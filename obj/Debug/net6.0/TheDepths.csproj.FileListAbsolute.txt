@@ -1,0 +1,5 @@
+C:\Users\Lion8\Documents\My Games\Terraria\tModLoader\ModSources\TheDepths\obj\Debug\net6.0\TheDepths.csproj.AssemblyReference.cache
+C:\Users\Lion8\Documents\My Games\Terraria\tModLoader\ModSources\TheDepths\obj\Debug\net6.0\TheDepths.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lion8\Documents\My Games\Terraria\tModLoader\ModSources\TheDepths\obj\Debug\net6.0\TheDepths.AssemblyInfoInputs.cache
+C:\Users\Lion8\Documents\My Games\Terraria\tModLoader\ModSources\TheDepths\obj\Debug\net6.0\TheDepths.AssemblyInfo.cs
+C:\Users\Lion8\Documents\My Games\Terraria\tModLoader\ModSources\TheDepths\obj\Debug\net6.0\TheDepths.csproj.CoreCompileInputs.cache

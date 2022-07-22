@@ -1,0 +1,6 @@
+displayName = The Depths (Alternate Hell)
+author = Lion8cake, Fox and Snickerbobble
+version = 0.1
+includePDB = true
+modReferences = AltLibrary
+sortAfter = AltLibrary
