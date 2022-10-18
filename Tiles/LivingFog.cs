@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -16,6 +16,7 @@ namespace TheDepths.Tiles
         public override void SetStaticDefaults()
         {
             Main.tileLighted[Type] = true;
+            HitSound = SoundID.Dig;
             ItemDrop = ItemType<Items.Placeable.LivingFog>();
             AddMapEntry(new Color(185, 197, 200), (LocalizedText)null);
             AnimationFrameHeight = 90;
@@ -31,7 +32,10 @@ namespace TheDepths.Tiles
             };
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinatePadding = 2;
+            //TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(new Func<int, int, int, int, int, int>(CanPlaceAlter), -1, 0, true);
             TileObjectData.newTile.UsesCustomCanPlace = true;
+            //TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(new Func<int, int, int, int, int, int>(AfterPlacement),
+                //-1, 0, false);
             TileObjectData.addTile(Type);
         }
 
@@ -46,6 +50,33 @@ namespace TheDepths.Tiles
         public int CanPlaceAlter(int i, int j, int type, int style, int direction)
         {
             return 1;
+        }
+
+        public static int AfterPlacement(int i, int j, int type, int style, int direction)
+        {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                NetMessage.SendTileSquare(Main.myPlayer, i, j, 1, 1, TileChangeType.None);
+            return 1;
+        }
+
+        public override bool CanPlace(int i, int j)
+        {
+            List<List<int>> intListList = new List<List<int>>()
+            {
+                new List<int>() { i, j - 1 },
+                new List<int>() { i - 1, j },
+                new List<int>() { i + 1, j },
+                new List<int>() { i, j + 1 }
+            };
+            if (Main.tile[i, j].WallType != 0)
+                return true;
+            for (int index = 0; index < intListList.Count; ++index)
+            {
+                Tile tile = Main.tile[intListList[index][0], intListList[index][1]];
+                if (tile.HasTile && (Main.tileSolid[tile.TileType] || TheDepths.livingFireBlockList.Contains(tile.TileType)))
+                    return true;
+            }
+            return false;
         }
 
         public override void AnimateTile(ref int frame, ref int frameCounter)

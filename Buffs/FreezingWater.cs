@@ -9,14 +9,9 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria.WorldBuilding;
 using Terraria.Utilities;
-using TheDepths.Dusts;
-using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Terraria.ModLoader.ModContent;
+using Terraria.WorldBuilding;
+using TheDepths.NPCs;
 
 namespace TheDepths.Buffs
 {
@@ -33,11 +28,6 @@ namespace TheDepths.Buffs
 		public override void Update(Player player, ref int buffIndex) {
 		player.GetModPlayer<TheDepthsPlayer>().slowWater = true;
 			player.moveSpeed = 0f;
-			for (int d = 0; d < 30; d++)
-            {
-                Dust dust = Main.dust[Dust.NewDust(player.position, player.width, player.height, DustType<SlowingWaterFire>())];
-                dust.velocity *= 3;
-            }
 		}
 		
 		public override void Update(NPC npc, ref int buffIndex)

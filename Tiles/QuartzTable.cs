@@ -1,49 +1,41 @@
-using Microsoft.Xna.Framework;
 using System;
+using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Enums;
 using Terraria.ModLoader;
-using Terraria.ObjectData; 
-using static Terraria.ModLoader.ModContent;
-using TheDepths.Dusts;
+using Terraria.ObjectData;
+using Terraria.DataStructures;
 
 namespace TheDepths.Tiles
 {
-    public class QuartzTable : ModTile
-    {
-        public override void SetStaticDefaults()
-        {
-            Main.tileSolidTop[Type] = true;
-            Main.tileFrameImportant[Type] = true;
-            Main.tileNoAttach[Type] = true;
-            Main.tileLavaDeath[Type] = false;
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
-            TileObjectData.newTile.Origin = new Point16(1, 1);
-            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 };
-            TileObjectData.newTile.AnchorInvalidTiles = new int[] { 127 };
-            TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
-            TileObjectData.addTile(Type);
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Quartz Table");
-            AddMapEntry(new Color(162, 184, 185), name);
-            DustType = DustType<GeodeDust>();
-            AdjTiles = new int[] { TileID.Tables };
-        }
+	public class QuartzTable : ModTile
+	{
+		public override void SetStaticDefaults()
+		{
+			Main.tileSolidTop[Type] = true;
+			Main.tileFrameImportant[Type] = true;
+			Main.tileNoAttach[Type] = true;
+			Main.tileTable[Type] = true;
+			Main.tileLavaDeath[Type] = true;
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
+			TileObjectData.newTile.Height = 2;
+			TileObjectData.newTile.CoordinateHeights = new int[]{ 16, 18 };
+			TileObjectData.newTile.Origin = new Point16(0, 1);
+			TileObjectData.addTile(Type);
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Table");
+			AddMapEntry(new Color(255, 255, 255), name);
+			DustType = 0;
+            TileID.Sets.DisableSmartCursor[Type] = true;
+			AdjTiles = new int[]{ TileID.Tables };
+			DustType = Mod.Find<ModDust>("QuartzCrystals").Type;
+		}
 
-        public override void NumDust(int i, int j, bool fail, ref int num)
-        {
-            num = fail ? 1 : 3;
-        }
-
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 48, 32, ItemType<Items.Placeable.QuartzTable>());
-            Chest.DestroyChest(i, j);
-        }
-    }
+		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+		{
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, Mod.Find<ModItem>("QuartzTable").Type);
+		}
+	}
 }

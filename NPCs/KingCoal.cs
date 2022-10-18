@@ -3,41 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ModLoader;
+using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TheDepths.Items.Banners;
-using Terraria;
-using Terraria.GameContent.Generation;
-using Terraria.ModLoader;
-using Terraria.WorldBuilding;
 using Terraria.DataStructures;
-using Terraria.Utilities.Terraria.Utilities;
-using Terraria.Utilities.FileBrowser;
-using Terraria.Utilities;
-using Terraria.UI.Gamepad;
-using Terraria.UI.Chat;
-using Terraria.UI;
-using Terraria.Testing.ChatCommands;
-using Terraria.Testing;
-using Terraria.Social.WeGame;
-using Terraria.Social.Steam;
-using Terraria.Social.Base;
-using Terraria.Social;
-using Terraria.Server;
-using Terraria.Physics;
-using Terraria.ObjectData;
-using Terraria.Net.Sockets;
-using Terraria.Net;
-using Terraria.Modules;
-using Terraria.Map;
-using Terraria.Localization;
-using Terraria.IO;
-using Terraria.ID;
-using Terraria.Audio;
-using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
-using static Terraria.ModLoader.ModContent;
-using TheDepths.Projectiles;
+using TheDepths.Items.Armor;
+using TheDepths.Items.Placeable;
+using AltLibrary.Common.Systems;
 
 namespace TheDepths.NPCs
 {
@@ -45,7 +22,6 @@ namespace TheDepths.NPCs
     {
 
         public bool attacking;
-		private int damage = 50;
 
         public override void SetStaticDefaults()
         {
@@ -62,6 +38,7 @@ namespace TheDepths.NPCs
             NPC.lifeMax = 600;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
+			NPC.lavaImmune = true;
             NPC.value = 1200f;
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = -1;
@@ -162,6 +139,10 @@ namespace TheDepths.NPCs
                         if ((k < num4 - 4 || k > num4 + 4 || num9 < num3 - 4 || num9 > num3 + 4) && (k < num6 - 1 || k > num6 + 1 || num9 < num5 - 1 || num9 > num5 + 1) && Main.tile[num9, k].HasUnactuatedTile)
                         {
                             bool flag2 = true;
+                            if ((Main.tile[num9, k - 1].LiquidType == LiquidID.Lava))
+                            {
+                                flag2 = false;
+                            }
                             if (flag2 && Main.tileSolid[Main.tile[num9, k].TileType] && !Collision.SolidTiles(num9 - 1, num9 + 1, k - 4, k - 1))
                             {
                                 NPC.ai[2] = num9;
@@ -191,13 +172,32 @@ namespace TheDepths.NPCs
                 if (NPC.ai[1] >= 180f)
                 {
                     SoundEngine.PlaySound(SoundID.Item42, NPC.position);
-					float shootDirection = (player.Center - NPC.Center).ToRotation();
-                    //Projectile.NewProjectile(NPC.GetProjectileSpawnSource(), NPC.Center.X + (23f * NPC.direction), NPC.Center.Y - 40f, 0f, -10f, ProjectileType<LumpOfCoal>(), damage, 3f, Main.myPlayer);
+                    float num10 = (float)Math.Atan2(val2.Y - val.Y, val2.X - val.X);
+                    int num11 = Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X, NPC.Center.Y, (float)(Math.Cos(num10) * 14.0 * -1.0), (float)(Math.Sin(num10) * 14.0 * -1.0), Mod.Find<ModProjectile>("LumpOfCoal").Type, 25, 0f, 0);
+                    Main.projectile[num11].friendly = false;
+                    Main.projectile[num11].hostile = true;
+                    Main.projectile[num11].timeLeft = 120;
                     attacking = false;
                     NPC.ai[1] = 0f;
                 }
             }
             NPC.netUpdate = true;
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+            {
+                return 1.5f;
+            }
+            return 0f;
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ember>(), 1, 1, 3));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CharredCrown>(), 100, 1, 1));
+            npcLoot.Add(ItemDropRule.Common(ItemID.Ruby, 50, 1, 1));
         }
     }
 }

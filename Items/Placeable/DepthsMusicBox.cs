@@ -1,4 +1,3 @@
-using TheDepths.Tiles;
 using Terraria.ModLoader;
 using Terraria.ID;
 
@@ -8,8 +7,6 @@ namespace TheDepths.Items.Placeable
 	{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Music Box (Depths)");
-			
-			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Depths"), ModContent.ItemType<Items.Placeable.DepthsMusicBox>(), ModContent.TileType<Tiles.DepthsMusicBox>());
 		}
 
 		public override void SetDefaults() {

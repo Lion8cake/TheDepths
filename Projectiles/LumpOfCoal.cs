@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Audio;
 
 namespace TheDepths.Projectiles
 {
@@ -14,7 +14,7 @@ namespace TheDepths.Projectiles
 		public override void SetDefaults() {
 			Projectile.width = 16;
 			Projectile.height = 16;
-			// projectile.friendly = false;
+			Projectile.friendly = false;
 			Projectile.hostile = true;
 			Projectile.penetrate = 8;
 			Projectile.timeLeft = 850;

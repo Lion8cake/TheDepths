@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.ID;
 using TheDepths.Tiles;
 using Terraria.ModLoader;
@@ -28,9 +29,13 @@ namespace TheDepths.Items.Placeable
 			Item.rare = ItemRarityID.Green;
 		}
 
-		/*public override void AddRecipes()
+		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<ArqueriteOre>(), 3).AddIngredient(ModContent.ItemType<Quartz>(), 1).AddTile(ModContent.TileType<Tiles.Gemforge>()).Register();
-		}*/
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ModContent.ItemType<ArqueriteOre>(), 3);
+			recipe.AddIngredient(ModContent.ItemType<Quartz>(), 1);
+			recipe.AddTile(ModContent.TileType<Tiles.Gemforge>());
+			recipe.Register();
+		}
 	}
 }

@@ -1,3 +1,4 @@
+using TheDepths.Items.Placeable;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -13,7 +14,7 @@ namespace TheDepths.Items.Weapons
 
 		public override void SetDefaults() {
 			Item.damage = 15;
-			Item.DamageType = DamageClass.Melee;
+			Item.DamageType = DamageClass.Melee/* tModPorter Suggestion: Consider MeleeNoSpeed for no attack speed scaling */;
 			Item.width = 40;
 			Item.height = 40;
 			Item.useTime = 5;
@@ -33,9 +34,12 @@ namespace TheDepths.Items.Weapons
 			}
 		}
 		
-		/*public override void AddRecipes()
+		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<ArqueriteBar>(), 20).AddTile(TileID.Anvils).Register();
-		}*/
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ModContent.ItemType<ArqueriteBar>(), 20);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
+		}
 	}
 }

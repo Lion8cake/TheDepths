@@ -29,9 +29,15 @@ namespace TheDepths.Items
             Item.buffTime = 14400;
         }
 		
-		/*public override void AddRecipes()
+		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.BottledWater, 1).AddIngredient(ItemID.FlarefinKoi, 1).AddIngredient(ItemID.Obsidifish, 2).AddIngredient(ModContent.ItemType<Items.ShadowShrub>(), 1).AddTile(13).Register();
-		}*/
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ItemID.BottledWater, 1);
+			recipe.AddIngredient(ItemID.FlarefinKoi, 1);
+			recipe.AddIngredient(ItemID.Obsidifish, 2);
+			recipe.AddIngredient(ModContent.ItemType<Items.ShadowShrub>(), 1);
+			recipe.AddTile(13);
+			recipe.Register();
+		}
     }
 }

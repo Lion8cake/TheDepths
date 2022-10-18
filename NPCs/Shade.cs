@@ -9,6 +9,10 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TheDepths.Items.Banners;
+using Terraria.GameContent.ItemDropRules;
+using TheDepths.Items;
+using TheDepths.Pets.ShadePet;
+using AltLibrary.Common.Systems;
 
 namespace TheDepths.NPCs
 {
@@ -32,6 +36,7 @@ namespace TheDepths.NPCs
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.knockBackResist = 0.5f;
+			NPC.lavaImmune = true;
             NPC.aiStyle = 22;
             AIType = NPCID.FloatyGross;
             Banner = NPC.type;
@@ -41,6 +46,21 @@ namespace TheDepths.NPCs
         public override void FindFrame(int frameHeight)
         {
             NPC.spriteDirection = NPC.direction;
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+            {
+                return 1.5f;
+            }
+            return 0f;
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShadePetItem>(), 500, 1, 1));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RubyRelic>(), 50, 1, 1));
         }
     }
 }

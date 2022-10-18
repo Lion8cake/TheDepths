@@ -9,35 +9,28 @@ namespace TheDepths.Tiles
 {
 	public class QuartzWorkbench : ModTile
 	{
-		public override void SetStaticDefaults() {
-			// Properties
-			Main.tileTable[Type] = true;
+		public override void SetStaticDefaults()
+		{
 			Main.tileSolidTop[Type] = true;
-			Main.tileNoAttach[Type] = true;
-			Main.tileLavaDeath[Type] = true;
 			Main.tileFrameImportant[Type] = true;
-			TileID.Sets.DisableSmartCursor[Type] = true;
-
-			DustType = ModContent.DustType<Dusts.QuartzCrystals>();
-			AdjTiles = new int[] { TileID.WorkBenches };
-
-			// Placement
+			Main.tileNoAttach[Type] = true;
+			Main.tileTable[Type] = true;
+			Main.tileLavaDeath[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x1);
-			TileObjectData.newTile.CoordinateHeights = new[] { 18 };
+			TileObjectData.newTile.CoordinateHeights = new int[]{ 18 };
 			TileObjectData.addTile(Type);
-
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-
-			// Etc
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Quartz Workbench");
-			AddMapEntry(new Color(106, 65, 51), name);
+			name.SetDefault("Workbench");
+            TileID.Sets.DisableSmartCursor[Type] = true;
+			AdjTiles = new int[]{ TileID.WorkBenches };
+			AddMapEntry(new Color(255, 255, 255), name);
+			DustType = Mod.Find<ModDust>("QuartzCrystals").Type;
 		}
 
-		public override void NumDust(int x, int y, bool fail, ref int num) => num = fail ? 1 : 3;
-
-		public override void KillMultiTile(int x, int y, int frameX, int frameY) {
-			Item.NewItem(new EntitySource_TileBreak(x, y), x * 16, y * 16, 32, 16, ModContent.ItemType<Items.Placeable.QuartzWorkbench>());
+		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+		{
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, Mod.Find<ModItem>("QuartzWorkbench").Type);
 		}
 	}
 }

@@ -5,7 +5,6 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Terraria.DataStructures;
 
 namespace TheDepths.Items.Accessories
 {
@@ -30,14 +29,18 @@ namespace TheDepths.Items.Accessories
 
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.GetDamage(DamageClass.Melee) += 0.09f;
-			//player.meleeSpeed += 0.09f;
+			player.GetAttackSpeed(DamageClass.Melee) += 0.09f;
 			player.kbGlove = true;
             player.GetModPlayer<TheDepthsPlayer>().aStone = true;
 		}
 		
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.MechanicalGlove, 1).AddIngredient(ModContent.ItemType<Items.Accessories.AquaStone>(), 1).AddTile(114).Register();
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ItemID.MechanicalGlove, 1);
+			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.AquaStone>(), 1);
+			recipe.AddTile(114);
+			recipe.Register();
 		}
 	}
 }

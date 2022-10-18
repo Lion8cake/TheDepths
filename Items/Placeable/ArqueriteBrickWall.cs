@@ -1,3 +1,4 @@
+using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 
@@ -22,7 +23,9 @@ namespace TheDepths.Items.Placeable
 		}
 
 		public override void AddRecipes() {
-			CreateRecipe(4).AddIngredient(ModContent.ItemType<ArqueriteBricks>()).Register();
+			Recipe recipe = CreateRecipe(4);
+			recipe.AddIngredient(ModContent.ItemType<ArqueriteBricks>());
+			recipe.Register();
 		}
 	}
 }

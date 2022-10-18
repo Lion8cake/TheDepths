@@ -9,6 +9,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TheDepths.Items.Banners;
+using AltLibrary.Common.Systems;
 
 namespace TheDepths.NPCs
 {
@@ -32,8 +33,18 @@ namespace TheDepths.NPCs
 			NPC.aiStyle = 1;
 			AIType = NPCID.Crimslime;
 			AnimationType = NPCID.Crimslime;
+			NPC.lavaImmune = true;
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<AchromaBanner>();
+		}
+
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		{
+			if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+			{
+				return 1.5f;
+			}
+			return 0f;
 		}
 	}
 }

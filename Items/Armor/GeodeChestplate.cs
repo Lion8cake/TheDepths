@@ -29,7 +29,10 @@ namespace TheDepths.Items.Armor
 		
 		public override void AddRecipes() 
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 3).AddTile(TileID.Anvils).Register();
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 3);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
 		}
 	}
 }

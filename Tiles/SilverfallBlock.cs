@@ -12,6 +12,7 @@ namespace TheDepths.Tiles
         public override void SetStaticDefaults()
         {
             Main.tileLighted[Type] = false;
+            HitSound = SoundID.Dig;
             ItemDrop = ItemType<Items.Placeable.SilverfallBlock>();
             AddMapEntry(new Color(232, 233, 234), (LocalizedText)null);
             AnimationFrameHeight = 90;

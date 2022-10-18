@@ -9,8 +9,8 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria.WorldBuilding;
 using Terraria.Utilities;
+using Terraria.WorldBuilding;
 
 namespace TheDepths.Buffs
 {
@@ -22,6 +22,7 @@ namespace TheDepths.Buffs
 			Main.debuff[Type] = false;
 	    	Main.pvpBuff[Type] = true;
 	    	Main.buffNoSave[Type] = false;
+			BuffID.Sets.LongerExpertDebuff[Type] = false;
 		}
 
 		public override void Update(Player player, ref int buffIndex) {

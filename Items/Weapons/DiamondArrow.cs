@@ -1,7 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-//using TheDepths.Items.Placeable;
+using TheDepths.Items.Placeable;
 
 namespace TheDepths.Items.Weapons
 {
@@ -26,8 +26,12 @@ namespace TheDepths.Items.Weapons
 			Item.ammo = AmmoID.Arrow;
 		}
 
-		/*public override void AddRecipes() {
-			CreateRecipe(33).AddIngredient(40, 33).AddIngredient(ModContent.ItemType<DiamondDust>(), 1).AddTile(TileID.Anvils).Register();
-		}*/
+		public override void AddRecipes() {
+			Recipe recipe = CreateRecipe(33);
+			recipe.AddIngredient(40, 33);
+			recipe.AddIngredient(ModContent.ItemType<DiamondDust>(), 1);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
+		}
 	}
 }

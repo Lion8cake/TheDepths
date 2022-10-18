@@ -1,13 +1,13 @@
-using TheDepths.Items.Placeable;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace TheDepths.Tiles
 {
-	public class DepthsMusicBox : ModTile
+	internal class DepthsMusicBox : ModTile
 	{
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
@@ -17,10 +17,10 @@ namespace TheDepths.Tiles
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
-
+            TileID.Sets.DisableSmartCursor[Type] = true;
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Music Box");
-			AddMapEntry(new Color(200, 200, 200), name);
+			AddMapEntry(new Color(133, 87, 50)); 
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {

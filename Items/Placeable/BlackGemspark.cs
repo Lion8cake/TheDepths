@@ -23,9 +23,13 @@ namespace TheDepths.Items.Placeable
 			Item.createTile = ModContent.TileType<Tiles.BlackGemspark>();
 		}
 		
-		/*public override void AddRecipes()
+		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.Glass, 20).AddIngredient(ModContent.ItemType<Items.Placeable.Onyx>(), 1).AddTile(TileID.WorkBenches).Register();
-		}*/
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ItemID.Glass, 20);
+			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Onyx>(), 1);
+			recipe.AddTile(TileID.WorkBenches);
+			recipe.Register();
+		}
 	}
 }

@@ -12,6 +12,7 @@ namespace TheDepths.Tiles
 		{
 			TileID.Sets.Ore[Type] = true;
 			Main.tileSpelunker[Type] = true;
+			Main.tileOreFinderPriority[Type] = 500;
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 975;
 			Main.tileMergeDirt[Type] = true;
@@ -47,5 +48,10 @@ namespace TheDepths.Tiles
 				player.AddBuff(ModContent.BuffType<MercuryPoisoning>(), Main.rand.Next(10, 20));
 			}
 		}
+		
+		public override bool CanExplode(int i, int j)
+		{
+			return false;
+		}	
 	}
 }

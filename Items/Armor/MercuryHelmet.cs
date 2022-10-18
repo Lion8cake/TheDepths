@@ -21,7 +21,7 @@ namespace TheDepths.Items.Armor
 		}
 		
 		public override void UpdateEquip(Player player) {
-		player.GetCritChance(DamageClass.Melee) += 4;
+		player.GetCritChance(DamageClass.Generic) += 4;
 		}
 
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
@@ -35,7 +35,10 @@ namespace TheDepths.Items.Armor
 
 		public override void AddRecipes() 
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 10).AddTile(TileID.Anvils).Register();
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 10);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
 		}
 	}
 }

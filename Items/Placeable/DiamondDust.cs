@@ -6,6 +6,10 @@ namespace TheDepths.Items.Placeable
 {
 	public class DiamondDust : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+		}
+
 		public override void SetDefaults()
 		{
 			Item.width = 20;
@@ -19,6 +23,7 @@ namespace TheDepths.Items.Placeable
 			Item.autoReuse = true;
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<Tiles.DiamondDust>();
+			Item.placeStyle = 0;
 			Item.rare = ItemRarityID.Green;
 		}
 	}

@@ -1,19 +1,10 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using System.IO;
+using TheDepths.Tiles;
+using TheDepths.Buffs;
+using TheDepths.Items.Placeable;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent.Generation;
-using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
-using Terraria.WorldBuilding;
-using Terraria.Utilities;
-using TheDepths.Buffs;
-using TheDepths.Dusts;
-using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TheDepths.Items.Accessories
 {
@@ -35,15 +26,4 @@ namespace TheDepths.Items.Accessories
             player.GetModPlayer<TheDepthsPlayer>().aStone = true;
 		}
 	}
-	
-	public class InflictWater : GlobalNPC
-    {
-        public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
-        {
-            if (player.GetModPlayer<TheDepthsPlayer>().aStone)
-            {
-                npc.AddBuff(BuffType<FreezingWater>(), Main.rand.Next(100, 200));
-            }
-        }
-    }	
 }

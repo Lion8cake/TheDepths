@@ -1,10 +1,11 @@
+using Terraria.Audio;
 using TheDepths.Dusts;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Audio;
+using Terraria.DataStructures;
 
 namespace TheDepths.Projectiles
 {
@@ -39,7 +40,6 @@ namespace TheDepths.Projectiles
 		public override void Kill(int timeLeft)
 	{
 		SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-		Vector2 launchVelocity = new Vector2(-4, 0);
 		if (Main.myPlayer != Projectile.owner)
 		{
 			return;
@@ -47,22 +47,19 @@ namespace TheDepths.Projectiles
 		int choice = Main.rand.Next(1);
 		if (choice == 0)
 		{
-		    launchVelocity = launchVelocity.RotatedBy(MathHelper.PiOver4);
-			Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, launchVelocity, ModContent.ProjectileType<CrystalBallPassive>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
+			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<CrystalBallPassive>(), 24, 1f, Main.myPlayer, 0f, 0f);
 		}
 		
 		int num = Main.rand.Next(1);
 		if (num == 0)
-		{ 
-		    launchVelocity = launchVelocity.RotatedBy(MathHelper.PiOver4);
-			Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, launchVelocity, ModContent.ProjectileType<CrystalBallPassive>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
+		{
+			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<CrystalBallPassive>(), 24, 1f, Main.myPlayer, 0f, 0f);
 		}
 		
 		int num2 = Main.rand.Next(1);
 		if (num2 == 0)
-		{ 
-		    launchVelocity = launchVelocity.RotatedBy(MathHelper.PiOver4);
-			Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, launchVelocity, ModContent.ProjectileType<CrystalBallPassive>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
+		{
+			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<CrystalBallPassive>(), 24, 1f, Main.myPlayer, 0f, 0f);
 		}
 	}
 	}

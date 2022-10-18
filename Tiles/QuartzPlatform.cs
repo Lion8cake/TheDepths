@@ -14,7 +14,7 @@ namespace TheDepths.Tiles
 			Main.tileFrameImportant[Type] = true;
 			Main.tileSolidTop[Type] = true;
 			Main.tileSolid[Type] = true;
-			Main.tileNoAttach[Type] = false;
+			Main.tileNoAttach[Type] = true;
 			Main.tileTable[Type] = true;
 			Main.tileLavaDeath[Type] = true;
 			TileID.Sets.Platforms[Type] = true;
@@ -24,13 +24,19 @@ namespace TheDepths.Tiles
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.StyleMultiplier = 27;
 			TileObjectData.newTile.StyleWrapLimit = 27;
+			TileObjectData.newTile.UsesCustomCanPlace = false;
 			TileObjectData.newTile.LavaDeath = true;
 			TileObjectData.addTile(Type);
-			AddMapEntry(new Color(27, 29, 33));
-			DustType = 37;
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
+			AddMapEntry(new Color(255, 255, 255));
+			DustType = Mod.Find<ModDust>("QuartzCrystals").Type;
 			ItemDrop = ModContent.ItemType<Items.Placeable.QuartzPlatform>();
-			TileID.Sets.DisableSmartCursor[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.Platforms };
+		}
+
+		public override void PostSetDefaults() {
+			Main.tileNoSunLight[Type] = false;
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) {

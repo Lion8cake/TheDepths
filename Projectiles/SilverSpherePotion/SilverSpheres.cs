@@ -3,12 +3,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using Terraria.GameContent.Generation;
-using Terraria.Localization;
-using Terraria.ModLoader.IO;
-using Terraria.WorldBuilding;
-using Terraria.Utilities;
 
 namespace TheDepths.Projectiles.SilverSpherePotion
 {
@@ -32,10 +26,16 @@ namespace TheDepths.Projectiles.SilverSpherePotion
 		Projectile.width = 30;
 		Projectile.height = 30;
 		Projectile.aiStyle = -1;
-		// projectile.tileCollide = false;
+		Projectile.tileCollide = false;
 		Projectile.ignoreWater = true;
 		Projectile.penetrate = -1;
 		Projectile.timeLeft = 3600;
+	}
+
+	public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+	{
+		Player player = Main.player[Projectile.owner];
+		hitDirection = ((!(target.Center.X < player.Center.X)) ? 1 : (-1));
 	}
 	
 	public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -58,14 +58,14 @@ namespace TheDepths.Projectiles.SilverSpherePotion
 
 	public override void AI()
 	{
-		Player owner = Main.player[Projectile.owner];
+		Player player = Main.player[Projectile.owner];
 		rot += 0.05f;
-		Projectile.Center = owner.Center + RotateVector(default(Vector2), new Vector2(0f, (float)(60 + Projectile.frameCounter)), rot + Projectile.ai[0] * 1.54666674f);
-		Projectile.velocity.X = ((Projectile.position.X > owner.position.X) ? 1f : (-1f));
+		Projectile.Center = player.Center + RotateVector(default(Vector2), new Vector2(0f, (float)(60 + Projectile.frameCounter)), rot + Projectile.ai[0] * 1.54666674f);
+		Projectile.velocity.X = ((Projectile.position.X > player.position.X) ? 1f : (-1f));
 		if (Projectile.ai[1] > 0f)
 		{
 			fadeOut = 0.15f;
-			// projectile.friendly = false;
+			Projectile.friendly = false;
 			timer++;
 			if (timer > 60)
 			{

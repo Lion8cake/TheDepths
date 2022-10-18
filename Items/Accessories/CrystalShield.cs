@@ -17,7 +17,7 @@ namespace TheDepths.Items.Accessories
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Crystal Shield");
-			Tooltip.SetDefault("Increases damage reduction by 10% and provides knockback and mercury poisoning immunity");
+			Tooltip.SetDefault("Increases damage redusction by 10% and provides knockback and mercury poisoning immunity");
 		}
 
 		public override void SetDefaults()
@@ -38,7 +38,11 @@ namespace TheDepths.Items.Accessories
 		
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Accessories.CrystalSkull>(), 1).AddIngredient(ItemID.CobaltShield, 1).AddTile(114).Register();
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.CrystalSkull>(), 1);
+			recipe.AddIngredient(ItemID.CobaltShield, 1);
+			recipe.AddTile(114);
+			recipe.Register();
 		}
 	}
 }

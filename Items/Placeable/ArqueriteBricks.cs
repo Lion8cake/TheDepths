@@ -1,3 +1,4 @@
+using Terraria;
 using TheDepths.Items.Placeable;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,7 +24,11 @@ namespace TheDepths.Items.Placeable
 		
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.StoneBlock, 1).AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteOre>(), 1).AddTile(TileID.Furnaces).Register();
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ItemID.StoneBlock, 1);
+			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteOre>(), 1);
+			recipe.AddTile(TileID.Furnaces);
+			recipe.Register();
 		}
 	}
 }

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
 
 namespace TheDepths.Projectiles
 {
@@ -64,26 +65,23 @@ namespace TheDepths.Projectiles
 		}
 
 		public override void Kill(int timeLeft)
+	{
+		if (Main.myPlayer != Projectile.owner)
 		{
-		    Vector2 launchVelocity = new Vector2(-4, 0);
-			if (Main.myPlayer != Projectile.owner)
-			{
-				return;
-			}
-			int choice = Main.rand.Next(1);
-			if (choice == 0)
-			{
-				launchVelocity = launchVelocity.RotatedBy(MathHelper.PiOver4);
-				Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, launchVelocity, ModContent.ProjectileType<ShadowBall2>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
-			}
-			
-			int num = Main.rand.Next(1);
-			if (num == 0)
-			{
-				launchVelocity = launchVelocity.RotatedBy(MathHelper.PiOver4);
-				Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, launchVelocity, ModContent.ProjectileType<ShadowBall2>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
-			}
+			return;
 		}
+		int choice = Main.rand.Next(1);
+		if (choice == 0)
+		{
+			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<ShadowBall2>(), 24, 1f, Main.myPlayer, 0f, 0f);
+		}
+		
+		int num = Main.rand.Next(1);
+		if (num == 0)
+		{
+			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<ShadowBall2>(), 24, 1f, Main.myPlayer, 0f, 0f);
+		}
+	}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
 			Projectile.ai[0] += 0.1f;

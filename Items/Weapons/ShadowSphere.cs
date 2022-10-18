@@ -1,5 +1,5 @@
 using TheDepths.Projectiles;
-//using TheDepths.Tiles;
+using TheDepths.Tiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -26,7 +26,7 @@ namespace TheDepths.Items.Weapons
 			Item.value = 10000;
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item21;
-			//item.autoReuse = false;
+			Item.autoReuse = false;
 			Item.shoot = ModContent.ProjectileType<ShadowBall>();
 			Item.shootSpeed = 7.5f;
 		}

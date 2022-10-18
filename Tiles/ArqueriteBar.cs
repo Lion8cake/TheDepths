@@ -9,7 +9,8 @@ namespace TheDepths.Tiles
 {
 	public class ArqueriteBar : ModTile
 	{
-		public override void SetStaticDefaults() {
+		public override void SetStaticDefaults()
+		{
 			Main.tileShine[Type] = 1100;
 			Main.tileSolid[Type] = true;
 			Main.tileSolidTop[Type] = true;
@@ -19,18 +20,19 @@ namespace TheDepths.Tiles
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
+			DustType = Mod.Find<ModDust>("ArqueriteDust").Type;
 
-			AddMapEntry(new Color(200, 200, 200), Language.GetText("MapObject.MetalBar"));
+			AddMapEntry(new Color(71, 84, 105), Language.GetText("MapObject.MetalBar"));
 		}
 
-		public override bool Drop(int i, int j) {
+		public override bool Drop(int i, int j)
+		{
 			Tile t = Main.tile[i, j];
 			int style = t.TileFrameX / 18;
-
-			if (style == 0) {
+			if (style == 0)
+			{
 				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<Items.Placeable.ArqueriteBar>());
 			}
-
 			return base.Drop(i, j);
 		}
 	}

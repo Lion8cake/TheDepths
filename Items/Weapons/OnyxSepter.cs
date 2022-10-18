@@ -1,5 +1,5 @@
-//using TheDepths.Projectiles;
-//using TheDepths.Tiles;
+using TheDepths.Projectiles;
+using TheDepths.Tiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -36,9 +36,14 @@ namespace TheDepths.Items.Weapons
 			Item.shootSpeed = 7.5f;
 		}
 		
-		/*public override void AddRecipes()
+		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 10).AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 6).AddIngredient(ModContent.ItemType<Items.Placeable.Onyx>(), 8).AddTile(TileID.MythrilAnvil).Register();
-		}*/
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 10);
+			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 6);
+			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Onyx>(), 8);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
+		}
 	}
 }

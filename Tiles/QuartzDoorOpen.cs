@@ -1,5 +1,3 @@
-using TheDepths.Dusts;
-using TheDepths.Items.Placeable;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -12,28 +10,12 @@ namespace TheDepths.Tiles
 {
 	public class QuartzDoorOpen : ModTile
 	{
-		public override void SetStaticDefaults() {
-			// Properties
+		public override void SetStaticDefaults()
+		{
 			Main.tileFrameImportant[Type] = true;
 			Main.tileSolid[Type] = false;
 			Main.tileLavaDeath[Type] = true;
 			Main.tileNoSunLight[Type] = true;
-			TileID.Sets.HousingWalls[Type] = true; //needed for non-solid blocks to count as walls
-			TileID.Sets.HasOutlines[Type] = false;
-			TileID.Sets.DisableSmartCursor[Type] = true;
-
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-
-			DustType = ModContent.DustType<QuartzCrystals>();
-			AdjTiles = new int[] { TileID.OpenDoor };
-			CloseDoorID = ModContent.TileType<QuartzDoorClosed>();
-
-			// Names
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Quartz Door");
-			AddMapEntry(new Color(106, 65, 51), name);
-
-			// Placement
 			TileObjectData.newTile.Width = 2;
 			TileObjectData.newTile.Height = 3;
 			TileObjectData.newTile.Origin = new Point16(0, 0);
@@ -41,7 +23,7 @@ namespace TheDepths.Tiles
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, 1, 0);
 			TileObjectData.newTile.UsesCustomCanPlace = true;
 			TileObjectData.newTile.LavaDeath = true;
-			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
+			TileObjectData.newTile.CoordinateHeights = new int[]{ 16, 16, 16 };
 			TileObjectData.newTile.CoordinateWidth = 16;
 			TileObjectData.newTile.CoordinatePadding = 2;
 			TileObjectData.newTile.StyleHorizontal = true;
@@ -73,17 +55,20 @@ namespace TheDepths.Tiles
 			TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceLeft;
 			TileObjectData.addAlternate(1);
 			TileObjectData.addTile(Type);
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
+			TileID.Sets.HousingWalls[Type] = true;
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Door");
+            TileID.Sets.DisableSmartCursor[Type] = true;
+			AdjTiles = new int[]{ TileID.OpenDoor };
+			CloseDoorID = Mod.Find<ModTile>("QuartzDoorClosed").Type;
+			AddMapEntry(new Color(255, 255, 255), name);
+			DustType = Mod.Find<ModDust>("QuartzCrystals").Type;
 		}
 
-		public override void NumDust(int i, int j, bool fail, ref int num) => num = 1;
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) => Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<QuartzDoor>());
-
-		public override void MouseOver(int i, int j) {
-			Player player = Main.LocalPlayer;
-			player.noThrow = 2;
-			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = ModContent.ItemType<QuartzDoor>();
+		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+		{
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, Mod.Find<ModItem>("QuartzDoor").Type);
 		}
 	}
 }

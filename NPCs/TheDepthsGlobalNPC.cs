@@ -1,27 +1,11 @@
-using TheDepths.Buffs;
 using TheDepths.Dusts;
-using TheDepths.Items;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameInput;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
-using Terraria.GameContent.Generation;
-using Terraria.Localization;
-using Terraria.WorldBuilding;
-using Terraria.Utilities;
-using static Terraria.ModLoader.ModContent;
 
 namespace TheDepths.NPCs
 {
-	public class TheDepthsGlobalNPC : GlobalNPC
+    public class TheDepthsGlobalNPC : GlobalNPC
 	{
 	    public override bool InstancePerEntity => true;
 	
@@ -43,7 +27,7 @@ namespace TheDepths.NPCs
 					Main.dust[dust].velocity *= 1.8f;
 					Main.dust[dust].velocity.Y -= 0.5f;
 					if (Main.rand.NextBool(4)) {
-						// Main.dust[dust].noGravity = false;
+						Main.dust[dust].noGravity = false;
 						Main.dust[dust].scale *= 0.5f;
 					}
 				}
@@ -55,7 +39,7 @@ namespace TheDepths.NPCs
 					Main.dust[dust].velocity *= 1.8f;
 					Main.dust[dust].velocity.Y -= 0.5f;
 					if (Main.rand.NextBool(4)) {
-						// Main.dust[dust].noGravity = false;
+						Main.dust[dust].noGravity = false;
 						Main.dust[dust].scale *= 0.5f;
 					}
 				}
@@ -67,7 +51,7 @@ namespace TheDepths.NPCs
 					Main.dust[dust].velocity *= 1.8f;
 					Main.dust[dust].velocity.Y -= 0.5f;
 					if (Main.rand.NextBool(4)) {
-						// Main.dust[dust].noGravity = false;
+						Main.dust[dust].noGravity = false;
 						Main.dust[dust].scale *= 0.5f;
 					}
 				}

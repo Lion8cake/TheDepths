@@ -26,10 +26,15 @@ namespace TheDepths.Tiles
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShalestoneTopaz").Type] = true;
 			DustType = Mod.Find<ModDust>("ShaleDust").Type;
 
-			//ItemDrop = ModContent.ItemType<Items.Placeable.Onyx>();
+			ItemDrop = ModContent.ItemType<Items.Placeable.Onyx>();
 			HitSound = SoundID.Tink;
 			MineResist = 2f;
 			MinPick = 110;
+		}
+		
+		public override bool CanExplode(int i, int j)
+		{
+			return false;
 		}
 	}
 }

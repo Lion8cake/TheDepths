@@ -3,50 +3,44 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using Terraria.GameContent.Generation;
-using Terraria.Localization;
-using Terraria.ModLoader.IO;
-using Terraria.WorldBuilding;
-using Terraria.Utilities;
 
 namespace TheDepths.Projectiles.GeodeSetBonus
 {
 	public class GeodeCrystalSummon : ModProjectile
-{
+	{
+	public bool shift;
+
+	public bool shift2;
+
 	public int timer;
 
-	public float fadeOut = 0.75f;
-
-	public Vector2 rotVec = new Vector2(0f, 65f);
-
 	public float rot;
-
-	public override void SetStaticDefaults()
-	{
-		DisplayName.SetDefault("Silver Sphere");
-	}
+	
+	public float fadeOut = 0.75f;
 
 	public override void SetDefaults()
 	{
-		Projectile.width = 30;
-		Projectile.height = 30;
+		Projectile.width = 18;
+		Projectile.height = 26;
 		Projectile.aiStyle = -1;
-		// projectile.tileCollide = false;
+		Projectile.friendly = true;
+		Projectile.tileCollide = false;
 		Projectile.ignoreWater = true;
 		Projectile.penetrate = -1;
-		Projectile.timeLeft = 3600;
+		Projectile.timeLeft = 60;
+		ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;
+		ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+	}
+
+	public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+	{
+		Player player = Main.player[Projectile.owner];
+		hitDirection = ((!(target.Center.X < player.Center.X)) ? 1 : (-1));
 	}
 	
-	public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+	public override Color? GetAlpha(Color lightColor)
 	{
-		for (int i = 0; i < 15; i++)
-		{
-			int num = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width * 2, Projectile.height * 2, 11, 0f, 0f, 100, default(Color), 1.2f);
-			int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width * 2, Projectile.height * 2, 11, 0f, 0f, 100, default(Color), 1.2f);
-			Main.dust[num2].noGravity = true;
-		}
-		Projectile.ai[1] = 1f;
+		return new Color(255, 255, 255, 100) * fadeOut;
 	}
 
 	public static Vector2 RotateVector(Vector2 origin, Vector2 vecToRot, float rot)
@@ -57,43 +51,38 @@ namespace TheDepths.Projectiles.GeodeSetBonus
 	}
 
 	public override void AI()
-	{
-		Player owner = Main.player[Projectile.owner];
-		rot += 0.05f;
-		Projectile.Center = owner.Center + RotateVector(default(Vector2), new Vector2(0f, (float)(60 + Projectile.frameCounter)), rot + Projectile.ai[0] * 1.54666674f);
-		Projectile.velocity.X = ((Projectile.position.X > owner.position.X) ? 1f : (-1f));
-		if (Projectile.ai[1] > 0f)
+    {
+		Player player = Main.player[Projectile.owner];
+		rot += 0.03f;
+		Projectile.Center = player.Center + RotateVector(default(Vector2), new Vector2(0f, (float)(90 + Projectile.frameCounter)), rot + Projectile.ai[0] * 1.04666674f);
+		Projectile.velocity.X = ((Projectile.position.X > player.position.X) ? 1f : (-1f));
+		if (Projectile.ai[1] == 0f)
 		{
+			Projectile.friendly = true;
 			fadeOut = 0.15f;
-			// projectile.friendly = false;
-			timer++;
-			if (timer > 60)
+			Projectile.alpha = 0;
+			timer = 0;
+		}
+		else
+		{
+			Projectile.friendly = false;
+			fadeOut = 0.15f;
+			Projectile.alpha += ((!shift2) ? 5 : (-5));
+			if (Projectile.alpha > 225 && !shift2)
 			{
-			for (int i = 0; i < 15; i++)
-				{
-					int num = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height * 2, 11, 0f, 0f, 100, default(Color), 1.2f);
-					int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height * 2, 11, 0f, 0f, 100, default(Color), 1.2f);
-					Main.dust[num2].noGravity = true;
-					Dust obj = Main.dust[num2];
-					obj.velocity *= 0.75f;
-					int num3 = Main.rand.Next(-50, 51);
-					int num4 = Main.rand.Next(-50, 51);
-					Dust dust = Main.dust[num2];
-					dust.position.X = dust.position.X + (float)num3;
-					Dust dust2 = Main.dust[num2];
-					dust2.position.Y = dust2.position.Y + (float)num4;
-					Main.dust[num2].velocity.X = (0f - (float)num3) * 0.075f;
-					Main.dust[num2].velocity.Y = (0f - (float)num4) * 0.075f;
-				}
+				shift2 = true;
+			}
+			if (Projectile.alpha <= 125)
+			{
+				shift2 = false;
+			}
+			timer++;
+			if (timer > 180)
+			{
 				Projectile.ai[1] = 0f;
 				timer = 0;
 			}
 		}
-		else
-		{
-			fadeOut = 0.75f;
-			Projectile.friendly = true;
-		}
 	}
-}
+	}
 }

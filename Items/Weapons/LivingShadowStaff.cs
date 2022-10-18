@@ -1,11 +1,10 @@
-using Microsoft.Xna.Framework;
-using System;
-using Terraria;
 using Terraria.DataStructures;
+using TheDepths.Projectiles.Summons;
+using TheDepths.Items.Placeable;
+using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using TheDepths.Buffs;
-using TheDepths.Projectiles.Summons;
 
 namespace TheDepths.Items.Weapons
 {
@@ -31,19 +30,14 @@ namespace TheDepths.Items.Weapons
 			Item.value = Item.buyPrice(0, 0, 100, 0);
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item44;
-			Item.buffType = ModContent.BuffType<LivingShadowSummonBuff>();
 			Item.shoot = ModContent.ProjectileType<LivingShadowSummonProj>();
+			Item.buffType = ModContent.BuffType<Buffs.LivingShadowSummonBuff>();
 		}
 
-		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			position = Main.MouseWorld;
-		}
-
-		/*public override bool Shoot(Player player, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			player.AddBuff(Item.buffType, 2);
-			var projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, Main.myPlayer);
-			projectile.originalDamage = Item.damage;
-			return false;
-		}*/
+			position = Main.MouseWorld;
+			return true;
+		}
 	}
 }

@@ -1,25 +1,26 @@
+using Terraria;
 using Terraria.ID;
-using TheDepths.Tiles;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace TheDepths.Items.Placeable
 {
 	public class Geode : ModItem
 	{
-		public override void SetDefaults()
-		{
-			Item.width = 20;
-			Item.height = 20;
-			Item.maxStack = 99;
-			Item.value = 500;
-			Item.useStyle = ItemUseStyleID.Swing;
+		public override void SetStaticDefaults() {
+		}
+
+		public override void SetDefaults() {
+			Item.width = 12;
+			Item.height = 12;
+			Item.maxStack = 999;
 			Item.useTurn = true;
+			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.autoReuse = true;
-			//Item.consumable = true;
-			//Item.createTile = ModContent.TileType<Tiles.PlacedGems>();
-			Item.rare = ItemRarityID.White;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.consumable = true;
+			Item.createTile = ModContent.TileType<Tiles.PlacedGems>();
 		}
 	}
 }

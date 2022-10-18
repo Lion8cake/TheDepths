@@ -49,7 +49,11 @@ namespace TheDepths.Items.Accessories
 		
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Accessories.CrystalShield>(), 1).AddIngredient(ItemID.AnkhCharm, 1).AddTile(114).Register();
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.CrystalShield>(), 1);
+			recipe.AddIngredient(ItemID.AnkhCharm, 1);
+			recipe.AddTile(114);
+			recipe.Register();
 		}
 	}
 }

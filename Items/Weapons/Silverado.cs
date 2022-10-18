@@ -1,4 +1,5 @@
-//using TheDepths.Tiles;
+using Terraria.DataStructures;
+using TheDepths.Tiles;
 using System;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -31,16 +32,23 @@ namespace TheDepths.Items.Weapons
 			Item.shootSpeed = 16f; 
 			Item.useAmmo = AmmoID.Bullet;
 		}
-		
-		    public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			if (type == ProjectileID.Bullet) { 
-				type = ProjectileID.BulletHighVelocity;
-				}
-			}
 
-		/*public override void AddRecipes()
+		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 10).AddIngredient(ItemID.Handgun, 1).AddTile(TileID.Anvils).Register();
-		}*/
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 10);
+			recipe.AddIngredient(ItemID.Handgun, 1);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
+		}
+
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		{
+			if (type == ProjectileID.Bullet)
+			{
+				type = ProjectileID.BulletHighVelocity;
+			}
+			return true;
+		}
 	}
 }

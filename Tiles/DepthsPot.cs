@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Terraria.Audio;
 using TheDepths.Buffs;
 using Terraria.ID;
 using Terraria;
@@ -6,7 +7,6 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using TheDepths.Items;
 using TheDepths.Items.Weapons;
-using Terraria.Audio;
 using Terraria.DataStructures;
 
 namespace TheDepths.Tiles
@@ -18,6 +18,7 @@ namespace TheDepths.Tiles
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;
 			Main.tileWaterDeath[Type] = false;
+			Main.tileOreFinderPriority[Type] = 100;
 			Main.tileSpelunker[Type] = true;
 			Main.tileCut[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
@@ -26,6 +27,7 @@ namespace TheDepths.Tiles
 			name.SetDefault("Pot");
 			AddMapEntry(new Color(33, 38, 97), name);
 			DustType = 29;
+			HitSound = SoundID.Item13;
 		}
 	
 		public override bool CreateDust(int i, int j, ref int type)
@@ -37,7 +39,10 @@ namespace TheDepths.Tiles
 		{
 			_ = j - Main.tile[i, j].TileFrameY / 18;
 			_ = i - Main.tile[i, j].TileFrameX / 18;
-			//SoundEngine.PlaySound(13, i * 16, j * 16, 0);
+			SoundEngine.PlaySound(SoundID.Shatter, new Vector2(i * 16, j * 16));
+			//Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default(Vector2), Mod.Find<ModGore>("DepthsPotGore1").Type);
+			//Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default(Vector2), Mod.Find<ModGore>("DepthsPotGore2").Type);
+			//Gore.NewGore(new Vector2((float)(i * 16), (float)(j * 16)), default(Vector2), Mod.Find<ModGore>("DepthsPotGore3").Type);
 			if (!WorldGen.gen && Main.netMode != 1)
 			{
 				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, 72, Main.rand.Next(15, 18));

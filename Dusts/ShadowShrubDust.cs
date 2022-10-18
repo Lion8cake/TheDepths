@@ -7,7 +7,7 @@ namespace TheDepths.Dusts
 	{
 		public override void OnSpawn(Dust dust) {
 			dust.velocity *= 0.4f;
-			// dust.noGravity = false;
+			dust.noGravity = false;
 			dust.noLight = true;
 			dust.scale *= 1f;
 		}

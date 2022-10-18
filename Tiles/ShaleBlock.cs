@@ -17,7 +17,6 @@ namespace TheDepths.Tiles
             Main.tileLighted[Type] = false;
             ItemDrop = ModContent.ItemType<Items.Placeable.ShaleBlock>();
             AddMapEntry(new Color(27, 29, 33));
-			//SetModTree(new Trees.PetrifiedTree());
 			Main.tileMerge[Type][Mod.Find<ModTile>("ArqueriteOre").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("Quartz").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShaleBlock").Type] = true;
@@ -36,10 +35,5 @@ namespace TheDepths.Tiles
         {
             num = (fail ? 1 : 3);
         }
-		
-		/*public override int SaplingGrowthType(ref int style) {
-			style = 0;
-			return ModContent.TileType<PetrifiedSapling>();
-		}*/
     }
 }

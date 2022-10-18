@@ -68,7 +68,7 @@ namespace TheDepths.Tiles
 					return;
 					
 			}
-			//Item.NewItem(i * 16, j * 16, 16, 48, Mod.Find<ModItem>(item).Type);
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, Mod.Find<ModItem>(item).Type);
 		}
 
 		public override void NearbyEffects(int i, int j, bool closer) {
@@ -95,28 +95,26 @@ namespace TheDepths.Tiles
 					case 5:
 						type = "GoldBat";
 						break;
-				case 6:
-					type = "Ferroslime";
-					break;
-				case 7:
-					type = "ShadowBat";
-					break;
-				case 8:
-					type = "CrystalKing";
-					break;
-				case 9:
-					type = "KingCoal";
-					break;
-				case 10:
-					type = "Achroma";
-					break;
-					default:
-						return;
+					case 6:
+						type = "Ferroslime";
+						break;
+					case 7:
+						type = "ShadowBat";
+						break;
+					case 8:
+						type = "CrystalKing";
+						break;
+					case 9:
+						type = "KingCoal";
+						break;
+					case 10:
+						type = "Achroma";
+						break;
+						default:
+					return;
 				}
-				/*
-				player.NPCBannerBuff[Mod.Find<ModNPC>(type).Type] = true;
-				player.hasBanner = true;
-				*/
+				Main.SceneMetrics.NPCBannerBuff[Mod.Find<ModNPC>(type).Type] = true;
+				Main.SceneMetrics.hasBanner = true;
 			}
 		}
 

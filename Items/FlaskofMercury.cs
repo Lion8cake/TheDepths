@@ -29,9 +29,13 @@ namespace TheDepths.Items
             Item.buffTime = 72000;
         }
 		
-		/*public override void AddRecipes()
+		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.BottledWater, 1).AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteOre>(), 3).AddTile(TileID.ImbuingStation).Register();
-		}*/
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ItemID.BottledWater, 1);
+			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteOre>(), 3);
+			recipe.AddTile(TileID.ImbuingStation);
+			recipe.Register();
+		}
     }
 }

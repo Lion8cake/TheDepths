@@ -24,12 +24,13 @@ namespace TheDepths.Tiles
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.StyleMultiplier = 27;
 			TileObjectData.newTile.StyleWrapLimit = 27;
+			TileObjectData.newTile.UsesCustomCanPlace = false;
 			TileObjectData.newTile.LavaDeath = true;
 			TileObjectData.addTile(Type);
 			AddMapEntry(new Color(27, 29, 33));
 			DustType = 37;
 			ItemDrop = ModContent.ItemType<Items.Placeable.ShadowShrubPlanterBox>();
-			TileID.Sets.DisableSmartCursor[Type] = true;
+            TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.PlanterBox };
 		}
 		

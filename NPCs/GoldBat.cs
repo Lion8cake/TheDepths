@@ -9,6 +9,8 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TheDepths.Items.Banners;
+using Terraria.GameContent.ItemDropRules;
+using AltLibrary.Common.Systems;
 
 namespace TheDepths.NPCs
 {
@@ -27,6 +29,7 @@ namespace TheDepths.NPCs
 			NPC.lifeMax = 320;
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath2;
+			NPC.lavaImmune = true;
 			NPC.value = 60f;
 			NPC.knockBackResist = 0.5f;
 			NPC.aiStyle = 14;
@@ -34,6 +37,20 @@ namespace TheDepths.NPCs
 			AnimationType = NPCID.GiantBat;
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<GoldBatBanner>();
+		}
+
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		{
+			if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+			{
+				return 1.5f;
+			}
+			return 0f;
+		}
+
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
+		{
+			npcLoot.Add(ItemDropRule.Common(ItemID.Topaz, 10, 1, 1));
 		}
 	}
 }

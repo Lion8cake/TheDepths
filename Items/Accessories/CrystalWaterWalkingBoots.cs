@@ -30,7 +30,11 @@ namespace TheDepths.Items.Accessories
 		
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.WaterWalkingBoots, 1).AddIngredient(ModContent.ItemType<Items.Accessories.CrystalSkull>(), 1).AddTile(114).Register();
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ItemID.WaterWalkingBoots, 1);
+			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.CrystalSkull>(), 1);
+			recipe.AddTile(114);
+			recipe.Register();
 		}
 	}
 }

@@ -26,7 +26,7 @@ namespace TheDepths.Items.Weapons
 			Item.damage = 21;
 			Item.rare = ItemRarityID.Orange;
 
-			Item.DamageType = DamageClass.Melee;
+			Item.DamageType = DamageClass.Melee/* tModPorter Suggestion: Consider MeleeNoSpeed for no attack speed scaling */;
 			Item.channel = true;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;

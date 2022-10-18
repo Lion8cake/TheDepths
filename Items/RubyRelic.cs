@@ -1,3 +1,6 @@
+using TheDepths.Tiles;
+using TheDepths.Buffs;
+using TheDepths.Items.Placeable;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;

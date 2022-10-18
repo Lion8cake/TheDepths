@@ -1,1 +1,25 @@
-The Depths (Alternate Hell) is a pretty cool mod, it does...this. Modify this file with a description of your mod.
+=========================================
+The Depths (Alternate Hell)
+=========================================
+0.2.1 Version
+
+Hello and welcome to the second mod we are working on to replace a vannilla biome in terraria. This time we are replacing the Underworld with the depths.
+The Depths is focused around Gems and murcury and was a concept done y snickerbobble in 2015. Currently this mod is in early public release so many features may be missing or there may be a few bugs.
+
+We encourage people make new worlds as this mod adds world generation to new worlds that allows the new content to be accessed.
+
+This might be the last update for the 1.3 version so be on the look out for 1.4 version soon (but not that soon)
+=========================================
+Change Log
+=========================================
+Fixed Npcs not being immune to lava
+Changed main depths theme to be HBDeus's new theme instead of the old granite Tremor theme by Delicous saturn
+
+==========================================
+-=Credits=-
+==========================================
+Lion8cake -  The Main Dev behind the mod
+Basically, I am little fox - Creator of the World gen, large gems, Tiles and other fixes
+Ghast tear - World Creation UI
+Snickerbobble - The main concept creator
+HBDeus - For making the current Depths theme (thank you very much its very awesome :)!)

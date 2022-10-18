@@ -11,20 +11,21 @@ using Terraria.GameContent;
 using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TheConfectionRebirth
+namespace TheDepths
 {
     internal class AltDepthsBiome : AltBiome
     {
-        public override Color NameColor => new(210, 196, 145);
+        public override Color NameColor => new(27, 29, 33);
 
         public override Asset<Texture2D>[] AltUnderworldBackgrounds => TextureAssets.Underworld;
-		public override Color AltUnderworldColor => new(210, 196, 145);
+		public override Color AltUnderworldColor => new(27, 29, 33);
 
 		public override void SetStaticDefaults()
         {
             BiomeType = BiomeType.Hell;
             BiomeStone = ModContent.TileType<ShaleBlock>();
-            //AltarTile = ModContent.TileType<Gemforge>();
+            AltarTile = ModContent.TileType<Gemforge>();
+            BiomeOre = ModContent.TileType<ArqueriteOre>();
 
             DisplayName.SetDefault("Depths");
             Description.SetDefault("A hot gem filled cave deep below the regular caverns that has liquid mercury and quartz");
@@ -35,6 +36,6 @@ namespace TheConfectionRebirth
 
         public override string LowerTexture => "TheDepths/Assets/Loading/Depths_Outer_Lower";
 
-        public override string IconSmall => "TheDepths/Biomes/BestiaryIcon1";
+        public override string IconSmall => "TheDepths/Biomes/DepthsBestiaryIcon";
     }
 }

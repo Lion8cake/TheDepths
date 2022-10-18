@@ -9,6 +9,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TheDepths.Items.Banners;
+using AltLibrary.Common.Systems;
 
 namespace TheDepths.NPCs
 {
@@ -30,10 +31,20 @@ namespace TheDepths.NPCs
 			NPC.value = 120f;
 			NPC.knockBackResist = 0.5f;
 			NPC.aiStyle = 14;
+			NPC.lavaImmune = true;
 			AIType = NPCID.GiantBat;
 			AnimationType = NPCID.GiantBat;
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<AlbinoBatBanner>();
+		}
+
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		{
+			if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+			{
+				return 1.5f;
+			}
+			return 0f;
 		}
 	}
 }
