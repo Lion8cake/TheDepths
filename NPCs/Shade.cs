@@ -13,6 +13,8 @@ using Terraria.GameContent.ItemDropRules;
 using TheDepths.Items;
 using TheDepths.Pets.ShadePet;
 using AltLibrary.Common.Systems;
+using Terraria.GameContent.Bestiary;
+using TheDepths.Biomes;
 
 namespace TheDepths.NPCs
 {
@@ -41,6 +43,15 @@ namespace TheDepths.NPCs
             AIType = NPCID.FloatyGross;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<ShadeBanner>();
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+
+                new FlavorTextBestiaryInfoElement("Beings of pure darkness that drift through blocks with the ability to freely float through the air. A group of them is called a darkening.")
+            });
         }
 
         public override void FindFrame(int frameHeight)

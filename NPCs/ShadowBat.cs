@@ -11,6 +11,8 @@ using Microsoft.Xna.Framework.Graphics;
 using TheDepths.Items.Banners;
 using Terraria.GameContent.ItemDropRules;
 using AltLibrary.Common.Systems;
+using Terraria.GameContent.Bestiary;
+using TheDepths.Biomes;
 
 namespace TheDepths.NPCs
 {
@@ -19,6 +21,14 @@ namespace TheDepths.NPCs
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Shadow Bat");
 			Main.npcFrameCount[NPC.type] = 4;
+
+			var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			{
+				Position = new Vector2(0f, -20f),
+				PortraitPositionXOverride = 0f,
+				PortraitPositionYOverride = -40f
+			};
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
 		}
 
 		public override void SetDefaults() {
@@ -37,8 +47,17 @@ namespace TheDepths.NPCs
 			AnimationType = NPCID.GiantBat;
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<ShadowBatBanner>();
+			SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
 		}
-		
+
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+		{
+			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+
+				new FlavorTextBestiaryInfoElement("This half black half emerald bat is a stonger varient of the bats found in the depths, Is it a bat's shadow or a shadow made of bats?")
+			});
+		}
+
 		public override void OnHitPlayer(Player target, int damage, bool crit)
     	{
     		target.AddBuff(BuffID.Blackout, 180);

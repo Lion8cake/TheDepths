@@ -14,9 +14,11 @@ public class DepthsBiome : ModBiome
 
     public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Depths");
 
-    public override string MapBackground => "Biomes/DepthsMapBackground";
+    public override string MapBackground => BackgroundPath;
 
-    public override string BestiaryIcon => "Biomes/DepthsBestiaryIcon";
+    public override string BackgroundPath => "TheDepths/Biomes/DepthsMapBackground";
+
+    public override string BestiaryIcon => "TheDepths/Biomes/DepthsBestiaryIcon";
 
     public override void SetStaticDefaults()
     {

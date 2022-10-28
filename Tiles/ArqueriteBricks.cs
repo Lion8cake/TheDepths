@@ -30,7 +30,7 @@ namespace TheDepths.Tiles
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
 			Player player = Main.LocalPlayer;
-			if ((int)Vector2.Distance(player.Center / 16f, new Vector2((float)i, (float)j)) <= 1)
+			if ((int)Vector2.Distance(player.Center / 16f, new Vector2((float)i, (float)j)) <= 1 && !player.dead)
 			{
 				player.AddBuff(ModContent.BuffType<MercuryPoisoning>(), Main.rand.Next(10, 20));
 			}

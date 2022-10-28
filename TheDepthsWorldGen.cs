@@ -32,7 +32,7 @@ namespace TheDepths
                 if (index3 != -1)
                 {
                     list.Insert(index3 + 1, new PassLegacy("The Depths: Hellforge Alt", new WorldGenLegacyMethod(Gemforge)));
-                    //list.Insert(index3 + 2, new PassLegacy("The Depths: Trees", new WorldGenLegacyMethod(TreeGen)));
+                    list.Insert(index3 + 2, new PassLegacy("The Depths: Trees", new WorldGenLegacyMethod(TreeGen)));
                 }
             }
         }

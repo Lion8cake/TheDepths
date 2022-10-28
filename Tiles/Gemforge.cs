@@ -17,7 +17,7 @@ namespace TheDepths.Tiles
 			Main.tileTable[Type] = false;
 			Main.tileLavaDeath[Type] = false;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
-			TileObjectData.newTile.CoordinateHeights = new[] { 18, 18 };
+			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			ModTranslation name = CreateMapEntryName();
@@ -26,6 +26,15 @@ namespace TheDepths.Tiles
 			DustType = ModContent.DustType<ArqueriteDust>();
             TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.Furnaces };
+			Main.tileLighted[Type] = true;
+			MinPick = 65;
+		}
+
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			r = 0.021f;
+			g = 0.17f;
+			b = 0.107f;
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) {
@@ -34,6 +43,11 @@ namespace TheDepths.Tiles
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
 			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, ModContent.ItemType<Items.Placeable.Gemforge>());
+		}
+
+		public override bool CanExplode(int i, int j)
+		{
+			return false;
 		}
 	}
 }

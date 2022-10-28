@@ -12,6 +12,8 @@ using TheDepths.Items.Banners;
 using Terraria.GameContent.ItemDropRules;
 using TheDepths.Items.Accessories;
 using AltLibrary.Common.Systems;
+using Terraria.GameContent.Bestiary;
+using TheDepths.Biomes;
 
 namespace TheDepths.NPCs
 {
@@ -38,8 +40,17 @@ namespace TheDepths.NPCs
 			AnimationType = NPCID.Crimslime;
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<FerroslimeBanner>();
+			SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
 		}
-		
+
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+		{
+			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+
+				new FlavorTextBestiaryInfoElement("This slime may appear spiky, but that's only its ferrofluid spiking up to come off as more threatening than it is.")
+			});
+		}
+
 		public override void OnHitPlayer(Player target, int damage, bool crit)
     	{
     		target.AddBuff(BuffID.Blackout, 180);

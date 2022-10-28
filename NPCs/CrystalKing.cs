@@ -15,6 +15,8 @@ using Terraria.GameContent.ItemDropRules;
 using TheDepths.Items.Armor;
 using TheDepths.Items.Placeable;
 using AltLibrary.Common.Systems;
+using Terraria.GameContent.Bestiary;
+using TheDepths.Biomes;
 
 namespace TheDepths.NPCs
 {
@@ -44,6 +46,15 @@ namespace TheDepths.NPCs
             NPC.aiStyle = -1;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<CrystalKingBanner>();
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+
+                new FlavorTextBestiaryInfoElement("A royal king of Geomancy, although unable to walk he can teleport like most other mages.")
+            });
         }
 
         public override void FindFrame(int frameHeight)

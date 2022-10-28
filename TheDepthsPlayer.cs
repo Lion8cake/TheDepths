@@ -48,7 +48,7 @@ namespace TheDepths
                 Filters.Scene["HeatDistortion"].Deactivate();
                 if (Filters.Scene["HeatDistortion"].Active)
           	    {
-           	        Filters.Scene["HeatDistortion"].Deactivate();
+                    Filters.Scene["HeatDistortion"].Deactivate();
 		        }
        	    }
         }
@@ -80,9 +80,11 @@ namespace TheDepths
 
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
+            Player player = Main.LocalPlayer;
+
             if (merPoison)
             {
-                if (Main.rand.NextBool(4) && drawInfo.shadow == 0f)
+                if (Main.rand.NextBool(4) && drawInfo.shadow == 0f && !player.dead)
                 {
                     int dust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, ModContent.DustType<MercuryFire>(), Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default(Color), 3f);
                     Main.dust[dust].noGravity = true;
@@ -93,7 +95,7 @@ namespace TheDepths
             }
             if (slowWater)
             {
-                if (Main.rand.NextBool(4) && drawInfo.shadow == 0f)
+                if (Main.rand.NextBool(4) && drawInfo.shadow == 0f && !player.dead)
                 {
                     int dust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, ModContent.DustType<SlowingWaterFire>(), Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default(Color), 3f);
                     Main.dust[dust].noGravity = true;
@@ -104,7 +106,7 @@ namespace TheDepths
             }
             if (merBoiling)
             {
-                if (Main.rand.NextBool(4) && drawInfo.shadow == 0f)
+                if (Main.rand.NextBool(4) && drawInfo.shadow == 0f && !player.dead)
                 {
                     int dust = Dust.NewDust(drawInfo.Position - new Vector2(2f, 2f), Player.width + 4, Player.height + 4, ModContent.DustType<MercuryFire>(), Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default(Color), 3f);
                     Main.dust[dust].noGravity = true;

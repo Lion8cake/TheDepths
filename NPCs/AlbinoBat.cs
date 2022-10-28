@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TheDepths.Items.Banners;
 using AltLibrary.Common.Systems;
+using TheDepths.Biomes;
+using Terraria.GameContent.Bestiary;
 
 namespace TheDepths.NPCs
 {
@@ -18,6 +20,14 @@ namespace TheDepths.NPCs
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Albino Bat");
 			Main.npcFrameCount[NPC.type] = 4;
+
+			var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			{
+				Position = new Vector2(0f, -20f),
+				PortraitPositionXOverride = 0f,
+				PortraitPositionYOverride = -40f
+			};
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
 		}
 
 		public override void SetDefaults() {
@@ -36,6 +46,15 @@ namespace TheDepths.NPCs
 			AnimationType = NPCID.GiantBat;
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<AlbinoBatBanner>();
+			SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
+		}
+
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+		{
+			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+
+				new FlavorTextBestiaryInfoElement("A victum of a rare pigment mutation this bat roams the deeper cavern system to blend in with the surrounding mercury in order to survive")
+			});
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)

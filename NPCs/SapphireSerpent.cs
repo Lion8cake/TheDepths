@@ -17,6 +17,8 @@ using TheDepths.Items.Weapons;
 using TheDepths.Items.Accessories;
 using Terraria.DataStructures;
 using AltLibrary.Common.Systems;
+using Terraria.GameContent.Bestiary;
+using TheDepths.Biomes;
 
 namespace TheDepths.NPCs
 {
@@ -24,6 +26,18 @@ namespace TheDepths.NPCs
 	{
 
 		public override string Texture => "TheDepths/NPCs/SapphireSerpentHead";
+
+        public override void SetStaticDefaults()
+        {
+            var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            {
+                CustomTexturePath = "TheDepths/NPCs/SapphireSerpent_Bestiary",
+                Position = new Vector2(0f, 0f),
+                PortraitPositionXOverride = 0f,
+                PortraitPositionYOverride = 12f
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
+        }
 
         public override void SetDefaults()
         {
@@ -45,8 +59,17 @@ namespace TheDepths.NPCs
             Banner = NPC.type;
             Banner = NPC.type;
 			BannerItem = ModContent.ItemType<SapphireSerpentBanner>();
+            SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
         }
-		
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+
+                new FlavorTextBestiaryInfoElement("A stone and sapphire serpent with water flowing through its veins. It carries a shovel like no other.")
+            });
+        }
+
         public override void Init()
         {
             base.Init();
@@ -74,6 +97,15 @@ namespace TheDepths.NPCs
     {
         public override string Texture => "TheDepths/NPCs/SapphireSerpentBody";
 
+        public override void SetStaticDefaults()
+        {
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                Hide = true
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+        }
+
         public override void SetDefaults()
         {
             NPC.width = 30;
@@ -99,6 +131,15 @@ namespace TheDepths.NPCs
     internal class SapphireSerpentTail : DepthsWorm
     {
         public override string Texture => "TheDepths/NPCs/SapphireSerpentTail";
+
+        public override void SetStaticDefaults()
+        {
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            {
+                Hide = true
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
+        }
 
         public override void SetDefaults()
         {			

@@ -15,6 +15,8 @@ using TheDepths.Items.Armor;
 using TheDepths.Items.Weapons;
 using TheDepths.Items.Accessories;
 using AltLibrary.Common.Systems;
+using Terraria.GameContent.Bestiary;
+using TheDepths.Biomes;
 
 namespace TheDepths.NPCs
 {
@@ -42,6 +44,15 @@ namespace TheDepths.NPCs
 			AnimationType = NPCID.ChaosElemental;
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<GeomancerBanner>();
+			SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
+		}
+
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+		{
+			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+
+				new FlavorTextBestiaryInfoElement("Loyal cult members well-practiced in geomancy. Legends have it that they worship a living shadow-flame being")
+			});
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

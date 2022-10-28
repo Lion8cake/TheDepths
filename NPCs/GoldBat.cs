@@ -11,6 +11,8 @@ using Microsoft.Xna.Framework.Graphics;
 using TheDepths.Items.Banners;
 using Terraria.GameContent.ItemDropRules;
 using AltLibrary.Common.Systems;
+using Terraria.GameContent.Bestiary;
+using TheDepths.Biomes;
 
 namespace TheDepths.NPCs
 {
@@ -19,6 +21,14 @@ namespace TheDepths.NPCs
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Gold Bat");
 			Main.npcFrameCount[NPC.type] = 4;
+
+			var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			{
+				Position = new Vector2(0f, -20f),
+				PortraitPositionXOverride = 0f,
+				PortraitPositionYOverride = -40f
+			};
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
 		}
 
 		public override void SetDefaults() {
@@ -37,6 +47,15 @@ namespace TheDepths.NPCs
 			AnimationType = NPCID.GiantBat;
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<GoldBatBanner>();
+			SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
+		}
+
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+		{
+			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+
+				new FlavorTextBestiaryInfoElement("A rare bat in the depths that was cursed by the geomancers to be a gem-like creature. Despite their name they are actually the same color as topaz.")
+			});
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)

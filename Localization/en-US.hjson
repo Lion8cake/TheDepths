@@ -1,0 +1,10 @@
+Mods: {
+	TheDepths: {
+		GameTips: {
+			DepthsTip0: "An unknown friendly NPC wonders the Depths as a crystal of their former self. If only there were a way to purify them . . ."
+			DepthsTip1: "If you dig deep enough in the right world, you might end up in The Depths!"
+			DepthsTip2: "Defeat the Shadowstone giant Chasme to change the world forever. Using a Ruby Relic at a Gemforge might summon her..."
+			DepthsTip3: "Aquerite is super poisonus, craft a crystal skull to be immue to its poisoning."
+		}
+	}
+}
