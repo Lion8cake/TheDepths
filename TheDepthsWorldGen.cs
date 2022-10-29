@@ -89,7 +89,7 @@ namespace TheDepths
                 for (int index = 0; index < (int)(Main.maxTilesX * Main.maxTilesY * 0.0008); ++index)
                     WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY), WorldGen.genRand.Next(4, 9), WorldGen.genRand.Next(5, 9), TileType<Shalestone>(), false, 0.0f, 0.0f, false, true);
                 Gems();
-                //AddDepthHouses();
+                AddDepthHouses();
             }
 
             void Gems()
@@ -174,13 +174,13 @@ namespace TheDepths
             }
         }
 
-        /*public static void AddDepthHouses()
+        public static void AddDepthHouses()
         {
             int minValue = (int)(Main.maxTilesX * 0.25);
             for (int i = minValue; i < Main.maxTilesX - minValue; ++i)
             {
                 int j = Main.maxTilesY - 40;
-                while (Main.tile[i, j].HasTile || Main.tile[i, j].LiquidAmount > 0)
+                while (Main.tile[i, j].HasTile || Main.tile[i, j].LiquidType > 0)
                     --j;
                 if (Main.tile[i, j + 1].HasTile)
                 {
@@ -743,22 +743,25 @@ namespace TheDepths
                                 Main.tile[index3, index4].LiquidAmount = 0;
                                 if (index3 == numArray1[index1] || index3 == numArray2[index1] || (index4 == numArray3[index2] || index4 == numArray4[index2]))
                                 {
+                                    WorldGen.KillTile(index3, index4, false, false, false);
                                     if (tileType != 77)
                                     {
                                         if (tileType == 76)
                                             Main.tile[index3, index4].TileType = (ushort)TileType<ArqueriteBricks>();
                                         else
                                             if (tileType == 75)
-                                                Main.tile[index3, index4].TileType = (ushort)TileType<QuartzBricks>();
-                                            else
-                                                Main.tile[index3, index4].TileType = tileType;
+                                            Main.tile[index3, index4].TileType = (ushort)TileType<QuartzBricks>();
+                                        else
+                                            Main.tile[index3, index4].TileType = tileType;
                                     }
                                     else
                                         Main.tile[index3, index4].TileType = (ushort)TileType<Gemforge>();
+                                    WorldGen.KillTile(index3, index4, false, false, false);
                                 }
                                 else
                                 {
                                     Main.tile[index3, index4].WallType = wallType;
+                                    WorldGen.KillTile(index3, index4, false, false, false);
                                 }
                             }
                         }
@@ -785,6 +788,9 @@ namespace TheDepths
                     if (flagArray2[index2])
                     {
                         flag3 = false;
+                        WorldGen.KillTile(numArray2[index1], numArray4[index2] - 1, false, false, false);
+                        WorldGen.KillTile(numArray2[index1], numArray4[index2] - 1, false, false, false);
+                        WorldGen.KillTile(numArray2[index1], numArray4[index2] - 1, false, false, false);
                         Main.tile[numArray2[index1], numArray4[index2] - 1].WallType = wallType;
                         Main.tile[numArray2[index1], numArray4[index2] - 2].WallType = wallType;
                         Main.tile[numArray2[index1], numArray4[index2] - 3].WallType = wallType;
@@ -806,12 +812,16 @@ namespace TheDepths
                                 num3 = WorldGen.genRand.Next(numArray1[index1] + 2, numArray2[index1] - 1);
                             for (int i1 = num3; i1 <= num4; ++i1)
                             {
-                                //WorldGen.PlaceTile(i1, numArray3[index2], TileType<QuartzPlatform>(), true, true, -1);
+                                WorldGen.KillTile(i1, numArray3[index2], false, false, false);
+                                WorldGen.PlaceTile(i1, numArray3[index2], TileType<QuartzPlatform>(), true, true, -1);
                                 Main.tile[i1, numArray3[index2]].WallType = wallType;
                             }
                         }
                         if (index1 < 4 && flagArray1[index1 + 1, index2] && WorldGen.genRand.Next(3) == 0)
                         {
+                            WorldGen.KillTile(numArray2[index1], numArray4[index2] - 1, false, false, false);
+                            WorldGen.KillTile(numArray2[index1], numArray4[index2] - 1, false, false, false);
+                            WorldGen.KillTile(numArray2[index1], numArray4[index2] - 1, false, false, false);
                             Main.tile[numArray2[index1], numArray4[index2] - 1].WallType = wallType;
                             Main.tile[numArray2[index1], numArray4[index2] - 2].WallType = wallType;
                             Main.tile[numArray2[index1], numArray4[index2] - 3].WallType = wallType;
@@ -839,7 +849,7 @@ namespace TheDepths
                     {
                         if (flagArray2[index2])
                         {
-                            if (!Main.tile[numArray1[index1] - 1, numArray4[index2] - 1].HasTile && !Main.tile[numArray1[index1] - 1, numArray4[index2] - 2].HasTile && (!Main.tile[numArray1[index1] - 1, numArray4[index2] - 3].HasTile && Main.tile[numArray1[index1] - 1, numArray4[index2] - 1].LiquidAmount == 0) && Main.tile[numArray1[index1] - 1, numArray4[index2] - 2].LiquidAmount == 0 && Main.tile[numArray1[index1] - 1, numArray4[index2] - 3].LiquidAmount == 0)
+                            if (!Main.tile[numArray1[index1] - 1, numArray4[index2] - 1].HasTile && !Main.tile[numArray1[index1] - 1, numArray4[index2] - 2].HasTile && (!Main.tile[numArray1[index1] - 1, numArray4[index2] - 3].HasTile && Main.tile[numArray1[index1] - 1, numArray4[index2] - 1].LiquidType == 0) && Main.tile[numArray1[index1] - 1, numArray4[index2] - 2].LiquidType == 0 && Main.tile[numArray1[index1] - 1, numArray4[index2] - 3].LiquidType == 0)
                                 flag3 = true;
                             else
                                 flagArray2[index2] = false;
@@ -851,6 +861,9 @@ namespace TheDepths
                         if (flagArray2[index2])
                         {
                             flag3 = false;
+                            WorldGen.KillTile(numArray1[index1], numArray4[index2] - 1, false, false, false);
+                            WorldGen.KillTile(numArray1[index1], numArray4[index2] - 1, false, false, false);
+                            WorldGen.KillTile(numArray1[index1], numArray4[index2] - 1, false, false, false);
                             WorldGen.PlaceTile(numArray1[index1], numArray4[index2] - 1, TileType<QuartzDoorClosed>(), true, false, -1);
                         }
                     }
@@ -876,7 +889,7 @@ namespace TheDepths
                     {
                         if (flagArray2[index2])
                         {
-                            if (!Main.tile[numArray2[index1] + 1, numArray4[index2] - 1].HasTile && !Main.tile[numArray2[index1] + 1, numArray4[index2] - 2].HasTile && (!Main.tile[numArray2[index1] + 1, numArray4[index2] - 3].HasTile && (int)Main.tile[numArray2[index1] + 1, numArray4[index2] - 1].LiquidAmount == 0) && ((int)Main.tile[numArray2[index1] + 1, numArray4[index2] - 2].LiquidAmount == 0 && (int)Main.tile[numArray2[index1] + 1, numArray4[index2] - 3].LiquidAmount == 0))
+                            if (!Main.tile[numArray2[index1] + 1, numArray4[index2] - 1].HasTile && !Main.tile[numArray2[index1] + 1, numArray4[index2] - 2].HasTile && (!Main.tile[numArray2[index1] + 1, numArray4[index2] - 3].HasTile && (int)Main.tile[numArray2[index1] + 1, numArray4[index2] - 1].LiquidType == 0) && ((int)Main.tile[numArray2[index1] + 1, numArray4[index2] - 2].LiquidType == 0 && (int)Main.tile[numArray2[index1] + 1, numArray4[index2] - 3].LiquidType == 0))
                                 flag3 = true;
                             else
                                 flagArray2[index2] = false;
@@ -888,6 +901,9 @@ namespace TheDepths
                         if (flagArray2[index2])
                         {
                             flag3 = false;
+                            WorldGen.KillTile(numArray2[index1], numArray4[index2] - 1, false, false, false);
+                            WorldGen.KillTile(numArray2[index1], numArray4[index2] - 1, false, false, false);
+                            WorldGen.KillTile(numArray2[index1], numArray4[index2] - 1, false, false, false);
                             WorldGen.PlaceTile(numArray2[index1], numArray4[index2] - 1, TileType<QuartzDoorClosed>(), true, false, -1);
                         }
                     }
@@ -920,14 +936,15 @@ namespace TheDepths
                                 num3 = WorldGen.genRand.Next(numArray1[index2] + 2, numArray2[index2] - 1);
                             for (int index3 = num3; index3 <= num4; ++index3)
                             {
-                                if (Main.tile[index3, numArray3[index1] - 1].HasTile || Main.tile[index3, numArray3[index1] - 1].LiquidAmount > 0)
+                                if (Main.tile[index3, numArray3[index1] - 1].HasTile || Main.tile[index3, numArray3[index1] - 1].LiquidType > 0)
                                     flag3 = false;
                             }
                             if (flag3)
                             {
                                 for (int i1 = num3; i1 <= num4; ++i1)
                                 {
-                                    //WorldGen.PlaceTile(i1, numArray3[index1], TileType<QuartzPlatform>(), true, true, -1);
+                                    WorldGen.KillTile(i1, numArray3[index1], false, false, false);
+                                    WorldGen.PlaceTile(i1, numArray3[index1], TileType<QuartzPlatform>(), true, true, -1);
                                 }
                             }
                             flag3 = false;
@@ -936,9 +953,9 @@ namespace TheDepths
                     break;
                 }
             }
-        }*/
-		
-	    public static void TreeGen(GenerationProgress progress, GameConfiguration configuration)
+        }
+
+        public static void TreeGen(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = "Petrifying Trees";
             progress.Set(0.0f);

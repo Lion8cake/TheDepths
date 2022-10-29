@@ -10,6 +10,7 @@ using TheDepths.Tiles;
 using Terraria.GameContent;
 using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
+using TheDepths;
 
 namespace TheDepths
 {
@@ -17,7 +18,7 @@ namespace TheDepths
     {
         public override Color NameColor => new(27, 29, 33);
 
-        public override Asset<Texture2D>[] AltUnderworldBackgrounds => TextureAssets.Underworld;
+        public override Asset<Texture2D>[] AltUnderworldBackgrounds => TheDepths.texture;
 		public override Color AltUnderworldColor => new(27, 29, 33);
 
 		public override void SetStaticDefaults()
