@@ -1,6 +1,7 @@
 using Terraria.ID;
 using TheDepths.Tiles;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Placeable
 {
@@ -8,6 +9,7 @@ namespace TheDepths.Items.Placeable
 	{
 		public override void SetStaticDefaults()
 		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
 		}
 
 		public override void SetDefaults()

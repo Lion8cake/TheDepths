@@ -1,5 +1,6 @@
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Placeable
 {
@@ -7,6 +8,7 @@ namespace TheDepths.Items.Placeable
 	{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Music Box (Depths)");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults() {

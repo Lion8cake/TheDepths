@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Accessories
 {
@@ -12,7 +13,8 @@ namespace TheDepths.Items.Accessories
 	public class SilverSlippers : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Provides the ability to walk on water\nGrants immunity to Mercury Poisoning and Boiling");
+			Tooltip.SetDefault("Provides the ability to walk on water, honey & lava\nGrants immunity to mercury poisoning and radiation");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults() {
@@ -28,6 +30,7 @@ namespace TheDepths.Items.Accessories
 			player.waterWalk = true;
 			player.buffImmune[ModContent.BuffType<MercuryBoiling>()] = true;
 			player.fireWalk = true;
+			//Make player take less damage to mercury debuffs
 		}
 		
 		public override void AddRecipes()

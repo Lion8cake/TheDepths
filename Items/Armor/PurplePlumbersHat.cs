@@ -2,6 +2,7 @@ using TheDepths.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Armor
 {
@@ -10,6 +11,7 @@ namespace TheDepths.Items.Armor
 	{ 
 	    public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Purple Plumber's Hat");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		
 		public override void SetDefaults() {

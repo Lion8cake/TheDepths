@@ -1,11 +1,16 @@
 using TheDepths.Items.Placeable;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Placeable
 {
 	public class Shalestone : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+		}
 
 		public override void SetDefaults()
 		{

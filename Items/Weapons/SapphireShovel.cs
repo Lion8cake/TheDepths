@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheDepths.Projectiles;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Weapons
 {
@@ -12,6 +13,7 @@ namespace TheDepths.Items.Weapons
 	{
 		public override void SetStaticDefaults() {
 			Tooltip.SetDefault("Disables enemies for a few seconds.");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults() {

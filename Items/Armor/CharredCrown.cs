@@ -2,6 +2,7 @@ using TheDepths.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Armor
 {
@@ -9,7 +10,8 @@ namespace TheDepths.Items.Armor
 	public class CharredCrown : ModItem
 	{
 		public override void SetStaticDefaults() {
-		Tooltip.SetDefault("18% Increased Magic Damage");
+			Tooltip.SetDefault("18% Increased Magic Damage");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults() {

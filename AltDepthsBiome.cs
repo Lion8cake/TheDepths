@@ -29,7 +29,7 @@ namespace TheDepths
             BiomeOre = ModContent.TileType<ArqueriteOre>();
 
             DisplayName.SetDefault("Depths");
-            Description.SetDefault("A hot gem filled cave deep below the regular caverns that has liquid mercury and quartz");
+            Description.SetDefault("A deeper below cave with almost freezing in tempratures where liquid mercury fills the reagon");
             GenPassName.SetDefault("Creating depths...");
         }
 

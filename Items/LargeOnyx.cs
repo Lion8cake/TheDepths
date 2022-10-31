@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using TheDepths.Items.Placeable;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items
 {
@@ -13,6 +14,7 @@ namespace TheDepths.Items
         {
             DisplayName.SetDefault("Large Onyx");
             Tooltip.SetDefault("For Capture the Gem. It drops when you die");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()

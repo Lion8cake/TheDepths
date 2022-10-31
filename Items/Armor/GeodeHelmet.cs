@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using TheDepths.Items.Placeable;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Armor
 {
@@ -15,8 +16,9 @@ namespace TheDepths.Items.Armor
 		public int timer;
 		
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Incressed maximum amount of minions");
+			Tooltip.SetDefault("Incressed maximum amount of minions by 1");
 			ArmorIDs.Head.Sets.DrawHead[Item.headSlot] = false;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults() {
@@ -60,8 +62,14 @@ namespace TheDepths.Items.Armor
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 2);
+			recipe.AddIngredient(ItemID.TissueSample, 5);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
+			Recipe recipe2 = CreateRecipe();
+			recipe2.AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 2);
+			recipe2.AddIngredient(ItemID.ShadowScale, 5);
+			recipe2.AddTile(TileID.Anvils);
+			recipe2.Register();
 		}
 	}
 }

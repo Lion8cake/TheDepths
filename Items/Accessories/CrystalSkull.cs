@@ -5,13 +5,15 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Accessories
 {
 	public class CrystalSkull : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Grants immunity to Mercury Poisoning");
+			Tooltip.SetDefault("Grants immunity to Mercury Radiation");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults() {

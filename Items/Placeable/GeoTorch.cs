@@ -3,11 +3,16 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Placeable
 {
 	public class GeoTorch : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+		}
 
 		public override void SetDefaults() {
 			Item.width = 10;

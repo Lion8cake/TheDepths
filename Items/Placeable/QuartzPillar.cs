@@ -2,11 +2,17 @@ using Terraria;
 using TheDepths.Items.Placeable;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Placeable
 {
 	public class QuartzPillar : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+		}
+
 		public override void SetDefaults()
 		{
 			Item.useStyle = ItemUseStyleID.Swing;

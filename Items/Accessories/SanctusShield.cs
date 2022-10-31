@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using TheDepths.Buffs;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Accessories
 {
@@ -17,7 +18,8 @@ namespace TheDepths.Items.Accessories
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Sanctus Shield");
-			Tooltip.SetDefault("Provides immunity to most debuffs\nProvides Knockback and Mercury Poisoning immunity");
+			Tooltip.SetDefault("Grants immunity to knockback and mercury radiation \nGrants immunity to most debuffs");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults()

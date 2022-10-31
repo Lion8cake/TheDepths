@@ -1,4 +1,5 @@
 ﻿using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheDepths.Tiles;
@@ -10,6 +11,7 @@ namespace TheDepths.Items.Placeable
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Onyx Gem Lock");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 
         public override void SetDefaults()

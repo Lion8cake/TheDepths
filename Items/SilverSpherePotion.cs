@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,13 +11,14 @@ namespace TheDepths.Items
         {
 		    DisplayName.SetDefault("Silver Sphere Potion");
             Tooltip.SetDefault("Four Silver Spheres summon around you");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
         }
 
         public override void SetDefaults()
         {
             Item.width = 20;
             Item.height = 26;
-            Item.useStyle = ItemUseStyleID.EatFood;
+            Item.useStyle = ItemUseStyleID.DrinkLiquid;
             Item.useAnimation = 15;
             Item.useTime = 15;
             Item.useTurn = true;

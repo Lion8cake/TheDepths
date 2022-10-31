@@ -1,10 +1,16 @@
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Placeable
 {
 	public class ShadowShrubSeeds : ModItem
 	{
+		public override void SetStaticDefaults()
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+		}
+
 		public override void SetDefaults() {
 			Item.autoReuse = true;
 			Item.useTurn = true;

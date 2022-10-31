@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Armor
 {
@@ -20,6 +21,7 @@ namespace TheDepths.Items.Armor
 			Tooltip.SetDefault("20% decreased mana usage"
 				+ "\nIncreases maximum mana by 60");
 			ArmorIDs.Body.Sets.HidesHands[Item.bodySlot] = false;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		
 		public override void SetDefaults() {

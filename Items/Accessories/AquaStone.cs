@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Accessories
 {
@@ -12,6 +13,7 @@ namespace TheDepths.Items.Accessories
 	{
 		public override void SetStaticDefaults() {
 			Tooltip.SetDefault("Inflicts freezing water on attack");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults() {

@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheDepths.Items.Placeable;
@@ -9,6 +10,7 @@ namespace TheDepths.Items.Weapons
 	{
 		public override void SetStaticDefaults() {
 			Tooltip.SetDefault("3 bursts of crystals are shot out in random directions apon impact");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
 		}
 
 		public override void SetDefaults() {

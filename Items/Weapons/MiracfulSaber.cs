@@ -4,6 +4,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -31,6 +32,7 @@ There are 8 weapon modes in total
 [c/DFE6EE:Diamond Mode]: Blade becomes so shiny, so it begins to shoot with sparkles!
 [c/D58E30:Amber Mode]: Shoots with amber snakes those able to deal colossal damage
 [c/393940:Onyx Mode]: Shoots 5 onyx blasters");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults()

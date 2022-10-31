@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items
 {
@@ -12,6 +13,7 @@ namespace TheDepths.Items
 	{
 		public override void SetStaticDefaults() {
 			Tooltip.SetDefault("'Do you hear something?'");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
 		}
 
 		public override void SetDefaults() {

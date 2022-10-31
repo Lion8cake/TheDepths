@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using TheDepths.Items.Placeable;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Armor
 {
@@ -10,7 +11,8 @@ namespace TheDepths.Items.Armor
 	public class GeodeLeggings : ModItem
 	{
 		public override void SetStaticDefaults() {
-		Tooltip.SetDefault("Incressed maximum amount of minions");
+			Tooltip.SetDefault("Incressed maximum amount of minions by 1");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults() {
@@ -24,13 +26,19 @@ namespace TheDepths.Items.Armor
 		public override void UpdateEquip(Player player) {
 		player.maxMinions++;
 		}
-		
-		public override void AddRecipes() 
+
+		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 2);
+			recipe.AddIngredient(ItemID.TissueSample, 5);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
+			Recipe recipe2 = CreateRecipe();
+			recipe2.AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 2);
+			recipe2.AddIngredient(ItemID.ShadowScale, 5);
+			recipe2.AddTile(TileID.Anvils);
+			recipe2.Register();
 		}
 	}
 }

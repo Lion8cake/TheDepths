@@ -17,7 +17,7 @@ namespace TheDepths.Buffs
 	public class MercuryPoisoning : ModBuff
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mercury Poisoning");
+			DisplayName.SetDefault("Mercury Radiation");
 			Description.SetDefault("Losing life and slowed movement");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;

@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,13 +11,14 @@ namespace TheDepths.Items
         {
 		    DisplayName.SetDefault("Crystal Skin Potion");
             Tooltip.SetDefault("Provides immunity to Quicksilver");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
         }
 
         public override void SetDefaults()
         {
             Item.width = 20;
             Item.height = 26;
-            Item.useStyle = ItemUseStyleID.EatFood;
+            Item.useStyle = ItemUseStyleID.DrinkLiquid;
             Item.useAnimation = 15;
             Item.useTime = 15;
             Item.useTurn = true;
@@ -26,7 +28,7 @@ namespace TheDepths.Items
             Item.rare = ItemRarityID.Blue;
             Item.value = 1000;
             Item.buffType = ModContent.BuffType<Buffs.CrystalSkin>();
-            Item.buffTime = 14400;
+            Item.buffTime = 21600;
         }
 		
 		public override void AddRecipes()

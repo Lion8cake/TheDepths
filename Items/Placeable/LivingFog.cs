@@ -1,4 +1,5 @@
 ﻿using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -10,6 +11,7 @@ namespace TheDepths.Items.Placeable
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Living Fog Block");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
         }
 
         public override void SetDefaults()

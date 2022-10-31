@@ -1,3 +1,4 @@
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,6 +9,7 @@ namespace TheDepths.Items.Placeable
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Quartz Work Bench");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults()

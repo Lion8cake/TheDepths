@@ -2,6 +2,7 @@ using TheDepths.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Armor
 {
@@ -9,7 +10,8 @@ namespace TheDepths.Items.Armor
 	public class CrystalCrown : ModItem
 	{
 		public override void SetStaticDefaults() {
-		Tooltip.SetDefault("20% Increased Magic Critical Strike Chance");
+			Tooltip.SetDefault("20% Increased Magic Critical Strike Chance");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults() {

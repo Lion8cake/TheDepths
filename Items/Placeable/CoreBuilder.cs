@@ -8,6 +8,7 @@ using TheDepths.Items.Armor;
 using TheDepths.Items.Accessories;
 using TheDepths.Items.Banners;
 using TheDepths.Tiles;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Placeable
 {
@@ -18,7 +19,8 @@ namespace TheDepths.Items.Placeable
             DisplayName.SetDefault("Core Builder");
             Tooltip.SetDefault("Allows you to convert hell materials into their depths alternatives and vice versa\n" +
                 "'A legendary forge that is rumored to be the reason how the core of each world is created'");
-        }
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+		}
 
 		public override void SetDefaults()
 		{

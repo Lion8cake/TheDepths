@@ -2,6 +2,7 @@ using TheDepths.Tiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Armor
 {
@@ -12,6 +13,7 @@ namespace TheDepths.Items.Armor
 			base.SetStaticDefaults();
 			DisplayName.SetDefault("Mercury Chestplate");
 			Tooltip.SetDefault("8% Increased Melee Damage");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults() {

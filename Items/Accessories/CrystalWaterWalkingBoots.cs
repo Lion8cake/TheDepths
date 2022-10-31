@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Accessories
 {
@@ -12,7 +13,8 @@ namespace TheDepths.Items.Accessories
 	public class CrystalWaterWalkingBoots : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Provides the ability to walk on water\nGrants immunity to Mercury Poisoning");
+			Tooltip.SetDefault("Provides the ability to walk on water & honey\nGrants immunity to Mercury Poisoning");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults() {
@@ -26,6 +28,8 @@ namespace TheDepths.Items.Accessories
 		public override void UpdateAccessory(Player player, bool hideVisual) {
             player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
 			player.waterWalk = true;
+			player.waterWalk2 = true;
+			player.fireWalk = false;
 		}
 		
 		public override void AddRecipes()

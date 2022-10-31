@@ -1,5 +1,6 @@
 using AltLibrary.Common.Systems;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Generation;
@@ -190,18 +191,26 @@ namespace TheDepths
 					if (Main.tile[i, num2 + 1].HasTile)
 					{
 						ushort num3 = (ushort)WorldGen.genRand.Next(75, 77);
-						byte wallType = 13;
-						if (WorldGen.genRand.Next(5) > 0)
-						{
-							num3 = 75;
-						}
+						ushort wallType = (ushort)WallType<QuartzBrickWallUnsafe>();
 						if (num3 == 75)
 						{
-							wallType = 14;
+							num3 = (ushort)TileType<ArqueriteBricks>();
+						}
+						if (num3 == 76)
+						{
+							num3 = (ushort)TileType<QuartzBricks>();
+						}
+						if (num3 == TileType<QuartzBricks>())
+						{
+							wallType = (ushort)WallType<QuartzBrickWallUnsafe>();
 						}
 						if (WorldGen.getGoodWorldGen)
 						{
-							num3 = 76;
+							num3 = (ushort)TileType<ArqueriteBricks>();
+						}
+						if (num3 == (ushort)TileType<ArqueriteBricks>())
+						{
+							wallType = (ushort)WallType<ArqueriteBrickWallUnsafe>();
 						}
 						DepthFort(i, num2, num3, wallType);
 						i += WorldGen.genRand.Next(30, 130);
@@ -223,7 +232,7 @@ namespace TheDepths
 					num6++;
 					int num7 = WorldGen.genRand.Next((int)((double)Main.maxTilesX * 0.2), (int)((double)Main.maxTilesX * 0.8));
 					int num8 = WorldGen.genRand.Next(Main.maxTilesY - 300, Main.maxTilesY - 20);
-					if (Main.tile[num7, num8].HasTile && (Main.tile[num7, num8].TileType == 75 || Main.tile[num7, num8].TileType == 76))
+					if (Main.tile[num7, num8].HasTile && (Main.tile[num7, num8].TileType == TileType<QuartzBricks>() || Main.tile[num7, num8].TileType == TileType<ArqueriteBricks>()))
 					{
 						int num9 = 0;
 						if (Main.tile[num7 - 1, num8].WallType > 0)
@@ -250,7 +259,7 @@ namespace TheDepths
 							}
 							if (!flag2)
 							{
-								WorldGen.PlaceTile(num7 + num9, num8, 4, true, true, -1, 7);
+								WorldGen.PlaceTile(num7 + num9, num8, TileType<GeoTorch>(), true, true, -1);
 								flag = true;
 							}
 						}
@@ -290,7 +299,7 @@ namespace TheDepths
 						break;
 					}
 				}
-				if (num12 <= 100000 && (Main.tile[num13, num14].WallType == 13 || Main.tile[num13, num14].WallType == 14) && !Main.tile[num13, num14].HasTile)
+				if (num12 <= 100000 && (Main.tile[num13, num14].WallType == WallType<QuartzBrickWallUnsafe>() || Main.tile[num13, num14].WallType == WallType<ArqueriteBrickWallUnsafe>()) && !Main.tile[num13, num14].HasTile)
 				{
 					while (!WorldGen.SolidTile(num13, num14, false) && num14 < Main.maxTilesY - 20)
 					{
@@ -410,6 +419,8 @@ namespace TheDepths
 						{
 							num19 = -1;
 						}
+
+
 						if (num19 == 0)
 						{
 							WorldGen.PlaceTile(num18, num14, 14, true, false, -1, style2);
@@ -767,7 +778,7 @@ namespace TheDepths
 			}
 		}
 
-		public static void DepthFort(int i, int j, ushort tileType = 75, byte wallType = 14)
+		public static void DepthFort(int i, int j, ushort tileType = 75, ushort wallType = 14)
 		{
 			int[] array14 = new int[5];
 			int[] array13 = new int[5];
@@ -936,6 +947,49 @@ namespace TheDepths
 					}
 				}
 			}
+			for (int index1 = 0; index1 < 5; ++index1)
+			{
+				for (int index2 = 0; index2 < 10; ++index2)
+				{
+					if (array10[index1, index2] && (array12[index2] < Main.maxTilesY - 200 || array11[index2] > Main.maxTilesY - 20))
+						array10[index1, index2] = false;
+				}
+			}
+			for (int index1 = 0; index1 < 5; ++index1)
+			{
+				for (int index2 = 0; index2 < 10; ++index2)
+				{
+					if (array10[index1, index2])
+					{
+						for (int index3 = array14[index1]; index3 <= array13[index1]; ++index3)
+						{
+							for (int index4 = array12[index2]; index4 <= array11[index2]; ++index4)
+							{
+								if (index3 == array14[index1] || index3 == array13[index1] || (index4 == array12[index2] || index4 == array11[index2]))
+								{
+									if (tileType != 77)
+									{
+										if (tileType == 76)
+											Main.tile[index3, index4].TileType = (ushort)TileType<ArqueriteBricks>();
+										else
+											if (tileType == 75)
+											Main.tile[index3, index4].TileType = (ushort)TileType<QuartzBricks>();
+										else
+											Main.tile[index3, index4].TileType = tileType;
+									}
+									else
+										Main.tile[index3, index4].TileType = (ushort)TileType<Gemforge>();
+								}
+								else
+								{
+									Main.tile[index3, index4].WallType = wallType;
+								}
+							}
+						}
+					}
+				}
+			}
+
 			for (int num54 = num60; num54 <= num59; num54++)
 			{
 				array10[2, num54] = true;
@@ -1025,7 +1079,7 @@ namespace TheDepths
 						tile.WallType = wallType;
 						tile = Main.tile[array13[num51], array11[num27] - 3];
 						tile.WallType = wallType;
-						WorldGen.PlaceTile(array13[num51], array11[num27] - 1, 10, true, false, -1, style3);
+						WorldGen.PlaceTile(array13[num51], array11[num27] - 1, TileType<QuartzDoorClosed>(), true, false, -1);
 					}
 				}
 			}
@@ -1059,7 +1113,7 @@ namespace TheDepths
 							{
 								tile = Main.tile[num29, array12[num33]];
 								tile.HasTile = (false);
-								WorldGen.PlaceTile(num29, array12[num33], 19, true, true, -1, style2);
+								WorldGen.PlaceTile(num29, array12[num33], TileType<QuartzPlatform>(), true, true, -1);
 								tile = Main.tile[num29, array12[num33]];
 								tile.WallType = wallType;
 							}
@@ -1078,7 +1132,7 @@ namespace TheDepths
 							tile.WallType = wallType;
 							tile = Main.tile[array13[num50], array11[num33] - 3];
 							tile.WallType = wallType;
-							WorldGen.PlaceTile(array13[num50], array11[num33] - 1, 10, true, false, -1, style3);
+							WorldGen.PlaceTile(array13[num50], array11[num33] - 1, TileType<QuartzDoorClosed>(), true, false, -1);
 						}
 					}
 				}
@@ -1143,7 +1197,7 @@ namespace TheDepths
 							tile.HasTile = (false);
 							tile = Main.tile[array14[num49], array11[num34] - 3];
 							tile.HasTile = (false);
-							WorldGen.PlaceTile(array14[num49], array11[num34] - 1, 10, true, false, -1, style3);
+							WorldGen.PlaceTile(array14[num49], array11[num34] - 1, TileType<QuartzDoorClosed>(), true, false, -1);
 						}
 					}
 					break;
@@ -1217,7 +1271,7 @@ namespace TheDepths
 							tile.HasTile = (false);
 							tile = Main.tile[array13[num46], array11[num35] - 3];
 							tile.HasTile = (false);
-							WorldGen.PlaceTile(array13[num46], array11[num35] - 1, 10, true, false, -1, style3);
+							WorldGen.PlaceTile(array13[num46], array11[num35] - 1, TileType<QuartzDoorClosed>(), true, false, -1);
 						}
 					}
 					break;
@@ -1294,7 +1348,7 @@ namespace TheDepths
 						{
 							tile = Main.tile[num36, array12[num43]];
 							tile.HasTile = false;
-							WorldGen.PlaceTile(num36, array12[num43], 19, true, true, -1, style2);
+							WorldGen.PlaceTile(num36, array12[num43], TileType<QuartzPlatform>(), true, true, -1);
 						}
 					}
 					flag5 = false;

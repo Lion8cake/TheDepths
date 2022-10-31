@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Accessories
 {
@@ -16,6 +17,7 @@ namespace TheDepths.Items.Accessories
 		{
 			DisplayName.SetDefault("Lode Stone");
 			Tooltip.SetDefault("Increases item pickup range");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults()

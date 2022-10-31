@@ -4,12 +4,15 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheDepths.Dusts;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Weapons
 {
 	public class MercuryPickaxe : ModItem
 	{
-		public override void SetStaticDefaults() {
+		public override void SetStaticDefaults()
+		{
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults() {

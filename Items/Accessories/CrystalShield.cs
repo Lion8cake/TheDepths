@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using TheDepths.Buffs;
+using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Accessories
 {
@@ -17,7 +18,10 @@ namespace TheDepths.Items.Accessories
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Crystal Shield");
-			Tooltip.SetDefault("Increases damage redusction by 10% and provides knockback and mercury poisoning immunity");
+			Tooltip.SetDefault("Increases damage reduction by 10%" 
+				+"\nImmune to knockback"
+				+"\nImmune to mercury radiation");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults()
