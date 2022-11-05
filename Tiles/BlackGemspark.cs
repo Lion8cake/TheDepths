@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
+using TheDepths.Dusts;
 
 namespace TheDepths.Tiles
 {
@@ -11,7 +12,7 @@ namespace TheDepths.Tiles
 		{
 			Main.tileLighted[Type] = true;
 			Main.tileSolid[Type] = true;
-			DustType = Mod.Find<ModDust>("BlackGemsparkDust").Type;
+			DustType = ModContent.DustType<BlackGemsparkDust>();
 			AddMapEntry(new Color(22, 19, 28));
 			ItemDrop = ModContent.ItemType<Items.Placeable.BlackGemspark>();
 		}

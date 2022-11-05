@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using TheDepths.Dusts;
 
 namespace TheDepths.Tiles
 {
@@ -16,7 +17,7 @@ namespace TheDepths.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
 			Main.tileNoAttach[Type] = true;
-			DustType = Mod.Find<ModDust>("EmberDust").Type;
+            DustType = ModContent.DustType<EmberDust>();
             ItemDrop = ModContent.ItemType<Items.Placeable.Ember>();
             AddMapEntry(new Color(179, 79, 36));
         }

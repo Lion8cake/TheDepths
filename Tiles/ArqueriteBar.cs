@@ -4,6 +4,7 @@ using Terraria.DataStructures;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using TheDepths.Dusts;
 
 namespace TheDepths.Tiles
 {
@@ -20,7 +21,7 @@ namespace TheDepths.Tiles
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
-			DustType = Mod.Find<ModDust>("ArqueriteDust").Type;
+			DustType = ModContent.DustType<ArqueriteDust>();
 
 			AddMapEntry(new Color(71, 84, 105), Language.GetText("MapObject.MetalBar"));
 		}

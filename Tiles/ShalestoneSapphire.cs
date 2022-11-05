@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheDepths.Dusts;
 
 namespace TheDepths.Tiles
 {
@@ -13,7 +14,7 @@ namespace TheDepths.Tiles
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
 			ItemDrop = ItemID.Sapphire;
-			DustType = Mod.Find<ModDust>("ShaleDust").Type;
+			DustType = ModContent.DustType<ShaleDust>();
 			AddMapEntry(new Color(11, 34, 147));
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShaleBlock").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("Shalestone").Type] = true;

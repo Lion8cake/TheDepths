@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using TheDepths.Dusts;
 
 namespace TheDepths.Tiles
 {
@@ -28,7 +29,7 @@ namespace TheDepths.Tiles
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShalestoneSapphire").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShalestoneTopaz").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("OnyxShalestone").Type] = true;
-			DustType = Mod.Find<ModDust>("ShaleDust").Type;
+            DustType = ModContent.DustType<ShaleDust>();
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

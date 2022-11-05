@@ -3,6 +3,7 @@ using Terraria;
 using TheDepths.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheDepths.Dusts;
 
 namespace TheDepths.Tiles
 {
@@ -18,7 +19,7 @@ namespace TheDepths.Tiles
 			Main.tileMergeDirt[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			DustType = Mod.Find<ModDust>("ArqueriteDust").Type;
+			DustType = ModContent.DustType<ArqueriteDust>();
 			Main.tileMerge[Type][Mod.Find<ModTile>("Shalestone").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("Quartz").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShaleBlock").Type] = true;

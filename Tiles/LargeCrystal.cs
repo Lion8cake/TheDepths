@@ -6,6 +6,7 @@ using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using TheDepths.Dusts;
 
 namespace TheDepths.Tiles
 {
@@ -56,8 +57,8 @@ namespace TheDepths.Tiles
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Large Crystal");
 			AddMapEntry(new Color(255, 255, 255), name);
-			DustType = Mod.Find<ModDust>("QuartzCrystals").Type;
-            TileID.Sets.DisableSmartCursor[Type] = true;
+			DustType = ModContent.DustType<QuartzCrystals>();
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { Type };
 		}
 		

@@ -1,25 +1,24 @@
 =========================================
 The Depths (Alternate Hell)
 =========================================
-0.2.1 Version
+0.3.1 Version
+This mod uses altlib to better be able to be used with other alternate mods like the Confection
 
-Hello and welcome to the second mod we are working on to replace a vannilla biome in terraria. This time we are replacing the Underworld with the depths.
-The Depths is focused around Gems and murcury and was a concept done y snickerbobble in 2015. Currently this mod is in early public release so many features may be missing or there may be a few bugs.
+The Depths is an alternate version of the underworld similar to how crimson corruption works. It generates instead of the underworld to ive some of your worlds that bit of spice when starting a new playthrough.
+This mod is made by the same devs behind the confection mod, a mod similar to this one but for the hallow. This biome and most of its sprites and ideas come from Snickerbobble and her forum talking about her take on an alternate hell.
 
 We encourage people make new worlds as this mod adds world generation to new worlds that allows the new content to be accessed.
-
-This might be the last update for the 1.3 version so be on the look out for 1.4 version soon (but not that soon)
 =========================================
 Change Log
 =========================================
-Fixed Npcs not being immune to lava
-Changed main depths theme to be HBDeus's new theme instead of the old granite Tremor theme by Delicous saturn
+Fixed Major issue with multiplayer where the game would refuse to allow the depths to load which also caused altlib to stop function which forced other mods to not work as well.
 
 ==========================================
 -=Credits=-
 ==========================================
 Lion8cake -  The Main Dev behind the mod
 Basically, I am little fox - Creator of the World gen, large gems, Tiles and other fixes
-Ghast tear - World Creation UI
+Ghast tear - 1.4 World Creation UI
 Snickerbobble - The main concept creator
 HBDeus - For making the current Depths theme (thank you very much its very awesome :)!)
+Syntrin - For making the default depths underworld background

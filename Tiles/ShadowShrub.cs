@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
+using TheDepths.Dusts;
 
 namespace TheDepths.Tiles
 {
@@ -41,7 +42,7 @@ namespace TheDepths.Tiles
 			};
 
 			TileObjectData.addTile(Type);
-			DustType = Mod.Find<ModDust>("ShadowShrubDust").Type;
+			DustType = ModContent.DustType<ShadowShrubDust>();
 		}
 
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)

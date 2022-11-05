@@ -5,6 +5,7 @@ using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using TheDepths.Dusts;
 
 namespace TheDepths.Tiles
 {
@@ -63,7 +64,7 @@ namespace TheDepths.Tiles
 			AdjTiles = new int[]{ TileID.OpenDoor };
 			CloseDoorID = Mod.Find<ModTile>("QuartzDoorClosed").Type;
 			AddMapEntry(new Color(255, 255, 255), name);
-			DustType = Mod.Find<ModDust>("QuartzCrystals").Type;
+			DustType = ModContent.DustType<QuartzCrystals>();
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)

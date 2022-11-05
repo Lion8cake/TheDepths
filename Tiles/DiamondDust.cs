@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
+using TheDepths.Dusts;
 
 namespace TheDepths.Tiles
 {
@@ -20,7 +21,7 @@ namespace TheDepths.Tiles
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(223, 230, 238));
-			DustType = Mod.Find<ModDust>("DiamondCrystals").Type;
+			DustType = ModContent.DustType<DiamondCrystals>();
 			ItemDrop = ModContent.ItemType<Items.Placeable.DiamondDust>();
 			TileObjectData.newTile.Width = 1;
             TileObjectData.newTile.Height = 1;

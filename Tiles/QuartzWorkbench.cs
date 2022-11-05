@@ -4,6 +4,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using TheDepths.Dusts;
 
 namespace TheDepths.Tiles
 {
@@ -25,7 +26,7 @@ namespace TheDepths.Tiles
             TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[]{ TileID.WorkBenches };
 			AddMapEntry(new Color(255, 255, 255), name);
-			DustType = Mod.Find<ModDust>("QuartzCrystals").Type;
+			DustType = ModContent.DustType<QuartzCrystals>();
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)

@@ -5,6 +5,7 @@ using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using TheDepths.Dusts;
 
 namespace TheDepths.Tiles
 {
@@ -30,7 +31,7 @@ namespace TheDepths.Tiles
 			AddMapEntry(new Color(255, 255, 255), name);
             TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.Chairs };
-			DustType = Mod.Find<ModDust>("QuartzCrystals").Type;
+			DustType = ModContent.DustType<QuartzCrystals>();
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) {

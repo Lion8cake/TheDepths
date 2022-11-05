@@ -3,6 +3,7 @@ using Terraria;
 using TheDepths.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheDepths.Dusts;
 
 namespace TheDepths.Tiles
 {
@@ -27,7 +28,7 @@ namespace TheDepths.Tiles
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShalestoneSapphire").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShalestoneTopaz").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("OnyxShalestone").Type] = true;
-			DustType = Mod.Find<ModDust>("QuartzCrystals").Type;
+			DustType = ModContent.DustType<QuartzCrystals>();
 
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Quartz");
