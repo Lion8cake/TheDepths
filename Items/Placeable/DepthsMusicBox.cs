@@ -9,6 +9,7 @@ namespace TheDepths.Items.Placeable
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Music Box (Depths)");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Depths"), ModContent.ItemType<Placeable.DepthsMusicBox>(), ModContent.TileType<Tiles.DepthsMusicBox>());
 		}
 
 		public override void SetDefaults() {

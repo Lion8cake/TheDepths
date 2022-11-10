@@ -11,6 +11,8 @@ using Terraria.GameContent;
 using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
 using TheDepths;
+using Terraria.WorldBuilding;
+using Terraria.GameContent.Generation;
 
 namespace TheDepths
 {
@@ -31,6 +33,11 @@ namespace TheDepths
             DisplayName.SetDefault("Depths");
             Description.SetDefault("A deeper below cave with almost freezing in tempratures where liquid mercury fills the reagon");
             GenPassName.SetDefault("Creating depths...");
+        }
+
+        public override WorldGenLegacyMethod GetHellforgeGenerationPass()
+        {
+            return new(TheDepthsWorldGen.Gemforge);
         }
 
         public override string WorldIcon => "";
