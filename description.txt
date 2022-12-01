@@ -1,7 +1,7 @@
 =========================================
 The Depths (Alternate Hell)
 =========================================
-0.3.1 Version
+0.3.2 Version Dev Build 1
 This mod uses altlib to better be able to be used with other alternate mods like the Confection
 
 The Depths is an alternate version of the underworld similar to how crimson corruption works. It generates instead of the underworld to ive some of your worlds that bit of spice when starting a new playthrough.

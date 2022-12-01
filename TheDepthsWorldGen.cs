@@ -33,64 +33,53 @@ namespace TheDepths
 
                 if (index3 != -1)
                 {
-                    list.Insert(index3 + 1, new PassLegacy("The Depths: Hellforge Alt", new WorldGenLegacyMethod(Gemforge)));
+                    //list.Insert(index3 + 1, new PassLegacy("The Depths: Hellforge Alt", new WorldGenLegacyMethod(Gemforge)));
                     list.Insert(index3 + 2, new PassLegacy("The Depths: Trees", new WorldGenLegacyMethod(TreeGen)));
                 }
             }
         }
 
-        public static void Gemforge(GenerationProgress progress, GameConfiguration configuration)
+        private void Gemforge(GenerationProgress progress, GameConfiguration configuration)
         {
-			progress.Message = "Placing gemforges";
-			for (int i = 0; i < Main.maxTilesX / 200; i++)
-			{
-				float num4 = i / (Main.maxTilesX / 200);
-				progress.Set(num4);
-				bool flag = false;
-				int num = 0;
-				while (!flag)
-				{
-					int num2 = WorldGen.genRand.Next(1, Main.maxTilesX);
-					int num3 = WorldGen.genRand.Next(Main.maxTilesY - 250, Main.maxTilesY - 30);
-					try
-					{
-						if (Main.tile[num2, num3].WallType != WallType<ArqueriteBrickWallUnsafe>())
-						{
-							if (Main.tile[num2, num3].WallType != WallType<QuartzBrickWallUnsafe>())
-							{
-								continue;
-							}
-						}
-						while (!Main.tile[num2, num3].HasTile && num3 < Main.maxTilesY - 20)
-						{
-							num3++;
-						}
-						num3--;
-						WorldGen.PlaceTile(num2, num3, TileType<Gemforge>());
-						if (Main.tile[num2, num3].TileType == TileType<Gemforge>())
-						{
-							flag = true;
-						}
-						else
-						{
-							num++;
-							if (num >= 10000)
-							{
-								flag = true;
-							}
-						}
-					}
-					catch
-					{
-						num++;
-						if (num >= 10000)
-						{
-							flag = true;
-						}
-					}
-				}
-			}
-		}
+            progress.Message = "Placing gemforges";
+            for (int index1 = 0; index1 < Main.maxTilesX / 200; ++index1)
+            {
+                float num2 = index1 / (Main.maxTilesX / 200);
+                progress.Set(num2);
+                bool flag = false;
+                int num3 = 0;
+                while (!flag)
+                {
+                    int i = WorldGen.genRand.Next(1, Main.maxTilesX);
+                    int index2 = WorldGen.genRand.Next(Main.maxTilesY - 250, Main.maxTilesY - 30);
+                    try
+                    {
+                        if (Main.tile[i, index2].WallType != WallType<ArqueriteBrickWallUnsafe>())
+                        {
+                            if (Main.tile[i, index2].WallType != WallType<QuartzBrickWallUnsafe>())
+                                continue;
+                        }
+                        while (!Main.tile[i, index2].HasTile && index2 < Main.maxTilesY - 20)
+                            ++index2;
+                        int j = index2 - 1;
+                        WorldGen.PlaceTile(i, j, TileType<Gemforge>());
+                        if (Main.tile[i, j].TileType == TileType<Gemforge>())
+                        {
+                            flag = true;
+                        }
+                        else
+                        {
+                            ++num3;
+                            if (num3 >= 10000)
+                                flag = true;
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+        }
 
         private static void Depths(GenerationProgress progress, GameConfiguration configuration)
         {

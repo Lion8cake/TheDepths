@@ -24,7 +24,6 @@ namespace TheDepths
                 texture[i] = ModContent.Request<Texture2D>("TheDepths/Backgrounds/DepthsUnderworldBG_" + i);
             livingFireBlockList = new List<int> { 336, 340, 341, 342, 343, 344, ModContent.TileType<LivingFog>() };
             IL.Terraria.Main.DrawUnderworldBackgroudLayer += ILMainDrawUnderworldBackground;
-            IL.Terraria.Main.Update += ILWaterEvaporation;
             if (!Main.dedServ)
             {
                 EquipLoader.AddEquipTexture(this, "TheDepths/Items/Armor/OnyxRobe_Legs", EquipType.Legs, name: "OnyxRobe_Legs");
@@ -60,37 +59,6 @@ namespace TheDepths
                 return asset;
             });
             c.Emit(OpCodes.Stloc, asset);
-        }
-
-        private void ILWaterEvaporation(ILContext il)
-        {
-            ILCursor c = new(il);
-            try
-            {
-                int b = 0;
-                c.GotoNext(MoveType.After,
-                    i => i.MatchLdcI4(out _),
-                i => i.MatchStloc(out b),
-                i => i.MatchLdloca(b),
-                i => i.MatchCall(out _),
-                i => i.MatchLdindU1(),
-                i => i.MatchLdloc(b),
-                i => i.MatchBge(out _));
-
-                c.GotoNext(MoveType.After, i => i.MatchLdloc(b));
-
-                c.EmitDelegate((byte goingToEvaporateBye) =>
-                {
-                    if (WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
-                    {
-                        return 0;
-                    }
-                    return goingToEvaporateBy;
-                });
-            }
-            catch
-            {
-            }
         }
 
         public override void Unload()
