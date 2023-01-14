@@ -12,6 +12,7 @@ using TheDepths.Items.Banners;
 using AltLibrary.Common.Systems;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;
+using TheDepths.Dusts;
 
 namespace TheDepths.NPCs
 {
@@ -58,9 +59,25 @@ namespace TheDepths.NPCs
 		{
 			if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
 			{
-				return 1.5f;
+				return 1.75f;
 			}
 			return 0f;
+		}
+
+		public override void HitEffect(int hitDirection, double damage)
+		{
+			if (Main.netMode == NetmodeID.Server)
+			{
+				return;
+			}
+
+			if (NPC.life <= 0)
+			{
+				for (int i = 0; i < 10; i++)
+				{
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<ShaleDust>());
+				}
+			}
 		}
 	}
 }

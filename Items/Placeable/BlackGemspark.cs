@@ -28,7 +28,7 @@ namespace TheDepths.Items.Placeable
 		
 		public override void AddRecipes()
 		{
-			Recipe recipe = CreateRecipe();
+			Recipe recipe = CreateRecipe(20);
 			recipe.AddIngredient(ItemID.Glass, 20);
 			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Onyx>(), 1);
 			recipe.AddTile(TileID.WorkBenches);

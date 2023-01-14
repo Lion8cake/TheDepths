@@ -62,6 +62,24 @@ namespace TheDepths.NPCs
             SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
         }
 
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                return;
+            }
+
+            if (NPC.life <= 0)
+            {
+                var entitySource = NPC.GetSource_Death();
+
+                for (int i = 0; i < 1; i++)
+                {
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-1, 1), Main.rand.Next(-1, 1)), Mod.Find<ModGore>("SapphireSerpentHeadGore").Type);
+                }
+            }
+        }
+
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
@@ -87,7 +105,7 @@ namespace TheDepths.NPCs
         {
             if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
             {
-                return 1f;
+                return 0.95f;
             }
             return 0f;
         }
@@ -125,6 +143,23 @@ namespace TheDepths.NPCs
 			NPC.value = Item.buyPrice(0, 0, 12, 0);
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<Items.Banners.SapphireSerpentBanner>();
+        }
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                return;
+            }
+
+            if (NPC.life <= 0)
+            {
+                var entitySource = NPC.GetSource_Death();
+
+                for (int i = 0; i < 1; i++)
+                {
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-1, 1), Main.rand.Next(-1, 1)), Mod.Find<ModGore>("SapphireSerpentBodyGore").Type);
+                }
+            }
         }
     }
 
@@ -166,6 +201,24 @@ namespace TheDepths.NPCs
         {
             base.Init();
             tail = true;
+        }
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                return;
+            }
+
+            if (NPC.life <= 0)
+            {
+                var entitySource = NPC.GetSource_Death();
+
+                for (int i = 0; i < 1; i++)
+                {
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-1, 1), Main.rand.Next(-1, 1)), Mod.Find<ModGore>("SapphireSerpentTailGore").Type);
+                }
+            }
         }
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheDepths.Biomes;
 using TheDepths.Items;
 using TheDepths.Items.Placeable;
 
@@ -12,7 +13,7 @@ namespace TheDepths.NPCs
     {
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
-            if (WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<DepthsBiome>()) || WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
             {
                 pool.Remove(NPCID.Hellbat);
                 pool.Remove(NPCID.LavaSlime);

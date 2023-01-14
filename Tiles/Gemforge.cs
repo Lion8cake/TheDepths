@@ -5,13 +5,19 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
+using TheDepths.Items;
+using TheDepths.Projectiles.Chasme;
+using Terraria.GameContent.ObjectInteractions;
+using TheDepths.Buffs;
 
 namespace TheDepths.Tiles
 {
 	public class Gemforge : ModTile
 	{
+		public static int RubyRelicIsOnForge;
+
 		public override void SetStaticDefaults() {
-			Main.tileSolidTop[Type] = true;
+			Main.tileSolidTop[Type] = false;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileTable[Type] = false;
@@ -28,6 +34,20 @@ namespace TheDepths.Tiles
 			AdjTiles = new int[] { TileID.Furnaces };
 			Main.tileLighted[Type] = true;
 			MinPick = 65;
+			TileID.Sets.HasOutlines[Type] = true;
+		}
+
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
+		{
+			Player player = Main.LocalPlayer;
+			if (player.HeldItem.type == ModContent.ItemType<RubyRelic>() && Main.LocalPlayer.ZoneUnderworldHeight)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -49,5 +69,62 @@ namespace TheDepths.Tiles
 		{
 			return false;
 		}
-	}
+
+        public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
+        {
+			int x = i - Main.tile[i, j].TileFrameX / 18 % 6;
+			int y = j - Main.tile[i, j].TileFrameY / 18 % 4;
+			for (int m = x; m < x + 6; m++)
+			{
+				for (int n = y; n < y + 4; n++)
+				{
+					if (Main.tile[m, n].HasTile && Main.tile[m, n].TileType == Type)
+					{
+						if (RubyRelicIsOnForge == 1 && Main.tile[m, n].TileFrameX > 18 * 3)
+                        {
+                            Main.tile[m, n].TileFrameX -= (short)(18 * 3);
+                            Main.tile[m + 1, n].TileFrameX -= (short)(18 * 3);
+                            Main.tile[m - 1, n].TileFrameX -= (short)(18 * 3);
+                            Main.tile[m, n + 1].TileFrameX -= (short)(18 * 3);
+							Main.tile[m + 1, n + 1].TileFrameX -= (short)(18 * 3);
+							Main.tile[m - 1, n + 1].TileFrameX -= (short)(18 * 3);
+							RubyRelicIsOnForge = 0;
+						}
+					}
+				}
+			}
+		}
+
+        public override bool RightClick(int i, int j)
+		{
+			int x = i - Main.tile[i, j].TileFrameX / 18 % 3;
+			int y = j - Main.tile[i, j].TileFrameY / 18 % 2;
+			Player player = Main.LocalPlayer;
+			for (int m = x; m < x + 3; m++)
+			{
+				for (int n = y; n < y + 2; n++)
+				{
+					if (Main.tile[m, n].HasTile && Main.tile[m, n].TileType == Type)
+					{
+						if (Main.tile[m, n].TileFrameX < 18 * 3 && player.HeldItem.type == ModContent.ItemType<RubyRelic>() && Main.LocalPlayer.ZoneUnderworldHeight && !player.HasBuff(BuffID.Horrified) && !player.HasBuff(ModContent.BuffType<RelicsCurse>()))
+						{
+							Main.tile[m, n].TileFrameX += (short)(18 * 3);
+							Projectile.NewProjectile(new EntitySource_Misc(""), new Vector2(x, y).ToWorldCoordinates() + new Vector2(17, 24), Vector2.Zero, ModContent.ProjectileType<GemforgeExtraDusts>(), 0, 0f, Main.myPlayer);
+						}
+                    }
+                }
+            }
+            if (player.HeldItem.type == ModContent.ItemType<RubyRelic>() && Main.LocalPlayer.ZoneUnderworldHeight && !player.HasBuff(BuffID.Horrified) && !player.HasBuff(ModContent.BuffType<RelicsCurse>()))
+            {
+                player.HeldItem.stack -= 1;
+				Projectile.NewProjectile(new EntitySource_Misc(""), new Vector2(x, y).ToWorldCoordinates() + new Vector2(17, 24), Vector2.Zero, ModContent.ProjectileType<GemforgeCutscene>(), 0, 0f, Main.myPlayer);
+				//player.AddBuff(ModContent.BuffType<RelicsCurse>(), 301);
+			}
+			else if (Main.maxTilesY >= 210 && player.HeldItem.type == ModContent.ItemType<RubyRelic>())
+			{
+				player.Hurt(PlayerDeathReason.ByCustomReason("Gemforge"), 99999, 0);
+			}
+            return true;
+		}
+    }
 }

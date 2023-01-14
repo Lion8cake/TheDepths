@@ -26,20 +26,20 @@ namespace TheDepths
                 int index2 = list.FindIndex(genpass => genpass.Name.Equals("Underworld"));
                 int index3 = list.FindIndex(genpass => genpass.Name.Equals("Hellforge"));
 
-                if (index2 != -1)
+				if (index2 != -1)
                 {
                     list.Insert(index2 + 1, new PassLegacy("The Depths: Underworld Alt", new WorldGenLegacyMethod(Depths)));
                 }
 
                 if (index3 != -1)
                 {
-                    //list.Insert(index3 + 1, new PassLegacy("The Depths: Hellforge Alt", new WorldGenLegacyMethod(Gemforge)));
+                    //list.Insert(index3 + 1, new PassLegacy("The Depths: Hellforge Alt", new WorldGenLegacyMethod(Gemforge))); //old generation of the gemforges, we use altlibs hellforge generation instead
                     list.Insert(index3 + 2, new PassLegacy("The Depths: Trees", new WorldGenLegacyMethod(TreeGen)));
                 }
-            }
+			}
         }
 
-        private void Gemforge(GenerationProgress progress, GameConfiguration configuration)
+        public static void Gemforge(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = "Placing gemforges";
             for (int index1 = 0; index1 < Main.maxTilesX / 200; ++index1)
@@ -81,10 +81,12 @@ namespace TheDepths
             }
         }
 
-        private static void Depths(GenerationProgress progress, GameConfiguration configuration)
+		private static void Depths(GenerationProgress progress, GameConfiguration configuration)
         {
             {
-                for (int index = 0; index < (int)(Main.maxTilesX * Main.maxTilesY * 0.0008) / 2; ++index)
+				for (int index = 0; index < (int)(Main.maxTilesX * Main.maxTilesY * 0.0008) / 3; ++index)
+					WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY), WorldGen.genRand.Next(2, 4), WorldGen.genRand.Next(3, 4), TileType<OnyxShalestone>(), false, 0.0f, 0.0f, false, true);
+				for (int index = 0; index < (int)(Main.maxTilesX * Main.maxTilesY * 0.0008) / 2; ++index)
                     WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY), WorldGen.genRand.Next(1, 6), WorldGen.genRand.Next(2, 6), TileType<Quartz>(), false, 0.0f, 0.0f, false, true);
                 /*for (int index = 0; index < (int)(Main.maxTilesX * Main.maxTilesY * 0.0008); ++index)
                     WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY), WorldGen.genRand.Next(2, 7), WorldGen.genRand.Next(3, 7), TileType<ArqueriteOre>(), false, 0.0f, 0.0f, false, true);*/

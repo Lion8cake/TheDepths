@@ -30,12 +30,13 @@ namespace TheDepths.Items.Accessories
 			player.waterWalk = true;
 			player.buffImmune[ModContent.BuffType<MercuryBoiling>()] = true;
 			player.fireWalk = true;
-			//Make player take less damage to mercury debuffs
+			player.GetModPlayer<TheDepthsPlayer>().stoneRose = true;
 		}
 		
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.StoneRose>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.AmalgamAmulet>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.CrystalWaterWalkingBoots>(), 1);
 			recipe.AddTile(114);

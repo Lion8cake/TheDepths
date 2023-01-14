@@ -25,5 +25,12 @@ namespace TheDepths.Items.Placeable
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<Tiles.QuartzPlatform>();
 		}
+
+		public override void AddRecipes()
+		{
+			Recipe recipe = CreateRecipe(2);
+			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.QuartzBricks>(), 1);
+			recipe.Register();
+		}
 	}
 }

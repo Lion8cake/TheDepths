@@ -19,12 +19,12 @@ using Terraria.Utilities;
 using static Terraria.ModLoader.ModContent;
 using AltLibrary.Common.Systems;
 using TheDepths.Biomes;
+using System;
 
 namespace TheDepths
 {
     public class TheDepthsPlayer : ModPlayer
     {
-        private int gemCount;
         public BitsByte largeGems;
         public BitsByte ownedLargeGems;
         public BitsByte hasLargeGems;
@@ -35,6 +35,8 @@ namespace TheDepths
         public bool aStone;
         public bool lodeStone;
         public bool noHit;
+        public bool stoneRose;
+        public int tremblingDepthsScreenshakeTimer;
 
         public bool geodeCrystal;
         public bool livingShadow;
@@ -42,15 +44,15 @@ namespace TheDepths
 
         public override void PreUpdate()
         {
-            Point tileCoordinates1 = Player.Center.ToTileCoordinates();
+            /*Point tileCoordinates1 = Player.Center.ToTileCoordinates();
            	if (tileCoordinates1.Y > Main.maxTilesY - 320 && Main.UseHeatDistortion && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
             {
-                Filters.Scene["HeatDistortion"].Deactivate();
-                if (Filters.Scene["HeatDistortion"].Active)
+                Filters.Scene["FilterHeatDistortion"].Deactivate();
+                if (Filters.Scene["FilterHeatDistortion"].Active)
           	    {
-                    Filters.Scene["HeatDistortion"].Deactivate();
+                    Filters.Scene["FilterHeatDistortion"].Deactivate();
 		        }
-       	    }
+       	    }*/
         }
 
         public override void ResetEffects()
@@ -62,6 +64,7 @@ namespace TheDepths
             merImbue = false;
             aStone = false;
             lodeStone = false;
+            stoneRose = false;
 
             geodeCrystal = false;
             livingShadow = false;
@@ -76,6 +79,14 @@ namespace TheDepths
                 }
             }
             noHit = false;
+        }
+
+        public override void ModifyScreenPosition()
+        {
+            if (tremblingDepthsScreenshakeTimer > 0)
+            {
+                Main.screenPosition += Main.rand.NextVector2Circular(20, 20);
+            }
         }
 
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
@@ -165,7 +176,14 @@ namespace TheDepths
 
         public override void PostUpdate()
         {
-            if (lodeStone) Player.defaultItemGrabRange = 107;
+            if (lodeStone)
+            {
+                Player.defaultItemGrabRange = 107;
+            }
+            if (tremblingDepthsScreenshakeTimer > 0)
+            {
+                tremblingDepthsScreenshakeTimer--;
+            }
         }
 
         public override void PostUpdateEquips()
@@ -193,6 +211,21 @@ namespace TheDepths
                 }
             }
         }
+
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
+        {
+            if (damageSource.SourceCustomReason == "Gemforge")
+            {
+                WeightedRandom<string> deathmessage = new();
+                deathmessage.Add(Language.GetTextValue(Player.name + " tried to summon a cult in pure light", Player.name));
+                deathmessage.Add(Language.GetTextValue(Player.name + " moved the gemforge away from its home", Player.name));
+                deathmessage.Add(Language.GetTextValue(Player.name + " tried to burned a relic on the surface", Player.name));
+                damageSource = PlayerDeathReason.ByCustomReason(deathmessage);
+                return true;
+            }
+            return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource, ref cooldownCounter);
+        }
+
 
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
         {

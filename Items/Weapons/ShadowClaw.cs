@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
+using Terraria.DataStructures;
 
 namespace TheDepths.Items.Weapons
 {
@@ -22,8 +23,8 @@ namespace TheDepths.Items.Weapons
 			Item.mana = 10;
 			Item.width = 40;
 			Item.height = 40;
-			Item.useTime = 15;
-			Item.useAnimation = 15;
+			Item.useTime = 28;
+			Item.useAnimation = 28;
 			Item.useStyle = 1;
 			Item.noMelee = true;
 			Item.knockBack = 5;
@@ -31,8 +32,8 @@ namespace TheDepths.Items.Weapons
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item21;
 			Item.autoReuse = false;
-			Item.shoot = ModContent.ProjectileType<ShadowClawMiddle>();
-			Item.shootSpeed = 1;
+			Item.shoot = ModContent.ProjectileType<ShadowClawBottom>();
+			Item.shootSpeed = 32f;
 		}
-	}
+    }
 }

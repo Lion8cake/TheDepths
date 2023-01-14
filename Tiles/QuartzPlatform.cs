@@ -16,7 +16,7 @@ namespace TheDepths.Tiles
 			Main.tileSolid[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileTable[Type] = true;
-			Main.tileLavaDeath[Type] = true;
+			Main.tileLavaDeath[Type] = false;
 			TileID.Sets.Platforms[Type] = true;
 			TileObjectData.newTile.CoordinateHeights = new[] { 16 };
 			TileObjectData.newTile.CoordinateWidth = 16;

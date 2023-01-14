@@ -38,7 +38,7 @@ namespace TheDepths.NPCs
 			NPC.defense = 18;
 			NPC.lifeMax = 220;
 			NPC.HitSound = SoundID.NPCHit1;
-			NPC.DeathSound = SoundID.NPCDeath2;
+			NPC.DeathSound = SoundID.NPCDeath4;
 			NPC.value = 400f;
 			NPC.knockBackResist = 0.5f;
 			NPC.lavaImmune = true;
@@ -67,7 +67,7 @@ namespace TheDepths.NPCs
 		{
 			if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
 			{
-				return 1.5f;
+				return 1.25f;
 			}
 			return 0f;
 		}
@@ -75,6 +75,24 @@ namespace TheDepths.NPCs
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
 			npcLoot.Add(ItemDropRule.Common(ItemID.Emerald, 50, 1, 1));
+		}
+
+		public override void HitEffect(int hitDirection, double damage)
+		{
+			if (Main.netMode == NetmodeID.Server)
+			{
+				return;
+			}
+
+			if (NPC.life <= 0)
+			{
+				var entitySource = NPC.GetSource_Death();
+
+				for (int i = 0; i < 1; i++)
+				{
+					Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("ShadowBatGore").Type);
+				}
+			}
 		}
 	}
 }

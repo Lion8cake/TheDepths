@@ -11,6 +11,7 @@ using Terraria.GameContent;
 using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
 using TheDepths;
+using Terraria.GameContent.Generation;
 
 namespace TheDepths
 {
@@ -38,5 +39,10 @@ namespace TheDepths
         public override string LowerTexture => "TheDepths/Assets/Loading/Depths_Outer_Lower";
 
         public override string IconSmall => "TheDepths/Biomes/DepthsBestiaryIcon";
+
+        public override WorldGenLegacyMethod GetHellforgeGenerationPass()
+        {
+            return new(TheDepthsWorldGen.Gemforge);
+        }
     }
 }

@@ -2,6 +2,7 @@ using TheDepths.Items.Placeable;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
+using Terraria;
 
 namespace TheDepths.Items.Placeable
 {
@@ -10,6 +11,7 @@ namespace TheDepths.Items.Placeable
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			ItemID.Sets.ExtractinatorMode[Item.type] = Item.type;
 		}
 
 		public override void SetDefaults()
@@ -24,6 +26,14 @@ namespace TheDepths.Items.Placeable
 			Item.createTile = ModContent.TileType<Tiles.Shalestone>();
 			Item.width = 12;
 			Item.height = 12;
+		}
+
+		public override void ExtractinatorUse(ref int resultType, ref int resultStack)
+		{
+			if (Main.rand.NextBool(15) && Main.hardMode)
+			{
+				resultType = ModContent.ItemType<Onyx>();
+			}
 		}
 	}
 }

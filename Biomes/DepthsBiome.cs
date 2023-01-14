@@ -27,6 +27,6 @@ public class DepthsBiome : ModBiome
 
     public override bool IsBiomeActive(Player player)
     {
-        return player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome";
+        return Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210 && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome";
     }
 }

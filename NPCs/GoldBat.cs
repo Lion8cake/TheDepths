@@ -38,9 +38,9 @@ namespace TheDepths.NPCs
 			NPC.defense = 10;
 			NPC.lifeMax = 320;
 			NPC.HitSound = SoundID.NPCHit1;
-			NPC.DeathSound = SoundID.NPCDeath2;
+			NPC.DeathSound = SoundID.NPCDeath4;
 			NPC.lavaImmune = true;
-			NPC.value = 60f;
+			NPC.value = 10000f;
 			NPC.knockBackResist = 0.5f;
 			NPC.aiStyle = 14;
 			AIType = NPCID.GiantBat;
@@ -62,7 +62,7 @@ namespace TheDepths.NPCs
 		{
 			if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
 			{
-				return 1.5f;
+				return 0.05f;
 			}
 			return 0f;
 		}
@@ -70,6 +70,24 @@ namespace TheDepths.NPCs
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
 			npcLoot.Add(ItemDropRule.Common(ItemID.Topaz, 10, 1, 1));
+		}
+
+		public override void HitEffect(int hitDirection, double damage)
+		{
+			if (Main.netMode == NetmodeID.Server)
+			{
+				return;
+			}
+
+			if (NPC.life <= 0)
+			{
+				var entitySource = NPC.GetSource_Death();
+
+				for (int i = 0; i < 1; i++)
+				{
+					Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("GoldBatGore").Type);
+				}
+			}
 		}
 	}
 }

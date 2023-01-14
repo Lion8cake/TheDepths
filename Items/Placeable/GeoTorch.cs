@@ -52,7 +52,7 @@ namespace TheDepths.Items.Placeable
 		
 		public override void AddRecipes()
 		{
-			Recipe recipe = CreateRecipe();
+			Recipe recipe = CreateRecipe(3);
 			recipe.AddIngredient(ItemID.Torch, 3);
 			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 1);
 			recipe.Register();

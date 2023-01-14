@@ -14,7 +14,7 @@ using TheDepths.Items;
 using TheDepths.Pets.ShadePet;
 using AltLibrary.Common.Systems;
 using Terraria.GameContent.Bestiary;
-using TheDepths.Biomes;
+using TheDepths.Biomes;   
 
 namespace TheDepths.NPCs
 {
@@ -63,7 +63,7 @@ namespace TheDepths.NPCs
         {
             if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
             {
-                return 1.5f;
+                return 1.3f;
             }
             return 0f;
         }
@@ -71,7 +71,27 @@ namespace TheDepths.NPCs
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShadePetItem>(), 500, 1, 1));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RubyRelic>(), 50, 1, 1));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RubyRelic>(), 4, 1, 1));
+        }
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                return;
+            }
+
+            if (NPC.life <= 0)
+            {
+                var entitySource = NPC.GetSource_Death();
+
+                for (int i = 0; i < 3; i++)
+                {
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3)), 63);
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3)), 62);
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3)), 61);
+                }
+            }
         }
     }
 }

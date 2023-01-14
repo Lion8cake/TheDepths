@@ -29,13 +29,12 @@ namespace TheDepths.NPCs
 
 		public override void SetDefaults() {
 			NPC.width = 40;
-			NPC.height = 80;
+			NPC.height = 46;
 			NPC.damage = 40;
 			NPC.defense = 16;
 			NPC.lifeMax = 85;
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath6;
-			//Sound 3 and 4 
 			NPC.lavaImmune = true;
 			NPC.value = 700f;
 			NPC.knockBackResist = 0.5f;
@@ -68,27 +67,27 @@ namespace TheDepths.NPCs
 
 				for (int i = 0; i < 3; i++)
 				{
-					Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), 13);
-					Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), 12);
-					Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), 11);
+					Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3)), 63);
+					Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3)), 62);
+					Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3)), 61);
 				}
 			}
 		}
 
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PurplePlumbersHat>(), 5000, 1, 1));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Geode>(), 1, 1, 1));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShadowSphere>(), 50, 1, 1));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LivingShadowStaff>(), 50, 1, 1));
-			//npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<StoneRose>(), 50, 1, 1));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PurplePlumbersHat>(), 5000));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Geode>(), 1));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShadowSphere>(), 50));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LivingShadowStaff>(), 50));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<StoneRose>(), 50));
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 			if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
 			{
-				return 1.5f;
+				return 1f;
 			}
 			return 0f;
 		}

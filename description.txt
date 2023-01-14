@@ -1,7 +1,7 @@
 =========================================
 The Depths (Alternate Hell)
 =========================================
-0.3.2 Version Dev Build 1
+0.4
 This mod uses altlib to better be able to be used with other alternate mods like the Confection
 
 The Depths is an alternate version of the underworld similar to how crimson corruption works. It generates instead of the underworld to ive some of your worlds that bit of spice when starting a new playthrough.
@@ -11,14 +11,38 @@ We encourage people make new worlds as this mod adds world generation to new wor
 =========================================
 Change Log
 =========================================
-Fixed Major issue with multiplayer where the game would refuse to allow the depths to load which also caused altlib to stop function which forced other mods to not work as well.
+Added gemforge and ruby relic cutscene for when you place a relic in the underworld/depths
+updated quartz door texture
+fixed sound when breaking most bricks
+updated textures to match 1.4.4.9
+added some unobtainabble new items
+made ruby relic now drop 25% of the time instead of 5% from shades
+changed rates of how npcs spawn
+added gores
+fixed coins dropped from npcs
+fixed hit, death and other sounds from npcs
+Added recipe to quartz platform
+fixed quartz platform being destroyed by lava
+fixed hitboxes with several npcs
+Added stone rose
+added terraspark boots crafting recipe
+changed silver slipper crafting and accessory effects
+fixed torch recipes
+added onyx generation
+changed the map colour and name for shalestone onyx
+added map names to the shalestone gems
+fixed amount given when making black gemspark blocks
+made shaletone extractable and give onyx in hardmode
+gemforges now nolonger have solid tops
+Changed how high the depths registers at
+made the rare occurance for hell enemies to spawn in depths worlds rarer but not fixed
 
 ==========================================
 -=Credits=-
 ==========================================
 Lion8cake -  The Main Dev behind the mod
 Basically, I am little fox - Creator of the World gen, large gems, Tiles and other fixes
-Ghast tear - 1.4 World Creation UI
+Ghast tear - 1.3 World Creation UI
 Snickerbobble - The main concept creator
 HBDeus - For making the current Depths theme (thank you very much its very awesome :)!)
 Syntrin - For making the default depths underworld background

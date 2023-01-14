@@ -20,6 +20,7 @@ namespace TheDepths.Tiles
             ItemDrop = ModContent.ItemType<Items.Placeable.ArqueriteBricks>();
             AddMapEntry(new Color(71, 84, 105));
 			DustType = ModContent.DustType<ArqueriteDust>();
+            HitSound = SoundID.Tink;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

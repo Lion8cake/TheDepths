@@ -20,6 +20,7 @@ namespace TheDepths.Tiles
             ItemDrop = ModContent.ItemType<Items.Placeable.ShaleBricks>();
             AddMapEntry(new Color(138, 158, 168));
 			DustType = ModContent.DustType<ShaleDust>();
+            HitSound = SoundID.Tink;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

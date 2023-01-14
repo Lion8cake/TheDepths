@@ -19,6 +19,7 @@ namespace TheDepths.Tiles
             ItemDrop = ModContent.ItemType<Items.Placeable.QuartzPillar>();
             AddMapEntry(new Color(138, 158, 168));
 			DustType = ModContent.DustType<QuartzCrystals>();
+            HitSound = SoundID.Tink;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

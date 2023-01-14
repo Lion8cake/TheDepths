@@ -199,7 +199,7 @@ namespace TheDepths.NPCs
         {
             if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
             {
-                return 1.5f;
+                return 1f;
             }
             return 0f;
         }
@@ -209,6 +209,25 @@ namespace TheDepths.NPCs
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ember>(), 1, 1, 3));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CharredCrown>(), 100, 1, 1));
             npcLoot.Add(ItemDropRule.Common(ItemID.Ruby, 50, 1, 1));
+        }
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                return;
+            }
+
+            if (NPC.life <= 0)
+            {
+                var entitySource = NPC.GetSource_Death();
+
+                for (int i = 0; i < 1; i++)
+                {
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("KingCoalGore1").Type);
+                    Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("KingCoalGore2").Type);
+                }
+            }
         }
     }
 }

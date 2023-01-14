@@ -12,6 +12,7 @@ using TheDepths.Items.Banners;
 using AltLibrary.Common.Systems;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;
+using TheDepths.Dusts;
 
 namespace TheDepths.NPCs
 {
@@ -30,7 +31,7 @@ namespace TheDepths.NPCs
 			NPC.lifeMax = 800;
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath1;
-			NPC.value = 250000f;
+			NPC.value = 1500000f;
 			NPC.knockBackResist = 0.5f;
 			NPC.aiStyle = 1;
 			AIType = NPCID.Crimslime;
@@ -53,9 +54,25 @@ namespace TheDepths.NPCs
 		{
 			if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
 			{
-				return 1.5f;
+				return 0.1f;
 			}
 			return 0f;
+		}
+
+		public override void HitEffect(int hitDirection, double damage)
+		{
+			if (Main.netMode == NetmodeID.Server)
+			{
+				return;
+			}
+
+			if (NPC.life <= 0)
+			{
+				for (int i = 0; i < 10; i++)
+				{
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<MercurySparkleDust>());
+				}
+			}
 		}
 	}
 }

@@ -15,7 +15,9 @@ namespace TheDepths.Tiles
 			Main.tileLighted[Type] = false;
 			ItemDrop = ItemID.Ruby;
 			DustType = ModContent.DustType<ShaleDust>();
-			AddMapEntry(new Color(147, 11, 11));
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Ruby");
+			AddMapEntry(new Color(147, 11, 11), name);
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShaleBlock").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("Shalestone").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShalestoneDiamond").Type] = true;

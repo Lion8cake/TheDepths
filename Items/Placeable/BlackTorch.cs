@@ -52,8 +52,8 @@ namespace TheDepths.Items.Placeable
 		
 		public override void AddRecipes()
 		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.Torch, 3);
+			Recipe recipe = CreateRecipe(10);
+			recipe.AddIngredient(ItemID.Torch, 10);
 			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Onyx>(), 1);
 			recipe.Register();
 		}

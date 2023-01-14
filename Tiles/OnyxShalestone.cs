@@ -16,7 +16,8 @@ namespace TheDepths.Tiles
 			Main.tileBlockLight[Type] = true;
 
 			ModTranslation name = CreateMapEntryName();
-			AddMapEntry(new Color(0, 0, 0));
+			name.SetDefault("Onyx");
+			AddMapEntry(new Color(22, 26, 25), name);
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShaleBlock").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("Shalestone").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShalestoneAmethyst").Type] = true;

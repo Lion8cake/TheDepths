@@ -14,6 +14,7 @@ using TheDepths.Items.Accessories;
 using AltLibrary.Common.Systems;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;
+using TheDepths.Dusts;
 
 namespace TheDepths.NPCs
 {
@@ -33,7 +34,7 @@ namespace TheDepths.NPCs
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.lavaImmune = true;
-			NPC.value = 60f;
+			NPC.value = 2000f;
 			NPC.knockBackResist = 0.5f;
 			NPC.aiStyle = 1;
 			AIType = NPCID.Crimslime;
@@ -60,7 +61,7 @@ namespace TheDepths.NPCs
         {
 			if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
             {
-				return 1.5f;
+				return 1.3f;
             }
             return 0f;
         }
@@ -69,6 +70,22 @@ namespace TheDepths.NPCs
 		{
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LodeStone>(), 33, 1, 1));
 			npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 5, 15));
+		}
+
+		public override void HitEffect(int hitDirection, double damage)
+		{
+			if (Main.netMode == NetmodeID.Server)
+			{
+				return;
+			}
+
+			if (NPC.life <= 0)
+			{
+				for (int i = 0; i < 10; i++)
+				{
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<ShaleDust>());
+				}
+			}
 		}
 	}
 }

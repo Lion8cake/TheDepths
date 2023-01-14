@@ -31,13 +31,13 @@ namespace TheDepths.NPCs
 		}
 
 		public override void SetDefaults() {
-			NPC.width = 18;
-			NPC.height = 24;
+			NPC.width = 26;
+			NPC.height = 16;
 			NPC.damage = 24;
 			NPC.defense = 9;
 			NPC.lifeMax = 52;
 			NPC.HitSound = SoundID.NPCHit1;
-			NPC.DeathSound = SoundID.NPCDeath2;
+			NPC.DeathSound = SoundID.NPCDeath4;
 			NPC.value = 120f;
 			NPC.knockBackResist = 0.5f;
 			NPC.aiStyle = 14;
@@ -61,9 +61,27 @@ namespace TheDepths.NPCs
 		{
 			if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
 			{
-				return 1.5f;
+				return 1.25f;
 			}
 			return 0f;
+		}
+
+		public override void HitEffect(int hitDirection, double damage)
+		{
+			if (Main.netMode == NetmodeID.Server)
+			{
+				return;
+			}
+
+			if (NPC.life <= 0)
+			{
+				var entitySource = NPC.GetSource_Death();
+
+				for (int i = 0; i < 1; i++)
+				{
+					Gore.NewGore(entitySource, NPC.position, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("AlbinoBatGore").Type);
+				}
+			}
 		}
 	}
 }

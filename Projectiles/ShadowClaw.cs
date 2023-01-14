@@ -13,8 +13,8 @@ namespace TheDepths.Projectiles
 	{
 		public override void SetDefaults()
 		{
-			Projectile.width = 34;
-			Projectile.height = 44;
+			Projectile.width = 32;
+			Projectile.height = 32;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Magic;
 			Projectile.penetrate = 1;
@@ -28,7 +28,7 @@ namespace TheDepths.Projectiles
 			Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 1.57f;
 			if (Projectile.ai[0] == 0f)
 			{
-				Projectile.alpha -= 50;
+				Projectile.alpha -= 75; //Speed, less in number, less in speed
 				if (Projectile.alpha > 0)
 				{
 					return;
@@ -38,12 +38,12 @@ namespace TheDepths.Projectiles
 				if (Projectile.ai[1] == 0f)
 				{
 					Projectile.ai[1] += 1f;
-					Projectile.position += Projectile.velocity * 1f;
+					//Projectile.position += Projectile.velocity * 1f;
 				}
 				if (Main.myPlayer == Projectile.owner)
 				{
 					int type = Projectile.type;
-					if (Projectile.ai[1] >= 10f)
+					if (Projectile.ai[1] >= 8f) //float controles how long the proj is
 					{
 						type = ModContent.ProjectileType<ShadowClawTip>();
 					}
@@ -58,11 +58,11 @@ namespace TheDepths.Projectiles
 			{
 				for (int num82 = 0; num82 < 3; num82++)
 				{
-					Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 18, Projectile.velocity.X * 0.025f, Projectile.velocity.Y * 0.025f, 170, default(Color), 1.2f);
+					Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<ShadowDust>(), Projectile.velocity.X * 0.025f, Projectile.velocity.Y * 0.025f, 170, default(Color), 1.2f);
 				}
-				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 14, 0f, 0f, 170, default(Color), 1.1f);
+				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<ShadowDust>(), 0f, 0f, 170, default(Color), 1.1f);
 			}
-			Projectile.alpha += 5;
+			Projectile.alpha += 4;
 			if (Projectile.alpha >= 255)
 			{
 				Projectile.Kill();
@@ -103,7 +103,6 @@ namespace TheDepths.Projectiles
 				if (Projectile.ai[1] == 0f)
 				{
 					Projectile.ai[1] += 1f;
-					Projectile.position += Projectile.velocity * 1f;
 				}
 				return;
 			}
@@ -111,15 +110,20 @@ namespace TheDepths.Projectiles
 			{
 				for (int num82 = 0; num82 < 3; num82++)
 				{
-					Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 18, Projectile.velocity.X * 0.025f, Projectile.velocity.Y * 0.025f, 170, default(Color), 1.2f);
+					Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<ShadowDust>(), Projectile.velocity.X * 0.025f, Projectile.velocity.Y * 0.025f, 170, default(Color), 1.2f);
 				}
-				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 14, 0f, 0f, 170, default(Color), 1.1f);
+				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<ShadowDust>(), 0f, 0f, 170, default(Color), 1.1f);
 			}
-			Projectile.alpha += 5;
+			Projectile.alpha += 4;
 			if (Projectile.alpha >= 255)
 			{
 				Projectile.Kill();
 			}
+		}
+
+		public override bool ShouldUpdatePosition()
+		{
+			return false;
 		}
 	}
 
@@ -152,7 +156,16 @@ namespace TheDepths.Projectiles
 				if (Projectile.ai[1] == 0f)
 				{
 					Projectile.ai[1] += 1f;
-					Projectile.position += Projectile.velocity * 1f;
+					//Projectile.position += Projectile.velocity * 1f;
+				}
+				if (Main.myPlayer == Projectile.owner)
+				{
+					int type = Projectile.type;
+					type = ModContent.ProjectileType<ShadowClawMiddle>();
+					int num72 = Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.position.X + Projectile.velocity.X + (float)(Projectile.width / 2), Projectile.position.Y + Projectile.velocity.Y + (float)(Projectile.height / 2), Projectile.velocity.X, Projectile.velocity.Y, type, Projectile.damage, Projectile.knockBack, Projectile.owner);
+					Main.projectile[num72].damage = Projectile.damage;
+					Main.projectile[num72].ai[1] = Projectile.ai[1] + 1f;
+					NetMessage.SendData(27, -1, -1, null, num72);
 				}
 				return;
 			}
@@ -160,15 +173,20 @@ namespace TheDepths.Projectiles
 			{
 				for (int num82 = 0; num82 < 3; num82++)
 				{
-					Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 18, Projectile.velocity.X * 0.025f, Projectile.velocity.Y * 0.025f, 170, default(Color), 1.2f);
+					Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<ShadowDust>(), Projectile.velocity.X * 0.025f, Projectile.velocity.Y * 0.025f, 170, default(Color), 1.2f);
 				}
-				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 14, 0f, 0f, 170, default(Color), 1.1f);
+				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<ShadowDust>(), 0f, 0f, 170, default(Color), 1.1f);
 			}
-			Projectile.alpha += 5;
+			Projectile.alpha += 4;
 			if (Projectile.alpha >= 255)
 			{
 				Projectile.Kill();
 			}
+		}
+
+		public override bool ShouldUpdatePosition()
+		{
+			return false;
 		}
 	}
 }
