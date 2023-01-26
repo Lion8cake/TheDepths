@@ -22,9 +22,13 @@ namespace TheDepths.NPCs
 {
 	public class Geomancer : ModNPC
 	{
+		public static int PraiseTheRelic;
+
+		public static int TheRelicMadeHimExplode;
+
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Geomancer");
-			Main.npcFrameCount[NPC.type] = 16; 
+			Main.npcFrameCount[NPC.type] = 20; 
 		}
 
 		public override void SetDefaults() {
@@ -45,6 +49,31 @@ namespace TheDepths.NPCs
 			BannerItem = ModContent.ItemType<GeomancerBanner>();
 			SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
 		}
+
+        /*public override void AI() //AI was supposed to freeze the npc in place and then force him into a warshipping animation which he would just die when the screenflash is over, ill leave this in the code for now
+        {
+            if (PraiseTheRelic == 1)
+            {
+				NPC.ai[3] = 125f;
+				PraiseTheRelic = 0;
+            }
+			if (NPC.ai[3] <= 125f)
+            {
+				NPC.ai[0] = 0f;
+                NPC.ai[1] = 0f;
+				NPC.ai[2] = 0f;
+				NPC.velocity = Vector2.Zero;
+				NPC.frame.Y = 16 * 56;
+				AnimationType = NPCID.CultistDevote;
+			}
+			if (TheRelicMadeHimExplode == 1)
+            {
+				OnKill();
+				NPC.frame.Y = 0;
+				AnimationType = NPCID.ChaosElemental;
+				TheRelicMadeHimExplode = 0;
+			}
+        }*/
 
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{

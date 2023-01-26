@@ -1,16 +1,5 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using System.IO;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent.Generation;
-using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
-using Terraria.Utilities;
-using Terraria.WorldBuilding;
 
 namespace TheDepths.Buffs
 {
@@ -29,14 +18,6 @@ namespace TheDepths.Buffs
 		player.GetModPlayer<TheDepthsPlayer>().merPoison = true;
 			int extra = player.buffTime[buffIndex] / 60;
 			player.moveSpeed -= 0.5f;
-			if (player.GetModPlayer<TheDepthsPlayer>().stoneRose == true)
-			{
-				player.lifeRegen = -30;
-			}
-			else
-			{
-				player.lifeRegen = -60;
-			}
 		}
 	}
 }

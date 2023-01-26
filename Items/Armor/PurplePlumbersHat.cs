@@ -10,6 +10,7 @@ namespace TheDepths.Items.Armor
 	public class PurplePlumbersHat : ModItem
 	{ 
 	    public override void SetStaticDefaults() {
+			ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
 			DisplayName.SetDefault("Purple Plumber's Hat");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}

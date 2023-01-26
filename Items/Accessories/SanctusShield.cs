@@ -18,7 +18,7 @@ namespace TheDepths.Items.Accessories
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Sanctus Shield");
-			Tooltip.SetDefault("Grants immunity to knockback and mercury radiation \nGrants immunity to most debuffs");
+			Tooltip.SetDefault("Grants immunity to knockback and mercury radiation \nIncreases damage reduction by 10% \nGrants immunity to most debuffs");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -29,11 +29,11 @@ namespace TheDepths.Items.Accessories
 			Item.value = 250000;
 			Item.accessory = true;
 			Item.height = 20;
-			Item.defense = 1;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
+			player.endurance = 0.1f;
 			player.noKnockback = true;
 			player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
 			player.buffImmune[46] = true;

@@ -2,16 +2,19 @@ using TheDepths.Dusts;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
+using AltLibrary.Common.Systems;
 
 namespace TheDepths.NPCs
 {
     public class TheDepthsGlobalNPC : GlobalNPC
 	{
 	    public override bool InstancePerEntity => true;
-	
+
 	    public bool merPoison;
 		public bool slowWater;
 		public bool merBoiling;
+		public int MercuryNPCTimer;
 		
 		public override void ResetEffects(NPC npc) {
 			merPoison = false;
@@ -69,15 +72,31 @@ namespace TheDepths.NPCs
 					npc.velocity.Y = 0f;
 				}
 			}
-			if (merBoiling) 
+			if (merBoiling)
 			{
-				if (npc.lifeRegen > 0) {
+				if (npc.lifeRegen > 0)
+				{
 					npc.lifeRegen = 0;
 				}
-				npc.lifeRegen -= 10;
-				if (damage < 1) {
-					damage = 1;
-				}
+				MercuryNPCTimer++;
+				npc.lifeRegen -= Utils.Clamp(MercuryNPCTimer / 60, 0, 10);
+			}
+			if (!merBoiling && MercuryNPCTimer >= 1)
+			{
+				MercuryNPCTimer--;
+			}
+		}
+
+		public override void SetupShop(int type, Chest shop, ref int nextSlot)
+		{
+			if (type == NPCID.Clothier && Main.moonPhase == 0 && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+			{
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Armor.PurplePlumbersShirt>());
+				shop.item[nextSlot].shopCustomPrice = 250000;
+				nextSlot++;
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Armor.PurplePlumbersPants>());
+				shop.item[nextSlot].shopCustomPrice = 250000;
+				nextSlot++;
 			}
 		}
 	}

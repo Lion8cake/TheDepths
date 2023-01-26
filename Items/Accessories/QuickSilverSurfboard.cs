@@ -6,10 +6,10 @@ using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Accessories
 {
-    [AutoloadEquip(new EquipType[] { EquipType.Wings })] 
 	public class QuickSilverSurfboard : ModItem
 	{
 		public override void SetStaticDefaults() {
+			Tooltip.SetDefault("Allows the owner to float for a few seconds");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -20,46 +20,21 @@ namespace TheDepths.Items.Accessories
 			Item.rare = ItemRarityID.Green;
 			Item.accessory = true;
 		}
-		
-		public override void UpdateAccessory(Player player, bool hideVisual) {
-			player.wingTimeMax = 50;
+
+		public override void UpdateAccessory(Player player, bool hideVisual)
+		{
+			player.carpet = true;
+			player.GetModPlayer<TheDepthsPlayer>().quicksilverSurfboard = true;
 		}
 
-		public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising,
-			ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend) {
-			ascentWhenFalling = 0.85f;
-			ascentWhenRising = 0.15f;
-			maxCanAscendMultiplier = 1f;
-			maxAscentMultiplier = 3f;
-			constantAscend = 0.135f;
+		public override void AddRecipes()
+		{
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.DiamondDust>(), 20);
+			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 20);
+			recipe.AddIngredient(ItemID.SoulofFlight, 20);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
 		}
-
-		public override void HorizontalWingSpeeds(Player player, ref float speed, ref float acceleration) {
-			speed = 20f;
-			acceleration *= 5f;
-		}
-		
-		public override bool WingUpdate(Player player, bool inUse)
-    	{
-	    	int WingTicks = ((!inUse) ? 8 : 6);
-	    	if (player.velocity.Y != 0f)
-    		{
-    			player.wingFrameCounter++;
-    			if (player.wingFrameCounter > WingTicks)
-    			{
-	    			player.wingFrame++;
-	    			player.wingFrameCounter = 0;
-	     			if (player.wingFrame >= 3)
-	    			{
-	    				player.wingFrame = 0;
-	     			}
-	    		}
-	    	}
-	    	else
-	     	{
-	    		player.wingFrame = 4;
-	    	}
-	    	return true;
-	    }
 	}
 }

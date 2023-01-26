@@ -1,7 +1,7 @@
 =========================================
 The Depths (Alternate Hell)
 =========================================
-0.4
+0.4.0.2
 This mod uses altlib to better be able to be used with other alternate mods like the Confection
 
 The Depths is an alternate version of the underworld similar to how crimson corruption works. It generates instead of the underworld to ive some of your worlds that bit of spice when starting a new playthrough.
@@ -11,6 +11,10 @@ We encourage people make new worlds as this mod adds world generation to new wor
 =========================================
 Change Log
 =========================================
+Fixed WoF spawning only on the left side
+Fixed crash with the sapphire serpent banner
+Added more recipes to the core builder
+
 Added gemforge and ruby relic cutscene for when you place a relic in the underworld/depths
 updated quartz door texture
 fixed sound when breaking most bricks

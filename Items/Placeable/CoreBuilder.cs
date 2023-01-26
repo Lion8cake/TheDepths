@@ -72,7 +72,11 @@ namespace TheDepths.Items.Placeable
 			AddAndReplace<ShadowBrick>(ItemID.DemoniteBrick);
 			AddAndReplace<ShadowBrick>(ItemID.CrimtaneBrick);
 			AddAndReplace<PurplePlumbersHat>(ItemID.PlumbersHat);
+			AddAndReplace<PurplePlumbersShirt>(ItemID.PlumbersShirt);
+			AddAndReplace<PurplePlumbersPants>(ItemID.PlumbersPants);
 			AddAndReplace<Gemforge>(ItemID.Hellforge);
+			AddAndReplace<AmalgamAmulet>(ItemID.LavaCharm);
+			AddAndReplace<StoneRose>(ItemID.ObsidianRose);
 		}
 
 		private static void AddAndReplace<TConf>(int hall) where TConf : ModItem
@@ -83,18 +87,6 @@ namespace TheDepths.Items.Placeable
 			recipe.Register();
 			recipe = Recipe.Create(ContentInstance<TConf>.Instance.Type);
 			recipe.AddIngredient(hall);
-			recipe.AddTile(ModContent.TileType<CoreBuilderTile>());
-			recipe.Register();
-		}
-
-		private static void AddAndReplace<THall, TConf>() where TConf : ModItem where THall : ModItem
-		{
-			Recipe recipe = Recipe.Create(ContentInstance<THall>.Instance.Type);
-			recipe.AddIngredient(ContentInstance<TConf>.Instance.Type);
-			recipe.AddTile(ModContent.TileType<CoreBuilderTile>());
-			recipe.Register();
-			recipe = Recipe.Create(ContentInstance<TConf>.Instance.Type);
-			recipe.AddIngredient(ContentInstance<THall>.Instance.Type);
 			recipe.AddTile(ModContent.TileType<CoreBuilderTile>());
 			recipe.Register();
 		}

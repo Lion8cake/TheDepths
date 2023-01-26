@@ -10,6 +10,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using TheDepths.Buffs;
 using TheDepths.Tiles;
+using TheDepths.NPCs;
 
 namespace TheDepths.Projectiles.Chasme
 {
@@ -57,6 +58,7 @@ namespace TheDepths.Projectiles.Chasme
 			if (Projectile.timeLeft >= 300f)
 			{
 				num1589 = 1f % 2;
+				Geomancer.PraiseTheRelic = 1;
 			}
 			for (int num1590 = 0; num1590 < 9; num1590++)
 			{
@@ -84,6 +86,7 @@ namespace TheDepths.Projectiles.Chasme
 			}
 			if (Projectile.timeLeft == 150)
 			{
+				Geomancer.TheRelicMadeHimExplode = 1;
 				Gemforge.RubyRelicIsOnForge = 1;
 				SoundEngine.PlaySound(SoundID.NPCDeath10, Projectile.position);
 				if (player.whoAmI == Main.myPlayer)
@@ -93,7 +96,7 @@ namespace TheDepths.Projectiles.Chasme
 						Main.NewText("[c/AF4BFF:Wall of Flesh has awoken!]");
 						NPC.NewNPC(new EntitySource_Misc(""), (int)(Projectile.Center.X - 1500f), (int)Projectile.Center.Y, NPCID.WallofFlesh, 0, 1f, 0f, 0f, player.whoAmI);
 					}
-					else if (Projectile.Center.X < (Main.maxTilesX * 16) / 2 && Main.netMode != NetmodeID.MultiplayerClient)
+					else if (Projectile.Center.X > (Main.maxTilesX * 16) / 2 && Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						Main.NewText("[c/AF4BFF:Wall of Flesh has awoken!]");
 						NPC.NewNPC(new EntitySource_Misc(""), (int)(Projectile.Center.X + 1500f), (int)Projectile.Center.Y, NPCID.WallofFlesh, 0, 1f, 0f, 0f, player.whoAmI);

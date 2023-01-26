@@ -50,6 +50,17 @@ namespace TheDepths.Tiles
 			}
 		}
 
+		public override void MouseOver(int i, int j)
+		{
+			Player player = Main.LocalPlayer;
+			if (Main.LocalPlayer.ZoneUnderworldHeight)
+			{
+				player.noThrow = 2;
+				player.cursorItemIconEnabled = true;
+				player.cursorItemIconID = ModContent.ItemType<Items.RubyRelic>();
+			}
+		}
+
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
 			r = 0.021f;

@@ -9,9 +9,11 @@ using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Accessories
 {
+	[AutoloadEquip(new EquipType[] { EquipType.Face })]
 	public class CrystalSkull : ModItem
 	{
 		public override void SetStaticDefaults() {
+            ArmorIDs.Face.Sets.DrawInFaceHeadLayer[Item.faceSlot] = true;
 			Tooltip.SetDefault("Grants immunity to Mercury Radiation");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -23,7 +25,6 @@ namespace TheDepths.Items.Accessories
 			Item.rare = ItemRarityID.Green;
 			Item.accessory = true;
 			Item.defense = 1;
-			Item.lifeRegen = 19;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual) {

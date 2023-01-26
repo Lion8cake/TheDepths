@@ -28,10 +28,6 @@ namespace TheDepths.Projectiles
 		}
 
 		public override void AI() {
-			if (Main.rand.Next(5) == 0) {
-				int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, dustType);
-			}
-
 			Projectile.tileCollide = true;
 			Projectile.localAI[1] = 0f;
 
@@ -104,7 +100,5 @@ namespace TheDepths.Projectiles
 				}
 			}
 		}
-
-		public override bool? CanDamage()/* tModPorter Suggestion: Return null instead of true */ => Projectile.localAI[1] != -1f;
 	}
 }

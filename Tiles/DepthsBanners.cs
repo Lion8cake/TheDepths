@@ -90,7 +90,7 @@ namespace TheDepths.Tiles
 						type = "Shade";
 						break;
 					case 4:
-						type = "SapphireSerpent";
+						type = "SapphireSerpentHead";
 						break;
 					case 5:
 						type = "GoldBat";
@@ -108,7 +108,7 @@ namespace TheDepths.Tiles
 						type = "KingCoal";
 						break;
 					case 10:
-						type = "Achroma";
+						type = "Archroma";
 						break;
 						default:
 					return;

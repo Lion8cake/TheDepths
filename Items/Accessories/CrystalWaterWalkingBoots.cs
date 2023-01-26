@@ -13,7 +13,7 @@ namespace TheDepths.Items.Accessories
 	public class CrystalWaterWalkingBoots : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Provides the ability to walk on water & honey\nGrants immunity to Mercury Poisoning");
+			Tooltip.SetDefault("Provides the ability to walk on water & honey\nGrants immunity to mercury radiation");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

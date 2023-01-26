@@ -25,6 +25,7 @@ namespace TheDepths
 {
     public class TheDepthsPlayer : ModPlayer
     {
+        public int MercuryTimer;
         public BitsByte largeGems;
         public BitsByte ownedLargeGems;
         public BitsByte hasLargeGems;
@@ -36,6 +37,7 @@ namespace TheDepths
         public bool lodeStone;
         public bool noHit;
         public bool stoneRose;
+        public bool quicksilverSurfboard;
         public int tremblingDepthsScreenshakeTimer;
 
         public bool geodeCrystal;
@@ -65,6 +67,7 @@ namespace TheDepths
             aStone = false;
             lodeStone = false;
             stoneRose = false;
+            quicksilverSurfboard = false;
 
             geodeCrystal = false;
             livingShadow = false;
@@ -186,6 +189,32 @@ namespace TheDepths
             }
         }
 
+        public override void UpdateBadLifeRegen()
+        {
+            if (Player.lifeRegen > 0)
+            {
+                Player.lifeRegen = 0;
+            }
+            if (merBoiling || merPoison)
+            {
+                MercuryTimer++;
+                int multiplier = 2;
+                if (stoneRose)
+                {
+                    multiplier--;
+                }
+                Player.lifeRegen -= Utils.Clamp(MercuryTimer / 60, 0, 10) * multiplier;
+            }
+            if (!merPoison && !merBoiling && MercuryTimer >= 1)
+            {
+                MercuryTimer--;
+            }
+            if (MercuryTimer == 1 || Player.dead)
+            {
+                MercuryTimer = 0;
+            }
+        }
+
         public override void PostUpdateEquips()
         {
             for (int index = 0; index < 59; ++index)
@@ -226,6 +255,20 @@ namespace TheDepths
             return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource, ref cooldownCounter);
         }
 
+        public override void PostUpdateMiscEffects()
+        {
+            if (Main.netMode != 2 && Player.whoAmI == Main.myPlayer)
+            {
+                if (quicksilverSurfboard)
+                {
+                    TextureAssets.FlyingCarpet = ModContent.Request<Texture2D>("TheDepths/Assets/FlyingCarpet/SilverSurfboard");
+                }
+                else
+                {
+                    TextureAssets.FlyingCarpet = ModContent.Request<Texture2D>("TheDepths/Assets/FlyingCarpet/FlyingCarpet");
+                }
+            }
+        }
 
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
         {

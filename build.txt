@@ -1,6 +1,6 @@
 displayName = The Depths (Hell Alternative)
 author = Lion8cake & Basically, I am little fox
-version = 0.4
+version = 0.4.0.2
 modReferences = AltLibrary
 includeSource = true
 sortAfter = AltLibrary

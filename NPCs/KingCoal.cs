@@ -197,7 +197,7 @@ namespace TheDepths.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+            if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell != "TheDepths/AltDepthsBiome")
             {
                 return 1f;
             }
@@ -208,7 +208,7 @@ namespace TheDepths.NPCs
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ember>(), 1, 1, 3));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CharredCrown>(), 100, 1, 1));
-            npcLoot.Add(ItemDropRule.Common(ItemID.Ruby, 50, 1, 1));
+            //pcLoot.Add(ItemDropRule.Common(ItemID.Ruby, 50, 1, 1));
         }
 
         public override void HitEffect(int hitDirection, double damage)

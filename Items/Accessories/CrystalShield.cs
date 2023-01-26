@@ -31,11 +31,11 @@ namespace TheDepths.Items.Accessories
 			Item.value = 100000;
 			Item.accessory = true;
 			Item.height = 20;
-			Item.defense = 1;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
+			player.endurance = 0.1f;
 			player.noKnockback = true;
 			player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
 		}

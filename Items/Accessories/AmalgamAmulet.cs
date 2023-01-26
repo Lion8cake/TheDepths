@@ -9,6 +9,7 @@ using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Accessories
 {
+	[AutoloadEquip(new EquipType[] { EquipType.Neck })]
 	public class AmalgamAmulet : ModItem
 	{
 		public override void SetStaticDefaults() {

@@ -27,14 +27,6 @@ namespace TheDepths.Buffs
 		public override void Update(Player player, ref int buffIndex) {
 		player.GetModPlayer<TheDepthsPlayer>().merBoiling = true;
 			int extra = player.buffTime[buffIndex] / 60;
-			if (player.GetModPlayer<TheDepthsPlayer>().stoneRose == true)
-			{
-				player.lifeRegen = -5;
-			}
-			else
-			{
-				player.lifeRegen = -10;
-			}
 		}
 		
 		public override void Update(NPC npc, ref int buffIndex)

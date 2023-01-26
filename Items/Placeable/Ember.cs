@@ -24,7 +24,7 @@ namespace TheDepths.Items.Placeable
 			Item.useTime = 10;
 			Item.autoReuse = true;
 			Item.consumable = true;
-			Item.createTile = ModContent.TileType<Tiles.Ember>();
+			Item.createTile = ModContent.TileType<Tiles.EmberUpdated>();
 			Item.rare = ItemRarityID.Green;
 		}
 	}

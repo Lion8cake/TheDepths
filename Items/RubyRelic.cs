@@ -11,9 +11,11 @@ namespace TheDepths.Items
 {
 	public class RubyRelic : ModItem
 	{
-		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("'Do you hear something?'");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+		public override void SetStaticDefaults()
+        {
+            Tooltip.SetDefault("'Do you hear something?'" +
+                "\nMaybe putting this on a gemforge is not the best idea");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
 		}
 
 		public override void SetDefaults() {
