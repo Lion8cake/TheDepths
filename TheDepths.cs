@@ -10,6 +10,8 @@ using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 using TheDepths.Tiles;
+using AltLibrary.Common.AltBiomes;
+using System.Reflection;
 
 namespace TheDepths
 {
@@ -30,22 +32,43 @@ namespace TheDepths
             {
                 EquipLoader.AddEquipTexture(this, "TheDepths/Items/Armor/OnyxRobe_Legs", EquipType.Legs, name: "OnyxRobe_Legs");
             }
+            IL.Terraria.Liquid.Update += ILEvaporateWatrer;
+        }
+
+        private void ILEvaporateWatrer(ILContext il)
+        {
+            ILCursor c = new ILCursor(il);
+            try
+            {
+                int b = 0;
+                c.GotoNext(MoveType.After,
+                    i => i.MatchLdcI4(out _),
+                    i => i.MatchStloc(out b),
+                    i => i.MatchLdloca(b),
+                    i => i.MatchCall(out _),
+                    i => i.MatchLdindU1(),
+                    i => i.MatchLdloc(b),
+                    i => i.MatchBge(out _));
+
+                c.GotoNext(MoveType.After, i => i.MatchLdloc(b));
+
+                c.EmitDelegate((byte goingToEvaporateBy) => {
+                    Console.WriteLine("What the fuck is a brain");
+                    if (WorldBiomeManager.WorldHell == "TheDepths/DepthsBiome")
+                    {
+                        return 0;
+                    }
+                    return goingToEvaporateBy;
+                });
+            }
+            catch
+            {
+            }
         }
 
         private void ILMainDrawUnderworldBackground(ILContext il)
         {
             ILCursor c = new(il);
-            /*c.GotoNext(MoveType.After, i => i.MatchStloc(2));
-                c.Index -= 2;
-            c.Emit(OpCodes.Ldloc, 1);
-            c.Emit(OpCodes.Ldloc, 0);
-            c.EmitDelegate<Func<Asset<Texture2D>, int, Asset<Texture2D>>>((orig, index) =>
-            {
-                if (WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
-                    return texture[index];
-                return orig;
-            });
-            c.Emit(OpCodes.Stloc, 1);*/
 
             int asset = 0, texture = 0;
             c.GotoNext(i => i.MatchLdloc(out asset),

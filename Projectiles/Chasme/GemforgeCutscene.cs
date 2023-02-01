@@ -107,6 +107,10 @@ namespace TheDepths.Projectiles.Chasme
 					}
 				}
 			}
+			if (Projectile.timeLeft == 140)
+            {
+				Geomancer.TheRelicMadeHimExplode = 0;
+			}
 		}
 
 		/*public override void Kill(int timeLeft)
