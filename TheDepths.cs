@@ -34,7 +34,6 @@ namespace TheDepths
             {
                 EquipLoader.AddEquipTexture(this, "TheDepths/Items/Armor/OnyxRobe_Legs", EquipType.Legs, name: "OnyxRobe_Legs");
             }
-            IL.Terraria.Liquid.Update += ILEvaporateWatrer;
         }
 
 		private void NoHeap(ILContext il) {
