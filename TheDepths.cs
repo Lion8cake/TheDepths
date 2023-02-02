@@ -34,6 +34,7 @@ namespace TheDepths
             {
                 EquipLoader.AddEquipTexture(this, "TheDepths/Items/Armor/OnyxRobe_Legs", EquipType.Legs, name: "OnyxRobe_Legs");
             }
+            IL.Terraria.Liquid.Update += ILEvaporateWatrer;
         }
 
 		private void NoHeap(ILContext il) {
@@ -87,17 +88,6 @@ namespace TheDepths
 		private void ILMainDrawUnderworldBackground(ILContext il)
         {
             ILCursor c = new(il);
-            /*c.GotoNext(MoveType.After, i => i.MatchStloc(2));
-                c.Index -= 2;
-            c.Emit(OpCodes.Ldloc, 1);
-            c.Emit(OpCodes.Ldloc, 0);
-            c.EmitDelegate<Func<Asset<Texture2D>, int, Asset<Texture2D>>>((orig, index) =>
-            {
-                if (WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
-                    return texture[index];
-                return orig;
-            });
-            c.Emit(OpCodes.Stloc, 1);*/
 
             int asset = 0, texture = 0;
             c.GotoNext(i => i.MatchLdloc(out asset),

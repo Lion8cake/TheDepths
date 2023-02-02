@@ -26,6 +26,8 @@ namespace TheDepths.NPCs
 
 		public static int TheRelicMadeHimExplode;
 
+		public bool shouldFrameCounterIncrease;
+
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Geomancer");
 			Main.npcFrameCount[NPC.type] = 20; 
@@ -50,32 +52,62 @@ namespace TheDepths.NPCs
 			SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
 		}
 
-        /*public override void AI() //AI was supposed to freeze the npc in place and then force him into a warshipping animation which he would just die when the screenflash is over, ill leave this in the code for now
+        public override void AI() //AI was supposed to freeze the npc in place and then force him into a warshipping animation which he would just die when the screenflash is over, ill leave this in the code for now
         {
             if (PraiseTheRelic == 1)
             {
 				NPC.ai[3] = 125f;
-				PraiseTheRelic = 0;
             }
-			if (NPC.ai[3] <= 125f)
+			if (NPC.ai[3] >= 125f)
             {
-				NPC.ai[0] = 0f;
-                NPC.ai[1] = 0f;
-				NPC.ai[2] = 0f;
-				NPC.velocity = Vector2.Zero;
-				NPC.frame.Y = 16 * 56;
-				AnimationType = NPCID.CultistDevote;
+				NPC.aiStyle = 0;
+				AIType = NPCID.BoundGoblin;
+				//AnimationType = NPCID.CultistDevote;
 			}
 			if (TheRelicMadeHimExplode == 1)
             {
-				OnKill();
-				NPC.frame.Y = 0;
+				NPC.life = -1;
 				AnimationType = NPCID.ChaosElemental;
-				TheRelicMadeHimExplode = 0;
+				PraiseTheRelic = 0;
 			}
-        }*/
+        }
 
-		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        public override void FindFrame(int frameHeight)
+        {
+			if (PraiseTheRelic == 1)
+			{
+				if (NPC.frameCounter <= 0)
+				{
+					shouldFrameCounterIncrease = true;
+				}
+				if (NPC.frameCounter >= 50)
+				{
+					shouldFrameCounterIncrease = false;
+				}
+
+				NPC.frameCounter += shouldFrameCounterIncrease ? 1 : -1; //thanks absoluteAquarian
+
+                if (NPC.frameCounter < 10)
+                {
+                    NPC.frame.Y = 16 * frameHeight;
+                }
+                else if (NPC.frameCounter < 20)
+                {
+                    NPC.frame.Y = 17 * frameHeight;
+                }
+                else if (NPC.frameCounter < 30)
+                {
+                    NPC.frame.Y = 18 * frameHeight;
+                }
+                else if (NPC.frameCounter < 40)
+                {
+                    NPC.frame.Y = 19 * frameHeight;
+                }
+				Main.NewText(NPC.frameCounter);
+			}
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 

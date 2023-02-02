@@ -33,7 +33,7 @@ namespace TheDepths.Items.Accessories
 
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Quartz>(), 30);
+			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Quartz>(), 20);
 			recipe.AddTile(TileID.Furnaces);
 			recipe.Register();
 		}

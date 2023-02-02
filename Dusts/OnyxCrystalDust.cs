@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace TheDepths.Dusts
 {
-	public class GeodeCrystalDust : ModDust
+	public class OnyxCrystalDust : ModDust
 	{
 		public override void OnSpawn(Dust dust) {
 			dust.velocity *= 0.4f;

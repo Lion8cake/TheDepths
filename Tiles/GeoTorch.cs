@@ -41,7 +41,7 @@ namespace TheDepths.Tiles
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Torch");
 			AddMapEntry(new Color(119, 11, 147), name);
-			DustType = ModContent.DustType<GeodeDust>();
+			DustType = ModContent.DustType<GeodeTorchDust>();
 			ItemDrop = ModContent.ItemType<Items.Placeable.GeoTorch>();
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.Torches };

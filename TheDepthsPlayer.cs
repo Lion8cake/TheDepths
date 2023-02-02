@@ -187,16 +187,21 @@ namespace TheDepths
             {
                 tremblingDepthsScreenshakeTimer--;
             }
+            if (Player.dead)
+            {
+                MercuryTimer = 0;
+            }
+            //Main.NewText(MercuryTimer); //For Debugging, posts number of ticks that have passed when the player is on Mercury
         }
 
         public override void UpdateBadLifeRegen()
         {
-            if (Player.lifeRegen > 0)
-            {
-                Player.lifeRegen = 0;
-            }
             if (merBoiling || merPoison)
             {
+                if (Player.lifeRegen > 0)
+                {
+                    Player.lifeRegen = 0;
+                }
                 MercuryTimer++;
                 int multiplier = 2;
                 if (stoneRose)
@@ -209,7 +214,7 @@ namespace TheDepths
             {
                 MercuryTimer--;
             }
-            if (MercuryTimer == 1 || Player.dead)
+            if (MercuryTimer <= 1 && !merPoison && !merBoiling)
             {
                 MercuryTimer = 0;
             }
@@ -261,11 +266,11 @@ namespace TheDepths
             {
                 if (quicksilverSurfboard)
                 {
-                    TextureAssets.FlyingCarpet = ModContent.Request<Texture2D>("TheDepths/Assets/FlyingCarpet/SilverSurfboard");
+                    TextureAssets.FlyingCarpet = Request<Texture2D>("TheDepths/Assets/FlyingCarpet/SilverSurfboard");
                 }
                 else
                 {
-                    TextureAssets.FlyingCarpet = ModContent.Request<Texture2D>("TheDepths/Assets/FlyingCarpet/FlyingCarpet");
+                    TextureAssets.FlyingCarpet = Request<Texture2D>("TheDepths/Assets/FlyingCarpet/FlyingCarpet");
                 }
             }
         }
