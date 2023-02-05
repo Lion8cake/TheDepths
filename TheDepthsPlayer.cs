@@ -20,6 +20,7 @@ using static Terraria.ModLoader.ModContent;
 using AltLibrary.Common.Systems;
 using TheDepths.Biomes;
 using System;
+using TheDepths.Items.Weapons;
 
 namespace TheDepths
 {
@@ -43,19 +44,6 @@ namespace TheDepths
         public bool geodeCrystal;
         public bool livingShadow;
         public bool ShadePet;
-
-        public override void PreUpdate()
-        {
-            /*Point tileCoordinates1 = Player.Center.ToTileCoordinates();
-           	if (tileCoordinates1.Y > Main.maxTilesY - 320 && Main.UseHeatDistortion && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
-            {
-                Filters.Scene["FilterHeatDistortion"].Deactivate();
-                if (Filters.Scene["FilterHeatDistortion"].Active)
-          	    {
-                    Filters.Scene["FilterHeatDistortion"].Deactivate();
-		        }
-       	    }*/
-        }
 
         public override void ResetEffects()
         {
@@ -222,6 +210,10 @@ namespace TheDepths
 
         public override void PostUpdateEquips()
         {
+            if (Main.LocalPlayer.HeldItem.type == ModContent.ItemType<BlueSphere>())
+            {
+                Player.stringColor = PaintID.DeepYellowPaint;
+            }
             for (int index = 0; index < 59; ++index)
             {
                 if (Player.inventory[index].type == ItemType<LargeOnyx>())

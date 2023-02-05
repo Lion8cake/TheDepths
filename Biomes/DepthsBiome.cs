@@ -14,6 +14,8 @@ public class DepthsBiome : ModBiome
 
     public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Depths");
 
+    public override ModWaterStyle WaterStyle => ModContent.GetInstance<FreezingWaterStyle>();
+
     public override string MapBackground => BackgroundPath;
 
     public override string BackgroundPath => "TheDepths/Biomes/DepthsMapBackground";

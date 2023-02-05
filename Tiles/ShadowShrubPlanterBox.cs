@@ -4,47 +4,55 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using System.Collections.Generic;
 
 namespace TheDepths.Tiles
 {
 	public class ShadowShrubPlanterBox : ModTile
 	{
-		public override void SetStaticDefaults() {
-			Main.tileLighted[Type] = true;
+		public override void SetStaticDefaults()
+		{
 			Main.tileFrameImportant[Type] = true;
-			Main.tileSolidTop[Type] = true;
-			Main.tileSolid[Type] = true;
-			Main.tileNoAttach[Type] = false;
 			Main.tileTable[Type] = true;
-			Main.tileLavaDeath[Type] = true;
-			TileID.Sets.Platforms[Type] = true;
-			TileObjectData.newTile.CoordinateHeights = new[] { 16 };
-			TileObjectData.newTile.CoordinateWidth = 16;
-			TileObjectData.newTile.CoordinatePadding = 2;
-			TileObjectData.newTile.StyleHorizontal = true;
-			TileObjectData.newTile.StyleMultiplier = 27;
-			TileObjectData.newTile.StyleWrapLimit = 27;
-			TileObjectData.newTile.UsesCustomCanPlace = false;
-			TileObjectData.newTile.LavaDeath = true;
-			TileObjectData.addTile(Type);
-			AddMapEntry(new Color(27, 29, 33));
-			DustType = 37;
+			Main.tileSolid[Type] = true;
+			Main.tileSolidTop[Type] = true;
+			AddMapEntry(new Color(191, 142, 111));
 			ItemDrop = ModContent.ItemType<Items.Placeable.ShadowShrubPlanterBox>();
-            TileID.Sets.DisableSmartCursor[Type] = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.PlanterBox };
 		}
-		
-		public override bool Slope(int i, int j)
-	{
-		return false;
-	}
 
-		public override void PostSetDefaults() {
-			Main.tileNoSunLight[Type] = false;
+		public override bool Slope(int i, int j)
+		{
+			return false;
 		}
 
-		public override void NumDust(int i, int j, bool fail, ref int num) {
-			num = fail ? 1 : 3;
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+		{
+			Tile left = Main.tile[i - 1, j];
+			Tile right = Main.tile[i + 1, j];
+			int x = i - Main.tile[i, j].TileFrameX / 18;
+			int y = j - Main.tile[i, j].TileFrameY / 18;
+			if (WorldGen.InWorld(x, y))
+			{
+				if (left.TileType == Type && right.TileType == Type)
+				{
+					Main.tile[i, j].TileFrameX = 18;
+				}
+				else if (left.TileType == Type && right.TileType != Type)
+				{
+					Main.tile[i, j].TileFrameX = 36;
+				}
+				else if (left.TileType != Type && right.TileType == Type)
+				{
+					Main.tile[i, j].TileFrameX = 0;
+				}
+				else
+				{
+					Main.tile[i, j].TileFrameX = 54;
+				}
+			}
+			return false;
 		}
 	}
 }

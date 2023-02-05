@@ -105,7 +105,7 @@ namespace TheDepths.NPCs
         {
             if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
             {
-                return 0.95f;
+                return 0.75f;
             }
             return 0f;
         }

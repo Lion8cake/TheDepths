@@ -2,6 +2,7 @@ using TheDepths.Projectiles;
 using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 
@@ -10,7 +11,8 @@ namespace TheDepths.Items.Weapons
 	public class BlueSphere : ModItem
 	{
 		public override void SetStaticDefaults() {
-		    DisplayName.SetDefault("Blue Sphere");
+			DisplayName.SetDefault("Blue Sphere");
+			Tooltip.SetDefault("'Collect them all!'");
 			ItemID.Sets.Yoyo[Item.type] = true;
 			ItemID.Sets.GamepadExtraRange[Item.type] = 15;
 			ItemID.Sets.GamepadSmartQuickReach[Item.type] = true;
@@ -32,14 +34,11 @@ namespace TheDepths.Items.Weapons
 			Item.channel = true;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
+			
 
 			Item.UseSound = SoundID.Item1;
 			Item.value = Item.sellPrice(silver: 400);
 			Item.shoot = ModContent.ProjectileType<BlueSphereYoyo>();
-		}
-		
-		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit) {
-			target.AddBuff(ModContent.BuffType<Buffs.FreezingWater>(), 300);
 		}
 	}
 }

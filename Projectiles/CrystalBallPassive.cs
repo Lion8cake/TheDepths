@@ -13,7 +13,7 @@ namespace TheDepths.Projectiles
 			Projectile.height = 16;
 			Projectile.friendly = true;
 			Projectile.hostile = false;
-			Projectile.penetrate = 3;
+			Projectile.penetrate = 2;
 			Projectile.timeLeft = 850;
 			Projectile.alpha = 255; 
 		}

@@ -98,6 +98,12 @@ namespace TheDepths.NPCs
 				shop.item[nextSlot].shopCustomPrice = 250000;
 				nextSlot++;
 			}
+			if (type == NPCID.Dryad && Main.hardMode)
+            {
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Placeable.ShadowShrubPlanterBox>());
+				shop.item[nextSlot].shopCustomPrice = 100;
+				nextSlot++;
+			}
 		}
 	}
 }

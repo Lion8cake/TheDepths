@@ -58,7 +58,7 @@ namespace TheDepths.Projectiles.Chasme
 			if (Projectile.timeLeft >= 300f)
 			{
 				num1589 = 1f % 2;
-				Geomancer.PraiseTheRelic = 1;
+				Geomancer.PraiseTheRelic = true;
 			}
 			for (int num1590 = 0; num1590 < 9; num1590++)
 			{
@@ -86,7 +86,7 @@ namespace TheDepths.Projectiles.Chasme
 			}
 			if (Projectile.timeLeft == 150)
 			{
-				Geomancer.TheRelicMadeHimExplode = 1;
+				Geomancer.TheRelicMadeHimExplode = true;
 				Gemforge.RubyRelicIsOnForge = 1;
 				SoundEngine.PlaySound(SoundID.NPCDeath10, Projectile.position);
 				if (player.whoAmI == Main.myPlayer)
@@ -109,7 +109,7 @@ namespace TheDepths.Projectiles.Chasme
 			}
 			if (Projectile.timeLeft == 140)
             {
-				Geomancer.TheRelicMadeHimExplode = 0;
+				Geomancer.TheRelicMadeHimExplode = false;
 			}
 		}
 

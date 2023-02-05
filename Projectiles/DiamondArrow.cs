@@ -15,7 +15,7 @@ namespace TheDepths.Projectiles
 			Projectile.width = 16;
 			Projectile.height = 16;
 			Projectile.friendly = true;
-			Projectile.DamageType = DamageClass.Magic;
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 600;
 		}
@@ -38,29 +38,15 @@ namespace TheDepths.Projectiles
 		}
 		
 		public override void Kill(int timeLeft)
-	{
-		SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
-		if (Main.myPlayer != Projectile.owner)
 		{
-			return;
+			SoundEngine.PlaySound(SoundID.Item27, Projectile.position);
+			if (Main.myPlayer != Projectile.owner)
+			{
+				return;
+			}
+			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8, -8, ModContent.ProjectileType<CrystalBallPassive>(), Projectile.damage % 2, Projectile.knockBack, Main.myPlayer, 0f, 0f);
+			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X - 2, Projectile.Center.Y - 2, 10, 10, ModContent.ProjectileType<CrystalBallPassive>(), Projectile.damage % 2, Projectile.knockBack, Main.myPlayer, 0f, 0f);
+			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X - 2, Projectile.Center.Y - 2, 0, 10, ModContent.ProjectileType<CrystalBallPassive>(), Projectile.damage % 2, Projectile.knockBack, Main.myPlayer, 0f, 0f);
 		}
-		int choice = Main.rand.Next(1);
-		if (choice == 0)
-		{
-			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<CrystalBallPassive>(), 24, 1f, Main.myPlayer, 0f, 0f);
-		}
-		
-		int num = Main.rand.Next(1);
-		if (num == 0)
-		{
-			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<CrystalBallPassive>(), 24, 1f, Main.myPlayer, 0f, 0f);
-		}
-		
-		int num2 = Main.rand.Next(1);
-		if (num2 == 0)
-		{
-			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8 + Main.rand.Next(0, 17), -8 + Main.rand.Next(0, 17), ModContent.ProjectileType<CrystalBallPassive>(), 24, 1f, Main.myPlayer, 0f, 0f);
-		}
-	}
 	}
 }

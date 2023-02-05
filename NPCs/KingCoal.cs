@@ -46,14 +46,14 @@ namespace TheDepths.NPCs
             NPC.aiStyle = -1;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<KingCoalBanner>();
-            SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld,
 
-                new FlavorTextBestiaryInfoElement("He's no merry old soul, he's Crystal King's rival brother, but both have a common enemy and will team up to take you down!")
+                new FlavorTextBestiaryInfoElement("He's no merry old soul, he's Crystal King's rival brother, born in fire he will do all he can to take you down!")
             });
         }
 

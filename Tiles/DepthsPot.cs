@@ -25,7 +25,7 @@ namespace TheDepths.Tiles
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Pot");
-			AddMapEntry(new Color(33, 38, 97), name);
+			AddMapEntry(new Color(226, 227, 231), name);
 			DustType = ModContent.DustType<QuartzDust>();
 			HitSound = SoundID.Shatter;
 		}

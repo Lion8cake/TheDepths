@@ -1,13 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using TheDepths.Items.Banners;
 using TheDepths.Items.Placeable;
 using Terraria.GameContent.ItemDropRules;
@@ -22,15 +17,23 @@ namespace TheDepths.NPCs
 {
 	public class Geomancer : ModNPC
 	{
-		public static int PraiseTheRelic;
+		public static bool PraiseTheRelic;
 
-		public static int TheRelicMadeHimExplode;
+		public static bool TheRelicMadeHimExplode;
 
 		public bool shouldFrameCounterIncrease;
 
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Geomancer");
-			Main.npcFrameCount[NPC.type] = 20; 
+			Main.npcFrameCount[NPC.type] = 20;
+
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			{
+				Velocity = 1f,
+				Direction = -1
+			};
+
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
 		}
 
 		public override void SetDefaults() {
@@ -52,58 +55,60 @@ namespace TheDepths.NPCs
 			SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
 		}
 
-        public override void AI() //AI was supposed to freeze the npc in place and then force him into a warshipping animation which he would just die when the screenflash is over, ill leave this in the code for now
+        public override void AI()
         {
-            if (PraiseTheRelic == 1)
-            {
-				NPC.ai[3] = 125f;
-            }
-			if (NPC.ai[3] >= 125f)
+            if (PraiseTheRelic == true)
             {
 				NPC.aiStyle = 0;
 				AIType = NPCID.BoundGoblin;
-				//AnimationType = NPCID.CultistDevote;
+				AnimationType = 0;
 			}
-			if (TheRelicMadeHimExplode == 1)
+			if (TheRelicMadeHimExplode == true)
             {
 				NPC.life = -1;
 				AnimationType = NPCID.ChaosElemental;
-				PraiseTheRelic = 0;
+				PraiseTheRelic = false;
 			}
         }
 
         public override void FindFrame(int frameHeight)
         {
-			if (PraiseTheRelic == 1)
+			if (PraiseTheRelic == true)
 			{
-				if (NPC.frameCounter <= 0)
+				if (shouldFrameCounterIncrease)
 				{
-					shouldFrameCounterIncrease = true;
+					NPC.frameCounter++;
 				}
-				if (NPC.frameCounter >= 50)
-				{
+				else if (!shouldFrameCounterIncrease)
+                {
+					NPC.frameCounter--;
+                }
+
+				if (NPC.frameCounter >= 25)
+                {
 					shouldFrameCounterIncrease = false;
-				}
+                }
+				else if (NPC.frameCounter <= 0)
+                {
+					shouldFrameCounterIncrease = true;
+                }
 
-				NPC.frameCounter += shouldFrameCounterIncrease ? 1 : -1; //thanks absoluteAquarian
-
-                if (NPC.frameCounter < 10)
+                if (NPC.frameCounter < 5)
                 {
                     NPC.frame.Y = 16 * frameHeight;
                 }
-                else if (NPC.frameCounter < 20)
+                else if (NPC.frameCounter < 10)
                 {
                     NPC.frame.Y = 17 * frameHeight;
                 }
-                else if (NPC.frameCounter < 30)
+                else if (NPC.frameCounter < 15)
                 {
                     NPC.frame.Y = 18 * frameHeight;
                 }
-                else if (NPC.frameCounter < 40)
+                else if (NPC.frameCounter < 20)
                 {
                     NPC.frame.Y = 19 * frameHeight;
                 }
-				Main.NewText(NPC.frameCounter);
 			}
         }
 
@@ -137,10 +142,10 @@ namespace TheDepths.NPCs
 
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PurplePlumbersHat>(), 5000));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PurplePlumbersHat>(), 250));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Geode>(), 1));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShadowSphere>(), 50));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LivingShadowStaff>(), 50));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ShadowSphere>(), 35));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LivingShadowStaff>(), 35));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<StoneRose>(), 50));
 		}
 

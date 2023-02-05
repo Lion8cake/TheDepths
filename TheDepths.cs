@@ -29,7 +29,7 @@ namespace TheDepths
             livingFireBlockList = new List<int> { 336, 340, 341, 342, 343, 344, ModContent.TileType<LivingFog>() };
             IL.Terraria.Main.DrawUnderworldBackgroudLayer += ILMainDrawUnderworldBackground;
 			IL.Terraria.Player.UpdateBiomes += NoHeap;
-			IL.Terraria.Liquid.Update += Evaporation;
+			//IL.Terraria.Liquid.Update += Evaporation;
             if (!Main.dedServ)
             {
                 EquipLoader.AddEquipTexture(this, "TheDepths/Items/Armor/OnyxRobe_Legs", EquipType.Legs, name: "OnyxRobe_Legs");
@@ -73,7 +73,7 @@ namespace TheDepths
                 c.Index -= 3;
                 c.Emit(OpCodes.Ldloca_S, (byte)tile);
                 c.EmitDelegate((byte num, ref Tile liqTile) => {
-                    if (WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome" && liqTile.LiquidType == LiquidID.Water) {
+                if (WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome" && liqTile.LiquidType == LiquidID.Water) {
                         return (byte)0;
                     }
                     return num;

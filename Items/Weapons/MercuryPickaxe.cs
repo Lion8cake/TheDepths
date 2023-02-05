@@ -20,8 +20,8 @@ namespace TheDepths.Items.Weapons
 			Item.DamageType = DamageClass.Melee/* tModPorter Suggestion: Consider MeleeNoSpeed for no attack speed scaling */;
 			Item.width = 40;
 			Item.height = 40;
-			Item.useTime = 5;
-			Item.useAnimation = 10;
+			Item.useTime = 18;
+			Item.useAnimation = 18;
 			Item.pick = 100;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 2;
