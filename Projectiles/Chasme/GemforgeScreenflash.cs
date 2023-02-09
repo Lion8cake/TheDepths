@@ -25,8 +25,8 @@ namespace TheDepths.Projectiles.Chasme
 		public override void AI()
 		{
 			if (Projectile.timeLeft >= 1f)
-            {
-                MoonlordDeathDrama.RequestLight(((Projectile.timeLeft + 920) - 480f) / 120f, Projectile.Center);
+			{
+				MoonlordDeathDrama.RequestLight(((Projectile.timeLeft + 920) - 480f) / 120f, Projectile.Center);
 			}
 		}
 	}
