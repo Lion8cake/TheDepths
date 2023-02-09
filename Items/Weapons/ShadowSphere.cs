@@ -23,12 +23,12 @@ namespace TheDepths.Items.Weapons
 			Item.height = 40;
 			Item.useTime = 10;
 			Item.useAnimation = 10;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noMelee = true;
 			Item.knockBack = 5;
 			Item.value = 10000;
 			Item.rare = ItemRarityID.LightRed;
-			Item.UseSound = SoundID.Item21;
+			Item.UseSound = SoundID.Item20;
 			Item.autoReuse = false;
 			Item.shoot = ModContent.ProjectileType<ShadowBall>();
 			Item.shootSpeed = 7.5f;

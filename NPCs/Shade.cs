@@ -36,7 +36,7 @@ namespace TheDepths.NPCs
             NPC.DeathSound = SoundID.NPCDeath6;
             NPC.value = 300f;
             NPC.noGravity = true;
-            NPC.noTileCollide = true;
+            NPC.noTileCollide = false;
             NPC.knockBackResist = 0.5f;
 			NPC.lavaImmune = true;
             NPC.aiStyle = 22;
@@ -50,7 +50,7 @@ namespace TheDepths.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("Beings of pure darkness that drift through blocks with the ability to freely float through the air. A group of them is called a darkening.")
+                new FlavorTextBestiaryInfoElement("Beings of pure darkness that drift through the depths with the ability to freely float through the air. A group of them is called a darkening.")
             });
         }
 

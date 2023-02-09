@@ -52,6 +52,7 @@ There are 8 weapon modes in total
 			Item.useTurn = true;
 			swings = 0;
 			mode = 0;
+			Item.shootSpeed = 10f;
 		}
 
 		private void SwingsHahaSoFunny()
@@ -129,7 +130,7 @@ There are 8 weapon modes in total
             {
 				case 0: // Amethyst
 					float num = (float)((Main.rand.NextFloat() - 0.75) * 0.785398185253143);
-					Projectile.NewProjectile(source, position, speed, ModContent.ProjectileType<MiracfulWhip>(), damage, knockback, player.whoAmI, 0f, num);
+					Projectile.NewProjectile(new EntitySource_Misc(""), position, speed, ModContent.ProjectileType<MiracfulWhip>(), damage, knockback, player.whoAmI, 0f, num);
 					break;
 				case 1: // Topaz
 					speed.X *= Main.rand.NextFloat(0.5f, 1.5f);
@@ -138,24 +139,24 @@ There are 8 weapon modes in total
 					for (int i = 0; i < Main.rand.Next(4, 6); i++)
 					{
 						if (Main.rand.NextBool(2))
-							num2[i] = Projectile.NewProjectile(source, position, speed.RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(5, 75))), ProjectileID.Fireball, damage, knockback, player.whoAmI);
+							num2[i] = Projectile.NewProjectile(new EntitySource_Misc(""), position, speed.RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(5, 75))), ProjectileID.Fireball, damage, knockback, player.whoAmI);
 						else
-							num2[i] = Projectile.NewProjectile(source, position, speed.RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(-75, -5))), ProjectileID.Fireball, damage, knockback, player.whoAmI);
+							num2[i] = Projectile.NewProjectile(new EntitySource_Misc(""), position, speed.RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(-75, -5))), ProjectileID.Fireball, damage, knockback, player.whoAmI);
 						Main.projectile[num2[i]].friendly = true;
 						Main.projectile[num2[i]].hostile = false;
 					}
 					break;
 				case 2: // Sapphire
-					Projectile.NewProjectile(source, position, speed, ModContent.ProjectileType<MiracfulSapphire>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(new EntitySource_Misc(""), position, speed, ModContent.ProjectileType<MiracfulSapphire>(), damage, knockback, player.whoAmI);
 					break;
 				case 3: // Emerald
 					int[] num3 = new int[6] { 0, 0, 0, 0, 0, 0, };
 					for (int i = 0; i < Main.rand.Next(4, 6); i++)
 					{
 						if (Main.rand.NextBool(2))
-							num3[i] = Projectile.NewProjectile(source, position, speed.RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(5, 75))), ProjectileID.CrystalLeafShot, damage, knockback, player.whoAmI);
+							num3[i] = Projectile.NewProjectile(new EntitySource_Misc(""), position, speed.RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(5, 75))), ProjectileID.CrystalLeafShot, damage, knockback, player.whoAmI);
 						else
-							num3[i] = Projectile.NewProjectile(source, position, speed.RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(-75, -5))), ProjectileID.CrystalLeafShot, damage, knockback, player.whoAmI);
+							num3[i] = Projectile.NewProjectile(new EntitySource_Misc(""), position, speed.RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(-75, -5))), ProjectileID.CrystalLeafShot, damage, knockback, player.whoAmI);
 						Main.projectile[num3[i]].friendly = true;
 						Main.projectile[num3[i]].hostile = false;
 					}
@@ -166,23 +167,23 @@ There are 8 weapon modes in total
 					if (Main.rand.NextBool(3)) type = ModContent.ProjectileType<MiracfulCrimson1>();
 					else if (Main.rand.NextBool(3)) type = ModContent.ProjectileType<MiracfulCrimson2>();
 					else type = ModContent.ProjectileType<MiracfulCrimson3>();
-					Projectile.NewProjectile(source, position, speed, type, damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(new EntitySource_Misc(""), position, speed, type, damage, knockback, player.whoAmI);
                     break;
                 case 5: // Diamond
-                    Projectile.NewProjectile(source, position, speed, ModContent.ProjectileType<MiracfulSparkle>(), damage, knockback, player.whoAmI);
+                    Projectile.NewProjectile(new EntitySource_Misc(""), position, speed, ModContent.ProjectileType<MiracfulSparkle>(), damage, knockback, player.whoAmI);
                     break;
 				case 6: // Amber
-					Projectile.NewProjectile(source, position, speed, ModContent.ProjectileType<MiracfulSnake>(), damage, knockback, player.whoAmI);
+					Projectile.NewProjectile(new EntitySource_Misc(""), position, speed, ModContent.ProjectileType<MiracfulSnake>(), damage, knockback, player.whoAmI);
 					break;
 				case 7: // Onyx
 					for (int i = 0; i < Main.rand.Next(2, 4); i++)
 					{
 						if (Main.rand.NextBool(2))
-							Projectile.NewProjectile(source, position, speed.RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(45, 135))), ProjectileID.BlackBolt, damage, knockback, player.whoAmI);
+							Projectile.NewProjectile(new EntitySource_Misc(""), position, speed.RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(45, 135))), ProjectileID.BlackBolt, damage, knockback, player.whoAmI);
 						else
-							Projectile.NewProjectile(source, position, speed.RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(-135, -45))), ProjectileID.BlackBolt, damage, knockback, player.whoAmI);
+							Projectile.NewProjectile(new EntitySource_Misc(""), position, speed.RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(-135, -45))), ProjectileID.BlackBolt, damage, knockback, player.whoAmI);
 					}
-                    Projectile.NewProjectile(source, position, speed, ProjectileID.BlackBolt, damage, knockback, player.whoAmI);
+                    Projectile.NewProjectile(new EntitySource_Misc(""), position, speed, ProjectileID.BlackBolt, damage, knockback, player.whoAmI);
 					break;
             }
             return false;

@@ -10,7 +10,7 @@ using TheDepths.Tiles;
 using Terraria.GameContent;
 using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
-using TheDepths;
+using TheDepths.Items.Weapons;
 using Terraria.GameContent.Generation;
 
 namespace TheDepths
@@ -35,6 +35,8 @@ namespace TheDepths
         }
 
         public override string WorldIcon => "";
+
+        public override AltMaterialContext MaterialContext => new AltMaterialContext().SetUnderworldSword(ModContent.ItemType<Terminex>()).SetUnderworldHerb(ModContent.ItemType<Items.ShadowShrub>()).SetUnderworldBar(ModContent.ItemType<Items.Placeable.ArqueriteBar>()).SetUnderworldForge(ModContent.ItemType<Items.Placeable.Gemforge>());
 
         public override string LowerTexture => "TheDepths/Assets/Loading/Depths_Outer_Lower";
 

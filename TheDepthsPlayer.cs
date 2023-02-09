@@ -20,6 +20,7 @@ using static Terraria.ModLoader.ModContent;
 using AltLibrary.Common.Systems;
 using TheDepths.Biomes;
 using System;
+using TheDepths.Items.Weapons;
 
 namespace TheDepths
 {
@@ -43,19 +44,6 @@ namespace TheDepths
         public bool geodeCrystal;
         public bool livingShadow;
         public bool ShadePet;
-
-        public override void PreUpdate()
-        {
-            /*Point tileCoordinates1 = Player.Center.ToTileCoordinates();
-           	if (tileCoordinates1.Y > Main.maxTilesY - 320 && Main.UseHeatDistortion && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
-            {
-                Filters.Scene["FilterHeatDistortion"].Deactivate();
-                if (Filters.Scene["FilterHeatDistortion"].Active)
-          	    {
-                    Filters.Scene["FilterHeatDistortion"].Deactivate();
-		        }
-       	    }*/
-        }
 
         public override void ResetEffects()
         {
@@ -187,16 +175,21 @@ namespace TheDepths
             {
                 tremblingDepthsScreenshakeTimer--;
             }
+            if (Player.dead)
+            {
+                MercuryTimer = 0;
+            }
+            //Main.NewText(MercuryTimer); //For Debugging, posts number of ticks that have passed when the player is on Mercury
         }
 
         public override void UpdateBadLifeRegen()
         {
-            if (Player.lifeRegen > 0)
-            {
-                Player.lifeRegen = 0;
-            }
             if (merBoiling || merPoison)
             {
+                if (Player.lifeRegen > 0)
+                {
+                    Player.lifeRegen = 0;
+                }
                 MercuryTimer++;
                 int multiplier = 2;
                 if (stoneRose)
@@ -209,7 +202,7 @@ namespace TheDepths
             {
                 MercuryTimer--;
             }
-            if (MercuryTimer == 1 || Player.dead)
+            if (MercuryTimer <= 1 && !merPoison && !merBoiling)
             {
                 MercuryTimer = 0;
             }
@@ -217,6 +210,10 @@ namespace TheDepths
 
         public override void PostUpdateEquips()
         {
+            if (Main.LocalPlayer.HeldItem.type == ModContent.ItemType<BlueSphere>())
+            {
+                Player.stringColor = PaintID.DeepYellowPaint;
+            }
             for (int index = 0; index < 59; ++index)
             {
                 if (Player.inventory[index].type == ItemType<LargeOnyx>())
@@ -261,11 +258,11 @@ namespace TheDepths
             {
                 if (quicksilverSurfboard)
                 {
-                    TextureAssets.FlyingCarpet = ModContent.Request<Texture2D>("TheDepths/Assets/FlyingCarpet/SilverSurfboard");
+                    TextureAssets.FlyingCarpet = Request<Texture2D>("TheDepths/Assets/FlyingCarpet/SilverSurfboard");
                 }
                 else
                 {
-                    TextureAssets.FlyingCarpet = ModContent.Request<Texture2D>("TheDepths/Assets/FlyingCarpet/FlyingCarpet");
+                    TextureAssets.FlyingCarpet = Request<Texture2D>("TheDepths/Assets/FlyingCarpet/FlyingCarpet");
                 }
             }
         }

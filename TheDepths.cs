@@ -10,6 +10,8 @@ using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 using TheDepths.Tiles;
+using Terraria.ID;
+using MonoMod.Utils;
 
 namespace TheDepths
 {
@@ -26,26 +28,65 @@ namespace TheDepths
                 texture[i] = ModContent.Request<Texture2D>("TheDepths/Backgrounds/DepthsUnderworldBG_" + i);
             livingFireBlockList = new List<int> { 336, 340, 341, 342, 343, 344, ModContent.TileType<LivingFog>() };
             IL.Terraria.Main.DrawUnderworldBackgroudLayer += ILMainDrawUnderworldBackground;
+			IL.Terraria.Player.UpdateBiomes += NoHeap;
+			//IL.Terraria.Liquid.Update += Evaporation;
             if (!Main.dedServ)
             {
                 EquipLoader.AddEquipTexture(this, "TheDepths/Items/Armor/OnyxRobe_Legs", EquipType.Legs, name: "OnyxRobe_Legs");
             }
         }
 
-        private void ILMainDrawUnderworldBackground(ILContext il)
+		private void NoHeap(ILContext il) {
+            var c = new ILCursor(il);
+            try {
+                c.GotoNext(MoveType.After,
+                    i => i.MatchLdstr("HeatDistortion"),
+                    i => i.MatchLdsfld<Main>("UseHeatDistortion"));
+
+                c.EmitDelegate((bool useHeatDistortion) => {
+                    if (WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome") {
+                        return false;
+                    }
+                    return useHeatDistortion;
+                });
+            }
+            catch (Exception e) {
+                Logger.Error(e.Message);
+            }
+		}
+
+		private void Evaporation(ILContext il) {
+            var c = new ILCursor(il);
+            try {
+                int b = 0;
+                int tile = 0;
+				c.GotoNext(MoveType.After,
+                    i => i.MatchLdloca(out tile),
+                    i => i.MatchCall<Tile>("get_liquid"),
+                    i => i.MatchDup(),
+                    i => i.MatchLdindU1(),
+                    i => i.MatchLdloc(out b),
+                    i => i.MatchSub(),
+                    i => i.MatchConvU1(),
+                    i => i.MatchStindI1());
+
+                c.Index -= 3;
+                c.Emit(OpCodes.Ldloca_S, (byte)tile);
+                c.EmitDelegate((byte num, ref Tile liqTile) => {
+                if (WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome" && liqTile.LiquidType == LiquidID.Water) {
+                        return (byte)0;
+                    }
+                    return num;
+                });
+			}
+            catch (Exception e) {
+                Logger.Error(e.Message);
+            }
+		}
+
+		private void ILMainDrawUnderworldBackground(ILContext il)
         {
             ILCursor c = new(il);
-            /*c.GotoNext(MoveType.After, i => i.MatchStloc(2));
-                c.Index -= 2;
-            c.Emit(OpCodes.Ldloc, 1);
-            c.Emit(OpCodes.Ldloc, 0);
-            c.EmitDelegate<Func<Asset<Texture2D>, int, Asset<Texture2D>>>((orig, index) =>
-            {
-                if (WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
-                    return texture[index];
-                return orig;
-            });
-            c.Emit(OpCodes.Stloc, 1);*/
 
             int asset = 0, texture = 0;
             c.GotoNext(i => i.MatchLdloc(out asset),
@@ -63,9 +104,11 @@ namespace TheDepths
             c.Emit(OpCodes.Stloc, asset);
         }
 
-        public override void Unload()
-        {
-            livingFireBlockList = null;
+        public override void Unload() {
+			IL.Terraria.Liquid.Update -= Evaporation;
+			IL.Terraria.Player.UpdateBiomes -= NoHeap;
+			IL.Terraria.Main.DrawUnderworldBackgroudLayer -= ILMainDrawUnderworldBackground;
+			livingFireBlockList = null;
         }
     }
 }

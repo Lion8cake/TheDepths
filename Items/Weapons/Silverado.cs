@@ -18,20 +18,20 @@ namespace TheDepths.Items.Weapons
 		}
 
 		public override void SetDefaults() {
-			Item.damage = 20;
+			Item.damage = 5;
 			Item.DamageType = DamageClass.Ranged; 
 			Item.width = 40;
 			Item.height = 20;
-			Item.useTime = 20;
-			Item.useAnimation = 20;
+			Item.useTime = 10;
+			Item.useAnimation = 10;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noMelee = true;
 			Item.knockBack = 4; 
 			Item.value = 50000;
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item11;
-			Item.autoReuse = true;
-			Item.shoot = 10; 
+			Item.autoReuse = false;
+			Item.shoot = ProjectileID.PurificationPowder; 
 			Item.shootSpeed = 16f; 
 			Item.useAmmo = AmmoID.Bullet;
 		}
@@ -45,13 +45,17 @@ namespace TheDepths.Items.Weapons
 			recipe.Register();
 		}
 
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		public override Vector2? HoldoutOffset()
+		{
+			return new Vector2(2f, -2f);
+		}
+
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
 		{
 			if (type == ProjectileID.Bullet)
 			{
 				type = ProjectileID.BulletHighVelocity;
 			}
-			return true;
 		}
 	}
 }

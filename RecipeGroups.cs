@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using TheDepths.Items.Accessories;
+using TheDepths.Items.Placeable;
 
 namespace TheDepths
 {

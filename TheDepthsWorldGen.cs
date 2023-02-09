@@ -29,7 +29,10 @@ namespace TheDepths
 				if (index2 != -1)
                 {
                     list.Insert(index2 + 1, new PassLegacy("The Depths: Underworld Alt", new WorldGenLegacyMethod(Depths)));
-                }
+					index2 = list.FindIndex(genpass => genpass.Name.Equals("Pots"));
+					list.Insert(index2 + 1, new PassLegacy("The Depths: Pots", new WorldGenLegacyMethod(Pots)));
+					list.RemoveAt(index2);
+				}
 
                 if (index3 != -1)
                 {
@@ -39,7 +42,92 @@ namespace TheDepths
 			}
         }
 
-        public static void Gemforge(GenerationProgress progress, GameConfiguration configuration)
+		public override void ModifyHardmodeTasks(List<GenPass> list)
+		{
+			if (WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+			{
+				list.Add(new PassLegacy("The Depths: Onyx Shalestone", new WorldGenLegacyMethod(OnyxShale)));
+			}
+		}
+
+		private static void OnyxShale(GenerationProgress progres, GameConfiguration configurations)
+		{
+			OnyxShale();
+		}
+
+		private void Pots(GenerationProgress progress, GameConfiguration configuration)
+		{
+			Main.tileSolid[137] = true;
+			Main.tileSolid[130] = true;
+			progress.Message = Lang.gen[35].Value;
+			for (int index = 0; index < (int)(Main.maxTilesX * Main.maxTilesY * 0.0008); ++index)
+			{
+				float num1 = index / (Main.maxTilesX * Main.maxTilesY * 0.0008f);
+				progress.Set(num1);
+				bool flag1 = false;
+				int num2 = 0;
+				while (!flag1)
+				{
+					int num3 = WorldGen.genRand.Next((int)WorldGen.worldSurfaceHigh, Main.maxTilesY - 10);
+					if (num1 > 0.93)
+						num3 = Main.maxTilesY - 150;
+					else if (num1 > 0.75)
+						num3 = (int)WorldGen.worldSurfaceLow;
+					int x = WorldGen.genRand.Next(1, Main.maxTilesX);
+					bool flag2 = false;
+					for (int y = num3; y < Main.maxTilesY; ++y)
+					{
+						if (!flag2)
+						{
+							if (Main.tile[x, y].HasTile && Main.tileSolid[Main.tile[x, y].TileType] && Main.tile[x, y - 1].LiquidAmount != LiquidID.Lava)
+								flag2 = true;
+						}
+						else
+						{
+							int type = 28;
+							int style = WorldGen.genRand.Next(0, 4);
+							int num4 = 0;
+							if (y < Main.maxTilesY - 5)
+								num4 = Main.tile[x, y + 1].TileType;
+							if (num4 == 147 || num4 == 161 || num4 == 162)
+								style = WorldGen.genRand.Next(4, 7);
+							if (num4 == 60)
+								style = WorldGen.genRand.Next(7, 10);
+							if (Main.wallDungeon[Main.tile[x, y].WallType])
+								style = WorldGen.genRand.Next(10, 13);
+							if (num4 == 41 || num4 == 43 || num4 == 44)
+								style = WorldGen.genRand.Next(10, 13);
+							if (num4 == 22 || num4 == 23 || num4 == 25)
+								style = WorldGen.genRand.Next(16, 19);
+							if (num4 == 199 || num4 == 203 || (num4 == 204 || num4 == 200))
+								style = WorldGen.genRand.Next(22, 25);
+							if (num4 == 367)
+								style = WorldGen.genRand.Next(31, 34);
+							if (num4 == 226)
+								style = WorldGen.genRand.Next(28, 31);
+							if (y > Main.maxTilesY - 200)
+							{
+								style = 0;
+								type = TileType<DepthsPot>();
+							}
+							if (WorldGen.PlacePot(x, y, (ushort)type, style))
+							{
+								flag1 = true;
+								break;
+							}
+							++num2;
+							if (num2 >= 10000)
+							{
+								flag1 = true;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		public static void Gemforge(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = "Placing gemforges";
             for (int index1 = 0; index1 < Main.maxTilesX / 200; ++index1)
@@ -81,11 +169,23 @@ namespace TheDepths
             }
         }
 
+		public static void OnyxShale()
+		{
+			float num1 = Main.maxTilesX * 0.5f;
+			float num2 = num1 * 0.2f;
+			for (int index = 0; index < num2; ++index)
+			{
+				int i = WorldGen.genRand.Next(0, Main.maxTilesX);
+				int j;
+				for (j = WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY); Main.tile[i, j].TileType != TileType<Shalestone>(); j = WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY))
+					i = WorldGen.genRand.Next(0, Main.maxTilesX);
+				WorldGen.TileRunner(i, j, WorldGen.genRand.Next(2, 6), WorldGen.genRand.Next(3, 7), TileType<OnyxShalestone>(), false, 0.0f, 0.0f, false, true);
+			}
+		}
+
 		private static void Depths(GenerationProgress progress, GameConfiguration configuration)
         {
             {
-				for (int index = 0; index < (int)(Main.maxTilesX * Main.maxTilesY * 0.0008) / 3; ++index)
-					WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY), WorldGen.genRand.Next(2, 4), WorldGen.genRand.Next(3, 4), TileType<OnyxShalestone>(), false, 0.0f, 0.0f, false, true);
 				for (int index = 0; index < (int)(Main.maxTilesX * Main.maxTilesY * 0.0008) / 2; ++index)
                     WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY), WorldGen.genRand.Next(1, 6), WorldGen.genRand.Next(2, 6), TileType<Quartz>(), false, 0.0f, 0.0f, false, true);
                 /*for (int index = 0; index < (int)(Main.maxTilesX * Main.maxTilesY * 0.0008); ++index)

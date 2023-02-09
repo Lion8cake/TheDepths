@@ -11,6 +11,7 @@ namespace TheDepths.Items.Weapons
 	{
 		public override void SetStaticDefaults() {
 		    DisplayName.SetDefault("Skyfall");
+			Tooltip.SetDefault("Mercury Rain falls from this throw");
 			ItemID.Sets.Yoyo[Item.type] = true;
 			ItemID.Sets.GamepadExtraRange[Item.type] = 15;
 			ItemID.Sets.GamepadSmartQuickReach[Item.type] = true;

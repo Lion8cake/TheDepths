@@ -21,6 +21,7 @@ namespace TheDepths.Tiles
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16 };
             TileObjectData.newTile.CoordinatePadding = 2;
+            //TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.addTile(Type);
             Main.tileFrameImportant[Type] = true;
@@ -42,14 +43,14 @@ namespace TheDepths.Tiles
             {
                 case 0:
                     toDrop = ModContent.ItemType<Items.Placeable.Geode>();
-					DustType = Mod.Find<ModDust>("GeodeDust").Type;
+					DustType = Mod.Find<ModDust>("GeodeCrystalDust").Type;
                     break;
                 case 1:
                     toDrop = ModContent.ItemType<Items.Placeable.Onyx>();
-					DustType = Mod.Find<ModDust>("BlackGemsparkDust").Type;
+					DustType = Mod.Find<ModDust>("OnyxCrystalDust").Type;
                     break;
             }
-            if (toDrop > 0) Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, toDrop);
+            if (toDrop > 0) Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, toDrop);
         }
 
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
