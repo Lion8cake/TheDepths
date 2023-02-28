@@ -16,27 +16,27 @@ namespace TheDepths.Projectiles.Chasme
 {
 	public class GemforgeCutscene : ModProjectile
 	{
-        public override void SetStaticDefaults()
-        {
+		public override void SetStaticDefaults()
+		{
 			NPCID.Sets.MPAllowedEnemies[NPCID.WallofFlesh] = true;
 		}
 
-        public override void SetDefaults()
-        {
-            Projectile.width = 10;
-            Projectile.height = 10;
-            Projectile.friendly = true;
-            Projectile.timeLeft = 300; //5 seconds (60 x 5)
-            Projectile.aiStyle = -1;
-        }
+		public override void SetDefaults()
+		{
+			Projectile.width = 10;
+			Projectile.height = 10;
+			Projectile.friendly = true;
+			Projectile.timeLeft = 300; //5 seconds (60 x 5)
+			Projectile.aiStyle = -1;
+		}
 
-        public override void AI()
-        {
-            Player player = Main.LocalPlayer;
+		public override void AI()
+		{
+			Player player = Main.LocalPlayer;
 			Vector2 vector311 = Projectile.Center + new Vector2(0f, -20f);
 			float num1589 = 0.99f;
 			if (Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210)
-            {
+			{
 				player.AddBuff(ModContent.BuffType<RelicsCurse>(), 5);
 			}
 			if (Projectile.timeLeft >= 160f)
@@ -102,7 +102,7 @@ namespace TheDepths.Projectiles.Chasme
 						NPC.NewNPC(new EntitySource_Misc(""), (int)(Projectile.Center.X + 1500f), (int)Projectile.Center.Y, NPCID.WallofFlesh, 0, 1f, 0f, 0f, player.whoAmI);
 					}
 					else
-                    {
+					{
 						NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: NPCID.WallofFlesh);
 					}
 				}
