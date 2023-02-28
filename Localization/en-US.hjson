@@ -5,6 +5,7 @@ Mods: {
 			DepthsTip1: "If you dig deep enough in the right world, you might end up in The Depths!"
 			DepthsTip2: "Defeat the Shadowstone giant Chasme to change the world forever. Using a Ruby Relic at a Gemforge might summon her..."
 			DepthsTip3: "Aquerite is super poisonus, craft a crystal skull to be immue to its poisoning."
+			DepthsTip4: "Don't fall into quicksilver without drinking an Crystal Skin Potion first!"
 		}
 	}
 }

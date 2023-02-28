@@ -77,6 +77,11 @@ namespace TheDepths.Items.Placeable
 			AddAndReplace<Gemforge>(ItemID.Hellforge);
 			AddAndReplace<AmalgamAmulet>(ItemID.LavaCharm);
 			AddAndReplace<StoneRose>(ItemID.ObsidianRose);
+			AddAndReplace<SilverStar>(ItemID.Sunfury);
+			AddAndReplace<Ember>(ModContent.ItemType<DiamondDust>());
+			AddAndReplace<Skyfall>(ItemID.FlowerofFire);
+			AddAndReplace<LivingFog>(ItemID.LivingFireBlock);
+			AddAndReplace<BlueSphere>(ItemID.HelFire);
 		}
 
 		private static void AddAndReplace<TConf>(int hall) where TConf : ModItem

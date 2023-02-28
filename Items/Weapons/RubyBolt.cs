@@ -8,7 +8,7 @@ using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Weapons
 {
-	public class OnyxSepter : ModItem
+	public class RubyBolt : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,32 +17,31 @@ namespace TheDepths.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			Item.damage = 68;
+			Item.damage = 72;
 			Item.DamageType = DamageClass.Magic;
-			Item.mana = 6;
-			Item.width = 30;
-			Item.height = 30;
+			Item.mana = 7;
+			Item.width = 48;
+			Item.height = 44;
 			Item.useTime = 27;
 			Item.useAnimation = 27;
 			Item.autoReuse = true;
 			Item.useStyle = 5;
 			Item.staff[Item.type] = true;
 			Item.noMelee = true;
-			Item.knockBack = 4f;
-			Item.value = Item.sellPrice(0, 0, 80);
-			Item.rare = 5;
+			Item.knockBack = 3f;
+			Item.value = Item.sellPrice(0, 1, 0);
+			Item.rare = 4;
 			Item.UseSound = SoundID.Item43;
 			Item.autoReuse = true;
-			Item.shoot = ModContent.ProjectileType<OnyxBolt>();
+			Item.shoot = ModContent.ProjectileType<Projectiles.RubyBolt>();
 			Item.shootSpeed = 7.5f;
 		}
 		
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 10);
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 6);
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Onyx>(), 8);
+			recipe.AddIngredient(ItemID.RubyStaff);
+			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Ember>(), 30);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

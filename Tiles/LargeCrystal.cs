@@ -63,6 +63,7 @@ namespace TheDepths.Tiles
 			DustType = ModContent.DustType<QuartzCrystals>();
 			AdjTiles = new int[] { Type };
 			Main.tileLighted[Type] = true;
+			HitSound = SoundID.Shatter;
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)

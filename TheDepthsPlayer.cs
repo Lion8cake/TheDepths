@@ -43,6 +43,8 @@ namespace TheDepths
 
         public bool geodeCrystal;
         public bool livingShadow;
+        public bool miniChasme;
+        public bool miniChasmeArms;
         public bool ShadePet;
 
         public override void ResetEffects()
@@ -59,6 +61,8 @@ namespace TheDepths
 
             geodeCrystal = false;
             livingShadow = false;
+            miniChasme = false;
+            miniChasmeArms = false;
             ShadePet = false;
 
 

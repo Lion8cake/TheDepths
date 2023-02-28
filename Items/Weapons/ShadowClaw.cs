@@ -30,7 +30,7 @@ namespace TheDepths.Items.Weapons
 			Item.knockBack = 5;
 			Item.value = 10000;
 			Item.rare = ItemRarityID.LightRed;
-			Item.UseSound = SoundID.Item21;
+			Item.UseSound = SoundID.Item43;
 			Item.autoReuse = false;
 			Item.shoot = ModContent.ProjectileType<ShadowClawBottom>();
 			Item.shootSpeed = 32f;

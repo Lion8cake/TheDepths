@@ -1,46 +1,83 @@
 =========================================
 The Depths (Alternate Hell)
 =========================================
-0.4.0.2
+0.5.2
 This mod uses altlib to better be able to be used with other alternate mods like the Confection
 
 The Depths is an alternate version of the underworld similar to how crimson corruption works. It generates instead of the underworld to ive some of your worlds that bit of spice when starting a new playthrough.
 This mod is made by the same devs behind the confection mod, a mod similar to this one but for the hallow. This biome and most of its sprites and ideas come from Snickerbobble and her forum talking about her take on an alternate hell.
 
-We encourage people make new worlds as this mod adds world generation to new worlds that allows the new content to be accessed.
 =========================================
 Change Log
 =========================================
-Fixed WoF spawning only on the left side
-Fixed crash with the sapphire serpent banner
-Added more recipes to the core builder
+Readded Altlib support
 
-Added gemforge and ruby relic cutscene for when you place a relic in the underworld/depths
-updated quartz door texture
-fixed sound when breaking most bricks
-updated textures to match 1.4.4.9
-added some unobtainabble new items
-made ruby relic now drop 25% of the time instead of 5% from shades
-changed rates of how npcs spawn
-added gores
-fixed coins dropped from npcs
-fixed hit, death and other sounds from npcs
-Added recipe to quartz platform
-fixed quartz platform being destroyed by lava
-fixed hitboxes with several npcs
-Added stone rose
-added terraspark boots crafting recipe
-changed silver slipper crafting and accessory effects
-fixed torch recipes
-added onyx generation
-changed the map colour and name for shalestone onyx
-added map names to the shalestone gems
-fixed amount given when making black gemspark blocks
-made shaletone extractable and give onyx in hardmode
-gemforges now nolonger have solid tops
-Changed how high the depths registers at
-made the rare occurance for hell enemies to spawn in depths worlds rarer but not fixed
-
+=========
+0.5.0
+=========
+Fixed crash when placing some banners
+Made King coal an underworld enemy
+Fixed tool top for the crystal water walking boots mentioning the now renamed Mercury boiling
+Fixed Aqua glove accessory not showing up on the player
+Added player accessory texture for the amalgamate amulet
+Added player accessory texture for the crystal skull
+Fixed Crystal skull giving regen
+Added player accessory texture for the stone rose
+Made the quicksilver surfboard nolonger wings and now is a flying carpet upgrade
+Added recipe to the quicksilver surfboard
+Changed quicksilver surfboard description
+Made crystal shield and sactus shield give DR (damage reduction) instead of defence
+Fixed Purple plumbers hat not showing tuffs of hair
+Fixed the Onyx robe not to show skin when jumping
+Added Purple plumbers pants
+Added Purple plumbers shirt
+Added purple plumbers cloths (apart from hat) now being sold by the clothier during a full moon when the world is depths
+Added Purple plumber set interchange from the core builder
+Reworked mercury debuffs
+Reworked ember tiles (all current ember tiles are deleted to prevent world corruption)
+Added ruby relic icon when hovering over a gemforge when deep enough
+Added extra hint to the ruby relic description
+Fixed placed gems duplicating when broken
+Made misc changes to placed gems
+Added various new dusts to prevent repitition and odd looking breaking animations and torch dusts
+Fixed light givin off from the geode torch when placed
+Finished the Large Crystal
+Large crystals now give off a tiny amount of light
+Fixed crystal skull requiring 30 quartz instead of 20
+Slightly Updated the living fog sprite
+Made Living fog, blue sphere and ruby relic now drop when the player is in the depths and living fire, cascade and Hel-fire wont drop in the depths anymore
+Reworked depths pots to now behave more like vanilla pots
+Reworked shadow shrub to now bloom during 10:45pm and 1:15am instead of randomly
+Reworked shadow shrub planterbox 
+Fixed Dryad not selling the shadow shrub planterbox once the world enters hardmode
+Fixed gemforge not being required to make titanium and adamantite forges
+Fixed arquerite bars not being used in the DCU
+Fixed Shadow Shrub not being required for some potions and flower garmand
+Fixed Trimex not being required for the night's edge
+Reworked Silverado
+Reworked sky fall yoyo
+Reworked Blue Sphere
+Added depths biome water
+Added Magic Quicksilver Dropper
+Nerfed Mercury pickaxe and hamaxe
+Reworked the Diamond Arrow
+Reworked the Shadow sphere
+Made shades nolonger float through tiles and sapphire serpents spawn less to make mining nolonger a pain in the ass
+Changed shades to nolonger mention floating through blocks
+Updated geomancer sprite and ai
+Changed geomancer bestiary
+Fixed drop chances from geomancers
+Made Pots generate in the depths
+Made shadow shrub now generate in the depths
+made onyx now generate once hardmode starts
+Added Night's fury
+Added Shaderang
+Buffed onyx septer
+Added Ruby bolt
+Added Diamond bolt
+Added Steelocanth
+Added Quartz cannon
+Added Blue sphere, living fog, sky fall, silver star and diamond dust interchangeable recipes for the core builder
 ==========================================
 -=Credits=-
 ==========================================

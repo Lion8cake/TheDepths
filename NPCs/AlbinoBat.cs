@@ -9,7 +9,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TheDepths.Items.Banners;
-using AltLibrary.Common.Systems;
+//using AltLibrary.Common.Systems;
 using TheDepths.Biomes;
 using Terraria.GameContent.Bestiary;
 
@@ -57,14 +57,14 @@ namespace TheDepths.NPCs
 			});
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		/*public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 			if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
 			{
 				return 1.25f;
 			}
 			return 0f;
-		}
+		}*/
 
 		public override void HitEffect(int hitDirection, double damage)
 		{

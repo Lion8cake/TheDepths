@@ -25,7 +25,6 @@ namespace TheDepths
             {
                 int index2 = list.FindIndex(genpass => genpass.Name.Equals("Underworld"));
                 int index3 = list.FindIndex(genpass => genpass.Name.Equals("Hellforge"));
-
 				if (index2 != -1)
                 {
                     list.Insert(index2 + 1, new PassLegacy("The Depths: Underworld Alt", new WorldGenLegacyMethod(Depths)));
@@ -54,6 +53,8 @@ namespace TheDepths
 		{
 			OnyxShale();
 		}
+
+
 
 		private void Pots(GenerationProgress progress, GameConfiguration configuration)
 		{

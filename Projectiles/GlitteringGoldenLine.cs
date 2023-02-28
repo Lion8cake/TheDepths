@@ -81,6 +81,11 @@ namespace TheDepths.Projectiles
 			Projectile.rotation = Projectile.velocity.ToRotation();
 		}
 
+		public override bool? CanCutTiles()
+		{
+			return false;
+		}
+
 		public Projectile FindClosestBlueSphere(float maxDetectDistance)
 		{
 			Projectile BlueSphere = null;

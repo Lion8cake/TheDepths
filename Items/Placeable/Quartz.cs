@@ -2,6 +2,8 @@ using TheDepths.Items.Placeable;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
+using Terraria;
+using TheDepths.Items.Weapons;
 
 namespace TheDepths.Items.Placeable
 {
@@ -26,6 +28,16 @@ namespace TheDepths.Items.Placeable
 			Item.width = 12;
 			Item.height = 12;
 			Item.rare = ItemRarityID.White;
+			//Item.shoot = ModContent.ProjectileType<Projectiles.QuartzChunk>(); 
 		}
-	}
+
+        public override bool? CanBeChosenAsAmmo(Item weapon, Player player)
+        {
+			if (Main.LocalPlayer.HeldItem.type == ModContent.ItemType<QuartzCannon>())
+			{
+				return true;
+			}
+			return false;
+		}
+    }
 }
