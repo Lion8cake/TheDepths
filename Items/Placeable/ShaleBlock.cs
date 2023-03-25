@@ -11,6 +11,14 @@ namespace TheDepths.Items.Placeable
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+			if (ModContent.GetInstance<TheDepthsClientConfig>().SlateConfig)
+            {
+				DisplayName.SetDefault("Slate Block");
+            }
+			else
+            {
+				DisplayName.SetDefault("Shale Block");
+			}
 		}
 
 		public override void SetDefaults() {

@@ -12,6 +12,14 @@ namespace TheDepths.Items.Placeable
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 			ItemID.Sets.ExtractinatorMode[Item.type] = Item.type;
+			if (ModContent.GetInstance<TheDepthsClientConfig>().SlateConfig)
+			{
+				DisplayName.SetDefault("Slatestone");
+			}
+            else
+            {
+				DisplayName.SetDefault("Shalestone");
+			}
 		}
 
 		public override void SetDefaults()

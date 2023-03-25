@@ -266,9 +266,51 @@ namespace TheDepths
                 }
                 else
                 {
-                    TextureAssets.FlyingCarpet = Request<Texture2D>("TheDepths/Assets/FlyingCarpet/FlyingCarpet");
+                    TextureAssets.FlyingCarpet = Main.Assets.Request<Texture2D>("Images/FlyingCarpet");
+                }
+                if (WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+                {
+                    //TextureAssets.Dust = Request<Texture2D>("TheDepths/Lava/Dust");
+                    TextureAssets.Liquid[1] = Request<Texture2D>("TheDepths/Lava/Quicksilver_Block");
+                    TextureAssets.LiquidSlope[1] = Request<Texture2D>("TheDepths/Lava/Quicksilver_Slope");
+                    TextureAssets.Item[207] = Request<Texture2D>("TheDepths/Lava/QuicksilverBucket");
+                    TextureAssets.Item[4820] = Request<Texture2D>("TheDepths/Lava/BottomlessQuicksilverBucket");
+                    TextureAssets.Item[4872] = Request<Texture2D>("TheDepths/Lava/QuicksilverSponge");
+
+                    //Old Texture/lava layer background
+                    int[] bgnum = new int[30] { 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 150, 151, 152, 157, 158, 159, 185, 186, 187 };
+                    foreach (int i in bgnum)
+                    {
+                        TextureAssets.Background[i] = Request<Texture2D>("TheDepths/Backgrounds/Background_" + i);
+                    }
+                }
+                else
+                {
+                    //TextureAssets.Dust = Main.Assets.Request<Texture2D>("Images/Dust");
+                    TextureAssets.Liquid[1] = Main.Assets.Request<Texture2D>("Images/Liquid_1");
+                    TextureAssets.LiquidSlope[1] = Main.Assets.Request<Texture2D>("Images/LiquidSlope_1");
+                    TextureAssets.Item[207] = Main.Assets.Request<Texture2D>("Images/Item_207");
+                    TextureAssets.Item[4820] = Main.Assets.Request<Texture2D>("Images/Item_4820");
+                    TextureAssets.Item[4872] = Main.Assets.Request<Texture2D>("Images/Item_4872");
+
+                    //Old Texture/lava layer background
+                    int[] bgnumOriginal = new int[30] { 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 150, 151, 152, 157, 158, 159, 185, 186, 187 };
+                    foreach (int i in bgnumOriginal)
+                    {
+                        TextureAssets.Background[i] = Main.Assets.Request<Texture2D>("Images/Background_" + i);
+                    }
                 }
             }
+            if (Player.lavaWet && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+            {
+                Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 7, false, false);
+                Player.lavaImmune = true;
+            }
+            /*else if (Player.lavaWet && WorldBiomeManager.WorldHell != "TheDepths/AltDepthsBiome")
+            {
+                Player.lavaImmune = false;
+            }*/
+            
         }
 
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)

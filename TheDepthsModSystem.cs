@@ -12,6 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheDepths.Tiles;
 using Microsoft.Xna.Framework;
+using Terraria.GameContent.Liquid;
 
 namespace TheDepths
 {
@@ -35,6 +36,35 @@ namespace TheDepths
                 if (Main.rand.Next(100) == 0 && Main.rand.Next(maxValue2) == 0)
                     PlantAlch();
             }
+
+            if (!Main.dedServ && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+            {
+                for (int i = 0; i < LiquidRenderer.Instance._liquidTextures.Length; i++)
+                {
+                    LiquidRenderer.Instance._liquidTextures[1] = ModContent.Request<Texture2D>("TheDepths/Lava/Quicksilver", (AssetRequestMode)1);
+                }
+                for (int i = 0; i < LiquidRenderer.Instance._liquidTextures.Length; i++)
+                {
+                    if (i <= 0 || i >= 2)
+                    {
+                        LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
+                    }
+                }
+            }
+            else
+            {
+                if (!Main.dedServ)
+                {
+                    for (int i = 0; i < LiquidRenderer.Instance._liquidTextures.Length; i++)
+                    {
+                        LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
+                    }
+                }
+            }
+            /*for (int i = 0; i < 26; i++)
+            {
+                WaterfallManager.waterfallTexture[i] = Main.Assets.Request<Texture2D>("Images/Waterfall_" + i, (AssetRequestMode)2);
+            }*/
         }
 
         public static void PlantAlch()
