@@ -12,13 +12,12 @@ namespace TheDepths.Items.Weapons
 	public class SapphireShovel : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Disables enemies for a few seconds.");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults() {
 			Item.damage = 20;
-			Item.DamageType = DamageClass.Melee/* tModPorter Suggestion: Consider MeleeNoSpeed for no attack speed scaling */;
+			Item.DamageType = DamageClass.Melee;
 			Item.width = 40;
 			Item.height = 40;
 			Item.useTime = 30;
@@ -34,7 +33,7 @@ namespace TheDepths.Items.Weapons
 			Item.shootSpeed = 7.5f;
 		}
 		
-		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(ModContent.BuffType<Buffs.FreezingWater>(), 150);
 		}
 	}

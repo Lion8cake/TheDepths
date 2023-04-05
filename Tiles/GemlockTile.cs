@@ -4,6 +4,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -23,9 +24,8 @@ namespace TheDepths.Tiles
             TileObjectData.addTile(Type);
             TileID.Sets.DisableSmartCursor[Type] = true;
             DustType = 7;
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("");
-            AddMapEntry(new Color(120, 120, 120), name);
+            LocalizedText name = CreateMapEntryName();
+            AddMapEntry(new Color(120, 120, 120));
         }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
         {

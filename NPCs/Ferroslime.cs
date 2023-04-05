@@ -11,7 +11,6 @@ using Microsoft.Xna.Framework.Graphics;
 using TheDepths.Items.Banners;
 using Terraria.GameContent.ItemDropRules;
 using TheDepths.Items.Accessories;
-using AltLibrary.Common.Systems;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;
 using TheDepths.Dusts;
@@ -21,7 +20,6 @@ namespace TheDepths.NPCs
 	public class Ferroslime : ModNPC
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Ferroslime");
 			Main.npcFrameCount[NPC.type] = 2; 
 		}
 		
@@ -48,18 +46,18 @@ namespace TheDepths.NPCs
 		{
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-				new FlavorTextBestiaryInfoElement("This slime may appear spiky, but that's only its ferrofluid spiking up to come off as more threatening than it is.")
+				new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.Ferroslime")
 			});
 		}
 
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
     	{
     		target.AddBuff(BuffID.Blackout, 180);
     	}
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-			if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+			if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell)
             {
 				return 1.3f;
             }
@@ -72,7 +70,7 @@ namespace TheDepths.NPCs
 			npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 5, 15));
 		}
 
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 			{

@@ -17,8 +17,6 @@ namespace TheDepths.Buffs
 	public class MercuryBoiling : ModBuff
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mercury Poisoning");
-			Description.SetDefault("Slowly losing life");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;

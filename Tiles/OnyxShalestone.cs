@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using TheDepths.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,8 +16,7 @@ namespace TheDepths.Tiles
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Onyx");
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(22, 26, 25), name);
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShaleBlock").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("Shalestone").Type] = true;

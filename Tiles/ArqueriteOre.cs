@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using TheDepths.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,8 +32,7 @@ namespace TheDepths.Tiles
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShalestoneTopaz").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("OnyxShalestone").Type] = true;
 
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Arquerite Ore");
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(119, 134, 162), name);
 
 			ItemDrop = ModContent.ItemType<Items.Placeable.ArqueriteOre>();

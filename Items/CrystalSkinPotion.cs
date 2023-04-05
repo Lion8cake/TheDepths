@@ -9,8 +9,6 @@ namespace TheDepths.Items
 	{
         public override void SetStaticDefaults()
         {
-		    DisplayName.SetDefault("Crystal Skin Potion");
-            Tooltip.SetDefault("Provides immunity to Quicksilver");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
         }
 

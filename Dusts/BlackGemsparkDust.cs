@@ -3,22 +3,22 @@ using Terraria.ModLoader;
 
 namespace TheDepths.Dusts
 {
-public class BlackGemsparkDust : ModDust
-{
-	public override void OnSpawn(Dust dust)
+	public class BlackGemsparkDust : ModDust
 	{
-		dust.scale *= 1.3f;
-	}
-
-	public override bool MidUpdate(Dust dust)
-	{
-		float num = dust.scale * 1.25f;
-		if (num > 1f)
+		public override void OnSpawn(Dust dust)
 		{
-			num = 1f;
+			dust.scale *= 1.3f;
 		}
-		Lighting.AddLight(dust.position, 0.15f * num, 0.15f * num, 0.15f * num);
-		return false;
+
+		public override bool MidUpdate(Dust dust)
+		{
+			float num = dust.scale * 1.25f;
+			if (num > 1f)
+			{
+				num = 1f;
+			}
+			Lighting.AddLight(dust.position, 0.15f * num, 0.15f * num, 0.15f * num);
+			return false;
+		}
 	}
-}
 }

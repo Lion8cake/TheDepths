@@ -6,17 +6,16 @@ using Terraria.ID;
 using TheDepths.Items.Placeable;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
+using Terraria.Localization;
 
 namespace TheDepths.Items.Armor
 {
 	[AutoloadEquip(EquipType.Head)]
 	public class GeodeHelmet : ModItem
 	{ 
-	    
 		public int timer;
 		
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Incressed maximum amount of minions by 1");
 			ArmorIDs.Head.Sets.DrawHead[Item.headSlot] = false;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -30,7 +29,7 @@ namespace TheDepths.Items.Armor
 		}
 		
 		public override void UpdateEquip(Player player) {
-		player.maxMinions++;
+			player.maxMinions++;
 		}
 
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
@@ -38,8 +37,8 @@ namespace TheDepths.Items.Armor
 		}
 
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Summons 4 Geode Crystals that will deal 20 damage";
-				timer++;
+			player.setBonus = Language.GetTextValue("Mods.TheDepths.SetBonus.GeodeHelmet");
+			timer++;
 			if (player.ownedProjectileCounts[Mod.Find<ModProjectile>("GeodeCrystalSummon").Type] < 1 && timer > 20)
 			{
 				for (int i = 0; i < 6; i++)

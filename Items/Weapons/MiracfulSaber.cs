@@ -21,17 +21,6 @@ namespace TheDepths.Items.Weapons
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Miracful Saber");
-			Tooltip.SetDefault($@"Changes blade color every 14 swings
-There are 8 weapon modes in total
-[c/A500EC:Amethyst Mode]: Transforms in amethyst whip
-[c/F19F01:Topaz Mode]: Shoots 4-6 hot fire every swing
-[c/0D6BD8:Sapphire Mode]: Sword now able to freeze enemies!
-[c/21B873:Emerald Mode]: Power of nature blesses your weapon...
-[c/C3292C:Ruby Mode]: Sword begins to shoot crimson musical notes
-[c/DFE6EE:Diamond Mode]: Blade becomes so shiny, so it begins to shoot with sparkles!
-[c/D58E30:Amber Mode]: Shoots with amber snakes those able to deal colossal damage
-[c/393940:Onyx Mode]: Shoots 5 onyx blasters");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

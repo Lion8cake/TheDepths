@@ -9,7 +9,6 @@ namespace TheDepths.Items.Accessories
 	public class QuickSilverSurfboard : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Allows the owner to float for a few seconds");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

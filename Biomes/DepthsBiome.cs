@@ -1,4 +1,3 @@
-using AltLibrary.Common.Systems;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -22,13 +21,8 @@ public class DepthsBiome : ModBiome
 
     public override string BestiaryIcon => "TheDepths/Biomes/DepthsBestiaryIcon";
 
-    public override void SetStaticDefaults()
-    {
-        DisplayName.SetDefault("The Depths");
-    }
-
     public override bool IsBiomeActive(Player player)
     {
-        return Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210 && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome";
+        return Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210 && TheDepthsWorldGen.depthsorHell;
     }
 }

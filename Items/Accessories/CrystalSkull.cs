@@ -14,7 +14,6 @@ namespace TheDepths.Items.Accessories
 	{
 		public override void SetStaticDefaults() {
             ArmorIDs.Face.Sets.DrawInFaceHeadLayer[Item.faceSlot] = true;
-			Tooltip.SetDefault("Grants immunity to Mercury Radiation");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

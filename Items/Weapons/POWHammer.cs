@@ -13,8 +13,6 @@ namespace TheDepths.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-			DisplayName.SetDefault("POW Hammer");
-			Tooltip.SetDefault("'High bonkability'");
 		}
 
 		public override void SetDefaults() {

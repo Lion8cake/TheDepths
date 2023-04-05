@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using Terraria;
+using Terraria.Localization;
 
 namespace TheDepths.Items.Placeable
 {
@@ -12,13 +13,17 @@ namespace TheDepths.Items.Placeable
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 			ItemID.Sets.ExtractinatorMode[Item.type] = Item.type;
-			if (ModContent.GetInstance<TheDepthsClientConfig>().SlateConfig)
+		}
+
+		public override LocalizedText DisplayName
+		{
+			get
 			{
-				DisplayName.SetDefault("Slatestone");
-			}
-            else
-            {
-				DisplayName.SetDefault("Shalestone");
+				if (ModContent.GetInstance<TheDepthsClientConfig>().SlateConfig)
+				{
+					return Language.GetOrRegister("Mods.TheDepths.ShaleConfig.Slatestone");
+				}
+				return Language.GetOrRegister("Mods.TheDepths.ShaleConfig.Shalestone");
 			}
 		}
 
@@ -36,7 +41,7 @@ namespace TheDepths.Items.Placeable
 			Item.height = 12;
 		}
 
-		public override void ExtractinatorUse(ref int resultType, ref int resultStack)
+		public override void ExtractinatorUse(int extractinatorBlockType, ref int resultType, ref int resultStack)
 		{
 			if (Main.rand.NextBool(15) && Main.hardMode)
 			{

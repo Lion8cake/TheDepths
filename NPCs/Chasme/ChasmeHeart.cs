@@ -34,7 +34,7 @@ public class ChasmeHeart : ModNPC
 
 	public override void SetStaticDefaults()
 	{
-		DisplayName.SetDefault("Chasme");
+		// DisplayName.SetDefault("Chasme");
 
 		NPCID.Sets.BossBestiaryPriority.Add(Type);
 

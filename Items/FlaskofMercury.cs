@@ -9,8 +9,6 @@ namespace TheDepths.Items
 	{
         public override void SetStaticDefaults()
         {
-		    DisplayName.SetDefault("Flask of Mercury");
-            Tooltip.SetDefault("Melee attacks boils enemies with mercury");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 201;
         }
 

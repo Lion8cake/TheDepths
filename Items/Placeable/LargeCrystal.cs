@@ -25,7 +25,7 @@ namespace TheDepths.Items.Placeable
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Quartz>(), 4);
+			recipe.AddIngredient(ModContent.ItemType<Quartz>(), 4);
 			recipe.AddTile(TileID.DemonAltar);
 			recipe.Register();
 		}

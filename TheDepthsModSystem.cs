@@ -1,4 +1,3 @@
-using AltLibrary.Common.Systems;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
@@ -13,11 +12,24 @@ using Terraria.ModLoader;
 using TheDepths.Tiles;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent.Liquid;
+using System.Reflection;
+using System.IO;
+using System.Text.Json;
+using Terraria.ModLoader.Config;
 
 namespace TheDepths
 {
     public class TheDepthsModSystem : ModSystem
     {
+        public override void PostUpdateEverything()
+        {
+            string twld = Path.ChangeExtension(Main.worldPathName, ".twld");
+            if (File.ReadAllText(ConfigManager.ModConfigPath + "/AltLibrary_AltLibraryConfig.json").Contains(twld))
+            {
+                Main.NewText("Found World");
+            }
+        }
+
         public override void OnWorldUnload()
         {
             Gemforge.RubyRelicIsOnForge = 1;
@@ -37,34 +49,28 @@ namespace TheDepths
                     PlantAlch();
             }
 
-            if (!Main.dedServ && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+            if (!Main.dedServ && TheDepthsWorldGen.depthsorHell)
             {
                 for (int i = 0; i < LiquidRenderer.Instance._liquidTextures.Length; i++)
                 {
                     LiquidRenderer.Instance._liquidTextures[1] = ModContent.Request<Texture2D>("TheDepths/Lava/Quicksilver", (AssetRequestMode)1);
                 }
-                for (int i = 0; i < LiquidRenderer.Instance._liquidTextures.Length; i++)
+                int[] liquidAssetRegularNum = new int[14] { 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+                foreach (int i in liquidAssetRegularNum)
                 {
-                    if (i <= 0 || i >= 2)
-                    {
-                        LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
-                    }
+                    LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
                 }
             }
             else
             {
                 if (!Main.dedServ)
                 {
-                    for (int i = 0; i < LiquidRenderer.Instance._liquidTextures.Length; i++)
+                    for (int i = 0; i < 15; i++)
                     {
                         LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
                     }
                 }
             }
-            /*for (int i = 0; i < 26; i++)
-            {
-                WaterfallManager.waterfallTexture[i] = Main.Assets.Request<Texture2D>("Images/Waterfall_" + i, (AssetRequestMode)2);
-            }*/
         }
 
         public static void PlantAlch()

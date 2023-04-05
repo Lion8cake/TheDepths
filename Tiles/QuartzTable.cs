@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.Enums;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
@@ -25,8 +26,7 @@ namespace TheDepths.Tiles
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Table");
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(255, 255, 255), name);
 			DustType = 0;
             TileID.Sets.DisableSmartCursor[Type] = true;

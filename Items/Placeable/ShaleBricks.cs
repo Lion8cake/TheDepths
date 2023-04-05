@@ -3,6 +3,7 @@ using TheDepths.Items.Placeable;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
+using Terraria.Localization;
 
 namespace TheDepths.Items.Placeable
 {
@@ -11,13 +12,17 @@ namespace TheDepths.Items.Placeable
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
-			if (ModContent.GetInstance<TheDepthsClientConfig>().SlateConfig)
+		}
+
+		public override LocalizedText DisplayName
+		{
+			get
 			{
-				DisplayName.SetDefault("Slate Bricks");
-			}
-			else
-            {
-				DisplayName.SetDefault("Shale Bricks");
+				if (ModContent.GetInstance<TheDepthsClientConfig>().SlateConfig)
+				{
+					return Language.GetOrRegister("Mods.TheDepths.ShaleConfig.SlateBricks");
+				}
+				return Language.GetOrRegister("Mods.TheDepths.ShaleConfig.ShaleBricks");
 			}
 		}
 

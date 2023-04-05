@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using TheDepths.Dusts;
@@ -38,11 +39,10 @@ namespace TheDepths.Tiles
 			TileObjectData.addAlternate(0);
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Door");
+			LocalizedText name = CreateMapEntryName();
             TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[]{ TileID.ClosedDoor };
-			OpenDoorID = Mod.Find<ModTile>("QuartzDoorOpen").Type;
+            TileID.Sets.OpenDoorID[Type] = Mod.Find<ModTile>("QuartzDoorOpen").Type;
 			AddMapEntry(new Color(255, 255, 255), name);
 			DustType = ModContent.DustType<QuartzCrystals>();
 		}

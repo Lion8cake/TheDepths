@@ -33,14 +33,14 @@ namespace TheDepths.Projectiles
 			}
 		}
 
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			Projectile.ai[0] += 0.1f;
 			Projectile.velocity *= 0.75f;
 			target.AddBuff(ModContent.BuffType<Buffs.MercuryBoiling>(), 125, false);
 		}
 
-		public override void OnHitPvp(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			target.AddBuff(ModContent.BuffType<Buffs.MercuryBoiling>(), 125, false);
 		}

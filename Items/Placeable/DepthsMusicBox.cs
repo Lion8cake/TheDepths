@@ -7,7 +7,6 @@ namespace TheDepths.Items.Placeable
 	public class DepthsMusicBox : ModItem
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Music Box (Depths)");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

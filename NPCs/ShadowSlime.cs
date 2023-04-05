@@ -9,7 +9,6 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TheDepths.Items.Banners;
-using AltLibrary.Common.Systems;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;
 using TheDepths.Dusts;
@@ -19,7 +18,6 @@ namespace TheDepths.NPCs
 	public class ShadowSlime : ModNPC
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Shadow Slime");
 			Main.npcFrameCount[NPC.type] = 2; 
 		}
 		
@@ -46,25 +44,25 @@ namespace TheDepths.NPCs
 		{
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-				new FlavorTextBestiaryInfoElement("A purely black slime that roams the hardened depths, getting hit by it would be a blinding.")
+				new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.ShadowSlime")
 			});
 		}
 
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
     	{
     		target.AddBuff(BuffID.Darkness, 180);
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+			if (spawnInfo.Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell)
 			{
 				return 1.75f;
 			}
 			return 0f;
 		}
 
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 			{

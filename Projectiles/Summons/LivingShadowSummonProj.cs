@@ -21,7 +21,6 @@ namespace TheDepths.Projectiles.Summons
 {
 	public override void SetStaticDefaults()
 	{
-		DisplayName.SetDefault("Silhouette");
 		Main.projFrames[Projectile.type] = 15;
 		ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 	}

@@ -17,10 +17,6 @@ namespace TheDepths.Items.Accessories
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Crystal Shield");
-			Tooltip.SetDefault("Increases damage reduction by 10%" 
-				+"\nImmune to knockback"
-				+"\nImmune to mercury radiation");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

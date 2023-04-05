@@ -3,5 +3,3 @@ author = Lion8cake & Basically, I am little fox
 version = 0.5.2
 includeSource = true
 includePDB = true
-modReferences = AltLibrary
-sortAfter = AltLibrary

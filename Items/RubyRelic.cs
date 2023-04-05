@@ -13,8 +13,6 @@ namespace TheDepths.Items
 	{
 		public override void SetStaticDefaults()
         {
-            Tooltip.SetDefault("'Do you hear something?'" +
-                "\nMaybe putting this on a gemforge is not the best idea");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
 		}
 

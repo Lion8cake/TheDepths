@@ -25,7 +25,8 @@ namespace TheDepths.Tiles
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);
 			TileID.Sets.DisableSmartCursor[Type] = true;
-			AddMapEntry(new Color(85, 96, 102), Language.GetText("Quicksilver Droplet"));
+			LocalizedText name = CreateMapEntryName();
+			AddMapEntry(new Color(85, 96, 102), name);
 			DustType = 0;
 		}
 

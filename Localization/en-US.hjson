@@ -1,11 +1,1073 @@
+
 Mods: {
 	TheDepths: {
 		GameTips: {
-			DepthsTip0: "An unknown friendly NPC wonders the Depths as a crystal of their former self. If only there were a way to purify them . . ."
-			DepthsTip1: "If you dig deep enough in the right world, you might end up in The Depths!"
-			DepthsTip2: "Defeat the Shadowstone giant Chasme to change the world forever. Using a Ruby Relic at a Gemforge might summon her..."
-			DepthsTip3: "Aquerite is super poisonus, craft a crystal skull to be immue to its poisoning."
-			DepthsTip4: "Don't fall into quicksilver without drinking an Crystal Skin Potion first!"
+			DepthsTip0: An unknown friendly NPC wonders the Depths as a crystal of their former self. If only there were a way to purify them . . .
+			DepthsTip1: If you dig deep enough in the right world, you might end up in The Depths!
+			DepthsTip2: Defeat the Shadowstone giant Chasme to change the world forever. Using a Ruby Relic at a Gemforge might summon her...
+			DepthsTip3: Aquerite is super poisonus, craft a crystal skull to be immue to its poisoning.
+			DepthsTip4: Don't fall into quicksilver without drinking an Crystal Skin Potion first!
 		}
+
+		common: {
+			Banner: " Banner"
+			Banner2: Nearby players get a bonus against:
+			CaughtInConfection: Caught anywhere in the Confection
+			CaughtInConfectionSF: Caught anywhere in the Confection Surface
+			CaughtInConfectionUG: Caught anywhere in the Confection Underground
+		}
+
+		ItemName: {
+			# Accessories
+			AmalgamAmulet: Amalgam Amulet
+			AquaGlove: Aqua Glove
+			AquaStone: Aqua Stone
+			CrystalShield: Crystal Shield
+			CrystalSkull: Crystal Skull
+			CrystalWaterWalkingBoots: Crystal Water Walking Boots
+			LodeStone: Lode Stone
+			QuickSilverSurfboard: Quicksilver Surfboard
+			SanctusShield: Sanctus Shield
+			SilverSlippers: Silver Slippers
+			StoneRose: Stone Rose
+			# Armor
+			CharredCrown: Charred Crown
+			CrystalCrown: Crystal Crown
+			GeodeChestplate: Geode Chestplate
+			GeodeHelmet: Geode Helmet
+			GeodeLeggings: Geode Leggings
+			MercuryChestplate: Mercury Chestplate
+			MercuryGreaves: Mercury Greaves
+			MercuryHelmet: Mercury Helmet
+			OnyxRobe: Onyx Robe
+			PurplePlumbersHat: Purple Plumber's Hat
+			PurplePlumbersPants: Purple Plumber's Pants
+			PurplePlumbersShirt: Purple Plumber's Shirt
+			# Banners
+			AchromaBanner: "{$Mods.TheDepths.NPCName.Achroma}{$Mods.TheDepths.Common.Banner}"
+			AlbinoBatBanner: "{$Mods.TheDepths.NPCName.AlbinoBat}{$Mods.TheDepths.Common.Banner}"
+			CrystalKingBanner: "{$Mods.TheDepths.NPCName.CrystalKing}{$Mods.TheDepths.Common.Banner}"
+			FerroslimeBanner: "{$Mods.TheDepths.NPCName.Ferroslime}{$Mods.TheDepths.Common.Banner}"
+			GeomancerBanner: "{$Mods.TheDepths.NPCName.Geomancer}{$Mods.TheDepths.Common.Banner}"
+			GoldBatBanner: "{$Mods.TheDepths.NPCName.GoldBat}{$Mods.TheDepths.Common.Banner}"
+			KingCoalBanner: "{$Mods.TheDepths.NPCName.KingCoal}{$Mods.TheDepths.Common.Banner}"
+			SapphireSerpentBanner: "{$Mods.TheDepths.NPCName.DepthsWorm}{$Mods.TheDepths.Common.Banner}"
+			ShadeBanner: "{$Mods.TheDepths.NPCName.Shade}{$Mods.TheDepths.Common.Banner}"
+			ShadowBatBanner: "{$Mods.TheDepths.NPCName.ShadowBat}{$Mods.TheDepths.Common.Banner}"
+			ShadowSlimeBanner: "{$Mods.TheDepths.NPCName.ShadowSlime}{$Mods.TheDepths.Common.Banner}"
+			# Placeable
+			ArqueriteBar: Arquerite Bar
+			ArqueriteBricks: Arquerite Bricks
+			ArqueriteBrickWall: Arquerite Brick Wall
+			ArqueriteOre: Arquerite Ore
+			BlackGemspark: Black Gemspark
+			BlackTorch: Black Torch
+			CoreBuilder: Core Builder
+			DepthsMusicBox: Music Box (Depths)
+			DiamondDust: Diamond Dust
+			Ember: Ember
+			Gemforge: Gemforge
+			Geode: Geode
+			GeoTorch: Geo Torch
+			LargeCrystal: Large Crystal
+			LivingFog: Living Fog Block
+			MagicQuicksilverDropper: Magic Quicksilver Dropper
+			Onyx: Onyx
+			OnyxGemLock: Onyx Gem Lock
+			PetrifiedWood: Petrified Wood
+			Quartz: Quartz
+			QuartzBlock: Quartz Block
+			QuartzBricks: Quartz Bricks
+			QuartzBrickWall: Quartz Brick Wall
+			QuartzChair: Quartz Chair
+			QuartzDoor: Quartz Door
+			QuartzPillar: Quartz Pillar
+			QuartzPlatform: Quartz Platform
+			QuartzTable: Quartz Table
+			QuartzWorkbench: Quartz Work Bench
+			ShadowBrick: Shadow Brick
+			ShadowShrubPlanterBox: Shadow Shrub Planter Box
+			ShadowShrubSeeds: Shadow Shrub Seeds
+			SilverfallBlock: Silverfall Block
+			SilverfallWall: Silverfall Wall
+			# Weapons
+			BlackPhaseblade: Black Phaseblade
+			BlackPhasesaber: Black Phasesaber
+			BlueSphere: Blue Sphere
+			DiamondArrow: Diamond Arrow
+			DiamondBolt: Diamond Bolt
+			LivingShadowStaff: Living Shadow Staff
+			MercuryHamaxe: Mercury Hamaxe
+			MercuryPickaxe: Mercury Pickaxe
+			MiracfulSaber: Miracful Saber
+			NightFury: Night Fury
+			OnyxSepter: Onyx Septer
+			POWHammer: POW Hammer
+			QuartzCannon: Quartz Cannon
+			RubyBolt: Ruby Bolt
+			SapphireShovel: Sapphire Shovel
+			ShadeBlade: Shade Blade
+			Shaderang: Shaderang
+			ShadowClaw: Shadow Claw
+			ShadowSphere: Shadow Sphere
+			Silverado: Silverado
+			SilverStar: Silver Star
+			Skyfall: Skyfall
+			Steelocanth: Steelocanth
+			Terminex: Terminex
+			# Misc/common items
+			CrystalSkinPotion: Crystal Skin Potion
+			FlaskofMercury: Flask of Mercury
+			LargeOnyx: Large Onyx
+			OnyxHook: Onyx Hook
+			RubyRelic: Ruby Relic
+			ShadowShrub: Shadow Shrub
+			SilverSpherePotion: Silver Sphere Potion
+			# Pets
+			ShadePetItem: Cheese And Crackers
+		}
+
+		ItemTooltip: {
+			# Accessories
+			AmalgamAmulet: Grants immunity to Mercury Poisoning
+			AquaGlove:
+				'''
+				Increases Melee knockback and inflicts freezing water on attack
+				12% increased melee speed and damage
+				Enables auto swing for melee weapons
+				'''
+			AquaStone: Inflicts freezing water on attack
+			CrystalShield:
+				'''
+				Increases damage reduction by 10% 
+				Immune to knockback
+				Immune to mercury radiation
+				'''
+			CrystalSkull: Grants immunity to Mercury Radiation
+			CrystalWaterWalkingBoots:
+				'''
+				Provides the ability to walk on water & honey
+				Grants immunity to mercury radiation
+				'''
+			LodeStone: Increases item pickup range
+			QuickSilverSurfboard: Allows the owner to float for a few seconds
+			SanctusShield:
+				'''
+				Grants immunity to knockback and mercury radiation
+				Increases damage reduction by 10% 
+				Grants immunity to most debuffs
+				'''
+			SilverSlippers:
+				'''
+				Provides the ability to walk on water, honey, lava & quicksilver
+				Grants immunity to mercury poisoning and radiation
+				'''
+			StoneRose: Reduced damage from Mercury debuffs
+			# Armor
+			CharredCrown: 18% Increased Magic Damage
+			CrystalCrown: 20% Increased Magic Critical Strike Chance
+			GeodeChestplate: Incressed maximum amount of minions by 1
+			GeodeHelmet: Incressed maximum amount of minions by 1
+			GeodeLeggings: Incressed maximum amount of minions by 1
+			MercuryChestplate: 8% Increased Melee Damage
+			MercuryGreaves: 10% Increased Movement Speed
+			MercuryHelmet: 4% Increased melee critical strike chance
+			OnyxRobe:
+				'''
+				20% decreased mana usage
+				Increases maximum mana by 60
+				'''
+			# Banner
+			AchromaBanner: "{$Mods.TheDepths.Common.Banner2} {$Mods.TheDepths.NPCName.Achroma}"
+			AlbinoBatBanner: "{$Mods.TheDepths.Common.Banner2} {$Mods.TheDepths.NPCName.AlbinoBat}"
+			CrystalKingBanner: "{$Mods.TheDepths.Common.Banner2} {$Mods.TheDepths.NPCName.CrystalKing}"
+			FerroslimeBanner: "{$Mods.TheDepths.Common.Banner2} {$Mods.TheDepths.NPCName.Ferroslime}"
+			GeomancerBanner: "{$Mods.TheDepths.Common.Banner2} {$Mods.TheDepths.NPCName.Geomancer}"
+			GoldBatBanner: "{$Mods.TheDepths.Common.Banner2} {$Mods.TheDepths.NPCName.GoldBat}"
+			KingCoalBanner: "{$Mods.TheDepths.Common.Banner2} {$Mods.TheDepths.NPCName.KingCoal}"
+			SapphireSerpent: "{$Mods.TheDepths.Common.Banner2} {$Mods.TheDepths.NPCName.DepthsWorm}"
+			ShadeBanner: "{$Mods.TheDepths.Common.Banner2} {$Mods.TheDepths.NPCName.Shade}"
+			ShadowBatBanner: "{$Mods.TheDepths.Common.Banner2} {$Mods.TheDepths.NPCName.ShadowBat}"
+			ShadowSlimeBanner: "{$Mods.TheDepths.Common.Banner2} {$Mods.TheDepths.NPCName.ShadowSlime}"
+			# Placeable
+			CoreBuilder:
+				'''
+				Allows you to convert hell materials into their depths alternatives and vice versa 
+				            'A legendary forge which is rumored to have made the world's core'
+				'''
+			# Weapons
+			BlueSphere: Collect them all!
+			DiamondArrow: 3 bursts of crystals are shot out in random directions apon impact
+			LivingShadowStaff: Summons a Silhouette to fight for you
+			MiracfulSaber:
+				'''
+				Changes blade color every 14 swings
+				There are 8 weapon modes in total
+				[c/A500EC:Amethyst Mode]: Transforms in amethyst whip
+				[c/F19F01:Topaz Mode]: Shoots 4-6 hot fire every swing
+				[c/0D6BD8:Sapphire Mode]: Sword now able to freeze enemies!
+				[c/21B873:Emerald Mode]: Power of nature blesses your weapon...
+				[c/C3292C:Ruby Mode]: Sword begins to shoot crimson musical notes
+				[c/DFE6EE:Diamond Mode]: Blade becomes so shiny, so it begins to shoot with sparkles!
+				[c/D58E30:Amber Mode]: Shoots with amber snakes those able to deal colossal damage
+				[c/393940:Onyx Mode]: Shoots 5 onyx blasters
+				'''
+			POWHammer: High bonkability
+			SapphireShovel: Disables enemies for a few seconds.
+			ShadowClaw: Releases dark energy
+			Skyfall: Mercury Rain falls from this throw
+			# Misc/common items
+			CrystalSkinPotion: Provides immunity to Quicksilver
+			FlaskofMercury: Melee attacks boils enemies with mercury
+			LargeOnyx: For Capture the Gem. It drops when you die
+			RubyRelic:
+				'''
+				'Do you hear something?'
+				            Maybe putting this on a gemforge is not the best idea
+				'''
+			# Pets
+			ShadePetItem: Summons a Shade Pet to follow you
+		}
+
+		SetBonus: {
+			GeodeHelmet: Summons 4 Geode Crystals that will deal 20 damage
+			MercuryHelmet:
+				'''
+				3 Defence
+				Mercury cannot infect you
+				'''
+		}
+
+		ShaleConfig: {
+			SlateBlock: Slate Block
+			ShaleBlock: Shale Block
+			SlateBricks: Slate Bricks
+			ShaleBricks: Shale Bricks
+			Slatestone: Slatestone
+			Shalestone: Shalestone
+		}
+
+		NPCName: {
+			# Chasme
+			ChasmeBody: Chasme Body
+			ChasmeHandRight: Chasme Hand
+			ChasmeHandLeft: Chasme Hand
+			ChasmeHead: Chasme Head
+			ChasmeHeart: Chasme
+			# Enemies
+			AlbinoBat: Albino Bat
+			Archroma: Archroma
+			CrystalKing: Crystal King
+			Ferroslime: Ferroslime
+			Geomancer: Geomancer
+			GoldBat: Gold Bat
+			KingCoal: King Coal
+			DepthsWorm: SapphireSerpent
+			Shade: Shade
+			ShadowBat: Shadow Bat
+			ShadowSlime: Shadow Slime
+		}
+
+		Bestiary: {
+			# Enemies
+			AlbinoBat: A victum of a rare pigment mutation this bat roams the deeper cavern system to blend in with the surrounding mercury in order to survive
+			Archroma: A cousin of pinky with a similar density causing them to be very strong, they eat money
+			CrystalKing: A royal king of Geomancy, although unable to walk he can teleport like most other mages.
+			Ferroslime: This slime may appear spiky, but that's only its ferrofluid spiking up to come off as more threatening than it is.
+			Geomancer: Loyal cult members well-practiced in geomancy. Legends have it that they worship a living shadow-flame being
+			GoldBat: A rare bat in the depths that was cursed by the geomancers to be a gem-like creature. Despite their name they are actually the same color as topaz.
+			KingCoal: He's no merry old soul, he's Crystal King's rival brother, born in fire he will do all he can to take you down!
+			DepthsWorm: A stone and sapphire serpent with water flowing through its veins. It carries a shovel like no other.
+			Shade: Beings of pure darkness that drift through the depths with the ability to freely float through the air. A group of them is called a darkening.
+			ShadowBat: This half black half emerald bat is a stonger varient of the bats found in the depths, Is it a bat's shadow or a shadow made of bats?
+			ShadowSlime: A purely black slime that roams the hardened depths, getting hit by it would be a blinding.
+		}
+
+		ProjectileName: {
+			#Chasme
+			GemforgeCutscene: Gemforge
+			GemforgeExtraDust: Gemforge
+			GemforgeScreenflash: Gemforge
+			#RotatingProj
+			GeodeCrystalSummon: Geode Crystal
+			SilverSpheres: Silver Sphere
+			#MiracfulSaber
+			MiracfulCrimson1: Ruby Note
+			MiracfulCrimson2: Ruby Note
+			MiracfulCrimson3: Ruby Note
+			MiracfulSapphire: Sapphire Flameball
+			MiracfulSnake: Amber Snake
+			MiracfulSparkle: Diamond Spark
+			MiracfulWhip: Amethyst Whip
+			# Weapons
+			LivingShadowSummonProj: Silhouette
+			# Pets
+			ShadePetProjectile: Shade Pet
+			# Misc
+			BlueExplosion: Blue Explosion
+			BlueSphereYoyo: Blue Sphere Yoyo
+			CrystalBall: Crystal Ball
+			CrystalBallPassive: Crystal Orb
+			DiamondArrow: Diamond Arrow
+			DiamondBolt: Diamond Bolt
+			DiamondDustProj: Diamond Dust
+			GlitteringGoldenLine: Glittering Golden Line
+			LumpOfCoal: Lump of Coal
+			OnyxBolt: Onyx Bolt
+			OnyxHook: Onyx Hook
+			QuartzChunk: Quartz
+			RubyBolt: Ruby Bolt
+			SapphireShovelProj: Bolt of Water
+			Shaderang: Shaderang
+			ShadowBall: Large Shadow Ball
+			ShadowBall2: Shadow Ball
+			ShadowBall3: Small Shadow Ball
+			ShadowClawMiddle: Shadow Claw
+			ShadowClawTip: "{$Mods.TheDepths.ProjectileName.ShadowClawMiddle}"
+			ShadowClawBottom: "{$Mods.TheDepths.ProjectileName.ShadowClawMiddle}"
+			SilverStar: Silver Star
+			SkyFallRain: Quicksilver Rain
+			SkyfallYoyo: Skyfall Yoyo
+			Steelocanth: Steelocanth
+		}
+
+		MapObject: {
+			ArqueriteOre: Arquerite Ore
+			BlackTorch: Torch
+			CoreBuilderTile: Core Builder
+			DepthsBanners: Banner
+			DepthsMusicBox: Music Box
+			DepthsPot: Pot
+			EmberUpdated: Ember
+			Gemforge: Gemforge
+			GeoTorch: Torch
+			LargeCrystal: Large Crystal
+			OnyxShalestone: Onyx
+			QuartzChair: Chair
+			QuartzDoorClosed: Door
+			QuartzDoorOpen: Door
+			QuartzTable: Table
+			QuartzWorkbench: Workbench
+			QuicksilverDropletSource: Quicksilver Droplet
+			ShadowShrub: Shadow Shrub
+			ShalestoneAmethyst: Amethyst
+			ShalestoneDiamond: Diamond
+			ShalestoneEmerald: Emerald
+			ShalestoneRuby: Ruby
+			ShalestoneSapphire: Sapphire
+			ShalestoneTopaz: Topaz
+			PetrifiedSapling: Sapling
+		}
+
+		PlayerDeathReason: {
+			Gemforge: {
+				0: "{0} tried to summon a cult in pure light"
+				1: "{0} moved the gemforge away from its home"
+				2: "{0} tried to burned a relic on the surface"
+			}
+		}
+
+		AltBiomeName.AltDepthsBiome: Depths
+		AltBiomeDescription.AltDepthsBiome: A deeper below cave with almost freezing in tempratures where liquid mercury fills the reagon.
+		AltBiomeGen.AltDepthsBiome: Creating depths...
+		BiomeName.DepthsBiome: The Depths
+		Biomes.DepthsBiome.DisplayName: Depths Biome
+
+		Tiles: {
+			ArqueriteOre.MapEntry: Arquerite Ore
+			BlackTorch.MapEntry: Black Torch
+			CoreBuilderTile.MapEntry: Core Builder Tile
+			DepthsBanners.MapEntry: Depths Banners
+			DepthsMusicBox.MapEntry: Depths Music Box
+			DepthsPot.MapEntry: Depths Pot
+			EmberUpdated.MapEntry: Ember Updated
+			Gemforge.MapEntry: Gemforge
+			GemlockTile.MapEntry: Gemlock Tile
+			GeoTorch.MapEntry: Geo Torch
+			LargeCrystal.MapEntry: Large Crystal
+			OnyxShalestone.MapEntry: Onyx Shalestone
+			Quartz.MapEntry: Quartz
+			QuartzChair.MapEntry: Quartz Chair
+			QuartzDoorClosed.MapEntry: Quartz Door Closed
+			QuartzDoorOpen.MapEntry: Quartz Door Open
+			QuartzTable.MapEntry: Quartz Table
+			QuartzWorkbench.MapEntry: Quartz Workbench
+			QuicksilverDropletSource.MapEntry: Quicksilver Droplet Source
+			ShadowShrub.MapEntry: Shadow Shrub
+			Shalestone.MapEntry: Shalestone
+			ShalestoneAmethyst.MapEntry: Shalestone Amethyst
+			ShalestoneDiamond.MapEntry: Shalestone Diamond
+			ShalestoneEmerald.MapEntry: Shalestone Emerald
+			ShalestoneRuby.MapEntry: Shalestone Ruby
+			ShalestoneSapphire.MapEntry: Shalestone Sapphire
+			ShalestoneTopaz.MapEntry: Shalestone Topaz
+			PetrifiedSapling.MapEntry: Petrified Sapling
+			NightSapling.MapEntry: Night Sapling
+		}
+
+		Buffs: {
+			CrystalSkin: {
+				DisplayName: Crystal Skin
+				Description: Immune to Quicksilver
+			}
+
+			FlaskofMercury: {
+				DisplayName: Weapon Imbue: Mercury
+				Description: Melee attacks boils enemies with mercury
+			}
+
+			FreezingWater: {
+				DisplayName: Freezing Water
+				Description: Movement has been completely disabled
+			}
+
+			LivingShadowSummonBuff: {
+				DisplayName: Silhouette
+				Description: A figure similar to yourself will fight for you.
+			}
+
+			MercuryBoiling: {
+				DisplayName: Mercury Poisoning
+				Description: Slowly losing life
+			}
+
+			MercuryFooting: {
+				DisplayName: Mercury Footing
+				Description: 15% increased movement speed
+			}
+
+			MercuryPoisoning: {
+				DisplayName: Mercury Radiation
+				Description: Losing life and slowed movement
+			}
+
+			RelicsCurse: {
+				DisplayName: Relic's Curse
+				Description: Unable to use more relics
+			}
+
+			SilverSphereBuff: {
+				DisplayName: Silver Sphere
+				Description: Four silver spheres orbit you
+			}
+
+			ShadePetBuff: {
+				DisplayName: Shade Pet
+				Description: '''"A Shade is floating around with you!"'''
+			}
+		}
+
+		Items: {
+			AmalgamAmulet: {
+				DisplayName: Amalgam Amulet
+				Tooltip: ""
+			}
+
+			AquaGlove: {
+				DisplayName: Aqua Glove
+				Tooltip: ""
+			}
+
+			AquaStone: {
+				DisplayName: Aqua Stone
+				Tooltip: ""
+			}
+
+			CrystalShield: {
+				DisplayName: Crystal Shield
+				Tooltip: ""
+			}
+
+			CrystalSkull: {
+				DisplayName: Crystal Skull
+				Tooltip: ""
+			}
+
+			CrystalWaterWalkingBoots: {
+				DisplayName: Crystal Water Walking Boots
+				Tooltip: ""
+			}
+
+			LodeStone: {
+				DisplayName: Lode Stone
+				Tooltip: ""
+			}
+
+			QuickSilverSurfboard: {
+				DisplayName: Quick Silver Surfboard
+				Tooltip: ""
+			}
+
+			SanctusShield: {
+				DisplayName: Sanctus Shield
+				Tooltip: ""
+			}
+
+			SilverSlippers: {
+				DisplayName: Silver Slippers
+				Tooltip: ""
+			}
+
+			StoneRose: {
+				DisplayName: Stone Rose
+				Tooltip: ""
+			}
+
+			CharredCrown: {
+				DisplayName: Charred Crown
+				Tooltip: ""
+			}
+
+			CrystalCrown: {
+				DisplayName: Crystal Crown
+				Tooltip: ""
+			}
+
+			GeodeChestplate: {
+				DisplayName: Geode Chestplate
+				Tooltip: ""
+			}
+
+			GeodeHelmet: {
+				DisplayName: Geode Helmet
+				Tooltip: ""
+			}
+
+			GeodeLeggings: {
+				DisplayName: Geode Leggings
+				Tooltip: ""
+			}
+
+			Geode: {
+				DisplayName: Geode
+				Tooltip: ""
+			}
+
+			MercuryChestplate: {
+				DisplayName: Mercury Chestplate
+				Tooltip: ""
+			}
+
+			MercuryGreaves: {
+				DisplayName: Mercury Greaves
+				Tooltip: ""
+			}
+
+			MercuryHelmet: {
+				DisplayName: Mercury Helmet
+				Tooltip: ""
+			}
+
+			OnyxRobe: {
+				DisplayName: Onyx Robe
+				Tooltip: ""
+			}
+
+			PurplePlumbersHat: {
+				DisplayName: Purple Plumbers Hat
+				Tooltip: ""
+			}
+
+			PurplePlumbersPants: {
+				DisplayName: Purple Plumbers Pants
+				Tooltip: ""
+			}
+
+			PurplePlumbersShirt: {
+				DisplayName: Purple Plumbers Shirt
+				Tooltip: ""
+			}
+
+			AchromaBanner: {
+				DisplayName: Achroma Banner
+				Tooltip: ""
+			}
+
+			AlbinoBatBanner: {
+				DisplayName: Albino Bat Banner
+				Tooltip: ""
+			}
+
+			CrystalKingBanner: {
+				DisplayName: Crystal King Banner
+				Tooltip: ""
+			}
+
+			FerroslimeBanner: {
+				DisplayName: Ferroslime Banner
+				Tooltip: ""
+			}
+
+			GeomancerBanner: {
+				DisplayName: Geomancer Banner
+				Tooltip: ""
+			}
+
+			GoldBatBanner: {
+				DisplayName: Gold Bat Banner
+				Tooltip: ""
+			}
+
+			KingCoalBanner: {
+				DisplayName: King Coal Banner
+				Tooltip: ""
+			}
+
+			SapphireSerpentBanner: {
+				DisplayName: Sapphire Serpent Banner
+				Tooltip: ""
+			}
+
+			ShadeBanner: {
+				DisplayName: Shade Banner
+				Tooltip: ""
+			}
+
+			ShadowBatBanner: {
+				DisplayName: Shadow Bat Banner
+				Tooltip: ""
+			}
+
+			ShadowSlimeBanner: {
+				DisplayName: Shadow Slime Banner
+				Tooltip: ""
+			}
+
+			CrystalSkinPotion: {
+				DisplayName: Crystal Skin Potion
+				Tooltip: ""
+			}
+
+			FlaskofMercury: {
+				DisplayName: Flaskof Mercury
+				Tooltip: ""
+			}
+
+			LargeOnyx: {
+				DisplayName: Large Onyx
+				Tooltip: ""
+			}
+
+			OnyxHook: {
+				DisplayName: Onyx Hook
+				Tooltip: ""
+			}
+
+			Onyx: {
+				DisplayName: Onyx
+				Tooltip: ""
+			}
+
+			ArqueriteBar: {
+				DisplayName: Arquerite Bar
+				Tooltip: ""
+			}
+
+			ArqueriteBricks: {
+				DisplayName: Arquerite Bricks
+				Tooltip: ""
+			}
+
+			ArqueriteBrickWall: {
+				DisplayName: Arquerite Brick Wall
+				Tooltip: ""
+			}
+
+			ArqueriteOre: {
+				DisplayName: Arquerite Ore
+				Tooltip: ""
+			}
+
+			BlackGemspark: {
+				DisplayName: Black Gemspark
+				Tooltip: ""
+			}
+
+			BlackTorch: {
+				DisplayName: Black Torch
+				Tooltip: ""
+			}
+
+			CoreBuilder: {
+				DisplayName: Core Builder
+				Tooltip: ""
+			}
+
+			DepthsMusicBox: {
+				DisplayName: Depths Music Box
+				Tooltip: ""
+			}
+
+			DiamondDust: {
+				DisplayName: Diamond Dust
+				Tooltip: ""
+			}
+
+			Ember: {
+				DisplayName: Ember
+				Tooltip: ""
+			}
+
+			Gemforge: {
+				DisplayName: Gemforge
+				Tooltip: ""
+			}
+
+			GeoTorch: {
+				DisplayName: Geo Torch
+				Tooltip: ""
+			}
+
+			LargeCrystal: {
+				DisplayName: Large Crystal
+				Tooltip: ""
+			}
+
+			LivingFog: {
+				DisplayName: Living Fog
+				Tooltip: ""
+			}
+
+			MagicQuicksilverDropper: {
+				DisplayName: Magic Quicksilver Dropper
+				Tooltip: ""
+			}
+
+			OnyxGemLock: {
+				DisplayName: Onyx Gem Lock
+				Tooltip: ""
+			}
+
+			PetrifiedWood: {
+				DisplayName: Petrified Wood
+				Tooltip: ""
+			}
+
+			Quartz: {
+				DisplayName: Quartz
+				Tooltip: ""
+			}
+
+			QuartzBlock: {
+				DisplayName: Quartz Block
+				Tooltip: ""
+			}
+
+			QuartzBricks: {
+				DisplayName: Quartz Bricks
+				Tooltip: ""
+			}
+
+			QuartzBrickWall: {
+				DisplayName: Quartz Brick Wall
+				Tooltip: ""
+			}
+
+			QuartzChair: {
+				DisplayName: Quartz Chair
+				Tooltip: ""
+			}
+
+			QuartzDoor: {
+				DisplayName: Quartz Door
+				Tooltip: ""
+			}
+
+			QuartzPillar: {
+				DisplayName: Quartz Pillar
+				Tooltip: ""
+			}
+
+			QuartzPlatform: {
+				DisplayName: Quartz Platform
+				Tooltip: ""
+			}
+
+			QuartzTable: {
+				DisplayName: Quartz Table
+				Tooltip: ""
+			}
+
+			QuartzWorkbench: {
+				DisplayName: Quartz Workbench
+				Tooltip: ""
+			}
+
+			ShadowBrick: {
+				DisplayName: Shadow Brick
+				Tooltip: ""
+			}
+
+			ShadowShrubPlanterBox: {
+				DisplayName: Shadow Shrub Planter Box
+				Tooltip: ""
+			}
+
+			ShadowShrubSeeds: {
+				DisplayName: Shadow Shrub Seeds
+				Tooltip: ""
+			}
+
+			ShadowShrub: {
+				DisplayName: Shadow Shrub
+				Tooltip: ""
+			}
+
+			ShaleBlock.Tooltip: ""
+			ShaleBricks.Tooltip: ""
+			Shalestone.Tooltip: ""
+
+			SilverfallBlock: {
+				DisplayName: Silverfall Block
+				Tooltip: ""
+			}
+
+			SilverfallWall: {
+				DisplayName: Silverfall Wall
+				Tooltip: ""
+			}
+
+			RubyRelic: {
+				DisplayName: Ruby Relic
+				Tooltip: ""
+			}
+
+			SilverSpherePotion: {
+				DisplayName: Silver Sphere Potion
+				Tooltip: ""
+			}
+
+			BlackPhaseblade: {
+				DisplayName: Black Phaseblade
+				Tooltip: ""
+			}
+
+			BlackPhasesaber: {
+				DisplayName: Black Phasesaber
+				Tooltip: ""
+			}
+
+			BlueSphere: {
+				DisplayName: Blue Sphere
+				Tooltip: ""
+			}
+
+			DiamondArrow: {
+				DisplayName: Diamond Arrow
+				Tooltip: ""
+			}
+
+			DiamondBolt: {
+				DisplayName: Diamond Bolt
+				Tooltip: ""
+			}
+
+			LivingShadowStaff: {
+				DisplayName: Living Shadow Staff
+				Tooltip: ""
+			}
+
+			MercuryHamaxe: {
+				DisplayName: Mercury Hamaxe
+				Tooltip: ""
+			}
+
+			MercuryPickaxe: {
+				DisplayName: Mercury Pickaxe
+				Tooltip: ""
+			}
+
+			MiracfulSaber: {
+				DisplayName: Miracful Saber
+				Tooltip: ""
+			}
+
+			NightFury: {
+				DisplayName: Night Fury
+				Tooltip: ""
+			}
+
+			OnyxSepter: {
+				DisplayName: Onyx Septer
+				Tooltip: ""
+			}
+
+			POWHammer: {
+				DisplayName: P O W Hammer
+				Tooltip: ""
+			}
+
+			QuartzCannon: {
+				DisplayName: Quartz Cannon
+				Tooltip: ""
+			}
+
+			RubyBolt: {
+				DisplayName: Ruby Bolt
+				Tooltip: ""
+			}
+
+			SapphireShovel: {
+				DisplayName: Sapphire Shovel
+				Tooltip: ""
+			}
+
+			ShadeBlade: {
+				DisplayName: Shade Blade
+				Tooltip: ""
+			}
+
+			Shaderang: {
+				DisplayName: Shaderang
+				Tooltip: ""
+			}
+
+			ShadowClaw: {
+				DisplayName: Shadow Claw
+				Tooltip: ""
+			}
+
+			ShadowSphere: {
+				DisplayName: Shadow Sphere
+				Tooltip: ""
+			}
+
+			Silverado: {
+				DisplayName: Silverado
+				Tooltip: ""
+			}
+
+			SilverStar: {
+				DisplayName: Silver Star
+				Tooltip: ""
+			}
+
+			Skyfall: {
+				DisplayName: Skyfall
+				Tooltip: ""
+			}
+
+			Steelocanth: {
+				DisplayName: Steelocanth
+				Tooltip: ""
+			}
+
+			Terminex: {
+				DisplayName: Terminex
+				Tooltip: ""
+			}
+
+			ShadePetItem: {
+				DisplayName: Shade Pet Item
+				Tooltip: ""
+			}
+
+			GlitterBlock: {
+				DisplayName: Glitter Block
+				Tooltip: ""
+			}
+
+			QuicksilverBucket: {
+				DisplayName: Quicksilver Bucket
+				Tooltip: ""
+			}
+
+			UnderGlobe: {
+				DisplayName: Under Globe
+				Tooltip: ""
+			}
+
+			CoreGlobe: {
+				DisplayName: Core Globe
+				Tooltip: ""
+			}
+
+			NightmareSeeds: {
+				DisplayName: Nightmare Seeds
+				Tooltip: ""
+			}
+
+			WhiteLightning: {
+				DisplayName: White Lightning
+				Tooltip: ""
+			}
+		}
+
+		NPCs: {
+			AlbinoBat.DisplayName: Albino Bat
+			Archroma.DisplayName: Archroma
+			ChasmeBody.DisplayName: Chasme Body
+			ChasmeHandLeft.DisplayName: Chasme Hand Left
+			ChasmeHandRight.DisplayName: Chasme Hand Right
+			ChasmeHead.DisplayName: Chasme Head
+			ChasmeHeart.DisplayName: Chasme Heart
+			CrystalKing.DisplayName: Crystal King
+			Ferroslime.DisplayName: Ferroslime
+			Geomancer.DisplayName: Geomancer
+			GoldBat.DisplayName: Gold Bat
+			KingCoal.DisplayName: King Coal
+			SapphireSerpentBody.DisplayName: Sapphire Serpent Body
+			SapphireSerpentHead.DisplayName: Sapphire Serpent Head
+			SapphireSerpentTail.DisplayName: Sapphire Serpent Tail
+			Shade.DisplayName: Shade
+			ShadowBat.DisplayName: Shadow Bat
+			ShadowSlime.DisplayName: Shadow Slime
+		}
+
+		Projectiles: {
+			ShadePetProjectile.DisplayName: Shade Pet Projectile
+			BlueExplosion.DisplayName: Blue Explosion
+			BlueSphereYoyo.DisplayName: Blue Sphere Yoyo
+			GemforgeCutscene.DisplayName: Gemforge Cutscene
+			GemforgeExtraDusts.DisplayName: Gemforge Extra Dusts
+			GemforgeScreenflash.DisplayName: Gemforge Screenflash
+			CrystalBall.DisplayName: Crystal Ball
+			CrystalBallPassive.DisplayName: Crystal Ball Passive
+			DiamondArrow.DisplayName: Diamond Arrow
+			DiamondBolt.DisplayName: Diamond Bolt
+			DiamondDustProj.DisplayName: Diamond Dust Proj
+			GeodeCrystalSummon.DisplayName: Geode Crystal Summon
+			GlitteringGoldenLine.DisplayName: Glittering Golden Line
+			LumpOfCoal.DisplayName: Lump Of Coal
+			MiracfulCrimson1.DisplayName: Miracful Crimson1
+			MiracfulCrimson2.DisplayName: Miracful Crimson2
+			MiracfulCrimson3.DisplayName: Miracful Crimson3
+			MiracfulSapphire.DisplayName: Miracful Sapphire
+			MiracfulSnake.DisplayName: Miracful Snake
+			MiracfulSparkle.DisplayName: Miracful Sparkle
+			MiracfulWhip.DisplayName: Miracful Whip
+			OnyxBolt.DisplayName: Onyx Bolt
+			OnyxHook.DisplayName: Onyx Hook
+			QuartzChunk.DisplayName: Quartz Chunk
+			RubyBolt.DisplayName: Ruby Bolt
+			SapphireShovelProj.DisplayName: Sapphire Shovel Proj
+			Shaderang.DisplayName: Shaderang
+			ShadowBall.DisplayName: Shadow Ball
+			ShadowBall2.DisplayName: Shadow Ball2
+			ShadowBall3.DisplayName: Shadow Ball3
+			ShadowClawBottom.DisplayName: Shadow Claw Bottom
+			ShadowClawMiddle.DisplayName: Shadow Claw Middle
+			ShadowClawTip.DisplayName: Shadow Claw Tip
+			SilverSpheres.DisplayName: Silver Spheres
+			SilverStar.DisplayName: Silver Star
+			SkyFallRain.DisplayName: Sky Fall Rain
+			SkyfallYoyo.DisplayName: Skyfall Yoyo
+			Steelocanth.DisplayName: Steelocanth
+			LivingShadowSummonProj.DisplayName: Living Shadow Summon Proj
+			UnderGlobe.DisplayName: Under Globe
+			CoreGlobe.DisplayName: Core Globe
+			WhiteLightning.DisplayName: White Lightning
+			WhiteLightningOrb.DisplayName: White Lightning Orb
+			WhiteLightningOrb2.DisplayName: White Lightning Orb2
+			WhiteLightningOrb3.DisplayName: White Lightning Orb3
+			WhiteLightning1to2.DisplayName: White Lightning1to2
+			WhiteLightningTo2.DisplayName: White Lightning To2
+			WhiteLightningTo1.DisplayName: White Lightning To1
+			WhiteLightningTo3.DisplayName: White Lightning To3
+		}
+
+		DepthsBiome: Mods.TheDepths.DepthsBiome
 	}
 }
+
+GameUI.LayerUnderworld: Core

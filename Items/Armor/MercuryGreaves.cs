@@ -10,7 +10,6 @@ namespace TheDepths.Items.Armor
 	public class MercuryGreaves : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("10% Increased Movement Speed");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -23,7 +22,7 @@ namespace TheDepths.Items.Armor
 		}
 		
 		public override void UpdateEquip(Player player) {
-		player.moveSpeed += 0.10f;
+			player.moveSpeed += 0.10f;
 		}
 
 		public override void AddRecipes() 

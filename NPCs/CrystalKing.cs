@@ -14,7 +14,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using TheDepths.Items.Armor;
 using TheDepths.Items.Placeable;
-using AltLibrary.Common.Systems;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;
 
@@ -27,7 +26,6 @@ namespace TheDepths.NPCs
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crystal King");
             Main.npcFrameCount[NPC.type] = 3;
         }
 
@@ -53,7 +51,7 @@ namespace TheDepths.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("A royal king of Geomancy, although unable to walk he can teleport like most other mages.")
+                new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.CrystalKing")
             });
         }
 
@@ -197,7 +195,7 @@ namespace TheDepths.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+            if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell)
             {
                 return 1f;
             }
@@ -211,7 +209,7 @@ namespace TheDepths.NPCs
             npcLoot.Add(ItemDropRule.Common(ItemID.Diamond, 50, 1, 1));
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (Main.netMode == NetmodeID.Server)
             {

@@ -24,20 +24,8 @@ namespace TheDepths.Tiles
 			TileObjectData.addTile(Type);
 			DustType = ModContent.DustType<EmberDust>();
 
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Ember");
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(68, 17, 17), name);
-		}
-
-		public override bool Drop(int i, int j)
-		{
-			Tile t = Main.tile[i, j];
-			int style = t.TileFrameX / 18;
-			if (style == 0)
-			{
-				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<Items.Placeable.Ember>());
-			}
-			return base.Drop(i, j);
 		}
 
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)

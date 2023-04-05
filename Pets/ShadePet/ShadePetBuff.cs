@@ -7,9 +7,6 @@ namespace TheDepths.Pets.ShadePet
 	public class ShadePetBuff : ModBuff
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Shade Pet");
-			Description.SetDefault(@"""A Shade is floating around with you!""");
-
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;
 		}

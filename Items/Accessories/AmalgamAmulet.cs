@@ -13,7 +13,6 @@ namespace TheDepths.Items.Accessories
 	public class AmalgamAmulet : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("Grants immunity to Mercury Poisoning");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -27,6 +26,7 @@ namespace TheDepths.Items.Accessories
 
 		public override void UpdateAccessory(Player player, bool hideVisual) {
             player.buffImmune[ModContent.BuffType<MercuryBoiling>()] = true;
+			player.GetModPlayer<TheDepthsPlayer>().aAmulet = true;
 		}
 	}
 }

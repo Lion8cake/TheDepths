@@ -9,7 +9,6 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TheDepths.Items.Banners;
-using AltLibrary.Common.Systems;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;
 using TheDepths.Dusts;
@@ -19,7 +18,6 @@ namespace TheDepths.NPCs
 	public class Archroma : ModNPC
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Archroma");
 			Main.npcFrameCount[NPC.type] = 2; 
 		}
 		
@@ -46,20 +44,20 @@ namespace TheDepths.NPCs
 		{
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-				new FlavorTextBestiaryInfoElement("A cousin of pinky with a similar density causing them to be very strong, they eat money")
+				new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.Archroma")
 			});
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+			if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell)
 			{
 				return 0.1f;
 			}
 			return 0f;
 		}
 
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 			{

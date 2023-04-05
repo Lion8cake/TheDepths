@@ -9,7 +9,6 @@ using Terraria.GameContent.ItemDropRules;
 using TheDepths.Items.Armor;
 using TheDepths.Items.Weapons;
 using TheDepths.Items.Accessories;
-using AltLibrary.Common.Systems;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;
 
@@ -24,7 +23,6 @@ namespace TheDepths.NPCs
 		public bool shouldFrameCounterIncrease;
 
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Geomancer");
 			Main.npcFrameCount[NPC.type] = 20;
 
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
@@ -116,11 +114,11 @@ namespace TheDepths.NPCs
 		{
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-				new FlavorTextBestiaryInfoElement("Loyal cult members well-practiced in geomancy. Legends have it that they worship a living shadow-flame being")
+				new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.Geomancer")
 			});
 		}
 
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 			{
@@ -151,7 +149,7 @@ namespace TheDepths.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+			if (spawnInfo.Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell)
 			{
 				return 1f;
 			}

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using TheDepths.Dusts;
 
@@ -15,8 +16,7 @@ namespace TheDepths.Tiles
 			Main.tileLighted[Type] = false;
 			ItemDrop = ItemID.Sapphire;
 			DustType = ModContent.DustType<ShaleDust>();
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Sapphire");
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(11, 34, 147), name);
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShaleBlock").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("Shalestone").Type] = true;

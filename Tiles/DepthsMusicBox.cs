@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -18,8 +19,7 @@ namespace TheDepths.Tiles
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
             TileID.Sets.DisableSmartCursor[Type] = true;
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Music Box");
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(133, 87, 50)); 
 		}
 

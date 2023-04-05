@@ -9,8 +9,6 @@ namespace TheDepths.Items
 	{
         public override void SetStaticDefaults()
         {
-		    DisplayName.SetDefault("Silver Sphere Potion");
-            Tooltip.SetDefault("Four Silver Spheres summon around you");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
         }
 

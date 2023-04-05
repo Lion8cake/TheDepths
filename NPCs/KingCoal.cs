@@ -14,7 +14,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using TheDepths.Items.Armor;
 using TheDepths.Items.Placeable;
-using AltLibrary.Common.Systems;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;
 
@@ -27,7 +26,6 @@ namespace TheDepths.NPCs
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("King Coal");
             Main.npcFrameCount[NPC.type] = 3;
         }
 
@@ -53,7 +51,7 @@ namespace TheDepths.NPCs
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld,
 
-                new FlavorTextBestiaryInfoElement("He's no merry old soul, he's Crystal King's rival brother, born in fire he will do all he can to take you down!")
+                new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.KingCoal")
             });
         }
 
@@ -197,7 +195,7 @@ namespace TheDepths.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell != "TheDepths/AltDepthsBiome")
+            if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell)
             {
                 return 1f;
             }
@@ -211,7 +209,7 @@ namespace TheDepths.NPCs
             //pcLoot.Add(ItemDropRule.Common(ItemID.Ruby, 50, 1, 1));
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (Main.netMode == NetmodeID.Server)
             {

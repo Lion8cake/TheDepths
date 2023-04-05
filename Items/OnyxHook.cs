@@ -12,7 +12,7 @@ namespace TheDepths.Items
         {
             Item.CloneDefaults(ItemID.SapphireHook);
             Item.shootSpeed = 18f;
-            Item.shoot = Mod.Find<ModProjectile>("OnyxHook").Type;
+            Item.shoot = ModContent.ProjectileType<Projectiles.OnyxHook>();
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 		

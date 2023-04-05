@@ -1,4 +1,3 @@
-using AltLibrary.Common.Systems;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -15,7 +14,7 @@ namespace TheDepths.NPCs
     {
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<DepthsBiome>()) || WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<DepthsBiome>()) || TheDepthsWorldGen.depthsorHell)
             {
                 pool.Remove(NPCID.Hellbat);
                 pool.Remove(NPCID.LavaSlime);

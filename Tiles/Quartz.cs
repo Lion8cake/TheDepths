@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Localization;
 using TheDepths.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,9 +31,8 @@ namespace TheDepths.Tiles
 			Main.tileMerge[Type][Mod.Find<ModTile>("OnyxShalestone").Type] = true;
 			DustType = ModContent.DustType<QuartzCrystals>();
 
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Quartz");
-			AddMapEntry(new Color(255, 255, 255), name);
+			LocalizedText name = CreateMapEntryName();
+			AddMapEntry(new Color(255, 255, 255));
 
 			ItemDrop = ModContent.ItemType<Items.Placeable.Quartz>();
 			HitSound = SoundID.Tink;

@@ -103,7 +103,7 @@ namespace TheDepths.Projectiles.Chasme
 					}
 					else
 					{
-						NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: NPCID.WallofFlesh);
+						NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: NPCID.WallofFlesh);
 					}
 				}
 			}

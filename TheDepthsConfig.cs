@@ -10,7 +10,7 @@ namespace TheDepths
 		[Header("Depths Clientside Config")]
 		[Label("Enables The Depths tile lighting")]
 		[Tooltip("Enables the Depths tile lighting making the depths require torches to see where you are going")]
-		[DefaultValue(false)]
+		[DefaultValue(true)]
 		public bool DepthsLightingConfig;
 
 		[Label("Renames Shale to Slate")]

@@ -12,13 +12,11 @@ using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Accessories
 {
-[AutoloadEquip(new EquipType[] { EquipType.Shield })]
-	class SanctusShield : ModItem
+	[AutoloadEquip(new EquipType[] { EquipType.Shield })]
+	public class SanctusShield : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Sanctus Shield");
-			Tooltip.SetDefault("Grants immunity to knockback and mercury radiation \nIncreases damage reduction by 10% \nGrants immunity to most debuffs");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

@@ -12,14 +12,10 @@ using Terraria.GameContent.Creative;
 namespace TheDepths.Items.Armor
 {
 	[AutoloadEquip(EquipType.Body)]
-	internal class OnyxRobe : ModItem
+	public class OnyxRobe : ModItem
 	{
-	
 	    public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Onyx Robe");
-			Tooltip.SetDefault("20% decreased mana usage"
-				+ "\nIncreases maximum mana by 60");
 			ArmorIDs.Body.Sets.HidesHands[Item.bodySlot] = false;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -48,7 +44,7 @@ namespace TheDepths.Items.Armor
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.Robe, 1);
 			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Onyx>(), 10);
-			recipe.AddTile(86);
+			recipe.AddTile(TileID.Loom);
 			recipe.Register();
 		}
 	}

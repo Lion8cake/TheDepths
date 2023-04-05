@@ -1,4 +1,4 @@
-using AltLibrary;
+/*using AltLibrary;
 using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Systems;
 using AltLibrary.Common.Hooks;
@@ -28,10 +28,6 @@ namespace TheDepths
             BiomeStone = ModContent.TileType<ShaleBlock>();
             AltarTile = ModContent.TileType<Gemforge>();
             BiomeOre = ModContent.TileType<ArqueriteOre>();
-
-            DisplayName.SetDefault("Depths");
-            Description.SetDefault("A deeper below cave with almost freezing in tempratures where liquid mercury fills the reagon");
-            GenPassName.SetDefault("Creating depths...");
         }
 
         public override string WorldIcon => "";
@@ -47,4 +43,4 @@ namespace TheDepths
             return new(TheDepthsWorldGen.Gemforge);
         }
     }
-}
+}*/

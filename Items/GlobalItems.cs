@@ -5,26 +5,22 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using TheDepths.Items.Placeable;
 using Terraria.GameContent.Creative;
-using AltLibrary.Common.Systems;
 using System.Collections.Generic;
 
 namespace TheDepths.Items
 {
     public class GlobalItems : GlobalItem
     {
-
-
-        public override bool? CanBurnInLava(Item item)
+        public override void SetDefaults(Item item)
         {
-            if (WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+            if (TheDepthsWorldGen.depthsorHell)
             {
-                return false;
+                ItemID.Sets.IsLavaImmuneRegardlessOfRarity[item.type] = true;
             }
             if (item.type == ItemID.Amethyst || item.type == ItemID.Topaz || item.type == ItemID.Sapphire || item.type == ItemID.Emerald || item.type == ItemID.Ruby || item.type == ItemID.Diamond)
             {
-                return false;
+                ItemID.Sets.IsLavaImmuneRegardlessOfRarity[item.type] = true;
             }
-            return true;
         }
     }
 }

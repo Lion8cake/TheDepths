@@ -9,7 +9,6 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TheDepths.Items.Banners;
-//using AltLibrary.Common.Systems;
 using TheDepths.Biomes;
 using Terraria.GameContent.Bestiary;
 
@@ -18,7 +17,6 @@ namespace TheDepths.NPCs
 	public class AlbinoBat : ModNPC
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Albino Bat");
 			Main.npcFrameCount[NPC.type] = 4;
 
 			var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
@@ -53,20 +51,20 @@ namespace TheDepths.NPCs
 		{
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-				new FlavorTextBestiaryInfoElement("A victum of a rare pigment mutation this bat roams the deeper cavern system to blend in with the surrounding mercury in order to survive")
+				new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.AlbinoBat")
 			});
 		}
 
-		/*public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+			if (spawnInfo.Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell)
 			{
 				return 1.25f;
 			}
 			return 0f;
-		}*/
+		}
 
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 			{

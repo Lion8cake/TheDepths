@@ -1,3 +1,4 @@
+using Terraria.Localization;
 using TheDepths.Dusts;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -20,8 +21,7 @@ namespace TheDepths.Tiles
 			TileObjectData.newTile.CoordinateHeights = new[] { 18, 18 };
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Core Builder");
+			LocalizedText name = CreateMapEntryName();
 			AnimationFrameHeight = 40;
 			AddMapEntry(new Color(140, 17, 206), name);
 			DustType = ModContent.DustType<ArqueriteDust>();

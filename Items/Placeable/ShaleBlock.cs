@@ -11,17 +11,21 @@ namespace TheDepths.Items.Placeable
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
-			if (ModContent.GetInstance<TheDepthsClientConfig>().SlateConfig)
-            {
-				DisplayName.SetDefault("Slate Block");
-            }
-			else
-            {
-				DisplayName.SetDefault("Shale Block");
-			}
 		}
 
-		public override void SetDefaults() {
+        public override LocalizedText DisplayName
+		{
+			get
+			{
+				if (ModContent.GetInstance<TheDepthsClientConfig>().SlateConfig)
+				{
+					return Language.GetOrRegister("Mods.TheDepths.ShaleConfig.SlateBlock");
+				}
+				return Language.GetOrRegister("Mods.TheDepths.ShaleConfig.ShaleBlock");
+			}
+        }
+
+        public override void SetDefaults() {
 			Item.width = 12;
 			Item.height = 12;
 			Item.maxStack = 999;

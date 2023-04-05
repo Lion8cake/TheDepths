@@ -1,3 +1,4 @@
+using Terraria.Localization;
 using TheDepths.Items.Placeable;
 using TheDepths.Items;
 using Microsoft.Xna.Framework;
@@ -8,6 +9,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using TheDepths.Dusts;
+using System.Collections.Generic;
 
 namespace TheDepths.Tiles
 {
@@ -50,8 +52,7 @@ namespace TheDepths.Tiles
 				ModContent.TileType<ShadowShrubPlanterBox>()
 			};
 
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Shadow Shrub");
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(172, 49, 238), name);
 
 			TileObjectData.addTile(Type);
@@ -107,7 +108,7 @@ namespace TheDepths.Tiles
 			}
 		}
 
-		public override bool Drop(int i, int j)
+		public override bool CanDrop(int i, int j)
 		{
 			PlantStage stage = GetStage(i, j);
 
@@ -115,6 +116,12 @@ namespace TheDepths.Tiles
 			{
 				return false;
 			}
+			return true;
+		}
+
+		public override IEnumerable<Item> GetItemDrops(int i, int j)
+		{
+			PlantStage stage = GetStage(i, j);
 
 			Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
 			Player nearestPlayer = Main.player[Player.FindClosest(worldPosition, 16, 16)];
@@ -152,7 +159,15 @@ namespace TheDepths.Tiles
 				Item.NewItem(source, worldPosition, seedItemType, seedItemStack);
 			}
 
-			return false;
+			if (herbItemType > 0 && herbItemStack > 0)
+			{
+				yield return new Item(herbItemType, herbItemStack);
+			}
+
+			if (seedItemType > 0 && seedItemStack > 0)
+			{
+				yield return new Item(seedItemType, seedItemStack);
+			}
 		}
 
 		public override bool IsTileSpelunkable(int i, int j)

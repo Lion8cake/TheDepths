@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using AltLibrary.Common.Systems;
 
 namespace TheDepths.NPCs
 {
@@ -87,22 +86,29 @@ namespace TheDepths.NPCs
 			}
 		}
 
-		public override void SetupShop(int type, Chest shop, ref int nextSlot)
+        public override void ModifyShop(NPCShop shop)
 		{
-			if (type == NPCID.Clothier && Main.moonPhase == 0 && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+			var depthsWorld = new Condition("Mods.TheDepths.DepthsBiome", () => TheDepthsWorldGen.depthsorHell);
+			if (shop.NpcType == NPCID.Clothier)
 			{
-				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Armor.PurplePlumbersShirt>());
-				shop.item[nextSlot].shopCustomPrice = 250000;
-				nextSlot++;
-				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Armor.PurplePlumbersPants>());
-				shop.item[nextSlot].shopCustomPrice = 250000;
-				nextSlot++;
+				shop.InsertAfter(ItemID.PlumbersShirt, ModContent.ItemType<Items.Armor.PurplePlumbersShirt>(), Condition.MoonPhaseFull, depthsWorld);
+				shop.InsertAfter(ItemID.PlumbersPants, ModContent.ItemType<Items.Armor.PurplePlumbersPants>(), Condition.MoonPhaseFull, depthsWorld);
+				if (shop.TryGetEntry(ItemID.PlumbersShirt, out NPCShop.Entry entry))
+				{
+					entry.Disable();
+				}
+				if (shop.TryGetEntry(ItemID.PlumbersPants, out NPCShop.Entry entry2))
+				{
+					entry2.Disable();
+				}
 			}
-			if (type == NPCID.Dryad && Main.hardMode)
+			if (shop.NpcType == NPCID.Dryad)
             {
-				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Placeable.ShadowShrubPlanterBox>());
-				shop.item[nextSlot].shopCustomPrice = 100;
-				nextSlot++;
+				shop.InsertAfter(ItemID.FireBlossomPlanterBox, ModContent.ItemType<Items.Placeable.ShadowShrubPlanterBox>(), Condition.Hardmode, depthsWorld);
+			}
+			if (shop.NpcType == NPCID.BestiaryGirl)
+            {
+				shop.InsertAfter(ItemID.WorldGlobe, ModContent.ItemType<Items.CoreGlobe>(), Condition.Hardmode);
 			}
 		}
 	}

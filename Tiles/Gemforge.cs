@@ -1,3 +1,4 @@
+using Terraria.Localization;
 using TheDepths.Dusts;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -26,8 +27,7 @@ namespace TheDepths.Tiles
 			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Gemforge");
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(140, 17, 206), name);
 			DustType = ModContent.DustType<ArqueriteDust>();
             TileID.Sets.DisableSmartCursor[Type] = true;

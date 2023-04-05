@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using TheDepths.Dusts;
@@ -36,8 +37,7 @@ namespace TheDepths.Tiles.Trees
 
             TileObjectData.addTile(Type);
 
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Sapling");
+            LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(55, 55, 45), name);
 
             TileID.Sets.TreeSapling[Type] = true;

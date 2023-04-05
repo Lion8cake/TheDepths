@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using TheDepths.Dusts;
@@ -57,13 +58,12 @@ namespace TheDepths.Tiles
 			TileObjectData.addAlternate(4);
 			TileObjectData.addTile(Type);
 
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Large Crystal");
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(213, 214, 218), name);
 			DustType = ModContent.DustType<QuartzCrystals>();
 			AdjTiles = new int[] { Type };
 			Main.tileLighted[Type] = true;
-			HitSound = SoundID.Shatter;
+			HitSound = SoundID.Item27;
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)

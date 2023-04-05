@@ -1,4 +1,3 @@
-using AltLibrary.Common.Systems;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -7,6 +6,7 @@ using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
 using TheDepths.Tiles;
 using TheDepths.Walls;
@@ -19,31 +19,69 @@ namespace TheDepths
     /// </summary>
     public class TheDepthsWorldGen : ModSystem
     {
-        public override void ModifyWorldGenTasks(List<GenPass> list, ref float totalWeight)
+		public static bool depthsorHell;
+
+		public override void OnWorldLoad()
+		{
+			depthsorHell = false;
+		}
+
+		public override void OnWorldUnload()
+		{
+			depthsorHell = false;
+		}
+
+		public override void SaveWorldData(TagCompound tag)
+		{
+			if (depthsorHell)
+			{
+				tag["IsDepths"] = true;
+			}
+		}
+
+		public override void LoadWorldData(TagCompound tag)
+		{
+			depthsorHell = tag.ContainsKey("IsDepths");
+		}
+
+		public override void PreWorldGen()
+		{
+			depthsorHell = true;
+		}
+
+		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
-            if (WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+            if (depthsorHell)
             {
-                int index2 = list.FindIndex(genpass => genpass.Name.Equals("Underworld"));
-                int index3 = list.FindIndex(genpass => genpass.Name.Equals("Hellforge"));
-				if (index2 != -1)
+                int index2 = tasks.FindIndex(genpass => genpass.Name.Equals("Underworld"));
+                int index3 = tasks.FindIndex(genpass => genpass.Name.Equals("Hellforge"));
+                int index4 = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
+                if (index2 != -1)
                 {
-                    list.Insert(index2 + 1, new PassLegacy("The Depths: Underworld Alt", new WorldGenLegacyMethod(Depths)));
-					index2 = list.FindIndex(genpass => genpass.Name.Equals("Pots"));
-					list.Insert(index2 + 1, new PassLegacy("The Depths: Pots", new WorldGenLegacyMethod(Pots)));
-					list.RemoveAt(index2);
-				}
+                    tasks.Insert(index2 + 1, new PassLegacy("Underworld", new WorldGenLegacyMethod(Depths)));
+                    tasks.RemoveAt(index2);
+                    index2 = tasks.FindIndex(genpass => genpass.Name.Equals("Pots"));
+                    tasks.Insert(index2 + 1, new PassLegacy("Pots", new WorldGenLegacyMethod(Pots)));
+                    tasks.RemoveAt(index2);
+                }
 
                 if (index3 != -1)
                 {
-                    //list.Insert(index3 + 1, new PassLegacy("The Depths: Hellforge Alt", new WorldGenLegacyMethod(Gemforge))); //old generation of the gemforges, we use altlibs hellforge generation instead
-                    list.Insert(index3 + 2, new PassLegacy("The Depths: Trees", new WorldGenLegacyMethod(TreeGen)));
+                    tasks.Insert(index3 + 1, new PassLegacy("Hellforge", new WorldGenLegacyMethod(Gemforge)));
+                    tasks.Insert(index3 + 2, new PassLegacy("The Depths: Trees", new WorldGenLegacyMethod(TreeGen)));
+                    tasks.RemoveAt(index3);
                 }
+
+				if (index4 == 1)
+				{
+					//tasks.Add(new PassLegacy("Quicksilver Droplets", new WorldGenLegacyMethod(DrippingQuicksilverTileCleanup)));
+				}
 			}
         }
 
-		public override void ModifyHardmodeTasks(List<GenPass> list)
+        public override void ModifyHardmodeTasks(List<GenPass> list)
 		{
-			if (WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+			if (depthsorHell)
 			{
 				list.Add(new PassLegacy("The Depths: Onyx Shalestone", new WorldGenLegacyMethod(OnyxShale)));
 			}
@@ -54,7 +92,24 @@ namespace TheDepths
 			OnyxShale();
 		}
 
-
+		/*public static void DrippingQuicksilverTileCleanup(GenerationProgress progress, GameConfiguration configuration)
+		{
+			progress.Message = "Placing Dripping Quicksilver";
+			for (int k = 0; k < Main.maxTilesX; k++)
+			{
+				for (int l = 0; l < Main.maxTilesY; l++)
+				{
+					if (WorldGen.InWorld(k, l))
+					{
+						if (Main.tile[k, l].TileType == 374)
+						{
+							Mod.Logger.Debug("Found Lava Droplets");
+							WorldGen.PlaceTile(k, l, TileType<QuicksilverDropletSource>(), true, true);
+						}
+					}
+				}
+			}
+		}*/
 
 		private void Pots(GenerationProgress progress, GameConfiguration configuration)
 		{
@@ -69,11 +124,11 @@ namespace TheDepths
 				int num2 = 0;
 				while (!flag1)
 				{
-					int num3 = WorldGen.genRand.Next((int)WorldGen.worldSurfaceHigh, Main.maxTilesY - 10);
+					int num3 = WorldGen.genRand.Next((int)GenVars.worldSurfaceHigh, Main.maxTilesY - 10);
 					if (num1 > 0.93)
 						num3 = Main.maxTilesY - 150;
 					else if (num1 > 0.75)
-						num3 = (int)WorldGen.worldSurfaceLow;
+						num3 = (int)GenVars.worldSurfaceLow;
 					int x = WorldGen.genRand.Next(1, Main.maxTilesX);
 					bool flag2 = false;
 					for (int y = num3; y < Main.maxTilesY; ++y)
@@ -187,13 +242,266 @@ namespace TheDepths
 		private static void Depths(GenerationProgress progress, GameConfiguration configuration)
         {
             {
-				for (int index = 0; index < (int)(Main.maxTilesX * Main.maxTilesY * 0.0008) / 2; ++index)
-                    WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY), WorldGen.genRand.Next(1, 6), WorldGen.genRand.Next(2, 6), TileType<Quartz>(), false, 0.0f, 0.0f, false, true);
-                /*for (int index = 0; index < (int)(Main.maxTilesX * Main.maxTilesY * 0.0008); ++index)
-                    WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY), WorldGen.genRand.Next(2, 7), WorldGen.genRand.Next(3, 7), TileType<ArqueriteOre>(), false, 0.0f, 0.0f, false, true);*/
-                for (int index = 0; index < (int)(Main.maxTilesX * Main.maxTilesY * 0.0008); ++index)
-                    WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY), WorldGen.genRand.Next(4, 9), WorldGen.genRand.Next(5, 9), TileType<Shalestone>(), false, 0.0f, 0.0f, false, true);
-                Gems();
+				progress.Message = "Creating depths";
+				progress.Set(0.0f);
+				int num838 = Main.maxTilesY -WorldGen.genRand.Next(150, 190);
+				for (int num839 = 0; num839 < Main.maxTilesX; num839++)
+				{
+					num838 +=WorldGen.genRand.Next(-3, 4);
+					if (num838 < Main.maxTilesY - 190)
+					{
+						num838 = Main.maxTilesY - 190;
+					}
+					if (num838 > Main.maxTilesY - 160)
+					{
+						num838 = Main.maxTilesY - 160;
+					}
+					for (int num840 = num838 - 20 -WorldGen.genRand.Next(3); num840 < Main.maxTilesY; num840++)
+					{
+						if (num840 >= num838)
+						{
+							Tile tile = Main.tile[num839, num840];
+							tile.HasTile = false;
+							tile.LiquidType = 1;
+							Main.tile[num839, num840].LiquidAmount = 0;
+						}
+						else
+						{
+							Main.tile[num839, num840].TileType = (ushort)ModContent.TileType<ShaleBlock>();
+						}
+					}
+				}
+				int num841 = Main.maxTilesY - WorldGen.genRand.Next(40, 70);
+				for (int num842 = 10; num842 < Main.maxTilesX - 10; num842++)
+				{
+					num841 +=WorldGen.genRand.Next(-10, 11);
+					if (num841 > Main.maxTilesY - 60)
+					{
+						num841 = Main.maxTilesY - 60;
+					}
+					if (num841 < Main.maxTilesY - 100)
+					{
+						num841 = Main.maxTilesY - 120;
+					}
+					for (int num843 = num841; num843 < Main.maxTilesY - 10; num843++)
+					{
+						if (!Main.tile[num842, num843].HasTile)
+						{
+							Tile tile = Main.tile[num842, num843];
+							tile.LiquidType = LiquidID.Lava;
+							Main.tile[num842, num843].LiquidAmount = byte.MaxValue;
+						}
+					}
+				}
+				for (int num844 = 0; num844 < Main.maxTilesX; num844++)
+				{
+					if (WorldGen.genRand.Next(50) == 0)
+					{
+						int num845 = Main.maxTilesY - 65;
+						while (!Main.tile[num844, num845].HasTile && num845 > Main.maxTilesY - 135)
+						{
+							num845--;
+						}
+						WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), num845 +WorldGen.genRand.Next(20, 50),WorldGen.genRand.Next(15, 20), 1000, ModContent.TileType<ShaleBlock>(), addTile: true, 0.0,WorldGen.genRand.Next(1, 3), noYChange: true);
+					}
+				}
+				Liquid.QuickWater(-2);
+				for (int num846 = 0; num846 < Main.maxTilesX; num846++)
+				{
+					double num847 = (double)num846 / (double)(Main.maxTilesX - 1);
+					progress.Set(num847 / 2.0 + 0.5);
+					if (WorldGen.genRand.Next(13) == 0)
+					{
+						int num848 = Main.maxTilesY - 65;
+						while ((Main.tile[num846, num848].LiquidAmount > 0 || Main.tile[num846, num848].HasTile) && num848 > Main.maxTilesY - 140)
+						{
+							num848--;
+						}
+						if ((!WorldGen.drunkWorldGen && !WorldGen.remixWorldGen) ||WorldGen.genRand.Next(3) == 0 || !((double)num846 > (double)Main.maxTilesX * 0.4) || !((double)num846 < (double)Main.maxTilesX * 0.6))
+						{
+							WorldGen.TileRunner(num846, num848 -WorldGen.genRand.Next(2, 5),WorldGen.genRand.Next(5, 30), 1000, ModContent.TileType<ShaleBlock>(), addTile: true, 0.0,WorldGen.genRand.Next(1, 3), noYChange: true);
+						}
+						double num849 =WorldGen.genRand.Next(1, 3);
+						if (WorldGen.genRand.Next(3) == 0)
+						{
+							num849 *= 0.5;
+						}
+						if ((!WorldGen.drunkWorldGen && !WorldGen.remixWorldGen) ||WorldGen.genRand.Next(3) == 0 || !((double)num846 > (double)Main.maxTilesX * 0.4) || !((double)num846 < (double)Main.maxTilesX * 0.6))
+						{
+							if (WorldGen.genRand.Next(2) == 0)
+							{
+								WorldGen.TileRunner(num846, num848 -WorldGen.genRand.Next(2, 5), (int)((double)WorldGen.genRand.Next(5, 15) * num849), (int)((double)WorldGen.genRand.Next(10, 15) * num849), ModContent.TileType<ShaleBlock>(), addTile: true, 1.0, 0.3);
+							}
+							if (WorldGen.genRand.Next(2) == 0)
+							{
+								num849 = WorldGen.genRand.Next(1, 3);
+								WorldGen.TileRunner(num846, num848 -WorldGen.genRand.Next(2, 5), (int)((double)WorldGen.genRand.Next(5, 15) * num849), (int)((double)WorldGen.genRand.Next(10, 15) * num849), ModContent.TileType<ShaleBlock>(), addTile: true, -1.0, 0.3);
+							}
+						}
+						WorldGen.TileRunner(num846 +WorldGen.genRand.Next(-10, 10), num848 +WorldGen.genRand.Next(-10, 10),WorldGen.genRand.Next(5, 15),WorldGen.genRand.Next(5, 10), -2, addTile: false,WorldGen.genRand.Next(-1, 3),WorldGen.genRand.Next(-1, 3));
+						if (WorldGen.genRand.Next(3) == 0)
+						{
+							WorldGen.TileRunner(num846 +WorldGen.genRand.Next(-10, 10), num848 +WorldGen.genRand.Next(-10, 10),WorldGen.genRand.Next(10, 30),WorldGen.genRand.Next(10, 20), -2, addTile: false,WorldGen.genRand.Next(-1, 3),WorldGen.genRand.Next(-1, 3));
+						}
+						if (WorldGen.genRand.Next(5) == 0)
+						{
+							WorldGen.TileRunner(num846 +WorldGen.genRand.Next(-15, 15), num848 +WorldGen.genRand.Next(-15, 10),WorldGen.genRand.Next(15, 30),WorldGen.genRand.Next(5, 20), -2, addTile: false,WorldGen.genRand.Next(-1, 3),WorldGen.genRand.Next(-1, 3));
+						}
+					}
+				}
+				for (int num850 = 0; num850 < Main.maxTilesX; num850++)
+				{
+					WorldGen.TileRunner(WorldGen.genRand.Next(20, Main.maxTilesX - 20),WorldGen.genRand.Next(Main.maxTilesY - 180, Main.maxTilesY - 10),WorldGen.genRand.Next(2, 7),WorldGen.genRand.Next(2, 7), -2);
+				}
+				if (WorldGen.drunkWorldGen || WorldGen.remixWorldGen)
+				{
+					for (int num851 = 0; num851 < Main.maxTilesX * 2; num851++)
+					{
+						WorldGen.TileRunner(WorldGen.genRand.Next((int)((double)Main.maxTilesX * 0.35), (int)((double)Main.maxTilesX * 0.65)),WorldGen.genRand.Next(Main.maxTilesY - 180, Main.maxTilesY - 10),WorldGen.genRand.Next(5, 20),WorldGen.genRand.Next(5, 10), -2);
+					}
+				}
+				for (int num852 = 0; num852 < Main.maxTilesX; num852++)
+				{
+					if (!Main.tile[num852, Main.maxTilesY - 145].HasTile)
+					{
+						Tile tile = Main.tile[num852, Main.maxTilesY - 145];
+						Main.tile[num852, Main.maxTilesY - 145].LiquidAmount = byte.MaxValue;
+						tile.LiquidType = LiquidID.Lava;
+					}
+					if (!Main.tile[num852, Main.maxTilesY - 144].HasTile)
+					{
+						Tile tile = Main.tile[num852, Main.maxTilesY - 144];
+						Main.tile[num852, Main.maxTilesY - 144].LiquidAmount = byte.MaxValue;
+						tile.LiquidType = 1;
+					}
+				}
+				for (int num853 = 0; num853 < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 0.0008); num853++)
+				{
+					WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX),WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY),WorldGen.genRand.Next(2, 7),WorldGen.genRand.Next(3, 7), TileType<ArqueriteOre>());
+				}
+				for (int index = 0; index < (int)(Main.maxTilesX * Main.maxTilesY * 0.0008); ++index)
+				{
+					WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY), WorldGen.genRand.Next(4, 9), WorldGen.genRand.Next(5, 9), TileType<Shalestone>(), false, 0.0f, 0.0f, false, true);
+				}
+				Gems();
+				if (WorldGen.remixWorldGen)
+				{
+					int num854 = (int)((double)Main.maxTilesX * 0.38);
+					int num855 = (int)((double)Main.maxTilesX * 0.62);
+					int num856 = num854;
+					int num857 = Main.maxTilesY - 1;
+					int num858 = Main.maxTilesY - 135;
+					int num859 = Main.maxTilesY - 160;
+					bool flag55 = false;
+					Liquid.QuickWater(-2);
+					for (; num857 < Main.maxTilesY - 1 || num856 < num855; num856++)
+					{
+						if (!flag55)
+						{
+							num857 -=WorldGen.genRand.Next(1, 4);
+							if (num857 < num858)
+							{
+								flag55 = true;
+							}
+						}
+						else if (num856 >= num855)
+						{
+							num857 +=WorldGen.genRand.Next(1, 4);
+							if (num857 > Main.maxTilesY - 1)
+							{
+								num857 = Main.maxTilesY - 1;
+							}
+						}
+						else
+						{
+							if ((num856 <= Main.maxTilesX / 2 - 5 || num856 >= Main.maxTilesX / 2 + 5) &&WorldGen.genRand.Next(4) == 0)
+							{
+								if (WorldGen.genRand.Next(3) == 0)
+								{
+									num857 +=WorldGen.genRand.Next(-1, 2);
+								}
+								else if (WorldGen.genRand.Next(6) == 0)
+								{
+									num857 +=WorldGen.genRand.Next(-2, 3);
+								}
+								else if (WorldGen.genRand.Next(8) == 0)
+								{
+									num857 +=WorldGen.genRand.Next(-4, 5);
+								}
+							}
+							if (num857 < num859)
+							{
+								num857 = num859;
+							}
+							if (num857 > num858)
+							{
+								num857 = num858;
+							}
+						}
+						for (int num860 = num857; num860 > num857 - 20; num860--)
+						{
+							Main.tile[num856, num860].LiquidAmount = 0;
+						}
+						for (int num861 = num857; num861 < Main.maxTilesY; num861++)
+						{
+							Tile tile = Main.tile[num856, num861];
+							tile = new Tile();
+							tile.HasTile = true;
+							Main.tile[num856, num861].TileType = (ushort)TileType<ShaleBlock>();
+						}
+					}
+					Liquid.QuickWater(-2);
+					for (int num862 = num854; num862 < num855 + 15; num862++)
+					{
+						for (int num863 = Main.maxTilesY - 300; num863 < num858 + 20; num863++)
+						{
+							Main.tile[num862, num863].LiquidAmount = 0;
+							if (Main.tile[num862, num863].TileType == ModContent.TileType<ShaleBlock>() && Main.tile[num862, num863].HasTile && (!Main.tile[num862 - 1, num863 - 1].HasTile || !Main.tile[num862, num863 - 1].HasTile || !Main.tile[num862 + 1, num863 - 1].HasTile || !Main.tile[num862 - 1, num863].HasTile || !Main.tile[num862 + 1, num863].HasTile || !Main.tile[num862 - 1, num863 + 1].HasTile || !Main.tile[num862, num863 + 1].HasTile || !Main.tile[num862 + 1, num863 + 1].HasTile))
+							{
+								Main.tile[num862, num863].TileType = (ushort)ModContent.TileType<NightmareGrass>();
+							}
+						}
+					}
+					for (int num864 = num854; num864 < num855 + 15; num864++)
+					{
+						for (int num865 = Main.maxTilesY - 200; num865 < num858 + 20; num865++)
+						{
+							if (Main.tile[num864, num865].TileType == ModContent.TileType<NightmareGrass>() && Main.tile[num864, num865].HasTile && !Main.tile[num864, num865 - 1].HasTile &&WorldGen.genRand.Next(3) == 0)
+							{
+								WorldGen.GrowTree(num864, num865);
+							}
+						}
+					}
+				}
+				else if (!WorldGen.drunkWorldGen)
+				{
+					for (int num866 = 25; num866 < Main.maxTilesX - 25; num866++)
+					{
+						if ((double)num866 < (double)Main.maxTilesX * 0.17 || (double)num866 > (double)Main.maxTilesX * 0.83)
+						{
+							for (int num867 = Main.maxTilesY - 300; num867 < Main.maxTilesY - 100 +WorldGen.genRand.Next(-1, 2); num867++)
+							{
+								if (Main.tile[num866, num867].TileType == ModContent.TileType<ShaleBlock>() && Main.tile[num866, num867].HasTile && (!Main.tile[num866 - 1, num867 - 1].HasTile || !Main.tile[num866, num867 - 1].HasTile || !Main.tile[num866 + 1, num867 - 1].HasTile || !Main.tile[num866 - 1, num867].HasTile || !Main.tile[num866 + 1, num867].HasTile || !Main.tile[num866 - 1, num867 + 1].HasTile || !Main.tile[num866, num867 + 1].HasTile || !Main.tile[num866 + 1, num867 + 1].HasTile))
+								{
+									Main.tile[num866, num867].TileType = (ushort)ModContent.TileType<NightmareGrass>();
+								}
+							}
+						}
+					}
+					for (int num868 = 25; num868 < Main.maxTilesX - 25; num868++)
+					{
+						if ((double)num868 < (double)Main.maxTilesX * 0.17 || (double)num868 > (double)Main.maxTilesX * 0.83)
+						{
+							for (int num869 = Main.maxTilesY - 200; num869 < Main.maxTilesY - 50; num869++)
+							{
+								if (Main.tile[num868, num869].TileType == ModContent.TileType<NightmareGrass>() && Main.tile[num868, num869].HasTile && !Main.tile[num868, num869 - 1].HasTile &&WorldGen.genRand.Next(3) == 0)
+								{
+									WorldGen.GrowTree(num868, num869);
+								}
+							}
+						}
+					}
+				}
                 AddDepthHouses();
             }
 
@@ -284,7 +592,7 @@ namespace TheDepths
 			int num = (int)((double)Main.maxTilesX * 0.25);
 			for (int i = 100; i < Main.maxTilesX - 100; i++)
 			{
-				if (((!WorldGen.drunkWorldGen/* && !WorldGen.remixWorldGen*/) || i <= num || i >= Main.maxTilesX - num) && (WorldGen.drunkWorldGen/* || WorldGen.remixWorldGen*/ || (i >= num && i <= Main.maxTilesX - num)))
+				if (((!WorldGen.drunkWorldGen && !WorldGen.remixWorldGen) || i <= num || i >= Main.maxTilesX - num) && (WorldGen.drunkWorldGen || WorldGen.remixWorldGen || (i >= num && i <= Main.maxTilesX - num)))
 				{
 					int num2 = Main.maxTilesY - 40;
 					while (Main.tile[i, num2].HasTile || Main.tile[i, num2].LiquidAmount > 0)
@@ -385,7 +693,7 @@ namespace TheDepths
 				{
 					num13 = WorldGen.genRand.Next(num, Main.maxTilesX - num);
 					num14 = WorldGen.genRand.Next(Main.maxTilesY - 250, Main.maxTilesY - 20);
-					if (WorldGen.drunkWorldGen/* || WorldGen.remixWorldGen*/)
+					if (WorldGen.drunkWorldGen || WorldGen.remixWorldGen)
 					{
 						if (WorldGen.genRand.Next(2) == 0)
 						{
@@ -665,7 +973,7 @@ namespace TheDepths
 				{
 					num26 = WorldGen.genRand.Next(num, Main.maxTilesX - num);
 					num27 = WorldGen.genRand.Next(Main.maxTilesY - 250, Main.maxTilesY - 20);
-					if (WorldGen.drunkWorldGen/* || WorldGen.remixWorldGen*/)
+					if (WorldGen.drunkWorldGen || WorldGen.remixWorldGen)
 					{
 						if (WorldGen.genRand.Next(2) == 0)
 						{
@@ -789,7 +1097,7 @@ namespace TheDepths
 				{
 					num37 = WorldGen.genRand.Next(num, Main.maxTilesX - num);
 					num38 = WorldGen.genRand.Next(Main.maxTilesY - 250, Main.maxTilesY - 20);
-					if (WorldGen.drunkWorldGen/* || WorldGen.remixWorldGen*/)
+					if (WorldGen.drunkWorldGen || WorldGen.remixWorldGen)
 					{
 						if (WorldGen.genRand.Next(2) == 0)
 						{

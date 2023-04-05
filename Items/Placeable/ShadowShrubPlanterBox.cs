@@ -22,6 +22,7 @@ namespace TheDepths.Items.Placeable
 			Item.useAnimation = 15;
 			Item.useTime = 10;
 			Item.value = 100;
+			Item.buyPrice(0, 0, 1, 0);
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<Tiles.ShadowShrubPlanterBox>();

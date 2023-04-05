@@ -10,7 +10,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TheDepths.Items.Banners;
 using Terraria.GameContent.ItemDropRules;
-using AltLibrary.Common.Systems;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;
 
@@ -19,7 +18,6 @@ namespace TheDepths.NPCs
 	public class GoldBat : ModNPC
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Gold Bat");
 			Main.npcFrameCount[NPC.type] = 4;
 
 			var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
@@ -54,13 +52,13 @@ namespace TheDepths.NPCs
 		{
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-				new FlavorTextBestiaryInfoElement("A rare bat in the depths that was cursed by the geomancers to be a gem-like creature. Despite their name they are actually the same color as topaz.")
+				new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.GoldBat")
 			});
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+			if (spawnInfo.Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell)
 			{
 				return 0.05f;
 			}
@@ -72,7 +70,7 @@ namespace TheDepths.NPCs
 			npcLoot.Add(ItemDropRule.Common(ItemID.Topaz, 10, 1, 1));
 		}
 
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
 			{

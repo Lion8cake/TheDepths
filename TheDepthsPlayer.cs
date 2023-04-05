@@ -17,7 +17,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.Utilities;
 using static Terraria.ModLoader.ModContent;
-using AltLibrary.Common.Systems;
 using TheDepths.Biomes;
 using System;
 using TheDepths.Items.Weapons;
@@ -38,14 +37,18 @@ namespace TheDepths
         public bool lodeStone;
         public bool noHit;
         public bool stoneRose;
+        public bool aAmulet;
         public bool quicksilverSurfboard;
         public int tremblingDepthsScreenshakeTimer;
+        public int QuicksilverTimer;
+        public int AmuletTimer;
 
         public bool geodeCrystal;
         public bool livingShadow;
         public bool miniChasme;
         public bool miniChasmeArms;
         public bool ShadePet;
+        private PlayerDeathReason damageSource;
 
         public override void ResetEffects()
         {
@@ -57,6 +60,7 @@ namespace TheDepths
             aStone = false;
             lodeStone = false;
             stoneRose = false;
+            aAmulet = false;
             quicksilverSurfboard = false;
 
             geodeCrystal = false;
@@ -139,7 +143,7 @@ namespace TheDepths
             }
         }
 
-        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
         {
             if (item.CountsAsClass(DamageClass.Melee))
             {
@@ -154,20 +158,21 @@ namespace TheDepths
             }
         }
 
-        public override void OnHitPvp(Item item, Player target, int damage, bool crit)
+        /*public override void OnHurt(Player.HurtInfo info)
         {
+            Item item = Player.HeldItem;
             if (item.CountsAsClass(DamageClass.Melee))
             {
                 if (merImbue)
                 {
-                    target.AddBuff(ModContent.BuffType<MercuryBoiling>(), 360 * Main.rand.Next(1, 1));
+                    .AddBuff(ModContent.BuffType<MercuryBoiling>(), 360 * Main.rand.Next(1, 1));
                 }
                 if (aStone)
                 {
-                    target.AddBuff(ModContent.BuffType<FreezingWater>(), 360 * Main.rand.Next(1, 1));
+                    Player.AddBuff(ModContent.BuffType<FreezingWater>(), 360 * Main.rand.Next(1, 1));
                 }
             }
-        }
+        }*/
 
         public override void PostUpdate()
         {
@@ -182,6 +187,22 @@ namespace TheDepths
             if (Player.dead)
             {
                 MercuryTimer = 0;
+            }
+            if (stoneRose)
+            {
+                if (QuicksilverTimer >= 60 * 4)
+                {
+                    Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 7, false, false);
+                    QuicksilverTimer = 60 * 4;
+                }
+            }
+            else
+            {
+                if (QuicksilverTimer >= 60 * 2)
+                {
+                    Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 7, false, false);
+                    QuicksilverTimer = 60 * 2;
+                }
             }
             //Main.NewText(MercuryTimer); //For Debugging, posts number of ticks that have passed when the player is on Mercury
         }
@@ -242,22 +263,21 @@ namespace TheDepths
             }
         }
 
-        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
+        /*public override void ModifyHurt(ref Player.HurtModifiers modifiers)
         {
             if (damageSource.SourceCustomReason == "Gemforge")
             {
                 WeightedRandom<string> deathmessage = new();
-                deathmessage.Add(Language.GetTextValue(Player.name + " tried to summon a cult in pure light", Player.name));
-                deathmessage.Add(Language.GetTextValue(Player.name + " moved the gemforge away from its home", Player.name));
-                deathmessage.Add(Language.GetTextValue(Player.name + " tried to burned a relic on the surface", Player.name));
+                deathmessage.Add(Language.GetTextValue("Mods.TheDepths.PlayerDeathReason.Gemforge.0", Player.name));
+                deathmessage.Add(Language.GetTextValue("Mods.TheDepths.PlayerDeathReason.Gemforge.1", Player.name));
+                deathmessage.Add(Language.GetTextValue("Mods.TheDepths.PlayerDeathReason.Gemforge.2", Player.name));
                 damageSource = PlayerDeathReason.ByCustomReason(deathmessage);
-                return true;
             }
-            return base.PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, ref customDamage, ref playSound, ref genGore, ref damageSource, ref cooldownCounter);
-        }
+        }*/
 
         public override void PostUpdateMiscEffects()
         {
+            Player player = Main.LocalPlayer;
             if (Main.netMode != 2 && Player.whoAmI == Main.myPlayer)
             {
                 if (quicksilverSurfboard)
@@ -268,7 +288,7 @@ namespace TheDepths
                 {
                     TextureAssets.FlyingCarpet = Main.Assets.Request<Texture2D>("Images/FlyingCarpet");
                 }
-                if (WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+                if (TheDepthsWorldGen.depthsorHell)
                 {
                     //TextureAssets.Dust = Request<Texture2D>("TheDepths/Lava/Dust");
                     TextureAssets.Liquid[1] = Request<Texture2D>("TheDepths/Lava/Quicksilver_Block");
@@ -282,6 +302,10 @@ namespace TheDepths
                     foreach (int i in bgnum)
                     {
                         TextureAssets.Background[i] = Request<Texture2D>("TheDepths/Backgrounds/Background_" + i);
+                    }
+                    for (int i = 0; i < 14; i++)
+                    {
+                        TextureAssets.Underworld[i] = Request<Texture2D>("TheDepths/Backgrounds/DepthsUnderworldBG_" + i);
                     }
                 }
                 else
@@ -299,18 +323,25 @@ namespace TheDepths
                     {
                         TextureAssets.Background[i] = Main.Assets.Request<Texture2D>("Images/Background_" + i);
                     }
+
+                    for (int i = 0; i < 14; i++)
+                    {
+                        TextureAssets.Underworld[i] = Main.Assets.Request<Texture2D>("Images/Backgrounds/Underworld " + i);
+                    }
                 }
             }
-            if (Player.lavaWet && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+            if (Player.lavaWet && TheDepthsWorldGen.depthsorHell || Collision.LavaCollision(Main.LocalPlayer.position, Main.LocalPlayer.width, Main.LocalPlayer.height) && TheDepthsWorldGen.depthsorHell)
             {
-                Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 7, false, false);
-                Player.lavaImmune = true;
+                Player.AddBuff(BuffType<MercuryFooting>(), 60 * 30, false, false);
+                Player.lavaTime = 1000;
+                player.buffImmune[BuffID.OnFire] = true;
+                player.buffImmune[BuffID.OnFire3] = true;
+                QuicksilverTimer++;
             }
-            /*else if (Player.lavaWet && WorldBiomeManager.WorldHell != "TheDepths/AltDepthsBiome")
+            else
             {
-                Player.lavaImmune = false;
-            }*/
-            
+                QuicksilverTimer = 0;
+            }
         }
 
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)

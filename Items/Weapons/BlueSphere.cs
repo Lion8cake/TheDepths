@@ -11,8 +11,6 @@ namespace TheDepths.Items.Weapons
 	public class BlueSphere : ModItem
 	{
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Blue Sphere");
-			Tooltip.SetDefault("'Collect them all!'");
 			ItemID.Sets.Yoyo[Item.type] = true;
 			ItemID.Sets.GamepadExtraRange[Item.type] = 15;
 			ItemID.Sets.GamepadSmartQuickReach[Item.type] = true;
@@ -30,7 +28,7 @@ namespace TheDepths.Items.Weapons
 			Item.damage = 50;
 			Item.rare = ItemRarityID.LightRed;
 
-			Item.DamageType = DamageClass.Melee/* tModPorter Suggestion: Consider MeleeNoSpeed for no attack speed scaling */;
+			Item.DamageType = DamageClass.Melee;
 			Item.channel = true;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;

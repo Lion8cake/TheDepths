@@ -9,7 +9,6 @@ namespace TheDepths.Items.Weapons
 	public class DiamondArrow : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("3 bursts of crystals are shot out in random directions apon impact");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
 		}
 

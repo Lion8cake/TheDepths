@@ -12,7 +12,6 @@ using TheDepths.Items.Banners;
 using Terraria.GameContent.ItemDropRules;
 using TheDepths.Items;
 using TheDepths.Pets.ShadePet;
-using AltLibrary.Common.Systems;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;   
 
@@ -20,10 +19,6 @@ namespace TheDepths.NPCs
 {
     public class Shade : ModNPC
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Shade");
-        }
 
         public override void SetDefaults()
         {
@@ -50,7 +45,7 @@ namespace TheDepths.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("Beings of pure darkness that drift through the depths with the ability to freely float through the air. A group of them is called a darkening.")
+                new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.Shade")
             });
         }
 
@@ -61,7 +56,7 @@ namespace TheDepths.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
+            if (spawnInfo.Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell)
             {
                 return 1.3f;
             }
@@ -74,7 +69,7 @@ namespace TheDepths.NPCs
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RubyRelic>(), 4, 1, 1));
         }
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (Main.netMode == NetmodeID.Server)
             {

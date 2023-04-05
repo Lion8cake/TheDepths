@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using TheDepths.Buffs;
 using Terraria.GameContent.Creative;
+using Terraria.Localization;
 
 namespace TheDepths.Items.Armor
 {
@@ -11,7 +12,6 @@ namespace TheDepths.Items.Armor
 	public class MercuryHelmet : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Tooltip.SetDefault("4% Increased melee critical strike chance");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -32,10 +32,13 @@ namespace TheDepths.Items.Armor
 		}
 
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "3 Defence"
-				+"\nMercury cannot infect you";
+			player.setBonus = Language.GetTextValue("Mods.TheDepths.SetBonus.MercuryHelmet");
 			player.statDefense += 3;
-			player.buffImmune[ModContent.BuffType<MercuryBoiling>()] = true;
+			if (Main.player[Main.myPlayer].GetModPlayer<TheDepthsPlayer>().QuicksilverTimer == 0)
+			{
+				player.buffImmune[ModContent.BuffType<MercuryBoiling>()] = true;
+				player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
+			}
 		}
 
 		public override void AddRecipes() 
