@@ -24,6 +24,7 @@ using Terraria.GameContent;
 using Terraria.Localization;
 using Terraria.UI;
 using Terraria.GameContent.UI.Elements;
+using TheDepths.Hooks;
 
 namespace TheDepths
 {
@@ -56,6 +57,11 @@ namespace TheDepths
             On_Player.PlaceThing_Tiles_CheckLavaBlocking += On_Player_PlaceThing_Tiles_CheckLavaBlocking;
             On_Main.DrawUnderworldBackgroudLayer += On_Main_DrawUnderworldBackgroudLayer; 
             Terraria.GameContent.UI.Elements.On_UIGenProgressBar.DrawSelf += On_UIGenProgressBar_DrawSelf;
+            Terraria.GameContent.UI.States.IL_UIWorldCreation.BuildPage += DepthsSelectionMenu.ILBuildPage;
+            Terraria.GameContent.UI.States.IL_UIWorldCreation.MakeInfoMenu += DepthsSelectionMenu.ILMakeInfoMenu;
+            Terraria.GameContent.UI.States.IL_UIWorldCreation.ShowOptionDescription +=
+                DepthsSelectionMenu.ILShowOptionDescription;
+            Terraria.GameContent.UI.States.On_UIWorldCreation.SetDefaultOptions += DepthsSelectionMenu.OnSetDefaultOptions;
         }
 
         public override void Unload()

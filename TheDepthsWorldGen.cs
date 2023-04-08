@@ -17,8 +17,16 @@ namespace TheDepths
     /// <summary>
     /// WHOLE SHIT HERE WAS MADE BY Develassper. aka "basically, i am little fox"
     /// </summary>
-    public class TheDepthsWorldGen : ModSystem
-    {
+    ///
+    
+    public enum UnderworldOptions {
+	    Random,
+	    Underworld,
+	    Depths,
+    }
+    
+    public class TheDepthsWorldGen : ModSystem {
+	    public UnderworldOptions SelectedUnderworldOption { get; set; } = UnderworldOptions.Random;
 		public static bool depthsorHell;
 
 		public override void OnWorldLoad()
@@ -44,9 +52,13 @@ namespace TheDepths
 			depthsorHell = tag.ContainsKey("IsDepths");
 		}
 
-		public override void PreWorldGen()
-		{
-			depthsorHell = true;
+		public override void PreWorldGen() {
+			depthsorHell = SelectedUnderworldOption switch {
+				UnderworldOptions.Random => Main.rand.NextBool(),
+				UnderworldOptions.Underworld => false,
+				UnderworldOptions.Depths => true,
+				_ => throw new ArgumentOutOfRangeException(),
+			};
 		}
 
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
