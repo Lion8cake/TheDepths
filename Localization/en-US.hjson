@@ -1067,6 +1067,23 @@ Mods: {
 		}
 
 		DepthsBiome: Mods.TheDepths.DepthsBiome
+
+		UnderworldSelection: {
+			Random: {
+				Title: Random
+				Description: Random description here
+			}
+
+			Underworld: {
+				Title: Underworld
+				Description: Underworld description here
+			}
+
+			Depths: {
+				Title: Depths
+				Description: Depths description here
+			}
+		}
 	}
 }
 
