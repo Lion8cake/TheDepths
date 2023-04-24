@@ -25,7 +25,6 @@ namespace TheDepths.Items.Accessories
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual) {
-            player.buffImmune[ModContent.BuffType<MercuryBoiling>()] = true;
 			player.GetModPlayer<TheDepthsPlayer>().aAmulet = true;
 		}
 	}

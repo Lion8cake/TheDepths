@@ -13,12 +13,7 @@ using TheDepths.Walls;
 using static Terraria.ModLoader.ModContent;
 
 namespace TheDepths
-{
-    /// <summary>
-    /// WHOLE SHIT HERE WAS MADE BY Develassper. aka "basically, i am little fox"
-    /// </summary>
-    ///
-    
+{    
     public enum UnderworldOptions {
 	    Random,
 	    Underworld,

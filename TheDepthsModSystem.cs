@@ -16,6 +16,7 @@ using System.Reflection;
 using System.IO;
 using System.Text.Json;
 using Terraria.ModLoader.Config;
+using Terraria.Localization;
 
 namespace TheDepths
 {
@@ -27,6 +28,19 @@ namespace TheDepths
             if (File.ReadAllText(ConfigManager.ModConfigPath + "/AltLibrary_AltLibraryConfig.json").Contains(twld))
             {
                 Main.NewText("Found World");
+            }
+        }
+
+        public override void PostAddRecipes()
+        {
+            for (int i = 0; i < Recipe.numRecipes; i++)
+            {
+                Recipe recipe = Main.recipe[i];
+
+                if (recipe.HasCondition(Condition.NearLava))
+                {
+                    recipe.AddCondition(Language.GetOrRegister(""), () => TheDepthsWorldGen.depthsorHell == false);
+                }
             }
         }
 

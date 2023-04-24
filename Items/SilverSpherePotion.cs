@@ -33,10 +33,10 @@ namespace TheDepths.Items
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(ItemID.FlarefinKoi, 1);
-			recipe.AddIngredient(ItemID.Obsidifish, 2);
+			recipe.AddIngredient(ModContent.ItemType<ShadowFightingFish>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<QuartzFeeder>(), 2);
 			recipe.AddIngredient(ModContent.ItemType<Items.ShadowShrub>(), 1);
-			recipe.AddTile(13);
+			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 		}
     }

@@ -46,11 +46,11 @@ namespace TheDepths.Projectiles
                 }
             }
             Player player = Main.player[Projectile.owner];
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningOrb2>()] > 0)
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningOrb2>()] > 0 && player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningTo2>()] <= 30)
             {
                 Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<WhiteLightningTo2>(), Projectile.damage, 0f, Main.myPlayer, 0f, 0f);
             }
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningOrb3>()] > 0)
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningOrb3>()] > 0 && player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningTo3>()] <= 30)
             {
                 Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<WhiteLightningTo3>(), Projectile.damage, 0f, Main.myPlayer, 0f, 0f);
             }
@@ -101,11 +101,11 @@ namespace TheDepths.Projectiles
                 }
             }
             Player player = Main.player[Projectile.owner];
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningOrb>()] > 0)
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningOrb>()] > 0 && player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningTo1>()] <= 30)
             {
                 Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<WhiteLightningTo1>(), Projectile.damage, 0f, Main.myPlayer, 0f, 0f);
             }
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningOrb3>()] > 0)
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningOrb3>()] > 0 && player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningTo3>()] <= 30)
             {
                 Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<WhiteLightningTo3>(), Projectile.damage, 0f, Main.myPlayer, 0f, 0f);
             }
@@ -156,11 +156,11 @@ namespace TheDepths.Projectiles
                 }
             }
             Player player = Main.player[Projectile.owner];
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningOrb2>()] > 0)
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningOrb2>()] > 0 && player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningTo2>()] <= 30)
             {
                 Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<WhiteLightningTo2>(), Projectile.damage, 0f, Main.myPlayer, 0f, 0f);
             }
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningOrb>()] > 0)
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningOrb>()] > 0 && player.ownedProjectileCounts[ModContent.ProjectileType<WhiteLightningTo1>()] <= 30)
             {
                 Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<WhiteLightningTo1>(), Projectile.damage, 0f, Main.myPlayer, 0f, 0f);
             }

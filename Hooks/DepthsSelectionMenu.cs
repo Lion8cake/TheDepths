@@ -101,9 +101,9 @@ internal static class DepthsSelectionMenu {
             Color.BlueViolet,
         };
         Asset<Texture2D>[] icons = {
-            Main.Assets.Request<Texture2D>("Images/UI/WorldCreation/IconEvilRandom"), 
-            Main.Assets.Request<Texture2D>("Images/UI/WorldCreation/IconEvilCorruption"),
-            Main.Assets.Request<Texture2D>("Images/UI/WorldCreation/IconEvilCrimson"),
+            Main.Assets.Request<Texture2D>("Images/UI/WorldCreation/IconEvilRandom"),
+            ModContent.Request<Texture2D>("TheDepths/Assets/WorldCreation/IconCoreUnderworld"),
+            ModContent.Request<Texture2D>("TheDepths/Assets/WorldCreation/IconCoreDepths"),
         };
         for (int i = 0; i < UnderworldButtons.Length; i++) {
             var groupOptionButton = new global::TheDepths.UI.GroupOptionButton<UnderworldOptions>(

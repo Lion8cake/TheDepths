@@ -2,6 +2,8 @@ using Terraria.ID;
 using TheDepths.Tiles;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
+using Terraria.Localization;
+using Terraria;
 
 namespace TheDepths.Items.Placeable
 {
@@ -27,6 +29,15 @@ namespace TheDepths.Items.Placeable
 			Item.createTile = ModContent.TileType<Tiles.QuicksilverDropletSource>();
 			Item.placeStyle = 0;
 			Item.rare = ItemRarityID.White;
+		}
+
+		public override void AddRecipes()
+		{
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ItemID.EmptyDropper);
+			recipe.AddTile(TileID.CrystalBall);
+			recipe.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), () => TheDepthsWorldGen.depthsorHell && Main.LocalPlayer.adjLava);
+			recipe.Register();
 		}
 	}
 }

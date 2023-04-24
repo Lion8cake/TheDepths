@@ -14,7 +14,45 @@ namespace TheDepths.NPCs
 		public bool slowWater;
 		public bool merBoiling;
 		public int MercuryNPCTimer;
-		
+
+		public int QuicksilverTimer;
+
+		public override void SetDefaults(NPC npc)
+		{
+			if (npc.lavaImmune == true)
+			{
+				npc.buffImmune[ModContent.BuffType<Buffs.MercuryBoiling>()] = true;
+			}
+		}
+
+		public override void PostAI(NPC npc)
+		{
+			if (TheDepthsWorldGen.depthsorHell && Collision.LavaCollision(npc.position, npc.width, npc.height))
+			{
+				npc.lavaImmune = true;
+				npc.buffImmune[BuffID.OnFire] = true;
+				npc.buffImmune[BuffID.OnFire3] = true;
+				QuicksilverTimer++;
+				if (QuicksilverTimer >= 120)
+				{
+					QuicksilverTimer = 120;
+					npc.AddBuff(ModContent.BuffType<Buffs.MercuryBoiling>(), 60 * 7, false);
+				}
+			}
+			if (TheDepthsWorldGen.depthsorHell && !Collision.LavaCollision(npc.position, npc.width, npc.height))
+            {
+				QuicksilverTimer--;
+				if (QuicksilverTimer <= 0)
+                {
+					QuicksilverTimer = 0;
+                }
+            }
+			if (TheDepthsWorldGen.depthsorHell == false && Collision.LavaCollision(npc.position, npc.width, npc.height) && npc.buffImmune[ModContent.BuffType<Buffs.MercuryBoiling>()] == false)
+            {
+				npc.lavaImmune = false;
+            }
+		}
+
 		public override void ResetEffects(NPC npc) {
 			merPoison = false;
 			slowWater = false;
@@ -57,7 +95,6 @@ namespace TheDepths.NPCs
 						Main.dust[dust].scale *= 0.5f;
 					}
 				}
-				Lighting.AddLight(npc.position, 0.1f, 0.2f, 0.7f);
 			}
 		}
 		

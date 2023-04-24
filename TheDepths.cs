@@ -345,7 +345,7 @@ namespace TheDepths
         }
         #endregion
 
-        #region QuicksilverTextureDetour
+        #region SilverfallTextureDetour
         private void On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects(On_WaterfallManager.orig_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects orig, WaterfallManager self, int waterfallType, int x, int y, float opacity, Vector2 position, Rectangle sourceRect, Color color, SpriteEffects effects)
         {
             orig.Invoke(self, waterfallType, x, y, opacity, position, sourceRect, color, effects);

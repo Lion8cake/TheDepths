@@ -25,10 +25,8 @@ namespace TheDepths.Items.Accessories
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual) {
-            player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
 			player.waterWalk = true;
-			player.waterWalk2 = true;
-			player.fireWalk = false;
+			player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
 		}
 		
 		public override void AddRecipes()

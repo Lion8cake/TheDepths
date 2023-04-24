@@ -12,7 +12,6 @@ namespace TheDepths.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-			//Tooltip.SetDefault("Summons up to 3 Lightning orbs that connect to each other");
 		}
 
 		public override void SetDefaults() {
