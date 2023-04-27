@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace TheDepths.Pets.ShadowCat
 {
-	public class MysticYarn : ModItem
+	public class GeodeLazerPointer : ModItem
 	{
 		public override void SetStaticDefaults() {
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;

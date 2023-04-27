@@ -13,7 +13,7 @@ namespace TheDepths.UI
 	internal class MercuryBubbleMainUI : UIState
 	{
 		private UIElement area;
-        readonly Asset<Texture2D> cloudtexture = ModContent.Request<Texture2D>("TheDepths/Lava/PoisonCloud");
+        readonly Asset<Texture2D> cloudtexture = ModContent.Request<Texture2D>("TheDepths/Assets/Lava/PoisonCloud");
 
 		public override void OnInitialize() {
 			area = new UIElement();

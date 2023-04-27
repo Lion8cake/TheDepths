@@ -43,7 +43,7 @@ namespace TheDepths.Items.Placeable
             {
                 ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Accessories.AmalgamAmulet>(), 1),
                 ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Accessories.ShadowflameEmberedTreads>(), 1),
-                ItemDropRule.NotScalingWithLuck(ItemID.SuperheatedBlood, 1),
+                ItemDropRule.NotScalingWithLuck(ModContent.ItemType<PurpleflameNecklace>(), 1),
                 ItemDropRule.NotScalingWithLuck(ModContent.ItemType<ShadowFightingFishBowl>(), 1),
                 ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Accessories.QuicksilverproofFishingHook>(), 1),
                 ItemDropRule.NotScalingWithLuck(ModContent.ItemType<FluorescentLightBulb>(), 1)

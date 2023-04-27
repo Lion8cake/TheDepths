@@ -428,7 +428,7 @@ namespace TheDepths
 
                 if (quicksilverSurfboard)
                 {
-                    TextureAssets.FlyingCarpet = Request<Texture2D>("TheDepths/Assets/FlyingCarpet/SilverSurfboard");
+                    TextureAssets.FlyingCarpet = Request<Texture2D>("TheDepths/Items/Accessories/QuickSilverSurfboard_Carpet");
                 }
                 else
                 {
@@ -436,11 +436,11 @@ namespace TheDepths
                 }
                 if (TheDepthsWorldGen.depthsorHell)
                 {
-                    TextureAssets.Liquid[1] = Request<Texture2D>("TheDepths/Lava/Quicksilver_Block");
-                    TextureAssets.LiquidSlope[1] = Request<Texture2D>("TheDepths/Lava/Quicksilver_Slope");
-                    TextureAssets.Item[207] = Request<Texture2D>("TheDepths/Lava/QuicksilverBucket");
-                    TextureAssets.Item[4820] = Request<Texture2D>("TheDepths/Lava/BottomlessQuicksilverBucket");
-                    TextureAssets.Item[4872] = Request<Texture2D>("TheDepths/Lava/QuicksilverSponge");
+                    TextureAssets.Liquid[1] = Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver_Block");
+                    TextureAssets.LiquidSlope[1] = Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver_Slope");
+                    TextureAssets.Item[207] = Request<Texture2D>("TheDepths/Assets/Lava/QuicksilverBucket");
+                    TextureAssets.Item[4820] = Request<Texture2D>("TheDepths/Assets/Lava/BottomlessQuicksilverBucket");
+                    TextureAssets.Item[4872] = Request<Texture2D>("TheDepths/Assets/Lava/QuicksilverSponge");
 
                     //Old Texture/lava layer background
                     int[] bgnum = new int[30] { 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 150, 151, 152, 157, 158, 159, 185, 186, 187 };

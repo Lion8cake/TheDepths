@@ -63,21 +63,18 @@ namespace TheDepths
                     PlantAlch();
             }
 
-            if (!Main.dedServ && TheDepthsWorldGen.depthsorHell)
+            if (!Main.dedServ)
             {
-                for (int i = 0; i < LiquidRenderer.Instance._liquidTextures.Length; i++)
+                if (TheDepthsWorldGen.depthsorHell)
                 {
-                    LiquidRenderer.Instance._liquidTextures[1] = ModContent.Request<Texture2D>("TheDepths/Lava/Quicksilver", (AssetRequestMode)1);
+                    LiquidRenderer.Instance._liquidTextures[1] = ModContent.Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver", (AssetRequestMode)1);
+                    int[] liquidAssetRegularNum = new int[14] { 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+                    foreach (int i in liquidAssetRegularNum)
+                    {
+                        LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
+                    }
                 }
-                int[] liquidAssetRegularNum = new int[14] { 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
-                foreach (int i in liquidAssetRegularNum)
-                {
-                    LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
-                }
-            }
-            else
-            {
-                if (!Main.dedServ)
+                else
                 {
                     for (int i = 0; i < 15; i++)
                     {

@@ -22,7 +22,6 @@ namespace TheDepths.Items.Accessories
 			Item.value = 10000;
 			Item.rare = ItemRarityID.Lime;
 			Item.accessory = true;
-			Item.vanity = true;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual) {

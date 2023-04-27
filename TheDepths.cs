@@ -25,6 +25,8 @@ using Terraria.Localization;
 using Terraria.UI;
 using Terraria.GameContent.UI.Elements;
 using TheDepths.Hooks;
+using Terraria.DataStructures;
+using TheDepths.Dusts;
 
 namespace TheDepths
 {
@@ -62,6 +64,8 @@ namespace TheDepths
             Terraria.GameContent.UI.States.IL_UIWorldCreation.ShowOptionDescription +=
                 DepthsSelectionMenu.ILShowOptionDescription;
             Terraria.GameContent.UI.States.On_UIWorldCreation.SetDefaultOptions += DepthsSelectionMenu.OnSetDefaultOptions;
+            On_Player.ItemCheck_CatchCritters += On_Player_ItemCheck_CatchCritters;
+            On_Player.SpawnFastRunParticles += On_Player_SpawnFastRunParticles;
         }
 
         public override void Unload()
@@ -80,7 +84,62 @@ namespace TheDepths
             On_Player.PlaceThing_Tiles_CheckLavaBlocking -= On_Player_PlaceThing_Tiles_CheckLavaBlocking;
             On_Main.DrawUnderworldBackgroudLayer -= On_Main_DrawUnderworldBackgroudLayer;
             Terraria.GameContent.UI.Elements.On_UIGenProgressBar.DrawSelf -= On_UIGenProgressBar_DrawSelf;
+            On_Player.ItemCheck_CatchCritters -= On_Player_ItemCheck_CatchCritters;
+            On_Player.SpawnFastRunParticles -= On_Player_SpawnFastRunParticles;
         }
+
+        #region nightmareflamebootsdetour(Doesn'tWork)
+        private void On_Player_SpawnFastRunParticles(On_Player.orig_SpawnFastRunParticles orig, Player self)
+        {
+            orig.Invoke(self);
+            int nump2 = 0;
+            if (self.gravDir == -1f)
+            {
+                nump2 -= self.height;
+            }
+            if (self.GetModPlayer<TheDepthsPlayer>().nFlare == true)
+            {
+                int num8 = Dust.NewDust(new Vector2(self.position.X - 4f, self.position.Y + (float)self.height + (float)nump2), Main.LocalPlayer.width + 8, 4, ModContent.DustType<ShadowflameEmber>(), (0f - self.velocity.X) * 0.5f, self.velocity.Y * 0.5f, 50, default(Color), 2f);
+                Main.dust[num8].velocity.X = Main.dust[num8].velocity.X * 0.2f;
+                Main.dust[num8].velocity.Y = -1.5f - Main.rand.NextFloat() * 0.5f;
+                Main.dust[num8].fadeIn = 0.5f;
+                Main.dust[num8].noGravity = true;
+                Main.dust[num8].shader = GameShaders.Armor.GetSecondaryShader(self.cShoe, self);
+            }
+        }
+        #endregion
+
+        #region MercuryBugCatchingPunishmentDetour
+        private Rectangle On_Player_ItemCheck_CatchCritters(On_Player.orig_ItemCheck_CatchCritters orig, Player self, Item sItem, Rectangle itemRectangle)
+        {
+            orig.Invoke(self, sItem, itemRectangle);
+            bool flag = sItem.type == ModContent.ItemType<Items.QuicksilverproofBugNet>() || sItem.type == 4821;
+            for (int i = 0; i < 200; i++)
+            {
+                if (!Main.npc[i].active || Main.npc[i].catchItem <= 0)
+                {
+                    continue;
+                }
+                Rectangle value = new Rectangle((int)Main.npc[i].position.X, (int)Main.npc[i].position.Y, Main.npc[i].width, Main.npc[i].height);
+                if (!itemRectangle.Intersects(value))
+                {
+                    continue;
+                }
+                if (!flag && ItemID.Sets.IsLavaBait[Main.npc[i].catchItem])
+                {
+                    if (Main.myPlayer == Main.LocalPlayer.whoAmI/* && Player.Hurt(PlayerDeathReason.ByNPC(i), 1, (Main.npc[i].Center.X < Main.LocalPlayer.Center.X) ? 1 : (-1), pvp: false, quiet: false, -1, false, 3f) > 0.0*/ && !Main.LocalPlayer.dead)
+                    {
+                        if (Main.npc[i].type == ModContent.NPCType<NPCs.EnchantedNightmareWorm>() || Main.npc[i].type == ModContent.NPCType<NPCs.AlbinoRat>() || Main.npc[i].type == ModContent.NPCType<NPCs.QuartzCrawler>())
+                        {
+                            Main.LocalPlayer.AddBuff(ModContent.BuffType<Buffs.MercuryBoiling>(), 300, quiet: false);
+                            Main.LocalPlayer.ClearBuff(BuffID.OnFire);
+                        }
+                    }
+                }
+            }
+            return itemRectangle;
+        }
+        #endregion
 
         #region OuterLowerDepthsProgressBar
         private void On_UIGenProgressBar_DrawSelf(Terraria.GameContent.UI.Elements.On_UIGenProgressBar.orig_DrawSelf orig, Terraria.GameContent.UI.Elements.UIGenProgressBar self, SpriteBatch spriteBatch)
@@ -353,7 +412,7 @@ namespace TheDepths
             {
                 if (waterfallType == 1)
                 {
-                    Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("TheDepths/Lava/Quicksilver_Silverfall", (AssetRequestMode)1), position, sourceRect, color, 0f, default(Vector2), 1f, effects, 0f);
+                    Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver_Silverfall", (AssetRequestMode)1), position, sourceRect, color, 0f, default(Vector2), 1f, effects, 0f);
                 }
             }
         }

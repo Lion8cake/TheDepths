@@ -57,6 +57,9 @@ Mods: {
 			Shade: Beings of pure darkness that drift through the depths with the ability to freely float through the air. A group of them is called a darkening.
 			ShadowBat: This half black half emerald bat is a stonger varient of the bats found in the depths, Is it a bat's shadow or a shadow made of bats?
 			ShadowSlime: A purely black slime that roams the hardened depths, getting hit by it would be a blinding.
+			EnchantedNightmareWorm: Over time worms that have found their way to the deep underground will have discovered the Nightmare Grove. Forced to blend in, they inherit the natural purple tint of their surrounding enviroment.
+			QuartzCrawler: A black snail with a shell that looks very similar to a chunk of quartz. An especially tasty treat to fish that leark in the mercury.
+			AlbinoRat: A rare pigmented rat that attempted to blend in with the surrounding quartz and mercury. How the hell do you catch a fish with that thing?
 		}
 
 		PlayerDeathReason: {
@@ -155,6 +158,11 @@ Mods: {
 			ShadowCatBuff: {
 				DisplayName: Shadow Cat
 				Description: Is it a the shadow of a cat, or a cat's shadow?
+			}
+
+			PurpleflameJellyBuff: {
+				DisplayName: Purpleflame Jelly
+				Description: A unique but rare and passive species of jellyfish that live in quicksilver
 			}
 		}
 
@@ -849,14 +857,76 @@ Mods: {
 				Tooltip: "'Pretty big to call them embers, aye?'"
 			}
 
-			MysticYarn: {
-				DisplayName: Mystic Yarn
+			NightmareFlareTreads: {
+				DisplayName: Nightmare Flare Treads
+				Tooltip:
+					'''
+					Allows flight
+					The wearer can run super fast
+					Walking emits shadowflame embers
+					'''
+			}
+
+			QuicksilverproofTackleBag: {
+				DisplayName: Quicksilverproof Tackle Bag
+				Tooltip:
+					'''
+					Fishing line will never break, decreases chance of bait consumption, increases fishing power by 10
+					Allows fishing in quicksilver
+					'''
+			}
+
+			PurpleflameNecklace: {
+				DisplayName: Purpleflame Necklace
+				Tooltip:
+					'''
+					Summons a ridable Purpleflame Jellyfish
+					'He doesn't zap, does he?'
+					'''
+			}
+
+			EnchantedNightmareWorm: {
+				DisplayName: Nightmare Slug
 				Tooltip: ""
 			}
 
-			NightmareFlareTreads: {
-				DisplayName: Nightmare Flare Treads
+			QuartzCrawler: {
+				DisplayName: Quartz Crawler
 				Tooltip: ""
+			}
+
+			AlbinoRat: {
+				DisplayName: Albino Rat
+				Tooltip: ""
+			}
+
+			QuicksilverproofBugNet: {
+				DisplayName: Quicksilverproof Bug Net
+				Tooltip: "'For when things are a bit too poisonus to handle'"
+			}
+
+			AlbinoRatCage: {
+				DisplayName: Albino Rat Cage
+				Tooltip: ""
+			}
+
+			EnchantedNightmareWormCage: {
+				DisplayName: Nightmare Slug Cage
+				Tooltip: ""
+			}
+
+			QuartzCrawlerCage: {
+				DisplayName: Quartz Crawler Cage
+				Tooltip: ""
+			}
+
+			GeodeLazerPointer: {
+				DisplayName: Geode Lazer Pointer
+				Tooltip: 
+					'''
+					Summons a Shadow Cat
+					'Can shadows even walk?'
+					'''
 			}
 		}
 
@@ -880,6 +950,9 @@ Mods: {
 			SapphireSerpentBody.DisplayName: Sapphire Serpent Body
 			SapphireSerpentHead.DisplayName: Sapphire Serpent Head
 			SapphireSerpentTail.DisplayName: Sapphire Serpent Tail
+			EnchantedNightmareWorm.DisplayName: Nightmare Slug
+			QuartzCrawler.DisplayName: Quartz Crawler
+			AlbinoRat.DisplayName: Albino Rat
 		}
 
 		Projectiles: {
@@ -964,4 +1037,5 @@ Mods: {
 		DepthsBiome: Mods.TheDepths.DepthsBiome
 	}
 }
+
 GameUI.LayerUnderworld: Core
