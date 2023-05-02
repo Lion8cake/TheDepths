@@ -23,6 +23,20 @@ Mods: {
 				'''
 		}
 
+		Quest: {
+			Description: {
+				Chasmefish: There is an old legend that says that a royal fish was born on the rise of a solar eclipse and was cursed to the depths of this world. I want you to find this fish so I can see how powerful it truly is.
+				Relicarp: You probably already know about the rituals that the geomancers proform on mulitple different objects whether they are alive or not. Aparently they cursed a fish and a relic at the same time merging it together to make a relic fish. Get it for me so I can see what happens when I place one in a pot.
+				GlimmerDepthFish: I was playing on a layer of quartz when all of a sudden a quartz chunk broke off into the quicksilver and it grew fins and swam away. I've always wanted to know what quartz tastes like, so get me this fish so I can be the first to taste it.
+			}
+
+			CaughtLocation: {
+				Chasmefish: Caught in Caverns
+				Relicarp: Caught in Caverns
+				GlimmerDepthFish: Caught in Caverns
+			}
+		}
+
 		Recipes.NearQuicksilver: Near quicksilver
 
 		ShaleConfig: {
@@ -922,10 +936,41 @@ Mods: {
 
 			GeodeLazerPointer: {
 				DisplayName: Geode Lazer Pointer
-				Tooltip: 
+				Tooltip:
 					'''
 					Summons a Shadow Cat
 					'Can shadows even walk?'
+					'''
+			}
+
+			Chasmefish: {
+				DisplayName: Chasmefish
+				Tooltip: Caught in Caverns
+			}
+
+			GlimmerDepthFish: {
+				DisplayName: Glimmer Depth Fish
+				Tooltip: Caught in Caverns
+			}
+
+			Relicarp: {
+				DisplayName: Relicarp
+				Tooltip: Caught in Caverns
+			}
+
+			ShalestoneConch: {
+				DisplayName: Shalestone Conch
+				Tooltip: If you listen closely, you can hear ritual chanting
+			}
+
+			ShellPhoneDepths: {
+				DisplayName: Shellphone (Depths)
+				Tooltip:
+					'''
+					Displays everything
+					Allows you to travel to the depths at will
+					Right Click to toggle destination
+					'If you listen closely, you can hear something about your car's warranty'
 					'''
 			}
 		}

@@ -195,4 +195,52 @@ namespace TheDepths.Items
             }
         }
     }
+
+    public class ShellphoneHell : GlobalItem
+    {
+        public override bool AppliesToEntity(Item entity, bool lateInstantiation)
+        {
+            return entity.type == ItemID.ShellphoneHell;
+        }
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        {
+            if (TheDepthsWorldGen.depthsorHell)
+            {
+                tooltips.RemoveAll(t => t.Text.Contains("everything"));
+                tooltips.RemoveAll(t => t.Text.Contains("underworld"));
+                tooltips.RemoveAll(t => t.Text.Contains("toggle"));
+                tooltips.RemoveAll(t => t.Text.Contains("you"));
+                tooltips.Add(new(Mod, "NewDescription", (string)Language.GetOrRegister("Mods.TheDepths.Items.ShellPhoneDepths.Tooltip")));
+                item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.Items.ShellPhoneDepths.DisplayName"));
+            }
+            else
+            {
+                item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneHell"));
+            }
+        }
+
+        public override void UpdateInventory(Item item, Player player)
+        {
+            if (TheDepthsWorldGen.depthsorHell)
+            {
+                item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.Items.ShellPhoneDepths.DisplayName"));
+            }
+            else
+            {
+                item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneHell"));
+            }
+        }
+
+        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
+        {
+            if (TheDepthsWorldGen.depthsorHell)
+            {
+                item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.Items.ShellPhoneDepths.DisplayName"));
+            }
+            else
+            {
+                item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneHell"));
+            }
+        }
+    }
 }

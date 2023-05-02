@@ -27,6 +27,13 @@ using Terraria.GameContent.UI.Elements;
 using TheDepths.Hooks;
 using Terraria.DataStructures;
 using TheDepths.Dusts;
+using Terraria.Map;
+using TheDepths.Items;
+using Terraria.Graphics.Capture;
+using Terraria.GameContent.UI.States;
+using System.Linq;
+using Terraria.IO;
+using Terraria.ModLoader.IO;
 
 namespace TheDepths
 {
@@ -42,22 +49,31 @@ namespace TheDepths
             for (int i = 0; i < texture.Length; i++)
                 texture[i] = ModContent.Request<Texture2D>("TheDepths/Backgrounds/DepthsUnderworldBG_" + i);
             livingFireBlockList = new List<int> { 336, 340, 341, 342, 343, 344, ModContent.TileType<Tiles.LivingFog>() };
-            //Terraria.IL_Main.DrawUnderworldBackgroudLayer += ILMainDrawUnderworldBackground;
-            Terraria.IL_Player.UpdateBiomes += NoHeap;
-            //IL.Terraria.Liquid.Update += Evaporation;
+            
             if (!Main.dedServ)
             {
                 EquipLoader.AddEquipTexture(this, "TheDepths/Items/Armor/OnyxRobe_Legs", EquipType.Legs, name: "OnyxRobe_Legs");
             }
+            //IL.Terraria.Liquid.Update += Evaporation;
+            //IL_Player.ItemCheck_ManageRightClickFeatures += IL_Player_ItemCheck_ManageRightClickFeatures;
+            Terraria.IL_Player.UpdateBiomes += NoHeap;
+
+            //Terraria.IL_Main.DrawUnderworldBackgroudLayer += ILMainDrawUnderworldBackground;
+            On_Main.DrawUnderworldBackgroudLayer += On_Main_DrawUnderworldBackgroudLayer;
+
+            Terraria.On_Main.UpdateAudio_DecideOnTOWMusic += Main_UpdateAudio_DecideOnTOWMusic;
+
             Terraria.Graphics.Light.On_TileLightScanner.ApplyLiquidLight += On_TileLightScanner_ApplyLiquidLight;
             Terraria.Graphics.Light.On_TileLightScanner.ApplyHellLight += TileLightScanner_ApplyHellLight;
-            Terraria.On_Main.UpdateAudio_DecideOnTOWMusic += Main_UpdateAudio_DecideOnTOWMusic;
-            Terraria.On_Dust.NewDust += Dust_NewDust;
-            Terraria.On_WaterfallManager.DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects += On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects;
-            On_Liquid.GetLiquidMergeTypes += On_Liquid_GetLiquidMergeTypes;
             On_WaterfallManager.AddLight += On_WaterfallManager_AddLight;
+
+            
+            Terraria.On_WaterfallManager.DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects += On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects;
+            On_Main.DoUpdate += On_Main_DoUpdate;
+
+            On_Liquid.GetLiquidMergeTypes += On_Liquid_GetLiquidMergeTypes;
             On_Player.PlaceThing_Tiles_CheckLavaBlocking += On_Player_PlaceThing_Tiles_CheckLavaBlocking;
-            On_Main.DrawUnderworldBackgroudLayer += On_Main_DrawUnderworldBackgroudLayer; 
+            
             Terraria.GameContent.UI.Elements.On_UIGenProgressBar.DrawSelf += On_UIGenProgressBar_DrawSelf;
             Terraria.GameContent.UI.States.IL_UIWorldCreation.BuildPage += DepthsSelectionMenu.ILBuildPage;
             Terraria.GameContent.UI.States.IL_UIWorldCreation.MakeInfoMenu += DepthsSelectionMenu.ILMakeInfoMenu;
@@ -65,28 +81,203 @@ namespace TheDepths
                 DepthsSelectionMenu.ILShowOptionDescription;
             Terraria.GameContent.UI.States.On_UIWorldCreation.SetDefaultOptions += DepthsSelectionMenu.OnSetDefaultOptions;
             On_Player.ItemCheck_CatchCritters += On_Player_ItemCheck_CatchCritters;
-            On_Player.SpawnFastRunParticles += On_Player_SpawnFastRunParticles;
+            Terraria.On_Dust.NewDust += Dust_NewDust;
+            Terraria.GameContent.UI.States.On_UIWorldSelect.UpdateWorldsList += On_UIWorldSelect_UpdateWorldsList;
         }
 
         public override void Unload()
         {
-            //IL.Terraria.Liquid.Update -= Evaporation;
-            Terraria.IL_Player.UpdateBiomes -= NoHeap;
-            //Terraria.IL_Main.DrawUnderworldBackgroudLayer -= ILMainDrawUnderworldBackground;
             livingFireBlockList = null;
+            //IL.Terraria.Liquid.Update -= Evaporation;
+            //IL_Player.ItemCheck_ManageRightClickFeatures -= IL_Player_ItemCheck_ManageRightClickFeatures;
+            Terraria.IL_Player.UpdateBiomes -= NoHeap;
+
+            //Terraria.IL_Main.DrawUnderworldBackgroudLayer -= ILMainDrawUnderworldBackground;
+            On_Main.DrawUnderworldBackgroudLayer -= On_Main_DrawUnderworldBackgroudLayer;
+
+            Terraria.On_Main.UpdateAudio_DecideOnTOWMusic -= Main_UpdateAudio_DecideOnTOWMusic;
+
             Terraria.Graphics.Light.On_TileLightScanner.ApplyLiquidLight -= On_TileLightScanner_ApplyLiquidLight;
             Terraria.Graphics.Light.On_TileLightScanner.ApplyHellLight -= TileLightScanner_ApplyHellLight;
-            Terraria.On_Main.UpdateAudio_DecideOnTOWMusic -= Main_UpdateAudio_DecideOnTOWMusic;
-            Terraria.On_Dust.NewDust -= Dust_NewDust;
-            Terraria.On_WaterfallManager.DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects -= On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects;
-            On_Liquid.GetLiquidMergeTypes -= On_Liquid_GetLiquidMergeTypes;
             On_WaterfallManager.AddLight -= On_WaterfallManager_AddLight;
+
+            Terraria.On_WaterfallManager.DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects -= On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects;
+            On_Main.DoUpdate -= On_Main_DoUpdate;
+            
+            On_Liquid.GetLiquidMergeTypes -= On_Liquid_GetLiquidMergeTypes;
             On_Player.PlaceThing_Tiles_CheckLavaBlocking -= On_Player_PlaceThing_Tiles_CheckLavaBlocking;
-            On_Main.DrawUnderworldBackgroudLayer -= On_Main_DrawUnderworldBackgroudLayer;
+            
             Terraria.GameContent.UI.Elements.On_UIGenProgressBar.DrawSelf -= On_UIGenProgressBar_DrawSelf;
             On_Player.ItemCheck_CatchCritters -= On_Player_ItemCheck_CatchCritters;
-            On_Player.SpawnFastRunParticles -= On_Player_SpawnFastRunParticles;
+            Terraria.On_Dust.NewDust -= Dust_NewDust;
+            Terraria.GameContent.UI.States.On_UIWorldSelect.UpdateWorldsList -= On_UIWorldSelect_UpdateWorldsList;
         }
+
+        #region WorldUIOverlay
+        private void On_UIWorldSelect_UpdateWorldsList(Terraria.GameContent.UI.States.On_UIWorldSelect.orig_UpdateWorldsList orig, Terraria.GameContent.UI.States.UIWorldSelect self)
+        {
+            orig(self);
+            UIList WorldList = (UIList)typeof(UIWorldSelect).GetField("_worldList", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
+            foreach (var item in WorldList)
+            {
+                if (item is UIWorldListItem worldItem)
+                {
+                    UIElement WorldIcon = (UIElement)typeof(UIWorldListItem).GetField("_worldIcon", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(item);
+                    WorldFileData Data = (WorldFileData)typeof(AWorldListItem).GetField("_data", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(item);
+                    if (Data.HasCrimson && !Data.RemixWorld && !Data.DrunkWorld && !Data.DefeatedMoonlord)
+                    {
+                        UIElement worldIcon = WorldIcon;
+                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepths"))
+                        {
+                            HAlign = 0.5f,
+                            VAlign = 0.5f,
+                            Top = new StyleDimension(-39f, 0f),
+                            Left = new StyleDimension(-36f, 0f),
+                            IgnoresMouseInteraction = true
+                        };
+                        worldIcon.Append(element);
+                    }
+                    if (Data.HasCrimson && !Data.RemixWorld && !Data.DrunkWorld && Data.DefeatedMoonlord)
+                    {
+                        UIElement worldIcon = WorldIcon;
+                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepths"))
+                        {
+                            HAlign = 0.5f,
+                            VAlign = 0.5f,
+                            Top = new StyleDimension(-39f, 0f),
+                            Left = new StyleDimension(-37f, 0f),
+                            IgnoresMouseInteraction = true
+                        };
+                        worldIcon.Append(element);
+                    }
+                    else if (Data.HasCorruption && !Data.DrunkWorld && !Data.DefeatedMoonlord)
+                    {
+                        UIElement worldIcon = WorldIcon;
+                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconUnderworld"))
+                        {
+                            HAlign = 0.5f,
+                            VAlign = 0.5f,
+                            Top = new StyleDimension(-39f, 0f),
+                            Left = new StyleDimension(-36f, 0f),
+                            IgnoresMouseInteraction = true
+                        };
+                        worldIcon.Append(element);
+                    }
+                    else if (Data.HasCorruption && !Data.DrunkWorld && Data.DefeatedMoonlord)
+                    {
+                        UIElement worldIcon = WorldIcon;
+                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconUnderworld"))
+                        {
+                            HAlign = 0.5f,
+                            VAlign = 0.5f,
+                            Top = new StyleDimension(-39f, 0f),
+                            Left = new StyleDimension(-37f, 0f),
+                            IgnoresMouseInteraction = true
+                        };
+                        worldIcon.Append(element);
+                    }
+                    else if (Data.DrunkWorld && !Data.DefeatedMoonlord)
+                    {
+                        UIElement worldIcon = WorldIcon;
+                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunk"))
+                        {
+                            HAlign = 0.5f,
+                            VAlign = 0.5f,
+                            Top = new StyleDimension(-39f, 0f),
+                            Left = new StyleDimension(-36f, 0f),
+                            IgnoresMouseInteraction = true
+                        };
+                        worldIcon.Append(element);
+                    }
+                    else if (Data.DrunkWorld && Data.DefeatedMoonlord)
+                    {
+                        UIElement worldIcon = WorldIcon;
+                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunk"))
+                        {
+                            HAlign = 0.5f,
+                            VAlign = 0.5f,
+                            Top = new StyleDimension(-39f, 0f),
+                            Left = new StyleDimension(-37f, 0f),
+                            IgnoresMouseInteraction = true
+                        };
+                        worldIcon.Append(element);
+                    }
+                    else if (Data.HasCrimson && Data.RemixWorld && !Data.IsHardMode)
+                    {
+                        UIElement worldIcon = WorldIcon;
+                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepthsRemixCrimson"))
+                        {
+                            HAlign = 0.5f,
+                            VAlign = 0.5f,
+                            Top = new StyleDimension(-39f, 0f),
+                            Left = new StyleDimension(-36f, 0f),
+                            IgnoresMouseInteraction = true
+                        };
+                        worldIcon.Append(element);
+                    }
+                    else if (Data.HasCrimson && Data.RemixWorld && Data.IsHardMode)
+                    {
+                        UIElement worldIcon = WorldIcon;
+                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepthsRemixCrimsonHallow"))
+                        {
+                            HAlign = 0.5f,
+                            VAlign = 0.5f,
+                            Top = new StyleDimension(-39f, 0f),
+                            Left = new StyleDimension(-36f, 0f),
+                            IgnoresMouseInteraction = true
+                        };
+                        worldIcon.Append(element);
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region LavaTextureDetour
+        private void On_Main_DoUpdate(On_Main.orig_DoUpdate orig, Main self, ref GameTime gameTime)
+        {
+            orig.Invoke(self, ref gameTime);
+            if (!Main.dedServ)
+            {
+                if (TheDepthsWorldGen.depthsorHell)
+                {
+                    LiquidRenderer.Instance._liquidTextures[1] = ModContent.Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver", (AssetRequestMode)1);
+                    int[] liquidAssetRegularNum = new int[14] { 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+                    foreach (int i in liquidAssetRegularNum)
+                    {
+                        LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 15; i++)
+                    {
+                        LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region ShellphoneILEdit
+        /*private void IL_Player_ItemCheck_ManageRightClickFeatures(ILContext il)
+        {
+            ILCursor c = new ILCursor(il);
+
+            if (!c.TryGotoNext(MoveType.After, i => i.MatchStloc(out _), i => i.MatchBr(out _), i => i.MatchLdcI4(ItemID.ShellphoneHell)))
+            {
+                throw new ILPatchFailureException(ModContent.GetInstance<TheDepths>(), il, null);
+            }
+
+            c.EmitDelegate<Func<int, int>>(static shellphone => {
+                if (TheDepthsWorldGen.depthsorHell)
+                    shellphone = ModContent.ItemType<ShellPhoneDepths>();
+                return shellphone;
+            });
+
+            MonoModHooks.DumpIL(ModContent.GetInstance<TheDepths>(), il);
+        }*/
+        #endregion
 
         #region nightmareflamebootsdetour(Doesn'tWork)
         private void On_Player_SpawnFastRunParticles(On_Player.orig_SpawnFastRunParticles orig, Player self)
@@ -447,7 +638,17 @@ namespace TheDepths
         {
             orig.Invoke(self, tile, x, y, ref lightColor);
             if (TheDepthsWorldGen.depthsorHell && ModContent.GetInstance<TheDepthsClientConfig>().DepthsLightingConfig)
+            {
+                if ((!tile.HasTile || !Main.tileNoSunLight[tile.TileType] || ((tile.Slope != 0 || tile.IsHalfBlock) && Main.tile[x, y - 1].LiquidAmount == 0 && Main.tile[x, y + 1].LiquidAmount == 0 && Main.tile[x - 1, y].LiquidAmount == 0 && Main.tile[x + 1, y].LiquidAmount == 0)) && (Main.wallLight[tile.WallType] || tile.WallType == 73 || tile.WallType == 227) && tile.LiquidAmount < 200 && (!tile.IsHalfBlock || Main.tile[x, y - 1].LiquidAmount < 200))
+                {
+                    lightColor = Vector3.Zero;
+                }
+                if ((!tile.HasTile || tile.IsHalfBlock || !Main.tileNoSunLight[tile.TileType]) && tile.LiquidAmount < byte.MaxValue)
+                {
+                    lightColor = Vector3.Zero;
+                }
                 lightColor = Vector3.Zero;
+            }
         }
         #endregion
 

@@ -207,6 +207,35 @@ namespace TheDepths
                 {
                     itemDrop = ModContent.ItemType<Items.Weapons.Steelocanth>();
                 }
+                if (itemDrop == ItemID.DemonConch)
+                {
+                    itemDrop = ModContent.ItemType<Items.ShalestoneConch>();
+                }
+            }
+
+            if (attempt.questFish == ModContent.ItemType<Chasmefish>())
+            {
+                if (Player.ZoneRockLayerHeight && TheDepthsWorldGen.depthsorHell && attempt.uncommon || Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell && attempt.uncommon)
+                {
+                    itemDrop = ModContent.ItemType<Chasmefish>();
+                    return;
+                }
+            }
+            if (attempt.questFish == ModContent.ItemType<Relicarp>())
+            {
+                if (Player.ZoneRockLayerHeight && TheDepthsWorldGen.depthsorHell && attempt.uncommon || Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell && attempt.uncommon)
+                {
+                    itemDrop = ModContent.ItemType<Relicarp>();
+                    return;
+                }
+            }
+            if (attempt.questFish == ModContent.ItemType<GlimmerDepthFish>())
+            {
+                if (Player.ZoneRockLayerHeight && TheDepthsWorldGen.depthsorHell && attempt.uncommon || Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell && attempt.uncommon)
+                {
+                    itemDrop = ModContent.ItemType<GlimmerDepthFish>();
+                    return;
+                }
             }
         }
 
@@ -300,8 +329,98 @@ namespace TheDepths
             {
                 AmuletTimer = 0;
             }
-            //Main.NewText(AmuletTimer);
-            //Main.NewText(MercuryTimer); //For Debugging, posts number of ticks that have passed when the player is on Mercury
+			//Main.NewText(AmuletTimer);
+			//Main.NewText(MercuryTimer); //For Debugging, posts number of ticks that have passed when the player is on Mercury
+
+            //Shalestone Conch and shellphone
+			Item item = Player.inventory[Player.selectedItem];
+			if (!Player.JustDroppedAnItem)
+			{
+				if ((item.type == ModContent.ItemType<ShalestoneConch>() || item.type == ModContent.ItemType<ShellPhoneDepths>()) && Player.itemAnimation > 0 && TheDepthsWorldGen.depthsorHell)
+				{
+					Vector2 vector2 = Vector2.UnitY.RotatedBy((float)Player.itemAnimation * ((float)Math.PI * 2f) / 30f) * new Vector2(15f, 0f);
+					for (int num = 0; num < 2; num++)
+					{
+						if (Main.rand.Next(3) == 0)
+						{
+							Dust dust2 = Dust.NewDustPerfect(Player.Bottom + vector2, ModContent.DustType<QuicksilverTeleportFire>()); //Change the dust to be unique
+							dust2.velocity.Y *= 0f;
+							dust2.velocity.Y -= 4.5f;
+							dust2.velocity.X *= 1.5f;
+							dust2.scale = 0.8f;
+							dust2.alpha = 130;
+							dust2.noGravity = true;
+							dust2.fadeIn = 1.1f;
+						}
+					}
+					if (Player.ItemTimeIsZero)
+					{
+                        Player.ApplyItemTime(item);
+					}
+					else if (Player.itemTime == item.useTime / 2)
+					{
+						if (Main.netMode == 0)
+						{
+                            ShalestoneConch(Player);
+						}
+						else if (Main.netMode == 1 && Player.whoAmI == Main.myPlayer)
+						{
+							NetMessage.SendData(73, -1, -1, null, 2);
+						}
+					}
+				}
+			}
+		}
+
+        public static void ShalestoneConch(Player player)
+        {
+            bool canSpawn = false;
+            int num = Main.maxTilesX / 2;
+            int num2 = 100;
+            int num3 = num2 / 2;
+            int teleportStartY = Main.UnderworldLayer + 20;
+            int teleportRangeY = 80;
+            Player.RandomTeleportationAttemptSettings settings = new Player.RandomTeleportationAttemptSettings
+            {
+                mostlySolidFloor = true,
+                avoidAnyLiquid = true,
+                avoidLava = true,
+                avoidHurtTiles = true,
+                avoidWalls = true,
+                attemptsBeforeGivingUp = 1000,
+                maximumFallDistanceFromOrignalPoint = 30
+            };
+            Vector2 vector = player.CheckForGoodTeleportationSpot(ref canSpawn, num - num3, num2, teleportStartY, teleportRangeY, settings);
+            if (!canSpawn)
+            {
+                vector = player.CheckForGoodTeleportationSpot(ref canSpawn, num - num2, num3, teleportStartY, teleportRangeY, settings);
+            }
+            if (!canSpawn)
+            {
+                vector = player.CheckForGoodTeleportationSpot(ref canSpawn, num + num3, num3, teleportStartY, teleportRangeY, settings);
+            }
+            if (canSpawn)
+            {
+                Vector2 newPos = vector;
+                player.Teleport(newPos, 7);
+                player.velocity = Vector2.Zero;
+                if (Main.netMode == 2)
+                {
+                    RemoteClient.CheckSection(player.whoAmI, player.position);
+                    NetMessage.SendData(65, -1, -1, null, 0, player.whoAmI, newPos.X, newPos.Y, 7);
+                }
+            }
+            else
+            {
+                Vector2 newPos2 = player.position;
+                player.Teleport(newPos2, 7);
+                player.velocity = Vector2.Zero;
+                if (Main.netMode == 2)
+                {
+                    RemoteClient.CheckSection(player.whoAmI, player.position);
+                    NetMessage.SendData(65, -1, -1, null, 0, player.whoAmI, newPos2.X, newPos2.Y, 7, 1);
+                }
+            }
         }
 
         public override void PostUpdateRunSpeeds()
@@ -441,6 +560,7 @@ namespace TheDepths
                     TextureAssets.Item[207] = Request<Texture2D>("TheDepths/Assets/Lava/QuicksilverBucket");
                     TextureAssets.Item[4820] = Request<Texture2D>("TheDepths/Assets/Lava/BottomlessQuicksilverBucket");
                     TextureAssets.Item[4872] = Request<Texture2D>("TheDepths/Assets/Lava/QuicksilverSponge");
+                    TextureAssets.Item[5361] = Request<Texture2D>("TheDepths/Items/ShellPhoneDepths");
 
                     //Old Texture/lava layer background
                     int[] bgnum = new int[30] { 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 150, 151, 152, 157, 158, 159, 185, 186, 187 };
@@ -460,6 +580,7 @@ namespace TheDepths
                     TextureAssets.Item[207] = Main.Assets.Request<Texture2D>("Images/Item_207");
                     TextureAssets.Item[4820] = Main.Assets.Request<Texture2D>("Images/Item_4820");
                     TextureAssets.Item[4872] = Main.Assets.Request<Texture2D>("Images/Item_4872");
+                    TextureAssets.Item[5361] = Main.Assets.Request<Texture2D>("Images/Item_5361");
 
                     //Old Texture/lava layer background
                     int[] bgnumOriginal = new int[30] { 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 150, 151, 152, 157, 158, 159, 185, 186, 187 };

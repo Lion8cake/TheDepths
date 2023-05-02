@@ -22,14 +22,14 @@ namespace TheDepths
 {
     public class TheDepthsModSystem : ModSystem
     {
-        public override void PostUpdateEverything()
+        /*public override void PostUpdateEverything()
         {
             string twld = Path.ChangeExtension(Main.worldPathName, ".twld");
             if (File.ReadAllText(ConfigManager.ModConfigPath + "/AltLibrary_AltLibraryConfig.json").Contains(twld))
             {
                 Main.NewText("Found World");
             }
-        }
+        }*/
 
         public override void PostAddRecipes()
         {
@@ -61,26 +61,6 @@ namespace TheDepths
             {
                 if (Main.rand.Next(100) == 0 && Main.rand.Next(maxValue2) == 0)
                     PlantAlch();
-            }
-
-            if (!Main.dedServ)
-            {
-                if (TheDepthsWorldGen.depthsorHell)
-                {
-                    LiquidRenderer.Instance._liquidTextures[1] = ModContent.Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver", (AssetRequestMode)1);
-                    int[] liquidAssetRegularNum = new int[14] { 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
-                    foreach (int i in liquidAssetRegularNum)
-                    {
-                        LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < 15; i++)
-                    {
-                        LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
-                    }
-                }
             }
         }
 
