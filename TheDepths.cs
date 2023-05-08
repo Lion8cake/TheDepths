@@ -34,6 +34,7 @@ using Terraria.GameContent.UI.States;
 using System.Linq;
 using Terraria.IO;
 using Terraria.ModLoader.IO;
+using TheDepths.Biomes;
 
 namespace TheDepths
 {
@@ -79,10 +80,11 @@ namespace TheDepths
             Terraria.GameContent.UI.States.IL_UIWorldCreation.MakeInfoMenu += DepthsSelectionMenu.ILMakeInfoMenu;
             Terraria.GameContent.UI.States.IL_UIWorldCreation.ShowOptionDescription +=
                 DepthsSelectionMenu.ILShowOptionDescription;
+            Terraria.GameContent.UI.States.On_UIWorldSelect.UpdateWorldsList += On_UIWorldSelect_UpdateWorldsList;
+
             Terraria.GameContent.UI.States.On_UIWorldCreation.SetDefaultOptions += DepthsSelectionMenu.OnSetDefaultOptions;
             On_Player.ItemCheck_CatchCritters += On_Player_ItemCheck_CatchCritters;
             Terraria.On_Dust.NewDust += Dust_NewDust;
-            Terraria.GameContent.UI.States.On_UIWorldSelect.UpdateWorldsList += On_UIWorldSelect_UpdateWorldsList;
         }
 
         public override void Unload()
@@ -108,9 +110,10 @@ namespace TheDepths
             On_Player.PlaceThing_Tiles_CheckLavaBlocking -= On_Player_PlaceThing_Tiles_CheckLavaBlocking;
             
             Terraria.GameContent.UI.Elements.On_UIGenProgressBar.DrawSelf -= On_UIGenProgressBar_DrawSelf;
+            Terraria.GameContent.UI.States.On_UIWorldSelect.UpdateWorldsList -= On_UIWorldSelect_UpdateWorldsList;
+
             On_Player.ItemCheck_CatchCritters -= On_Player_ItemCheck_CatchCritters;
             Terraria.On_Dust.NewDust -= Dust_NewDust;
-            Terraria.GameContent.UI.States.On_UIWorldSelect.UpdateWorldsList -= On_UIWorldSelect_UpdateWorldsList;
         }
 
         #region WorldUIOverlay
@@ -120,7 +123,7 @@ namespace TheDepths
             UIList WorldList = (UIList)typeof(UIWorldSelect).GetField("_worldList", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
             foreach (var item in WorldList)
             {
-                if (item is UIWorldListItem worldItem)
+                if (item is UIWorldListItem)
                 {
                     UIElement WorldIcon = (UIElement)typeof(UIWorldListItem).GetField("_worldIcon", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(item);
                     WorldFileData Data = (WorldFileData)typeof(AWorldListItem).GetField("_data", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(item);
@@ -239,7 +242,7 @@ namespace TheDepths
             orig.Invoke(self, ref gameTime);
             if (!Main.dedServ)
             {
-                if (TheDepthsWorldGen.depthsorHell)
+                if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
                 {
                     LiquidRenderer.Instance._liquidTextures[1] = ModContent.Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver", (AssetRequestMode)1);
                     int[] liquidAssetRegularNum = new int[14] { 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
@@ -359,7 +362,7 @@ namespace TheDepths
         private void On_Main_DrawUnderworldBackgroudLayer(On_Main.orig_DrawUnderworldBackgroudLayer orig, bool flat, Vector2 screenOffset, float pushUp, int layerTextureIndex)
         {
             orig.Invoke(flat, screenOffset, pushUp, layerTextureIndex);
-            if (TheDepthsWorldGen.depthsorHell)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 int num = Main.underworldBG[layerTextureIndex];
                 var assets = new Asset<Texture2D>[TextureAssets.Underworld.Length];
@@ -491,7 +494,7 @@ namespace TheDepths
         {
             orig.Invoke(self);
             bool result = false;
-            if (TheDepthsWorldGen.depthsorHell)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 result = false;
             }
@@ -502,7 +505,7 @@ namespace TheDepths
         #region DepthsSilverfallLightRemover
         private void On_WaterfallManager_AddLight(On_WaterfallManager.orig_AddLight orig, int waterfallType, int x, int y)
         {
-            if (TheDepthsWorldGen.depthsorHell)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
             }
             else
@@ -523,7 +526,7 @@ namespace TheDepths
         private void On_Liquid_GetLiquidMergeTypes(On_Liquid.orig_GetLiquidMergeTypes orig, int thisLiquidType, out int liquidMergeTileType, out int liquidMergeType, bool waterNearby, bool lavaNearby, bool honeyNearby, bool shimmerNearby)
         {
             orig.Invoke(thisLiquidType, out liquidMergeTileType, out liquidMergeType, waterNearby, lavaNearby, honeyNearby, shimmerNearby);
-            if (TheDepthsWorldGen.depthsorHell)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 liquidMergeTileType = ModContent.TileType<Tiles.Quartz>();
                 liquidMergeType = thisLiquidType;
@@ -599,7 +602,7 @@ namespace TheDepths
         private void On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects(On_WaterfallManager.orig_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects orig, WaterfallManager self, int waterfallType, int x, int y, float opacity, Vector2 position, Rectangle sourceRect, Color color, SpriteEffects effects)
         {
             orig.Invoke(self, waterfallType, x, y, opacity, position, sourceRect, color, effects);
-            if (TheDepthsWorldGen.depthsorHell)
+            if (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld)
             {
                 if (waterfallType == 1)
                 {
@@ -613,7 +616,7 @@ namespace TheDepths
         private int Dust_NewDust(Terraria.On_Dust.orig_NewDust orig, Vector2 Position, int Width, int Height, int Type, float SpeedX, float SpeedY, int Alpha, Color newColor, float Scale)
         {
             int index = orig.Invoke(Position, Width, Height, Type, SpeedX, SpeedY, Alpha, newColor, Scale);
-            if (Type == DustID.Lava && TheDepthsWorldGen.depthsorHell)
+            if (Type == DustID.Lava && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 Main.dust[index].active = false;
             }
@@ -626,9 +629,9 @@ namespace TheDepths
         {
             orig.Invoke(self);
             Player player = Main.CurrentPlayer;
-            if (TheDepthsWorldGen.depthsorHell && player.ZoneUnderworldHeight)
+            if (player.InModBiome(ModContent.GetInstance<DepthsBiome>()))
             {
-                Main.newMusic = 79;
+                Main.newMusic = 79; //Otherworldly Eerie
             }
         }
         #endregion
@@ -637,7 +640,7 @@ namespace TheDepths
         private void TileLightScanner_ApplyHellLight(Terraria.Graphics.Light.On_TileLightScanner.orig_ApplyHellLight orig, TileLightScanner self, Tile tile, int x, int y, ref Vector3 lightColor)
         {
             orig.Invoke(self, tile, x, y, ref lightColor);
-            if (TheDepthsWorldGen.depthsorHell && ModContent.GetInstance<TheDepthsClientConfig>().DepthsLightingConfig)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld) && ModContent.GetInstance<TheDepthsClientConfig>().DepthsLightingConfig)
             {
                 if ((!tile.HasTile || !Main.tileNoSunLight[tile.TileType] || ((tile.Slope != 0 || tile.IsHalfBlock) && Main.tile[x, y - 1].LiquidAmount == 0 && Main.tile[x, y + 1].LiquidAmount == 0 && Main.tile[x - 1, y].LiquidAmount == 0 && Main.tile[x + 1, y].LiquidAmount == 0)) && (Main.wallLight[tile.WallType] || tile.WallType == 73 || tile.WallType == 227) && tile.LiquidAmount < 200 && (!tile.IsHalfBlock || Main.tile[x, y - 1].LiquidAmount < 200))
                 {
@@ -656,7 +659,7 @@ namespace TheDepths
         private void On_TileLightScanner_ApplyLiquidLight(On_TileLightScanner.orig_ApplyLiquidLight orig, TileLightScanner self, Tile tile, ref Vector3 lightColor)
         {
             orig.Invoke(self, tile, ref lightColor);
-            if (tile.LiquidType == 1 && TheDepthsWorldGen.depthsorHell)
+            if (tile.LiquidType == 1 && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
                 lightColor = Vector3.Zero;
         }
         #endregion

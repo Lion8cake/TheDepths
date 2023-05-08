@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using System;
 
 namespace TheDepths.NPCs
 {
@@ -27,7 +28,7 @@ namespace TheDepths.NPCs
 
 		public override void PostAI(NPC npc)
 		{
-			if (TheDepthsWorldGen.depthsorHell && Collision.LavaCollision(npc.position, npc.width, npc.height))
+			if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld) && Collision.LavaCollision(npc.position, npc.width, npc.height))
 			{
 				npc.lavaImmune = true;
 				npc.buffImmune[BuffID.OnFire] = true;
@@ -39,7 +40,7 @@ namespace TheDepths.NPCs
 					npc.AddBuff(ModContent.BuffType<Buffs.MercuryBoiling>(), 60 * 7, false);
 				}
 			}
-			if (TheDepthsWorldGen.depthsorHell && !Collision.LavaCollision(npc.position, npc.width, npc.height))
+			if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld) && !Collision.LavaCollision(npc.position, npc.width, npc.height))
             {
 				QuicksilverTimer--;
 				if (QuicksilverTimer <= 0)
@@ -47,7 +48,7 @@ namespace TheDepths.NPCs
 					QuicksilverTimer = 0;
                 }
             }
-			if (TheDepthsWorldGen.depthsorHell == false && Collision.LavaCollision(npc.position, npc.width, npc.height) && npc.buffImmune[ModContent.BuffType<Buffs.MercuryBoiling>()] == false)
+			if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld) == false && Collision.LavaCollision(npc.position, npc.width, npc.height) && npc.buffImmune[ModContent.BuffType<Buffs.MercuryBoiling>()] == false)
             {
 				npc.lavaImmune = false;
             }
@@ -125,7 +126,7 @@ namespace TheDepths.NPCs
 
         public override void ModifyShop(NPCShop shop)
 		{
-			var depthsWorld = new Condition("Mods.TheDepths.DepthsBiome", () => TheDepthsWorldGen.depthsorHell);
+			var depthsWorld = new Condition("Mods.TheDepths.DepthsBiome", () => (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld));
 			if (shop.NpcType == NPCID.Clothier)
 			{
 				shop.InsertAfter(ItemID.PlumbersShirt, ModContent.ItemType<Items.Armor.PurplePlumbersShirt>(), Condition.MoonPhaseFull, depthsWorld);

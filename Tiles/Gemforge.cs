@@ -35,6 +35,7 @@ namespace TheDepths.Tiles
 			Main.tileLighted[Type] = true;
 			MinPick = 65;
 			TileID.Sets.HasOutlines[Type] = true;
+			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 		}
 
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)

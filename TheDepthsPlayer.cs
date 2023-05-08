@@ -24,6 +24,8 @@ using TheDepths.Gores;
 using TheDepths.Projectiles;
 using Terraria.Graphics.Shaders;
 using Terraria.Audio;
+using System.Reflection;
+using Terraria.Map;
 
 namespace TheDepths
 {
@@ -185,7 +187,7 @@ namespace TheDepths
 
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
-            if (TheDepthsWorldGen.depthsorHell)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 if (itemDrop == ItemID.Obsidifish)
                 {
@@ -215,7 +217,7 @@ namespace TheDepths
 
             if (attempt.questFish == ModContent.ItemType<Chasmefish>())
             {
-                if (Player.ZoneRockLayerHeight && TheDepthsWorldGen.depthsorHell && attempt.uncommon || Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell && attempt.uncommon)
+                if (Player.ZoneRockLayerHeight && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld) && attempt.uncommon || Player.ZoneUnderworldHeight && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld) && attempt.uncommon)
                 {
                     itemDrop = ModContent.ItemType<Chasmefish>();
                     return;
@@ -223,7 +225,7 @@ namespace TheDepths
             }
             if (attempt.questFish == ModContent.ItemType<Relicarp>())
             {
-                if (Player.ZoneRockLayerHeight && TheDepthsWorldGen.depthsorHell && attempt.uncommon || Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell && attempt.uncommon)
+                if (Player.ZoneRockLayerHeight && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld) && attempt.uncommon || Player.ZoneUnderworldHeight && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld) && attempt.uncommon)
                 {
                     itemDrop = ModContent.ItemType<Relicarp>();
                     return;
@@ -231,7 +233,7 @@ namespace TheDepths
             }
             if (attempt.questFish == ModContent.ItemType<GlimmerDepthFish>())
             {
-                if (Player.ZoneRockLayerHeight && TheDepthsWorldGen.depthsorHell && attempt.uncommon || Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell && attempt.uncommon)
+                if (Player.ZoneRockLayerHeight && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld) && attempt.uncommon || Player.ZoneUnderworldHeight && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld) && attempt.uncommon)
                 {
                     itemDrop = ModContent.ItemType<GlimmerDepthFish>();
                     return;
@@ -241,6 +243,19 @@ namespace TheDepths
 
         public override void PostUpdate()
         {
+            #region QuicksilverMapColor
+            ushort LiquidPosition = (ushort)typeof(MapHelper).GetField("liquidPosition", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+            Color[] ColorLookup = (Color[])typeof(MapHelper).GetField("colorLookup", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+            if (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld)
+            {
+                ColorLookup[LiquidPosition + 1] = new Color(85, 96, 102);
+            }
+            else
+            {
+                ColorLookup[LiquidPosition + 1] = new Color(253, 32, 3);
+            }
+            #endregion
+
             if (lodeStone)
             {
                 Player.defaultItemGrabRange = 107;
@@ -313,7 +328,7 @@ namespace TheDepths
                     QuicksilverTimer = 60 * 2;
                 }
             }
-            if (AmuletTimer < 60 * 4 && aAmulet == true && quicksilverWet == false || AmuletTimer < 60 * 4 && aAmulet == true && !TheDepthsWorldGen.depthsorHell)
+            if (AmuletTimer < 60 * 4 && aAmulet == true && quicksilverWet == false || AmuletTimer < 60 * 4 && aAmulet == true && !(TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 AmuletTimer++;
             }
@@ -329,8 +344,9 @@ namespace TheDepths
             {
                 AmuletTimer = 0;
             }
-			//Main.NewText(AmuletTimer);
-			//Main.NewText(MercuryTimer); //For Debugging, posts number of ticks that have passed when the player is on Mercury
+            //Main.NewText(AmuletTimer);
+            //Main.NewText(MercuryTimer); //For Debugging, posts number of ticks that have passed when the player is on Mercury
+            //Main.NewText("Depths in on the left : " + TheDepthsWorldGen.DrunkDepthsLeft); //Debugging for the drunkseed tag checker
 
             //Shalestone Conch and shellphone
 			Item item = Player.inventory[Player.selectedItem];
@@ -553,7 +569,7 @@ namespace TheDepths
                 {
                     TextureAssets.FlyingCarpet = Main.Assets.Request<Texture2D>("Images/FlyingCarpet");
                 }
-                if (TheDepthsWorldGen.depthsorHell)
+                if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
                 {
                     TextureAssets.Liquid[1] = Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver_Block");
                     TextureAssets.LiquidSlope[1] = Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver_Slope");
@@ -595,7 +611,7 @@ namespace TheDepths
                     }
                 }
             }
-            if (Player.lavaWet && TheDepthsWorldGen.depthsorHell || Collision.LavaCollision(Main.LocalPlayer.position, Main.LocalPlayer.width, Main.LocalPlayer.height) && TheDepthsWorldGen.depthsorHell)
+            if (Player.lavaWet && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld) || Collision.LavaCollision(Main.LocalPlayer.position, Main.LocalPlayer.width, Main.LocalPlayer.height) && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 Player.AddBuff(BuffType<MercuryFooting>(), 60 * 30, false, false);
                 Player.lavaTime = 1000;

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using TheDepths.Buffs;
 using Terraria.DataStructures;
 using Terraria.Localization;
+using System;
 
 namespace TheDepths.Items
 {
@@ -28,11 +29,11 @@ namespace TheDepths.Items
 
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
         {
-            if (TheDepthsWorldGen.depthsorHell && Collision.LavaCollision(item.position, item.width, item.height))
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld) && Collision.LavaCollision(item.position, item.width, item.height))
             {
                 ItemID.Sets.IsLavaImmuneRegardlessOfRarity[item.type] = true;
             }
-            if (TheDepthsWorldGen.depthsorHell == false && Collision.LavaCollision(item.position, item.width, item.height) && LavaProof == false)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld) == false && Collision.LavaCollision(item.position, item.width, item.height) && LavaProof == false)
             {
                 ItemID.Sets.IsLavaImmuneRegardlessOfRarity[item.type] = false;
             }
@@ -66,7 +67,7 @@ namespace TheDepths.Items
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (TheDepthsWorldGen.depthsorHell)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 tooltips.RemoveAll(t => t.Text.Contains("lava"));
                 tooltips.RemoveAll(t => t.Text.Contains("poured"));
@@ -81,7 +82,7 @@ namespace TheDepths.Items
         }
         public override void UpdateInventory(Item item, Player player)
         {
-            if (TheDepthsWorldGen.depthsorHell)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverBucketName"));
             }
@@ -93,7 +94,7 @@ namespace TheDepths.Items
 
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
         {
-            if (TheDepthsWorldGen.depthsorHell)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverBucketName"));
             }
@@ -112,7 +113,7 @@ namespace TheDepths.Items
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (TheDepthsWorldGen.depthsorHell)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 tooltips.RemoveAll(t => t.Text.Contains("lava"));
                 tooltips.RemoveAll(t => t.Text.Contains("poured"));
@@ -128,7 +129,7 @@ namespace TheDepths.Items
 
         public override void UpdateInventory(Item item, Player player)
         {
-            if (TheDepthsWorldGen.depthsorHell)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.BottomlessQuicksilverBucketName"));
             }
@@ -140,7 +141,7 @@ namespace TheDepths.Items
 
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
         {
-            if (TheDepthsWorldGen.depthsorHell)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.BottomlessQuicksilverBucketName"));
             }
@@ -159,7 +160,7 @@ namespace TheDepths.Items
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (TheDepthsWorldGen.depthsorHell)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 tooltips.RemoveAll(t => t.Text.Contains("lava"));
                 tooltips.Add(new(Mod, "NewDescription", (string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverAbsorbantSpongeDescription")));
@@ -173,7 +174,7 @@ namespace TheDepths.Items
 
         public override void UpdateInventory(Item item, Player player)
         {
-            if (TheDepthsWorldGen.depthsorHell)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverAbsorbantSpongeName"));
             }
@@ -185,7 +186,7 @@ namespace TheDepths.Items
 
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
         {
-            if (TheDepthsWorldGen.depthsorHell)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverAbsorbantSpongeName"));
             }
@@ -204,7 +205,7 @@ namespace TheDepths.Items
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (TheDepthsWorldGen.depthsorHell)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 tooltips.RemoveAll(t => t.Text.Contains("everything"));
                 tooltips.RemoveAll(t => t.Text.Contains("underworld"));
@@ -221,7 +222,7 @@ namespace TheDepths.Items
 
         public override void UpdateInventory(Item item, Player player)
         {
-            if (TheDepthsWorldGen.depthsorHell)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.Items.ShellPhoneDepths.DisplayName"));
             }
@@ -233,7 +234,7 @@ namespace TheDepths.Items
 
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
         {
-            if (TheDepthsWorldGen.depthsorHell)
+            if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.Items.ShellPhoneDepths.DisplayName"));
             }

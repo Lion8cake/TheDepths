@@ -39,7 +39,7 @@ namespace TheDepths
 
                 if (recipe.HasCondition(Condition.NearLava))
                 {
-                    recipe.AddCondition(Language.GetOrRegister(""), () => TheDepthsWorldGen.depthsorHell == false);
+                    recipe.AddCondition(Language.GetOrRegister(""), () => (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld) == false);
                 }
             }
         }
