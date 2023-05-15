@@ -17,7 +17,6 @@ namespace TheDepths.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
-            ItemDrop = ModContent.ItemType<Items.Placeable.QuartzBricks>();
             AddMapEntry(new Color(138, 158, 168));
 			DustType = ModContent.DustType<QuartzCrystals>();
             HitSound = SoundID.Tink;

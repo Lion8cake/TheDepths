@@ -41,17 +41,32 @@ namespace TheDepths.NPCs
 				}
 			}
 			if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld) && !Collision.LavaCollision(npc.position, npc.width, npc.height))
-            {
+			{
 				QuicksilverTimer--;
 				if (QuicksilverTimer <= 0)
-                {
+				{
 					QuicksilverTimer = 0;
-                }
-            }
+				}
+			}
 			if ((TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld) == false && Collision.LavaCollision(npc.position, npc.width, npc.height) && npc.buffImmune[ModContent.BuffType<Buffs.MercuryBoiling>()] == false)
-            {
+			{
 				npc.lavaImmune = false;
-            }
+			}
+
+			for (int o = 0; o < Main.maxNPCs; o++)
+			{
+				NPC target = Main.npc[o];
+				if (!target.friendly)
+				{
+					if (target.position.WithinRange(npc.position, 40) && npc.HasBuff(ModContent.BuffType<Buffs.MercuryContagion>()))
+					{
+						if (!target.HasBuff(ModContent.BuffType<Buffs.MercuryContagion>()) && target != npc)
+						{
+							target.AddBuff(ModContent.BuffType<Buffs.MercuryContagion>(), npc.buffTime[npc.FindBuffIndex(ModContent.BuffType<Buffs.MercuryContagion>())]); //works but worried about MP
+						}
+					}
+				}
+			}
 		}
 
 		public override void ResetEffects(NPC npc) {

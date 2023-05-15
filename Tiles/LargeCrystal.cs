@@ -66,9 +66,10 @@ namespace TheDepths.Tiles
 			HitSound = SoundID.Item27;
 		}
 
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override bool CanDrop(int i, int j)
         {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 64, 32, ModContent.ItemType<Items.Placeable.Quartz>(), 4);
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 64, 32, ModContent.ItemType<Items.Placeable.Quartz>(), 4);
+			return false;
         }
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

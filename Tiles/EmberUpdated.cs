@@ -16,7 +16,6 @@ namespace TheDepths.Tiles
 			Main.tileSolidTop[Type] = false;
 			Main.tileFrameImportant[Type] = true;
 
-			ItemDrop = ModContent.ItemType<Items.Placeable.Ember>();
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
 			TileObjectData.newTile.CoordinateHeights = new int[] { 18 };
 			TileObjectData.newTile.StyleHorizontal = true;

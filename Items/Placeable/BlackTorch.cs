@@ -17,7 +17,7 @@ namespace TheDepths.Items.Placeable
 		public override void SetDefaults() {
 			Item.width = 10;
 			Item.height = 12;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.holdStyle = 1;
 			Item.noWet = true;
 			Item.useTurn = true;
@@ -37,12 +37,12 @@ namespace TheDepths.Items.Placeable
 				Dust.NewDust(new Vector2(player.itemLocation.X + 16f * player.direction, player.itemLocation.Y - 14f * player.gravDir), 4, 4, ModContent.DustType<BlackGemsparkDust>());
 			}
 			Vector2 position = player.RotatedRelativePoint(new Vector2(player.itemLocation.X + 12f * player.direction + player.velocity.X, player.itemLocation.Y - 14f + player.velocity.Y), true);
-			Lighting.AddLight(position, 2f, 1f, 1f);
+			Lighting.AddLight(position, 0.06f, 0.06f, 0.06f);
 		}
 
 		public override void PostUpdate() {
 			if (!Item.wet) {
-				Lighting.AddLight((int)((Item.position.X + Item.width / 2) / 16f), (int)((Item.position.Y + Item.height / 2) / 16f), 1f, 1f, 1f);
+				Lighting.AddLight((int)((Item.position.X + Item.width / 2) / 16f), (int)((Item.position.Y + Item.height / 2) / 16f), 0.06f, 0.06f, 0.06f);
 			}
 		}
 

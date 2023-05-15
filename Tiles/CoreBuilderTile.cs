@@ -38,20 +38,16 @@ namespace TheDepths.Tiles
             g = 2.53f;
             b = 1.64f;
         }
-		
-		public override void AnimateTile(ref int frame, ref int frameCounter)
-        {
-            frameCounter++;
-            if (frameCounter > 6)
-            {
-                frameCounter = 0;
-                frame++;
-                frame %= 3;
-            }
-        }
 
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, ModContent.ItemType<Items.Placeable.CoreBuilder>());
+		public override void AnimateTile(ref int frame, ref int frameCounter)
+		{
+			frameCounter++;
+			if (frameCounter > 6)
+			{
+				frameCounter = 0;
+				frame++;
+				frame %= 3;
+			}
 		}
 	}
 }

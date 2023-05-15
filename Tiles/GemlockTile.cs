@@ -38,7 +38,7 @@ namespace TheDepths.Tiles
             player.cursorItemIconEnabled = true;
             player.cursorItemIconID = itemType;
         }
-        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        /*public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             int gemLock = 0;
             int gem = SelectGem((short)frameX);
@@ -56,7 +56,7 @@ namespace TheDepths.Tiles
                     Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 54, 32, gem);
 				}
             }
-        }
+        }*/
 
         public override void MouseOver(int i, int j)
         {

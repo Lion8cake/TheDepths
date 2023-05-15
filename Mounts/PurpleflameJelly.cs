@@ -86,6 +86,7 @@ namespace TheDepths.Mounts
 			}
 			player.buffImmune[ModContent.BuffType<Buffs.MercuryPoisoning>()] = true;
 			player.buffImmune[ModContent.BuffType<Buffs.MercuryBoiling>()] = true;
-        }
+			player.GetModPlayer<TheDepthsPlayer>().AmuletTimer = 0;
+		}
 	}
 }

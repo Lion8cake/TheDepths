@@ -35,7 +35,6 @@ namespace TheDepths.Tiles
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(119, 134, 162), name);
 
-			ItemDrop = ModContent.ItemType<Items.Placeable.ArqueriteOre>();
 			HitSound = SoundID.Tink;
 			MineResist = 2f;
 			MinPick = 65;

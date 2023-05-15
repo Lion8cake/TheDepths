@@ -14,7 +14,6 @@ namespace TheDepths.Tiles
 			Main.tileSolid[Type] = true;
 			DustType = ModContent.DustType<BlackGemsparkDust>();
 			AddMapEntry(new Color(22, 19, 28));
-			ItemDrop = ModContent.ItemType<Items.Placeable.BlackGemspark>();
 		}
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

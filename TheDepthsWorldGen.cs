@@ -204,6 +204,24 @@ namespace TheDepths
 			}
 		}
 
+		/*public static void AmalgamAmuletReplacor(GenerationProgress progress, GameConfiguration configuration)
+		{
+			progress.Message = "Shuffling Chests";
+			for (int k = 0; k < Main.maxTilesX; k++)
+			{
+				for (int l = 0; l < Main.maxTilesY; l++)
+				{
+					if (Main.tile[l, k].TileType == 21)
+					{
+						if (Main.chest[ItemID.LavaCharm].item[906].type == ItemID.LavaCharm)
+                        {
+
+                        }
+					}
+				}
+			}
+		}*/
+
 		private void Pots(GenerationProgress progress, GameConfiguration configuration)
 		{
 			Main.tileSolid[137] = true;

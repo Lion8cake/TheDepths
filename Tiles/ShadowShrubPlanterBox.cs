@@ -17,7 +17,6 @@ namespace TheDepths.Tiles
 			Main.tileSolid[Type] = true;
 			Main.tileSolidTop[Type] = true;
 			AddMapEntry(new Color(191, 142, 111));
-			ItemDrop = ModContent.ItemType<Items.Placeable.ShadowShrubPlanterBox>();
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.PlanterBox };
 		}

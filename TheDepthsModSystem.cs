@@ -22,14 +22,14 @@ namespace TheDepths
 {
     public class TheDepthsModSystem : ModSystem
     {
-        /*public override void PostUpdateEverything()
+        public override void PostUpdateEverything()
         {
-            string twld = Path.ChangeExtension(Main.worldPathName, ".twld");
+            /*string twld = Path.ChangeExtension(Main.worldPathName, ".twld");
             if (File.ReadAllText(ConfigManager.ModConfigPath + "/AltLibrary_AltLibraryConfig.json").Contains(twld))
             {
                 Main.NewText("Found World");
-            }
-        }*/
+            }*/
+        }
 
         public override void PostAddRecipes()
         {

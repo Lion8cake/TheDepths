@@ -42,7 +42,6 @@ namespace TheDepths.Tiles
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(29, 29, 29), name);
 			DustType = ModContent.DustType<BlackGemsparkDust>();
-			ItemDrop = ModContent.ItemType<Items.Placeable.BlackTorch>();
             TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.Torches };
             TileID.Sets.Torch[Type] = true;
@@ -60,9 +59,9 @@ namespace TheDepths.Tiles
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			Tile tile = Main.tile[i, j];
 			if (tile.TileFrameX < 66) {
-				r = 2f;
-				g = 1f;
-				b = 1f;
+				r = 0.06f;
+				g = 0.06f;
+				b = 0.06f;
 			}
 		}
 

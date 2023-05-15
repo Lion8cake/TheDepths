@@ -35,6 +35,7 @@ using System.Linq;
 using Terraria.IO;
 using Terraria.ModLoader.IO;
 using TheDepths.Biomes;
+using Terraria.GameContent.Tile_Entities;
 
 namespace TheDepths
 {
@@ -85,6 +86,7 @@ namespace TheDepths
             Terraria.GameContent.UI.States.On_UIWorldCreation.SetDefaultOptions += DepthsSelectionMenu.OnSetDefaultOptions;
             On_Player.ItemCheck_CatchCritters += On_Player_ItemCheck_CatchCritters;
             Terraria.On_Dust.NewDust += Dust_NewDust;
+            On_TELogicSensor.GetState += On_TELogicSensor_GetState;
         }
 
         public override void Unload()
@@ -114,7 +116,19 @@ namespace TheDepths
 
             On_Player.ItemCheck_CatchCritters -= On_Player_ItemCheck_CatchCritters;
             Terraria.On_Dust.NewDust -= Dust_NewDust;
+            On_TELogicSensor.GetState -= On_TELogicSensor_GetState;
         }
+
+        #region LavaSensorDetour
+        private bool On_TELogicSensor_GetState(On_TELogicSensor.orig_GetState orig, int x, int y, TELogicSensor.LogicCheckType type, TELogicSensor instance)
+        {
+            if (type == TELogicSensor.LogicCheckType.Lava && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2) && Main.drunkWorld))
+            {
+                return false;
+            }
+            return orig.Invoke(x, y, type, instance);
+        }
+        #endregion
 
         #region WorldUIOverlay
         private void On_UIWorldSelect_UpdateWorldsList(Terraria.GameContent.UI.States.On_UIWorldSelect.orig_UpdateWorldsList orig, Terraria.GameContent.UI.States.UIWorldSelect self)

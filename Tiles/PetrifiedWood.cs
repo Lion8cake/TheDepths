@@ -16,7 +16,6 @@ namespace TheDepths.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
-            ItemDrop = ModContent.ItemType<Items.Placeable.PetrifiedWood>();
             AddMapEntry(new Color(55, 55, 45));
 			DustType = ModContent.DustType<PetrifiedWoodDust>();
         }

@@ -352,8 +352,8 @@ namespace TheDepths
 			Item item = Player.inventory[Player.selectedItem];
 			if (!Player.JustDroppedAnItem)
 			{
-				if ((item.type == ModContent.ItemType<ShalestoneConch>() || item.type == ModContent.ItemType<ShellPhoneDepths>()) && Player.itemAnimation > 0 && TheDepthsWorldGen.depthsorHell)
-				{
+				if ((item.type == ModContent.ItemType<ShalestoneConch>() || item.type == ModContent.ItemType<ShellPhoneDepths>()) && Player.itemAnimation > 0 && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
+                {
 					Vector2 vector2 = Vector2.UnitY.RotatedBy((float)Player.itemAnimation * ((float)Math.PI * 2f) / 30f) * new Vector2(15f, 0f);
 					for (int num = 0; num < 2; num++)
 					{
@@ -385,7 +385,7 @@ namespace TheDepths
 						}
 					}
 				}
-			}
+            }
 		}
 
         public static void ShalestoneConch(Player player)

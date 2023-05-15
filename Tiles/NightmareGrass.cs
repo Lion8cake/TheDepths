@@ -26,7 +26,6 @@ namespace TheDepths.Tiles
             TileID.Sets.Conversion.Grass[Type] = true;
             DustType = ModContent.DustType<NightDust>();
             AddMapEntry(new Color(43, 28, 83));
-            ItemDrop = ModContent.ItemType<Items.Placeable.ShaleBlock>();
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

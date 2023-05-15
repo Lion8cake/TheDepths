@@ -19,7 +19,6 @@ namespace TheDepths.Tiles
 
 			AddMapEntry(new Color(205, 181, 82));
 
-			ItemDrop = ModContent.ItemType<Items.Placeable.GlitterBlock>();
 		}
 	}
 }

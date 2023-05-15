@@ -16,7 +16,6 @@ namespace TheDepths.Tiles
 			Main.tileSolid[Type] = true;
 			DustType = ModContent.DustType<BlackGemsparkDust>();
 			AddMapEntry(new Color(22, 19, 28));
-			ItemDrop = ModContent.ItemType<Items.Placeable.BlackGemspark>();
 		}
 	
 		public override void HitWire(int i, int j)

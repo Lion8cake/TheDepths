@@ -17,7 +17,7 @@ namespace TheDepths.Items.Weapons
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 8;
 			Item.height = 8;
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.consumable = true; 
 			Item.knockBack = 1.5f;
 			Item.value = 80;

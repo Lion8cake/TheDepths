@@ -34,7 +34,6 @@ namespace TheDepths.Tiles
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(255, 255, 255));
 
-			ItemDrop = ModContent.ItemType<Items.Placeable.Quartz>();
 			HitSound = SoundID.Tink;
 			MineResist = 2f;
 			MinPick = 65;

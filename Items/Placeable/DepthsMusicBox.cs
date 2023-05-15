@@ -8,6 +8,9 @@ namespace TheDepths.Items.Placeable
 	{
 		public override void SetStaticDefaults() {
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			ItemID.Sets.CanGetPrefixes[Type] = false;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.MusicBox;
+			MusicLoader.AddMusicBox(Mod, MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Depths"), ModContent.ItemType<DepthsMusicBox>(), ModContent.TileType<Tiles.DepthsMusicBox>());
 		}
 
 		public override void SetDefaults() {

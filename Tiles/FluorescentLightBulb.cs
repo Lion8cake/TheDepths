@@ -36,7 +36,6 @@ namespace TheDepths.Tiles
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 			AddMapEntry(new Color(140, 165, 170));
 			DustType = 0;
-			ItemDrop = ModContent.ItemType<Items.Placeable.FluorescentLightBulb>();
 			TileID.Sets.DisableSmartCursor[Type] = true;
 		}
 

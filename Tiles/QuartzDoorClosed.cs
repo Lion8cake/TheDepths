@@ -18,7 +18,7 @@ namespace TheDepths.Tiles
 			Main.tileBlockLight[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileNoAttach[Type] = true;
-			Main.tileLavaDeath[Type] = true;
+			Main.tileLavaDeath[Type] = false;
 			TileID.Sets.NotReallySolid[Type] = true;
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileObjectData.newTile.Width = 1;
@@ -45,11 +45,6 @@ namespace TheDepths.Tiles
             TileID.Sets.OpenDoorID[Type] = Mod.Find<ModTile>("QuartzDoorOpen").Type;
 			AddMapEntry(new Color(255, 255, 255), name);
 			DustType = ModContent.DustType<QuartzCrystals>();
-		}
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, Mod.Find<ModItem>("QuartzDoor").Type);
 		}
 	}
 }

@@ -16,9 +16,6 @@ namespace TheDepths.Items.Placeable
 	{
 		public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Core Builder");
-            /* Tooltip.SetDefault("Allows you to convert hell materials into their depths alternatives and vice versa\n" +
-                "'A legendary forge that is rumored to be the reason how the core of each world is created'"); */
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -26,7 +23,7 @@ namespace TheDepths.Items.Placeable
 		{
 			Item.width = 20;
 			Item.height = 20;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.value = 3000;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTurn = true;
@@ -46,13 +43,13 @@ namespace TheDepths.Items.Placeable
                 .AddIngredient(ItemID.Hellforge, 1)
                 .AddIngredient(ItemID.HellstoneBar, 10)
                 .AddTile(TileID.Anvils)
-                .Register();
+				.Register();
             CreateRecipe()
                 .AddIngredient<ShaleBlock>(50)
                 .AddIngredient<Gemforge>(1)
                 .AddIngredient<ArqueriteBar>(10)
                 .AddTile(TileID.Anvils)
-                .Register();
+				.Register();
 
 			AddAndReplace<ShaleBlock>(ItemID.AshBlock);
 			AddAndReplace<Shalestone>(ItemID.AshBlock);
@@ -89,10 +86,12 @@ namespace TheDepths.Items.Placeable
 			Recipe recipe = Recipe.Create(hall);
 			recipe.AddIngredient(ContentInstance<TConf>.Instance.Type);
 			recipe.AddTile(ModContent.TileType<CoreBuilderTile>());
+			recipe.DisableDecraft();
 			recipe.Register();
 			recipe = Recipe.Create(ContentInstance<TConf>.Instance.Type);
 			recipe.AddIngredient(hall);
 			recipe.AddTile(ModContent.TileType<CoreBuilderTile>());
+			recipe.DisableDecraft();
 			recipe.Register();
 		}
 	}

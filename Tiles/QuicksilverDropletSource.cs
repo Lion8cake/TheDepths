@@ -34,5 +34,10 @@ namespace TheDepths.Tiles
 		{
 			Gore.NewGore(new EntitySource_Misc(""), new Vector2((i - Main.tile[i, j].TileFrameX / 18) * 16, j - Main.tile[i, j].TileFrameY / 18 * 16), Vector2.Zero, ModContent.Find<ModGore>("TheDepths/QuicksilverDroplet").Type, 1f);
 		}
-	}
+
+        public override bool CanDrop(int i, int j)
+        {
+			return false;
+        }
+    }
 }

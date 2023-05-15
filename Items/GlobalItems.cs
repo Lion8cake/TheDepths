@@ -44,6 +44,23 @@ namespace TheDepths.Items
         }
     }
 
+    public class DemonConch : GlobalItem
+    {
+        public override bool AppliesToEntity(Item entity, bool lateInstantiation)
+        {
+            return entity.type == ItemID.DemonConch;
+        }
+
+        public override bool CanUseItem(Item item, Player player)
+        {
+            if (!(TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+
     public class TerrasparkUpgrade : GlobalItem
     {
         public override bool AppliesToEntity(Item entity, bool lateInstantiation)

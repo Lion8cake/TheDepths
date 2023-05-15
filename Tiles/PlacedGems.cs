@@ -36,21 +36,32 @@ namespace TheDepths.Tiles
             return (ushort)(Main.tile[i, j].TileFrameX / 18);
         }
 
-        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
-            int toDrop = 0;
-            switch (Main.tile[i, j].TileFrameX / 18)
+            Tile t = Main.tile[i, j];
+            int style = t.TileFrameX / 18;
+            if (style == 0)
             {
-                case 0:
-                    toDrop = ModContent.ItemType<Items.Placeable.Geode>();
-					DustType = Mod.Find<ModDust>("GeodeCrystalDust").Type;
-                    break;
-                case 1:
-                    toDrop = ModContent.ItemType<Items.Placeable.Onyx>();
-					DustType = Mod.Find<ModDust>("OnyxCrystalDust").Type;
-                    break;
+                yield return new Item(ModContent.ItemType<Items.Placeable.Geode>());
             }
-            if (toDrop > 0) Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, toDrop);
+            else if (style == 1)
+            {
+                yield return new Item(ModContent.ItemType<Items.Placeable.Onyx>());
+            }
+        }
+
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+            int style = Main.tile[i, j].TileFrameX / 18;
+            if (style == 0)
+            {
+                type = ModContent.DustType<Dusts.GeodeDust>(); 
+            }
+            if (style == 1)
+            {
+                type = ModContent.DustType<Dusts.OnyxCrystalDust>();
+            }
+            return true;
         }
 
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)

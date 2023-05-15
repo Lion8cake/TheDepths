@@ -13,7 +13,7 @@ namespace TheDepths.Items.Placeable
         public override void SetStaticDefaults()
         {
             ItemID.Sets.IsFishingCrate[Type] = true;
-
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<QuartzCrate>();
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
         }
 

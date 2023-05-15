@@ -30,7 +30,6 @@ namespace TheDepths.Tiles
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 			AddMapEntry(new Color(255, 255, 255));
 			DustType = ModContent.DustType<QuartzCrystals>();
-			ItemDrop = ModContent.ItemType<Items.Placeable.QuartzPlatform>();
             TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.Platforms };
 		}

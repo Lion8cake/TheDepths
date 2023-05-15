@@ -103,7 +103,7 @@ Mods: {
 			QuartzDoorOpen.MapEntry: Door
 			QuartzTable.MapEntry: Table
 			QuartzWorkbench.MapEntry: Workbench
-			QuicksilverDropletSource.MapEntry: Quicksilver Droplet
+			QuicksilverDropletSource.MapEntry: Dripping Quicksilver
 			ShadowShrub.MapEntry: Shadow Shrub
 			Shalestone.MapEntry: Shalestone
 			ShalestoneAmethyst.MapEntry: Amethyst
@@ -177,6 +177,11 @@ Mods: {
 			PurpleflameJellyBuff: {
 				DisplayName: Purpleflame Jelly
 				Description: A unique but rare and passive species of jellyfish that live in quicksilver
+			}
+
+			MercuryContagion: {
+				DisplayName: Mercury Contagion
+				Description: Mods.TheDepths.Buffs.MercuryContagion.Description
 			}
 		}
 
@@ -665,8 +670,8 @@ Mods: {
 			}
 
 			POWHammer: {
-				DisplayName: POW Hammer
-				Tooltip: High bonkability
+				DisplayName: P.O.W Hammer
+				Tooltip: "'High bonkability'"
 			}
 
 			QuartzCannon: {
@@ -973,6 +978,11 @@ Mods: {
 					'If you listen closely, you can hear something about your car's warranty'
 					'''
 			}
+
+			AncientShadowBrick: {
+				DisplayName: Ancient Shadow Brick
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -1058,6 +1068,14 @@ Mods: {
 			ShadowCat.DisplayName: Shadow Cat
 			ShadowflameEmber2.DisplayName: Shadowflame Ember2
 			ShadowflameEmber3.DisplayName: Shadowflame Ember3
+			POWHammerSwing.DisplayName: P O W Hammer Swing
+			POWEffect.DisplayName: P O W Effect
+			MercuryExplosion1.DisplayName: Mercury Explosion1
+			MercuryExplosion.DisplayName: Mercury Explosion
+			MercuryWarningSign.DisplayName: Mercury Warning Sign
+			ShadeBladeLeft.DisplayName: Shade Blade Left
+			ShadeBladeRight.DisplayName: Shade Blade Right
+			ShadeBladeCalculator.DisplayName: Shade Blade Calculator
 		}
 
 		Biomes.DepthsBiome.DisplayName: Depths Biome

@@ -14,7 +14,6 @@ namespace TheDepths.Tiles
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
-			ItemDrop = ItemID.Sapphire;
 			DustType = ModContent.DustType<ShaleDust>();
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(11, 34, 147), name);

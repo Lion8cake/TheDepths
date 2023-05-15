@@ -28,7 +28,6 @@ namespace TheDepths.Tiles
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShalestoneTopaz").Type] = true;
 			DustType = ModContent.DustType<ShaleDust>();
 
-			ItemDrop = ModContent.ItemType<Items.Placeable.Onyx>();
 			HitSound = SoundID.Tink;
 			MineResist = 2f;
 			MinPick = 110;

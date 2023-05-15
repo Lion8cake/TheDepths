@@ -17,7 +17,7 @@ namespace TheDepths.Items.Placeable
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.maxStack = 99;
+			Item.maxStack = 9999;
 			Item.consumable = true;
 			Item.placeStyle = 0;
 			Item.width = 12;
