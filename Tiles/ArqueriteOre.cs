@@ -5,6 +5,7 @@ using TheDepths.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheDepths.Dusts;
+using System;
 
 namespace TheDepths.Tiles
 {
@@ -52,6 +53,37 @@ namespace TheDepths.Tiles
 		public override bool CanExplode(int i, int j)
 		{
 			return false;
-		}	
-	}
+		}
+
+        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+        {
+			Tile tile = Main.tile[i, j];
+			int x = i - Main.tile[i, j].TileFrameX / 18 % 1;
+			int y = j - Main.tile[i, j].TileFrameY / 18 % 1;
+			if (Main.netMode != 1)
+			{
+				if (j > Main.UnderworldLayer && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2) && Main.drunkWorld))
+				{
+					tile.LiquidType = LiquidID.Lava;
+					tile.LiquidAmount = 128;
+				}
+			}
+		}
+    }
+
+	//For future removal of lava dropping quicksilver
+	/*public class Hellstone : GlobalTile
+    {
+		public override 
+
+        public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)
+        {
+			return true;
+        }
+
+        public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
+        {
+            base.KillTile(i, j, type, ref fail, ref effectOnly, ref noItem);
+        }
+    }*/
 }

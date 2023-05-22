@@ -1,5 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -25,11 +28,24 @@ public abstract class ChasmeBodyPart : ModNPC
 	{
 		get => Main.npc[MainNPCIndex];
 	}
+    public override void SetStaticDefaults()
+    {
+        NPCDebuffImmunityData debuffData = new() //immunity for all body parts
+        {
+            SpecificallyImmuneTo = new int[]
+            {
+                BuffID.Poisoned,
+                BuffID.Confused,
+                BuffID.Burning
+            }
+        };
+        NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+    }
 
-	/// <summary>
-	/// Gets the main position (Center) of the boss this body part should follow
-	/// </summary>
-	protected Vector2 ChasmePosition
+    /// <summary>
+    /// Gets the main position (Center) of the boss this body part should follow
+    /// </summary>
+    protected Vector2 ChasmePosition
 	{
 		get
 		{
@@ -52,6 +68,8 @@ public abstract class ChasmeBodyPart : ModNPC
 
 	public override bool IsLoadingEnabled(Mod mod) => false;
 
+	public bool ShouldFaceTarget = true;
+
 	public override void SetDefaults()
 	{
 		NPC.HitSound = SoundID.NPCHit8;
@@ -59,16 +77,28 @@ public abstract class ChasmeBodyPart : ModNPC
 		NPC.noTileCollide = true;
 		NPC.knockBackResist = 0f;
 		NPC.aiStyle = -1;
-	}
+        //NPC.ScaleStats_UseStrengthMultiplier(0.6f); //dont scale like a regular npc in different gamemodes
+    }
 
 	public override void AI()
 	{
-		NPC.spriteDirection = NPC.direction = MainNPC.direction;
+		if (ShouldFaceTarget) //disable during dashes
+		{
+			NPC.spriteDirection = NPC.direction = MainNPC.direction;
+		}
 		Vector2 offset = GetOffset();
 		PreAutoPosition();
 		if (ShouldAutoPosition)
 			AutoPosition(offset);
 		PostAutoPosition(offset);
+
+
+		if (!MainNPC.active)
+		{
+			NPC.active = false;
+		}
+		Main.BestiaryTracker.Kills.SetKillCountDirectly(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ChasmeHandLeft>()], Main.BestiaryTracker.Kills.GetKillCount(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ChasmeHeart>()]));
+		Main.BestiaryTracker.Kills.SetKillCountDirectly(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ChasmeBody>()], Main.BestiaryTracker.Kills.GetKillCount(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ChasmeHeart>()]));
 	}
 
 	/// <summary>
@@ -85,4 +115,36 @@ public abstract class ChasmeBodyPart : ModNPC
 	protected virtual void PreAutoPosition() { }
 
 	protected virtual void PostAutoPosition(Vector2 offset) { }
+
+    public override bool CheckDead()
+    {
+        return false;
+    }
+
+    public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+    {
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+
+        // Retrieve reference to shader
+        /*var deathShader = GameShaders.Misc["TheDepths:ChasmeDeath"];  //TODO compile the shader in the effects file that i stole and uncomment/debug this part
+
+        // Reset back to default value.
+        deathShader.UseOpacity(1f);
+        // We use npc.ai[3] as a counter since the real death.
+        if (MainNPC.ai[3] > 30f)
+        {
+            // Our shader uses the Opacity register to drive the effect. See ExampleEffectDeath.fx to see how the Opacity parameter factors into the shader math. 
+            deathShader.UseOpacity(1f - (MainNPC.ai[3] - 30f) / 150f);
+        }
+        // Call Apply to apply the shader to the SpriteBatch. Only 1 shader can be active at a time.
+        deathShader.Apply(null);
+		*/
+        return true;
+    }
+    public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+    {
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+    }
 }

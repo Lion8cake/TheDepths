@@ -11,6 +11,7 @@ using Terraria.DataStructures;
 using TheDepths.Buffs;
 using TheDepths.Tiles;
 using TheDepths.NPCs;
+using Terraria.Localization;
 
 namespace TheDepths.Projectiles.Chasme
 {
@@ -93,17 +94,17 @@ namespace TheDepths.Projectiles.Chasme
 				{
 					if (Projectile.Center.X < (Main.maxTilesX * 16) / 2 && Main.netMode != NetmodeID.MultiplayerClient)
 					{
-						Main.NewText("[c/AF4BFF:Wall of Flesh has awoken!]");
-						NPC.NewNPC(new EntitySource_Misc(""), (int)(Projectile.Center.X - 1500f), (int)Projectile.Center.Y, NPCID.WallofFlesh, 0, 1f, 0f, 0f, player.whoAmI);
+						Main.NewText("[c/AF4BFF:" + Language.GetTextValue("Mods.TheDepths.common.ChasSpawn") + "]");
+						NPC.NewNPC(new EntitySource_Misc(""), (int)(Projectile.Center.X - 1500f), (int)Projectile.Center.Y, ModContent.NPCType<NPCs.Chasme.ChasmeHeart>(), 0);
 					}
 					else if (Projectile.Center.X > (Main.maxTilesX * 16) / 2 && Main.netMode != NetmodeID.MultiplayerClient)
 					{
-						Main.NewText("[c/AF4BFF:Wall of Flesh has awoken!]");
-						NPC.NewNPC(new EntitySource_Misc(""), (int)(Projectile.Center.X + 1500f), (int)Projectile.Center.Y, NPCID.WallofFlesh, 0, 1f, 0f, 0f, player.whoAmI);
+						Main.NewText("[c/AF4BFF:" + Language.GetTextValue("Mods.TheDepths.common.ChasSpawn") + "]");
+						NPC.NewNPC(new EntitySource_Misc(""), (int)(Projectile.Center.X + 1500f), (int)Projectile.Center.Y, ModContent.NPCType<NPCs.Chasme.ChasmeHeart>(), 0);
 					}
 					else
 					{
-						NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: NPCID.WallofFlesh);
+						NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: ModContent.NPCType<NPCs.Chasme.ChasmeHeart>());
 					}
 				}
 			}

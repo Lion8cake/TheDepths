@@ -1,5 +1,5 @@
 displayName = The Depths (Hell Alternative)
-author = Lion8cake & Basically, I am little fox
-version = 0.5.2
+author = Lion8cake & Snickerbobble
+version = 0.6.0
 includeSource = true
 includePDB = true

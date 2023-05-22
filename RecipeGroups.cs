@@ -120,5 +120,10 @@ namespace TheDepths
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
+
+        public override void AddRecipeGroups()
+        {
+            RecipeGroup.recipeGroups[RecipeGroupID.Wood].ValidItems.Add(ModContent.ItemType<Items.Placeable.NightWood>());
+        }
     }
 }

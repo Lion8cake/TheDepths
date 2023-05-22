@@ -28,6 +28,7 @@ namespace TheDepths.Items.Placeable
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe(4);
 			recipe.AddIngredient(ModContent.ItemType<ArqueriteBricks>());
+			recipe.AddTile(TileID.WorkBenches);
 			recipe.Register();
 		}
 	}
