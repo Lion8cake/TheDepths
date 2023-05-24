@@ -1268,7 +1268,12 @@ Mods: {
 			Chlaser.DisplayName: Chlaser
 		}
 
-		Biomes.DepthsBiome.DisplayName: Depths Biome
+		Biomes: {
+			DepthsBiome: {
+				DisplayName: Depths Biome
+				TownNPCDialogueName: the Depths Biome
+			}
+		}
 
 		UnderworldSelection: {
 			Random: {

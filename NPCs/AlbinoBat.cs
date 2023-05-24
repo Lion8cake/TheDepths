@@ -55,7 +55,7 @@ namespace TheDepths.NPCs
 			});
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 			if (spawnInfo.Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell)
 			{

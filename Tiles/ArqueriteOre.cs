@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheDepths.Dusts;
 using System;
+using Terraria.DataStructures;
 
 namespace TheDepths.Tiles
 {
@@ -59,7 +60,6 @@ namespace TheDepths.Tiles
         {
 			Tile tile = Main.tile[i, j];
 			int x = i - Main.tile[i, j].TileFrameX / 18 % 1;
-			int y = j - Main.tile[i, j].TileFrameY / 18 % 1;
 			if (Main.netMode != 1)
 			{
 				if (j > Main.UnderworldLayer && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2) && Main.drunkWorld))
@@ -72,18 +72,20 @@ namespace TheDepths.Tiles
     }
 
 	//For future removal of lava dropping quicksilver
-	/*public class Hellstone : GlobalTile
-    {
-		public override 
+	public class Hellstone : GlobalTile
+    {	
 
-        public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)
+        /*public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
-			return true;
-        }
-
-        public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
-        {
-            base.KillTile(i, j, type, ref fail, ref effectOnly, ref noItem);
-        }
-    }*/
+			Tile tile = Main.tile[i, j];
+			int x = i - Main.tile[i, j].TileFrameX / 18 % 1;
+			if (type == TileID.Hellstone && fail == false && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2) && Main.drunkWorld))
+            {
+				noItem = true;
+				tile.HasTile = false;
+				tile.ClearEverything();
+				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.Hellstone);
+			}
+        }*/
+    }
 }

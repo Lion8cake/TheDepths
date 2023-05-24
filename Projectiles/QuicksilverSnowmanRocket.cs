@@ -57,7 +57,7 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != 1 && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
+			if (Main.netMode != 1 && TheDepthsWorldGen.InDepths)
 			{
 				Point pt3 = base.Projectile.Center.ToTileCoordinates();
 				Projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);

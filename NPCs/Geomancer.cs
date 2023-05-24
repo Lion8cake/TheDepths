@@ -53,7 +53,7 @@ namespace TheDepths.NPCs
 			SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
 		}
 
-        public override void AI()
+		public override void AI()
         {
             if (PraiseTheRelic == true)
             {

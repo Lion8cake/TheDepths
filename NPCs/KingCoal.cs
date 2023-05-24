@@ -195,7 +195,7 @@ namespace TheDepths.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell)
+            if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && !TheDepthsWorldGen.depthsorHell)
             {
                 return 1f;
             }

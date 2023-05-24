@@ -22,6 +22,8 @@ namespace TheDepths
 {
     public class TheDepthsModSystem : ModSystem
     {
+        //public static bool NotLavaDestroyable;
+
         public override void PostUpdateEverything()
         {
             /*string twld = Path.ChangeExtension(Main.worldPathName, ".twld");
@@ -31,6 +33,24 @@ namespace TheDepths
             }*/
         }
 
+        /*public override void PreUpdateWorld()
+        {
+            //if (TheDepthsWorldGen.InDepths)
+            //{
+                for (int i = 0; i < TileLoader.TileCount; i++)
+                {
+                    Main.tileLavaDeath[i] = false;
+                }
+            //}
+            //else if (NotLavaDestroyable == false)
+            //{
+            //    for (int i = 0; i < TileLoader.TileCount; i++)
+            //    {
+            //        Main.tileLavaDeath[i] = true;
+            //    }
+            //}
+        }*/
+
         public override void PostAddRecipes()
         {
             for (int i = 0; i < Recipe.numRecipes; i++)
@@ -39,7 +59,7 @@ namespace TheDepths
 
                 if (recipe.HasCondition(Condition.NearLava))
                 {
-                    recipe.AddCondition(Language.GetOrRegister(""), () => (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld) == false);
+                    recipe.AddCondition(Language.GetOrRegister(""), () => TheDepthsWorldGen.InDepths);
                 }
             }
         }

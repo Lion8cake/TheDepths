@@ -18,7 +18,8 @@ namespace TheDepths.NPCs
 	public class ShadowSlime : ModNPC
 	{
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 2; 
+			Main.npcFrameCount[NPC.type] = 2;
+			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 		}
 		
 		public override void SetDefaults() {

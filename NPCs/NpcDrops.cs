@@ -15,7 +15,7 @@ namespace TheDepths.NPCs
     {
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<DepthsBiome>()) || (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2) && Main.drunkWorld))
+            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<DepthsBiome>()) || TheDepthsWorldGen.InDepths)
             {
                 pool.Remove(NPCID.Hellbat);
                 pool.Remove(NPCID.LavaSlime);

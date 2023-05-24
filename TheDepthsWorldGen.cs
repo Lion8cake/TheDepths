@@ -27,6 +27,21 @@ namespace TheDepths
 		public static bool DrunkDepthsLeft;
 		public static bool DrunkDepthsRight;
 
+		/// <summary>
+		/// Detects if the player is on the depths side of the drunk seed if the depths is on the Right
+		/// </summary>
+		public static bool IsPlayerInRightDepths => DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2;
+
+		/// <summary>
+		///   Detects if the player is on the depths side of the drunk seed if the depths is on the left
+		/// </summary>
+		public static bool IsPlayerInLeftDepths => DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2;
+
+		/// <summary>
+		///   Checks if the player is in the depths part of the world. This is used to reduce repition within code as previously all the check needed was depthsorHell == true.
+		/// </summary>
+		public static bool InDepths => (depthsorHell && !Main.drunkWorld || (IsPlayerInLeftDepths || IsPlayerInRightDepths) && Main.drunkWorld);
+
 		public override void OnWorldLoad()
 		{
 			depthsorHell = false;

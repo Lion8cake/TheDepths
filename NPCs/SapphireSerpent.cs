@@ -104,7 +104,7 @@ namespace TheDepths.NPCs
         {
             if (spawnInfo.Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell)
             {
-                return 0.75f;
+                return 0.5f;
             }
             return 0f;
         }

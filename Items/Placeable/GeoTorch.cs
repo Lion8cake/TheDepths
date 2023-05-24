@@ -12,6 +12,7 @@ namespace TheDepths.Items.Placeable
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+			ItemID.Sets.Torches[Type] = true;
 		}
 
 		public override void SetDefaults() {
@@ -46,9 +47,9 @@ namespace TheDepths.Items.Placeable
 			}
 		}
 
-		public override void AutoLightSelect(ref bool dryTorch, ref bool wetTorch, ref bool glowstick) {
-			dryTorch = true;
-		}
+		//public override void AutoLightSelect(ref bool dryTorch, ref bool wetTorch, ref bool glowstick)/* tModPorter Note: Removed. Use ItemID.Sets.Torches[Type], ItemID.Sets.WaterTorches[Type], and ItemID.Sets.Glowsticks[Type] in SetStaticDefaults */ {
+		//	dryTorch = true;
+		//}
 		
 		public override void AddRecipes()
 		{
