@@ -42,7 +42,7 @@ namespace TheDepths.Tiles
 		{
 			int x = i - Main.tile[i, j].TileFrameX / 18 % 1;
 			int y = j - Main.tile[i, j].TileFrameY / 18 % 1;
-			if (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2) && Main.drunkWorld)
+			if (Worldgen.TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2) && Main.drunkWorld)
 			{
 				if ((Main.tile[x, y].LiquidType == LiquidID.Lava) && Main.tile[x, y].TileFrameX == 0)
 				{

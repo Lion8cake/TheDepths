@@ -32,14 +32,6 @@ namespace TheDepths.Items.Weapons
             Item.useAmmo = AmmoID.Arrow;
         }
 
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 4)
-                .AddTile(TileID.Anvils)
-                .Register();
-        }
-
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
             if (type == ProjectileID.WoodenArrowFriendly)

@@ -27,7 +27,7 @@ namespace TheDepths.Items.Placeable
             Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.Glass);
             recipe.AddTile(TileID.CrystalBall);
-            recipe.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), () => TheDepthsWorldGen.depthsorHell && Main.LocalPlayer.adjLava);
+            recipe.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), () => Worldgen.TheDepthsWorldGen.depthsorHell && Main.LocalPlayer.adjLava);
             recipe.Register();
         }
     }

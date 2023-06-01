@@ -7,7 +7,7 @@ namespace TheDepths
 	{
 		public override ConfigScope Mode => ConfigScope.ClientSide;
 
-		[Header("Depths Clientside Config")]
+		[Header("DepthsClientsideConfig")]
 		[Label("Enables The Depths tile lighting")]
 		[Tooltip("Enables the Depths tile lighting making the depths require torches to see where you are going")]
 		[DefaultValue(true)]
@@ -18,6 +18,11 @@ namespace TheDepths
 		[DefaultValue(false)]
         [ReloadRequired]
 		public bool SlateConfig;
+
+		[Label("[EXPERIMENTAL], Depths world icon")]
+		[Tooltip("Enables the depths and underworld icons, NOTE: due to current limitations they are based off the world evil type not core type")]
+		[DefaultValue(false)]
+		public bool DepthsIconsConfig;
 	}
 
 	/*public class TheDepthsServerConfig : ModConfig

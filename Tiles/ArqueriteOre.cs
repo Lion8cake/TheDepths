@@ -56,13 +56,18 @@ namespace TheDepths.Tiles
 			return false;
 		}
 
+        public override bool IsTileSpelunkable(int i, int j)
+        {
+			return true;
+        }
+
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
 			Tile tile = Main.tile[i, j];
 			int x = i - Main.tile[i, j].TileFrameX / 18 % 1;
 			if (Main.netMode != 1)
 			{
-				if (j > Main.UnderworldLayer && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2) && Main.drunkWorld))
+				if (j > Main.UnderworldLayer && (Worldgen.TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2) && Main.drunkWorld))
 				{
 					tile.LiquidType = LiquidID.Lava;
 					tile.LiquidAmount = 128;
@@ -79,7 +84,7 @@ namespace TheDepths.Tiles
         {
 			Tile tile = Main.tile[i, j];
 			int x = i - Main.tile[i, j].TileFrameX / 18 % 1;
-			if (type == TileID.Hellstone && fail == false && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2) && Main.drunkWorld))
+			if (type == TileID.Hellstone && fail == false && (Worldgen.TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
 				noItem = true;
 				tile.HasTile = false;

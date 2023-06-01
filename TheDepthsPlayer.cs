@@ -167,27 +167,25 @@ namespace TheDepths
             }
         }
 
-        /*public override void OnHurt(Player.HurtInfo info)
+        public override void OnHurt(Player.HurtInfo info)
         {
             Item item = Player.HeldItem;
             if (item.CountsAsClass(DamageClass.Melee))
             {
                 if (merImbue)
                 {
-                    .AddBuff(ModContent.BuffType<MercuryBoiling>(), 360 * Main.rand.Next(1, 1));
+                    Player.AddBuff(ModContent.BuffType<MercuryBoiling>(), 360 * Main.rand.Next(1, 1));
                 }
                 if (aStone)
                 {
                     Player.AddBuff(ModContent.BuffType<FreezingWater>(), 360 * Main.rand.Next(1, 1));
                 }
             }
-        }*/
-
-
+        }
 
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
-            if (TheDepthsWorldGen.InDepths)
+            if (Worldgen.TheDepthsWorldGen.InDepths)
             {
                 if (itemDrop == ItemID.Obsidifish)
                 {
@@ -217,7 +215,7 @@ namespace TheDepths
 
             if (attempt.questFish == ModContent.ItemType<Chasmefish>())
             {
-                if (Player.ZoneRockLayerHeight && TheDepthsWorldGen.InDepths && attempt.uncommon || Player.ZoneUnderworldHeight && TheDepthsWorldGen.InDepths && attempt.uncommon)
+                if (Player.ZoneRockLayerHeight && Worldgen.TheDepthsWorldGen.InDepths && attempt.uncommon || Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && attempt.uncommon)
                 {
                     itemDrop = ModContent.ItemType<Chasmefish>();
                     return;
@@ -225,7 +223,7 @@ namespace TheDepths
             }
             if (attempt.questFish == ModContent.ItemType<Relicarp>())
             {
-                if (Player.ZoneRockLayerHeight && TheDepthsWorldGen.InDepths && attempt.uncommon || Player.ZoneUnderworldHeight && TheDepthsWorldGen.InDepths && attempt.uncommon)
+                if (Player.ZoneRockLayerHeight && Worldgen.TheDepthsWorldGen.InDepths && attempt.uncommon || Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && attempt.uncommon)
                 {
                     itemDrop = ModContent.ItemType<Relicarp>();
                     return;
@@ -233,7 +231,7 @@ namespace TheDepths
             }
             if (attempt.questFish == ModContent.ItemType<GlimmerDepthFish>())
             {
-                if (Player.ZoneRockLayerHeight && TheDepthsWorldGen.InDepths && attempt.uncommon || Player.ZoneUnderworldHeight && TheDepthsWorldGen.InDepths && attempt.uncommon)
+                if (Player.ZoneRockLayerHeight && Worldgen.TheDepthsWorldGen.InDepths && attempt.uncommon || Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && attempt.uncommon)
                 {
                     itemDrop = ModContent.ItemType<GlimmerDepthFish>();
                     return;
@@ -246,7 +244,7 @@ namespace TheDepths
             #region QuicksilverMapColor
             ushort LiquidPosition = (ushort)typeof(MapHelper).GetField("liquidPosition", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
             Color[] ColorLookup = (Color[])typeof(MapHelper).GetField("colorLookup", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
-            if (TheDepthsWorldGen.InDepths)
+            if (Worldgen.TheDepthsWorldGen.InDepths)
             {
                 ColorLookup[LiquidPosition + 1] = new Color(85, 96, 102);
             }
@@ -328,7 +326,7 @@ namespace TheDepths
                     QuicksilverTimer = 60 * 2;
                 }
             }
-            if (AmuletTimer < 60 * 4 && aAmulet == true && quicksilverWet == false || AmuletTimer < 60 * 4 && aAmulet == true && !TheDepthsWorldGen.InDepths)
+            if (AmuletTimer < 60 * 4 && aAmulet == true && quicksilverWet == false || AmuletTimer < 60 * 4 && aAmulet == true && !Worldgen.TheDepthsWorldGen.InDepths)
             {
                 AmuletTimer++;
             }
@@ -346,13 +344,13 @@ namespace TheDepths
             }
             //Main.NewText(AmuletTimer);
             //Main.NewText(MercuryTimer); //For Debugging, posts number of ticks that have passed when the player is on Mercury
-            //Main.NewText("Depths in on the left : " + TheDepthsWorldGen.DrunkDepthsLeft); //Debugging for the drunkseed tag checker
+            //Main.NewText("Depths in on the left : " + Worldgen.TheDepthsWorldGen.DrunkDepthsLeft); //Debugging for the drunkseed tag checker
 
             //Shalestone Conch and shellphone
 			Item item = Player.inventory[Player.selectedItem];
 			if (!Player.JustDroppedAnItem)
 			{
-				if ((item.type == ModContent.ItemType<ShalestoneConch>() || item.type == ModContent.ItemType<ShellPhoneDepths>()) && Player.itemAnimation > 0 && TheDepthsWorldGen.InDepths)
+				if ((item.type == ModContent.ItemType<ShalestoneConch>() || item.type == ModContent.ItemType<ShellPhoneDepths>()) && Player.itemAnimation > 0 && Worldgen.TheDepthsWorldGen.InDepths)
                 {
 					Vector2 vector2 = Vector2.UnitY.RotatedBy((float)Player.itemAnimation * ((float)Math.PI * 2f) / 30f) * new Vector2(15f, 0f);
 					for (int num = 0; num < 2; num++)
@@ -483,7 +481,7 @@ namespace TheDepths
 
         public override void UpdateBadLifeRegen()
         {
-            if (merBoiling || merPoison)
+            if (merPoison)
             {
                 if (Player.lifeRegen > 0)
                 {
@@ -496,6 +494,31 @@ namespace TheDepths
                     multiplier--;
                 }
                 Player.lifeRegen -= Utils.Clamp(MercuryTimer / 60, 0, 10) * multiplier;
+            }
+            if (merBoiling)
+            {
+                if (Main.remixWorld)
+                {
+                    if (Player.lifeRegen > 0)
+                    {
+                        Player.lifeRegen = 0;
+                    }
+                    Player.lifeRegen -= 10;
+                }
+                else
+                {
+                    if (Player.lifeRegen > 0)
+                    {
+                        Player.lifeRegen = 0;
+                    }
+                    MercuryTimer++;
+                    int multiplier = 2;
+                    if (stoneRose)
+                    {
+                        multiplier--;
+                    }
+                    Player.lifeRegen -= Utils.Clamp(MercuryTimer / 60, 0, 10) * multiplier;
+                }
             }
             if (!merPoison && !merBoiling && MercuryTimer >= 1)
             {
@@ -541,7 +564,7 @@ namespace TheDepths
             }
         }
 
-        /*public override void ModifyHurt(ref Player.HurtModifiers modifiers)
+        public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
             if (damageSource.SourceCustomReason == "Gemforge")
             {
@@ -550,8 +573,10 @@ namespace TheDepths
                 deathmessage.Add(Language.GetTextValue("Mods.TheDepths.PlayerDeathReason.Gemforge.1", Player.name));
                 deathmessage.Add(Language.GetTextValue("Mods.TheDepths.PlayerDeathReason.Gemforge.2", Player.name));
                 damageSource = PlayerDeathReason.ByCustomReason(deathmessage);
+                return true;
             }
-        }*/
+            return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
+        }
 
         public override void PostUpdateMiscEffects()
         {
@@ -569,7 +594,7 @@ namespace TheDepths
                 {
                     TextureAssets.FlyingCarpet = Main.Assets.Request<Texture2D>("Images/FlyingCarpet");
                 }
-                if (TheDepthsWorldGen.InDepths)
+                if (Worldgen.TheDepthsWorldGen.InDepths)
                 {
                     TextureAssets.Liquid[1] = Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver_Block");
                     TextureAssets.LiquidSlope[1] = Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver_Slope");
@@ -611,16 +636,30 @@ namespace TheDepths
                     }
                 }
             }
-            if (Player.lavaWet && TheDepthsWorldGen.InDepths || Collision.LavaCollision(Main.LocalPlayer.position, Main.LocalPlayer.width, Main.LocalPlayer.height) && TheDepthsWorldGen.InDepths)
+            if (Player.lavaWet && Worldgen.TheDepthsWorldGen.InDepths || Collision.LavaCollision(Main.LocalPlayer.position, Main.LocalPlayer.width, Main.LocalPlayer.height) && Worldgen.TheDepthsWorldGen.InDepths)
             {
-                Player.AddBuff(BuffType<MercuryFooting>(), 60 * 30, false, false);
-                Player.lavaTime = 1000;
-                player.buffImmune[BuffID.OnFire] = true;
-                player.buffImmune[BuffID.OnFire3] = true;
-                quicksilverWet = true;
-                if (AmuletTimer == 0)
+                if (Main.remixWorld)
                 {
-                    QuicksilverTimer++;
+                    Player.lavaTime = 1000;
+                    player.buffImmune[BuffID.OnFire] = true;
+                    player.buffImmune[BuffID.OnFire3] = true;
+                    quicksilverWet = true;
+                    if (AmuletTimer == 0)
+                    {
+                        Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 7, false, false);
+                    }
+                }
+                else
+                {
+                    Player.AddBuff(BuffType<MercuryFooting>(), 60 * 30, false, false);
+                    Player.lavaTime = 1000;
+                    player.buffImmune[BuffID.OnFire] = true;
+                    player.buffImmune[BuffID.OnFire3] = true;
+                    quicksilverWet = true;
+                    if (AmuletTimer == 0)
+                    {
+                        QuicksilverTimer++;
+                    }
                 }
             }
             else

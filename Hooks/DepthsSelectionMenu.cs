@@ -11,6 +11,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using TheDepths.UI;
+using TheDepths.Worldgen;
 
 namespace TheDepths.Hooks;
 
@@ -59,7 +60,7 @@ internal static class DepthsSelectionMenu {
     public static void OnSetDefaultOptions(On_UIWorldCreation.orig_SetDefaultOptions orig, UIWorldCreation self) {
         orig(self);
         
-        ModContent.GetInstance<TheDepthsWorldGen>().SelectedUnderworldOption = UnderworldOptions.Random;
+        ModContent.GetInstance<Worldgen.TheDepthsWorldGen>().SelectedUnderworldOption = UnderworldOptions.Random;
         foreach (GroupOptionButton<UnderworldOptions> underworldButton in UnderworldButtons) {
             underworldButton.SetCurrentOption(UnderworldOptions.Random);
         }
@@ -133,7 +134,7 @@ internal static class DepthsSelectionMenu {
 
     private static void ClickUnderworldOption(UIMouseEvent evt, UIElement listeningElement) {
         var groupOptionButton = (GroupOptionButton<UnderworldOptions>)listeningElement;
-        ModContent.GetInstance<TheDepthsWorldGen>().SelectedUnderworldOption = groupOptionButton.OptionValue;
+        ModContent.GetInstance<Worldgen.TheDepthsWorldGen>().SelectedUnderworldOption = groupOptionButton.OptionValue;
 
         foreach (GroupOptionButton<UnderworldOptions> underworldButton in UnderworldButtons) {
             underworldButton.SetCurrentOption(groupOptionButton.OptionValue);

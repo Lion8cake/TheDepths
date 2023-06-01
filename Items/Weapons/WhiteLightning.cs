@@ -55,5 +55,21 @@ namespace TheDepths.Items.Weapons
 			}
 			return false;
 		}
+
+		public override void UpdateInventory(Player player)
+		{
+			if (Main.remixWorld)
+			{
+				Item.damage = 36;
+				Item.rare = ItemRarityID.LightRed;
+				Item.value = Item.sellPrice(silver: 400);
+			}
+			else
+			{
+				Item.damage = 16;
+				Item.rare = ItemRarityID.Orange;
+				Item.value = 10000;
+			}
+		}
 	}
 }

@@ -37,6 +37,7 @@ using Terraria.ModLoader.IO;
 using TheDepths.Biomes;
 using Terraria.GameContent.Tile_Entities;
 using static Terraria.WaterfallManager;
+using Terraria.GameContent.Items;
 
 namespace TheDepths
 {
@@ -48,6 +49,7 @@ namespace TheDepths
 
         public override void Load()
         {
+            //ItemVariants.AddVariant(ModContent.ItemType<NightwoodSword>(), ItemVariants.WeakerVariant, Condition.RemixWorld);
             mod = this;
             for (int i = 0; i < texture.Length; i++)
                 texture[i] = ModContent.Request<Texture2D>("TheDepths/Backgrounds/DepthsUnderworldBG_" + i);
@@ -72,7 +74,6 @@ namespace TheDepths
 
             
             Terraria.On_WaterfallManager.DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects += On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects;
-            //Terraria.IL_WaterfallManager.DrawWaterfall_int_float += WaterfallManager_DrawWaterfall;
             Terraria.On_WaterfallManager.StylizeColor += On_WaterfallManager_StylizeColor;
             On_Main.DoUpdate += On_Main_DoUpdate;
 
@@ -109,7 +110,6 @@ namespace TheDepths
             On_WaterfallManager.AddLight -= On_WaterfallManager_AddLight;
 
             Terraria.On_WaterfallManager.DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects -= On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects;
-            //Terraria.IL_WaterfallManager.DrawWaterfall_int_float -= WaterfallManager_DrawWaterfall;
             Terraria.On_WaterfallManager.StylizeColor -= On_WaterfallManager_StylizeColor;
             On_Main.DoUpdate -= On_Main_DoUpdate;
             
@@ -124,13 +124,14 @@ namespace TheDepths
             On_TELogicSensor.GetState -= On_TELogicSensor_GetState;
         }
 
+        #region QuicksilverfallGlowmaskRemover
         private Color On_WaterfallManager_StylizeColor(On_WaterfallManager.orig_StylizeColor orig, float alpha, int maxSteps, int waterfallType, int y, int s, Tile tileCache, Color aColor)
         {
             float num = (float)(int)aColor.R * alpha;
             float num2 = (float)(int)aColor.G * alpha;
             float num3 = (float)(int)aColor.B * alpha;
             float num4 = (float)(int)aColor.A * alpha;
-            if (TheDepthsWorldGen.InDepths)
+            if (Worldgen.TheDepthsWorldGen.InDepths)
             {
                 if (waterfallType == 1)
                 {
@@ -170,94 +171,12 @@ namespace TheDepths
             aColor = new Color((int)num, (int)num2, (int)num3, (int)num4);
             return aColor;
         }
-
-        /*private void On_WaterfallManager_DrawWaterfall_int_float(On_WaterfallManager.orig_DrawWaterfall_int_float orig, WaterfallManager self, int Style, float Alpha)
-        {
-            orig.Invoke(self, Style, Alpha);
-            WaterfallData[] waterFall = (WaterfallData[])typeof(WaterfallManager).GetField("waterfalls", BindingFlags.NonPublic).GetValue(self);
-            int CurrentMax = (int)typeof(WaterfallManager).GetField("currentMax", BindingFlags.Static | BindingFlags.NonPublic).GetValue(self);
-            if (TheDepthsWorldGen.InDepths)
-            {
-                for (int i = 0; i < CurrentMax; i++)
-                {
-                    int num13 = waterFall[i].x;
-                    int num14 = waterFall[i].y;
-                    Rectangle value = new Rectangle(18, 0, 16, 16);
-                    Vector2 position = ((num14 % 2 != 0) ? (new Vector2(num13 * 16 + 8, num14 * 16 + 8) - Main.screenPosition) : (new Vector2(num13 * 16 + 9, num14 * 16 + 8) - Main.screenPosition));
-                    Color color = Lighting.GetColor(num13, num14);
-                    if (waterFall[i].type == 1)
-                    {
-                        Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver_Silverfall", (AssetRequestMode)1), position, value, Color.Green, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-                    }
-                }
-            }
-        }*/
-
-        private static void WaterfallManager_DrawWaterfall(ILContext il)
-        {
-            ILCursor c = new(il);
-            if (!c.TryGotoNext(i => i.MatchLdcR4(900f)))
-                return;
-            for (int j = 0; j < 3; j++)
-            {
-                if (!c.TryGotoNext(i => i.MatchStloc(60 + j)))
-                    return;
-                c.Index++;
-                c.Emit(OpCodes.Ldloc, 60 + j);
-                c.Emit(OpCodes.Ldc_I4, j);
-                c.EmitDelegate<Func<float, int, float>>((orig, j) =>
-                {
-                    return j switch
-                    {
-                        0 => 0,
-                        1 => 0,
-                        2 => 0,
-                        _ => orig
-                    };
-                    return orig;
-                });
-                c.Emit(OpCodes.Stloc, 60 + j);
-            }
-
-            while (c.TryGotoNext(
-                i => i.MatchLdarg(1),
-                i => i.MatchLdarg(0),
-                i => i.MatchLdfld<WaterfallManager>("waterfallTexture") && i.Offset != 0,
-                i => i.MatchLdloc(12) || i.MatchLdloc(20),
-                i => i.MatchLdelemRef()))
-            {
-                c.Index += 5;
-                c.Emit(OpCodes.Pop);
-                c.Emit(OpCodes.Ldarg, 0);
-                c.Emit(OpCodes.Ldfld, typeof(WaterfallManager).GetField("waterfallTexture", BindingFlags.NonPublic | BindingFlags.Instance));
-                c.Emit(OpCodes.Ldloc, 12);
-                c.Emit(OpCodes.Ldloc, 20);
-                c.EmitDelegate<Func<Asset<Texture2D>[], int, int, Asset<Texture2D>>>((waterfallTexture, num59, num109) =>
-                {
-                    if (num109 != num59)
-                    {
-                        if (TheDepthsWorldGen.InDepths && num59 == 1)
-                        {
-                            return ModContent.Request<Texture2D>("TheDepths/Projectiles/CrystalBall", (AssetRequestMode)1);
-                        }
-                        return waterfallTexture[num59];
-                    }
-                    else
-                    {
-                        if (TheDepthsWorldGen.InDepths && num59 == 1)
-                        {
-                            return ModContent.Request<Texture2D>("TheDepths/Projectiles/CrystalBall", (AssetRequestMode)1);
-                        }
-                        return waterfallTexture[num59];
-                    }
-                });
-            }
-        }
+        #endregion
 
         #region LavaSensorDetour
         private bool On_TELogicSensor_GetState(On_TELogicSensor.orig_GetState orig, int x, int y, TELogicSensor.LogicCheckType type, TELogicSensor instance)
         {
-            if (type == TELogicSensor.LogicCheckType.Lava && (TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2) && Main.drunkWorld))
+            if (type == TELogicSensor.LogicCheckType.Lava && (Worldgen.TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2) && Main.drunkWorld))
             {
                 return false;
             }
@@ -272,7 +191,7 @@ namespace TheDepths
             UIList WorldList = (UIList)typeof(UIWorldSelect).GetField("_worldList", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
             foreach (var item in WorldList)
             {
-                if (item is UIWorldListItem)
+                if (item is UIWorldListItem && ModContent.GetInstance<TheDepthsClientConfig>().DepthsIconsConfig)
                 {
                     UIElement WorldIcon = (UIElement)typeof(UIWorldListItem).GetField("_worldIcon", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(item);
                     WorldFileData Data = (WorldFileData)typeof(AWorldListItem).GetField("_data", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(item);
@@ -391,7 +310,7 @@ namespace TheDepths
             orig.Invoke(self, ref gameTime);
             if (!Main.dedServ)
             {
-                if (TheDepthsWorldGen.InDepths)
+                if (Worldgen.TheDepthsWorldGen.InDepths)
                 {
                     LiquidRenderer.Instance._liquidTextures[1] = ModContent.Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver", (AssetRequestMode)1);
                     int[] liquidAssetRegularNum = new int[14] { 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
@@ -422,7 +341,7 @@ namespace TheDepths
             }
 
             c.EmitDelegate<Func<int, int>>(static shellphone => {
-                if (TheDepthsWorldGen.depthsorHell)
+                if (Worldgen.TheDepthsWorldGen.depthsorHell)
                     shellphone = ModContent.ItemType<ShellPhoneDepths>();
                 return shellphone;
             });
@@ -493,7 +412,7 @@ namespace TheDepths
             Asset<Texture2D> OuterLower = (Asset<Texture2D>)typeof(UIGenProgressBar).GetField("_texOuterLower", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
             if (OuterCorrupt.IsLoaded && OuterCrimson.IsLoaded && OuterLower.IsLoaded)
             {
-                bool flag2 = TheDepthsWorldGen.depthsorHell;
+                bool flag2 = Worldgen.TheDepthsWorldGen.depthsorHell;
                 if (WorldGen.drunkWorldGen && Main.rand.NextBool(2))
                 {
                     flag2 = !flag2;
@@ -511,7 +430,7 @@ namespace TheDepths
         private void On_Main_DrawUnderworldBackgroudLayer(On_Main.orig_DrawUnderworldBackgroudLayer orig, bool flat, Vector2 screenOffset, float pushUp, int layerTextureIndex)
         {
             orig.Invoke(flat, screenOffset, pushUp, layerTextureIndex);
-            if (TheDepthsWorldGen.InDepths)
+            if (Worldgen.TheDepthsWorldGen.InDepths)
             {
                 int num = Main.underworldBG[layerTextureIndex];
                 var assets = new Asset<Texture2D>[TextureAssets.Underworld.Length];
@@ -643,7 +562,7 @@ namespace TheDepths
         {
             orig.Invoke(self);
             bool result = false;
-            if (TheDepthsWorldGen.InDepths)
+            if (Worldgen.TheDepthsWorldGen.InDepths)
             {
                 result = false;
             }
@@ -654,7 +573,7 @@ namespace TheDepths
         #region DepthsSilverfallLightRemover
         private void On_WaterfallManager_AddLight(On_WaterfallManager.orig_AddLight orig, int waterfallType, int x, int y)
         {
-            if (TheDepthsWorldGen.InDepths)
+            if (Worldgen.TheDepthsWorldGen.InDepths)
             {
             }
             else
@@ -675,7 +594,7 @@ namespace TheDepths
         private void On_Liquid_GetLiquidMergeTypes(On_Liquid.orig_GetLiquidMergeTypes orig, int thisLiquidType, out int liquidMergeTileType, out int liquidMergeType, bool waterNearby, bool lavaNearby, bool honeyNearby, bool shimmerNearby)
         {
             orig.Invoke(thisLiquidType, out liquidMergeTileType, out liquidMergeType, waterNearby, lavaNearby, honeyNearby, shimmerNearby);
-            if (TheDepthsWorldGen.InDepths)
+            if (Worldgen.TheDepthsWorldGen.InDepths)
             {
                 liquidMergeTileType = ModContent.TileType<Tiles.Quartz>();
                 liquidMergeType = thisLiquidType;
@@ -751,7 +670,7 @@ namespace TheDepths
         private void On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects(On_WaterfallManager.orig_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects orig, WaterfallManager self, int waterfallType, int x, int y, float opacity, Vector2 position, Rectangle sourceRect, Color color, SpriteEffects effects)
         {
             orig.Invoke(self, waterfallType, x, y, opacity, position, sourceRect, color, effects);
-            if (TheDepthsWorldGen.InDepths)
+            if (Worldgen.TheDepthsWorldGen.InDepths)
             {
                 if (waterfallType == 1)
                 {
@@ -765,7 +684,7 @@ namespace TheDepths
         private int Dust_NewDust(Terraria.On_Dust.orig_NewDust orig, Vector2 Position, int Width, int Height, int Type, float SpeedX, float SpeedY, int Alpha, Color newColor, float Scale)
         {
             int index = orig.Invoke(Position, Width, Height, Type, SpeedX, SpeedY, Alpha, newColor, Scale);
-            if (Type == DustID.Lava && TheDepthsWorldGen.InDepths)
+            if (Type == DustID.Lava && Worldgen.TheDepthsWorldGen.InDepths)
             {
                 Main.dust[index].active = false;
             }
@@ -789,7 +708,7 @@ namespace TheDepths
         private void TileLightScanner_ApplyHellLight(Terraria.Graphics.Light.On_TileLightScanner.orig_ApplyHellLight orig, TileLightScanner self, Tile tile, int x, int y, ref Vector3 lightColor)
         {
             orig.Invoke(self, tile, x, y, ref lightColor);
-            if (TheDepthsWorldGen.InDepths && ModContent.GetInstance<TheDepthsClientConfig>().DepthsLightingConfig)
+            if (Worldgen.TheDepthsWorldGen.InDepths && ModContent.GetInstance<TheDepthsClientConfig>().DepthsLightingConfig)
             {
                 if ((!tile.HasTile || !Main.tileNoSunLight[tile.TileType] || ((tile.Slope != 0 || tile.IsHalfBlock) && Main.tile[x, y - 1].LiquidAmount == 0 && Main.tile[x, y + 1].LiquidAmount == 0 && Main.tile[x - 1, y].LiquidAmount == 0 && Main.tile[x + 1, y].LiquidAmount == 0)) && (Main.wallLight[tile.WallType] || tile.WallType == 73 || tile.WallType == 227) && tile.LiquidAmount < 200 && (!tile.IsHalfBlock || Main.tile[x, y - 1].LiquidAmount < 200))
                 {
@@ -808,7 +727,7 @@ namespace TheDepths
         private void On_TileLightScanner_ApplyLiquidLight(On_TileLightScanner.orig_ApplyLiquidLight orig, TileLightScanner self, Tile tile, ref Vector3 lightColor)
         {
             orig.Invoke(self, tile, ref lightColor);
-            if (tile.LiquidType == 1 && TheDepthsWorldGen.InDepths)
+            if (tile.LiquidType == 1 && Worldgen.TheDepthsWorldGen.InDepths)
                 lightColor = Vector3.Zero;
         }
         #endregion
@@ -825,7 +744,7 @@ namespace TheDepths
 
                 c.EmitDelegate((bool useHeatDistortion) =>
                 {
-                    if (TheDepthsWorldGen.depthsorHell)
+                    if (Worldgen.TheDepthsWorldGen.depthsorHell)
                     {
                         return false;
                     }
@@ -861,7 +780,7 @@ namespace TheDepths
                 c.Emit(OpCodes.Ldloca_S, (byte)tile);
                 c.EmitDelegate((byte num, ref Tile liqTile) =>
                 {
-                    if (TheDepthsWorldGen.depthsorHell && liqTile.LiquidType == LiquidID.Water /*&& ModContent.GetInstance<TheDepthsServerConfig>().DepthsNoWaterVapor*/)
+                    if (Worldgen.TheDepthsWorldGen.depthsorHell && liqTile.LiquidType == LiquidID.Water /*&& ModContent.GetInstance<TheDepthsServerConfig>().DepthsNoWaterVapor*/)
                     {
                         return (byte)0;
                     }
@@ -889,7 +808,7 @@ namespace TheDepths
             c.Emit(OpCodes.Ldloc, 0);
             c.EmitDelegate<Func<Asset<Texture2D>, int, Asset<Texture2D>>>((asset, index) =>
             {
-                if (TheDepthsWorldGen.depthsorHell)
+                if (Worldgen.TheDepthsWorldGen.depthsorHell)
                     return TheDepths.texture[index];
                 return asset;
             });

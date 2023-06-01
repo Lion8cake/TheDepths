@@ -28,13 +28,13 @@ namespace TheDepths.Projectiles
 			}
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
-				if (TheDepthsWorldGen.depthsorHell)
+				if (Worldgen.TheDepthsWorldGen.depthsorHell)
 				{
-					TheDepthsWorldGen.depthsorHell = false;
+					Worldgen.TheDepthsWorldGen.depthsorHell = false;
 				}
 				else
 				{
-					TheDepthsWorldGen.depthsorHell = true;
+					Worldgen.TheDepthsWorldGen.depthsorHell = true;
 				}
 				NetMessage.SendData(MessageID.WorldData);
 			}

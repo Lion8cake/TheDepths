@@ -12,6 +12,7 @@ using TheDepths.Items.Banners;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;
 using TheDepths.Dusts;
+using Terraria.GameContent.ItemDropRules;
 
 namespace TheDepths.NPCs
 {
@@ -39,6 +40,13 @@ namespace TheDepths.NPCs
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<ShadowSlimeBanner>();
 			SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
+			if (Main.remixWorld)
+			{
+				NPC.damage = 7;
+				NPC.defense = 2;
+				NPC.lifeMax = 25;
+				NPC.value = 25f;
+			}
 		}
 
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -54,9 +62,15 @@ namespace TheDepths.NPCs
     		target.AddBuff(BuffID.Darkness, 180);
 		}
 
+		public override void ModifyNPCLoot(NPCLoot npcLoot)
+		{
+			npcLoot.Add(ItemDropRule.ByCondition(Condition.RemixWorld.ToDropCondition(ShowItemDropInUI.Always), ItemID.Gel, 2, 1, 2));
+			npcLoot.Add(ItemDropRule.ByCondition(Condition.RemixWorld.ToDropCondition(ShowItemDropInUI.Always), ItemID.SlimeStaff, 8000, 1));
+		}
+
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (spawnInfo.Player.ZoneUnderworldHeight && TheDepthsWorldGen.depthsorHell)
+			if (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths)
 			{
 				return 1.75f;
 			}

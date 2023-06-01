@@ -28,7 +28,7 @@ namespace TheDepths.NPCs
 
 		public override void PostAI(NPC npc)
 		{
-			if (TheDepthsWorldGen.InDepths && Collision.LavaCollision(npc.position, npc.width, npc.height))
+			if (Worldgen.TheDepthsWorldGen.InDepths && Collision.LavaCollision(npc.position, npc.width, npc.height))
 			{
 				npc.lavaImmune = true;
 				npc.buffImmune[BuffID.OnFire] = true;
@@ -40,7 +40,7 @@ namespace TheDepths.NPCs
 					npc.AddBuff(ModContent.BuffType<Buffs.MercuryBoiling>(), 60 * 7, false);
 				}
 			}
-			if (TheDepthsWorldGen.InDepths && !Collision.LavaCollision(npc.position, npc.width, npc.height))
+			if (Worldgen.TheDepthsWorldGen.InDepths && !Collision.LavaCollision(npc.position, npc.width, npc.height))
 			{
 				QuicksilverTimer--;
 				if (QuicksilverTimer <= 0)
@@ -48,7 +48,7 @@ namespace TheDepths.NPCs
 					QuicksilverTimer = 0;
 				}
 			}
-			if (!TheDepthsWorldGen.InDepths && Collision.LavaCollision(npc.position, npc.width, npc.height) && npc.buffImmune[ModContent.BuffType<Buffs.MercuryBoiling>()] == false)
+			if (!Worldgen.TheDepthsWorldGen.InDepths && Collision.LavaCollision(npc.position, npc.width, npc.height) && npc.buffImmune[ModContent.BuffType<Buffs.MercuryBoiling>()] == false)
 			{
 				npc.lavaImmune = false;
 			}
@@ -141,7 +141,7 @@ namespace TheDepths.NPCs
 
         public override void ModifyShop(NPCShop shop)
 		{
-			var depthsWorld = new Condition("Mods.TheDepths.DepthsBiome", () => TheDepthsWorldGen.InDepths);
+			var depthsWorld = new Condition("Mods.TheDepths.DepthsBiome", () => Worldgen.TheDepthsWorldGen.InDepths);
 			if (shop.NpcType == NPCID.Clothier)
 			{
 				shop.InsertAfter(ItemID.PlumbersShirt, ModContent.ItemType<Items.Armor.PurplePlumbersShirt>(), Condition.MoonPhaseFull, depthsWorld);

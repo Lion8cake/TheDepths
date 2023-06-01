@@ -23,15 +23,15 @@ public class DepthsBiome : ModBiome
 
     public override bool IsBiomeActive(Player player)
     {
-        if (Main.drunkWorld && TheDepthsWorldGen.DrunkDepthsLeft)
+        if (Main.drunkWorld && Worldgen.TheDepthsWorldGen.DrunkDepthsLeft)
         {
             return Math.Abs(player.position.ToTileCoordinates().X) < Main.maxTilesX / 2 && Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210;
         }
-        else if (Main.drunkWorld && TheDepthsWorldGen.DrunkDepthsRight)
+        else if (Main.drunkWorld && Worldgen.TheDepthsWorldGen.DrunkDepthsRight)
         {
             return Math.Abs(player.position.ToTileCoordinates().X) > Main.maxTilesX / 2 && Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210;
         }
 
-        return Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210 && TheDepthsWorldGen.depthsorHell;
+        return Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210 && Worldgen.TheDepthsWorldGen.depthsorHell;
     }
 }

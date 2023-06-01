@@ -15,7 +15,7 @@ namespace TheDepths.NPCs
     {
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<DepthsBiome>()) || TheDepthsWorldGen.InDepths)
+            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<DepthsBiome>()) || Worldgen.TheDepthsWorldGen.InDepths)
             {
                 pool.Remove(NPCID.Hellbat);
                 pool.Remove(NPCID.LavaSlime);
@@ -103,6 +103,54 @@ namespace TheDepths.NPCs
         }
         #endregion
 
+        #region DepthsBiomeHardmodeDropRuleNoRemix
+        public class DepthsBiomeHardmodeDropRuleNoRemix : IItemDropRuleCondition, IProvideItemConditionDescription
+        {
+            public bool CanDrop(DropAttemptInfo info)
+            {
+                if (Conditions.SoulOfWhateverConditionCanDrop(info))
+                {
+                    return info.player.InModBiome(ModContent.GetInstance<DepthsBiome>()) && Main.hardMode && !Main.remixWorld;
+                }
+                return false;
+            }
+
+            public bool CanShowItemDropInUI()
+            {
+                return false;
+            }
+
+            public string GetConditionDescription()
+            {
+                return "Drops in the Depths in Hardmode";
+            }
+        }
+        #endregion
+
+        #region DepthsBiomeHardmodeDropRuleRemix
+        public class DepthsBiomeHardmodeDropRuleRemix : IItemDropRuleCondition, IProvideItemConditionDescription
+        {
+            public bool CanDrop(DropAttemptInfo info)
+            {
+                if (Conditions.SoulOfWhateverConditionCanDrop(info))
+                {
+                    return info.player.InModBiome(ModContent.GetInstance<DepthsBiome>()) && Main.hardMode && Main.remixWorld;
+                }
+                return false;
+            }
+
+            public bool CanShowItemDropInUI()
+            {
+                return false;
+            }
+
+            public string GetConditionDescription()
+            {
+                return "Drops in the Depths in Hardmode in the Remix seed";
+            }
+        }
+        #endregion
+
         #region UnderworldHardmodeDropRule
         public class UnderworldHardmodeDropRule : IItemDropRuleCondition, IProvideItemConditionDescription
         {
@@ -155,7 +203,8 @@ namespace TheDepths.NPCs
         {
             globalLoot.Add(ItemDropRule.ByCondition(new DepthsBiomeHardmodeDropRule(), ModContent.ItemType<LivingFog>(), 45, 20, 50));
             globalLoot.Add(ItemDropRule.ByCondition(new DepthsBiomeDropRule(), ModContent.ItemType<RubyRelic>(), 50));
-            globalLoot.Add(ItemDropRule.ByCondition(new DepthsBiomeHardmodeDropRule(), ModContent.ItemType<BlueSphere>(), 400));
+            globalLoot.Add(ItemDropRule.ByCondition(new DepthsBiomeHardmodeDropRuleNoRemix(), ModContent.ItemType<BlueSphere>(), 400));
+            globalLoot.Add(ItemDropRule.ByCondition(new DepthsBiomeHardmodeDropRuleRemix(), ModContent.ItemType<WhiteLightning>(), 400));
 
             globalLoot.RemoveWhere(
             rule => rule is ItemDropWithConditionRule drop

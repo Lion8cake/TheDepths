@@ -35,7 +35,7 @@ namespace TheDepths
 
         /*public override void PreUpdateWorld()
         {
-            //if (TheDepthsWorldGen.InDepths)
+            //if (Worldgen.TheDepthsWorldGen.InDepths)
             //{
                 for (int i = 0; i < TileLoader.TileCount; i++)
                 {
@@ -59,7 +59,7 @@ namespace TheDepths
 
                 if (recipe.HasCondition(Condition.NearLava))
                 {
-                    recipe.AddCondition(Language.GetOrRegister(""), () => TheDepthsWorldGen.InDepths);
+                    recipe.AddCondition(Language.GetOrRegister(""), () => Worldgen.TheDepthsWorldGen.InDepths);
                 }
             }
         }

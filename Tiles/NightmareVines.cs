@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,8 +15,10 @@ namespace TheDepths.Tiles
             Main.tileLavaDeath[Type] = true;
             Main.tileNoFail[Type] = true;
             Main.tileNoAttach[Type] = true;
+            TileID.Sets.IsVine[Type] = true;
             DustType = ModContent.DustType<NightDust>();
             HitSound = SoundID.Grass;
+            AddMapEntry(new Color(44, 25, 96));
         }
 
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)

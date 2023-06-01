@@ -1,5 +1,5 @@
-displayName = The Depths (Hell Alternative)
+displayName = The Depths (Hell Alternative) (pre-relase)
 author = Lion8cake & Snickerbobble
-version = 0.6.0
+version = 0.5.2.61
 includeSource = true
 includePDB = true

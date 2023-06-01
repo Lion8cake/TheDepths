@@ -55,7 +55,7 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != NetmodeID.MultiplayerClient && !TheDepthsWorldGen.InDepths)
+			if (Main.netMode != NetmodeID.MultiplayerClient && !Worldgen.TheDepthsWorldGen.InDepths)
 			{
 				Point pt3 = projectile.Center.ToTileCoordinates();
 				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);
@@ -106,7 +106,7 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != NetmodeID.MultiplayerClient && !TheDepthsWorldGen.InDepths)
+			if (Main.netMode != NetmodeID.MultiplayerClient && !Worldgen.TheDepthsWorldGen.InDepths)
 			{
 				Point pt3 = projectile.Center.ToTileCoordinates();
 				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);
@@ -157,7 +157,7 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != NetmodeID.MultiplayerClient && !TheDepthsWorldGen.InDepths)
+			if (Main.netMode != NetmodeID.MultiplayerClient && !Worldgen.TheDepthsWorldGen.InDepths)
 			{
 				Point pt3 = projectile.Center.ToTileCoordinates();
 				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);
@@ -208,7 +208,7 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != NetmodeID.MultiplayerClient && !TheDepthsWorldGen.InDepths)
+			if (Main.netMode != NetmodeID.MultiplayerClient && !Worldgen.TheDepthsWorldGen.InDepths)
 			{
 				Point pt3 = projectile.Center.ToTileCoordinates();
 				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);
@@ -259,7 +259,7 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != NetmodeID.MultiplayerClient && !TheDepthsWorldGen.InDepths)
+			if (Main.netMode != NetmodeID.MultiplayerClient && !Worldgen.TheDepthsWorldGen.InDepths)
 			{
 				Point pt3 = projectile.Center.ToTileCoordinates();
 				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);

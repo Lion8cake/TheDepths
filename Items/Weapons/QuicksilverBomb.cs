@@ -32,7 +32,7 @@ namespace TheDepths.Items.Weapons
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.DryBomb);
-			recipe.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), () => TheDepthsWorldGen.depthsorHell && Main.LocalPlayer.adjLava);
+			recipe.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), () => Worldgen.TheDepthsWorldGen.depthsorHell && Main.LocalPlayer.adjLava);
 			recipe.Register();
 		}
 	}

@@ -58,7 +58,7 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != 1 && TheDepthsWorldGen.depthsorHell == false)
+			if (Main.netMode != 1 && Worldgen.TheDepthsWorldGen.depthsorHell == false)
 			{
 				Point pt3 = projectile.Center.ToTileCoordinates();
 				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);
@@ -108,7 +108,7 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != 1 && TheDepthsWorldGen.depthsorHell == false)
+			if (Main.netMode != 1 && Worldgen.TheDepthsWorldGen.depthsorHell == false)
 			{
 				Point pt3 = projectile.Center.ToTileCoordinates();
 				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);
@@ -158,7 +158,7 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != 1 && TheDepthsWorldGen.depthsorHell == false)
+			if (Main.netMode != 1 && Worldgen.TheDepthsWorldGen.depthsorHell == false)
 			{
 				Point pt3 = projectile.Center.ToTileCoordinates();
 				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);
@@ -208,7 +208,7 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != 1 && TheDepthsWorldGen.depthsorHell == false)
+			if (Main.netMode != 1 && Worldgen.TheDepthsWorldGen.depthsorHell == false)
 			{
 				Point pt3 = projectile.Center.ToTileCoordinates();
 				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);
@@ -258,7 +258,7 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != 1 && TheDepthsWorldGen.depthsorHell == false)
+			if (Main.netMode != 1 && Worldgen.TheDepthsWorldGen.depthsorHell == false)
 			{
 				Point pt3 = projectile.Center.ToTileCoordinates();
 				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);

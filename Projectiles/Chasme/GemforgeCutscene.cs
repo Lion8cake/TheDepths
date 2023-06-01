@@ -12,6 +12,7 @@ using TheDepths.Buffs;
 using TheDepths.Tiles;
 using TheDepths.NPCs;
 using Terraria.Localization;
+using Terraria.Chat;
 
 namespace TheDepths.Projectiles.Chasme
 {
@@ -94,18 +95,24 @@ namespace TheDepths.Projectiles.Chasme
 				{
 					if (Projectile.Center.X < (Main.maxTilesX * 16) / 2 && Main.netMode != NetmodeID.MultiplayerClient)
 					{
-						Main.NewText("[c/AF4BFF:" + Language.GetTextValue("Mods.TheDepths.common.ChasSpawn") + "]");
 						NPC.NewNPC(new EntitySource_Misc(""), (int)(Projectile.Center.X - 1500f), (int)Projectile.Center.Y, ModContent.NPCType<NPCs.Chasme.ChasmeHeart>(), 0);
 					}
 					else if (Projectile.Center.X > (Main.maxTilesX * 16) / 2 && Main.netMode != NetmodeID.MultiplayerClient)
 					{
-						Main.NewText("[c/AF4BFF:" + Language.GetTextValue("Mods.TheDepths.common.ChasSpawn") + "]");
 						NPC.NewNPC(new EntitySource_Misc(""), (int)(Projectile.Center.X + 1500f), (int)Projectile.Center.Y, ModContent.NPCType<NPCs.Chasme.ChasmeHeart>(), 0);
 					}
 					else
 					{
 						NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: ModContent.NPCType<NPCs.Chasme.ChasmeHeart>());
 					}
+				}
+				if (Main.netMode == 0)
+				{
+					Main.NewText(Language.GetTextValue("Announcement.HasAwoken", Language.GetTextValue("Mods.TheDepths.NPCs.ChasmeBody.DisplayName")), 175, 75);
+				}
+				else if (Main.netMode == 2)
+				{
+					ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", Language.GetTextValue("Mods.TheDepths.NPCs.ChasmeBody.DisplayName")), new Color(175, 75, 255));
 				}
 			}
 			if (Projectile.timeLeft == 140)

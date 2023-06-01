@@ -12,7 +12,6 @@ Mods: {
 		common: {
 			Banner: " Banner"
 			Banner2: Nearby players get a bonus against:
-			ChasSpawn: Chasme has awoken!
 		}
 
 		SetBonus: {
@@ -105,7 +104,7 @@ Mods: {
 		PlayerDeathReason: {
 			Gemforge: {
 				0: "{0} tried to summon a cult in pure light"
-				1: "{0} moved the gemforge away from its home"
+				1: "{0} moved a gemforge away from its home"
 				2: "{0} tried to burned a relic on the surface"
 			}
 		}
@@ -162,6 +161,22 @@ Mods: {
 			NightwoodTable.MapEntry: Nightwood Table
 			NightwoodToilet.MapEntry: Nightwood Toilet
 			NightwoodWorkbench.MapEntry: Nightwood Workbench
+			QuartzToilet.MapEntry: Quartz Toilet
+			QuartzSofa.MapEntry: Quartz Sofa
+			QuartzSink.MapEntry: Quartz Sink
+			QuartzPiano.MapEntry: Quartz Piano
+			QuartzLantern.MapEntry: Quartz Lantern
+			QuartzLamp.MapEntry: Quartz Lamp
+			QuartzDresser.MapEntry: Quartz Dresser
+			QuartzClock.MapEntry: Quartz Clock
+			QuartzChest.MapEntry: Quartz Chest
+			QuartzChandelier.MapEntry: Quartz Chandelier
+			QuartzCandle.MapEntry: Quartz Candle
+			QuartzCandelabra.MapEntry: Quartz Candelabra
+			QuartzBookcase.MapEntry: Quartz Bookcase
+			QuartzBed.MapEntry: Quartz Bed
+			QuartzBath.MapEntry: Quartz Bath
+			DepthsVanityBanners.MapEntry: Depths Vanity Banners
 		}
 
 		Buffs: {
@@ -229,6 +244,8 @@ Mods: {
 				DisplayName: Mercury Contagion
 				Description: Mods.TheDepths.Buffs.MercuryContagion.Description
 			}
+
+			PhantomFirecartBuff.DisplayName: Minecart
 		}
 
 		Items: {
@@ -1169,6 +1186,146 @@ Mods: {
 				DisplayName: Chasme Relic
 				Tooltip: ""
 			}
+
+			PhantomFirecart: {
+				DisplayName: Geomancer's Mining cart
+				Tooltip: Grants 4 seconds of extra quicksilver immunity
+			}
+
+			QuartzCandelabra: {
+				Tooltip: ""
+				DisplayName: Quartz Candelabra
+			}
+
+			QuartzBookcase: {
+				Tooltip: ""
+				DisplayName: Quartz Bookcase
+			}
+
+			QuartzBed: {
+				Tooltip: ""
+				DisplayName: Quartz Bed
+			}
+
+			QuartzBath: {
+				Tooltip: ""
+				DisplayName: Quartz Bath
+			}
+
+			QuartzCandle: {
+				DisplayName: Quartz Candle
+				Tooltip: ""
+			}
+
+			QuartzChandelier: {
+				DisplayName: Quartz Chandelier
+				Tooltip: ""
+			}
+
+			QuartzChest: {
+				DisplayName: Quartz Chest
+				Tooltip: ""
+			}
+
+			QuartzClock: {
+				DisplayName: Quartz Clock
+				Tooltip: ""
+			}
+
+			QuartzDresser: {
+				DisplayName: Quartz Dresser
+				Tooltip: ""
+			}
+
+			QuartzLamp: {
+				DisplayName: Quartz Lamp
+				Tooltip: ""
+			}
+
+			QuartzLantern: {
+				DisplayName: Quartz Lantern
+				Tooltip: ""
+			}
+
+			QuartzPiano: {
+				DisplayName: Quartz Piano
+				Tooltip: ""
+			}
+
+			QuartzSink: {
+				DisplayName: Quartz Sink
+				Tooltip: ""
+			}
+
+			QuartzSofa: {
+				DisplayName: Quartz Sofa
+				Tooltip: ""
+			}
+
+			QuartzToilet: {
+				DisplayName: Quartz Toilet
+				Tooltip: ""
+			}
+
+			QuartzVase: {
+				DisplayName: Quartz Vase
+				Tooltip: ""
+			}
+
+			GemforgeBanner: {
+				DisplayName: Gemforge Banner
+				Tooltip: ""
+			}
+
+			GlowingQuicksilverBanner: {
+				DisplayName: Glowing Quicksilver Banner
+				Tooltip: ""
+			}
+
+			LostHeartBanner: {
+				DisplayName: Lost Heart Banner
+				Tooltip: ""
+			}
+
+			QuartzStackBanner: {
+				DisplayName: Quartz Stack Banner
+				Tooltip: ""
+			}
+
+			RackedCollectionBanner: {
+				DisplayName: Racked Collection Banner
+				Tooltip: ""
+			}
+
+			RelicBanner: {
+				DisplayName: Relic Banner
+				Tooltip: ""
+			}
+
+			SwordOfTheCavesBanner: {
+				DisplayName: Sword Of The Caves Banner
+				Tooltip: ""
+			}
+
+			NightwoodFence: {
+				DisplayName: Nightwood Fence
+				Tooltip: ""
+			}
+
+			NightwoodSword: {
+				Tooltip: ""
+				DisplayName: Nightwood Sword
+			}
+
+			NightwoodHammer: {
+				DisplayName: Nightwood Hammer
+				Tooltip: ""
+			}
+
+			NightwoodBow: {
+				Tooltip: ""
+				DisplayName: Nightwood Bow
+			}
 		}
 
 		NPCs: {
@@ -1293,6 +1450,28 @@ Mods: {
 		}
 
 		DepthsBiome: Mods.TheDepths.DepthsBiome
+
+		Configs: {
+			TheDepthsClientConfig: {
+				DisplayName: The Depths Client Config
+				Headers.DepthsClientsideConfig: Depths Clientside Config Header
+
+				DepthsLightingConfig: {
+					Label: Enables The Depths tile lighting
+					Tooltip: Enables the Depths tile lighting making the depths require torches to see where you are going
+				}
+
+				SlateConfig: {
+					Label: Renames Shale to Slate
+					Tooltip: Renames Shale to Slate, Requires the mod to reload for the config to work
+				}
+
+				DepthsIconsConfig: {
+					Label: "[EXPERIMENTAL], Depths world icon"
+					Tooltip: Enables the depths and underworld icons, NOTE: due to current limitations they are based off if the world evil type not core type
+				}
+			}
+		}
 	}
 }
 

@@ -16,7 +16,7 @@ namespace TheDepths.Items
 
 		public override bool IsQuestFish() => true;
 
-		public override bool IsAnglerQuestAvailable() => TheDepthsWorldGen.depthsorHell;
+		public override bool IsAnglerQuestAvailable() => Worldgen.TheDepthsWorldGen.depthsorHell;
 
 		public override void AnglerQuestChat(ref string description, ref string catchLocation) {
 			description = Language.GetTextValue("Mods.TheDepths.Quest.Description.Relicarp");

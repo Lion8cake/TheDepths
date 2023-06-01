@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -30,12 +31,58 @@ namespace TheDepths.Tiles
 			DustType = 0;
 		}
 
-		public override void RandomUpdate(int i, int j)
+		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
-			Gore.NewGore(new EntitySource_Misc(""), new Vector2((i - Main.tile[i, j].TileFrameX / 18) * 16, j - Main.tile[i, j].TileFrameY / 18 * 16), Vector2.Zero, ModContent.Find<ModGore>("TheDepths/QuicksilverDroplet").Type, 1f);
+			num = 0;
 		}
 
-        public override bool CanDrop(int i, int j)
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			EmitLiquidDrops(i, j);
+
+			return base.PreDraw(i, j, spriteBatch);
+		}
+
+		public void EmitLiquidDrops(int i, int j) //This code was made by Diverman Sam and possibly others on the thorium dev team
+		{
+			Tile tile = Main.tile[i, j];
+			int x = i - tile.TileFrameX / 18;
+			int y = j - tile.TileFrameY / 18;
+			int spawnX = x * 16;
+			int spawnY = y * 16;
+
+			//Below is vanilla code for spawning droplets
+			int chanceDenominator = 60;
+			if (tile.LiquidAmount != 0 || !Main.rand.NextBool(chanceDenominator))
+			{
+				return;
+			}
+
+			Rectangle thisGoreAtParticularFrame = new Rectangle(x * 16, y * 16, 16, 16);
+			thisGoreAtParticularFrame.X -= 34;
+			thisGoreAtParticularFrame.Width += 68;
+			thisGoreAtParticularFrame.Y -= 100;
+			thisGoreAtParticularFrame.Height = 400;
+			int goreType = Mod.Find<ModGore>("QuicksilverDroplet").Type;
+			for (int k = 0; k < Main.maxGore; k++)
+			{
+				Gore otherGore = Main.gore[k];
+				if (otherGore.active && otherGore.type == goreType)
+				{
+					Rectangle otherGoreRect = new Rectangle((int)otherGore.position.X, (int)otherGore.position.Y, 16, 16);
+					if (thisGoreAtParticularFrame.Intersects(otherGoreRect))
+					{
+						//Check if no other droplets exist in the same tile
+						return;
+					}
+				}
+			}
+
+			var source = WorldGen.GetItemSource_FromTileBreak(x, y);
+			Gore.NewGoreDirect(source, new Vector2(spawnX, spawnY), Vector2.Zero, goreType, 1f).velocity *= 0f;
+		}
+
+		public override bool CanDrop(int i, int j)
         {
 			return false;
         }
