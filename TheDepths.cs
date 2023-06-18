@@ -38,6 +38,8 @@ using TheDepths.Biomes;
 using Terraria.GameContent.Tile_Entities;
 using static Terraria.WaterfallManager;
 using Terraria.GameContent.Items;
+using System.IO;
+using Terraria.ModLoader.Config;
 
 namespace TheDepths
 {
@@ -49,7 +51,6 @@ namespace TheDepths
 
         public override void Load()
         {
-            //ItemVariants.AddVariant(ModContent.ItemType<NightwoodSword>(), ItemVariants.WeakerVariant, Condition.RemixWorld);
             mod = this;
             for (int i = 0; i < texture.Length; i++)
                 texture[i] = ModContent.Request<Texture2D>("TheDepths/Backgrounds/DepthsUnderworldBG_" + i);
@@ -191,114 +192,223 @@ namespace TheDepths
             UIList WorldList = (UIList)typeof(UIWorldSelect).GetField("_worldList", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
             foreach (var item in WorldList)
             {
-                if (item is UIWorldListItem && ModContent.GetInstance<TheDepthsClientConfig>().DepthsIconsConfig)
+                if (item is UIWorldListItem)
                 {
                     UIElement WorldIcon = (UIElement)typeof(UIWorldListItem).GetField("_worldIcon", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(item);
                     WorldFileData Data = (WorldFileData)typeof(AWorldListItem).GetField("_data", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(item);
-                    if (Data.HasCrimson && !Data.RemixWorld && !Data.DrunkWorld && !Data.DefeatedMoonlord)
+
+                    var path = Path.ChangeExtension(Data.Path, ".twld");
+
+                    TheDepthsClientConfig config = ModContent.GetInstance<TheDepthsClientConfig>();
+                    Dictionary<string, TheDepthsClientConfig.WorldDataValues> tempDict = config.GetWorldData();
+
+                    if (!tempDict.ContainsKey(path))
+                    {
+                        byte[] buf = FileUtilities.ReadAllBytes(path, Data.IsCloudSave);
+                        var stream = new MemoryStream(buf);
+                        var tag = TagIO.FromStream(stream);
+                        bool containsMod = false;
+
+                        if (tag.ContainsKey("modData"))
+                        {
+                            foreach (TagCompound modDataTag in tag.GetList<TagCompound>("modData").Skip(2))
+                            {
+                                if (modDataTag.Get<string>("mod") == ModContent.GetInstance<TheDepthsClientConfig>().Mod.Name)
+                                {
+                                    TagCompound dataTag = modDataTag.Get<TagCompound>("data");
+                                    TheDepthsClientConfig.WorldDataValues worldData;
+
+                                    worldData.depths = dataTag.Get<bool>("IsDepths");
+                                    worldData.depthsLeft = dataTag.Get<bool>("DepthsIsOnTheLeft");
+                                    worldData.depthsRight = dataTag.Get<bool>("DepthsIsOnTheRight");
+                                    tempDict[path] = worldData;
+
+                                    containsMod = true;
+
+                                    break;
+                                }
+                            }
+
+                            if (!containsMod)
+                            {
+                                TheDepthsClientConfig.WorldDataValues worldData;
+
+                                worldData.depths = false;
+                                worldData.depthsLeft = false;
+                                worldData.depthsRight = false;
+                                tempDict[path] = worldData;
+                            }
+
+                            config.SetWorldData(tempDict);
+                            TheDepthsClientConfig.Save(config);
+                        }
+                    }
+
+                    #region RegularSeedIcon
+                    if (tempDict[path].depths && !Data.RemixWorld && !Data.DrunkWorld && !Data.DefeatedMoonlord)
                     {
                         UIElement worldIcon = WorldIcon;
                         UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepths"))
                         {
-                            HAlign = 0.5f,
-                            VAlign = 0.5f,
-                            Top = new StyleDimension(-39f, 0f),
-                            Left = new StyleDimension(-36f, 0f),
+                            Top = new StyleDimension(-10f, 0f),
+                            Left = new StyleDimension(-6f, 0f),
                             IgnoresMouseInteraction = true
                         };
                         worldIcon.Append(element);
                     }
-                    if (Data.HasCrimson && !Data.RemixWorld && !Data.DrunkWorld && Data.DefeatedMoonlord)
+                    if (tempDict[path].depths && !Data.RemixWorld && !Data.DrunkWorld && Data.DefeatedMoonlord)
                     {
                         UIElement worldIcon = WorldIcon;
                         UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepths"))
                         {
-                            HAlign = 0.5f,
-                            VAlign = 0.5f,
-                            Top = new StyleDimension(-39f, 0f),
-                            Left = new StyleDimension(-37f, 0f),
+                            Top = new StyleDimension(-10f, 0f),
+                            Left = new StyleDimension(-7f, 0f),
                             IgnoresMouseInteraction = true
                         };
                         worldIcon.Append(element);
                     }
-                    else if (Data.HasCorruption && !Data.DrunkWorld && !Data.DefeatedMoonlord)
+                    else if (!tempDict[path].depths && !Data.DrunkWorld && !Data.DefeatedMoonlord)
                     {
                         UIElement worldIcon = WorldIcon;
                         UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconUnderworld"))
                         {
-                            HAlign = 0.5f,
-                            VAlign = 0.5f,
-                            Top = new StyleDimension(-39f, 0f),
-                            Left = new StyleDimension(-36f, 0f),
+                            Top = new StyleDimension(-10f, 0f),
+                            Left = new StyleDimension(-6f, 0f),
                             IgnoresMouseInteraction = true
                         };
                         worldIcon.Append(element);
                     }
-                    else if (Data.HasCorruption && !Data.DrunkWorld && Data.DefeatedMoonlord)
+                    else if (!tempDict[path].depths && !Data.DrunkWorld && Data.DefeatedMoonlord)
                     {
                         UIElement worldIcon = WorldIcon;
                         UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconUnderworld"))
                         {
-                            HAlign = 0.5f,
-                            VAlign = 0.5f,
-                            Top = new StyleDimension(-39f, 0f),
-                            Left = new StyleDimension(-37f, 0f),
+                            Top = new StyleDimension(-10f, 0f),
+                            Left = new StyleDimension(-7f, 0f),
                             IgnoresMouseInteraction = true
                         };
                         worldIcon.Append(element);
                     }
-                    else if (Data.DrunkWorld && !Data.DefeatedMoonlord)
+                    #endregion
+
+                    #region DrunkSeedIcon
+                    else if (Data.DrunkWorld && !Data.DefeatedMoonlord && (tempDict[path].depthsLeft && tempDict[path].depthsRight || !tempDict[path].depthsLeft && !tempDict[path].depthsRight))
                     {
                         UIElement worldIcon = WorldIcon;
                         UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunk"))
                         {
-                            HAlign = 0.5f,
-                            VAlign = 0.5f,
-                            Top = new StyleDimension(-39f, 0f),
-                            Left = new StyleDimension(-36f, 0f),
+                            Top = new StyleDimension(-10f, 0f),
+                            Left = new StyleDimension(-6f, 0f),
                             IgnoresMouseInteraction = true
                         };
                         worldIcon.Append(element);
                     }
-                    else if (Data.DrunkWorld && Data.DefeatedMoonlord)
+                    else if (Data.DrunkWorld && Data.DefeatedMoonlord && (tempDict[path].depthsLeft && tempDict[path].depthsRight || !tempDict[path].depthsLeft && !tempDict[path].depthsRight))
                     {
                         UIElement worldIcon = WorldIcon;
                         UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunk"))
                         {
-                            HAlign = 0.5f,
-                            VAlign = 0.5f,
-                            Top = new StyleDimension(-39f, 0f),
-                            Left = new StyleDimension(-37f, 0f),
+                            Top = new StyleDimension(-10f, 0f),
+                            Left = new StyleDimension(-7f, 0f),
                             IgnoresMouseInteraction = true
                         };
                         worldIcon.Append(element);
                     }
-                    else if (Data.HasCrimson && Data.RemixWorld && !Data.IsHardMode)
+
+                    else if (Data.DrunkWorld && !Data.DefeatedMoonlord && tempDict[path].depthsLeft && !tempDict[path].depthsRight)
+                    {
+                        UIElement worldIcon = WorldIcon;
+                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunkLeft"))
+                        {
+                            Top = new StyleDimension(-10f, 0f),
+                            Left = new StyleDimension(-6f, 0f),
+                            IgnoresMouseInteraction = true
+                        };
+                        worldIcon.Append(element);
+                    }
+                    else if (Data.DrunkWorld && Data.DefeatedMoonlord && tempDict[path].depthsLeft && !tempDict[path].depthsRight)
+                    {
+                        UIElement worldIcon = WorldIcon;
+                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunkLeft"))
+                        {
+                            Top = new StyleDimension(-10f, 0f),
+                            Left = new StyleDimension(-7f, 0f),
+                            IgnoresMouseInteraction = true
+                        };
+                        worldIcon.Append(element);
+                    }
+
+                    else if (Data.DrunkWorld && !Data.DefeatedMoonlord && !tempDict[path].depthsLeft && tempDict[path].depthsRight)
+                    {
+                        UIElement worldIcon = WorldIcon;
+                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunkRight"))
+                        {
+                            Top = new StyleDimension(-10f, 0f),
+                            Left = new StyleDimension(-6f, 0f),
+                            IgnoresMouseInteraction = true
+                        };
+                        worldIcon.Append(element);
+                    }
+                    else if (Data.DrunkWorld && Data.DefeatedMoonlord && !tempDict[path].depthsLeft && tempDict[path].depthsRight)
+                    {
+                        UIElement worldIcon = WorldIcon;
+                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunkRight"))
+                        {
+                            Top = new StyleDimension(-10f, 0f),
+                            Left = new StyleDimension(-7f, 0f),
+                            IgnoresMouseInteraction = true
+                        };
+                        worldIcon.Append(element);
+                    }
+
+                    #endregion
+
+                    #region RemixSeedIcon
+                    else if (tempDict[path].depths && Data.HasCrimson && Data.RemixWorld && !Data.IsHardMode)
                     {
                         UIElement worldIcon = WorldIcon;
                         UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepthsRemixCrimson"))
                         {
-                            HAlign = 0.5f,
-                            VAlign = 0.5f,
-                            Top = new StyleDimension(-39f, 0f),
-                            Left = new StyleDimension(-36f, 0f),
+                            Top = new StyleDimension(-10f, 0f),
+                            Left = new StyleDimension(-6f, 0f),
                             IgnoresMouseInteraction = true
                         };
                         worldIcon.Append(element);
                     }
-                    else if (Data.HasCrimson && Data.RemixWorld && Data.IsHardMode)
+                    else if (tempDict[path].depths && Data.HasCrimson && Data.RemixWorld && Data.IsHardMode)
                     {
                         UIElement worldIcon = WorldIcon;
                         UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepthsRemixCrimsonHallow"))
                         {
-                            HAlign = 0.5f,
-                            VAlign = 0.5f,
-                            Top = new StyleDimension(-39f, 0f),
-                            Left = new StyleDimension(-36f, 0f),
+                            Top = new StyleDimension(-10f, 0f),
+                            Left = new StyleDimension(-6f, 0f),
                             IgnoresMouseInteraction = true
                         };
                         worldIcon.Append(element);
                     }
+                    else if (tempDict[path].depths && Data.HasCorruption && Data.RemixWorld && !Data.IsHardMode)
+                    {
+                        UIElement worldIcon = WorldIcon;
+                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepthsRemixCorruption"))
+                        {
+                            Top = new StyleDimension(-10f, 0f),
+                            Left = new StyleDimension(-6f, 0f),
+                            IgnoresMouseInteraction = true
+                        };
+                        worldIcon.Append(element);
+                    }
+                    else if (tempDict[path].depths && Data.HasCorruption && Data.RemixWorld && Data.IsHardMode)
+                    {
+                        UIElement worldIcon = WorldIcon;
+                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepthsRemixCorruptionHallow"))
+                        {
+                            Top = new StyleDimension(-10f, 0f),
+                            Left = new StyleDimension(-6f, 0f),
+                            IgnoresMouseInteraction = true
+                        };
+                        worldIcon.Append(element);
+                    }
+                    #endregion
                 }
             }
         }

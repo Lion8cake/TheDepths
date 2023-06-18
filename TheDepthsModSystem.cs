@@ -17,21 +17,19 @@ using System.IO;
 using System.Text.Json;
 using Terraria.ModLoader.Config;
 using Terraria.Localization;
+using Terraria.GameContent.UI.Elements;
+using Terraria.UI;
+using Terraria.IO;
+using Newtonsoft.Json;
+using Terraria.ModLoader.IO;
+using TheDepths.Worldgen;
+using System.Linq;
 
 namespace TheDepths
 {
     public class TheDepthsModSystem : ModSystem
     {
         //public static bool NotLavaDestroyable;
-
-        public override void PostUpdateEverything()
-        {
-            /*string twld = Path.ChangeExtension(Main.worldPathName, ".twld");
-            if (File.ReadAllText(ConfigManager.ModConfigPath + "/AltLibrary_AltLibraryConfig.json").Contains(twld))
-            {
-                Main.NewText("Found World");
-            }*/
-        }
 
         /*public override void PreUpdateWorld()
         {
@@ -49,6 +47,106 @@ namespace TheDepths
             //        Main.tileLavaDeath[i] = true;
             //    }
             //}
+        }*/
+
+        public override void OnWorldLoad()
+        {
+            #region oldconfigreader
+            /*string twld = Path.ChangeExtension(Main.worldPathName, ".twld");
+            if (File.ReadAllText(ConfigManager.ModConfigPath + "/AltLibrary_AltLibraryConfig.json").Contains(twld.Replace(@"\", @"\\")))
+            {
+                int counter = 0;
+                string line;
+
+                // Read the file and display it line by line.
+                System.IO.StreamReader file = new System.IO.StreamReader(ConfigManager.ModConfigPath + "/AltLibrary_AltLibraryConfig.json");
+
+                while ((line = file.ReadLine()) != null)
+                {
+                    if (line.Contains(twld.Replace(@"\", @"\\")))
+                    {
+                        ModContent.GetInstance<TheDepths>().Logger.Debug(counter.ToString() + ": " + line);
+                    }
+                }
+
+                counter++;
+
+                /*TextReader tr = new StreamReader((ConfigManager.ModConfigPath + "/AltLibrary_AltLibraryConfig.json"));
+
+                //String SplitBy = "},";
+
+                String split2 = twld.Replace(@"\", @"\\");
+
+                // Skip first 5 lines of the text file?
+                String fullLog = tr.ReadToEnd();
+
+                //String[] sections = fullLog.Split(new string[] { SplitBy }, StringSplitOptions.None);
+
+                String[] sections2 = fullLog.Split(new string[] { split2 }, StringSplitOptions.None);
+
+                //String[] lines = sections.Skip(5).ToArray();
+
+                foreach (String r in sections2)
+                {
+                    ModContent.GetInstance<TheDepths>().Logger.Debug(r);
+                }
+
+                //foreach (String r in sections)
+                //{
+                //    ModContent.GetInstance<TheDepths>().Logger.Debug(r);
+                //    ModContent.GetInstance<TheDepths>().Logger.Debug("==================");
+                //}*/
+            //}
+            #endregion
+
+            //string twld = Path.ChangeExtension(Main.worldPathName, ".twld");
+
+            //var tmlFile = TagIO.FromStream(new MemoryStream(File.ReadAllBytes(twld))); // the whole twld file
+            //var modData = tmlFile.GetList<TagCompound>("modData"); // all mods' ModSystems
+            //var altLibSystemEntry = modData.Single(tag => tag.GetString("mod") == "AltLibrary" && tag.GetString("name") == "WorldBiomeManager").GetCompound("data"); // search specifically for altlib's system
+            //var altLibSystemData = altLibSystemEntry["AltLibrary:WorldHell: TheDepths/AltDepthsBiome"]; // the actual data stored in the system, the one passed to ModSystem.Load
+            // var altLibSystemData = altLibSystemEntry["data"]; // the actual data stored in the system, the one passed to ModSystem.Load
+            //var myEntry = altLibSystemData["AltLibrary:WorldHell: TheDepths/AltDepthsBiome"]; // your entry                                                                                            //var myEntry = altLibSystemData; // your entry
+
+
+            //if ((bool)altLibSystemData)
+            //{
+            //    ModContent.GetInstance<TheDepths>().Logger.Debug("Found Altlib world Tag: Converting world to newest version!");
+                //TheDepthsWorldGen.depthsorHell = true;
+                //TheDepthsWorldGen.HasBeenConvertedFrom143 = true;
+            //}
+        }
+
+        /*public override void PostUpdateEverything()
+        {
+            #region oldworldpathfinderlocator 
+            /*string twld = Path.ChangeExtension(Main.worldPathName, ".twld");
+            if (File.ReadAllText(ConfigManager.ModConfigPath + "/AltLibrary_AltLibraryConfig.json").Contains(twld.Replace(@"\", @"\\")))
+            {
+                
+                Main.NewText("Found World at: " + twld);
+            }
+            else
+            {
+                Main.NewText("Didn't find World at: " + twld);
+            }
+            #endregion
+
+            string twld = Path.ChangeExtension(Main.worldPathName, ".twld");
+
+            var tmlFile = TagIO.FromStream(new MemoryStream(File.ReadAllBytes(twld))); // the whole twld file
+            var modData = tmlFile.GetList<TagCompound>("modData"); // all mods' ModSystems
+            var altLibSystemEntry = modData.SingleOrDefault(tag => tag["mod"] == "AltLibrary" && tag["name"] == "WorldBiomeManager"); // search specifically for altlib's system
+            var altLibSystemData = altLibSystemEntry["AltLibrary:WorldHell: TheDepths/AltDepthsBiome"]; // the actual data stored in the system, the one passed to ModSystem.Load
+            //var myEntry = altLibSystemData; // your entry
+
+           
+            if ((bool)altLibSystemData)
+            {
+                ModContent.GetInstance<TheDepths>().Logger.Debug("Found Altlib world Tag: Converting world to newest version!");
+                //TheDepthsWorldGen.depthsorHell = true;
+                //TheDepthsWorldGen.HasBeenConvertedFrom143 = true;
+            }
         }*/
 
         public override void PostAddRecipes()

@@ -36,7 +36,6 @@ namespace TheDepths.Tiles
 
 			HitSound = SoundID.Tink;
 			MineResist = 2f;
-			MinPick = 65;
 		}
 		
 		public override bool CanExplode(int i, int j)

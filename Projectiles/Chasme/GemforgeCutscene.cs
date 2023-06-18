@@ -91,20 +91,14 @@ namespace TheDepths.Projectiles.Chasme
 				Geomancer.TheRelicMadeHimExplode = true;
 				Gemforge.RubyRelicIsOnForge = 1;
 				SoundEngine.PlaySound(SoundID.NPCDeath10, Projectile.position);
-				if (player.whoAmI == Main.myPlayer)
+
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
-					if (Projectile.Center.X < (Main.maxTilesX * 16) / 2 && Main.netMode != NetmodeID.MultiplayerClient)
-					{
-						NPC.NewNPC(new EntitySource_Misc(""), (int)(Projectile.Center.X - 1500f), (int)Projectile.Center.Y, ModContent.NPCType<NPCs.Chasme.ChasmeHeart>(), 0);
-					}
-					else if (Projectile.Center.X > (Main.maxTilesX * 16) / 2 && Main.netMode != NetmodeID.MultiplayerClient)
-					{
-						NPC.NewNPC(new EntitySource_Misc(""), (int)(Projectile.Center.X + 1500f), (int)Projectile.Center.Y, ModContent.NPCType<NPCs.Chasme.ChasmeHeart>(), 0);
-					}
-					else
-					{
-						NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: ModContent.NPCType<NPCs.Chasme.ChasmeHeart>());
-					}
+					NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<NPCs.Chasme.ChasmeHeart>());
+				}
+				else
+				{
+					NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: ModContent.NPCType<NPCs.Chasme.ChasmeHeart>());
 				}
 				if (Main.netMode == 0)
 				{
@@ -115,7 +109,7 @@ namespace TheDepths.Projectiles.Chasme
 					ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", Language.GetTextValue("Mods.TheDepths.NPCs.ChasmeBody.DisplayName")), new Color(175, 75, 255));
 				}
 			}
-			if (Projectile.timeLeft == 140)
+			if (Projectile.timeLeft == 140) 
             {
 				Geomancer.TheRelicMadeHimExplode = false;
 			}

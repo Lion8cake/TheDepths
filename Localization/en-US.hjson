@@ -21,6 +21,11 @@ Mods: {
 				3 Defence
 				Mercury cannot infect you
 				'''
+			NightwoodHelmet:
+				'''
+				Doubles duration of Mercury Footing
+				Halves the duration of Mercury Poisoning from Quicksilver
+				'''
 		}
 
 		Quest: {
@@ -106,6 +111,19 @@ Mods: {
 				0: "{0} tried to summon a cult in pure light"
 				1: "{0} moved a gemforge away from its home"
 				2: "{0} tried to burned a relic on the surface"
+			}
+
+			MercuryPoisoning: {
+				0: "{0} couldn't find a cure"
+				1: "{0} surcome to their illness"
+				2: "{0} drank a lightbulb"
+				3: "{0} licked a special rock"
+			}
+
+			ChasmeHead: {
+				0: "{0} was devoured by Chasme."
+				1: "{0} went down the hatch."
+				2: "{0} hit the spot."
 			}
 		}
 
@@ -1325,6 +1343,31 @@ Mods: {
 			NightwoodBow: {
 				Tooltip: ""
 				DisplayName: Nightwood Bow
+			}
+
+			NightwoodHelmet: {
+				Tooltip: ""
+				DisplayName: Nightwood Helmet
+			}
+
+			NightwoodGreaves: {
+				Tooltip: ""
+				DisplayName: Nightwood Greaves
+			}
+
+			NightwoodBreastplate: {
+				Tooltip: ""
+				DisplayName: Nightwood Breastplate
+			}
+
+			Ciamito: {
+				Tooltip: "{$CommonItemTooltip.MinorStats}"
+				DisplayName: Ciamito
+			}
+
+			BlackOlive: {
+				Tooltip: "{$CommonItemTooltip.MinorStats}"
+				DisplayName: Black Olive
 			}
 		}
 

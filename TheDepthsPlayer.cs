@@ -52,6 +52,7 @@ namespace TheDepths
         public int AmuletTimer;
         public bool quicksilverWet;
         public int EmberTimer;
+        public bool NightwoodBuff;
 
         public bool geodeCrystal;
         public bool livingShadow;
@@ -75,6 +76,7 @@ namespace TheDepths
             nFlare = false;
             quicksilverSurfboard = false;
             quicksilverWet = false;
+            NightwoodBuff = false;
 
             geodeCrystal = false;
             livingShadow = false;
@@ -314,7 +316,14 @@ namespace TheDepths
             {
                 if (QuicksilverTimer >= 60 * 4 && AmuletTimer == 0)
                 {
-                    Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 7, false, false);
+                    if (NightwoodBuff == true)
+                    {
+                        Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 3, false, false);
+                    }
+                    else
+                    {
+                        Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 7, false, false);
+                    }
                     QuicksilverTimer = 60 * 4;
                 }
             }
@@ -322,7 +331,14 @@ namespace TheDepths
             {
                 if (QuicksilverTimer >= 60 * 2 && AmuletTimer == 0)
                 {
-                    Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 7, false, false);
+                    if (NightwoodBuff == true)
+                    {
+                        Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 3, false, false);
+                    }
+                    else
+                    {
+                        Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 7, false, false);
+                    }
                     QuicksilverTimer = 60 * 2;
                 }
             }
@@ -481,7 +497,7 @@ namespace TheDepths
 
         public override void UpdateBadLifeRegen()
         {
-            if (merPoison)
+            if (merPoison || merBoiling)
             {
                 if (Player.lifeRegen > 0)
                 {
@@ -504,20 +520,6 @@ namespace TheDepths
                         Player.lifeRegen = 0;
                     }
                     Player.lifeRegen -= 10;
-                }
-                else
-                {
-                    if (Player.lifeRegen > 0)
-                    {
-                        Player.lifeRegen = 0;
-                    }
-                    MercuryTimer++;
-                    int multiplier = 2;
-                    if (stoneRose)
-                    {
-                        multiplier--;
-                    }
-                    Player.lifeRegen -= Utils.Clamp(MercuryTimer / 60, 0, 10) * multiplier;
                 }
             }
             if (!merPoison && !merBoiling && MercuryTimer >= 1)
@@ -575,6 +577,26 @@ namespace TheDepths
                 damageSource = PlayerDeathReason.ByCustomReason(deathmessage);
                 return true;
             }
+            else if (damageSource.SourceCustomReason == "Mercury" || (merPoison || merBoiling))
+            {
+                WeightedRandom<string> deathmessage = new();
+                deathmessage.Add(Language.GetTextValue("Mods.TheDepths.PlayerDeathReason.MercuryPoisoning.0", Player.name));
+                deathmessage.Add(Language.GetTextValue("Mods.TheDepths.PlayerDeathReason.MercuryPoisoning.1", Player.name));
+                deathmessage.Add(Language.GetTextValue("Mods.TheDepths.PlayerDeathReason.MercuryPoisoning.2", Player.name));
+                deathmessage.Add(Language.GetTextValue("Mods.TheDepths.PlayerDeathReason.MercuryPoisoning.3", Player.name));
+                damageSource = PlayerDeathReason.ByCustomReason(deathmessage);
+                return true;
+            }
+            else if (damageSource.SourceCustomReason == "Chasme")
+            {
+                WeightedRandom<string> deathmessage = new();
+                deathmessage.Add(Language.GetTextValue("Mods.TheDepths.PlayerDeathReason.ChasmeHead.0", Player.name));
+                deathmessage.Add(Language.GetTextValue("Mods.TheDepths.PlayerDeathReason.ChasmeHead.1", Player.name));
+                deathmessage.Add(Language.GetTextValue("Mods.TheDepths.PlayerDeathReason.ChasmeHead.2", Player.name));
+                damageSource = PlayerDeathReason.ByCustomReason(deathmessage);
+                return true;
+            }
+
             return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
         }
 
@@ -646,12 +668,26 @@ namespace TheDepths
                     quicksilverWet = true;
                     if (AmuletTimer == 0)
                     {
-                        Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 7, false, false);
+                        if (NightwoodBuff == true)
+                        {
+                            Player.AddBuff(BuffType<MercuryBoiling>(), 60 * (int)3.5, false, false);
+                        }
+                        else
+                        {
+                            Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 7, false, false);
+                        }
                     }
                 }
                 else
                 {
-                    Player.AddBuff(BuffType<MercuryFooting>(), 60 * 30, false, false);
+                    if (NightwoodBuff == true)
+                    {
+                        Player.AddBuff(BuffType<MercuryFooting>(), 60 * 60, false, false);
+                    }
+                    else
+                    {
+                        Player.AddBuff(BuffType<MercuryFooting>(), 60 * 30, false, false);
+                    }
                     Player.lavaTime = 1000;
                     player.buffImmune[BuffID.OnFire] = true;
                     player.buffImmune[BuffID.OnFire3] = true;

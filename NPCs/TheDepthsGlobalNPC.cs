@@ -146,11 +146,11 @@ namespace TheDepths.NPCs
 			{
 				shop.InsertAfter(ItemID.PlumbersShirt, ModContent.ItemType<Items.Armor.PurplePlumbersShirt>(), Condition.MoonPhaseFull, depthsWorld);
 				shop.InsertAfter(ItemID.PlumbersPants, ModContent.ItemType<Items.Armor.PurplePlumbersPants>(), Condition.MoonPhaseFull, depthsWorld);
-				if (shop.TryGetEntry(ItemID.PlumbersShirt, out NPCShop.Entry entry))
+				if (shop.TryGetEntry(ItemID.PlumbersShirt, out NPCShop.Entry entry) && Worldgen.TheDepthsWorldGen.InDepths)
 				{
 					entry.Disable();
 				}
-				if (shop.TryGetEntry(ItemID.PlumbersPants, out NPCShop.Entry entry2))
+				if (shop.TryGetEntry(ItemID.PlumbersPants, out NPCShop.Entry entry2) && Worldgen.TheDepthsWorldGen.InDepths)
 				{
 					entry2.Disable();
 				}

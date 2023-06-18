@@ -124,6 +124,8 @@ namespace TheDepths
         public override void AddRecipeGroups()
         {
             RecipeGroup.recipeGroups[RecipeGroupID.Wood].ValidItems.Add(ModContent.ItemType<Items.Placeable.NightWood>());
+            RecipeGroup.recipeGroups[RecipeGroupID.Fruit].ValidItems.Add(ModContent.ItemType<Items.Ciamito>());
+            RecipeGroup.recipeGroups[RecipeGroupID.Fruit].ValidItems.Add(ModContent.ItemType<Items.BlackOlive>());
         }
     }
 }

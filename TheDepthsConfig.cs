@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using Terraria.ModLoader.Config;
 
 namespace TheDepths
@@ -19,10 +22,29 @@ namespace TheDepths
         [ReloadRequired]
 		public bool SlateConfig;
 
-		[Label("[EXPERIMENTAL], Depths world icon")]
-		[Tooltip("Enables the depths and underworld icons, NOTE: due to current limitations they are based off the world evil type not core type")]
-		[DefaultValue(false)]
-		public bool DepthsIconsConfig;
+		public struct WorldDataValues
+		{
+			public bool depths;
+			public bool depthsLeft;
+			public bool depthsRight;
+		}
+
+		// Key value is each twld path
+		[DefaultListValue(false)]
+		[JsonProperty]
+		private Dictionary<string, WorldDataValues> worldData = new Dictionary<string, WorldDataValues>();
+
+		// Methods to avoid public variable getting picked up by serialiser
+		public Dictionary<string, WorldDataValues> GetWorldData() { return worldData; }
+		public void SetWorldData(Dictionary<string, WorldDataValues> newDict) { worldData = newDict; }
+		public static void Save(ModConfig config)
+		{
+			Directory.CreateDirectory(ConfigManager.ModConfigPath);
+			string filename = config.Mod.Name + "_" + config.Name + ".json";
+			string path = Path.Combine(ConfigManager.ModConfigPath, filename);
+			string json = JsonConvert.SerializeObject((object)config, ConfigManager.serializerSettings);
+			File.WriteAllText(path, json);
+		}
 	}
 
 	/*public class TheDepthsServerConfig : ModConfig

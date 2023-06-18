@@ -1,7 +1,7 @@
 =========================================
 The Depths (Alternate Hell)
 =========================================
-0.6.0 Public Pre-release 1
+0.6.0 Public Pre-release 4
 A public pre-release for the depths for the biggest upcoming update that will make the mod almost complete.
 There is still alot more left to do so please report any bugs to our discord: https://discord.gg/JwEKrVhjA6
 
@@ -17,7 +17,9 @@ here is a summary until the update comes out fully
 New Liquid - Quicksilver (replaces lava in depths worlds)
 Chasme Boss - Alternate to the Wall of flesh (summoned with a ruby relic at a gemforge)
 WorldGen Remakes and make overs - Loads of changes to the worldgen
-Secret seed support - Now play with both the underworld and the depths in drunk seed worlds
+World Icons - Depth worlds and underworld worlds will now have a world icon to tell them apart
+Drunk seed support - Now play with both the underworld and the depths in drunk seed worlds
+Remix seed support - Play a whole new way in the remix seed with full support and features
 1.4.4 changes - Changes to both weapons and other items
 New biome enviroment - New lighting, background retextures and other atmospheric changes
 Removal of Altlib - Nolonger do you need altlib to run the mod

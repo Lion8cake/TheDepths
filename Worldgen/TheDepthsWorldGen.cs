@@ -13,6 +13,7 @@ using TheDepths.Tiles;
 using TheDepths.Walls;
 using static Terraria.ModLoader.ModContent;
 using TheDepths.Tiles.Furniture;
+using System.IO;
 
 namespace TheDepths.Worldgen
 {    
@@ -25,6 +26,8 @@ namespace TheDepths.Worldgen
     public class TheDepthsWorldGen : ModSystem {
 	    public UnderworldOptions SelectedUnderworldOption { get; set; } = UnderworldOptions.Random;
 		public static bool depthsorHell;
+
+		public static bool HasBeenConvertedFrom143;
 
 		public static bool DrunkDepthsLeft;
 		public static bool DrunkDepthsRight;
@@ -49,6 +52,7 @@ namespace TheDepths.Worldgen
 			depthsorHell = false;
 			DrunkDepthsLeft = false;
 			DrunkDepthsRight = false;
+			HasBeenConvertedFrom143 = false;
 		}
 
 		public override void OnWorldUnload()
@@ -56,6 +60,7 @@ namespace TheDepths.Worldgen
 			depthsorHell = false;
 			DrunkDepthsLeft = false;
 			DrunkDepthsRight = false;
+			HasBeenConvertedFrom143 = false;
 		}
 
 		public override void SaveWorldData(TagCompound tag)
@@ -72,6 +77,25 @@ namespace TheDepths.Worldgen
 			{
 				tag["DepthsIsOnTheRight"] = true;
 			}
+			if (HasBeenConvertedFrom143)
+			{
+				tag["CovertedWorld"] = true;
+			}
+
+			// Update config cache values on save world
+			TheDepthsClientConfig config = ModContent.GetInstance<TheDepthsClientConfig>();
+			Dictionary<string, TheDepthsClientConfig.WorldDataValues> tempDict = config.GetWorldData();
+			TheDepthsClientConfig.WorldDataValues worldData;
+
+			worldData.depths = depthsorHell;
+			worldData.depthsLeft = DrunkDepthsLeft;
+			worldData.depthsRight = DrunkDepthsRight;
+
+			string path = Path.ChangeExtension(Main.worldPathName, ".twld");
+			tempDict[path] = worldData;
+			config.SetWorldData(tempDict);
+
+			TheDepthsClientConfig.Save(config);
 		}
 
 		public override void LoadWorldData(TagCompound tag)
@@ -79,6 +103,24 @@ namespace TheDepths.Worldgen
 			depthsorHell = tag.ContainsKey("IsDepths");
 			DrunkDepthsLeft = tag.ContainsKey("DepthsIsOnTheLeft");
 			DrunkDepthsRight = tag.ContainsKey("DepthsIsOnTheRight");
+			HasBeenConvertedFrom143 = tag.ContainsKey("ConvertedWorld");
+		}
+
+		public override void NetSend(BinaryWriter writer)
+		{
+			var flags = new BitsByte();
+			flags[0] = depthsorHell;
+			flags[1] = DrunkDepthsLeft;
+			flags[2] = DrunkDepthsRight;
+			writer.Write(flags);
+		}
+
+		public override void NetReceive(BinaryReader reader)
+		{
+			BitsByte flags = reader.ReadByte();
+			depthsorHell = flags[0];
+			DrunkDepthsLeft = flags[1];
+			DrunkDepthsRight = flags[2];
 		}
 
 		public override void PreWorldGen() {
@@ -125,8 +167,8 @@ namespace TheDepths.Worldgen
 				int index4 = tasks.FindIndex(genpass => genpass.Name.Equals("Pots"));
 				if (index4 != -1)
 				{
-					tasks.Insert(index4 - 1, new PassLegacy("Nightmare Grove", new WorldGenLegacyMethod(NightmareGrove)));
-					tasks.Insert(index4 + 1, new PassLegacy("Pots", new WorldGenLegacyMethod(Pots)));
+					tasks.Insert(index4 + 1, new PassLegacy("Nightmare Grove", new WorldGenLegacyMethod(NightmareGrove)));
+					tasks.Insert(index4 + 2, new PassLegacy("Pots", new WorldGenLegacyMethod(Pots)));
 					tasks.RemoveAt(index4);
 				}
 				int index5 = tasks.FindIndex(genpass => genpass.Name.Equals("Buried Chests"));
