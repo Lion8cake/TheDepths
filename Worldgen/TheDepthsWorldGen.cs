@@ -27,8 +27,6 @@ namespace TheDepths.Worldgen
 	    public UnderworldOptions SelectedUnderworldOption { get; set; } = UnderworldOptions.Random;
 		public static bool depthsorHell;
 
-		public static bool HasBeenConvertedFrom143;
-
 		public static bool DrunkDepthsLeft;
 		public static bool DrunkDepthsRight;
 
@@ -43,16 +41,70 @@ namespace TheDepths.Worldgen
 		public static bool IsPlayerInLeftDepths => DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2;
 
 		/// <summary>
-		///   Checks if the player is in the depths part of the world. This is used to reduce repition within code as previously all the check needed was depthsorHell == true.
+		///   Checks if the player is in the depths part of the world. This is used to reduce repetion within code as previously all the check needed was depthsorHell == true.
 		/// </summary>
 		public static bool InDepths => (depthsorHell && !Main.drunkWorld || (IsPlayerInLeftDepths || IsPlayerInRightDepths) && Main.drunkWorld);
 
 		public override void OnWorldLoad()
 		{
-			depthsorHell = false;
 			DrunkDepthsLeft = false;
 			DrunkDepthsRight = false;
-			HasBeenConvertedFrom143 = false;
+
+			//World Converter (1.4.3 => 1.4.4)
+			//Also contains some explinations 
+			string twld = Path.ChangeExtension(Main.worldPathName, ".twld"); //gets the world we are updating
+			var tag2 = TagIO.FromStream(new MemoryStream(File.ReadAllBytes(twld))); //We read the nbt data of the world .twld file
+			if (tag2.ContainsKey("modData"))
+			{ //We look for modData here and v there 
+				foreach (TagCompound modDataTag in tag2.GetList<TagCompound>("modData"))
+				{
+					if (modDataTag.Get<string>("mod") == "AltLibrary" && modDataTag.Get<string>("name") == "WorldBiomeManager")
+					{ //Here we take two paths, one for if altlib is enabled (imposter mod the original wont return) or if the mod is unloaded 
+						TagCompound dataTag = modDataTag.Get<TagCompound>("data");
+
+						if (dataTag.Get<string>("AltLibrary:WorldHell") == "TheDepths/AltDepthsBiome")
+						{ //Look for the correct string that WorldHallow is saved under
+							depthsorHell = true; //Convert world by giving it the tag
+							ModContent.GetInstance<TheDepths>().Logger.Debug("Altlib save!, converting world!"); //Announce converting
+						}
+						else
+						{
+							ModContent.GetInstance<TheDepths>().Logger.Debug("non-Altlib save, unable to convert world"); //Announce that the world doesn't have altlib/it didn't work
+						}
+						break;
+					}
+					if (modDataTag.Get<string>("mod") == "ModLoader")
+					{
+						ModContent.GetInstance<TheDepths>().Logger.Debug("Didn't find altlib, Attempting to look in unloaded mods"); //Didn't find altlib so we look in unloaded and announce 
+						TagCompound dataTag = modDataTag.Get<TagCompound>("data"); //we look for the first tmod data
+						if (dataTag.ContainsKey("list"))
+						{ //find a list called list
+							ModContent.GetInstance<TheDepths>().Logger.Debug("Found List inside unloaded mods!"); //anounce we have found the list since list can be tricky sometimes
+							foreach (TagCompound unloadedList in dataTag.GetList<TagCompound>("list"))
+							{ //same here as above ^
+
+								if (unloadedList.Get<string>("mod") == "AltLibrary" && unloadedList.Get<string>("name") == "WorldBiomeManager")
+								{ //Look for altlib inside of list
+									ModContent.GetInstance<TheDepths>().Logger.Debug("Found Altlib under unloaded mods"); //announce that altlib has been found inside tmod's unloaded data
+									TagCompound dataTag2 = (TagCompound)unloadedList["data"]; //We look for the data entry list under list
+
+									if (dataTag2.Get<string>("AltLibrary:WorldHell") == "TheDepths/AltDepthsBiome")
+									{ //same as the lines previously when altlib was enabled
+										depthsorHell = true;
+										ModContent.GetInstance<TheDepths>().Logger.Debug("Altlib save!, converting world!");
+									}
+									else
+									{
+										ModContent.GetInstance<TheDepths>().Logger.Debug("non-Altlib save, unable to convert world");
+									}
+									break;
+								}
+							}
+						}
+						break;
+					}
+				}
+			}
 		}
 
 		public override void OnWorldUnload()
@@ -60,7 +112,6 @@ namespace TheDepths.Worldgen
 			depthsorHell = false;
 			DrunkDepthsLeft = false;
 			DrunkDepthsRight = false;
-			HasBeenConvertedFrom143 = false;
 		}
 
 		public override void SaveWorldData(TagCompound tag)
@@ -76,10 +127,6 @@ namespace TheDepths.Worldgen
 			if (DrunkDepthsRight)
 			{
 				tag["DepthsIsOnTheRight"] = true;
-			}
-			if (HasBeenConvertedFrom143)
-			{
-				tag["CovertedWorld"] = true;
 			}
 
 			// Update config cache values on save world
@@ -103,7 +150,6 @@ namespace TheDepths.Worldgen
 			depthsorHell = tag.ContainsKey("IsDepths");
 			DrunkDepthsLeft = tag.ContainsKey("DepthsIsOnTheLeft");
 			DrunkDepthsRight = tag.ContainsKey("DepthsIsOnTheRight");
-			HasBeenConvertedFrom143 = tag.ContainsKey("ConvertedWorld");
 		}
 
 		public override void NetSend(BinaryWriter writer)

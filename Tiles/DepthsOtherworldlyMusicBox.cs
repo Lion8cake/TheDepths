@@ -9,7 +9,7 @@ using Terraria.ObjectData;
 
 namespace TheDepths.Tiles
 {
-	internal class ChasmeMusicBox : ModTile
+	internal class DepthsOtherworldlyMusicBox : ModTile
 	{
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
@@ -20,6 +20,7 @@ namespace TheDepths.Tiles
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
             TileID.Sets.DisableSmartCursor[Type] = true;
+			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(133, 87, 50)); 
 		}
 
@@ -27,7 +28,7 @@ namespace TheDepths.Tiles
 			Player player = Main.LocalPlayer;
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = ModContent.ItemType<Items.Placeable.ChasmeMusicBox>();
+			player.cursorItemIconID = ModContent.ItemType<Items.Placeable.DepthsOtherworldlyMusicBox>();
 		}
 
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
@@ -55,7 +56,7 @@ namespace TheDepths.Tiles
 		{
 			if (frameX >= 36)
 			{
-				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<Items.Placeable.ChasmeMusicBox>());
+				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<Items.Placeable.DepthsOtherworldlyMusicBox>());
 			}
 		}
 	}

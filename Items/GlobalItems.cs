@@ -261,4 +261,67 @@ namespace TheDepths.Items
             }
         }
     }
+
+    public class ShellPhoneNameFix : GlobalItem
+    {
+        public override bool AppliesToEntity(Item entity, bool lateInstantiation)
+        {
+            return entity.type == ItemID.ShellphoneSpawn;
+        }
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        {
+            item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneSpawn"));
+        }
+        public override void UpdateInventory(Item item, Player player)
+        {
+            item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneSpawn"));
+        }
+
+        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
+        {
+            item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneSpawn"));
+        }
+    }
+
+    public class ShellPhoneNameFix2 : GlobalItem
+    {
+        public override bool AppliesToEntity(Item entity, bool lateInstantiation)
+        {
+            return entity.type == ItemID.Shellphone;
+        }
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        {
+            item.SetNameOverride((string)Language.GetOrRegister("ItemName.Shellphone"));
+        }
+        public override void UpdateInventory(Item item, Player player)
+        {
+            item.SetNameOverride((string)Language.GetOrRegister("ItemName.Shellphone"));
+        }
+
+        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
+        {
+            item.SetNameOverride((string)Language.GetOrRegister("ItemName.Shellphone"));
+        }
+    }
+
+    public class ShellPhoneNameFix3 : GlobalItem
+    {
+        public override bool AppliesToEntity(Item entity, bool lateInstantiation)
+        {
+            return entity.type == ItemID.ShellphoneOcean;
+        }
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        {
+            item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneOcean"));
+        }
+        public override void UpdateInventory(Item item, Player player)
+        {
+            item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneOcean"));
+        }
+
+        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
+        {
+            item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneOcean"));
+        }
+    }
 }

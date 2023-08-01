@@ -93,7 +93,7 @@ public class ChasmeHand : ChasmeBodyPart
 		{
 			NPC.rotation = 0;
 		}
-		for (int i = 0; i < Main.maxNPCs; i++)
+		/*for (int i = 0; i < Main.maxNPCs; i++)
 		{
 			if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<ChasmeHead>())
 			{
@@ -102,7 +102,7 @@ public class ChasmeHand : ChasmeBodyPart
 					NPC.life = NPC.lifeMax;
 				}
 			}
-		}
+		}*/
 
 		//int halfDamage = (int)(NPC.damage*0.5f);
 		if (regen)

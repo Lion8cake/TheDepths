@@ -1,9 +1,9 @@
 =========================================
 The Depths (Alternate Hell)
 =========================================
-0.6.0 Public Pre-release 4
-A public pre-release for the depths for the biggest upcoming update that will make the mod almost complete.
-There is still alot more left to do so please report any bugs to our discord: https://discord.gg/JwEKrVhjA6
+Depths version 0.6.0
+Please report any bugs to our discord: https://discord.gg/JwEKrVhjA6
+Worlds can be converted from 1.4.3 to 1.4.4 just by opening them
 
 The Depths is an alternate version of the underworld similar to how crimson corruption works. It generates instead of the underworld to ive some of your worlds that bit of spice when starting a new playthrough.
 This mod is made by the same devs behind the confection mod, a mod similar to this one but for the hallow. This biome and most of its sprites and ideas come from Snickerbobble and her forum talking about her take on an alternate hell.
@@ -11,18 +11,138 @@ This mod is made by the same devs behind the confection mod, a mod similar to th
 =========================================
 Change Log
 =========================================
-Over 250+ changes ready for the 0.6.0 upcoming update
-here is a summary until the update comes out fully
-
-New Liquid - Quicksilver (replaces lava in depths worlds)
-Chasme Boss - Alternate to the Wall of flesh (summoned with a ruby relic at a gemforge)
-WorldGen Remakes and make overs - Loads of changes to the worldgen
-World Icons - Depth worlds and underworld worlds will now have a world icon to tell them apart
-Drunk seed support - Now play with both the underworld and the depths in drunk seed worlds
-Remix seed support - Play a whole new way in the remix seed with full support and features
-1.4.4 changes - Changes to both weapons and other items
-New biome enviroment - New lighting, background retextures and other atmospheric changes
-Removal of Altlib - Nolonger do you need altlib to run the mod
+Changed NPC spawning for all NPCs
+Fixed all gems being destroyed by lava
+Added No background and lava layer backgrounds for the depths
+Fixed Texturepack compatability with the flying carpet
+Added Otherworldly Depths Music Track
+Fixed several misspellings in names and descriptions
+Removed Pot item
+Changed the sound used when breaking large crystals
+Added Remix world generation
+Added A new liquid Quicksilver, you can read about quicksilver on the wiki (https://terrariamods.wiki.gg/wiki/The_Depths/Liquids)
+Removed quartz generating in the depths as an ore
+Made the clotheir sell the purple plumber's outfit
+Added Glitter Block
+Added Mercury footing buff
+Reworked Mercury armour setbonus to only clear mercury debuffs when outside of quicksilver
+Added Core Globe
+Changed the depth meter's underworld text to core
+Changed the front texture of the 1st depths background
+Fixed the bottom of all the backgrounds being reddish instead of black
+Added Nightmare grass, foliage, vines, nightwood and nightwood trees
+Added the nightmare grove mini-biome
+Fixed mulitple issues related to pot worldgen
+Added the White lighting
+Fixed the spawning of quicksilver dropplets dropped by the Sky Fall
+Changed the bottom of the world creation progress bar texture
+Rewoked the Amalgam Amulet to now have a proper ui and fuctionaility
+Added Amalgam Amulet effects to the terraspark boots
+Added Tooltip to the Arquerite Bar
+Removed altlib requirement
+Added all altlib removed features (world creation screen, world tags, ect)
+Changed the Liquid sensor (all) to now include quicksilver in it's sprite
+Added Quicksilver Sensor
+Made mercury dust nolonger light up
+Fixed silverfall wall no being craftable
+Added Quicksilver bucket
+Added Bottomless Quicksilver bucket
+Added Quicksilver abosrbant sponge
+Made the Liquid sensor (all) craftable with quicksilver dropper
+Added Quicksilver Bombs
+Added Quicksilver Rockets
+Made Lava Bombs and rockets explode into a cloud of smoke in depth worlds
+Added Shadow Fighting Fish
+Added Quartz Feeder
+Added Silver Liner
+Added Quartz Crate
+Added Arquerite Crate
+Changed Recipe of the Silver sphere potion
+Added Quicksilverproof Fishing Hook
+Added Quartz Lock Box
+Added Fluorescent Light bulb
+Added Giant Fluorescent Light bulb
+Added Other Portal painting
+Added Potted Mercury Tendrils
+Added Potted Nightmare Palm
+Added Potted Purplestar bramble
+Added potted nightterror bush
+Added potted shadowflame bulb
+Added Shadow Fighting Fish bowl
+Added Geomancer's Lazer pointer
+Added Shadowflame Embered Treads
+Added Nightmare Flare Treads
+Added Quicksilverproof Tackle Bag
+Added Purpleflame Jellyfish Mount
+Added Quartz Crawler
+Added albino Rat
+Added Nightmare Slug
+Added Quicksilverproof bug net
+Added Albino Rat Cage
+Added Nightmare Slug cage
+Added Quartz Crawler Cage
+Added Shalestone conch
+Added Depths Shellphone variant
+Added World Icon overlay to the depths to tell between whether a world is underworld or depths
+Added Remix seed icon for depths remix seed worlds
+Changed texture of the 2nd depths background
+Changed texture of the 3rd depths background
+Added Drunk seed support so half the world will be underworld and the other half depths
+Fixed Quicksilver droplets being unfuctional and not generating
+Fixed shalestone onyx not generating in drunk seeds
+Fixed gemforges being broken if the tile below them was destroyed
+Made the demon conch not work in depths worlds
+Made lava sensor not detect quicksilver
+Fixed multiple multi-tile tiles dropping 2 of the same item
+Fixed music boxes being able to be reforged
+Removed being able to shimmer depths items into underworld items
+Made onyx shimmer into diamonds
+Made petrified wood shimmer into stone
+Made Arquerite crates shimmer into quartz crates
+Made most items now stack up to 9999
+Reworked the P.O.W hammer
+Added the mercury contagion debuff
+Reworked the Terminex
+Reworked the Shade Blade
+Updated Chasme's texture
+Added Nightwood wall, Nightwood fence, Nightwood armour, Nightwood tools and Nightwood furniture
+Added Shadow Chasme Mask
+Added Chasme Soul Mask
+Added Chasme Trophy
+Added Chasme Treasure Bag
+Added Chasme Music Box
+Fixed some crafting recipes not needing to be at a workbench when they should need one
+Added Chasme Relic
+Made Arquerite drop 1/2 tile of quicksilver when broken in the depths
+Made shadow chests generate with depths items in them such as the silver star instead of their underworld counterparts such as the sunfury
+Made the amalagm amulet spawn instead of the lava charm in depths worlds
+Made Diamond arrows, Crystal skin potion, silver sphere potion, geodemancer's lazer pointer and more replace their vanilla items in chests
+Added Geomancer's mining cart
+Updated Quartz door texture
+Added the rest of the quartz furniture
+Added Relic banner
+Added Sword of the Caves banner
+Added Lost Heart Banner
+Added Quartz Stack Banner
+Added Glowing Quicksilver Banner
+Added Racked Collection Banner
+Added Gemforge Banner
+Added Quartz apartment and Arquerite castle worldgen
+Removed Night's fury recipe
+Added Remix nerfs and swaps to several items
+Added Remix nerf to the shadow slime
+Made shadow slimes drop gel and slime staff in remix seeds
+Added several new configs
+Added several death messages
+Remade the depths map background
+Added multiplayer support to several things
+Added Depths and Depths (Otherworldly) menu
+Fixed quartz having a pickaxe power requirement
+Added Ciamito
+Added Black Olive
+Added Chasme
+Removed Miracful saber
+Fixed Music boxes not emitting music notes and not dropping when active
 
 ==========================================
 -=Credits=-

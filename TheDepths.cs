@@ -59,7 +59,10 @@ namespace TheDepths
             if (!Main.dedServ)
             {
                 EquipLoader.AddEquipTexture(this, "TheDepths/Items/Armor/OnyxRobe_Legs", EquipType.Legs, name: "OnyxRobe_Legs");
+
+                //GameShaders.Misc["TheDepths:ChasmeDeath"] = new MiscShaderData(new Ref<Effect>((Effect)ModContent.Request<Effect>("TheDepths/Shaders/ChasmeDeathEffect", ReLogic.Content.AssetRequestMode.ImmediateLoad)), "ChasmeAnimation").UseImage0("Images/Misc/Perlin");
             }
+
             //IL.Terraria.Liquid.Update += Evaporation;
             //IL_Player.ItemCheck_ManageRightClickFeatures += IL_Player_ItemCheck_ManageRightClickFeatures;
             Terraria.IL_Player.UpdateBiomes += NoHeap;
@@ -188,8 +191,11 @@ namespace TheDepths
         #region WorldUIOverlay
         private void On_UIWorldSelect_UpdateWorldsList(Terraria.GameContent.UI.States.On_UIWorldSelect.orig_UpdateWorldsList orig, Terraria.GameContent.UI.States.UIWorldSelect self)
         {
-            orig(self);
+            orig.Invoke(self);
             UIList WorldList = (UIList)typeof(UIWorldSelect).GetField("_worldList", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
+			
+			TheDepthsClientConfig config = ModContent.GetInstance<TheDepthsClientConfig>();
+            Dictionary<string, TheDepthsClientConfig.WorldDataValues> tempDict = config.GetWorldData();
             foreach (var item in WorldList)
             {
                 if (item is UIWorldListItem)
@@ -199,10 +205,7 @@ namespace TheDepths
 
                     var path = Path.ChangeExtension(Data.Path, ".twld");
 
-                    TheDepthsClientConfig config = ModContent.GetInstance<TheDepthsClientConfig>();
-                    Dictionary<string, TheDepthsClientConfig.WorldDataValues> tempDict = config.GetWorldData();
-
-                    if (!tempDict.ContainsKey(path))
+                    /*if (!tempDict.ContainsKey(path))
                     {
                         byte[] buf = FileUtilities.ReadAllBytes(path, Data.IsCloudSave);
                         var stream = new MemoryStream(buf);
@@ -242,7 +245,58 @@ namespace TheDepths
                             config.SetWorldData(tempDict);
                             TheDepthsClientConfig.Save(config);
                         }
+                    }*/
+
+                    #region UnopenedWorldIcon
+                    if (!tempDict.ContainsKey(path))
+                    {
+                        if (!Data.DrunkWorld && !Data.DefeatedMoonlord)
+                        {
+                            UIElement worldIcon = WorldIcon;
+                            UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconUnderworld"))
+                            {
+                                Top = new StyleDimension(-10f, 0f),
+                                Left = new StyleDimension(-6f, 0f),
+                                IgnoresMouseInteraction = true
+                            };
+                            worldIcon.Append(element);
+                        }
+                        else if (!Data.DrunkWorld && Data.DefeatedMoonlord)
+                        {
+                            UIElement worldIcon = WorldIcon;
+                            UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconUnderworld"))
+                            {
+                                Top = new StyleDimension(-10f, 0f),
+                                Left = new StyleDimension(-7f, 0f),
+                                IgnoresMouseInteraction = true
+                            };
+                            worldIcon.Append(element);
+                        }
+                        else if (Data.DrunkWorld)
+                        {
+                            UIElement worldIcon = WorldIcon;
+                            UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunk"))
+                            {
+                                Top = new StyleDimension(-10f, 0f),
+                                Left = new StyleDimension(-6f, 0f),
+                                IgnoresMouseInteraction = true
+                            };
+                            worldIcon.Append(element);
+                        }
+                        else if (Data.DrunkWorld && Data.DefeatedMoonlord)
+                        {
+                            UIElement worldIcon = WorldIcon;
+                            UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunk"))
+                            {
+                                Top = new StyleDimension(-10f, 0f),
+                                Left = new StyleDimension(-7f, 0f),
+                                IgnoresMouseInteraction = true
+                            };
+                            worldIcon.Append(element);
+                        }
+                        continue;
                     }
+                    #endregion
 
                     #region RegularSeedIcon
                     if (tempDict[path].depths && !Data.RemixWorld && !Data.DrunkWorld && !Data.DefeatedMoonlord)
@@ -809,7 +863,7 @@ namespace TheDepths
             Player player = Main.CurrentPlayer;
             if (player.InModBiome(ModContent.GetInstance<DepthsBiome>()))
             {
-                Main.newMusic = 79; //Otherworldly Eerie
+                Main.newMusic = MusicLoader.GetMusicSlot(mod, "Sounds/Music/DepthsOtherworldly"); //Otherworldly Eerie
             }
         }
         #endregion

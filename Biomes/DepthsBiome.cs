@@ -15,6 +15,8 @@ public class DepthsBiome : ModBiome
 
     public override ModWaterStyle WaterStyle => ModContent.GetInstance<FreezingWaterStyle>();
 
+    public override int BiomeTorchItemType => ModContent.ItemType<Items.Placeable.GeoTorch>();
+
     public override string MapBackground => BackgroundPath;
 
     public override string BackgroundPath => "TheDepths/Biomes/DepthsMapBackground";

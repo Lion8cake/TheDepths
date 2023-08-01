@@ -94,10 +94,6 @@ namespace TheDepths.Projectiles.Chasme
                 Main.dust[a].noGravity = true;
             }
         }
-        /*public override void OnHitPlayer(Player target, Player.HurtInfo info)
-        {
-            base.OnHitPlayer(target, damage, crit);
-        }*/
     }
 }
 

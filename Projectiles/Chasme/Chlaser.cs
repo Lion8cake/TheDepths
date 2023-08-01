@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-//using On.Terraria.Graphics.Effects;
+using Terraria.Graphics.Effects;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,7 +21,6 @@ namespace TheDepths.Projectiles.Chasme
         Color beamColor = new(195, 136, 251);
         public override void SetStaticDefaults()
         {
-            //DisplayName.SetDefault("Chlaser");
             base.SetStaticDefaults();
         }
         private float BeamLength

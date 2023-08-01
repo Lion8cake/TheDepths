@@ -11,7 +11,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using System.Collections.Generic;
 using TheDepths.Items;
-using TheDepths.Projectiles.Nohitweapon;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.Localization;
@@ -103,7 +102,31 @@ namespace TheDepths
             }
         }
 
-        public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
+		public override void Unload()
+		{
+            TextureAssets.Liquid[1] = Main.Assets.Request<Texture2D>("Images/Liquid_1");
+            TextureAssets.LiquidSlope[1] = Main.Assets.Request<Texture2D>("Images/LiquidSlope_1");
+            TextureAssets.Item[207] = Main.Assets.Request<Texture2D>("Images/Item_207");
+            TextureAssets.Item[4820] = Main.Assets.Request<Texture2D>("Images/Item_4820");
+            TextureAssets.Item[4872] = Main.Assets.Request<Texture2D>("Images/Item_4872");
+            TextureAssets.Item[5361] = Main.Assets.Request<Texture2D>("Images/Item_5361");
+
+            int[] bgnumOriginal = new int[30] { 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 150, 151, 152, 157, 158, 159, 185, 186, 187 };
+            foreach (int i in bgnumOriginal)
+            {
+                TextureAssets.Background[i] = Main.Assets.Request<Texture2D>("Images/Background_" + i);
+            }
+
+            for (int i = 0; i < 14; i++)
+            {
+                TextureAssets.Underworld[i] = Main.Assets.Request<Texture2D>("Images/Backgrounds/Underworld " + i);
+            }
+
+            TextureAssets.Item[3729] = Main.Assets.Request<Texture2D>("Images/Item_3729");
+            TextureAssets.Tile[423] = Main.Assets.Request<Texture2D>("Images/Tiles_423");
+        }
+
+		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
             Player player = Main.LocalPlayer;
 
@@ -657,6 +680,11 @@ namespace TheDepths
                         TextureAssets.Underworld[i] = Main.Assets.Request<Texture2D>("Images/Backgrounds/Underworld " + i);
                     }
                 }
+            }
+            else
+			{
+                TextureAssets.Item[3729] = Main.Assets.Request<Texture2D>("Images/Item_3729");
+                TextureAssets.Tile[423] = Main.Assets.Request<Texture2D>("Images/Tiles_423");
             }
             if (Player.lavaWet && Worldgen.TheDepthsWorldGen.InDepths || Collision.LavaCollision(Main.LocalPlayer.position, Main.LocalPlayer.width, Main.LocalPlayer.height) && Worldgen.TheDepthsWorldGen.InDepths)
             {

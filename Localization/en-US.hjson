@@ -195,6 +195,7 @@ Mods: {
 			QuartzBed.MapEntry: Quartz Bed
 			QuartzBath.MapEntry: Quartz Bath
 			DepthsVanityBanners.MapEntry: Depths Vanity Banners
+			DepthsOtherworldlyMusicBox.MapEntry: Music Box
 		}
 
 		Buffs: {
@@ -1369,6 +1370,11 @@ Mods: {
 				Tooltip: "{$CommonItemTooltip.MinorStats}"
 				DisplayName: Black Olive
 			}
+
+			DepthsOtherworldlyMusicBox: {
+				DisplayName: Otherworldly Music Box (Depths)
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -1507,11 +1513,6 @@ Mods: {
 				SlateConfig: {
 					Label: Renames Shale to Slate
 					Tooltip: Renames Shale to Slate, Requires the mod to reload for the config to work
-				}
-
-				DepthsIconsConfig: {
-					Label: "[EXPERIMENTAL], Depths world icon"
-					Tooltip: Enables the depths and underworld icons, NOTE: due to current limitations they are based off if the world evil type not core type
 				}
 			}
 		}
