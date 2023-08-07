@@ -38,6 +38,16 @@ namespace TheDepths.Tiles
 			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 		}
 
+		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+		{
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, ModContent.ItemType<Items.Placeable.Gemforge>());
+		}
+
+		public override bool CanDrop(int i, int j)
+		{
+			return false;
+		}
+
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
 		{
 			Player player = Main.LocalPlayer;

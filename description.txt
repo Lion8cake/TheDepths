@@ -1,7 +1,7 @@
 =========================================
 The Depths (Alternate Hell)
 =========================================
-Depths version 0.6.0
+Depths version 0.6.1
 Please report any bugs to our discord: https://discord.gg/JwEKrVhjA6
 Worlds can be converted from 1.4.3 to 1.4.4 just by opening them
 
@@ -11,6 +11,14 @@ This mod is made by the same devs behind the confection mod, a mod similar to th
 =========================================
 Change Log
 =========================================
+0.6.1
+===============================
+Fixed Nightmare grass dropping 4 shale and that drop being offset but alot
+Fixed Gemforges sometimes not dropping their item causing a softlock in progression
+Attempted to fix lava being silver on the map after unloading the mod
+
+0.6.0
+===============================
 Changed NPC spawning for all NPCs
 Fixed all gems being destroyed by lava
 Added No background and lava layer backgrounds for the depths

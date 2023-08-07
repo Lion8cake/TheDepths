@@ -124,6 +124,10 @@ namespace TheDepths
 
             TextureAssets.Item[3729] = Main.Assets.Request<Texture2D>("Images/Item_3729");
             TextureAssets.Tile[423] = Main.Assets.Request<Texture2D>("Images/Tiles_423");
+
+            ushort LiquidPosition = (ushort)typeof(MapHelper).GetField("liquidPosition", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+            Color[] ColorLookup = (Color[])typeof(MapHelper).GetField("colorLookup", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+            ColorLookup[LiquidPosition + 1] = new Color(253, 32, 3);
         }
 
 		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)

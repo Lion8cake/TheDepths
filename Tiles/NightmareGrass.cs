@@ -27,6 +27,7 @@ namespace TheDepths.Tiles
             TileID.Sets.Conversion.Grass[Type] = true;
             DustType = ModContent.DustType<NightDust>();
             AddMapEntry(new Color(43, 28, 83));
+            RegisterItemDrop(ModContent.ItemType<Items.Placeable.ShaleBlock>());
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -34,12 +35,6 @@ namespace TheDepths.Tiles
             r = 0.43f;
             g = 0.28f;
             b = 0.83f;
-        }
-
-        public override bool CanDrop(int i, int j)
-        {
-            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 64, 32, ModContent.ItemType<Items.Placeable.ShaleBlock>(), 4);
-            return false;
         }
 
         public override void RandomUpdate(int i, int j)
