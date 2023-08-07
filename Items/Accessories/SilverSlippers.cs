@@ -9,10 +9,11 @@ using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Accessories
 {
-	[AutoloadEquip(new EquipType[] { EquipType.Shoes })]
+[AutoloadEquip(new EquipType[] { EquipType.Shoes })]
 	public class SilverSlippers : ModItem
 	{
 		public override void SetStaticDefaults() {
+			Tooltip.SetDefault("Provides the ability to walk on water, honey & lava\nGrants immunity to mercury poisoning and radiation");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -25,11 +26,10 @@ namespace TheDepths.Items.Accessories
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual) {
-			player.waterWalk2 = true;
-			player.fireWalk = true;
+            player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
 			player.waterWalk = true;
-			player.GetModPlayer<TheDepthsPlayer>().aAmulet = true;
-			player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
+			player.buffImmune[ModContent.BuffType<MercuryBoiling>()] = true;
+			player.fireWalk = true;
 			player.GetModPlayer<TheDepthsPlayer>().stoneRose = true;
 		}
 		

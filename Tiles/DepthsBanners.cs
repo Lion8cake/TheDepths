@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -23,11 +22,12 @@ namespace TheDepths.Tiles
 			TileObjectData.newTile.StyleWrapLimit = 111;
 			TileObjectData.addTile(Type);
 			DustType = -1;
-			LocalizedText name = CreateMapEntryName();
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Banner");
 			AddMapEntry(new Color(13, 88, 130), name);
 		}
 
-		/*public override void KillMultiTile(int i, int j, int frameX, int frameY) {
+		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
 			int style = frameX / 18;
 			string item;
 			switch (style) {
@@ -69,7 +69,7 @@ namespace TheDepths.Tiles
 					
 			}
 			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, Mod.Find<ModItem>(item).Type);
-		}*/
+		}
 
 		public override void NearbyEffects(int i, int j, bool closer) {
 			if (closer) {

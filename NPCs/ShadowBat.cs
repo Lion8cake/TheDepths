@@ -18,6 +18,7 @@ namespace TheDepths.NPCs
 	public class ShadowBat : ModNPC
 	{
 		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Shadow Bat");
 			Main.npcFrameCount[NPC.type] = 4;
 
 			var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
@@ -52,30 +53,30 @@ namespace TheDepths.NPCs
 		{
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-				new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.ShadowBat")
+				new FlavorTextBestiaryInfoElement("This half black half emerald bat is a stonger varient of the bats found in the depths, Is it a bat's shadow or a shadow made of bats?")
 			});
 		}
 
-		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
+		public override void OnHitPlayer(Player target, int damage, bool crit)
     	{
     		target.AddBuff(BuffID.Blackout, 180);
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		/*public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (Main.hardMode && (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && !Main.remixWorld) || Main.hardMode && (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && (spawnInfo.SpawnTileX < Main.maxTilesX * 0.38 + 50.0 || spawnInfo.SpawnTileX > Main.maxTilesX * 0.62) && Main.remixWorld))
+			if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
 			{
 				return 1.25f;
 			}
 			return 0f;
-		}
+		}*/
 
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
 			npcLoot.Add(ItemDropRule.Common(ItemID.Emerald, 50, 1, 1));
 		}
 
-		public override void HitEffect(NPC.HitInfo hit)
+		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (Main.netMode == NetmodeID.Server)
 			{

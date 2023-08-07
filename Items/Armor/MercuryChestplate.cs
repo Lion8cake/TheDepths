@@ -10,6 +10,9 @@ namespace TheDepths.Items.Armor
 	public class MercuryChestplate : ModItem
 	{
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			DisplayName.SetDefault("Mercury Chestplate");
+			Tooltip.SetDefault("8% Increased Melee Damage");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

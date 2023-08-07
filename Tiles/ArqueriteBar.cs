@@ -25,5 +25,16 @@ namespace TheDepths.Tiles
 
 			AddMapEntry(new Color(71, 84, 105), Language.GetText("MapObject.MetalBar"));
 		}
+
+		public override bool Drop(int i, int j)
+		{
+			Tile t = Main.tile[i, j];
+			int style = t.TileFrameX / 18;
+			if (style == 0)
+			{
+				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<Items.Placeable.ArqueriteBar>());
+			}
+			return base.Drop(i, j);
+		}
 	}
 }

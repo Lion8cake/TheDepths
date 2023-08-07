@@ -12,6 +12,7 @@ namespace TheDepths.Items.Accessories
 	public class AquaStone : ModItem
 	{
 		public override void SetStaticDefaults() {
+			Tooltip.SetDefault("Inflicts freezing water on attack");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

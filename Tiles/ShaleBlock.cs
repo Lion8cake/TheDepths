@@ -16,6 +16,7 @@ namespace TheDepths.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
+            ItemDrop = ModContent.ItemType<Items.Placeable.ShaleBlock>();
             AddMapEntry(new Color(27, 29, 33));
 			Main.tileMerge[Type][Mod.Find<ModTile>("ArqueriteOre").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("Quartz").Type] = true;

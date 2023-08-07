@@ -10,7 +10,7 @@ namespace TheDepths.Items.Placeable
 		{
 			Item.width = 20;
 			Item.height = 20;
-			Item.maxStack = 9999;
+			Item.maxStack = 99;
 			Item.value = 1000;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTurn = true;
@@ -25,7 +25,7 @@ namespace TheDepths.Items.Placeable
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Quartz>(), 4);
+			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Quartz>(), 4);
 			recipe.AddTile(TileID.DemonAltar);
 			recipe.Register();
 		}

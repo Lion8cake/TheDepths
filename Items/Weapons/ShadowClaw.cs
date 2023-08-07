@@ -14,6 +14,7 @@ namespace TheDepths.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Tooltip.SetDefault("'Releases dark energy'");
 		}
 
 		public override void SetDefaults() {

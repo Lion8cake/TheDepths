@@ -2,10 +2,8 @@ using Microsoft.Xna.Framework;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.WorldBuilding;
 using TheDepths.Items;
 using TheDepths.Items.Weapons;
 using Terraria.DataStructures;
@@ -25,7 +23,8 @@ namespace TheDepths.Tiles
 			Main.tileCut[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Pot");
 			AddMapEntry(new Color(226, 227, 231), name);
 			DustType = ModContent.DustType<QuartzDust>();
 			HitSound = SoundID.Shatter;
@@ -205,7 +204,7 @@ namespace TheDepths.Tiles
 						{
 							Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.UnholyArrow, Main.rand.Next(10, 20)); //Unholy Arrows
 						}
-						else if (GenVars.silver == ItemID.SilverOre)
+						else if (WorldGen.silver == ItemID.SilverOre)
 						{
 							Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.SilverBullet, Main.rand.Next(10, 20)); //Silver bullet
 						}

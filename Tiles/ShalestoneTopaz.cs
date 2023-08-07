@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using TheDepths.Dusts;
 
@@ -14,8 +13,10 @@ namespace TheDepths.Tiles
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
+			ItemDrop = ItemID.Topaz;
 			DustType = ModContent.DustType<ShaleDust>();
-			LocalizedText name = CreateMapEntryName();
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Topaz");
 			AddMapEntry(new Color(147, 116, 11), name);
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShaleBlock").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("Shalestone").Type] = true;

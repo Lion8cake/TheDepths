@@ -13,6 +13,7 @@ namespace TheDepths.Tiles
         {
             Main.tileLighted[Type] = false;
             HitSound = SoundID.Dig;
+            ItemDrop = ItemType<Items.Placeable.SilverfallBlock>();
             AddMapEntry(new Color(232, 233, 234), (LocalizedText)null);
             AnimationFrameHeight = 90;
             Main.tileSolid[Type] = true;

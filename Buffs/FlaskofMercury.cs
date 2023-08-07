@@ -17,6 +17,8 @@ namespace TheDepths.Buffs
 	public class FlaskofMercury : ModBuff
 	{
 		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Weapon Imbue: Mercury");
+			Description.SetDefault("Melee attacks boils enemies with mercury");
 			Main.debuff[Type] = false;
 	    	Main.pvpBuff[Type] = true;
 	    	Main.buffNoSave[Type] = false;
@@ -24,7 +26,7 @@ namespace TheDepths.Buffs
 		}
 
 		public override void Update(Player player, ref int buffIndex) {
-			player.GetModPlayer<TheDepthsPlayer>().merImbue = true;
+		player.GetModPlayer<TheDepthsPlayer>().merImbue = true;
 		}
 	}
 }

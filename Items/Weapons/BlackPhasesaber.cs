@@ -17,7 +17,7 @@ namespace TheDepths.Items.Weapons
 		{
 			Item.CloneDefaults(3764);
 			Item.damage = 41;
-			Item.DamageType = DamageClass.Melee;
+			Item.DamageType = DamageClass.Melee/* tModPorter Suggestion: Consider MeleeNoSpeed for no attack speed scaling */;
 			Item.width = 40;
 			Item.height = 40;
 		}

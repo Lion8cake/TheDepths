@@ -10,6 +10,7 @@ namespace TheDepths.Items.Placeable
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Onyx Gem Lock");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

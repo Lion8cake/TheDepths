@@ -11,10 +11,12 @@ using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Accessories
 {
-	public class LodeStone : ModItem
+	class LodeStone : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
+			DisplayName.SetDefault("Lode Stone");
+			Tooltip.SetDefault("Increases item pickup range");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

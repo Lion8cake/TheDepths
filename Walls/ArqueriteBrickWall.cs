@@ -11,6 +11,7 @@ namespace TheDepths.Walls
 		public override void SetStaticDefaults() {
 			Main.wallHouse[Type] = true;
 			DustType = ModContent.DustType<ArqueriteDust>();
+			ItemDrop = ModContent.ItemType<Items.Placeable.ArqueriteBrickWall>();
 			AddMapEntry(new Color(38, 45, 55));
 		}
 		

@@ -17,6 +17,7 @@ namespace TheDepths.Tiles
         {
             Main.tileLighted[Type] = true;
             HitSound = SoundID.Dig;
+            ItemDrop = ItemType<Items.Placeable.LivingFog>();
             AddMapEntry(new Color(185, 197, 200), (LocalizedText)null);
             AnimationFrameHeight = 90;
             Main.tileSolid[Type] = false;

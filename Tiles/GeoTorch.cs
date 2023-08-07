@@ -1,4 +1,3 @@
-using Terraria.Localization;
 using TheDepths.Dusts;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -39,9 +38,11 @@ namespace TheDepths.Tiles
 			TileObjectData.addAlternate(0);
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-			LocalizedText name = CreateMapEntryName();
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Torch");
 			AddMapEntry(new Color(119, 11, 147), name);
 			DustType = ModContent.DustType<GeodeTorchDust>();
+			ItemDrop = ModContent.ItemType<Items.Placeable.GeoTorch>();
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.Torches };
 			TileID.Sets.Torch[Type] = true;

@@ -11,34 +11,32 @@ using Terraria.DataStructures;
 using TheDepths.Buffs;
 using TheDepths.Tiles;
 using TheDepths.NPCs;
-using Terraria.Localization;
-using Terraria.Chat;
 
 namespace TheDepths.Projectiles.Chasme
 {
 	public class GemforgeCutscene : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
+        public override void SetStaticDefaults()
+        {
 			NPCID.Sets.MPAllowedEnemies[NPCID.WallofFlesh] = true;
 		}
 
-		public override void SetDefaults()
-		{
-			Projectile.width = 10;
-			Projectile.height = 10;
-			Projectile.friendly = true;
-			Projectile.timeLeft = 300; //5 seconds (60 x 5)
-			Projectile.aiStyle = -1;
-		}
+        public override void SetDefaults()
+        {
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.friendly = true;
+            Projectile.timeLeft = 300; //5 seconds (60 x 5)
+            Projectile.aiStyle = -1;
+        }
 
-		public override void AI()
-		{
-			Player player = Main.LocalPlayer;
+        public override void AI()
+        {
+            Player player = Main.LocalPlayer;
 			Vector2 vector311 = Projectile.Center + new Vector2(0f, -20f);
 			float num1589 = 0.99f;
 			if (Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210)
-			{
+            {
 				player.AddBuff(ModContent.BuffType<RelicsCurse>(), 5);
 			}
 			if (Projectile.timeLeft >= 160f)
@@ -91,25 +89,25 @@ namespace TheDepths.Projectiles.Chasme
 				Geomancer.TheRelicMadeHimExplode = true;
 				Gemforge.RubyRelicIsOnForge = 1;
 				SoundEngine.PlaySound(SoundID.NPCDeath10, Projectile.position);
-
-				if (Main.netMode != NetmodeID.MultiplayerClient)
+				if (player.whoAmI == Main.myPlayer)
 				{
-					NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<NPCs.Chasme.ChasmeHeart>());
-				}
-				else
-				{
-					NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: ModContent.NPCType<NPCs.Chasme.ChasmeHeart>());
-				}
-				if (Main.netMode == 0)
-				{
-					Main.NewText(Language.GetTextValue("Announcement.HasAwoken", Language.GetTextValue("Mods.TheDepths.NPCs.ChasmeBody.DisplayName")), 175, 75);
-				}
-				else if (Main.netMode == 2)
-				{
-					ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", Language.GetTextValue("Mods.TheDepths.NPCs.ChasmeBody.DisplayName")), new Color(175, 75, 255));
+					if (Projectile.Center.X < (Main.maxTilesX * 16) / 2 && Main.netMode != NetmodeID.MultiplayerClient)
+					{
+						Main.NewText("[c/AF4BFF:Wall of Flesh has awoken!]");
+						NPC.NewNPC(new EntitySource_Misc(""), (int)(Projectile.Center.X - 1500f), (int)Projectile.Center.Y, NPCID.WallofFlesh, 0, 1f, 0f, 0f, player.whoAmI);
+					}
+					else if (Projectile.Center.X > (Main.maxTilesX * 16) / 2 && Main.netMode != NetmodeID.MultiplayerClient)
+					{
+						Main.NewText("[c/AF4BFF:Wall of Flesh has awoken!]");
+						NPC.NewNPC(new EntitySource_Misc(""), (int)(Projectile.Center.X + 1500f), (int)Projectile.Center.Y, NPCID.WallofFlesh, 0, 1f, 0f, 0f, player.whoAmI);
+					}
+					else
+                    {
+						NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: NPCID.WallofFlesh);
+					}
 				}
 			}
-			if (Projectile.timeLeft == 140) 
+			if (Projectile.timeLeft == 140)
             {
 				Geomancer.TheRelicMadeHimExplode = false;
 			}

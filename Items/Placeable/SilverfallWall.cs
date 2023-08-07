@@ -1,5 +1,4 @@
-﻿using Terraria;
-using Terraria.GameContent.Creative;
+﻿using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -10,6 +9,7 @@ namespace TheDepths.Items.Placeable
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Silverfall Wall");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 400;
         }
 
@@ -19,13 +19,6 @@ namespace TheDepths.Items.Placeable
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.createWall = WallType<Walls.SilverfallWall>();
-        }
-
-        public override void AddRecipes()
-        {
-            Recipe recipe = CreateRecipe(4);
-            recipe.AddIngredient(ModContent.ItemType<SilverfallBlock>());
-            recipe.Register();
         }
     }
 }

@@ -18,15 +18,15 @@ namespace TheDepths.Buffs
 	public class FreezingWater : ModBuff
 	{
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Freezing Water");
-			// Description.SetDefault("Moment has been completely disabled");
+			DisplayName.SetDefault("Freezing Water");
+			Description.SetDefault("Moment has been completely disabled");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;
 		}
 
 		public override void Update(Player player, ref int buffIndex) {
-			player.GetModPlayer<TheDepthsPlayer>().slowWater = true;
+		player.GetModPlayer<TheDepthsPlayer>().slowWater = true;
 			player.moveSpeed = 0f;
 		}
 		

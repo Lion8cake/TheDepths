@@ -18,6 +18,7 @@ namespace TheDepths.NPCs
 	public class Archroma : ModNPC
 	{
 		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Archroma");
 			Main.npcFrameCount[NPC.type] = 2; 
 		}
 		
@@ -29,7 +30,7 @@ namespace TheDepths.NPCs
 			NPC.lifeMax = 800;
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath1;
-			NPC.value = 150000f;
+			NPC.value = 1500000f;
 			NPC.knockBackResist = 0.5f;
 			NPC.aiStyle = 1;
 			AIType = NPCID.Crimslime;
@@ -44,20 +45,20 @@ namespace TheDepths.NPCs
 		{
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-				new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.Archroma")
+				new FlavorTextBestiaryInfoElement("A cousin of pinky with a similar density causing them to be very strong, they eat money")
 			});
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		/*public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (Main.hardMode && (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && !Main.remixWorld) || Main.hardMode && (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && (spawnInfo.SpawnTileX < Main.maxTilesX * 0.38 + 50.0 || spawnInfo.SpawnTileX > Main.maxTilesX * 0.62) && Main.remixWorld))
+			if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
 			{
 				return 0.1f;
 			}
 			return 0f;
-		}
+		}*/
 
-		public override void HitEffect(NPC.HitInfo hit)
+		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (Main.netMode == NetmodeID.Server)
 			{

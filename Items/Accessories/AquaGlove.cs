@@ -17,6 +17,8 @@ namespace TheDepths.Items.Accessories
 	public class AquaGlove : ModItem
 	{
 		public override void SetStaticDefaults() {
+			Tooltip.SetDefault("Increases Melee knockback and inflicts freezing water on attack\n12% increased melee speed and damage"
+				+"\nEnables auto swing for melee weapons");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

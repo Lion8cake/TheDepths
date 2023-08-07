@@ -17,6 +17,8 @@ namespace TheDepths.Buffs
 	public class RelicsCurse : ModBuff
 	{
 		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Relic's Curse");
+			Description.SetDefault("Unable to use more relics");
 			Main.debuff[Type] = true;
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;

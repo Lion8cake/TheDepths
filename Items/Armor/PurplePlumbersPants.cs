@@ -10,6 +10,7 @@ namespace TheDepths.Items.Armor
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Purple Plumber's Pants");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

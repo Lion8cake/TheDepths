@@ -3,7 +3,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using Terraria;
-using Terraria.Localization;
 
 namespace TheDepths.Items.Placeable
 {
@@ -15,18 +14,6 @@ namespace TheDepths.Items.Placeable
 			ItemID.Sets.ExtractinatorMode[Item.type] = Item.type;
 		}
 
-		public override LocalizedText DisplayName
-		{
-			get
-			{
-				if (ModContent.GetInstance<TheDepthsClientConfig>().SlateConfig)
-				{
-					return Language.GetOrRegister("Mods.TheDepths.ShaleConfig.Slatestone");
-				}
-				return Language.GetOrRegister("Mods.TheDepths.ShaleConfig.Shalestone");
-			}
-		}
-
 		public override void SetDefaults()
 		{
 			Item.useStyle = ItemUseStyleID.Swing;
@@ -34,14 +21,14 @@ namespace TheDepths.Items.Placeable
 			Item.useAnimation = 15;
 			Item.useTime = 10;
 			Item.autoReuse = true;
-			Item.maxStack = 9999;
+			Item.maxStack = 999;
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<Tiles.Shalestone>();
 			Item.width = 12;
 			Item.height = 12;
 		}
 
-		public override void ExtractinatorUse(int extractinatorBlockType, ref int resultType, ref int resultStack)
+		public override void ExtractinatorUse(ref int resultType, ref int resultStack)
 		{
 			if (Main.rand.NextBool(15) && Main.hardMode)
 			{

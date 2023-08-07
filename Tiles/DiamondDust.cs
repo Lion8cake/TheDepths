@@ -22,6 +22,7 @@ namespace TheDepths.Tiles
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(223, 230, 238));
 			DustType = ModContent.DustType<DiamondCrystals>();
+			ItemDrop = ModContent.ItemType<Items.Placeable.DiamondDust>();
 			TileObjectData.newTile.Width = 1;
             TileObjectData.newTile.Height = 1;
             TileObjectData.newTile.Origin = new Point16(0, 0);

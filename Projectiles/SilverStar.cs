@@ -25,6 +25,7 @@ namespace TheDepths.Projectiles
 			Dropping
 		}
 
+		// These properties wrap the usual ai and localAI arrays for cleaner and easier to understand code.
 		private AIState CurrentAIState
 		{
 			get => (AIState)Projectile.ai[0];
@@ -36,27 +37,32 @@ namespace TheDepths.Projectiles
 
 		public override void SetStaticDefaults()
 		{
+			// These lines facilitate the trail drawing
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 		}
 
 		public override void SetDefaults()
 		{
-			Projectile.netImportant = true; 
-			Projectile.width = 26; 
-			Projectile.height = 26; 
-			Projectile.friendly = true; 
-			Projectile.penetrate = -1;
-			Projectile.DamageType = DamageClass.Melee; 
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 10;
+			Projectile.netImportant = true; // This ensures that the projectile is synced when other players join the world.
+			Projectile.width = 26; // The width of your projectile
+			Projectile.height = 26; // The height of your projectile
+			Projectile.friendly = true; // Deals damage to enemies
+			Projectile.penetrate = -1; // Infinite pierce
+			Projectile.DamageType = DamageClass.Melee; // Deals melee damage
+			Projectile.usesLocalNPCImmunity = true; // Used for hit cooldown changes in the ai hook
+			Projectile.localNPCHitCooldown = 10; // This facilitates custom hit cooldown logic
+
+			// Vanilla flails all use aiStyle 15, but the code isn't customizable so an adaption of that aiStyle is used in the AI method
 		}
 
+		// This AI code was adapted from vanilla code: Terraria.Projectile.AI_015_Flails() 
 		public override void AI()
 		{
 			Projectile.rotation = 2f;
 
 			Player player = Main.player[Projectile.owner];
+			// Kill the projectile if the player dies or gets crowd controlled
 			if (!player.active || player.dead || player.noItems || player.CCed || Vector2.Distance(Projectile.Center, player.Center) > 900f)
 			{
 				Projectile.Kill();
@@ -71,8 +77,8 @@ namespace TheDepths.Projectiles
 			Vector2 mountedCenter = player.MountedCenter;
 			bool doFastThrowDust = false;
 			bool shouldOwnerHitCheck = false;
-			int launchTimeLimit = 15; 
-			float launchSpeed = 14f; 
+			int launchTimeLimit = 15;  // How much time the projectile can go before retracting (speed and shootTimer will set the flail's range)
+			float launchSpeed = 14f; // How fast the projectile can move
 			float maxLaunchLength = 2000f; // How far the projectile's chain can stretch before being forced to retract when in launched state
 			float retractAcceleration = 3f; // How quickly the projectile will accelerate back towards the player while retracting
 			float maxRetractSpeed = 10f; // The max speed the projectile will have while retracting
@@ -434,27 +440,39 @@ namespace TheDepths.Projectiles
 			return base.Colliding(projHitbox, targetHitbox);
 		}
 
-		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+		public override void ModifyDamageScaling(ref float damageScale)
 		{
+			// Flails do 20% more damage while spinning
 			if (CurrentAIState == AIState.Spinning)
 			{
-				modifiers.SourceDamage *= 1.2f;
+				damageScale *= 1.2f;
 			}
+			// Flails do 100% more damage while launched or retracting. This is the damage the item tooltip for flails aim to match, as this is the most common mode of attack. This is why the item has ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;
 			else if (CurrentAIState == AIState.LaunchingForward || CurrentAIState == AIState.Retracting)
 			{
-				modifiers.SourceDamage *= 2f;
+				damageScale *= 2f;
 			}
+		}
 
-			modifiers.HitDirectionOverride = (Main.player[Projectile.owner].Center.X < target.Center.X).ToDirectionInt();
+		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		{
+			// Flails do a few custom things, you'll want to keep these to have the same feel as vanilla flails.
 
+			// The hitDirection is always set to hit away from the player, even if the flail damages the npc while returning
+			hitDirection = (Main.player[Projectile.owner].Center.X < target.Center.X).ToDirectionInt();
+
+			// Knockback is only 25% as powerful when in spin mode
 			if (CurrentAIState == AIState.Spinning)
 			{
-				modifiers.Knockback *= 0.25f;
+				knockback *= 0.25f;
 			}
+			// Knockback is only 50% as powerful when in drop down mode
 			else if (CurrentAIState == AIState.Dropping)
 			{
-				modifiers.Knockback *= 0.5f;
+				knockback *= 0.5f;
 			}
+
+			base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
 		}
 
 		public override bool PreDraw(ref Color lightColor)

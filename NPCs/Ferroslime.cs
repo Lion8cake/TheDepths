@@ -20,6 +20,7 @@ namespace TheDepths.NPCs
 	public class Ferroslime : ModNPC
 	{
 		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Ferroslime");
 			Main.npcFrameCount[NPC.type] = 2; 
 		}
 		
@@ -46,23 +47,23 @@ namespace TheDepths.NPCs
 		{
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-				new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.Ferroslime")
+				new FlavorTextBestiaryInfoElement("This slime may appear spiky, but that's only its ferrofluid spiking up to come off as more threatening than it is.")
 			});
 		}
 
-		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
+		public override void OnHitPlayer(Player target, int damage, bool crit)
     	{
     		target.AddBuff(BuffID.Blackout, 180);
     	}
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        /*public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-			if (Main.hardMode && (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && !Main.remixWorld) || Main.hardMode && (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && (spawnInfo.SpawnTileX < Main.maxTilesX * 0.38 + 50.0 || spawnInfo.SpawnTileX > Main.maxTilesX * 0.62) && Main.remixWorld))
+			if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
             {
 				return 1.3f;
             }
             return 0f;
-        }
+        }*/
 
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
@@ -70,7 +71,7 @@ namespace TheDepths.NPCs
 			npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 5, 15));
 		}
 
-		public override void HitEffect(NPC.HitInfo hit)
+		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (Main.netMode == NetmodeID.Server)
 			{

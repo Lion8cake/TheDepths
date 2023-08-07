@@ -13,6 +13,8 @@ namespace TheDepths.Items
 	{
 		public override void SetStaticDefaults()
         {
+            Tooltip.SetDefault("'Do you hear something?'" +
+                "\nMaybe putting this on a gemforge is not the best idea");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
 		}
 
@@ -21,7 +23,7 @@ namespace TheDepths.Items
 			Item.height = 28;
 			Item.value = 1000;
 			Item.rare = ItemRarityID.White;
-			Item.maxStack = 9999;
+			Item.maxStack = 999;
 		}
 	}
 }

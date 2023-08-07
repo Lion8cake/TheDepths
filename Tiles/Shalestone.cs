@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Localization;
 using TheDepths.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,7 +15,7 @@ namespace TheDepths.Tiles
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 
-			LocalizedText name = CreateMapEntryName();
+			ModTranslation name = CreateMapEntryName();
 			AddMapEntry(new Color(27, 29, 33));
 			Main.tileMerge[Type][Mod.Find<ModTile>("ArqueriteOre").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("Quartz").Type] = true;
@@ -30,6 +29,7 @@ namespace TheDepths.Tiles
 			Main.tileMerge[Type][Mod.Find<ModTile>("OnyxShalestone").Type] = true;
 			DustType = ModContent.DustType<ShaleDust>();
 
+			ItemDrop = ModContent.ItemType<Items.Placeable.Shalestone>();
 			HitSound = SoundID.Tink;
 			MineResist = 2f;
 			MinPick = 65;

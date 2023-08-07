@@ -13,6 +13,7 @@ namespace TheDepths.Items.Accessories
 	public class CrystalWaterWalkingBoots : ModItem
 	{
 		public override void SetStaticDefaults() {
+			Tooltip.SetDefault("Provides the ability to walk on water & honey\nGrants immunity to mercury radiation");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -25,8 +26,10 @@ namespace TheDepths.Items.Accessories
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual) {
+            player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
 			player.waterWalk = true;
-			player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
+			player.waterWalk2 = true;
+			player.fireWalk = false;
 		}
 		
 		public override void AddRecipes()

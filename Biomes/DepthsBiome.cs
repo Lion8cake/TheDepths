@@ -15,25 +15,19 @@ public class DepthsBiome : ModBiome
 
     public override ModWaterStyle WaterStyle => ModContent.GetInstance<FreezingWaterStyle>();
 
-    public override int BiomeTorchItemType => ModContent.ItemType<Items.Placeable.GeoTorch>();
-
     public override string MapBackground => BackgroundPath;
 
     public override string BackgroundPath => "TheDepths/Biomes/DepthsMapBackground";
 
     public override string BestiaryIcon => "TheDepths/Biomes/DepthsBestiaryIcon";
 
-    public override bool IsBiomeActive(Player player)
+    public override void SetStaticDefaults()
     {
-        if (Main.drunkWorld && Worldgen.TheDepthsWorldGen.DrunkDepthsLeft)
-        {
-            return Math.Abs(player.position.ToTileCoordinates().X) < Main.maxTilesX / 2 && Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210;
-        }
-        else if (Main.drunkWorld && Worldgen.TheDepthsWorldGen.DrunkDepthsRight)
-        {
-            return Math.Abs(player.position.ToTileCoordinates().X) > Main.maxTilesX / 2 && Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210;
-        }
-
-        return Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210 && Worldgen.TheDepthsWorldGen.depthsorHell;
+        DisplayName.SetDefault("The Depths");
     }
+
+    /*public override bool IsBiomeActive(Player player)
+    {
+        //return Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210 && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome";
+    }*/
 }

@@ -26,6 +26,7 @@ namespace TheDepths.NPCs
 
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("King Coal");
             Main.npcFrameCount[NPC.type] = 3;
         }
 
@@ -51,7 +52,7 @@ namespace TheDepths.NPCs
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld,
 
-                new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.KingCoal")
+                new FlavorTextBestiaryInfoElement("He's no merry old soul, he's Crystal King's rival brother, born in fire he will do all he can to take you down!")
             });
         }
 
@@ -193,14 +194,14 @@ namespace TheDepths.NPCs
             NPC.netUpdate = true;
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        /*public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (Main.hardMode && (spawnInfo.Player.ZoneUnderworldHeight && !Worldgen.TheDepthsWorldGen.InDepths && !Main.remixWorld) || Main.hardMode && (spawnInfo.Player.ZoneUnderworldHeight && !Worldgen.TheDepthsWorldGen.InDepths && (spawnInfo.SpawnTileX < Main.maxTilesX * 0.38 + 50.0 || spawnInfo.SpawnTileX > Main.maxTilesX * 0.62) && Main.remixWorld))
+            if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell != "TheDepths/AltDepthsBiome")
             {
                 return 1f;
             }
             return 0f;
-        }
+        }*/
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
@@ -209,7 +210,7 @@ namespace TheDepths.NPCs
             //pcLoot.Add(ItemDropRule.Common(ItemID.Ruby, 50, 1, 1));
         }
 
-        public override void HitEffect(NPC.HitInfo hit)
+        public override void HitEffect(int hitDirection, double damage)
         {
             if (Main.netMode == NetmodeID.Server)
             {

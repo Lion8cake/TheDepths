@@ -13,22 +13,10 @@ namespace TheDepths.Items.Placeable
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
 		}
 
-        public override LocalizedText DisplayName
-		{
-			get
-			{
-				if (ModContent.GetInstance<TheDepthsClientConfig>().SlateConfig)
-				{
-					return Language.GetOrRegister("Mods.TheDepths.ShaleConfig.SlateBlock");
-				}
-				return Language.GetOrRegister("Mods.TheDepths.ShaleConfig.ShaleBlock");
-			}
-        }
-
-        public override void SetDefaults() {
+		public override void SetDefaults() {
 			Item.width = 12;
 			Item.height = 12;
-			Item.maxStack = 9999;
+			Item.maxStack = 999;
 			Item.useTurn = true;
 			Item.autoReuse = true;
 			Item.useAnimation = 15;

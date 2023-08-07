@@ -1,16 +1,23 @@
 =========================================
 The Depths (Alternate Hell)
 =========================================
-Depths version 0.6.1
+Depths version 0.5.3
 Please report any bugs to our discord: https://discord.gg/JwEKrVhjA6
 Worlds can be converted from 1.4.3 to 1.4.4 just by opening them
 
 The Depths is an alternate version of the underworld similar to how crimson corruption works. It generates instead of the underworld to ive some of your worlds that bit of spice when starting a new playthrough.
 This mod is made by the same devs behind the confection mod, a mod similar to this one but for the hallow. This biome and most of its sprites and ideas come from Snickerbobble and her forum talking about her take on an alternate hell.
 
+The 1.4.3 version's functions nolonger work due to the removal of altlib although this doesn't mean the mod is unloadable so your worlds dont fully corrupt.
+
 =========================================
 Change Log
 =========================================
+0.5.3
+===============================
+Removed Altlib on the 1.4.3 version
+Please update to the 1.4.4 version to play normally again
+
 0.6.1
 ===============================
 Fixed Nightmare grass dropping 4 shale and that drop being offset but alot

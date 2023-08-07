@@ -19,6 +19,10 @@ namespace TheDepths.NPCs
 {
     public class Shade : ModNPC
     {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Shade");
+        }
 
         public override void SetDefaults()
         {
@@ -45,7 +49,7 @@ namespace TheDepths.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.Shade")
+                new FlavorTextBestiaryInfoElement("Beings of pure darkness that drift through the depths with the ability to freely float through the air. A group of them is called a darkening.")
             });
         }
 
@@ -54,14 +58,14 @@ namespace TheDepths.NPCs
             NPC.spriteDirection = NPC.direction;
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        /*public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if ((spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && !Main.remixWorld) || (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && (spawnInfo.SpawnTileX < Main.maxTilesX * 0.38 + 50.0 || spawnInfo.SpawnTileX > Main.maxTilesX * 0.62) && Main.remixWorld))
+            if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
             {
                 return 1.3f;
             }
             return 0f;
-        }
+        }*/
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
@@ -69,7 +73,7 @@ namespace TheDepths.NPCs
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RubyRelic>(), 4, 1, 1));
         }
 
-        public override void HitEffect(NPC.HitInfo hit)
+        public override void HitEffect(int hitDirection, double damage)
         {
             if (Main.netMode == NetmodeID.Server)
             {

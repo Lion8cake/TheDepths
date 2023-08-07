@@ -32,8 +32,8 @@ namespace TheDepths.Projectiles
 			if (RainTimer == 80)
             {
 				Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -1, -1, ModContent.ProjectileType<SkyFallRain>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0f, 0f);
-				Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X - 2, Projectile.Center.Y - 2, 1, -1, ModContent.ProjectileType<SkyFallRain>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0f, 0f);
-				Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X - 2, Projectile.Center.Y - 2, 0, -1, ModContent.ProjectileType<SkyFallRain>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X - 2, Projectile.Center.Y - 2, 1, 1, ModContent.ProjectileType<SkyFallRain>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X - 2, Projectile.Center.Y - 2, 0, 0, ModContent.ProjectileType<SkyFallRain>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0f, 0f);
 				RainTimer = 0;
             }
 			bool foundYoyo = false;
@@ -51,14 +51,13 @@ namespace TheDepths.Projectiles
 			}
 		}
 
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
 			Projectile.ai[0] += 0.1f;
 			Projectile.velocity *= 0.75f;
 			target.AddBuff(ModContent.BuffType<Buffs.MercuryBoiling>(), 250, false);
 		}
 
-		public override void OnHitPlayer(Player target, Player.HurtInfo info)
-		{
+		public override void OnHitPvp(Player target, int damage, bool crit) {
 			target.AddBuff(ModContent.BuffType<Buffs.MercuryBoiling>(), 250, false);
 		}
 	}

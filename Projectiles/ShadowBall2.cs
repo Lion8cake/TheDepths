@@ -87,7 +87,7 @@ namespace TheDepths.Projectiles
 			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, Projectile.velocity.X + 5, -5, ModContent.ProjectileType<ShadowBall3>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0f, 0f);
 		}
 
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
 			Projectile.ai[0] += 0.1f;
 			Projectile.velocity *= 0.75f;
 		}

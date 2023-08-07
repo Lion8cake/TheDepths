@@ -4,7 +4,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -24,8 +23,9 @@ namespace TheDepths.Tiles
             TileObjectData.addTile(Type);
             TileID.Sets.DisableSmartCursor[Type] = true;
             DustType = 7;
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(120, 120, 120));
+            ModTranslation name = CreateMapEntryName();
+            name.SetDefault("");
+            AddMapEntry(new Color(120, 120, 120), name);
         }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
         {
@@ -38,7 +38,7 @@ namespace TheDepths.Tiles
             player.cursorItemIconEnabled = true;
             player.cursorItemIconID = itemType;
         }
-        /*public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             int gemLock = 0;
             int gem = SelectGem((short)frameX);
@@ -56,7 +56,7 @@ namespace TheDepths.Tiles
                     Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 54, 32, gem);
 				}
             }
-        }*/
+        }
 
         public override void MouseOver(int i, int j)
         {

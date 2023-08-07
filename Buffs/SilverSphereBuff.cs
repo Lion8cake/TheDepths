@@ -20,6 +20,8 @@ namespace TheDepths.Buffs
 	    public int timer;
 	
 		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Silver Sphere");
+			Description.SetDefault("Four Spheres are around you");
 			Main.debuff[Type] = false;
 	    	Main.pvpBuff[Type] = true;
 	    	Main.buffNoSave[Type] = false;

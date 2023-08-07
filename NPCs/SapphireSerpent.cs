@@ -61,7 +61,7 @@ namespace TheDepths.NPCs
             SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
         }
 
-        public override void HitEffect(NPC.HitInfo hit)
+        public override void HitEffect(int hitDirection, double damage)
         {
             if (Main.netMode == NetmodeID.Server)
             {
@@ -83,7 +83,7 @@ namespace TheDepths.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.DepthsWorm")
+                new FlavorTextBestiaryInfoElement("A stone and sapphire serpent with water flowing through its veins. It carries a shovel like no other.")
             });
         }
 
@@ -100,14 +100,14 @@ namespace TheDepths.NPCs
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AquaStone>(), 50, 1, 1));
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        /*public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if ((spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && !Main.remixWorld) || (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && (spawnInfo.SpawnTileX < Main.maxTilesX * 0.38 + 50.0 || spawnInfo.SpawnTileX > Main.maxTilesX * 0.62) && Main.remixWorld))
+            if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
             {
-                return 0.5f;
+                return 0.75f;
             }
             return 0f;
-        }
+        }*/
     }
 
     internal class SapphireSerpentBody : DepthsWorm
@@ -143,7 +143,7 @@ namespace TheDepths.NPCs
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<Items.Banners.SapphireSerpentBanner>();
         }
-        public override void HitEffect(NPC.HitInfo hit)
+        public override void HitEffect(int hitDirection, double damage)
         {
             if (Main.netMode == NetmodeID.Server)
             {
@@ -202,7 +202,7 @@ namespace TheDepths.NPCs
             tail = true;
         }
 
-        public override void HitEffect(NPC.HitInfo hit)
+        public override void HitEffect(int hitDirection, double damage)
         {
             if (Main.netMode == NetmodeID.Server)
             {
@@ -224,6 +224,11 @@ namespace TheDepths.NPCs
     // I made this 2nd base class to limit code repetition.
     public abstract class DepthsWorm : Worm
     {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Sapphire Serpent");
+        }
+
         public override void Init()
         {
             minLength = 12;
@@ -319,7 +324,7 @@ namespace TheDepths.NPCs
                 }
                 if (!NPC.active && Main.netMode == NetmodeID.Server)
                 {
-                    NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, -1f, 0f, 0f, 0, 0, 0);
+                    NetMessage.SendData(MessageID.StrikeNPC, -1, -1, null, NPC.whoAmI, -1f, 0f, 0f, 0, 0, 0);
                 }
             }
             int num180 = (int)(NPC.position.X / 16f) - 1;

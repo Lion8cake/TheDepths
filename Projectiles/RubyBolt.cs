@@ -31,12 +31,12 @@ namespace TheDepths.Projectiles
 			}
 		}
 
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			target.AddBuff(BuffID.OnFire, 240, false);
 		}
 
-        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+		public override void OnHitPvp(Player target, int damage, bool crit)
 		{
 			target.AddBuff(BuffID.OnFire, 240, false);
 		}

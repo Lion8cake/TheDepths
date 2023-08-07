@@ -17,6 +17,7 @@ namespace TheDepths.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
+            ItemDrop = ModContent.ItemType<Items.Placeable.ArqueriteBricks>();
             AddMapEntry(new Color(71, 84, 105));
 			DustType = ModContent.DustType<ArqueriteDust>();
             HitSound = SoundID.Tink;

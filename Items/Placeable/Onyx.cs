@@ -11,13 +11,12 @@ namespace TheDepths.Items.Placeable
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
-			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Diamond;
 		}
 
 		public override void SetDefaults() {
 			Item.width = 12;
 			Item.height = 12;
-			Item.maxStack = 9999;
+			Item.maxStack = 999;
 			Item.useTurn = true;
 			Item.autoReuse = true;
 			Item.useAnimation = 15;

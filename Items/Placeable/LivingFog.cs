@@ -10,6 +10,7 @@ namespace TheDepths.Items.Placeable
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Living Fog Block");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
         }
 
@@ -17,7 +18,7 @@ namespace TheDepths.Items.Placeable
         {
             Item.width = 12;
             Item.height = 12;
-            Item.maxStack = 9999;
+            Item.maxStack = 999;
             Item.useTurn = true;
             Item.autoReuse = true;
             Item.useAnimation = 15;

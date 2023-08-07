@@ -11,6 +11,9 @@ namespace TheDepths.Items.Armor
 	public class GeodeChestplate : ModItem
 	{
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			DisplayName.SetDefault("Geode Chestplate");
+			Tooltip.SetDefault("Incressed maximum amount of minions by 1");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -23,7 +26,7 @@ namespace TheDepths.Items.Armor
 		}
 		
 		public override void UpdateEquip(Player player) {
-			player.maxMinions++;
+		player.maxMinions++;
 		}
 		
 		public override void AddRecipes() 

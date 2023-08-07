@@ -17,6 +17,8 @@ namespace TheDepths.Buffs
 	public class CrystalSkin : ModBuff
 	{
 		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Crystal Skin");
+			Description.SetDefault("Immune to Quicksilver");
 			Main.debuff[Type] = false;
 	    	Main.pvpBuff[Type] = true;
 	    	Main.buffNoSave[Type] = false;

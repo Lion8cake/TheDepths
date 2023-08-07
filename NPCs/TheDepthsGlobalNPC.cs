@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using System;
 
 namespace TheDepths.NPCs
 {
@@ -15,60 +14,7 @@ namespace TheDepths.NPCs
 		public bool slowWater;
 		public bool merBoiling;
 		public int MercuryNPCTimer;
-
-		public int QuicksilverTimer;
-
-		public override void SetDefaults(NPC npc)
-		{
-			if (npc.lavaImmune == true)
-			{
-				npc.buffImmune[ModContent.BuffType<Buffs.MercuryBoiling>()] = true;
-			}
-		}
-
-		public override void PostAI(NPC npc)
-		{
-			if (Worldgen.TheDepthsWorldGen.InDepths && Collision.LavaCollision(npc.position, npc.width, npc.height))
-			{
-				npc.lavaImmune = true;
-				npc.buffImmune[BuffID.OnFire] = true;
-				npc.buffImmune[BuffID.OnFire3] = true;
-				QuicksilverTimer++;
-				if (QuicksilverTimer >= 120)
-				{
-					QuicksilverTimer = 120;
-					npc.AddBuff(ModContent.BuffType<Buffs.MercuryBoiling>(), 60 * 7, false);
-				}
-			}
-			if (Worldgen.TheDepthsWorldGen.InDepths && !Collision.LavaCollision(npc.position, npc.width, npc.height))
-			{
-				QuicksilverTimer--;
-				if (QuicksilverTimer <= 0)
-				{
-					QuicksilverTimer = 0;
-				}
-			}
-			if (!Worldgen.TheDepthsWorldGen.InDepths && Collision.LavaCollision(npc.position, npc.width, npc.height) && npc.buffImmune[ModContent.BuffType<Buffs.MercuryBoiling>()] == false)
-			{
-				npc.lavaImmune = false;
-			}
-
-			for (int o = 0; o < Main.maxNPCs; o++)
-			{
-				NPC target = Main.npc[o];
-				if (!target.friendly)
-				{
-					if (target.position.WithinRange(npc.position, 40) && npc.HasBuff(ModContent.BuffType<Buffs.MercuryContagion>()))
-					{
-						if (!target.HasBuff(ModContent.BuffType<Buffs.MercuryContagion>()) && target != npc)
-						{
-							target.AddBuff(ModContent.BuffType<Buffs.MercuryContagion>(), npc.buffTime[npc.FindBuffIndex(ModContent.BuffType<Buffs.MercuryContagion>())]); //works but worried about MP
-						}
-					}
-				}
-			}
-		}
-
+		
 		public override void ResetEffects(NPC npc) {
 			merPoison = false;
 			slowWater = false;
@@ -111,6 +57,7 @@ namespace TheDepths.NPCs
 						Main.dust[dust].scale *= 0.5f;
 					}
 				}
+				Lighting.AddLight(npc.position, 0.1f, 0.2f, 0.7f);
 			}
 		}
 		
@@ -139,30 +86,23 @@ namespace TheDepths.NPCs
 			}
 		}
 
-        public override void ModifyShop(NPCShop shop)
+		/*public override void SetupShop(int type, Chest shop, ref int nextSlot)
 		{
-			var depthsWorld = new Condition("Mods.TheDepths.DepthsBiome", () => Worldgen.TheDepthsWorldGen.InDepths);
-			if (shop.NpcType == NPCID.Clothier)
+			if (type == NPCID.Clothier && Main.moonPhase == 0 && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
 			{
-				shop.InsertAfter(ItemID.PlumbersShirt, ModContent.ItemType<Items.Armor.PurplePlumbersShirt>(), Condition.MoonPhaseFull, depthsWorld);
-				shop.InsertAfter(ItemID.PlumbersPants, ModContent.ItemType<Items.Armor.PurplePlumbersPants>(), Condition.MoonPhaseFull, depthsWorld);
-				if (shop.TryGetEntry(ItemID.PlumbersShirt, out NPCShop.Entry entry) && Worldgen.TheDepthsWorldGen.InDepths)
-				{
-					entry.Disable();
-				}
-				if (shop.TryGetEntry(ItemID.PlumbersPants, out NPCShop.Entry entry2) && Worldgen.TheDepthsWorldGen.InDepths)
-				{
-					entry2.Disable();
-				}
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Armor.PurplePlumbersShirt>());
+				shop.item[nextSlot].shopCustomPrice = 250000;
+				nextSlot++;
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Armor.PurplePlumbersPants>());
+				shop.item[nextSlot].shopCustomPrice = 250000;
+				nextSlot++;
 			}
-			if (shop.NpcType == NPCID.Dryad)
+			if (type == NPCID.Dryad && Main.hardMode)
             {
-				shop.InsertAfter(ItemID.FireBlossomPlanterBox, ModContent.ItemType<Items.Placeable.ShadowShrubPlanterBox>(), Condition.Hardmode, depthsWorld);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Items.Placeable.ShadowShrubPlanterBox>());
+				shop.item[nextSlot].shopCustomPrice = 100;
+				nextSlot++;
 			}
-			if (shop.NpcType == NPCID.BestiaryGirl)
-            {
-				shop.InsertAfter(ItemID.WorldGlobe, ModContent.ItemType<Items.CoreGlobe>(), Condition.Hardmode);
-			}
-		}
+		}*/
 	}
 }

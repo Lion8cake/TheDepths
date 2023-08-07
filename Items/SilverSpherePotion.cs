@@ -9,6 +9,8 @@ namespace TheDepths.Items
 	{
         public override void SetStaticDefaults()
         {
+		    DisplayName.SetDefault("Silver Sphere Potion");
+            Tooltip.SetDefault("Four Silver Spheres summon around you");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
         }
 
@@ -21,7 +23,7 @@ namespace TheDepths.Items
             Item.useTime = 15;
             Item.useTurn = true;
             Item.UseSound = SoundID.Item3;
-            Item.maxStack = 9999;
+            Item.maxStack = 30;
             Item.consumable = true;
             Item.rare = ItemRarityID.Blue;
             Item.value = 1000;
@@ -33,10 +35,10 @@ namespace TheDepths.Items
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(ModContent.ItemType<ShadowFightingFish>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<QuartzFeeder>(), 2);
+			recipe.AddIngredient(ItemID.FlarefinKoi, 1);
+			recipe.AddIngredient(ItemID.Obsidifish, 2);
 			recipe.AddIngredient(ModContent.ItemType<Items.ShadowShrub>(), 1);
-			recipe.AddTile(TileID.Bottles);
+			recipe.AddTile(13);
 			recipe.Register();
 		}
     }

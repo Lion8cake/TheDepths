@@ -18,6 +18,7 @@ namespace TheDepths.NPCs
 	public class GoldBat : ModNPC
 	{
 		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Gold Bat");
 			Main.npcFrameCount[NPC.type] = 4;
 
 			var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
@@ -52,25 +53,25 @@ namespace TheDepths.NPCs
 		{
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-				new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.GoldBat")
+				new FlavorTextBestiaryInfoElement("A rare bat in the depths that was cursed by the geomancers to be a gem-like creature. Despite their name they are actually the same color as topaz.")
 			});
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		/*public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if ((spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && !Main.remixWorld) || (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && (spawnInfo.SpawnTileX < Main.maxTilesX * 0.38 + 50.0 || spawnInfo.SpawnTileX > Main.maxTilesX * 0.62) && Main.remixWorld))
+			if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
 			{
 				return 0.05f;
 			}
 			return 0f;
-		}
+		}*/
 
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
 			npcLoot.Add(ItemDropRule.Common(ItemID.Topaz, 10, 1, 1));
 		}
 
-		public override void HitEffect(NPC.HitInfo hit)
+		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (Main.netMode == NetmodeID.Server)
 			{

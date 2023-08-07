@@ -11,6 +11,8 @@ namespace TheDepths.Items.Weapons
 	public class BlueSphere : ModItem
 	{
 		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Blue Sphere");
+			Tooltip.SetDefault("'Collect them all!'");
 			ItemID.Sets.Yoyo[Item.type] = true;
 			ItemID.Sets.GamepadExtraRange[Item.type] = 15;
 			ItemID.Sets.GamepadSmartQuickReach[Item.type] = true;
@@ -28,7 +30,7 @@ namespace TheDepths.Items.Weapons
 			Item.damage = 50;
 			Item.rare = ItemRarityID.LightRed;
 
-			Item.DamageType = DamageClass.Melee;
+			Item.DamageType = DamageClass.Melee/* tModPorter Suggestion: Consider MeleeNoSpeed for no attack speed scaling */;
 			Item.channel = true;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
@@ -37,22 +39,6 @@ namespace TheDepths.Items.Weapons
 			Item.UseSound = SoundID.Item1;
 			Item.value = Item.sellPrice(silver: 400);
 			Item.shoot = ModContent.ProjectileType<BlueSphereYoyo>();
-		}
-
-		public override void UpdateInventory(Player player)
-		{
-			if (Main.remixWorld)
-			{
-				Item.damage = 24;
-				Item.rare = ItemRarityID.Orange;
-				Item.value = 10000;
-			}
-			else
-			{
-				Item.damage = 50;
-				Item.rare = ItemRarityID.LightRed;
-				Item.value = Item.sellPrice(silver: 400);
-			}
 		}
 	}
 }

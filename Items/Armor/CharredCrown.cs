@@ -10,6 +10,7 @@ namespace TheDepths.Items.Armor
 	public class CharredCrown : ModItem
 	{
 		public override void SetStaticDefaults() {
+			Tooltip.SetDefault("18% Increased Magic Damage");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -22,7 +23,7 @@ namespace TheDepths.Items.Armor
 		}
 		
 		public override void UpdateEquip(Player player) {
-			player.GetDamage(DamageClass.Magic) += 0.18f;
+		player.GetDamage(DamageClass.Magic) += 0.18f;
 		}
 	}
 }

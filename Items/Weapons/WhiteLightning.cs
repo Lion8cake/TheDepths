@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+/*using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,6 +12,7 @@ namespace TheDepths.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Tooltip.SetDefault("Summons up to 3 Lightning orbs that connect to each other");
 		}
 
 		public override void SetDefaults() {
@@ -41,35 +42,11 @@ namespace TheDepths.Items.Weapons
 		{
 			int tileX = (int)((Main.mouseX + Main.screenPosition.X) / 16);
 			int tileY = (int)((Main.mouseY + Main.screenPosition.Y) / 16);
-			if (player.ownedProjectileCounts[Item.shoot] < 1 && (!Main.tile[tileX, tileY].HasTile || !Main.tileSolid[Main.tile[tileX, tileY].TileType]))
+			if (player.ownedProjectileCounts[Item.shoot] < 3 && (!Main.tile[tileX, tileY].HasTile || !Main.tileSolid[Main.tile[tileX, tileY].TileType]))
 			{
 				Projectile.NewProjectile(source, Main.MouseWorld, velocity, type, damage, knockback, player.whoAmI);
 			}
-			else if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.WhiteLightningOrb2>()] < 1 && (!Main.tile[tileX, tileY].HasTile || !Main.tileSolid[Main.tile[tileX, tileY].TileType]))
-			{
-				Projectile.NewProjectile(source, Main.MouseWorld, velocity, ModContent.ProjectileType<Projectiles.WhiteLightningOrb2>(), damage, knockback, player.whoAmI);
-			}
-			else if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.WhiteLightningOrb3>()] < 1 && (!Main.tile[tileX, tileY].HasTile || !Main.tileSolid[Main.tile[tileX, tileY].TileType]))
-			{
-				Projectile.NewProjectile(source, Main.MouseWorld, velocity, ModContent.ProjectileType<Projectiles.WhiteLightningOrb3>(), damage, knockback, player.whoAmI);
-			}
 			return false;
 		}
-
-		public override void UpdateInventory(Player player)
-		{
-			if (Main.remixWorld)
-			{
-				Item.damage = 36;
-				Item.rare = ItemRarityID.LightRed;
-				Item.value = Item.sellPrice(silver: 400);
-			}
-			else
-			{
-				Item.damage = 16;
-				Item.rare = ItemRarityID.Orange;
-				Item.value = 10000;
-			}
-		}
 	}
-}
+}*/

@@ -1,4 +1,3 @@
-using Terraria.Localization;
 using TheDepths.Dusts;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -27,7 +26,8 @@ namespace TheDepths.Tiles
 			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-			LocalizedText name = CreateMapEntryName();
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Gemforge");
 			AddMapEntry(new Color(140, 17, 206), name);
 			DustType = ModContent.DustType<ArqueriteDust>();
             TileID.Sets.DisableSmartCursor[Type] = true;
@@ -35,17 +35,6 @@ namespace TheDepths.Tiles
 			Main.tileLighted[Type] = true;
 			MinPick = 65;
 			TileID.Sets.HasOutlines[Type] = true;
-			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
-		}
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, ModContent.ItemType<Items.Placeable.Gemforge>());
-		}
-
-		public override bool CanDrop(int i, int j)
-		{
-			return false;
 		}
 
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
@@ -81,6 +70,10 @@ namespace TheDepths.Tiles
 
 		public override void NumDust(int i, int j, bool fail, ref int num) {
 			num = fail ? 1 : 3;
+		}
+
+		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 16, ModContent.ItemType<Items.Placeable.Gemforge>());
 		}
 
 		public override bool CanExplode(int i, int j)

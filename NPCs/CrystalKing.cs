@@ -26,6 +26,7 @@ namespace TheDepths.NPCs
 
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Crystal King");
             Main.npcFrameCount[NPC.type] = 3;
         }
 
@@ -51,7 +52,7 @@ namespace TheDepths.NPCs
         {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-                new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.CrystalKing")
+                new FlavorTextBestiaryInfoElement("A royal king of Geomancy, although unable to walk he can teleport like most other mages.")
             });
         }
 
@@ -193,14 +194,14 @@ namespace TheDepths.NPCs
             NPC.netUpdate = true;
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        /*public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (Main.hardMode && (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && !Main.remixWorld) || Main.hardMode &&  (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && (spawnInfo.SpawnTileX < Main.maxTilesX * 0.38 + 50.0 || spawnInfo.SpawnTileX > Main.maxTilesX * 0.62) && Main.remixWorld))
+            if (Main.hardMode && spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
             {
                 return 1f;
             }
             return 0f;
-        }
+        }*/
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
@@ -209,7 +210,7 @@ namespace TheDepths.NPCs
             npcLoot.Add(ItemDropRule.Common(ItemID.Diamond, 50, 1, 1));
         }
 
-        public override void HitEffect(NPC.HitInfo hit)
+        public override void HitEffect(int hitDirection, double damage)
         {
             if (Main.netMode == NetmodeID.Server)
             {

@@ -23,6 +23,7 @@ namespace TheDepths.NPCs
 		public bool shouldFrameCounterIncrease;
 
 		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Geomancer");
 			Main.npcFrameCount[NPC.type] = 20;
 
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
@@ -53,7 +54,7 @@ namespace TheDepths.NPCs
 			SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
 		}
 
-		public override void AI()
+        public override void AI()
         {
             if (PraiseTheRelic == true)
             {
@@ -114,11 +115,11 @@ namespace TheDepths.NPCs
 		{
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-				new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.Geomancer")
+				new FlavorTextBestiaryInfoElement("Loyal cult members well-practiced in geomancy. Legends have it that they worship a living shadow-flame being")
 			});
 		}
 
-		public override void HitEffect(NPC.HitInfo hit)
+		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (Main.netMode == NetmodeID.Server)
 			{
@@ -147,13 +148,13 @@ namespace TheDepths.NPCs
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<StoneRose>(), 50));
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		/*public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if ((spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && !Main.remixWorld) || (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && (spawnInfo.SpawnTileX < Main.maxTilesX * 0.38 + 50.0 || spawnInfo.SpawnTileX > Main.maxTilesX * 0.62) && Main.remixWorld))
+			if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
 			{
 				return 1f;
 			}
 			return 0f;
-		}
+		}*/
 	}
 }

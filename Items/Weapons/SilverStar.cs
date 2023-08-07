@@ -6,10 +6,12 @@ using Microsoft.Xna.Framework;
 
 namespace TheDepths.Items.Weapons
 {
-	public class SilverStar : ModItem
+	internal class SilverStar : ModItem
 	{
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
+			DisplayName.SetDefault("Silver Star");
+			SacrificeTotal = 1;
+
 			ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;
 		}
 

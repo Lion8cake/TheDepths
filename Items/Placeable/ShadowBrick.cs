@@ -9,7 +9,6 @@ namespace TheDepths.Items.Placeable
 	{
 		public override void SetStaticDefaults()
 		{
-			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<AncientShadowBrick>();
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 200;
 		}
 
@@ -20,7 +19,7 @@ namespace TheDepths.Items.Placeable
 			Item.useAnimation = 15;
 			Item.useTime = 10;
 			Item.autoReuse = true;
-			Item.maxStack = 9999;
+			Item.maxStack = 999;
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<Tiles.ShadowBrick>();
 			Item.width = 12;

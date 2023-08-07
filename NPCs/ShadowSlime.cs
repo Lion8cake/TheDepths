@@ -12,15 +12,14 @@ using TheDepths.Items.Banners;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;
 using TheDepths.Dusts;
-using Terraria.GameContent.ItemDropRules;
 
 namespace TheDepths.NPCs
 {
 	public class ShadowSlime : ModNPC
 	{
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 2;
-			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+			DisplayName.SetDefault("Shadow Slime");
+			Main.npcFrameCount[NPC.type] = 2; 
 		}
 		
 		public override void SetDefaults() {
@@ -40,44 +39,31 @@ namespace TheDepths.NPCs
 			Banner = NPC.type;
 			BannerItem = ModContent.ItemType<ShadowSlimeBanner>();
 			SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
-			if (Main.remixWorld)
-			{
-				NPC.damage = 7;
-				NPC.defense = 2;
-				NPC.lifeMax = 25;
-				NPC.value = 25f;
-			}
 		}
 
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
-				new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.ShadowSlime")
+				new FlavorTextBestiaryInfoElement("A purely black slime that roams the hardened depths, getting hit by it would be a blinding.")
 			});
 		}
 
-		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
+		public override void OnHitPlayer(Player target, int damage, bool crit)
     	{
     		target.AddBuff(BuffID.Darkness, 180);
 		}
 
-		public override void ModifyNPCLoot(NPCLoot npcLoot)
+		/*public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			npcLoot.Add(ItemDropRule.ByCondition(Condition.RemixWorld.ToDropCondition(ShowItemDropInUI.Always), ItemID.Gel, 2, 1, 2));
-			npcLoot.Add(ItemDropRule.ByCondition(Condition.RemixWorld.ToDropCondition(ShowItemDropInUI.Always), ItemID.SlimeStaff, 8000, 1));
-		}
-
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			if (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths)
+			if (spawnInfo.Player.ZoneUnderworldHeight && WorldBiomeManager.WorldHell == "TheDepths/AltDepthsBiome")
 			{
 				return 1.75f;
 			}
 			return 0f;
-		}
+		}*/
 
-		public override void HitEffect(NPC.HitInfo hit)
+		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (Main.netMode == NetmodeID.Server)
 			{

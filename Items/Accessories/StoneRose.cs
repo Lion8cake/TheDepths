@@ -12,11 +12,13 @@ using Terraria.GameContent.Creative;
 namespace TheDepths.Items.Accessories
 {
 	[AutoloadEquip(new EquipType[] { EquipType.Face })]
-	public class StoneRose : ModItem
+	class StoneRose : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			ArmorIDs.Face.Sets.DrawInFaceFlowerLayer[Item.faceSlot] = true;
+			DisplayName.SetDefault("Stone Rose");
+			Tooltip.SetDefault("Reduced damage from Mercury debuffs");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

@@ -1,12 +1,9 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Localization;
 using TheDepths.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheDepths.Dusts;
-using System;
-using Terraria.DataStructures;
 
 namespace TheDepths.Tiles
 {
@@ -34,9 +31,11 @@ namespace TheDepths.Tiles
 			Main.tileMerge[Type][Mod.Find<ModTile>("ShalestoneTopaz").Type] = true;
 			Main.tileMerge[Type][Mod.Find<ModTile>("OnyxShalestone").Type] = true;
 
-			LocalizedText name = CreateMapEntryName();
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Arquerite Ore");
 			AddMapEntry(new Color(119, 134, 162), name);
 
+			ItemDrop = ModContent.ItemType<Items.Placeable.ArqueriteOre>();
 			HitSound = SoundID.Tink;
 			MineResist = 2f;
 			MinPick = 65;
@@ -54,43 +53,6 @@ namespace TheDepths.Tiles
 		public override bool CanExplode(int i, int j)
 		{
 			return false;
-		}
-
-        public override bool IsTileSpelunkable(int i, int j)
-        {
-			return true;
-        }
-
-        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
-        {
-			Tile tile = Main.tile[i, j];
-			int x = i - Main.tile[i, j].TileFrameX / 18 % 1;
-			if (Main.netMode != 1)
-			{
-				if (j > Main.UnderworldLayer && (Worldgen.TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2) && Main.drunkWorld))
-				{
-					tile.LiquidType = LiquidID.Lava;
-					tile.LiquidAmount = 128;
-				}
-			}
-		}
-    }
-
-	//For future removal of lava dropping quicksilver
-	public class Hellstone : GlobalTile
-    {	
-
-        /*public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
-        {
-			Tile tile = Main.tile[i, j];
-			int x = i - Main.tile[i, j].TileFrameX / 18 % 1;
-			if (type == TileID.Hellstone && fail == false && (Worldgen.TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2) && Main.drunkWorld))
-            {
-				noItem = true;
-				tile.HasTile = false;
-				tile.ClearEverything();
-				Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.Hellstone);
-			}
-        }*/
-    }
+		}	
+	}
 }

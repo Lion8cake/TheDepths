@@ -10,6 +10,7 @@ namespace TheDepths.Items.Armor
 	public class CrystalCrown : ModItem
 	{
 		public override void SetStaticDefaults() {
+			Tooltip.SetDefault("20% Increased Magic Critical Strike Chance");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -22,7 +23,7 @@ namespace TheDepths.Items.Armor
 		}
 		
 		public override void UpdateEquip(Player player) {
-			player.GetCritChance(DamageClass.Magic) += 20;
+		player.GetCritChance(DamageClass.Magic) += 20;
 		}
 	}
 }

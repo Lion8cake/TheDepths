@@ -18,6 +18,7 @@ namespace TheDepths.Tiles
             Main.tileMergeDirt[Type] = false;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
+            ItemDrop = ModContent.ItemType<Items.Placeable.Ember>();
             Main.tileNoAttach[Type] = true;
             DustType = ModContent.DustType<EmberDust>();
             AddMapEntry(new Color(179, 79, 36));

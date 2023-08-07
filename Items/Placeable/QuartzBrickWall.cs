@@ -15,7 +15,7 @@ namespace TheDepths.Items.Placeable
 		public override void SetDefaults() {
 			Item.width = 12;
 			Item.height = 12;
-			Item.maxStack = 9999;
+			Item.maxStack = 999;
 			Item.useTurn = true;
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
@@ -28,7 +28,6 @@ namespace TheDepths.Items.Placeable
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe(4);
 			recipe.AddIngredient(ModContent.ItemType<QuartzBricks>());
-			recipe.AddTile(TileID.WorkBenches);
 			recipe.Register();
 		}
 	}

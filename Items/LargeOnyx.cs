@@ -8,10 +8,12 @@ using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items
 {
-    public class LargeOnyx : ModItem
+    class LargeOnyx : ModItem
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Large Onyx");
+            Tooltip.SetDefault("For Capture the Gem. It drops when you die");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 

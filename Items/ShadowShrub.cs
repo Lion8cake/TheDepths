@@ -21,7 +21,7 @@ namespace TheDepths.Items
 			Item.height = 28;
 			Item.value = 100;
 			Item.rare = ItemRarityID.White;
-			Item.maxStack = 9999;
+			Item.maxStack = 99;
 		}
 	}
 }

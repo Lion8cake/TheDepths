@@ -1,7 +1,5 @@
-﻿using Terraria;
-using Terraria.GameContent.Creative;
+﻿using Terraria.GameContent.Creative;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -11,6 +9,7 @@ namespace TheDepths.Items.Placeable
     {
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Silverfall Block");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
         }
 
@@ -20,15 +19,6 @@ namespace TheDepths.Items.Placeable
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.createTile = TileType<Tiles.SilverfallBlock>();
-        }
-
-        public override void AddRecipes()
-        {
-            Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ItemID.Glass);
-            recipe.AddTile(TileID.CrystalBall);
-            recipe.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), () => Worldgen.TheDepthsWorldGen.depthsorHell && Main.LocalPlayer.adjLava);
-            recipe.Register();
         }
     }
 }

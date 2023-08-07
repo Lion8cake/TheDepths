@@ -10,6 +10,8 @@ namespace TheDepths.Items.Weapons
 	public class Skyfall : ModItem
 	{
 		public override void SetStaticDefaults() {
+		    DisplayName.SetDefault("Skyfall");
+			Tooltip.SetDefault("Mercury Rain falls from this throw");
 			ItemID.Sets.Yoyo[Item.type] = true;
 			ItemID.Sets.GamepadExtraRange[Item.type] = 15;
 			ItemID.Sets.GamepadSmartQuickReach[Item.type] = true;
@@ -27,7 +29,7 @@ namespace TheDepths.Items.Weapons
 			Item.damage = 21;
 			Item.rare = ItemRarityID.Orange;
 
-			Item.DamageType = DamageClass.Melee;
+			Item.DamageType = DamageClass.Melee/* tModPorter Suggestion: Consider MeleeNoSpeed for no attack speed scaling */;
 			Item.channel = true;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
@@ -37,7 +39,7 @@ namespace TheDepths.Items.Weapons
 			Item.shoot = ModContent.ProjectileType<SkyfallYoyo>();
 		}
 		
-		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
+		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit) {
 			target.AddBuff(ModContent.BuffType<Buffs.MercuryBoiling>(), 250); //Cascade is 4 secs of on fire and hel-fire is 6 secs, yes i counted in my head
 		}
 	}

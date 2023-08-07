@@ -17,6 +17,7 @@ namespace TheDepths.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
+            ItemDrop = ModContent.ItemType<Items.Placeable.ShaleBricks>();
             AddMapEntry(new Color(138, 158, 168));
 			DustType = ModContent.DustType<ShaleDust>();
             HitSound = SoundID.Tink;

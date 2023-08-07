@@ -66,15 +66,14 @@ namespace TheDepths.Projectiles
 			return false;
 		}
 
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
 			Projectile.ai[0] += 0.1f;
 			Projectile.velocity *= 0.75f;
 			target.AddBuff(ModContent.BuffType<Buffs.FreezingWater>(), 150, false);
 		}
 
-		public override void OnHitPlayer(Player target, Player.HurtInfo info) 
-		{
-			target.AddBuff(ModContent.BuffType<Buffs.FreezingWater>(), 150, false);
+		public override void OnHitPvp(Player target, int damage, bool crit) {
+		target.AddBuff(ModContent.BuffType<Buffs.FreezingWater>(), 150, false);
 		}
 	}
 }

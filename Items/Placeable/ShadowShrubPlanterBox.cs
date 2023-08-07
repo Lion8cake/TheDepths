@@ -16,13 +16,12 @@ namespace TheDepths.Items.Placeable
 		public override void SetDefaults() {
 			Item.width = 12;
 			Item.height = 12;
-			Item.maxStack = 9999;
+			Item.maxStack = 999;
 			Item.useTurn = true;
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
 			Item.value = 100;
-			Item.buyPrice(0, 0, 1, 0);
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<Tiles.ShadowShrubPlanterBox>();

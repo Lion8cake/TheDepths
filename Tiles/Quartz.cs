@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Localization;
 using TheDepths.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,11 +30,14 @@ namespace TheDepths.Tiles
 			Main.tileMerge[Type][Mod.Find<ModTile>("OnyxShalestone").Type] = true;
 			DustType = ModContent.DustType<QuartzCrystals>();
 
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(255, 255, 255));
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Quartz");
+			AddMapEntry(new Color(255, 255, 255), name);
 
+			ItemDrop = ModContent.ItemType<Items.Placeable.Quartz>();
 			HitSound = SoundID.Tink;
 			MineResist = 2f;
+			MinPick = 65;
 		}
 		
 		public override bool CanExplode(int i, int j)

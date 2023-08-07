@@ -9,6 +9,8 @@ namespace TheDepths.Items
 	{
         public override void SetStaticDefaults()
         {
+		    DisplayName.SetDefault("Flask of Mercury");
+            Tooltip.SetDefault("Melee attacks boils enemies with mercury");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 201;
         }
 
@@ -21,7 +23,7 @@ namespace TheDepths.Items
             Item.useTime = 15;
             Item.useTurn = true;
             Item.UseSound = SoundID.Item3;
-            Item.maxStack = 9999;
+            Item.maxStack = 30;
             Item.consumable = true;
             Item.rare = ItemRarityID.LightRed;
             Item.value = 2500;

@@ -15,7 +15,7 @@ namespace TheDepths.Items.Placeable
 		{
 			Item.width = 20;
 			Item.height = 20;
-			Item.maxStack = 9999;
+			Item.maxStack = 99;
 			Item.value = 3000;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTurn = true;
