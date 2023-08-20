@@ -1,12 +1,12 @@
 Mods: {
 	TheDepths: {
 		GameTips: {
-			DepthsTip0: An unknown friendly NPC wonders the Depths as a crystal of their former self. If only there were a way to purify them . . .
+			DepthsTip0: An unknown friendly NPC wanders the Depths as a crystal of their former self. If only there were a way to purify them . . .
 			DepthsTip1: If you dig deep enough in the right world, you might end up in The Depths!
 			DepthsTip2: Defeat the Shadowstone giant Chasme to change the world forever. Using a Ruby Relic at a Gemforge might summon her...
-			DepthsTip3: Aquerite is super poisonus, craft a crystal skull to be immue to its poisoning.
-			DepthsTip4: Don't fall into quicksilver without drinking an Crystal Skin Potion first!
-			DepthsTip5: You can spend up to 8 seconds in quicksilver without consiquences with the right gear!
+			DepthsTip3: Arquerite is super poisonous, craft a Crystal Skull to be immue to its poisoning.
+			DepthsTip4: Don't fall into quicksilver without drinking a Crystal Skin Potion first!
+			DepthsTip5: You can spend up to 8 seconds in quicksilver without consequences with the right gear!
 		}
 
 		common: {
@@ -65,22 +65,22 @@ Mods: {
 
 		Bestiary: {
 			# Enemies
-			AlbinoBat: A victum of a rare pigment mutation this bat roams the deeper cavern system to blend in with the surrounding mercury in order to survive
-			Archroma: A cousin of pinky with a similar density causing them to be very strong, they eat money
+			AlbinoBat: A victum of a rare pigment mutation, this bat roams the deeper cavern system to blend in with the surrounding mercury in order to survive.
+			Archroma: A cousin of pinky with a similar density causing them to be very strong, they eat money.
 			CrystalKing: A royal king of Geomancy, although unable to walk he can teleport like most other mages.
 			Ferroslime: This slime may appear spiky, but that's only its ferrofluid spiking up to come off as more threatening than it is.
-			Geomancer: Loyal cult members well-practiced in geomancy. Legends have it that they worship a living shadow-flame being
+			Geomancer: Loyal cult members well-practiced in geomancy. Legends have it that they worship a living shadowflame being.
 			GoldBat: A rare bat in the depths that was cursed by the geomancers to be a gem-like creature. Despite their name they are actually the same color as topaz.
 			KingCoal: He's no merry old soul, he's Crystal King's rival brother, born in fire he will do all he can to take you down!
 			DepthsWorm: A stone and sapphire serpent with water flowing through its veins. It carries a shovel like no other.
 			Shade: Beings of pure darkness that drift through the depths with the ability to freely float through the air. A group of them is called a darkening.
-			ShadowBat: This half black half emerald bat is a stonger varient of the bats found in the depths, Is it a bat's shadow or a shadow made of bats?
+			ShadowBat: This half black half emerald bat is a stonger varient of the bats found in the depths. Is it a bat's shadow or a shadow made of bats?
 			ShadowSlime: A purely black slime that roams the hardened depths, getting hit by it would be a blinding.
 			EnchantedNightmareWorm: Over time worms that have found their way to the deep underground will have discovered the Nightmare Grove. Forced to blend in, they inherit the natural purple tint of their surrounding enviroment.
-			QuartzCrawler: A black snail with a shell that looks very similar to a chunk of quartz. An especially tasty treat to fish that leark in the mercury.
+			QuartzCrawler: A black snail with a shell that looks very similar to a chunk of quartz. An especially tasty treat to fish that lurk in the mercury.
 			AlbinoRat: A rare pigmented rat that attempted to blend in with the surrounding quartz and mercury. How the hell do you catch a fish with that thing?
-			Chasme: A giant made a pure Shalestone. Despite being called Chasme this is only her depth'n tool of destruction and safety.          Chasme too was powerful but she never wanted that fight. Maybe this was all a misunderstanding
-			ChasmeHands: Shalestone manifestations made by Chasme to help shape the Depths to what you see today. These have no corrilation to the hands of those from Deerclops.           You destroyed her and her home all for the freedom of the ancient spirits. Happiness comes at a cost.
+			Chasme: A giant made of pure Shalestone. Despite being called Chasme this is only her depth'n tool of destruction and safety.          Chasme too was powerful but she never wanted that fight. Maybe this was all a misunderstanding
+			ChasmeHands: Shalestone manifestations made by Chasme to help shape the Depths to what you see today. These have no correlation to the hands of those from Deerclops.           You destroyed her and her home all for the freedom of the ancient spirits. Happiness comes at a cost.
 			ChasmeSoul: Chasme was born on a total eclipse that cursed her to what you saw then. She was locked away in the deep underground where she turned everything into an eternal dark abyss.        Sometimes I wonder if her curse could be broken someday.
 		}
 
@@ -96,28 +96,28 @@ Mods: {
 				'''
 			TheDepths:
 				'''
-				The Depths is a cold harsh place, nothing like I have ever seen before. Despite being that I also find its unique floana and fauna quite 
-				interesting. They have all learnt to live within the darkness and to adapt to their surroundings. One interesting part I learnt from exploring
-				the Depths is the almost ever expanding cult there. They built these castles and apartments just to worship Chasme. They are a tricky kind. every
+				The Depths is a cold harsh place, nothing like I have ever seen before. Despite being that I also find its unique flora and fauna quite 
+				interesting. They have all learnt to live within the darkness and adapt to their surroundings. One interesting part I learnt from exploring
+				the Depths is the almost ever expanding cult there. They built these castles and apartments just to worship Chasme. They are a tricky kind. Every
 				one that my men have captured or killed have either been able to escape or have turned to gems and I still have no idea whether the geomancers are
-				humans or a whole new species. I should also note that the nightmare grove is quite the place. its unique bio-luminescent grass, vines and more 
-				serve as the Depth's only source of light, apart from the geomancer's own torches. I will have Draedon to construct tests and observations here
+				humans or a whole new species. I should also note that the nightmare grove is quite the place. Its unique bio-luminescent grass, vines and more 
+				serve as the Depth's only source of light, apart from the geomancer's own torches. I will have Draedon conduct tests and observations here
 				to explore this place's true potential. The only trouble is keeping Chasme at bay...
 				'''
 		}
 
 		PlayerDeathReason: {
 			Gemforge: {
-				0: "{0} tried to summon a cult in pure light"
-				1: "{0} moved a gemforge away from its home"
-				2: "{0} tried to burned a relic on the surface"
+				0: "{0} tried to summon a cult in pure light."
+				1: "{0} moved a gemforge away from its home."
+				2: "{0} tried to burn a relic on the surface."
 			}
 
 			MercuryPoisoning: {
-				0: "{0} couldn't find a cure"
-				1: "{0} surcome to their illness"
-				2: "{0} drank a lightbulb"
-				3: "{0} licked a special rock"
+				0: "{0} couldn't find a cure."
+				1: "{0} succumbed to their illness."
+				2: "{0} drank a lightbulb."
+				3: "{0} licked a special rock."
 			}
 
 			ChasmeHead: {
@@ -168,8 +168,8 @@ Mods: {
 			NightwoodChandelier.MapEntry: Nightwood Chandelier
 			NightwoodChest.MapEntry: Nightwood Chest
 			NightwoodClock.MapEntry: Nightwood Clock
-			NightwoodDoorClosed.MapEntry: Nightwood Door Closed
-			NightwoodDoorOpen.MapEntry: Nightwood Door Open
+			NightwoodDoorClosed.MapEntry: Nightwood Door
+			NightwoodDoorOpen.MapEntry: Nightwood Door
 			NightwoodDresser.MapEntry: Nightwood Dresser
 			NightwoodLamp.MapEntry: Nightwood Lamp
 			NightwoodLantern.MapEntry: Nightwood Lantern
@@ -206,7 +206,7 @@ Mods: {
 
 			FlaskofMercury: {
 				DisplayName: Weapon Imbue: Mercury
-				Description: Melee attacks boils enemies with mercury
+				Description: Melee attacks boil enemies with mercury
 			}
 
 			FreezingWater: {
@@ -270,7 +270,7 @@ Mods: {
 		Items: {
 			AmalgamAmulet: {
 				DisplayName: Amalgam Amulet
-				Tooltip: Grants 4 seconds of extra quicksilver immunity
+				Tooltip: Grants 4 additional seconds of quicksilver immunity
 			}
 
 			AquaGlove: {
@@ -840,7 +840,7 @@ Mods: {
 				DisplayName: Core Globe
 				Tooltip:
 					'''
-					Toss it to change how the core look!
+					Toss it to change how the core looks!
 					'Time for a change of scenery'
 					'''
 			}
@@ -1456,22 +1456,22 @@ Mods: {
 			QuicksilverRocket.DisplayName: Quicksilver Rocket
 			QuicksilverSnowmanRocket.DisplayName: Quicksilver Snowman Rocket
 			SilverBobber.DisplayName: Silver Bobber
-			ShadowflameEmber1.DisplayName: Shadowflame Ember1
+			ShadowflameEmber1.DisplayName: Shadowflame Ember
 			ShadowCat.DisplayName: Shadow Cat
-			ShadowflameEmber2.DisplayName: Shadowflame Ember2
-			ShadowflameEmber3.DisplayName: Shadowflame Ember3
+			ShadowflameEmber2.DisplayName: Shadowflame Ember
+			ShadowflameEmber3.DisplayName: Shadowflame Ember
 			POWHammerSwing.DisplayName: P O W Hammer Swing
 			POWEffect.DisplayName: P O W Effect
-			MercuryExplosion1.DisplayName: Mercury Explosion1
+			MercuryExplosion1.DisplayName: Mercury Explosion
 			MercuryExplosion.DisplayName: Mercury Explosion
 			MercuryWarningSign.DisplayName: Mercury Warning Sign
-			ShadeBladeLeft.DisplayName: Shade Blade Left
-			ShadeBladeRight.DisplayName: Shade Blade Right
+			ShadeBladeLeft.DisplayName: Shade Blade
+			ShadeBladeRight.DisplayName: Shade Blade
 			ShadeBladeCalculator.DisplayName: Shade Blade Calculator
 			ChasmeRay.DisplayName: Chasme Ray
 			ChasmeShockwave.DisplayName: Chasme Shockwave
-			ChasVoid.DisplayName: Chas Void
-			Chlaser.DisplayName: Chlaser
+			ChasVoid.DisplayName: Chasme Void
+			Chlaser.DisplayName: Chasme Laser
 		}
 
 		Biomes: {
@@ -1484,17 +1484,17 @@ Mods: {
 		UnderworldSelection: {
 			Random: {
 				Title: Random
-				Description: Let nature decide whether the underworld or depths is the world core.
+				Description: Let nature decide whether the Underworld or Depths is the world core.
 			}
 
 			Underworld: {
 				Title: Underworld
-				Description: Lava filled underworld is guarenteed to be present in your world.
+				Description: The lava filled Underworld is guaranteed to be present in your world.
 			}
 
 			Depths: {
 				Title: Depths
-				Description: Cold, dark depths is guarenteeed to be present in your world.
+				Description: The cold, dark Depths are guaranteeed to be present in your world.
 			}
 		}
 
