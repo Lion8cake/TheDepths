@@ -39,7 +39,7 @@ namespace TheDepths.Items
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 15);
 			recipe.AddIngredient(ItemID.BugNet, 1);
-			recipe.AddTile(ModContent.TileType<Tiles.Gemforge>());
+			recipe.AddTile(TileID.Hellforge);
 			recipe.Register();
 		}
 	}

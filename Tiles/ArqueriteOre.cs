@@ -15,7 +15,6 @@ namespace TheDepths.Tiles
 		public override void SetStaticDefaults()
 		{
 			TileID.Sets.Ore[Type] = true;
-			Main.tileSpelunker[Type] = true;
 			Main.tileOreFinderPriority[Type] = 500;
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 975;
@@ -53,6 +52,10 @@ namespace TheDepths.Tiles
 		
 		public override bool CanExplode(int i, int j)
 		{
+			if (Main.hardMode)
+			{
+				return true;
+			}
 			return false;
 		}
 

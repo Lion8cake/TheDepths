@@ -42,7 +42,14 @@ namespace TheDepths.Items
                 ItemID.Sets.IsLavaImmuneRegardlessOfRarity[item.type] = true;
             }
         }
-    }
+
+		public override void SetStaticDefaults()
+		{
+            ItemID.Sets.ShimmerTransformToItem[ItemID.Amber] = ItemID.Diamond;
+            ItemID.Sets.ShimmerTransformToItem[ItemID.CobaltOre] = ModContent.ItemType<ArqueriteOre>();
+            ItemID.Sets.ShimmerTransformToItem[ItemID.Hellstone] = ItemID.PlatinumOre;
+        }
+	}
 
     public class DemonConch : GlobalItem
     {

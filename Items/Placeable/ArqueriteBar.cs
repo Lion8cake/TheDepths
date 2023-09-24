@@ -36,7 +36,7 @@ namespace TheDepths.Items.Placeable
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ModContent.ItemType<ArqueriteOre>(), 3);
 			recipe.AddIngredient(ModContent.ItemType<Quartz>(), 1);
-			recipe.AddTile(ModContent.TileType<Tiles.Gemforge>());
+			recipe.AddTile(TileID.Hellforge);
 			recipe.Register();
 		}
 	}

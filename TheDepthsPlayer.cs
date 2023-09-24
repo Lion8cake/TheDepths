@@ -25,6 +25,8 @@ using Terraria.Graphics.Shaders;
 using Terraria.Audio;
 using System.Reflection;
 using Terraria.Map;
+using Terraria.GameContent.Liquid;
+using ReLogic.Content;
 
 namespace TheDepths
 {
@@ -40,7 +42,6 @@ namespace TheDepths
         public bool merImbue;
         public bool aStone;
         public bool lodeStone;
-        public bool noHit;
         public bool stoneRose;
         public bool aAmulet;
         public bool sEmbers;
@@ -52,6 +53,8 @@ namespace TheDepths
         public bool quicksilverWet;
         public int EmberTimer;
         public bool NightwoodBuff;
+
+        public int cShadowFlame;
 
         public bool geodeCrystal;
         public bool livingShadow;
@@ -82,16 +85,7 @@ namespace TheDepths
             miniChasme = false;
             miniChasmeArms = false;
             ShadePet = false;
-
-
-            for (int i = 0; i < Main.maxNPCs; i++)
-            {
-                if (Main.npc[i].active && Main.npc[i].boss)
-                {
-                    return;
-                }
-            }
-            noHit = false;
+            tremblingDepthsScreenshakeTimer = 0;
         }
 
         public override void ModifyScreenPosition()
@@ -128,6 +122,14 @@ namespace TheDepths
             ushort LiquidPosition = (ushort)typeof(MapHelper).GetField("liquidPosition", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
             Color[] ColorLookup = (Color[])typeof(MapHelper).GetField("colorLookup", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
             ColorLookup[LiquidPosition + 1] = new Color(253, 32, 3);
+
+            if (!Main.dedServ)
+            {
+                for (int i = 0; i < 15; i++)
+                {
+                    LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
+                }
+            }
         }
 
 		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
@@ -183,7 +185,7 @@ namespace TheDepths
 
         public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
         {
-            if (item.CountsAsClass(DamageClass.Melee))
+            if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass<SummonMeleeSpeedDamageClass>())
             {
                 if (merImbue)
                 {
@@ -196,18 +198,17 @@ namespace TheDepths
             }
         }
 
-        public override void OnHurt(Player.HurtInfo info)
-        {
-            Item item = Player.HeldItem;
-            if (item.CountsAsClass(DamageClass.Melee))
+		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
+		{
+            if (proj.CountsAsClass(DamageClass.Melee) || proj.CountsAsClass<SummonMeleeSpeedDamageClass>())
             {
                 if (merImbue)
                 {
-                    Player.AddBuff(ModContent.BuffType<MercuryBoiling>(), 360 * Main.rand.Next(1, 1));
+                    target.AddBuff(ModContent.BuffType<MercuryBoiling>(), 360 * Main.rand.Next(1, 1));
                 }
                 if (aStone)
                 {
-                    Player.AddBuff(ModContent.BuffType<FreezingWater>(), 360 * Main.rand.Next(1, 1));
+                    target.AddBuff(ModContent.BuffType<FreezingWater>(), 360 * Main.rand.Next(1, 1));
                 }
             }
         }
@@ -268,6 +269,29 @@ namespace TheDepths
             }
         }
 
+		public override void UpdateDyes()
+		{
+            for (int i = 0; i < 20; i++)
+            {
+                if (Player.IsItemSlotUnlockedAndUsable(i))
+                {
+                    int num = i % 10;
+                    UpdateItemDye(i < 10, Player.hideVisibleAccessory[num], Player.armor[i], Player.dye[num]);
+                }
+            }
+        }
+
+        internal void UpdateItemDye(bool isNotInVanitySlot, bool isSetToHidden, Item armorItem, Item dyeItem)
+        {
+            if (!armorItem.IsAir || !isSetToHidden)
+            {
+                if (armorItem.type == ModContent.ItemType<Items.Accessories.ShadowflameEmberedTreads>() || armorItem.type == ModContent.ItemType<Items.Accessories.NightmareFlareTreads>())
+                {
+                    cShadowFlame = dyeItem.dye;
+                }
+            }
+        }
+
         public override void PostUpdate()
         {
             #region QuicksilverMapColor
@@ -282,6 +306,26 @@ namespace TheDepths
                 ColorLookup[LiquidPosition + 1] = new Color(253, 32, 3);
             }
             #endregion
+
+            if (!Main.dedServ)
+            {
+                if (Worldgen.TheDepthsWorldGen.InDepths)
+                {
+                    LiquidRenderer.Instance._liquidTextures[1] = ModContent.Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver", (AssetRequestMode)1);
+                    int[] liquidAssetRegularNum = new int[14] { 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+                    foreach (int i in liquidAssetRegularNum)
+                    {
+                        LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 15; i++)
+                    {
+                        LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
+                    }
+                }
+            }
 
             if (lodeStone)
             {
@@ -690,11 +734,11 @@ namespace TheDepths
                 TextureAssets.Item[3729] = Main.Assets.Request<Texture2D>("Images/Item_3729");
                 TextureAssets.Tile[423] = Main.Assets.Request<Texture2D>("Images/Tiles_423");
             }
-            if (Player.lavaWet && Worldgen.TheDepthsWorldGen.InDepths || Collision.LavaCollision(Main.LocalPlayer.position, Main.LocalPlayer.width, Main.LocalPlayer.height) && Worldgen.TheDepthsWorldGen.InDepths)
+            if (player.lavaWet && Worldgen.TheDepthsWorldGen.InDepths || Collision.LavaCollision(Main.LocalPlayer.position, Main.LocalPlayer.width, Main.LocalPlayer.height) && Worldgen.TheDepthsWorldGen.InDepths)
             {
                 if (Main.remixWorld)
                 {
-                    Player.lavaTime = 1000;
+                    player.lavaTime = 1000;
                     player.buffImmune[BuffID.OnFire] = true;
                     player.buffImmune[BuffID.OnFire3] = true;
                     quicksilverWet = true;
@@ -702,11 +746,11 @@ namespace TheDepths
                     {
                         if (NightwoodBuff == true)
                         {
-                            Player.AddBuff(BuffType<MercuryBoiling>(), 60 * (int)3.5, false, false);
+                            player.AddBuff(BuffType<MercuryBoiling>(), 60 * (int)3.5, false, false);
                         }
                         else
                         {
-                            Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 7, false, false);
+                            player.AddBuff(BuffType<MercuryBoiling>(), 60 * 7, false, false);
                         }
                     }
                 }
@@ -714,13 +758,13 @@ namespace TheDepths
                 {
                     if (NightwoodBuff == true)
                     {
-                        Player.AddBuff(BuffType<MercuryFooting>(), 60 * 60, false, false);
+                        player.AddBuff(BuffType<MercuryFooting>(), 60 * 60, false, false);
                     }
                     else
                     {
-                        Player.AddBuff(BuffType<MercuryFooting>(), 60 * 30, false, false);
+                        player.AddBuff(BuffType<MercuryFooting>(), 60 * 30, false, false);
                     }
-                    Player.lavaTime = 1000;
+                    player.lavaTime = 1000;
                     player.buffImmune[BuffID.OnFire] = true;
                     player.buffImmune[BuffID.OnFire3] = true;
                     quicksilverWet = true;

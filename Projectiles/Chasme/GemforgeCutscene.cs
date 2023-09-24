@@ -109,7 +109,7 @@ namespace TheDepths.Projectiles.Chasme
 					ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", Language.GetTextValue("Mods.TheDepths.NPCs.ChasmeBody.DisplayName")), new Color(175, 75, 255));
 				}
 			}
-			if (Projectile.timeLeft == 140) 
+			if (Projectile.timeLeft >= 140) 
             {
 				Geomancer.TheRelicMadeHimExplode = false;
 			}

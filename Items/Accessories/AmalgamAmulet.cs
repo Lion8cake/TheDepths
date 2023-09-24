@@ -14,6 +14,7 @@ namespace TheDepths.Items.Accessories
 	{
 		public override void SetStaticDefaults() {
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<AquaStone>();
 		}
 
 		public override void SetDefaults() {

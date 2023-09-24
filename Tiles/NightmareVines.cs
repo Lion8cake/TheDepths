@@ -1,5 +1,9 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using System.Reflection;
 using Terraria;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheDepths.Dusts;
@@ -16,9 +20,23 @@ namespace TheDepths.Tiles
             Main.tileNoFail[Type] = true;
             Main.tileNoAttach[Type] = true;
             TileID.Sets.IsVine[Type] = true;
+            TileID.Sets.VineThreads[Type] = true; //REQUIRED if your adding wind to vines
             DustType = ModContent.DustType<NightDust>();
             HitSound = SoundID.Grass;
             AddMapEntry(new Color(44, 25, 96));
+        }
+
+        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            bool intoRenderTargets = true;
+            bool flag = intoRenderTargets || Main.LightingEveryFrame;
+
+            if (Main.tile[i, j].TileFrameX % 18 == 0 && Main.tile[i, j].TileFrameY % 54 == 0 && flag)
+            {
+                Main.instance.TilesRenderer.CrawlToTopOfVineAndAddSpecialPoint(j, i);
+            }
+
+            return false;
         }
 
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)

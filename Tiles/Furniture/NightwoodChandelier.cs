@@ -30,6 +30,19 @@ namespace TheDepths.Tiles.Furniture
             DustType = ModContent.DustType<Dusts.NightWoodDust>();
         }
 
+        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            bool intoRenderTargets = true;
+            bool flag = intoRenderTargets || Main.LightingEveryFrame;
+
+            if (Main.tile[i, j].TileFrameX % 54 == 0 && Main.tile[i, j].TileFrameY % 54 == 0 && flag)
+            {
+                Main.instance.TilesRenderer.AddSpecialPoint(i, j, 5);
+            }
+
+            return false;
+        }
+
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             Tile tile = Main.tile[i, j];

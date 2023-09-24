@@ -161,7 +161,10 @@ namespace TheDepths.NPCs
 			}
 			if (shop.NpcType == NPCID.BestiaryGirl)
             {
-				shop.InsertAfter(ItemID.WorldGlobe, ModContent.ItemType<Items.CoreGlobe>(), Condition.Hardmode);
+				shop.InsertAfter(ItemID.WorldGlobe, new Item(ModContent.ItemType<Items.CoreGlobe>())
+				{
+					shopCustomPrice = Item.buyPrice(0, 3, 0, 0)
+				}, Condition.Hardmode);
 			}
 		}
 	}

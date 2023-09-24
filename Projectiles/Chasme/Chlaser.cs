@@ -21,7 +21,6 @@ namespace TheDepths.Projectiles.Chasme
         Color beamColor = new(195, 136, 251);
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
         }
         private float BeamLength
         {

@@ -24,7 +24,6 @@ namespace TheDepths.Tiles
             TileID.Sets.ChecksForMerge[Type] = true;
             TileID.Sets.ForcedDirtMerging[Type] = true;
             TileID.Sets.Conversion.MergesWithDirtInASpecialWay[Type] = true;
-            TileID.Sets.Conversion.Grass[Type] = true;
             DustType = ModContent.DustType<NightDust>();
             AddMapEntry(new Color(43, 28, 83));
             RegisterItemDrop(ModContent.ItemType<Items.Placeable.ShaleBlock>());

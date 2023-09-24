@@ -77,7 +77,6 @@ namespace TheDepths.Items.Placeable
 			AddAndReplace<SilverStar>(ItemID.Sunfury);
 			AddAndReplace<Ember>(ModContent.ItemType<DiamondDust>());
 			AddAndReplace<Skyfall>(ItemID.FlowerofFire);
-			AddAndReplace<LivingFog>(ItemID.LivingFireBlock);
 			AddAndReplace<BlueSphere>(ItemID.HelFire);
 		}
 

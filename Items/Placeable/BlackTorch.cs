@@ -13,6 +13,7 @@ namespace TheDepths.Items.Placeable
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
 			ItemID.Sets.Torches[Type] = true;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerTorch;
 		}
 
 		public override void SetDefaults() {

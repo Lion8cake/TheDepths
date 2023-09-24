@@ -28,7 +28,7 @@ namespace TheDepths.Items.Placeable.Furniture
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<NightWood>(), 8).AddIngredient(22, 2).AddTile(TileID.WorkBenches).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<NightWood>(), 8).AddRecipeGroup(RecipeGroupID.IronBar, 2).AddTile(TileID.WorkBenches).Register();
         }
     }
 }

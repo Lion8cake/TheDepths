@@ -8,38 +8,26 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
-using TheDepths.Tiles;
 using Terraria.ID;
-using MonoMod.Utils;
 using Terraria.GameContent.Liquid;
 using System.Reflection;
 using Microsoft.Xna.Framework;
 using Terraria.Graphics.Light;
-using Terraria.Utilities;
-using Terraria.ObjectData;
-using Terraria.Audio;
 using TheDepths.Items.Weapons;
-using Terraria.GameContent.Skies;
 using Terraria.GameContent;
-using Terraria.Localization;
 using Terraria.UI;
 using Terraria.GameContent.UI.Elements;
 using TheDepths.Hooks;
-using Terraria.DataStructures;
 using TheDepths.Dusts;
-using Terraria.Map;
-using TheDepths.Items;
-using Terraria.Graphics.Capture;
 using Terraria.GameContent.UI.States;
-using System.Linq;
 using Terraria.IO;
-using Terraria.ModLoader.IO;
 using TheDepths.Biomes;
 using Terraria.GameContent.Tile_Entities;
-using static Terraria.WaterfallManager;
-using Terraria.GameContent.Items;
 using System.IO;
-using Terraria.ModLoader.Config;
+using static Terraria.Graphics.FinalFractalHelper;
+using Terraria.Graphics;
+using TheDepths.Worldgen;
+using Terraria.GameContent.Drawing;
 
 namespace TheDepths
 {
@@ -51,11 +39,17 @@ namespace TheDepths
 
         public override void Load()
         {
+            TheDepthsWindUtilities.Load();
+
+            var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+
+            fractalProfiles.Add(ModContent.ItemType<Terminex>(), new FinalFractalProfile(70f, new Color(75, 103, 214))); // new Color(119, 135, 162)));
+
             mod = this;
             for (int i = 0; i < texture.Length; i++)
                 texture[i] = ModContent.Request<Texture2D>("TheDepths/Backgrounds/DepthsUnderworldBG_" + i);
             livingFireBlockList = new List<int> { 336, 340, 341, 342, 343, 344, ModContent.TileType<Tiles.LivingFog>() };
-            
+
             if (!Main.dedServ)
             {
                 EquipLoader.AddEquipTexture(this, "TheDepths/Items/Armor/OnyxRobe_Legs", EquipType.Legs, name: "OnyxRobe_Legs");
@@ -76,29 +70,42 @@ namespace TheDepths
             Terraria.Graphics.Light.On_TileLightScanner.ApplyHellLight += TileLightScanner_ApplyHellLight;
             On_WaterfallManager.AddLight += On_WaterfallManager_AddLight;
 
-            
+            On_UIWorldListItem.DrawSelf += (orig, self, spriteBatch) => {
+                orig(self, spriteBatch);
+                DrawWorldSelectItemOverlay(self, spriteBatch);
+            };
+
             Terraria.On_WaterfallManager.DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects += On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects;
             Terraria.On_WaterfallManager.StylizeColor += On_WaterfallManager_StylizeColor;
-            On_Main.DoUpdate += On_Main_DoUpdate;
 
             On_Liquid.GetLiquidMergeTypes += On_Liquid_GetLiquidMergeTypes;
             On_Player.PlaceThing_Tiles_CheckLavaBlocking += On_Player_PlaceThing_Tiles_CheckLavaBlocking;
-            
+
             Terraria.GameContent.UI.Elements.On_UIGenProgressBar.DrawSelf += On_UIGenProgressBar_DrawSelf;
             Terraria.GameContent.UI.States.IL_UIWorldCreation.BuildPage += DepthsSelectionMenu.ILBuildPage;
             Terraria.GameContent.UI.States.IL_UIWorldCreation.MakeInfoMenu += DepthsSelectionMenu.ILMakeInfoMenu;
             Terraria.GameContent.UI.States.IL_UIWorldCreation.ShowOptionDescription +=
                 DepthsSelectionMenu.ILShowOptionDescription;
-            Terraria.GameContent.UI.States.On_UIWorldSelect.UpdateWorldsList += On_UIWorldSelect_UpdateWorldsList;
+
 
             Terraria.GameContent.UI.States.On_UIWorldCreation.SetDefaultOptions += DepthsSelectionMenu.OnSetDefaultOptions;
             On_Player.ItemCheck_CatchCritters += On_Player_ItemCheck_CatchCritters;
             Terraria.On_Dust.NewDust += Dust_NewDust;
             On_TELogicSensor.GetState += On_TELogicSensor_GetState;
+
+			On_TileDrawing.DrawMultiTileVinesInWind += On_TileDrawing_DrawMultiTileVinesInWind;
         }
 
-        public override void Unload()
+		
+
+		public override void Unload()
         {
+            TheDepthsWindUtilities.Unload();
+
+            var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+
+            fractalProfiles.Remove(ModContent.ItemType<Terminex>());
+
             livingFireBlockList = null;
             //IL.Terraria.Liquid.Update -= Evaporation;
             //IL_Player.ItemCheck_ManageRightClickFeatures -= IL_Player_ItemCheck_ManageRightClickFeatures;
@@ -115,21 +122,273 @@ namespace TheDepths
 
             Terraria.On_WaterfallManager.DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects -= On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects;
             Terraria.On_WaterfallManager.StylizeColor -= On_WaterfallManager_StylizeColor;
-            On_Main.DoUpdate -= On_Main_DoUpdate;
             
             On_Liquid.GetLiquidMergeTypes -= On_Liquid_GetLiquidMergeTypes;
             On_Player.PlaceThing_Tiles_CheckLavaBlocking -= On_Player_PlaceThing_Tiles_CheckLavaBlocking;
             
             Terraria.GameContent.UI.Elements.On_UIGenProgressBar.DrawSelf -= On_UIGenProgressBar_DrawSelf;
-            Terraria.GameContent.UI.States.On_UIWorldSelect.UpdateWorldsList -= On_UIWorldSelect_UpdateWorldsList;
 
             On_Player.ItemCheck_CatchCritters -= On_Player_ItemCheck_CatchCritters;
             Terraria.On_Dust.NewDust -= Dust_NewDust;
             On_TELogicSensor.GetState -= On_TELogicSensor_GetState;
+
+            On_TileDrawing.DrawMultiTileVinesInWind -= On_TileDrawing_DrawMultiTileVinesInWind;
         }
 
-        #region QuicksilverfallGlowmaskRemover
-        private Color On_WaterfallManager_StylizeColor(On_WaterfallManager.orig_StylizeColor orig, float alpha, int maxSteps, int waterfallType, int y, int s, Tile tileCache, Color aColor)
+		#region VineWindTileLength
+		private void On_TileDrawing_DrawMultiTileVinesInWind(On_TileDrawing.orig_DrawMultiTileVinesInWind orig, TileDrawing self, Vector2 screenPosition, Vector2 offSet, int topLeftX, int topLeftY, int sizeX, int sizeY)
+        {
+            if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.DepthsVanityBanners>())
+            {
+                sizeY = 3;
+            }
+            else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.DepthsBanners>())
+            {
+                sizeY = 3;
+            }
+            else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.NightwoodChandelier>())
+            {
+                sizeX = 3;
+                sizeY = 3;
+            }
+            else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.QuartzChandelier>())
+            {
+                sizeX = 3;
+                sizeY = 3;
+            }
+            orig.Invoke(self, screenPosition, offSet, topLeftX, topLeftY, sizeX, sizeY);
+        }
+        #endregion
+
+		#region NEWWorldIcondetour
+		private void DrawWorldSelectItemOverlay(UIWorldListItem uiItem, SpriteBatch spriteBatch)
+        {
+            bool data =  uiItem.Data.TryGetHeaderData(ModContent.GetInstance<TheDepthsWorldGen>(), out var _data);
+            UIElement WorldIcon = (UIElement)typeof(UIWorldListItem).GetField("_worldIcon", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(uiItem);
+            WorldFileData Data = (WorldFileData)typeof(AWorldListItem).GetField("_data", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(uiItem);
+
+            #region UnopenedWorldIcon
+            if (!data)
+            {
+                if (!Data.DrunkWorld && !Data.DefeatedMoonlord)
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconUnderworld"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-6f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+                else if (!Data.DrunkWorld && Data.DefeatedMoonlord)
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconUnderworld"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-7f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+                else if (Data.DrunkWorld)
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunk"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-6f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+                else if (Data.DrunkWorld && Data.DefeatedMoonlord)
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunk"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-7f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+            }
+			#endregion
+			else
+			{
+                #region Normal
+                if (_data.GetBool("HasDepths") && !Data.RemixWorld && !Data.DrunkWorld && !Data.DefeatedMoonlord)
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepths"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-6f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+                if (_data.GetBool("HasDepths") && !Data.RemixWorld && !Data.DrunkWorld && Data.DefeatedMoonlord)
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepths"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-7f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+                else if (!_data.GetBool("HasDepths") && !Data.DrunkWorld && !Data.DefeatedMoonlord)
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconUnderworld"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-6f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+                else if (!_data.GetBool("HasDepths") && !Data.DrunkWorld && Data.DefeatedMoonlord)
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconUnderworld"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-7f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+                #endregion
+
+                #region DrunkSeedIcon
+                else if (Data.DrunkWorld && !Data.DefeatedMoonlord && (_data.GetBool("DrunkDepthsLeft") && _data.GetBool("DrunkDepthsRight") || !_data.GetBool("DrunkDepthsLeft") && !_data.GetBool("DrunkDepthsRight")))
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunk"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-6f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+                else if (Data.DrunkWorld && Data.DefeatedMoonlord && (_data.GetBool("DrunkDepthsLeft") && _data.GetBool("DrunkDepthsRight") || !_data.GetBool("DrunkDepthsLeft") && !_data.GetBool("DrunkDepthsRight")))
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunk"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-7f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+
+                else if (Data.DrunkWorld && !Data.DefeatedMoonlord && _data.GetBool("DrunkDepthsLeft") && !_data.GetBool("DrunkDepthsRight"))
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunkLeft"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-6f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+                else if (Data.DrunkWorld && Data.DefeatedMoonlord && _data.GetBool("DrunkDepthsLeft") && !_data.GetBool("DrunkDepthsRight"))
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunkLeft"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-7f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+
+                else if (Data.DrunkWorld && !Data.DefeatedMoonlord && !_data.GetBool("DrunkDepthsLeft") && _data.GetBool("DrunkDepthsRight"))
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunkRight"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-6f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+                else if (Data.DrunkWorld && Data.DefeatedMoonlord && !_data.GetBool("DrunkDepthsLeft") && _data.GetBool("DrunkDepthsRight"))
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunkRight"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-7f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+
+                #endregion
+
+                #region RemixSeedIcon
+                else if (_data.GetBool("HasDepths") && Data.HasCrimson && Data.RemixWorld && !Data.IsHardMode)
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepthsRemixCrimson"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-6f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+                else if (_data.GetBool("HasDepths") && Data.HasCrimson && Data.RemixWorld && Data.IsHardMode)
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepthsRemixCrimsonHallow"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-6f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+                else if (_data.GetBool("HasDepths") && Data.HasCorruption && Data.RemixWorld && !Data.IsHardMode)
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepthsRemixCorruption"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-6f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+                else if (_data.GetBool("HasDepths") && Data.HasCorruption && Data.RemixWorld && Data.IsHardMode)
+                {
+                    UIElement worldIcon = WorldIcon;
+                    UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepthsRemixCorruptionHallow"))
+                    {
+                        Top = new StyleDimension(-10f, 0f),
+                        Left = new StyleDimension(-6f, 0f),
+                        IgnoresMouseInteraction = true
+                    };
+                    worldIcon.Append(element);
+                }
+                #endregion
+            }
+		}
+		#endregion
+
+		#region QuicksilverfallGlowmaskRemover
+		private Color On_WaterfallManager_StylizeColor(On_WaterfallManager.orig_StylizeColor orig, float alpha, int maxSteps, int waterfallType, int y, int s, Tile tileCache, Color aColor)
         {
             float num = (float)(int)aColor.R * alpha;
             float num2 = (float)(int)aColor.G * alpha;
@@ -185,312 +444,6 @@ namespace TheDepths
                 return false;
             }
             return orig.Invoke(x, y, type, instance);
-        }
-        #endregion
-
-        #region WorldUIOverlay
-        private void On_UIWorldSelect_UpdateWorldsList(Terraria.GameContent.UI.States.On_UIWorldSelect.orig_UpdateWorldsList orig, Terraria.GameContent.UI.States.UIWorldSelect self)
-        {
-            orig.Invoke(self);
-            UIList WorldList = (UIList)typeof(UIWorldSelect).GetField("_worldList", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
-			
-			TheDepthsClientConfig config = ModContent.GetInstance<TheDepthsClientConfig>();
-            Dictionary<string, TheDepthsClientConfig.WorldDataValues> tempDict = config.GetWorldData();
-            foreach (var item in WorldList)
-            {
-                if (item is UIWorldListItem)
-                {
-                    UIElement WorldIcon = (UIElement)typeof(UIWorldListItem).GetField("_worldIcon", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(item);
-                    WorldFileData Data = (WorldFileData)typeof(AWorldListItem).GetField("_data", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(item);
-
-                    var path = Path.ChangeExtension(Data.Path, ".twld");
-
-                    /*if (!tempDict.ContainsKey(path))
-                    {
-                        byte[] buf = FileUtilities.ReadAllBytes(path, Data.IsCloudSave);
-                        var stream = new MemoryStream(buf);
-                        var tag = TagIO.FromStream(stream);
-                        bool containsMod = false;
-
-                        if (tag.ContainsKey("modData"))
-                        {
-                            foreach (TagCompound modDataTag in tag.GetList<TagCompound>("modData").Skip(2))
-                            {
-                                if (modDataTag.Get<string>("mod") == ModContent.GetInstance<TheDepthsClientConfig>().Mod.Name)
-                                {
-                                    TagCompound dataTag = modDataTag.Get<TagCompound>("data");
-                                    TheDepthsClientConfig.WorldDataValues worldData;
-
-                                    worldData.depths = dataTag.Get<bool>("IsDepths");
-                                    worldData.depthsLeft = dataTag.Get<bool>("DepthsIsOnTheLeft");
-                                    worldData.depthsRight = dataTag.Get<bool>("DepthsIsOnTheRight");
-                                    tempDict[path] = worldData;
-
-                                    containsMod = true;
-
-                                    break;
-                                }
-                            }
-
-                            if (!containsMod)
-                            {
-                                TheDepthsClientConfig.WorldDataValues worldData;
-
-                                worldData.depths = false;
-                                worldData.depthsLeft = false;
-                                worldData.depthsRight = false;
-                                tempDict[path] = worldData;
-                            }
-
-                            config.SetWorldData(tempDict);
-                            TheDepthsClientConfig.Save(config);
-                        }
-                    }*/
-
-                    #region UnopenedWorldIcon
-                    if (!tempDict.ContainsKey(path))
-                    {
-                        if (!Data.DrunkWorld && !Data.DefeatedMoonlord)
-                        {
-                            UIElement worldIcon = WorldIcon;
-                            UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconUnderworld"))
-                            {
-                                Top = new StyleDimension(-10f, 0f),
-                                Left = new StyleDimension(-6f, 0f),
-                                IgnoresMouseInteraction = true
-                            };
-                            worldIcon.Append(element);
-                        }
-                        else if (!Data.DrunkWorld && Data.DefeatedMoonlord)
-                        {
-                            UIElement worldIcon = WorldIcon;
-                            UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconUnderworld"))
-                            {
-                                Top = new StyleDimension(-10f, 0f),
-                                Left = new StyleDimension(-7f, 0f),
-                                IgnoresMouseInteraction = true
-                            };
-                            worldIcon.Append(element);
-                        }
-                        else if (Data.DrunkWorld)
-                        {
-                            UIElement worldIcon = WorldIcon;
-                            UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunk"))
-                            {
-                                Top = new StyleDimension(-10f, 0f),
-                                Left = new StyleDimension(-6f, 0f),
-                                IgnoresMouseInteraction = true
-                            };
-                            worldIcon.Append(element);
-                        }
-                        else if (Data.DrunkWorld && Data.DefeatedMoonlord)
-                        {
-                            UIElement worldIcon = WorldIcon;
-                            UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunk"))
-                            {
-                                Top = new StyleDimension(-10f, 0f),
-                                Left = new StyleDimension(-7f, 0f),
-                                IgnoresMouseInteraction = true
-                            };
-                            worldIcon.Append(element);
-                        }
-                        continue;
-                    }
-                    #endregion
-
-                    #region RegularSeedIcon
-                    if (tempDict[path].depths && !Data.RemixWorld && !Data.DrunkWorld && !Data.DefeatedMoonlord)
-                    {
-                        UIElement worldIcon = WorldIcon;
-                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepths"))
-                        {
-                            Top = new StyleDimension(-10f, 0f),
-                            Left = new StyleDimension(-6f, 0f),
-                            IgnoresMouseInteraction = true
-                        };
-                        worldIcon.Append(element);
-                    }
-                    if (tempDict[path].depths && !Data.RemixWorld && !Data.DrunkWorld && Data.DefeatedMoonlord)
-                    {
-                        UIElement worldIcon = WorldIcon;
-                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepths"))
-                        {
-                            Top = new StyleDimension(-10f, 0f),
-                            Left = new StyleDimension(-7f, 0f),
-                            IgnoresMouseInteraction = true
-                        };
-                        worldIcon.Append(element);
-                    }
-                    else if (!tempDict[path].depths && !Data.DrunkWorld && !Data.DefeatedMoonlord)
-                    {
-                        UIElement worldIcon = WorldIcon;
-                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconUnderworld"))
-                        {
-                            Top = new StyleDimension(-10f, 0f),
-                            Left = new StyleDimension(-6f, 0f),
-                            IgnoresMouseInteraction = true
-                        };
-                        worldIcon.Append(element);
-                    }
-                    else if (!tempDict[path].depths && !Data.DrunkWorld && Data.DefeatedMoonlord)
-                    {
-                        UIElement worldIcon = WorldIcon;
-                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconUnderworld"))
-                        {
-                            Top = new StyleDimension(-10f, 0f),
-                            Left = new StyleDimension(-7f, 0f),
-                            IgnoresMouseInteraction = true
-                        };
-                        worldIcon.Append(element);
-                    }
-                    #endregion
-
-                    #region DrunkSeedIcon
-                    else if (Data.DrunkWorld && !Data.DefeatedMoonlord && (tempDict[path].depthsLeft && tempDict[path].depthsRight || !tempDict[path].depthsLeft && !tempDict[path].depthsRight))
-                    {
-                        UIElement worldIcon = WorldIcon;
-                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunk"))
-                        {
-                            Top = new StyleDimension(-10f, 0f),
-                            Left = new StyleDimension(-6f, 0f),
-                            IgnoresMouseInteraction = true
-                        };
-                        worldIcon.Append(element);
-                    }
-                    else if (Data.DrunkWorld && Data.DefeatedMoonlord && (tempDict[path].depthsLeft && tempDict[path].depthsRight || !tempDict[path].depthsLeft && !tempDict[path].depthsRight))
-                    {
-                        UIElement worldIcon = WorldIcon;
-                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunk"))
-                        {
-                            Top = new StyleDimension(-10f, 0f),
-                            Left = new StyleDimension(-7f, 0f),
-                            IgnoresMouseInteraction = true
-                        };
-                        worldIcon.Append(element);
-                    }
-
-                    else if (Data.DrunkWorld && !Data.DefeatedMoonlord && tempDict[path].depthsLeft && !tempDict[path].depthsRight)
-                    {
-                        UIElement worldIcon = WorldIcon;
-                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunkLeft"))
-                        {
-                            Top = new StyleDimension(-10f, 0f),
-                            Left = new StyleDimension(-6f, 0f),
-                            IgnoresMouseInteraction = true
-                        };
-                        worldIcon.Append(element);
-                    }
-                    else if (Data.DrunkWorld && Data.DefeatedMoonlord && tempDict[path].depthsLeft && !tempDict[path].depthsRight)
-                    {
-                        UIElement worldIcon = WorldIcon;
-                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunkLeft"))
-                        {
-                            Top = new StyleDimension(-10f, 0f),
-                            Left = new StyleDimension(-7f, 0f),
-                            IgnoresMouseInteraction = true
-                        };
-                        worldIcon.Append(element);
-                    }
-
-                    else if (Data.DrunkWorld && !Data.DefeatedMoonlord && !tempDict[path].depthsLeft && tempDict[path].depthsRight)
-                    {
-                        UIElement worldIcon = WorldIcon;
-                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunkRight"))
-                        {
-                            Top = new StyleDimension(-10f, 0f),
-                            Left = new StyleDimension(-6f, 0f),
-                            IgnoresMouseInteraction = true
-                        };
-                        worldIcon.Append(element);
-                    }
-                    else if (Data.DrunkWorld && Data.DefeatedMoonlord && !tempDict[path].depthsLeft && tempDict[path].depthsRight)
-                    {
-                        UIElement worldIcon = WorldIcon;
-                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunkRight"))
-                        {
-                            Top = new StyleDimension(-10f, 0f),
-                            Left = new StyleDimension(-7f, 0f),
-                            IgnoresMouseInteraction = true
-                        };
-                        worldIcon.Append(element);
-                    }
-
-                    #endregion
-
-                    #region RemixSeedIcon
-                    else if (tempDict[path].depths && Data.HasCrimson && Data.RemixWorld && !Data.IsHardMode)
-                    {
-                        UIElement worldIcon = WorldIcon;
-                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepthsRemixCrimson"))
-                        {
-                            Top = new StyleDimension(-10f, 0f),
-                            Left = new StyleDimension(-6f, 0f),
-                            IgnoresMouseInteraction = true
-                        };
-                        worldIcon.Append(element);
-                    }
-                    else if (tempDict[path].depths && Data.HasCrimson && Data.RemixWorld && Data.IsHardMode)
-                    {
-                        UIElement worldIcon = WorldIcon;
-                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepthsRemixCrimsonHallow"))
-                        {
-                            Top = new StyleDimension(-10f, 0f),
-                            Left = new StyleDimension(-6f, 0f),
-                            IgnoresMouseInteraction = true
-                        };
-                        worldIcon.Append(element);
-                    }
-                    else if (tempDict[path].depths && Data.HasCorruption && Data.RemixWorld && !Data.IsHardMode)
-                    {
-                        UIElement worldIcon = WorldIcon;
-                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepthsRemixCorruption"))
-                        {
-                            Top = new StyleDimension(-10f, 0f),
-                            Left = new StyleDimension(-6f, 0f),
-                            IgnoresMouseInteraction = true
-                        };
-                        worldIcon.Append(element);
-                    }
-                    else if (tempDict[path].depths && Data.HasCorruption && Data.RemixWorld && Data.IsHardMode)
-                    {
-                        UIElement worldIcon = WorldIcon;
-                        UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepthsRemixCorruptionHallow"))
-                        {
-                            Top = new StyleDimension(-10f, 0f),
-                            Left = new StyleDimension(-6f, 0f),
-                            IgnoresMouseInteraction = true
-                        };
-                        worldIcon.Append(element);
-                    }
-                    #endregion
-                }
-            }
-        }
-        #endregion
-
-        #region LavaTextureDetour
-        private void On_Main_DoUpdate(On_Main.orig_DoUpdate orig, Main self, ref GameTime gameTime)
-        {
-            orig.Invoke(self, ref gameTime);
-            if (!Main.dedServ)
-            {
-                if (Worldgen.TheDepthsWorldGen.InDepths)
-                {
-                    LiquidRenderer.Instance._liquidTextures[1] = ModContent.Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver", (AssetRequestMode)1);
-                    int[] liquidAssetRegularNum = new int[14] { 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
-                    foreach (int i in liquidAssetRegularNum)
-                    {
-                        LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < 15; i++)
-                    {
-                        LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
-                    }
-                }
-            }
         }
         #endregion
 
@@ -860,10 +813,12 @@ namespace TheDepths
         private void Main_UpdateAudio_DecideOnTOWMusic(Terraria.On_Main.orig_UpdateAudio_DecideOnTOWMusic orig, Main self)
         {
             orig.Invoke(self);
-            Player player = Main.CurrentPlayer;
-            if (player.InModBiome(ModContent.GetInstance<DepthsBiome>()))
+            if (!Main.gameMenu)
             {
-                Main.newMusic = MusicLoader.GetMusicSlot(mod, "Sounds/Music/DepthsOtherworldly"); //Otherworldly Eerie
+                if (Main.newMusic == MusicLoader.GetMusicSlot(this, "Sounds/Music/Depths"))
+                {
+                    Main.newMusic = MusicLoader.GetMusicSlot(this, "Sounds/Music/DepthsOtherworldly");
+                }
             }
         }
         #endregion
@@ -979,5 +934,60 @@ namespace TheDepths
             c.Emit(OpCodes.Stloc, asset);
         }*/
         #endregion
+    }
+
+    public static class TheDepthsWindUtilities
+    {
+        public static void Load()
+        {
+            _addSpecialPointSpecialPositions = typeof(Terraria.GameContent.Drawing.TileDrawing).GetField("_specialPositions", BindingFlags.NonPublic | BindingFlags.Instance);
+            _addSpecialPointSpecialsCount = typeof(Terraria.GameContent.Drawing.TileDrawing).GetField("_specialsCount", BindingFlags.NonPublic | BindingFlags.Instance);
+            _addVineRootPositions = typeof(Terraria.GameContent.Drawing.TileDrawing).GetField("_vineRootsPositions", BindingFlags.NonPublic | BindingFlags.Instance);
+        }
+
+        public static void Unload()
+        {
+            _addSpecialPointSpecialPositions = null;
+            _addSpecialPointSpecialsCount = null;
+            _addVineRootPositions = null;
+        }
+
+        public static FieldInfo _addSpecialPointSpecialPositions;
+        public static FieldInfo _addSpecialPointSpecialsCount;
+        public static FieldInfo _addVineRootPositions;
+
+        public static void AddSpecialPoint(this Terraria.GameContent.Drawing.TileDrawing tileDrawing, int x, int y, int type)
+        {
+            if (_addSpecialPointSpecialPositions.GetValue(tileDrawing) is Point[][] _specialPositions)
+            {
+                if (_addSpecialPointSpecialsCount.GetValue(tileDrawing) is int[] _specialsCount)
+                {
+                    _specialPositions[type][_specialsCount[type]++] = new Point(x, y);
+                }
+            }
+        }
+
+        public static void CrawlToTopOfVineAndAddSpecialPoint(this Terraria.GameContent.Drawing.TileDrawing tileDrawing, int j, int i)
+        {
+            if (_addVineRootPositions.GetValue(tileDrawing) is List<Point> _vineRootsPositions)
+            {
+                int y = j;
+                for (int num = j - 1; num > 0; num--)
+                {
+                    Tile tile = Main.tile[i, num];
+                    if (WorldGen.SolidTile(i, num) || !tile.HasTile)
+                    {
+                        y = num + 1;
+                        break;
+                    }
+                }
+                Point item = new(i, y);
+                if (!_vineRootsPositions.Contains(item))
+                {
+                    _vineRootsPositions.Add(item);
+                    Main.instance.TilesRenderer.AddSpecialPoint(i, y, 6);
+                }
+            }
+        }
     }
 }

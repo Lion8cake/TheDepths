@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
 using TheDepths.Dusts;
+using Terraria.Graphics.Shaders;
 
 namespace TheDepths.Projectiles
 {
@@ -31,6 +32,7 @@ namespace TheDepths.Projectiles
 				Dust dust2 = Dust.NewDustDirect(Projectile.Center, 4, 4, ModContent.DustType<ShadowflameEmber>(), 0f, 0f, 100);
 				if (Main.rand.Next(3) != 0)
 				{
+					dust2.shader = GameShaders.Armor.GetSecondaryShader(Main.player[Projectile.owner].GetModPlayer<TheDepthsPlayer>().cShadowFlame, Main.LocalPlayer);
 					dust2.noGravity = true;
 					dust2.velocity.Y -= 3f;
 					dust2.noLight = true;
@@ -39,7 +41,23 @@ namespace TheDepths.Projectiles
 			Lighting.AddLight(Projectile.Center, r: 2.22f / 10, g: 1.01f / 10, b: 2.84f / 10);
 		}
 
-        public override void PostDraw(Color lightColor) //Adapted code from the funny dd2 ghost pet
+		public override bool PreDraw(ref Color lightColor)
+		{
+			int projectileDesiredShader = 0;
+			if (Projectile.owner != 255)
+			{
+				projectileDesiredShader = Main.player[Projectile.owner].GetModPlayer<TheDepthsPlayer>().cShadowFlame;
+			}
+			Matrix value = Main.Transform;
+			if (Projectile.isAPreviewDummy)
+			{
+				value = Main.UIScaleMatrix;
+			}
+			Main.instance.PrepareDrawnEntityDrawing(Projectile, projectileDesiredShader, value);
+			return false;
+		}
+
+		public override void PostDraw(Color lightColor) //Adapted code from the funny dd2 ghost pet
         {
 			SpriteEffects dir = SpriteEffects.None;
 			Vector2 vector82 = Projectile.position + new Vector2(Projectile.width, Projectile.height) / 2f + Vector2.UnitY * Projectile.gfxOffY - Main.screenPosition;
@@ -83,12 +101,29 @@ namespace TheDepths.Projectiles
 				Dust dust2 = Dust.NewDustDirect(Projectile.Center, 4, 4, ModContent.DustType<ShadowflameEmber>(), 0f, 0f, 100);
 				if (Main.rand.Next(3) != 0)
 				{
+					dust2.shader = GameShaders.Armor.GetSecondaryShader(Main.player[Projectile.owner].GetModPlayer<TheDepthsPlayer>().cShadowFlame, Main.LocalPlayer);
 					dust2.noGravity = true;
 					dust2.velocity.Y -= 3f;
 					dust2.noLight = true;
 				}
 			}
 			Lighting.AddLight(Projectile.Center, r: 2.22f / 10, g: 1.01f / 10, b: 2.84f / 10);
+		}
+
+		public override bool PreDraw(ref Color lightColor)
+		{
+			int projectileDesiredShader = 0;
+			if (Projectile.owner != 255)
+			{
+				projectileDesiredShader = Main.player[Projectile.owner].GetModPlayer<TheDepthsPlayer>().cShadowFlame;
+			}
+			Matrix value = Main.Transform;
+			if (Projectile.isAPreviewDummy)
+			{
+				value = Main.UIScaleMatrix;
+			}
+			Main.instance.PrepareDrawnEntityDrawing(Projectile, projectileDesiredShader, value);
+			return false;
 		}
 
 		public override void PostDraw(Color lightColor) //Adapted code from the funny dd2 ghost pet
@@ -136,12 +171,29 @@ namespace TheDepths.Projectiles
 				Dust dust2 = Dust.NewDustDirect(Projectile.Center, 4, 4, ModContent.DustType<ShadowflameEmber>(), 0f, 0f, 100);
 				if (Main.rand.Next(3) != 0)
 				{
+					dust2.shader = GameShaders.Armor.GetSecondaryShader(Main.player[Projectile.owner].GetModPlayer<TheDepthsPlayer>().cShadowFlame, Main.LocalPlayer);
 					dust2.noGravity = true;
 					dust2.velocity.Y -= 3f;
 					dust2.noLight = true;
 				}
 			}
 			Lighting.AddLight(Projectile.Center, r: 2.22f / 10, g: 1.01f / 10, b: 2.84f / 10);
+		}
+
+		public override bool PreDraw(ref Color lightColor)
+		{
+			int projectileDesiredShader = 0;
+			if (Projectile.owner != 255)
+			{
+				projectileDesiredShader = Main.player[Projectile.owner].GetModPlayer<TheDepthsPlayer>().cShadowFlame;
+			}
+			Matrix value = Main.Transform;
+			if (Projectile.isAPreviewDummy)
+			{
+				value = Main.UIScaleMatrix;
+			}
+			Main.instance.PrepareDrawnEntityDrawing(Projectile, projectileDesiredShader, value);
+			return false;
 		}
 
 		public override void PostDraw(Color lightColor) //Adapted code from the funny dd2 ghost pet

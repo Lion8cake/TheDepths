@@ -21,6 +21,7 @@ namespace TheDepths.Tiles
             Main.tileNoAttach[Type] = true;
             DustType = ModContent.DustType<EmberDust>();
             AddMapEntry(new Color(179, 79, 36));
+            RegisterItemDrop(ModContent.ItemType<Items.Placeable.Ember>());
         }
 
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)

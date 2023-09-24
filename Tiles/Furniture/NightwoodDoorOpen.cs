@@ -29,6 +29,7 @@ namespace TheDepths.Tiles.Furniture
             TileID.Sets.CloseDoorID[Type] = ModContent.TileType<NightwoodDoorClosed>();
 
             AddMapEntry(new Color(30, 32, 36), CreateMapEntryName());
+            RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.NightwoodDoor>(), 0);
 
             TileObjectData.newTile.Width = 2;
             TileObjectData.newTile.Height = 3;

@@ -66,11 +66,7 @@ namespace TheDepths.Tiles.Furniture
 			TileID.Sets.CloseDoorID[Type] = ModContent.TileType<QuartzDoorClosed>();
 			AddMapEntry(new Color(255, 255, 255), name);
 			DustType = ModContent.DustType<QuartzCrystals>();
-		}
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY)
-		{
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 48, ModContent.ItemType<Items.Placeable.Furniture.QuartzDoor>());
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.QuartzDoor>(), 0);
 		}
 
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)

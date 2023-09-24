@@ -67,6 +67,13 @@ namespace TheDepths.NPCs
 				AnimationType = NPCID.ChaosElemental;
 				PraiseTheRelic = false;
 			}
+			for (int i = 0; i < Main.maxProjectiles; i++)
+			{
+				if (!Main.projectile[i].active && Main.projectile[i].type == ModContent.ProjectileType<Projectiles.Chasme.GemforgeCutscene>())
+				{
+					PraiseTheRelic = false;
+				}
+			}
         }
 
         public override void FindFrame(int frameHeight)

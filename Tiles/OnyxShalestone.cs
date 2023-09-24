@@ -31,6 +31,8 @@ namespace TheDepths.Tiles
 			HitSound = SoundID.Tink;
 			MineResist = 2f;
 			MinPick = 110;
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.Onyx>());
+			Main.tileSpelunker[Type] = true;
 		}
 		
 		public override bool CanExplode(int i, int j)

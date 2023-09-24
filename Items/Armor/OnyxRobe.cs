@@ -23,7 +23,7 @@ namespace TheDepths.Items.Armor
 		public override void SetDefaults() {
 			Item.width = 18;
 			Item.height = 14;
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.LightRed;
 			Item.value = 300000;
 			Item.defense = 16;
 		}

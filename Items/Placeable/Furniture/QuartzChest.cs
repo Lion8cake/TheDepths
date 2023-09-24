@@ -28,7 +28,7 @@ namespace TheDepths.Items.Placeable.Furniture
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Quartz>(), 6).AddIngredient(ModContent.ItemType<ArqueriteOre>(), 2).AddIngredient(22, 2).AddTile(TileID.WorkBenches).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<Quartz>(), 6).AddIngredient(ModContent.ItemType<ArqueriteOre>(), 2).AddRecipeGroup(RecipeGroupID.IronBar, 2).AddTile(TileID.WorkBenches).Register();
         }
     }
 }

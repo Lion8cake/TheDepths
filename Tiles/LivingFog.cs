@@ -36,6 +36,7 @@ namespace TheDepths.Tiles
             //TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(new Func<int, int, int, int, int, int>(AfterPlacement),
                 //-1, 0, false);
             TileObjectData.addTile(Type);
+            RegisterItemDrop(ModContent.ItemType<Items.Placeable.LivingFog>());
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

@@ -30,9 +30,9 @@ namespace TheDepths.Items.Placeable
 		
 		public override void AddRecipes()
 		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.StoneBlock, 1);
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Quartz>(), 2);
+			Recipe recipe = CreateRecipe(5);
+			recipe.AddIngredient(ItemID.StoneBlock, 5);
+			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Quartz>(), 1);
 			recipe.AddTile(TileID.Furnaces);
 			recipe.Register();
 		}

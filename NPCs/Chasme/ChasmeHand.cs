@@ -62,7 +62,6 @@ public class ChasmeHand : ChasmeBodyPart
     {
 		NPCID.Sets.TrailCacheLength[Type] = 10;
         NPCID.Sets.TrailingMode[Type] = 1;
-        base.SetStaticDefaults();
     }
     public override void SetDefaults()
 	{
@@ -238,7 +237,7 @@ public class ChasmeHand : ChasmeBodyPart
 		}
 		if (ActionStateTimer % 24 == 0)
 		{
-			voids.Add(Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<ChasVoid>(), NPC.damage, 8, player.whoAmI, 0, 1));
+			voids.Add(Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<ChasVoid>(), NPC.damage / 3, 8, player.whoAmI, 0, 1));
 		}
     }
 	private void ReturnAI(Vector2 offset)
@@ -284,7 +283,7 @@ public class ChasmeHand : ChasmeBodyPart
         Vector2 TargetDir = NPC.DirectionTo(target.Center).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-maxDegrees, maxDegrees)));
         if (shootTimer == fireRate + shootOffset) //if timer is the fire rate with a 20% variation
         {
-            int a = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Vector2.UnitX*32*NPC.spriteDirection, TargetDir * speed, ModContent.ProjectileType<ChasmeRay>(), (int)(NPC.damage * damageModifier), 4, 255, 1, 1);
+            int a = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Vector2.UnitX*32*NPC.spriteDirection, TargetDir * speed, ModContent.ProjectileType<ChasmeRay>(), (int)((NPC.damage / 3) * damageModifier), 4, 255, 1, 1);
             Main.projectile[a].friendly = false;
             Main.projectile[a].hostile = true;
 			Main.projectile[a].tileCollide = false;

@@ -30,17 +30,10 @@ public abstract class ChasmeBodyPart : ModNPC
 	}
     public override void SetStaticDefaults()
     {
-        NPCDebuffImmunityData debuffData = new() //immunity for all body parts
-        {
-            SpecificallyImmuneTo = new int[]
-            {
-                BuffID.Poisoned,
-                BuffID.Confused,
-                BuffID.Burning
-            }
-        };
-        NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
-    }
+		NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+		NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
+		NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Burning] = true;
+	}
 
     /// <summary>
     /// Gets the main position (Center) of the boss this body part should follow
@@ -121,7 +114,19 @@ public abstract class ChasmeBodyPart : ModNPC
         return false;
     }
 
-    public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+	public override bool CheckActive()
+	{
+		for (int i = 0; 0 < Main.maxPlayers; i++)
+		{
+			if (Main.player[i].active && (!Main.player[i].dead || !Main.player[i].ghost))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);

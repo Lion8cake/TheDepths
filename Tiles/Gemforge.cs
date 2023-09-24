@@ -26,12 +26,11 @@ namespace TheDepths.Tiles
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
 			TileObjectData.addTile(Type);
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(140, 17, 206), name);
 			DustType = ModContent.DustType<ArqueriteDust>();
             TileID.Sets.DisableSmartCursor[Type] = true;
-			AdjTiles = new int[] { TileID.Furnaces };
+			AdjTiles = new int[2] { TileID.Furnaces, TileID.Hellforge };
 			Main.tileLighted[Type] = true;
 			MinPick = 65;
 			TileID.Sets.HasOutlines[Type] = true;

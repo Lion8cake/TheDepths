@@ -28,6 +28,8 @@ namespace TheDepths.Tiles
 			
 			HitSound = SoundID.Tink;
 			MinPick = 65;
+			RegisterItemDrop(ItemID.Amethyst);
+			Main.tileSpelunker[Type] = true;
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) {

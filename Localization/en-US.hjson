@@ -680,7 +680,7 @@ Mods: {
 
 			SilverSpherePotion: {
 				DisplayName: Silver Sphere Potion
-				Tooltip: ""
+				Tooltip: "Summons 4 silver spheres to orbit the player and deal damage to enemies!"
 			}
 
 			BlackPhaseblade: {
@@ -1498,8 +1498,6 @@ Mods: {
 			}
 		}
 
-		DepthsBiome: Mods.TheDepths.DepthsBiome
-
 		Configs: {
 			TheDepthsClientConfig: {
 				DisplayName: The Depths Client Config
@@ -1514,9 +1512,30 @@ Mods: {
 					Label: Renames Shale to Slate
 					Tooltip: Renames Shale to Slate, Requires the mod to reload for the config to work
 				}
+
+				CoreIconConfig: {
+					Label: Enables Core Icon
+					Tooltip: Enables the core icon overlay on world icons, disable this if issues persist when entering the world select screen
+				}
 			}
 		}
+
+		Emotes: {
+			DepthsBiomeEmote: darknessbiome
+			ShadowCatEmote: shadowcat
+			ChasmeEmote: chasme
+		}
+
+		DepthsBiome: Mods.TheDepths.DepthsBiome
 	}
 }
 
 GameUI.LayerUnderworld: Core
+ItemTooltip.TerrasparkBoots:
+	'''
+	Allows flight, super fast running, and extra mobility on ice
+	8% increased movement speed
+	Provides the ability to walk on water, honey, quicksilver & lava
+	Grants immunity to fire & poisonus blocks, 7 seconds of immunity to lava and 8 secconds immunity to quicksilver
+	Reduces damage from touching lava
+	'''

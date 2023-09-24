@@ -32,6 +32,7 @@ namespace TheDepths.Tiles
             TileObjectData.newTile.UsesCustomCanPlace = true;
             //TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(AfterPlacement, -1, 0, processedCoordinates: false);
             TileObjectData.addTile(Type);
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.DiamondDust>());
 		}
 		
 		public override bool CanPlace(int i, int j)

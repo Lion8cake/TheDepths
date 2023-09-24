@@ -27,7 +27,6 @@ public class ChasmeHead : ChasmeBodyPart
     {
         // DisplayName.SetDefault("chasme head");
         Main.projFrames[Type] = 5;
-        base.SetStaticDefaults();
         NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
         {
             Hide = true
@@ -80,9 +79,8 @@ public class ChasmeHead : ChasmeBodyPart
             return false;
         }
         return false;
-
-
     }
+
     public override void AI()
     {
         
@@ -135,7 +133,7 @@ public class ChasmeHead : ChasmeBodyPart
 
         if (ActionTimer == fireRate) //if timer is the fire rate
         {
-            int a = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(saphireOffset.X * NPC.spriteDirection, saphireOffset.Y), TargetDir * speed, ModContent.ProjectileType<ChasmeRay>(), (int)(NPC.damage * damageModifier), 4, MainNPCIndex, 0, 0);
+            int a = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(saphireOffset.X * NPC.spriteDirection, saphireOffset.Y), TargetDir * speed, ModContent.ProjectileType<ChasmeRay>(), (int)((NPC.damage / 3) * damageModifier), 4, MainNPCIndex, 0, 0);
             Main.projectile[a].friendly = false;
             Main.projectile[a].hostile = true;
             ActionTimer = 0;

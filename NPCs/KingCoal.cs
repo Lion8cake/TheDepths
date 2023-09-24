@@ -197,7 +197,7 @@ namespace TheDepths.NPCs
         {
             if (Main.hardMode && (spawnInfo.Player.ZoneUnderworldHeight && !Worldgen.TheDepthsWorldGen.InDepths && !Main.remixWorld) || Main.hardMode && (spawnInfo.Player.ZoneUnderworldHeight && !Worldgen.TheDepthsWorldGen.InDepths && (spawnInfo.SpawnTileX < Main.maxTilesX * 0.38 + 50.0 || spawnInfo.SpawnTileX > Main.maxTilesX * 0.62) && Main.remixWorld))
             {
-                return 1f;
+                return 0.5f;
             }
             return 0f;
         }

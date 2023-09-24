@@ -18,9 +18,11 @@ namespace TheDepths.Buffs
 	{
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = false;
-	    	Main.pvpBuff[Type] = true;
-	    	Main.buffNoSave[Type] = false;
-			BuffID.Sets.LongerExpertDebuff[Type] = false;
+			Main.pvpBuff[Type] = true;
+			Main.buffNoSave[Type] = false;
+			Main.meleeBuff[Type] = true;
+			Main.persistentBuff[Type] = true;
+			BuffID.Sets.IsAFlaskBuff[Type] = true;
 		}
 
 		public override void Update(Player player, ref int buffIndex) {

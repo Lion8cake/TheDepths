@@ -17,6 +17,7 @@ using TheDepths.Items.Armor;
 using TheDepths.Projectiles.Chasme;
 using TheDepths.Biomes;
 using Terraria.GameContent.Bestiary;
+using TheDepths.Worldgen;
 
 namespace TheDepths.NPCs.Chasme;
 
@@ -67,16 +68,9 @@ public class ChasmeHeart : ModNPC
 
 		NPCID.Sets.BossBestiaryPriority.Add(Type);
 
-		NPCDebuffImmunityData debuffData = new()
-		{
-			SpecificallyImmuneTo = new int[]
-			{
-				BuffID.Poisoned,
-				BuffID.Confused,
-				BuffID.Burning
-			}
-		};
-		NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+		NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+		NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
+		NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Burning] = true;
 
 		NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
 		{
@@ -126,6 +120,17 @@ public class ChasmeHeart : ModNPC
 		potionType = ItemID.HealingPotion;
     }
 
+	public override bool CheckActive()
+	{
+		for (int i = 0; 0 < Main.maxPlayers; i++)
+		{
+			if (Main.player[i].active && (!Main.player[i].dead || !Main.player[i].ghost))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public override void AI()
 	{
@@ -144,6 +149,13 @@ public class ChasmeHeart : ModNPC
 		if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
 		{
 			NPC.TargetClosest();
+		}
+
+		Player player0 = Main.LocalPlayer;
+		float chaspos = NPC.position.X + 40f;
+		if (player0.position.Y > (float)((Main.maxTilesY - 250) * 16) && player0.position.X > chaspos - 1920f && player0.position.X < chaspos + 1920f)
+		{
+			player0.AddBuff(37, 10);
 		}
 
 		Player player = Main.player[NPC.target];
@@ -462,6 +474,8 @@ public class ChasmeHeart : ModNPC
 
 	public override void OnKill()
 	{
+		NPC.SetEventFlagCleared(ref TheDepthsWorldGen.downedChasme, -1);
+
 		if (Main.netMode != NetmodeID.MultiplayerClient)
 		{
 			int CentreX = (int)(NPC.position.X + (12)) / 16;
