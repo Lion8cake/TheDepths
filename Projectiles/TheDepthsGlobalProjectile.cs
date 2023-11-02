@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.Audio;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using TheDepths.Worldgen;
 
 namespace TheDepths.Projectiles
 {

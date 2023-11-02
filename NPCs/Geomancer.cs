@@ -32,6 +32,7 @@ namespace TheDepths.NPCs
 			};
 
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Buffs.MercuryBoiling>()] = true;
 		}
 
 		public override void SetDefaults() {

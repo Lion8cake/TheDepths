@@ -22,7 +22,7 @@ namespace TheDepths.Items.Armor
 		}
 		
 		public override void UpdateEquip(Player player) {
-		player.GetDamage(DamageClass.Melee) += 0.08f;
+			player.GetDamage(DamageClass.Melee) += 0.19f;
 		}
 
 		public override void AddRecipes() 

@@ -26,6 +26,7 @@ namespace TheDepths.NPCs
 				PortraitPositionYOverride = -40f
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
+			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Buffs.MercuryBoiling>()] = true;
 		}
 
 		public override void SetDefaults() {

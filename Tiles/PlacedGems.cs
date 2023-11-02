@@ -23,6 +23,9 @@ namespace TheDepths.Tiles
             TileObjectData.newTile.CoordinatePadding = 2;
             //TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.AnchorInvalidTiles = new int[] {
+                TileID.Platforms
+            };
             TileObjectData.addTile(Type);
             Main.tileFrameImportant[Type] = true;
             Main.tileObsidianKill[Type] = true;

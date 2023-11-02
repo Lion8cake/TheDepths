@@ -1,63 +1,35 @@
 =========================================
 The Depths (Alternate Hell)
 =========================================
-Depths version 0.6.2
+Depths version 0.6.5
 Please report any bugs to our discord: https://discord.gg/JwEKrVhjA6
 Worlds can be converted from 1.4.3 to 1.4.4 just by opening them
 
 The Depths is an alternate version of the underworld similar to how crimson corruption works. It generates instead of the underworld to ive some of your worlds that bit of spice when starting a new playthrough.
 This mod is made by the same devs behind the confection mod, a mod similar to this one but for the hallow. This biome and most of its sprites and ideas come from Snickerbobble and her forum talking about her take on an alternate hell.
 
+This mod has Achievement Mod Support, download and use the Achievement Mod to see achievements for this mod
+
 =========================================
 Change Log
 =========================================
-0.6.3
+0.6.5
 ===============================
-Resprited the Core Builder
-Resprited the Geomancer's mining cart item and buff
-Resprited the skyfall's rain projectile
-Made the Shadowflame ember treads and its upgrade change its flames based on the shoe's dyes
-Added the Terminex to the zenith graphic
-Fixed Nightmare grass being clentaminat-able into regular grass
-Fixed Otherworldly music replacing all tracks instead of just the depth's theme
-Fixed quicksilver giving its buffs/debuffs to all players on a multiplayer server
-Fixed Mercury flask buff not being counted as a flask buff or being persistant after the player's death
-Fixed buff infliction from the mercury flask
-Fixed Nightmare grass not spreading to shale
-Removed internal mentions of the mirical saber
-Removed unused lava bomb and rocket code
-Updated the terraspark boot despcription
-Fixed Living fog having two recipes and not dropping when broken
-Fixed shalestone gems not dropping their items and not being shown with the spelunker buff
-Fixed Arquerite showing up with the spelunker potion
-Fixed Diamond dust not dropping
-Fixed Ember not dropping
-Fixed Bomb-able-ness of quartz and arquerite not being the same as obsidian and hellstone
-Changed the rarity of the onyx robe
-Fixed not being able to transmutate geo torches and block torches
-Fixed night wood chest, clock and quartz chest not using the iron bar recipe group
-Fixed gemforges not spawning on 50% of drunk seed worlds
-Fixed chasme despawning when moving too far away
-Fixed chasme not giving the horrified debuff
-Fixed the gemforge cutscene screenshake often happening indefinatly
-Removed the Update detour due to it causing issues with other mods and generally not being needed (does not effect gameplay)
-Fixed geomancers sometimes being stuck in praising phase
-Added a core icon config to prevent game softlocks with the depths enabled
-
-0.6.2
-===============================
-Fixed Chasme damage scaling being 3x more than it should be
-Changed shimmer transmutation for onyx and arquerite, amber and hellstone
-
-0.6.1
-===============================
-Fixed Nightmare grass dropping 4 shale and that drop being offset but alot
-Fixed Gemforges sometimes not dropping their item causing a softlock in progression
-Attempted to fix lava being silver on the map after unloading the mod
-
-0.6.0
-===============================
-To see the 0.6.0 changelogs join our discord
+Added Altar of Gems
+Added For the sake of making Gadgets
+Added Im-purr-sonation
+Added Musician's Best Friend
+Added Mercury
+Added Chaos Cat
+Added DO NOT DRINK
+Added painting worldgen
+Fixed gemforges not having an item sprite
+Added gemforge tile animation
+Fixed map color of all paintings
+Reworked the nightmare grass spread and foliage growth
+Fixed weird cutting with the nightmare foliage
+Added achievement support
+Yet again attempted to fix multiplayer syncing mods issue
 
 ==========================================
 -=Credits=-

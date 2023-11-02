@@ -196,6 +196,13 @@ Mods: {
 			QuartzBath.MapEntry: Quartz Bath
 			DepthsVanityBanners.MapEntry: Depths Vanity Banners
 			DepthsOtherworldlyMusicBox.MapEntry: Music Box
+			AltarOfGems.MapEntry: Altar Of Gems
+			ForTheSakeOfMakingGadgets.MapEntry: For The Sake Of Making Gadgets
+			ImPurrSonation.MapEntry: Im Purr Sonation
+			Mercury.MapEntry: Mercury
+			MusiciansBestFriend.MapEntry: Musicians Best Friend
+			ChaosCat.MapEntry: Chaos Cat
+			DONOTDRINK.MapEntry: D O N O T D R I N K
 		}
 
 		Buffs: {
@@ -379,7 +386,7 @@ Mods: {
 
 			MercuryChestplate: {
 				DisplayName: Mercury Chestplate
-				Tooltip: 8% Increased Melee Damage
+				Tooltip: 19% Increased Melee Damage
 			}
 
 			MercuryGreaves: {
@@ -389,7 +396,7 @@ Mods: {
 
 			MercuryHelmet: {
 				DisplayName: Mercury Helmet
-				Tooltip: 4% Increased melee critical strike chance
+				Tooltip: 6% Increased melee critical strike chance
 			}
 
 			OnyxRobe: {
@@ -674,13 +681,13 @@ Mods: {
 				Tooltip:
 					'''
 					'Do you hear something?'
-					Maybe putting this on a gemforge is not the best idea
+					Maybe putting this on a gemforge isn't the best idea
 					'''
 			}
 
 			SilverSpherePotion: {
 				DisplayName: Silver Sphere Potion
-				Tooltip: "Summons 4 silver spheres to orbit the player and deal damage to enemies!"
+				Tooltip: Summons 4 silver spheres to orbit the player and deal damage to enemies!
 			}
 
 			BlackPhaseblade: {
@@ -721,6 +728,11 @@ Mods: {
 			MercuryPickaxe: {
 				DisplayName: Mercury Pickaxe
 				Tooltip: ""
+			}
+
+			Mercury: {
+				DisplayName: Mercury
+				Tooltip: "'L. Cake'"
 			}
 
 			MiracfulSaber: {
@@ -1375,6 +1387,36 @@ Mods: {
 				DisplayName: Otherworldly Music Box (Depths)
 				Tooltip: ""
 			}
+
+			AltarOfGems: {
+				DisplayName: Altar of Gems
+				Tooltip: "'L. Cake'"
+			}
+
+			ForTheSakeOfMakingGadgets: {
+				DisplayName: For the sake of making Gadgets
+				Tooltip: "'L. Cake'"
+			}
+
+			ImPurrSonation: {
+				DisplayName: Im-Purr-Sonation
+				Tooltip: "'L. Cake & W. Sephi'"
+			}
+
+			MusiciansBestFriend: {
+				DisplayName: Musician's Best Friend
+				Tooltip: "'L. Cake'"
+			}
+
+			ChaosCat: {
+				DisplayName: Chaos Cat
+				Tooltip: "'L. Cake & B. Cat'"
+			}
+
+			DONOTDRINK: {
+				DisplayName: DO NOT DRINK
+				Tooltip: "'L. Cake'"
+			}
 		}
 
 		NPCs: {
@@ -1527,6 +1569,28 @@ Mods: {
 		}
 
 		DepthsBiome: Mods.TheDepths.DepthsBiome
+
+		Achievements: {
+			HeartSmasher: {
+				Name: Heart Smasher
+				Description: Defeat Chasme and her shalestone giant. The creator of The Depths and the commander of the Geomancers.
+			}
+
+			PickaxeOfPoison: {
+				Name: Pickaxe of Poison
+				Description: Craft a Mercury Pickaxe using the most deadly of liquids.
+			}
+
+			MysteriesOfTheDark: {
+				Name: Mysteries of the Dark
+				Description: Go deep enough to find The Depths.
+			}
+
+			MercuryAngler: {
+				Name: Mercury Angler
+				Description: Cast a line into a pool of quicksilver to find some mercury resistant marine life.
+			}
+		}
 	}
 }
 

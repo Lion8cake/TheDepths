@@ -39,7 +39,7 @@ namespace TheDepths.Tiles
 			TileObjectData.addTile(Type);
 
 			TileID.Sets.DisableSmartCursor[Type] = true;
-			AddMapEntry(new Color(233, 207, 94), Language.GetText("MapObject.Banner"));
+			AddMapEntry(new Color(13, 88, 130), Language.GetText("MapObject.Banner"));
 			AdjTiles = new int[] { TileID.Banners };
 		}
 

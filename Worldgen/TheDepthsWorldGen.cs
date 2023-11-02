@@ -62,59 +62,70 @@ namespace TheDepths.Worldgen
 			//Also contains some explinations 
 			if (!Main.dedServ) //Make sure that we are not on a server so we dont infinatly get stuck on Syncing Mods
 			{
-				string twld = Path.ChangeExtension(Main.worldPathName, ".twld"); //gets the world we are updating
-				var tag2 = TagIO.FromStream(new MemoryStream(File.ReadAllBytes(twld))); //We read the nbt data of the world .twld file
-				if (tag2.ContainsKey("modData"))
-				{ //We look for modData here and v there 
-					foreach (TagCompound modDataTag in tag2.GetList<TagCompound>("modData"))
-					{
-						if (modDataTag.Get<string>("mod") == "AltLibrary" && modDataTag.Get<string>("name") == "WorldBiomeManager")
-						{ //Here we take two paths, one for if altlib is enabled (imposter mod the original wont return) or if the mod is unloaded 
-							TagCompound dataTag = modDataTag.Get<TagCompound>("data");
-
-							if (dataTag.Get<string>("AltLibrary:WorldHell") == "TheDepths/AltDepthsBiome")
-							{ //Look for the correct string that WorldHallow is saved under
-								depthsorHell = true; //Convert world by giving it the tag
-								ModContent.GetInstance<TheDepths>().Logger.Debug("Altlib save!, converting world!"); //Announce converting
-							}
-							else
-							{
-								ModContent.GetInstance<TheDepths>().Logger.Debug("non-Altlib save, unable to convert world"); //Announce that the world doesn't have altlib/it didn't work
-							}
-							break;
-						}
-						if (modDataTag.Get<string>("mod") == "ModLoader")
+				try
+				{
+					string twld = Path.ChangeExtension(Main.worldPathName, ".twld"); //gets the world we are updating
+					var tag2 = TagIO.FromStream(new MemoryStream(File.ReadAllBytes(twld))); //We read the nbt data of the world .twld file
+					if (tag2.ContainsKey("modData"))
+					{ //We look for modData here and v there 
+						foreach (TagCompound modDataTag in tag2.GetList<TagCompound>("modData"))
 						{
-							ModContent.GetInstance<TheDepths>().Logger.Debug("Didn't find altlib, Attempting to look in unloaded mods"); //Didn't find altlib so we look in unloaded and announce 
-							TagCompound dataTag = modDataTag.Get<TagCompound>("data"); //we look for the first tmod data
-							if (dataTag.ContainsKey("list"))
-							{ //find a list called list
-								ModContent.GetInstance<TheDepths>().Logger.Debug("Found List inside unloaded mods!"); //anounce we have found the list since list can be tricky sometimes
-								foreach (TagCompound unloadedList in dataTag.GetList<TagCompound>("list"))
-								{ //same here as above ^
+							if (modDataTag.Get<string>("mod") == "AltLibrary" && modDataTag.Get<string>("name") == "WorldBiomeManager")
+							{ //Here we take two paths, one for if altlib is enabled (imposter mod the original wont return) or if the mod is unloaded 
+								TagCompound dataTag = modDataTag.Get<TagCompound>("data");
 
-									if (unloadedList.Get<string>("mod") == "AltLibrary" && unloadedList.Get<string>("name") == "WorldBiomeManager")
-									{ //Look for altlib inside of list
-										ModContent.GetInstance<TheDepths>().Logger.Debug("Found Altlib under unloaded mods"); //announce that altlib has been found inside tmod's unloaded data
-										TagCompound dataTag2 = (TagCompound)unloadedList["data"]; //We look for the data entry list under list
+								if (dataTag.Get<string>("AltLibrary:WorldHell") == "TheDepths/AltDepthsBiome")
+								{ //Look for the correct string that WorldHallow is saved under
+									depthsorHell = true; //Convert world by giving it the tag
+									ModContent.GetInstance<TheDepths>().Logger.Debug("Altlib save!, converting world!"); //Announce converting
+								}
+								else
+								{
+									ModContent.GetInstance<TheDepths>().Logger.Debug("non-Altlib save, unable to convert world"); //Announce that the world doesn't have altlib/it didn't work
+								}
+								break;
+							}
+							if (modDataTag.Get<string>("mod") == "ModLoader")
+							{
+								ModContent.GetInstance<TheDepths>().Logger.Debug("Didn't find altlib, Attempting to look in unloaded mods"); //Didn't find altlib so we look in unloaded and announce 
+								TagCompound dataTag = modDataTag.Get<TagCompound>("data"); //we look for the first tmod data
+								if (dataTag.ContainsKey("list"))
+								{ //find a list called list
+									ModContent.GetInstance<TheDepths>().Logger.Debug("Found List inside unloaded mods!"); //anounce we have found the list since list can be tricky sometimes
+									foreach (TagCompound unloadedList in dataTag.GetList<TagCompound>("list"))
+									{ //same here as above ^
 
-										if (dataTag2.Get<string>("AltLibrary:WorldHell") == "TheDepths/AltDepthsBiome")
-										{ //same as the lines previously when altlib was enabled
-											depthsorHell = true;
-											ModContent.GetInstance<TheDepths>().Logger.Debug("Altlib save!, converting world!");
+										if (unloadedList.Get<string>("mod") == "AltLibrary" && unloadedList.Get<string>("name") == "WorldBiomeManager")
+										{ //Look for altlib inside of list
+											ModContent.GetInstance<TheDepths>().Logger.Debug("Found Altlib under unloaded mods"); //announce that altlib has been found inside tmod's unloaded data
+											TagCompound dataTag2 = (TagCompound)unloadedList["data"]; //We look for the data entry list under list
+
+											if (dataTag2.Get<string>("AltLibrary:WorldHell") == "TheDepths/AltDepthsBiome")
+											{ //same as the lines previously when altlib was enabled
+												depthsorHell = true;
+												ModContent.GetInstance<TheDepths>().Logger.Debug("Altlib save!, converting world!");
+											}
+											else
+											{
+												ModContent.GetInstance<TheDepths>().Logger.Debug("non-Altlib save, unable to convert world");
+											}
+											break;
 										}
-										else
-										{
-											ModContent.GetInstance<TheDepths>().Logger.Debug("non-Altlib save, unable to convert world");
-										}
-										break;
 									}
 								}
+								break;
 							}
-							break;
 						}
 					}
 				}
+				catch
+				{
+					ModContent.GetInstance<TheDepths>().Logger.Debug("Could not get the world file, you are either joining a server or world directory is false!");
+				}
+			}
+			else
+			{
+				ModContent.GetInstance<TheDepths>().Logger.Debug("Could not get the world file, you are either joining a server or world directory is false!");
 			}
 		}
 
@@ -198,8 +209,7 @@ namespace TheDepths.Worldgen
 
 			if (Main.drunkWorld)
             {
-				DrunkDepthsRight = true;
-				/*if (Main.rand.NextBool(2))
+				if (Main.rand.NextBool(2))
 				{
 					DrunkDepthsLeft = true;
 					DrunkDepthsRight = false;
@@ -208,7 +218,7 @@ namespace TheDepths.Worldgen
                 {
 					DrunkDepthsRight = true;
 					DrunkDepthsLeft = false;
-                }*/
+                }
 			}
 		}
 
@@ -1653,19 +1663,19 @@ namespace TheDepths.Worldgen
 				{
 					continue;
 				}
-				/*int num34 = 0;
-				if (WorldGen.nearPicture2(num25, num26))
+				int num34 = 0;
+				if (nearDepthsPainting(num25, num26))
 				{
 					num34 = -1;
 				}
 				if (num34 == 0)
 				{
-					PaintingEntry paintingEntry = WorldGen.RandHellPicture();
+					PaintingEntry paintingEntry = RandDarknessPicture();
 					if (!WorldGen.nearPicture(num25, num26))
 					{
 						WorldGen.PlaceTile(num25, num26, paintingEntry.tileType, mute: true, forced: false, -1, paintingEntry.style);
 					}
-				}*/
+				}
 			}
 			num9 = 420000.0 / (double)Main.maxTilesX;
 			for (int num35 = 0; (double)num35 < num9; num35++)
@@ -2383,7 +2393,6 @@ namespace TheDepths.Worldgen
 			}
 		}
 
-
 		public static void TreeGen(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = "Petrifying Trees";
@@ -2409,6 +2418,66 @@ namespace TheDepths.Worldgen
             }
             progress.Set(1f);
         }
+
+
+		/// <summary>
+		///  Checks for nearby Depths Paintings. 
+		///  Mainly used for depths houses to not place paintings both too close each other and make sure paintings dont overlap each other as well
+		/// </summary>
+		/// <param name="x">The tied x position of the search</param>
+		/// <param name="y">The tied y position of the search</param>
+		/// <returns>False if no paintings are found</returns>
+		public static bool nearDepthsPainting(int x, int y)
+		{
+			for (int i = x - 8; i <= x + 8; i++)
+			{
+				for (int j = y - 5; j <= y + 5; j++)
+				{
+					if (Main.tile[i, j].HasTile && (Main.tile[i, j].TileType == ModContent.TileType<ForTheSakeOfMakingGadgets>() || Main.tile[i, j].TileType == ModContent.TileType<AltarOfGems>() || Main.tile[i, j].TileType == ModContent.TileType<DONOTDRINK>() || Main.tile[i, j].TileType == ModContent.TileType<OtherPortal>() || Main.tile[i, j].TileType == ModContent.TileType<ImPurrSonation>() || Main.tile[i, j].TileType == ModContent.TileType<MusiciansBestFriend>() || Main.tile[i, j].TileType == ModContent.TileType<Mercury>())) //3x3, 4x3, 3x4, 4x6
+					{
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		public static PaintingEntry RandDarknessPicture()
+		{
+			int num = WorldGen.genRand.Next(8);
+			int num2 = 0;
+			switch (num)
+			{
+				case 0:
+					num = ModContent.TileType<OtherPortal>();
+					break;
+				case 1:
+					num = ModContent.TileType<MusiciansBestFriend>();
+					break;
+				case 2:
+					num = ModContent.TileType<ImPurrSonation>();
+					break;
+				case 3:
+					num = ModContent.TileType<AltarOfGems>();
+					break;
+				case 4:
+					num = ModContent.TileType<ForTheSakeOfMakingGadgets>();
+					break;
+				case 5:
+					num = ModContent.TileType<Mercury>();
+					break;
+				case 6:
+					num = ModContent.TileType<ChaosCat>();
+					break;
+				default:
+					num = ModContent.TileType<DONOTDRINK>();
+					break;
+			}
+			PaintingEntry result = default(PaintingEntry);
+			result.tileType = num;
+			result.style = num2;
+			return result;
+		}
 
 		private static bool IsUndergroundDesert(int x, int y)
 		{

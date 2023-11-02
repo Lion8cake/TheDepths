@@ -35,17 +35,5 @@ namespace TheDepths.Tiles
         {
             num = (fail ? 1 : 3);
         }
-
-        public override void RandomUpdate(int i, int j)
-        {
-            Tile up = Main.tile[i, j - 1];
-            Tile down = Main.tile[i, j + 1];
-            Tile left = Main.tile[i - 1, j];
-            Tile right = Main.tile[i + 1, j];
-            if (WorldGen.genRand.Next(3) == 0 && (up.TileType == ModContent.TileType<NightmareGrass>() || down.TileType == ModContent.TileType<NightmareGrass>() || left.TileType == ModContent.TileType<NightmareGrass>() || right.TileType == ModContent.TileType<NightmareGrass>()))
-            {
-                WorldGen.SpreadGrass(i, j, Type, ModContent.TileType<NightmareGrass>(), repeat: false);
-            }
-        }
     }
 }

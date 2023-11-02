@@ -17,6 +17,7 @@ namespace TheDepths.NPCs
                 Velocity = 1f,
                 Position = new(1, 2)
             });
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Buffs.MercuryBoiling>()] = true;
         }
 
         public override void SetDefaults()

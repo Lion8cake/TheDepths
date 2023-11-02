@@ -25,6 +25,7 @@ namespace TheDepths.Tiles
 			Main.tileLavaDeath[Type] = false;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
+			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(140, 17, 206), name);
@@ -35,6 +36,7 @@ namespace TheDepths.Tiles
 			MinPick = 65;
 			TileID.Sets.HasOutlines[Type] = true;
 			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
+			AnimationFrameHeight = 38;
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
@@ -117,23 +119,27 @@ namespace TheDepths.Tiles
 			int x = i - Main.tile[i, j].TileFrameX / 18 % 3;
 			int y = j - Main.tile[i, j].TileFrameY / 18 % 2;
 			Player player = Main.LocalPlayer;
-			for (int m = x; m < x + 3; m++)
+			if ((player.HeldItem.type == ModContent.ItemType<RubyRelic>() || Main.mouseItem.type == ModContent.ItemType<RubyRelic>()) && Main.LocalPlayer.ZoneUnderworldHeight && !player.HasBuff(ModContent.BuffType<RelicsCurse>()) && !NPC.AnyNPCs(ModContent.NPCType<NPCs.Chasme.ChasmeHeart>()))
 			{
-				for (int n = y; n < y + 2; n++)
+				for (int m = x; m < x + 3; m++)
 				{
-					if (Main.tile[m, n].HasTile && Main.tile[m, n].TileType == Type)
+					for (int n = y; n < y + 2; n++)
 					{
-						if (Main.tile[m, n].TileFrameX < 18 * 3 && player.HeldItem.type == ModContent.ItemType<RubyRelic>() && Main.LocalPlayer.ZoneUnderworldHeight && !player.HasBuff(BuffID.Horrified) && !player.HasBuff(ModContent.BuffType<RelicsCurse>()))
+						if (Main.tile[m, n].HasTile && Main.tile[m, n].TileType == Type)
 						{
-							Main.tile[m, n].TileFrameX += (short)(18 * 3);
-							Projectile.NewProjectile(new EntitySource_Misc(""), new Vector2(x, y).ToWorldCoordinates() + new Vector2(17, 24), Vector2.Zero, ModContent.ProjectileType<GemforgeExtraDusts>(), 0, 0f, Main.myPlayer);
+							if (Main.tile[m, n].TileFrameX < 18 * 3)
+							{
+								Main.tile[m, n].TileFrameX += (short)(18 * 3);
+								for (int dust = 0; dust < 6; dust++)
+								{
+									Projectile.NewProjectile(new EntitySource_Misc(""), new Vector2(x, y).ToWorldCoordinates() + new Vector2(17, 24), Vector2.Zero, ModContent.ProjectileType<GemforgeExtraDusts>(), 0, 0f, Main.myPlayer);
+								}
+							}
 						}
-                    }
-                }
-            }
-            if (player.HeldItem.type == ModContent.ItemType<RubyRelic>() && Main.LocalPlayer.ZoneUnderworldHeight && !player.HasBuff(BuffID.Horrified) && !player.HasBuff(ModContent.BuffType<RelicsCurse>()))
-            {
+					}
+				}
                 player.HeldItem.stack -= 1;
+				Main.mouseItem.stack -= 1;
 				Projectile.NewProjectile(new EntitySource_Misc(""), new Vector2(x, y).ToWorldCoordinates() + new Vector2(17, 24), Vector2.Zero, ModContent.ProjectileType<GemforgeCutscene>(), 0, 0f, Main.myPlayer);
 				//player.AddBuff(ModContent.BuffType<RelicsCurse>(), 301);
 			}
@@ -143,5 +149,16 @@ namespace TheDepths.Tiles
 			}
             return true;
 		}
-    }
+
+		public override void AnimateTile(ref int frame, ref int frameCounter)
+		{
+			frameCounter++;
+			if (frameCounter > 6)
+			{
+				frameCounter = 0;
+				frame++;
+				frame %= 8;
+			}
+		}
+	}
 }

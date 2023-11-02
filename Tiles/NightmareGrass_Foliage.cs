@@ -25,16 +25,9 @@ namespace TheDepths.Tiles
             DustType = ModContent.DustType<NightDust>();
             HitSound = SoundID.Grass;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
+            TileObjectData.newTile.CoordinateHeights = new int[] { 20 };
             TileObjectData.addTile(Type);
             AddMapEntry(new Color(44, 25, 96));
-        }
-
-        public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)
-        {
-            if (i % 6 < 11)
-            {
-                spriteEffects = (SpriteEffects)1;
-            }
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

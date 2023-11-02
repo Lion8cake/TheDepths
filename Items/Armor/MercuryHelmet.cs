@@ -24,7 +24,7 @@ namespace TheDepths.Items.Armor
 		}
 		
 		public override void UpdateEquip(Player player) {
-		player.GetCritChance(DamageClass.Generic) += 4;
+			player.GetCritChance(DamageClass.Generic) += 6;
 		}
 
 		public override bool IsArmorSet(Item head, Item body, Item legs) {

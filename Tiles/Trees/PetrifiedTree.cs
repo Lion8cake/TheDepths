@@ -22,6 +22,11 @@ namespace TheDepths.Tiles.Trees
             GrowsOnTileId = new int[1] { ModContent.TileType<ShaleBlock>() };
         }
 
+        public override int CreateDust()
+        {
+            return ModContent.DustType<Dusts.PetrifiedWoodDust>();
+        }
+
         public override Asset<Texture2D> GetTexture()
         {
             return ModContent.Request<Texture2D>("TheDepths/Tiles/Trees/PetrifiedTree");
@@ -55,5 +60,10 @@ namespace TheDepths.Tiles.Trees
         {
             return ModContent.GoreType<PetrifiedTreeLeaf>();
         }
-    }
+
+		public override bool Shake(int x, int y, ref bool createLeaves)
+		{
+            return false;
+		}
+	}
 }

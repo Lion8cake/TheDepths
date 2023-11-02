@@ -1104,19 +1104,19 @@ namespace TheDepths.Worldgen
 				{
 					continue;
 				}
-				/*int num34 = 0;
-				if (WorldGen.nearPicture2(num25, num26))
+				int num34 = 0;
+				if (TheDepthsWorldGen.nearDepthsPainting(num25, num26))
 				{
 					num34 = -1;
 				}
 				if (num34 == 0)
 				{
-					PaintingEntry paintingEntry = WorldGen.RandHellPicture();
+					PaintingEntry paintingEntry = TheDepthsWorldGen.RandDarknessPicture();
 					if (!WorldGen.nearPicture(num25, num26))
 					{
 						WorldGen.PlaceTile(num25, num26, paintingEntry.tileType, mute: true, forced: false, -1, paintingEntry.style);
 					}
-				}*/
+				}
 			}
 			num9 = 420000.0 / (double)(Main.maxTilesX / 2);
 			for (int num35 = 0; (double)num35 < num9; num35++)
@@ -2715,19 +2715,19 @@ namespace TheDepths.Worldgen
 				{
 					continue;
 				}
-				/*int num34 = 0;
-				if (WorldGen.nearPicture2(num25, num26))
+				int num34 = 0;
+				if (TheDepthsWorldGen.nearDepthsPainting(num25, num26))
 				{
 					num34 = -1;
 				}
 				if (num34 == 0)
 				{
-					PaintingEntry paintingEntry = WorldGen.RandHellPicture();
+					PaintingEntry paintingEntry = TheDepthsWorldGen.RandDarknessPicture();
 					if (!WorldGen.nearPicture(num25, num26))
 					{
 						WorldGen.PlaceTile(num25, num26, paintingEntry.tileType, mute: true, forced: false, -1, paintingEntry.style);
 					}
-				}*/
+				}
 			}
 			num9 = 420000.0 / (double)Main.maxTilesX;
 			for (int num35 = 0; (double)num35 < num9; num35++)
@@ -3097,7 +3097,7 @@ namespace TheDepths.Worldgen
 						{
 							break;
 						}
-						for (int num32 = num29 + (Main.maxTilesX / 2); num32 <= num30 && num32 >= 20 && num32 <= Main.maxTilesX - 20; num32++)
+						for (int num32 = num29 + (Main.maxTilesX); num32 <= num30 && num32 >= 20 && num32 <= Main.maxTilesX - 20; num32++)
 						{
 							Tile tile = Main.tile[num32, array3[num28]];
 							tile.HasTile = false;

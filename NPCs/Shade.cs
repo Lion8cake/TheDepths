@@ -19,8 +19,12 @@ namespace TheDepths.NPCs
 {
     public class Shade : ModNPC
     {
+		public override void SetStaticDefaults()
+		{
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Buffs.MercuryBoiling>()] = true;
+        }
 
-        public override void SetDefaults()
+		public override void SetDefaults()
         {
             NPC.width = 56;
             NPC.height = 70;

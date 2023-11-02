@@ -11,7 +11,6 @@ namespace TheDepths.Items.Placeable
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
-			//ItemID.Sets.KillsToBanner for a later note
 		}
 
 		public override void SetDefaults() {
@@ -33,6 +32,14 @@ namespace TheDepths.Items.Placeable
 			recipe.AddIngredient(ModContent.ItemType<NightwoodWall>(), 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.Register();
+
+			Recipe recipe2 = CreateRecipe();
+			recipe2.AddIngredient(ModContent.ItemType<Items.Placeable.Furniture.NightwoodPlatform>(), 2);
+			recipe2.Register();
+
+			Recipe recipe3 = CreateRecipe();
+			recipe3.AddIngredient(ModContent.ItemType<Items.Placeable.NightwoodWall>(), 4);
+			recipe3.Register();
 		}
 	}
 }

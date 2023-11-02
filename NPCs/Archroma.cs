@@ -18,7 +18,8 @@ namespace TheDepths.NPCs
 	public class Archroma : ModNPC
 	{
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 2; 
+			Main.npcFrameCount[NPC.type] = 2;
+			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Buffs.MercuryBoiling>()] = true;
 		}
 		
 		public override void SetDefaults() {

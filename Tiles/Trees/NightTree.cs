@@ -54,7 +54,17 @@ namespace TheDepths.Tiles.Trees
         {
         }
 
-        public override bool Shake(int x, int y, ref bool createLeaves)
+		public override int CreateDust()
+		{
+			return ModContent.DustType<Dusts.NightWoodDust>();
+		}
+
+		public override int TreeLeaf()
+		{
+			return ModContent.GoreType<NullGore>();
+		}
+
+		public override bool Shake(int x, int y, ref bool createLeaves)
         {
 			if (Main.getGoodWorld && WorldGen.genRand.NextBool(17))
 			{

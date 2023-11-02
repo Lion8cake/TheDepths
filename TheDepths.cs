@@ -94,6 +94,7 @@ namespace TheDepths
             On_TELogicSensor.GetState += On_TELogicSensor_GetState;
 
 			On_TileDrawing.DrawMultiTileVinesInWind += On_TileDrawing_DrawMultiTileVinesInWind;
+            On_TileDrawing.GetWindCycle += On_TileDrawing_GetWindCycle;
         }
 
 		
@@ -133,7 +134,45 @@ namespace TheDepths
             On_TELogicSensor.GetState -= On_TELogicSensor_GetState;
 
             On_TileDrawing.DrawMultiTileVinesInWind -= On_TileDrawing_DrawMultiTileVinesInWind;
+			On_TileDrawing.GetWindCycle -= On_TileDrawing_GetWindCycle;
         }
+
+		#region MakeSomeTilesWindyInTheDepths
+		private float On_TileDrawing_GetWindCycle(On_TileDrawing.orig_GetWindCycle orig, TileDrawing self, int x, int y, double windCounter)
+		{
+            if (TheDepthsWorldGen.InDepths)
+            {
+                if (!Main.SettingsEnabled_TilesSwayInWind)
+                {
+                    return 0f;
+                }
+                float num = (float)x * 0.5f + (float)(y / 100) * 0.5f;
+                float num2 = (float)Math.Cos(windCounter * 6.2831854820251465 + (double)num) * 0.5f;
+                if (Main.remixWorld)
+                {
+                    if (!((double)y > Main.worldSurface) && (y <= Main.UnderworldLayer))
+                    {
+                        return 0f;
+                    }
+                    num2 += Main.WindForVisuals;
+                }
+                else
+                {
+                    if (!((double)y < Main.worldSurface) && (y <= Main.UnderworldLayer))
+                    {
+                        return 0f;
+                    }
+                    num2 += Main.WindForVisuals;
+                }
+                float lerpValue = Utils.GetLerpValue(0.08f, 0.18f, Math.Abs(Main.WindForVisuals), clamped: true);
+                return num2 * lerpValue;
+            }
+            else
+            {
+                return orig.Invoke(self, x, y, windCounter);
+            }
+        }
+#endregion
 
 		#region VineWindTileLength
 		private void On_TileDrawing_DrawMultiTileVinesInWind(On_TileDrawing.orig_DrawMultiTileVinesInWind orig, TileDrawing self, Vector2 screenPosition, Vector2 offSet, int topLeftX, int topLeftY, int sizeX, int sizeY)

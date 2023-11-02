@@ -27,6 +27,7 @@ namespace TheDepths.NPCs
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 3;
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Buffs.MercuryBoiling>()] = true;
         }
 
         public override void SetDefaults()

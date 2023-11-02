@@ -20,7 +20,8 @@ namespace TheDepths.NPCs
 	public class Ferroslime : ModNPC
 	{
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 2; 
+			Main.npcFrameCount[NPC.type] = 2;
+			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Buffs.MercuryBoiling>()] = true;
 		}
 		
 		public override void SetDefaults() {

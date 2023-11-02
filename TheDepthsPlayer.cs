@@ -183,7 +183,7 @@ namespace TheDepths
             }
         }
 
-        public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
+        public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass<SummonMeleeSpeedDamageClass>())
             {
@@ -265,6 +265,13 @@ namespace TheDepths
                 {
                     itemDrop = ModContent.ItemType<GlimmerDepthFish>();
                     return;
+                }
+            }
+            if (attempt.CanFishInLava && attempt.inLava)
+            {
+                if (DepthsModCalling.Achievements != null)
+                {
+                    DepthsModCalling.Achievements.Call("Event", "FishingInQuicksilver");
                 }
             }
         }
@@ -470,6 +477,14 @@ namespace TheDepths
 						}
 					}
 				}
+            }
+
+            if (Main.LocalPlayer.InModBiome<DepthsBiome>())
+			{
+                if (DepthsModCalling.Achievements != null)
+                {
+                    DepthsModCalling.Achievements.Call("Event", "WalkedIntoTheDepths");
+                }
             }
 		}
 

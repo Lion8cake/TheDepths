@@ -29,6 +29,10 @@ namespace TheDepths.Items.Placeable
             recipe.AddTile(TileID.CrystalBall);
             recipe.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), () => Worldgen.TheDepthsWorldGen.depthsorHell && Main.LocalPlayer.adjLava);
             recipe.Register();
+
+            Recipe recipe2 = CreateRecipe();
+            recipe2.AddIngredient(ModContent.ItemType<Items.Placeable.SilverfallWall>(), 4);
+            recipe2.Register();
         }
     }
 }

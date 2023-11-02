@@ -35,6 +35,10 @@ namespace TheDepths.Items.Placeable
 			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteOre>(), 1);
 			recipe.AddTile(TileID.Furnaces);
 			recipe.Register();
+
+			Recipe recipe2 = CreateRecipe();
+			recipe2.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBrickWall>(), 4);
+			recipe2.Register();
 		}
 	}
 }

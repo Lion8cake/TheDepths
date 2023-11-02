@@ -22,7 +22,7 @@ namespace TheDepths.NPCs
 		{
 			if (npc.lavaImmune == true)
 			{
-				npc.buffImmune[ModContent.BuffType<Buffs.MercuryBoiling>()] = true;
+				NPCID.Sets.SpecificDebuffImmunity[npc.type][ModContent.BuffType<Buffs.MercuryBoiling>()] = true;
 			}
 		}
 

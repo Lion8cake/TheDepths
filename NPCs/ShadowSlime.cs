@@ -21,6 +21,7 @@ namespace TheDepths.NPCs
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 2;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Buffs.MercuryBoiling>()] = true;
 		}
 		
 		public override void SetDefaults() {
