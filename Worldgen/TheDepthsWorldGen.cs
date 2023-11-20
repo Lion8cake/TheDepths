@@ -50,7 +50,7 @@ namespace TheDepths.Worldgen
 		/// <summary>
 		///   Checks if the player is in the depths part of the world. This is used to reduce repetion within code as previously all the check needed was depthsorHell == true.
 		/// </summary>
-		public static bool InDepths => (depthsorHell && !Main.drunkWorld || (IsPlayerInLeftDepths || IsPlayerInRightDepths) && Main.drunkWorld);
+		public static bool InDepths => ((depthsorHell && !DrunkDepthsLeft && !DrunkDepthsRight) || (IsPlayerInLeftDepths || IsPlayerInRightDepths));
 
 		public override void OnWorldLoad()
 		{
@@ -207,7 +207,7 @@ namespace TheDepths.Worldgen
 				_ => throw new ArgumentOutOfRangeException(),
 			};
 
-			if (Main.drunkWorld)
+			if (Main.drunkWorld || ModSupport.DepthsModCalling.FargoBoBWSupport)
             {
 				if (Main.rand.NextBool(2))
 				{
@@ -224,7 +224,7 @@ namespace TheDepths.Worldgen
 
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
-            if (depthsorHell && !Main.drunkWorld)
+            if (depthsorHell && (!Main.drunkWorld && !ModSupport.DepthsModCalling.FargoBoBWSupport))
             {
                 int index2 = tasks.FindIndex(genpass => genpass.Name.Equals("Underworld"));
 				if (index2 != -1)
@@ -265,7 +265,7 @@ namespace TheDepths.Worldgen
 					tasks.Insert(index7 + 2, new PassLegacy("Shadow Chest Shuffler", new WorldGenLegacyMethod(DepthsShadowchestGenResetter)));
 				}
 			}
-			if (DrunkDepthsLeft && Main.drunkWorld)
+			if (DrunkDepthsLeft && (Main.drunkWorld || ModSupport.DepthsModCalling.FargoBoBWSupport))
 			{
 				int index2 = tasks.FindIndex(genpass => genpass.Name.Equals("Underworld"));
 				if (index2 != -1)
@@ -299,7 +299,7 @@ namespace TheDepths.Worldgen
 					tasks.Insert(index6 + 2, new PassLegacy("Shadow Chest Shuffler", new WorldGenLegacyMethod(TheDepthsDrunkGen.DepthsShadowchestGenResetterDrunk)));
 				}
 			}
-			if (DrunkDepthsRight && Main.drunkWorld)
+			if (DrunkDepthsRight && (Main.drunkWorld || ModSupport.DepthsModCalling.FargoBoBWSupport))
 			{
 				int index2 = tasks.FindIndex(genpass => genpass.Name.Equals("Underworld"));
 				if (index2 != -1)
@@ -337,7 +337,7 @@ namespace TheDepths.Worldgen
 
         public override void ModifyHardmodeTasks(List<GenPass> list)
 		{
-			if (depthsorHell || WorldGen.drunkWorldGen)
+			if (depthsorHell || WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport)
 			{
 				list.Add(new PassLegacy("The Depths: Onyx Shalestone", new WorldGenLegacyMethod(OnyxShale)));
 			}

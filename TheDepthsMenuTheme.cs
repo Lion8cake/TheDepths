@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using System.Collections.Generic;
 using System;
 using ReLogic.Content;
+using Terraria.Graphics.Effects;
 
 namespace TheDepths
 {

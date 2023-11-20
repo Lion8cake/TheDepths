@@ -1,6 +1,9 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using Terraria;
+using Terraria.Graphics.Effects;
 using Terraria.ModLoader;
 
 namespace TheDepths.Biomes;
@@ -23,17 +26,41 @@ public class DepthsBiome : ModBiome
 
     public override string BestiaryIcon => "TheDepths/Biomes/DepthsBestiaryIcon";
 
-    public override bool IsBiomeActive(Player player)
+    public override void SpecialVisuals(Player player, bool isActive)
     {
-        if (Main.drunkWorld && Worldgen.TheDepthsWorldGen.DrunkDepthsLeft)
+        if (ModContent.GetInstance<TheDepthsClientConfig>().EnableFog)
+        {
+            float FogStrength = (NPC.AnyNPCs(ModContent.NPCType<NPCs.Chasme.ChasmeHeart>()) ? 0.4f : (Main.bloodMoon ? 0.75f : 0.85f));
+            Color FogColor = (Main.bloodMoon ? Color.Crimson : Color.White);
+            var FogShader = Filters.Scene["TheDepths:FogShader"]?.GetShader().UseIntensity(FogStrength).UseColor(FogColor);
+            FogShader.UseImage(ModContent.Request<Texture2D>("TheDepths/Shaders/Perlin", AssetRequestMode.ImmediateLoad).Value, 0);
+            FogShader.UseImage(ModContent.Request<Texture2D>("TheDepths/Shaders/Perlin", AssetRequestMode.ImmediateLoad).Value, 1);
+            player.ManageSpecialBiomeVisuals("TheDepths:FogShader", isActive);
+        }
+        else
+		{
+            player.ManageSpecialBiomeVisuals("TheDepths:FogShader", false);
+        }
+    }
+
+    public override void OnLeave(Player player)
+    {
+        player.ManageSpecialBiomeVisuals("TheDepths:FogShader", false);
+    }
+
+	public override bool IsBiomeActive(Player player)
+    {
+        if (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft)
         {
             return Math.Abs(player.position.ToTileCoordinates().X) < Main.maxTilesX / 2 && Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210;
         }
-        else if (Main.drunkWorld && Worldgen.TheDepthsWorldGen.DrunkDepthsRight)
+        else if (Worldgen.TheDepthsWorldGen.DrunkDepthsRight)
         {
             return Math.Abs(player.position.ToTileCoordinates().X) > Main.maxTilesX / 2 && Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210;
         }
-
-        return Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210 && Worldgen.TheDepthsWorldGen.depthsorHell;
+        else
+        {
+            return Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210 && Worldgen.TheDepthsWorldGen.depthsorHell;
+        }
     }
 }

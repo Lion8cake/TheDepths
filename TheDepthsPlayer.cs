@@ -98,30 +98,33 @@ namespace TheDepths
 
 		public override void Unload()
 		{
-            TextureAssets.Liquid[1] = Main.Assets.Request<Texture2D>("Images/Liquid_1");
-            TextureAssets.LiquidSlope[1] = Main.Assets.Request<Texture2D>("Images/LiquidSlope_1");
-            TextureAssets.Item[207] = Main.Assets.Request<Texture2D>("Images/Item_207");
-            TextureAssets.Item[4820] = Main.Assets.Request<Texture2D>("Images/Item_4820");
-            TextureAssets.Item[4872] = Main.Assets.Request<Texture2D>("Images/Item_4872");
-            TextureAssets.Item[5361] = Main.Assets.Request<Texture2D>("Images/Item_5361");
-
-            int[] bgnumOriginal = new int[30] { 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 150, 151, 152, 157, 158, 159, 185, 186, 187 };
-            foreach (int i in bgnumOriginal)
+            if (Main.netMode != NetmodeID.Server)
             {
-                TextureAssets.Background[i] = Main.Assets.Request<Texture2D>("Images/Background_" + i);
+                TextureAssets.Liquid[1] = Main.Assets.Request<Texture2D>("Images/Liquid_1");
+                TextureAssets.LiquidSlope[1] = Main.Assets.Request<Texture2D>("Images/LiquidSlope_1");
+                TextureAssets.Item[207] = Main.Assets.Request<Texture2D>("Images/Item_207");
+                TextureAssets.Item[4820] = Main.Assets.Request<Texture2D>("Images/Item_4820");
+                TextureAssets.Item[4872] = Main.Assets.Request<Texture2D>("Images/Item_4872");
+                TextureAssets.Item[5361] = Main.Assets.Request<Texture2D>("Images/Item_5361");
+
+                int[] bgnumOriginal = new int[30] { 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 150, 151, 152, 157, 158, 159, 185, 186, 187 };
+                foreach (int i in bgnumOriginal)
+                {
+                    TextureAssets.Background[i] = Main.Assets.Request<Texture2D>("Images/Background_" + i);
+                }
+
+                for (int i = 0; i < 14; i++)
+                {
+                    TextureAssets.Underworld[i] = Main.Assets.Request<Texture2D>("Images/Backgrounds/Underworld " + i);
+                }
+
+                TextureAssets.Item[3729] = Main.Assets.Request<Texture2D>("Images/Item_3729");
+                TextureAssets.Tile[423] = Main.Assets.Request<Texture2D>("Images/Tiles_423");
+
+                ushort LiquidPosition = (ushort)typeof(MapHelper).GetField("liquidPosition", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+                Color[] ColorLookup = (Color[])typeof(MapHelper).GetField("colorLookup", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+                ColorLookup[LiquidPosition + 1] = new Color(253, 32, 3);
             }
-
-            for (int i = 0; i < 14; i++)
-            {
-                TextureAssets.Underworld[i] = Main.Assets.Request<Texture2D>("Images/Backgrounds/Underworld " + i);
-            }
-
-            TextureAssets.Item[3729] = Main.Assets.Request<Texture2D>("Images/Item_3729");
-            TextureAssets.Tile[423] = Main.Assets.Request<Texture2D>("Images/Tiles_423");
-
-            ushort LiquidPosition = (ushort)typeof(MapHelper).GetField("liquidPosition", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
-            Color[] ColorLookup = (Color[])typeof(MapHelper).GetField("colorLookup", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
-            ColorLookup[LiquidPosition + 1] = new Color(253, 32, 3);
 
             if (!Main.dedServ)
             {
@@ -213,6 +216,11 @@ namespace TheDepths
             }
         }
 
+        public override void GetDyeTraderReward(List<int> rewardPool)
+        {
+            rewardPool.Add(ModContent.ItemType<Items.LivingFogDye>());
+        }
+
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
             if (Worldgen.TheDepthsWorldGen.InDepths)
@@ -269,9 +277,9 @@ namespace TheDepths
             }
             if (attempt.CanFishInLava && attempt.inLava)
             {
-                if (DepthsModCalling.Achievements != null)
+                if (ModSupport.DepthsModCalling.Achievements != null)
                 {
-                    DepthsModCalling.Achievements.Call("Event", "FishingInQuicksilver");
+                    ModSupport.DepthsModCalling.Achievements.Call("Event", "FishingInQuicksilver");
                 }
             }
         }
@@ -301,6 +309,8 @@ namespace TheDepths
 
         public override void PostUpdate()
         {
+            Player player = Main.LocalPlayer;
+
             #region QuicksilverMapColor
             ushort LiquidPosition = (ushort)typeof(MapHelper).GetField("liquidPosition", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
             Color[] ColorLookup = (Color[])typeof(MapHelper).GetField("colorLookup", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
@@ -479,14 +489,14 @@ namespace TheDepths
 				}
             }
 
-            if (Main.LocalPlayer.InModBiome<DepthsBiome>())
+            if (player.InModBiome<DepthsBiome>())
 			{
-                if (DepthsModCalling.Achievements != null)
+                if (ModSupport.DepthsModCalling.Achievements != null)
                 {
-                    DepthsModCalling.Achievements.Call("Event", "WalkedIntoTheDepths");
+                    ModSupport.DepthsModCalling.Achievements.Call("Event", "WalkedIntoTheDepths");
                 }
             }
-		}
+        }
 
         public static void ShalestoneConch(Player player)
         {

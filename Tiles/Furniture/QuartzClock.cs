@@ -22,7 +22,8 @@ namespace TheDepths.Tiles.Furniture
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
             TileObjectData.newTile.Height = 5;
-            TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16, 16 };
+			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16, 18 };
+            TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
             TileObjectData.addTile(Type);
 
             AddMapEntry(new Color(255, 255, 255), CreateMapEntryName());

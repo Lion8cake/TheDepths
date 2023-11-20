@@ -26,7 +26,7 @@ namespace TheDepths.Tiles
 			AddMapEntry(new Color(140, 17, 206), name);
 			DustType = ModContent.DustType<ArqueriteDust>();
             TileID.Sets.DisableSmartCursor[Type] = true;
-			TileObjectData.newTile.DrawYOffset = -2;
+			//TileObjectData.newTile.DrawYOffset = -2;
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) {

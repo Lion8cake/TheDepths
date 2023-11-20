@@ -15,6 +15,7 @@ float2 uImageSize0;
 float2 uImageSize1;
 
 // This is a shader. You are on your own with shaders. Compile shaders in an XNB project.
+// Uses Perlin2 as of recently as DepthsFog shader uses Perlin
 
 float4 PixelShaderFunction(float2 coords : TEXCOORD0) : COLOR0
 {

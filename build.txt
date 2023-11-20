@@ -1,5 +1,5 @@
 displayName = The Depths (Hell Alternative)
 author = Lion8cake & Snickerbobble
-version = 0.6.5
+version = 0.6.6
 includeSource = true
 includePDB = true

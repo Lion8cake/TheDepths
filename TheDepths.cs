@@ -28,6 +28,10 @@ using static Terraria.Graphics.FinalFractalHelper;
 using Terraria.Graphics;
 using TheDepths.Worldgen;
 using Terraria.GameContent.Drawing;
+using Terraria.ModLoader.Core;
+using System.Linq;
+using Terraria.GameContent.Skies;
+using Terraria.Utilities;
 
 namespace TheDepths
 {
@@ -39,6 +43,9 @@ namespace TheDepths
 
         public override void Load()
         {
+            Asset<Effect> shader = ModContent.Request<Effect>("TheDepths/Shaders/DepthsFog", AssetRequestMode.ImmediateLoad);
+            Filters.Scene["TheDepths:FogShader"] = new Filter(new ScreenShaderData(new Ref<Effect>(shader.Value), "DepthsFogShaderPass"), EffectPriority.VeryHigh);
+
             TheDepthsWindUtilities.Load();
 
             var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
@@ -95,9 +102,9 @@ namespace TheDepths
 
 			On_TileDrawing.DrawMultiTileVinesInWind += On_TileDrawing_DrawMultiTileVinesInWind;
             On_TileDrawing.GetWindCycle += On_TileDrawing_GetWindCycle;
-        }
 
-		
+			On_AmbientSky.HellBatsGoupSkyEntity.ctor += HellBatsGoupSkyEntity_ctor;
+        }
 
 		public override void Unload()
         {
@@ -135,10 +142,31 @@ namespace TheDepths
 
             On_TileDrawing.DrawMultiTileVinesInWind -= On_TileDrawing_DrawMultiTileVinesInWind;
 			On_TileDrawing.GetWindCycle -= On_TileDrawing_GetWindCycle;
+
+            On_AmbientSky.HellBatsGoupSkyEntity.ctor -= HellBatsGoupSkyEntity_ctor;
         }
 
-		#region MakeSomeTilesWindyInTheDepths
-		private float On_TileDrawing_GetWindCycle(On_TileDrawing.orig_GetWindCycle orig, TileDrawing self, int x, int y, double windCounter)
+		#region AlbinoBatSkyObject
+		private void HellBatsGoupSkyEntity_ctor(On_AmbientSky.HellBatsGoupSkyEntity.orig_ctor orig, object self, Player player, FastRandom random)
+        {
+            orig.Invoke(self, player, random);
+            if (TheDepthsWorldGen.InDepths)
+            {
+                var SkyEntity = typeof(AmbientSky).GetNestedType("SkyEntity", BindingFlags.NonPublic);
+                SkyEntity.GetField("Texture",
+                    BindingFlags.Public |
+                    BindingFlags.NonPublic |
+                    BindingFlags.Static |
+                    BindingFlags.Instance
+                    ).SetValue(
+                    self,
+                    ModContent.Request<Texture2D>("TheDepths/Backgrounds/Ambient/AlbinoBat" + Main.rand.Next(1, 4)));
+            }
+        }
+        #endregion
+
+        #region MakeSomeTilesWindyInTheDepths
+        private float On_TileDrawing_GetWindCycle(On_TileDrawing.orig_GetWindCycle orig, TileDrawing self, int x, int y, double windCounter)
 		{
             if (TheDepthsWorldGen.InDepths)
             {
@@ -172,7 +200,7 @@ namespace TheDepths
                 return orig.Invoke(self, x, y, windCounter);
             }
         }
-#endregion
+        #endregion
 
 		#region VineWindTileLength
 		private void On_TileDrawing_DrawMultiTileVinesInWind(On_TileDrawing.orig_DrawMultiTileVinesInWind orig, TileDrawing self, Vector2 screenPosition, Vector2 offSet, int topLeftX, int topLeftY, int sizeX, int sizeY)
@@ -257,8 +285,10 @@ namespace TheDepths
 			#endregion
 			else
 			{
+                bool NotDuelCores = !_data.GetBool("DrunkDepthsRight") && !_data.GetBool("DrunkDepthsLeft");
+
                 #region Normal
-                if (_data.GetBool("HasDepths") && !Data.RemixWorld && !Data.DrunkWorld && !Data.DefeatedMoonlord)
+                if (_data.GetBool("HasDepths") && NotDuelCores && !Data.RemixWorld && !Data.DrunkWorld && !Data.DefeatedMoonlord)
                 {
                     UIElement worldIcon = WorldIcon;
                     UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepths"))
@@ -269,7 +299,7 @@ namespace TheDepths
                     };
                     worldIcon.Append(element);
                 }
-                if (_data.GetBool("HasDepths") && !Data.RemixWorld && !Data.DrunkWorld && Data.DefeatedMoonlord)
+                if (_data.GetBool("HasDepths") && NotDuelCores && !Data.RemixWorld && !Data.DrunkWorld && Data.DefeatedMoonlord)
                 {
                     UIElement worldIcon = WorldIcon;
                     UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDepths"))
@@ -280,7 +310,7 @@ namespace TheDepths
                     };
                     worldIcon.Append(element);
                 }
-                else if (!_data.GetBool("HasDepths") && !Data.DrunkWorld && !Data.DefeatedMoonlord)
+                else if (!_data.GetBool("HasDepths") && NotDuelCores && !Data.DrunkWorld && !Data.DefeatedMoonlord)
                 {
                     UIElement worldIcon = WorldIcon;
                     UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconUnderworld"))
@@ -291,7 +321,7 @@ namespace TheDepths
                     };
                     worldIcon.Append(element);
                 }
-                else if (!_data.GetBool("HasDepths") && !Data.DrunkWorld && Data.DefeatedMoonlord)
+                else if (!_data.GetBool("HasDepths") && NotDuelCores && !Data.DrunkWorld && Data.DefeatedMoonlord)
                 {
                     UIElement worldIcon = WorldIcon;
                     UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconUnderworld"))
@@ -328,7 +358,7 @@ namespace TheDepths
                     worldIcon.Append(element);
                 }
 
-                else if (Data.DrunkWorld && !Data.DefeatedMoonlord && _data.GetBool("DrunkDepthsLeft") && !_data.GetBool("DrunkDepthsRight"))
+                else if (!Data.DefeatedMoonlord && _data.GetBool("DrunkDepthsLeft") && !_data.GetBool("DrunkDepthsRight"))
                 {
                     UIElement worldIcon = WorldIcon;
                     UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunkLeft"))
@@ -339,7 +369,7 @@ namespace TheDepths
                     };
                     worldIcon.Append(element);
                 }
-                else if (Data.DrunkWorld && Data.DefeatedMoonlord && _data.GetBool("DrunkDepthsLeft") && !_data.GetBool("DrunkDepthsRight"))
+                else if (Data.DefeatedMoonlord && _data.GetBool("DrunkDepthsLeft") && !_data.GetBool("DrunkDepthsRight"))
                 {
                     UIElement worldIcon = WorldIcon;
                     UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunkLeft"))
@@ -351,7 +381,7 @@ namespace TheDepths
                     worldIcon.Append(element);
                 }
 
-                else if (Data.DrunkWorld && !Data.DefeatedMoonlord && !_data.GetBool("DrunkDepthsLeft") && _data.GetBool("DrunkDepthsRight"))
+                else if (!Data.DefeatedMoonlord && !_data.GetBool("DrunkDepthsLeft") && _data.GetBool("DrunkDepthsRight"))
                 {
                     UIElement worldIcon = WorldIcon;
                     UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunkRight"))
@@ -362,7 +392,7 @@ namespace TheDepths
                     };
                     worldIcon.Append(element);
                 }
-                else if (Data.DrunkWorld && Data.DefeatedMoonlord && !_data.GetBool("DrunkDepthsLeft") && _data.GetBool("DrunkDepthsRight"))
+                else if (Data.DefeatedMoonlord && !_data.GetBool("DrunkDepthsLeft") && _data.GetBool("DrunkDepthsRight"))
                 {
                     UIElement worldIcon = WorldIcon;
                     UIImage element = new UIImage(ModContent.Request<Texture2D>("TheDepths/Assets/WorldIcon/IconDrunkRight"))
@@ -478,7 +508,7 @@ namespace TheDepths
         #region LavaSensorDetour
         private bool On_TELogicSensor_GetState(On_TELogicSensor.orig_GetState orig, int x, int y, TELogicSensor.LogicCheckType type, TELogicSensor instance)
         {
-            if (type == TELogicSensor.LogicCheckType.Lava && (Worldgen.TheDepthsWorldGen.depthsorHell && !Main.drunkWorld || (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2) && Main.drunkWorld))
+            if (type == TELogicSensor.LogicCheckType.Lava && (Worldgen.TheDepthsWorldGen.depthsorHell || (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2)))
             {
                 return false;
             }
@@ -866,17 +896,18 @@ namespace TheDepths
         private void TileLightScanner_ApplyHellLight(Terraria.Graphics.Light.On_TileLightScanner.orig_ApplyHellLight orig, TileLightScanner self, Tile tile, int x, int y, ref Vector3 lightColor)
         {
             orig.Invoke(self, tile, x, y, ref lightColor);
-            if (Worldgen.TheDepthsWorldGen.InDepths && ModContent.GetInstance<TheDepthsClientConfig>().DepthsLightingConfig)
+            Vector3 depthslightcolor = new Vector3(0f, 0f, 0.01f);
+            if (Worldgen.TheDepthsWorldGen.InDepths)
             {
                 if ((!tile.HasTile || !Main.tileNoSunLight[tile.TileType] || ((tile.Slope != 0 || tile.IsHalfBlock) && Main.tile[x, y - 1].LiquidAmount == 0 && Main.tile[x, y + 1].LiquidAmount == 0 && Main.tile[x - 1, y].LiquidAmount == 0 && Main.tile[x + 1, y].LiquidAmount == 0)) && (Main.wallLight[tile.WallType] || tile.WallType == 73 || tile.WallType == 227) && tile.LiquidAmount < 200 && (!tile.IsHalfBlock || Main.tile[x, y - 1].LiquidAmount < 200))
                 {
-                    lightColor = Vector3.Zero;
+                    lightColor = depthslightcolor;
                 }
                 if ((!tile.HasTile || tile.IsHalfBlock || !Main.tileNoSunLight[tile.TileType]) && tile.LiquidAmount < byte.MaxValue)
                 {
-                    lightColor = Vector3.Zero;
+                    lightColor = depthslightcolor;
                 }
-                lightColor = Vector3.Zero;
+                lightColor = depthslightcolor;
             }
         }
         #endregion

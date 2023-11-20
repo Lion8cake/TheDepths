@@ -119,6 +119,12 @@ namespace TheDepths
                 .AddIngredient(ModContent.ItemType<Items.Placeable.Gemforge>())
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
+            Recipe recipe18 = Recipe.Create(ItemID.ShellphoneDummy);
+                recipe18.AddIngredient(ItemID.CellPhone)
+                .AddIngredient(ItemID.MagicConch)
+                .AddIngredient(ModContent.ItemType<Items.ShalestoneConch>())
+                .AddTile(TileID.TinkerersWorkbench)
+                .Register();
         }
 
         public override void AddRecipeGroups()

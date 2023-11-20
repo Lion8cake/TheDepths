@@ -78,6 +78,7 @@ namespace TheDepths.Items.Placeable
 			AddAndReplace<Ember>(ModContent.ItemType<DiamondDust>());
 			AddAndReplace<Skyfall>(ItemID.FlowerofFire);
 			AddAndReplace<BlueSphere>(ItemID.HelFire);
+			AddAndReplace<ShalestoneConch>(ItemID.DemonConch);
 		}
 
 		private static void AddAndReplace<TConf>(int hall) where TConf : ModItem

@@ -1417,6 +1417,21 @@ Mods: {
 				DisplayName: DO NOT DRINK
 				Tooltip: "'L. Cake'"
 			}
+
+			LivingFogDye: {
+				DisplayName: Living Fog Dye
+				Tooltip: ""
+			}
+
+			IntenseShadowDye: {
+				Tooltip: ""
+				DisplayName: Intense Shadow Dye
+			}
+
+			test: {
+				DisplayName: test
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -1545,11 +1560,6 @@ Mods: {
 				DisplayName: The Depths Client Config
 				Headers.DepthsClientsideConfig: Depths Clientside Config Header
 
-				DepthsLightingConfig: {
-					Label: Enables The Depths tile lighting
-					Tooltip: Enables the Depths tile lighting making the depths require torches to see where you are going
-				}
-
 				SlateConfig: {
 					Label: Renames Shale to Slate
 					Tooltip: Renames Shale to Slate, Requires the mod to reload for the config to work
@@ -1558,6 +1568,21 @@ Mods: {
 				CoreIconConfig: {
 					Label: Enables Core Icon
 					Tooltip: Enables the core icon overlay on world icons, disable this if issues persist when entering the world select screen
+				}
+
+				EnableFog: {
+					Label: Enable Depths Fog
+					Tooltip: Enables the intense fog seen within the depths, disable to turn off the fog.
+				}
+			}
+
+			FargosBoBWConfig: {
+				DisplayName: Fargos Best of Both Worlds Depths Config
+				Headers.DrunkSeedRequiresFargosbestofbothworldsmod: Drunk Seed (Requires Fargo's Best of Both Worlds Mod)
+
+				BothCores: {
+					Label: "[i:174][i:TheDepths/ArqueriteOre] Both Cores"
+					Tooltip: ""
 				}
 			}
 		}

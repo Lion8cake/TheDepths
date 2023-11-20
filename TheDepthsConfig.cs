@@ -11,10 +11,10 @@ namespace TheDepths
 		public override ConfigScope Mode => ConfigScope.ClientSide;
 
 		[Header("DepthsClientsideConfig")]
-		[Label("Enables The Depths tile lighting")]
-		[Tooltip("Enables the Depths tile lighting making the depths require torches to see where you are going")]
+		[Label("Enable Depths Fog")]
+		[Tooltip("Enables the intense fog seen within the depths, disable to turn off the fog.")]
 		[DefaultValue(true)]
-		public bool DepthsLightingConfig;
+		public bool EnableFog;
 
 		[Label("Renames Shale to Slate")]
 		[Tooltip("Renames Shale to Slate, Requires the mod to reload for the config to work")]

@@ -1,13 +1,15 @@
 using Terraria.ModLoader;
 using Terraria.Achievements;
 
-namespace TheDepths
+namespace TheDepths.ModSupport
 {
     public class DepthsModCalling : ModSystem
     {
 		public static readonly Mod? Achievements = ModLoader.TryGetMod("TMLAchievements", out Mod obtainedMod) ? obtainedMod : null;
 
-		public override void PostSetupContent()
+        public static bool FargoBoBWSupport = ModLoader.HasMod("FargoSeeds") && ModContent.GetInstance<ModSupport.FargosBoBWConfig>().BothCores;
+
+        public override void PostSetupContent()
 		{
             if (Achievements == null)
             {
