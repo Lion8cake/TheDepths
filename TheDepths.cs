@@ -64,7 +64,7 @@ namespace TheDepths
                 //GameShaders.Misc["TheDepths:ChasmeDeath"] = new MiscShaderData(new Ref<Effect>((Effect)ModContent.Request<Effect>("TheDepths/Shaders/ChasmeDeathEffect", ReLogic.Content.AssetRequestMode.ImmediateLoad)), "ChasmeAnimation").UseImage0("Images/Misc/Perlin");
             }
 
-            //IL.Terraria.Liquid.Update += Evaporation;
+            IL_Liquid.Update += Evaporation;
             //IL_Player.ItemCheck_ManageRightClickFeatures += IL_Player_ItemCheck_ManageRightClickFeatures;
             Terraria.IL_Player.UpdateBiomes += NoHeap;
 
@@ -115,7 +115,7 @@ namespace TheDepths
             fractalProfiles.Remove(ModContent.ItemType<Terminex>());
 
             livingFireBlockList = null;
-            //IL.Terraria.Liquid.Update -= Evaporation;
+            IL_Liquid.Update -= Evaporation;
             //IL_Player.ItemCheck_ManageRightClickFeatures -= IL_Player_ItemCheck_ManageRightClickFeatures;
             Terraria.IL_Player.UpdateBiomes -= NoHeap;
 
@@ -514,26 +514,6 @@ namespace TheDepths
             }
             return orig.Invoke(x, y, type, instance);
         }
-        #endregion
-
-        #region ShellphoneILEdit
-        /*private void IL_Player_ItemCheck_ManageRightClickFeatures(ILContext il)
-        {
-            ILCursor c = new ILCursor(il);
-
-            if (!c.TryGotoNext(MoveType.After, i => i.MatchStloc(out _), i => i.MatchBr(out _), i => i.MatchLdcI4(ItemID.ShellphoneHell)))
-            {
-                throw new ILPatchFailureException(ModContent.GetInstance<TheDepths>(), il, null);
-            }
-
-            c.EmitDelegate<Func<int, int>>(static shellphone => {
-                if (Worldgen.TheDepthsWorldGen.depthsorHell)
-                    shellphone = ModContent.ItemType<ShellPhoneDepths>();
-                return shellphone;
-            });
-
-            MonoModHooks.DumpIL(ModContent.GetInstance<TheDepths>(), il);
-        }*/
         #endregion
 
         #region nightmareflamebootsdetour(Doesn'tWork)
@@ -950,36 +930,10 @@ namespace TheDepths
         #region NoEvaporationILEdit
         private void Evaporation(ILContext il)
         {
-            var c = new ILCursor(il);
-            try
-            {
-                int b = 0;
-                int tile = 0;
-                c.GotoNext(MoveType.After,
-                    i => i.MatchLdloca(out tile),
-                    i => i.MatchCall<Tile>("get_liquid"),
-                    i => i.MatchDup(),
-                    i => i.MatchLdindU1(),
-                    i => i.MatchLdloc(out b),
-                    i => i.MatchSub(),
-                    i => i.MatchConvU1(),
-                    i => i.MatchStindI1());
-
-                c.Index -= 3;
-                c.Emit(OpCodes.Ldloca_S, (byte)tile);
-                c.EmitDelegate((byte num, ref Tile liqTile) =>
-                {
-                    if (Worldgen.TheDepthsWorldGen.depthsorHell && liqTile.LiquidType == LiquidID.Water /*&& ModContent.GetInstance<TheDepthsServerConfig>().DepthsNoWaterVapor*/)
-                    {
-                        return (byte)0;
-                    }
-                    return num;
-                });
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e.Message);
-            }
+            ILCursor c = new(il);
+            c.GotoNext(x => x.MatchCall(typeof(Main).GetMethod("get_UnderworldLayer")));
+            c.Index++;
+            c.EmitDelegate<Func<int, int>>(value => !TheDepthsWorldGen.depthsorHell ? value : int.MaxValue);
         }
         #endregion
 
