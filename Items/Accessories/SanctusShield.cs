@@ -27,30 +27,30 @@ namespace TheDepths.Items.Accessories
 			Item.value = 250000;
 			Item.accessory = true;
 			Item.height = 20;
+			Item.defense = 2;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.endurance = 0.1f;
-			player.noKnockback = true;
+			player.GetModPlayer<TheDepthsPlayer>().pShield = true;
 			player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
-			player.buffImmune[46] = true;
-			player.buffImmune[44] = true;
-			player.buffImmune[33] = true;
-			player.buffImmune[36] = true;
-			player.buffImmune[30] = true;
-			player.buffImmune[20] = true;
-			player.buffImmune[32] = true;
-			player.buffImmune[31] = true;
-			player.buffImmune[35] = true;
-			player.buffImmune[23] = true;
-			player.buffImmune[22] = true;
+			player.buffImmune[BuffID.Frozen] = true;
+			player.buffImmune[BuffID.Weak] = true;
+			player.buffImmune[BuffID.BrokenArmor] = true;
+			player.buffImmune[BuffID.Bleeding] = true;
+			player.buffImmune[BuffID.Poisoned] = true;
+			player.buffImmune[BuffID.Slow] = true; 
+			player.buffImmune[BuffID.Confused] = true;
+			player.buffImmune[BuffID.Silenced] = true;
+			player.buffImmune[BuffID.Cursed] = true;
+			player.buffImmune[BuffID.Darkness] = true;
+			player.buffImmune[BuffID.Stoned] = true;
 		}
 		
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.CrystalShield>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<CrystalShield>(), 1);
 			recipe.AddIngredient(ItemID.AnkhCharm, 1);
 			recipe.AddTile(114);
 			recipe.Register();

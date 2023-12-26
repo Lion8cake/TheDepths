@@ -39,5 +39,13 @@ namespace TheDepths.Items.Placeable
 			}
 			return false;
 		}
-    }
+
+		public override void AddRecipes()
+		{
+			CreateRecipe()
+				.AddIngredient(ModContent.ItemType<QuartzStackWall>(), 4)
+				.AddTile(TileID.WorkBenches)
+				.Register();
+		}
+	}
 }

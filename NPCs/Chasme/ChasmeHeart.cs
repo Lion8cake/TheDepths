@@ -94,6 +94,8 @@ public class ChasmeHeart : ModNPC
 		NPC.knockBackResist = 0f;
 		NPC.boss = true;
 		NPC.value = 80000;
+		NPC.HitSound = SoundID.Item30;
+		NPC.DeathSound = SoundID.NPCDeath7;
 		NPC.ScaleStats_UseStrengthMultiplier(0.6f); //dont scale like a regular npc in different gamemodes
 		if (!Main.dedServ)
 		{
@@ -234,7 +236,7 @@ public class ChasmeHeart : ModNPC
 
 
 
-			if (ActionTimer <= 0 || startLife - NPC.life >= 1250)
+			if (ActionTimer <= 0 || startLife - NPC.life >= 1651)
 			{
 				open = false;
 				NPC.netUpdate = true;
@@ -507,6 +509,32 @@ public class ChasmeHeart : ModNPC
 		if (!Main.hardMode)
 		{
 			WorldGen.StartHardmode();
+		}
+	}
+
+	public override void HitEffect(NPC.HitInfo hit)
+	{
+		if (Main.netMode == NetmodeID.Server)
+		{
+			return;
+		}
+
+		if (NPC.life <= 0)
+		{
+			var entitySource = NPC.GetSource_Death();
+
+			Gore.NewGore(entitySource, NPC.BottomLeft, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("ChasmeHeart1").Type);
+			Gore.NewGore(entitySource, NPC.BottomRight, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("ChasmeHeart2").Type);
+			Gore.NewGore(entitySource, NPC.TopLeft, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("ChasmeHeart3").Type);
+			Gore.NewGore(entitySource, NPC.TopRight, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("ChasmeHeart4").Type);
+
+			for (int l = 0; l < NPC.width; l++)
+			{
+				if (Main.rand.NextBool(2))
+				{
+					Dust.NewDust(NPC.position + new Vector2(l, l), 8, 8, ModContent.DustType<Dusts.SmashedHeartDust>());
+				}
+			}
 		}
 	}
 

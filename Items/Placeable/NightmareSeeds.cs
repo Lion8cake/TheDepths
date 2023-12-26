@@ -17,6 +17,7 @@ namespace TheDepths.Items.Placeable
 			Item.useAnimation = 15;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.maxStack = 9999;
+			Item.value = 150;
 		}
 
         public override bool? UseItem(Player player)

@@ -115,13 +115,16 @@ namespace TheDepths.NPCs
 		}
 		
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
-			if (slowWater && !npc.boss)
+			if (slowWater && !npc.boss && npc.type != NPCID.DungeonGuardian)
 			{
 				npc.velocity.X = 0f;
-				npc.velocity.Y = 0f;
-				if (npc.velocity.Y > 0f)
+				if (npc.noGravity)
 				{
 					npc.velocity.Y = 0f;
+				}
+				else
+				{
+					npc.velocity.Y += npc.gravity;
 				}
 			}
 			if (merBoiling)
@@ -141,23 +144,30 @@ namespace TheDepths.NPCs
 
         public override void ModifyShop(NPCShop shop)
 		{
-			var depthsWorld = new Condition("Mods.TheDepths.DepthsBiome", () => Worldgen.TheDepthsWorldGen.InDepths);
+			var depthsWorld = new Condition("Mods.TheDepths.InDepths", () => Worldgen.TheDepthsWorldGen.InDepths);
+			var underWorld = new Condition("Mods.TheDepths.OutDepths", () => !Worldgen.TheDepthsWorldGen.InDepths);
 			if (shop.NpcType == NPCID.Clothier)
 			{
 				shop.InsertAfter(ItemID.PlumbersShirt, ModContent.ItemType<Items.Armor.PurplePlumbersShirt>(), Condition.MoonPhaseFull, depthsWorld);
 				shop.InsertAfter(ItemID.PlumbersPants, ModContent.ItemType<Items.Armor.PurplePlumbersPants>(), Condition.MoonPhaseFull, depthsWorld);
-				if (shop.TryGetEntry(ItemID.PlumbersShirt, out NPCShop.Entry entry) && Worldgen.TheDepthsWorldGen.InDepths)
+				if (shop.TryGetEntry(ItemID.PlumbersShirt, out NPCShop.Entry entry))
 				{
-					entry.Disable();
+					entry.AddCondition(underWorld);
 				}
-				if (shop.TryGetEntry(ItemID.PlumbersPants, out NPCShop.Entry entry2) && Worldgen.TheDepthsWorldGen.InDepths)
+				if (shop.TryGetEntry(ItemID.PlumbersPants, out NPCShop.Entry entry2))
 				{
-					entry2.Disable();
+					entry2.AddCondition(underWorld);
 				}
 			}
 			if (shop.NpcType == NPCID.Dryad)
             {
 				shop.InsertAfter(ItemID.FireBlossomPlanterBox, ModContent.ItemType<Items.Placeable.ShadowShrubPlanterBox>(), Condition.Hardmode, depthsWorld);
+
+				shop.InsertAfter(ItemID.AshGrassSeeds, ModContent.ItemType<Items.Placeable.NightmareSeeds>(), depthsWorld, Condition.InUnderworldHeight);
+				if (shop.TryGetEntry(ItemID.AshGrassSeeds, out NPCShop.Entry entry3))
+				{
+					entry3.AddCondition(underWorld);
+				}
 			}
 			if (shop.NpcType == NPCID.BestiaryGirl)
             {

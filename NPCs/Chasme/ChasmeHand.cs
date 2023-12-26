@@ -58,6 +58,8 @@ public class ChasmeHand : ChasmeBodyPart
 
 	private bool regen;
 
+	//private bool SecondRoundBaby = false;
+
     public override void SetStaticDefaults()
     {
 		NPCID.Sets.TrailCacheLength[Type] = 10;
@@ -92,30 +94,14 @@ public class ChasmeHand : ChasmeBodyPart
 		{
 			NPC.rotation = 0;
 		}
-		/*for (int i = 0; i < Main.maxNPCs; i++)
-		{
-			if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<ChasmeHead>())
-			{
-				if (Main.npc[i].life >= Main.npc[i].lifeMax)
-				{
-					NPC.life = NPC.lifeMax;
-				}
-			}
-		}*/
 
-		//int halfDamage = (int)(NPC.damage*0.5f);
-		if (regen)
+		/*if (Main.npc[MainNPCIndex].life <= 1650 && regen && !SecondRoundBaby)
 		{
-			//NPC.damage /= 2;
-			NPC.dontTakeDamage = true;
-			NPC.life += (int)(NPC.lifeMax / 1200); //10 seconds to regen
-			if (NPC.life >= NPC.lifeMax)
-			{
-				NPC.dontTakeDamage = false;
-				NPC.life = NPC.lifeMax;
-				regen = false;
-			}
-		}
+			NPC.dontTakeDamage = false;
+			NPC.life = NPC.lifeMax;
+			regen = false;
+			SecondRoundBaby = true;
+		}*/
 
         ++ActionStateTimer;
 
@@ -237,7 +223,7 @@ public class ChasmeHand : ChasmeBodyPart
 		}
 		if (ActionStateTimer % 24 == 0)
 		{
-			voids.Add(Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<ChasVoid>(), NPC.damage / 3, 8, player.whoAmI, 0, 1));
+			voids.Add(Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<ChasVoid>(), 42, 8, player.whoAmI, 0, 1));
 		}
     }
 	private void ReturnAI(Vector2 offset)
@@ -283,10 +269,12 @@ public class ChasmeHand : ChasmeBodyPart
         Vector2 TargetDir = NPC.DirectionTo(target.Center).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-maxDegrees, maxDegrees)));
         if (shootTimer == fireRate + shootOffset) //if timer is the fire rate with a 20% variation
         {
-            int a = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Vector2.UnitX*32*NPC.spriteDirection, TargetDir * speed, ModContent.ProjectileType<ChasmeRay>(), (int)((NPC.damage / 3) * damageModifier), 4, 255, 1, 1);
+            int a = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Vector2.UnitX*32*NPC.spriteDirection, TargetDir * speed, ModContent.ProjectileType<ChasmeRay>(), (int)(55 * damageModifier), 4, 255, 1, 1);
             Main.projectile[a].friendly = false;
             Main.projectile[a].hostile = true;
 			Main.projectile[a].tileCollide = false;
+			Main.projectile[a].ai[0] = 1f;
+			Main.projectile[a].ai[1] = 1f;
             shootTimer = shootOffset;
         }
     }

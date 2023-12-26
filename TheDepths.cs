@@ -32,12 +32,12 @@ using Terraria.ModLoader.Core;
 using System.Linq;
 using Terraria.GameContent.Skies;
 using Terraria.Utilities;
+using Terraria.DataStructures;
 
 namespace TheDepths
 {
     public class TheDepths : Mod
     {
-        public static Asset<Texture2D>[] texture = new Asset<Texture2D>[14];
         public static Mod mod;
         public static List<int> livingFireBlockList;
 
@@ -53,8 +53,6 @@ namespace TheDepths
             fractalProfiles.Add(ModContent.ItemType<Terminex>(), new FinalFractalProfile(70f, new Color(75, 103, 214))); // new Color(119, 135, 162)));
 
             mod = this;
-            for (int i = 0; i < texture.Length; i++)
-                texture[i] = ModContent.Request<Texture2D>("TheDepths/Backgrounds/DepthsUnderworldBG_" + i);
             livingFireBlockList = new List<int> { 336, 340, 341, 342, 343, 344, ModContent.TileType<Tiles.LivingFog>() };
 
             if (!Main.dedServ)
@@ -65,10 +63,8 @@ namespace TheDepths
             }
 
             IL_Liquid.Update += Evaporation;
-            //IL_Player.ItemCheck_ManageRightClickFeatures += IL_Player_ItemCheck_ManageRightClickFeatures;
             Terraria.IL_Player.UpdateBiomes += NoHeap;
 
-            //Terraria.IL_Main.DrawUnderworldBackgroudLayer += ILMainDrawUnderworldBackground;
             On_Main.DrawUnderworldBackgroudLayer += On_Main_DrawUnderworldBackgroudLayer;
 
             Terraria.On_Main.UpdateAudio_DecideOnTOWMusic += Main_UpdateAudio_DecideOnTOWMusic;
@@ -104,6 +100,12 @@ namespace TheDepths
             On_TileDrawing.GetWindCycle += On_TileDrawing_GetWindCycle;
 
 			On_AmbientSky.HellBatsGoupSkyEntity.ctor += HellBatsGoupSkyEntity_ctor;
+
+            IL_Player.RocketBootVisuals += RocketBootVfx;
+
+			On_Main.DrawProj_FishingLine += On_Main_DrawProj_FishingLine;
+
+			On_Player.PlaceThing_PaintScrapper_LongMoss += On_Player_PlaceThing_PaintScrapper_LongMoss;
         }
 
 		public override void Unload()
@@ -116,10 +118,8 @@ namespace TheDepths
 
             livingFireBlockList = null;
             IL_Liquid.Update -= Evaporation;
-            //IL_Player.ItemCheck_ManageRightClickFeatures -= IL_Player_ItemCheck_ManageRightClickFeatures;
             Terraria.IL_Player.UpdateBiomes -= NoHeap;
 
-            //Terraria.IL_Main.DrawUnderworldBackgroudLayer -= ILMainDrawUnderworldBackground;
             On_Main.DrawUnderworldBackgroudLayer -= On_Main_DrawUnderworldBackgroudLayer;
 
             Terraria.On_Main.UpdateAudio_DecideOnTOWMusic -= Main_UpdateAudio_DecideOnTOWMusic;
@@ -144,7 +144,187 @@ namespace TheDepths
 			On_TileDrawing.GetWindCycle -= On_TileDrawing_GetWindCycle;
 
             On_AmbientSky.HellBatsGoupSkyEntity.ctor -= HellBatsGoupSkyEntity_ctor;
+
+            IL_Player.RocketBootVisuals -= RocketBootVfx;
+
+            On_Main.DrawProj_FishingLine -= On_Main_DrawProj_FishingLine;
+
+            On_Player.PlaceThing_PaintScrapper_LongMoss -= On_Player_PlaceThing_PaintScrapper_LongMoss;
         }
+
+        #region MossScapper
+        private void On_Player_PlaceThing_PaintScrapper_LongMoss(On_Player.orig_PlaceThing_PaintScrapper_LongMoss orig, Player self, int x, int y)
+        {
+            orig.Invoke(self, x, y);
+            Tile tile = Main.tile[x, y];
+            if (tile.TileType != ModContent.TileType<Tiles.MercuryMoss_Foliage>())
+            {
+                return;
+            }
+            self.cursorItemIconEnabled = true;
+            if (!self.ItemTimeIsZero || self.itemAnimation <= 0 || !self.controlUseItem)
+            {
+                return;
+            }
+            tile = Main.tile[x, y];
+            int frameX = tile.TileFrameX;
+            WorldGen.KillTile(x, y);
+            self.ApplyItemTime(self.inventory[self.selectedItem]);
+            if (Main.netMode == 1)
+            {
+                NetMessage.SendData(17, -1, -1, null, 0, x, y);
+            }
+            if (Main.rand.Next(9) == 0)
+            {
+                int number = Item.NewItem(new EntitySource_ItemUse(self, self.HeldItem), x * 16, y * 16, 16, 16, ModContent.ItemType<Items.Placeable.MercuryMoss>());
+                NetMessage.SendData(21, -1, -1, null, number, 1f);
+            }
+        }
+        #endregion
+
+        #region FishingBobberFix
+        private void On_Main_DrawProj_FishingLine(On_Main.orig_DrawProj_FishingLine orig, Projectile proj, ref float polePosX, ref float polePosY, Vector2 mountedCenter)
+        {
+            Player player = Main.player[proj.owner];
+            polePosX = mountedCenter.X;
+            polePosY = mountedCenter.Y;
+            polePosY += player.gfxOffY;
+            int type = player.inventory[player.selectedItem].type;
+            if (player.mount.Active && player.mount.Type == 52)
+            {
+                polePosX -= player.direction * 14;
+                polePosY -= -10f;
+            }
+            if (type == ModContent.ItemType<Items.SilverLiner>())
+            {
+                polePosX += 47 * (float)player.direction;
+                if (player.direction < 0)
+                {
+                    polePosX -= 13f;
+                }
+                polePosY += -31 * player.gravDir;
+                Vector2 vector = new(polePosX, polePosY);
+                vector = Main.player[proj.owner].RotatedRelativePoint(vector + new Vector2(8f)) - new Vector2(8f);
+                float num = proj.position.X + (float)proj.width * 0.5f - vector.X;
+                float num2 = proj.position.Y + (float)proj.height * 0.5f - vector.Y;
+                Math.Sqrt(num * num + num2 * num2);
+                float num3 = (float)Math.Atan2(num2, num) - 1.57f;
+                bool flag = true;
+                if (num == 0f && num2 == 0f)
+                {
+                    flag = false;
+                }
+                else
+                {
+                    float num4 = (float)Math.Sqrt(num * num + num2 * num2);
+                    num4 = 12f / num4;
+                    num *= num4;
+                    num2 *= num4;
+                    vector.X -= num;
+                    vector.Y -= num2;
+                    num = proj.position.X + (float)proj.width * 0.5f - vector.X;
+                    num2 = proj.position.Y + (float)proj.height * 0.5f - vector.Y;
+                }
+                while (flag)
+                {
+                    float num5 = 12f;
+                    float num6 = (float)Math.Sqrt(num * num + num2 * num2);
+                    float num7 = num6;
+                    if (float.IsNaN(num6) || float.IsNaN(num7))
+                    {
+                        flag = false;
+                        continue;
+                    }
+                    if (num6 < 20f)
+                    {
+                        num5 = num6 - 8f;
+                        flag = false;
+                    }
+                    num6 = 12f / num6;
+                    num *= num6;
+                    num2 *= num6;
+                    vector.X += num;
+                    vector.Y += num2;
+                    num = proj.position.X + (float)proj.width * 0.5f - vector.X;
+                    num2 = proj.position.Y + (float)proj.height * 0.1f - vector.Y;
+                    if (num7 > 12f)
+                    {
+                        float num8 = 0.3f;
+                        float num9 = Math.Abs(proj.velocity.X) + Math.Abs(proj.velocity.Y);
+                        if (num9 > 16f)
+                        {
+                            num9 = 16f;
+                        }
+                        num9 = 1f - num9 / 16f;
+                        num8 *= num9;
+                        num9 = num7 / 80f;
+                        if (num9 > 1f)
+                        {
+                            num9 = 1f;
+                        }
+                        num8 *= num9;
+                        if (num8 < 0f)
+                        {
+                            num8 = 0f;
+                        }
+                        num9 = 1f - proj.localAI[0] / 100f;
+                        num8 *= num9;
+                        if (num2 > 0f)
+                        {
+                            num2 *= 1f + num8;
+                            num *= 1f - num8;
+                        }
+                        else
+                        {
+                            num9 = Math.Abs(proj.velocity.X) / 3f;
+                            if (num9 > 1f)
+                            {
+                                num9 = 1f;
+                            }
+                            num9 -= 0.5f;
+                            num8 *= num9;
+                            if (num8 > 0f)
+                            {
+                                num8 *= 2f;
+                            }
+                            num2 *= 1f + num8;
+                            num *= 1f - num8;
+                        }
+                    }
+                    num3 = (float)Math.Atan2(num2, num) - 1.57f;
+                    Color color = Lighting.GetColor((int)vector.X / 16, (int)(vector.Y / 16f), Color.Silver);
+                    Main.EntitySpriteDraw(TextureAssets.FishingLine.Value, new Vector2(vector.X - Main.screenPosition.X + (float)TextureAssets.FishingLine.Width() * 0.5f, vector.Y - Main.screenPosition.Y + (float)TextureAssets.FishingLine.Height() * 0.5f), (Rectangle?)new Rectangle(0, 0, TextureAssets.FishingLine.Width(), (int)num5), color, num3, new Vector2((float)TextureAssets.FishingLine.Width() * 0.5f, 0f), 1f, (SpriteEffects)0, 0f);
+                }
+            }
+            else
+			{
+                orig.Invoke(proj, ref polePosX, ref polePosY, mountedCenter);
+            }
+        }
+		#endregion
+
+		#region RocketbootDustILedit
+		static void RocketBootVfx(ILContext il)
+        {
+            ILCursor c = new ILCursor(il);
+            c.GotoNext(instruction => instruction.MatchCall<Dust>("NewDustDirect"));
+            c.GotoNext(instruction => instruction.MatchCall<Dust>("NewDustDirect"));
+
+            c.GotoPrev(MoveType.After, i => i.MatchLdloc(4));
+            c.Emit(OpCodes.Ldarg, 0);
+            c.EmitDelegate((int type, Player player) =>
+            {
+                if (Main.LocalPlayer.GetModPlayer<TheDepthsPlayer>().nFlare)
+				{
+                    return ModContent.DustType<NightmareEmberDust>();
+				}
+                else
+				{
+                    return type;
+                }
+            });
+        }
+		#endregion
 
 		#region AlbinoBatSkyObject
 		private void HellBatsGoupSkyEntity_ctor(On_AmbientSky.HellBatsGoupSkyEntity.orig_ctor orig, object self, Player player, FastRandom random)
@@ -513,27 +693,6 @@ namespace TheDepths
                 return false;
             }
             return orig.Invoke(x, y, type, instance);
-        }
-        #endregion
-
-        #region nightmareflamebootsdetour(Doesn'tWork)
-        private void On_Player_SpawnFastRunParticles(On_Player.orig_SpawnFastRunParticles orig, Player self)
-        {
-            orig.Invoke(self);
-            int nump2 = 0;
-            if (self.gravDir == -1f)
-            {
-                nump2 -= self.height;
-            }
-            if (self.GetModPlayer<TheDepthsPlayer>().nFlare == true)
-            {
-                int num8 = Dust.NewDust(new Vector2(self.position.X - 4f, self.position.Y + (float)self.height + (float)nump2), Main.LocalPlayer.width + 8, 4, ModContent.DustType<ShadowflameEmber>(), (0f - self.velocity.X) * 0.5f, self.velocity.Y * 0.5f, 50, default(Color), 2f);
-                Main.dust[num8].velocity.X = Main.dust[num8].velocity.X * 0.2f;
-                Main.dust[num8].velocity.Y = -1.5f - Main.rand.NextFloat() * 0.5f;
-                Main.dust[num8].fadeIn = 0.5f;
-                Main.dust[num8].noGravity = true;
-                Main.dust[num8].shader = GameShaders.Armor.GetSecondaryShader(self.cShoe, self);
-            }
         }
         #endregion
 
@@ -935,28 +1094,6 @@ namespace TheDepths
             c.Index++;
             c.EmitDelegate<Func<int, int>>(value => !TheDepthsWorldGen.depthsorHell ? value : int.MaxValue);
         }
-        #endregion
-
-        #region UnderworldTextureILEdit
-        /*private void ILMainDrawUnderworldBackground(ILContext il)
-        {
-            ILCursor c = new(il);
-
-            int asset = 0, texture = 0;
-            c.GotoNext(i => i.MatchLdloc(out asset),
-                i => i.OpCode == OpCodes.Callvirt,
-                i => i.MatchStloc(out texture));
-
-            c.Emit(OpCodes.Ldloc, asset);
-            c.Emit(OpCodes.Ldloc, 0);
-            c.EmitDelegate<Func<Asset<Texture2D>, int, Asset<Texture2D>>>((asset, index) =>
-            {
-                if (Worldgen.TheDepthsWorldGen.depthsorHell)
-                    return TheDepths.texture[index];
-                return asset;
-            });
-            c.Emit(OpCodes.Stloc, asset);
-        }*/
         #endregion
     }
 

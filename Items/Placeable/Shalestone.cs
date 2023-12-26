@@ -46,6 +46,7 @@ namespace TheDepths.Items.Placeable
 			if (Main.rand.NextBool(15) && Main.hardMode)
 			{
 				resultType = ModContent.ItemType<Onyx>();
+				resultStack = 1;
 			}
 		}
 	}

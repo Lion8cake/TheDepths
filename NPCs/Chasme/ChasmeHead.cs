@@ -101,6 +101,10 @@ public class ChasmeHead : ChasmeBodyPart
                 RegenPhase = true;
                 NPC.dontTakeDamage = true;
                 NPC.life += (int)(NPC.lifeMax / 1200); //10 seconds to regen
+                if (Main.npc[MainNPCIndex].dontTakeDamage == true && NPC.life >= NPC.lifeMax / 600 && NPC.life < (int)(NPC.lifeMax / 1.05))
+				{
+                    NPC.life = (int)(NPC.lifeMax / 1.05);
+                }
                 if (NPC.life >= NPC.lifeMax)
                 {
                     NPC.life = NPC.lifeMax;
@@ -133,7 +137,7 @@ public class ChasmeHead : ChasmeBodyPart
 
         if (ActionTimer == fireRate) //if timer is the fire rate
         {
-            int a = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(saphireOffset.X * NPC.spriteDirection, saphireOffset.Y), TargetDir * speed, ModContent.ProjectileType<ChasmeRay>(), (int)((NPC.damage / 3) * damageModifier), 4, MainNPCIndex, 0, 0);
+            int a = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(saphireOffset.X * NPC.spriteDirection, saphireOffset.Y), TargetDir * speed, ModContent.ProjectileType<ChasmeRay>(), (int)(55 * damageModifier), 4, 255, 0, 0);
             Main.projectile[a].friendly = false;
             Main.projectile[a].hostile = true;
             ActionTimer = 0;

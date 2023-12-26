@@ -10,8 +10,15 @@ namespace TheDepths.NPCs
     {
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Rat];
-            Main.npcCatchable[NPC.type] = true;
+            Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.Snail];
+            Main.npcCatchable[Type] = true;
+
+            NPCID.Sets.CountsAsCritter[Type] = true;
+            NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
+            NPCID.Sets.TownCritter[Type] = true;
+
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
+
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
             {
                 Velocity = 1f,
@@ -22,10 +29,17 @@ namespace TheDepths.NPCs
 
         public override void SetDefaults()
         {
-            NPC.CloneDefaults(NPCID.Rat);
-            NPC.catchItem = (short)ModContent.ItemType<Items.AlbinoRat>();
+            NPC.width = 14;
+            NPC.height = 12;
             NPC.aiStyle = 7;
-            NPC.friendly = true;
+            NPC.damage = 0;
+            NPC.defense = 0;
+            NPC.lifeMax = 5;
+            NPC.HitSound = SoundID.NPCHit1;
+            NPC.DeathSound = SoundID.NPCDeath4;
+            NPC.npcSlots = 0.25f;
+
+            NPC.catchItem = (short)ModContent.ItemType<Items.AlbinoRat>();
             NPC.lavaImmune = true;
             NPC.buffImmune[ModContent.BuffType<Buffs.MercuryBoiling>()] = true;
             NPC.buffImmune[ModContent.BuffType<Buffs.MercuryPoisoning>()] = true;
@@ -40,30 +54,6 @@ namespace TheDepths.NPCs
 
                 new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.AlbinoRat")
             });
-        }
-
-        public override bool? CanBeHitByItem(Player player, Item item)
-        {
-            return true;
-        }
-
-        public override bool? CanBeHitByProjectile(Projectile projectile)
-        {
-            return true;
-        }
-
-        public virtual void OnCatchNPC(Player player, Item item)
-        {
-            item.stack = 1;
-
-            try
-            {
-                var npcCenter = NPC.Center.ToTileCoordinates();
-            }
-            catch
-            {
-                return;
-            }
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

@@ -53,7 +53,7 @@ namespace TheDepths.Mounts
 
 		public override void UpdateEffects(Player player)
 		{
-			player.GetModPlayer<TheDepthsPlayer>().aAmulet = true;
+			player.GetModPlayer<TheDepthsPlayer>().aAmulet3 = true;
 		}
 
 		private static void SetAsMinecart(MountData newMount, int buffToLeft, int buffToRight, Asset<Texture2D> texture, int verticalOffset = 0, int playerVerticalOffset = 0)

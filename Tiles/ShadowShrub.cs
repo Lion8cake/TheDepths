@@ -42,7 +42,8 @@ namespace TheDepths.Tiles
 
 			TileObjectData.newTile.AnchorValidTiles = new int[]
 			{
-				ModContent.TileType<ShaleBlock>()
+				ModContent.TileType<ShaleBlock>(),
+				ModContent.TileType<NightmareGrass>()
 			};
 
 			TileObjectData.newTile.AnchorAlternateTiles = new int[]

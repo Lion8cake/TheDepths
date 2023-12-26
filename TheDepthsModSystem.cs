@@ -63,39 +63,25 @@ namespace TheDepths
             }
         }
 
-        public override void OnWorldUnload()
+		public static int? MossConversion(int thisType, int otherType)
+		{
+            if (Main.tileMoss[thisType] || TileID.Sets.tileMossBrick[thisType])
+            {
+                if (otherType == 38)
+                {
+                    return ModContent.TileType<MercuryMossStoneBricks>();
+                }
+                if (otherType == 1)
+                {
+                    return ModContent.TileType<MercuryMoss>();
+                }
+            }
+            return null;
+		}
+
+		public override void OnWorldUnload()
         {
             Gemforge.RubyRelicIsOnForge = 1;
         }
-
-		public override void Load()
-		{
-            IL_Player.ItemCheck_ManageRightClickFeatures += IL_Player_ItemCheck_ManageRightClickFeatures;
-		}
-
-		public override void Unload()
-		{
-            IL_Player.ItemCheck_ManageRightClickFeatures -= IL_Player_ItemCheck_ManageRightClickFeatures;
-        }
-
-		#region ShellphoneILEdit
-		private void IL_Player_ItemCheck_ManageRightClickFeatures(ILContext il)
-        {
-            ILCursor c = new ILCursor(il);
-
-            if (!c.TryGotoNext(MoveType.After, i => i.MatchStloc(out _), i => i.MatchBr(out _), i => i.MatchLdcI4(ItemID.ShellphoneHell)))
-            {
-                throw new ILPatchFailureException(ModContent.GetInstance<TheDepths>(), il, null);
-            }
-
-            c.EmitDelegate<Func<int, int>>(static shellphone => {
-                if (Worldgen.TheDepthsWorldGen.depthsorHell)
-                    shellphone = ModContent.ItemType<ShellPhoneDepths>();
-                return shellphone;
-            });
-
-            MonoModHooks.DumpIL(ModContent.GetInstance<TheDepths>(), il);
-        }
-		#endregion
 	}
 }

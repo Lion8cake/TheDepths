@@ -13,7 +13,7 @@ using Terraria.GameContent.Creative;
 namespace TheDepths.Items.Accessories
 {
 [AutoloadEquip(new EquipType[] { EquipType.Shield })]
-	class CrystalShield : ModItem
+	public class CrystalShield : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -27,12 +27,12 @@ namespace TheDepths.Items.Accessories
 			Item.value = 100000;
 			Item.accessory = true;
 			Item.height = 20;
+			Item.defense = 2;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.endurance = 0.1f;
-			player.noKnockback = true;
+			player.GetModPlayer<TheDepthsPlayer>().pShield = true;
 			player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
 		}
 		
@@ -40,7 +40,7 @@ namespace TheDepths.Items.Accessories
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.CrystalSkull>(), 1);
-			recipe.AddIngredient(ItemID.CobaltShield, 1);
+			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.PalladiumShield>(), 1);
 			recipe.AddTile(114);
 			recipe.Register();
 		}

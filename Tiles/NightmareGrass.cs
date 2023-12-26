@@ -28,6 +28,14 @@ namespace TheDepths.Tiles
             RegisterItemDrop(ModContent.ItemType<Items.Placeable.ShaleBlock>());
         }
 
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
+		{
+			if (drawData.tileFrameX >= 0 && drawData.tileFrameY >= 0)
+			{
+				Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
+			}
+		}
+
 		public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Tile tile = Main.tile[i, j];

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -28,6 +29,15 @@ namespace TheDepths.Tiles
             TileObjectData.newTile.CoordinateHeights = new int[] { 20 };
             TileObjectData.addTile(Type);
             AddMapEntry(new Color(44, 25, 96));
+        }
+
+        public override bool CanDrop(int i, int j)
+        {
+            if (Main.rand.NextBool(99))
+            {
+                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<Items.Placeable.NightmareSeeds>());
+            }
+            return false;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

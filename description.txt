@@ -1,12 +1,12 @@
 =========================================
 The Depths (Alternate Hell)
 =========================================
-Depths version 0.6.6
+Depths version 0.7.0
 Please report any bugs to our discord: https://discord.gg/JwEKrVhjA6
 Worlds can be converted from 1.4.3 to 1.4.4 just by opening them
 
-The Depths is an alternate version of the underworld similar to how crimson corruption works. It generates instead of the underworld to ive some of your worlds that bit of spice when starting a new playthrough.
-This mod is made by the same devs behind the confection mod, a mod similar to this one but for the hallow. This biome and most of its sprites and ideas come from Snickerbobble and her forum talking about her take on an alternate hell.
+The Depths is an alternate version of the underworld similar to how crimson corruption works. It generates instead of the underworld to give some of your worlds that bit of spice when starting a new playthrough.
+This mod is made by the same devs behind the confection mod, a mod similar to this one but for the hallow. This biome and most of its sprites and ideas come from Snickerbobble and her forum post talking about her take on an alternate hell.
 
 This mod has Achievement Mod Support, download and use the Achievement Mod to see achievements for this mod
 This mod has Fargo's Best of Both World Support, When enabled you can now have both the confection and the hallow infect normal worlds
@@ -14,22 +14,52 @@ This mod has Fargo's Best of Both World Support, When enabled you can now have b
 =========================================
 Change Log
 =========================================
-0.6.6
+0.7.0
 ===============================
-Fixed a server crash when unloading client side textures in a dedicated server
-Fixed the shalestone conch not having any recipes
-Fixed the depths biome registration prioritising the world tag over the drunk seed sides in multiplayer
-DrunkLeft and DrunkRight world tags nolonger require the drunkseed to function
-Added Fargo's best of both worlds support
-Touched up the chasme relic sprite
-Changed the nightmare grass glowmask to use its own instead of the ash grass glowmask
-Removed code that made every single modded furniture float 2 pixels in the air
-Fixed non-solid tiles disapearing when in complete darkness in the depths such as trees, pots, chests, ect
-Added Fog, When entering the depths, fog will now cover the screen. This fog will change both based on bloodmoon and if chasme is being fought
-Added Living Fog Dye
-Added Intense Shadow Dye
-Replaced ambient background hellbats with ambient background albino bats
-Replaced the depths lighting config with depths fog config
+Added a system that automatically replaces item ingredients with depths recipe groups. This fixes incompatibilities with some items from other mods. Dedicated support for some modded items will still need to be added
+Added the Quartz Horseshoe
+Added the Crying Skull
+Added the Crystal Rose
+Added the Azurite Rose
+Added Mercury Moss
+Added Mercury Moss Fishing Bobber
+Added Mercury Moss Birck
+Added Mercury Moss Birck Wall
+Added Quartz Stack wall
+Added Leaky Mercury Wall
+Added Mercury Bubble Wall
+Added Dotted Quicksilver Wall
+Added Water Geyser
+Added the Aqua Quiver
+Added the Palladium shield
+Added worldgen for Mercury Moss, Water Geysers, Natural depths walls and palladium shields
+Fixed Water evaporating in the depths.
+Fixed inconsistencies between the Sanctus and Ankh shield
+Added different types of amalgam amulets allowing for stacking of the accessory buff dependant on upgrade
+Fixed the Nightmare flare treads having the wrong rocket boot dust
+Fixed the Silver Liner having an incorrect line position when a bobber accessory was equipped
+Fixed name of the bottomless quicksilver bucket
+Fixed decraft happening with the arquerite bricks
+Fixed shalestone giving between 15-30 onyx instead of 1
+Changed the quicksilver slope texture
+Remade chest worldgen which makes depths more stable with other mods that add worldgen
+Added Drunk seed support for chests
+Reduced the maximum amount of projectiles the white lightning could produce
+Fixed Chasme Projectiles doing insane damage on some difficulties
+Changed sounds for chasme
+Increased the amount of damage before chasme's heart forcefully closes now being half her health
+Fixed having to still wait the full head regeneration time even when the heart was closed
+Added gores to chasme
+Added sunflower placement support to nightmare grass
+Rewrote all critters
+Changed how the freezing water debuff works with npcs
+Updated all shields to now use the palladium shield's effects instead of the cobalt shields knockback immunity
+Updated lockbox loot tables to take in account for palladium shields
+Updated quartz lockbox loot table to take in account for the remix seed
+Added nightmare grass to the shadow shrub avaible tiles
+Fixed NPCs not selling underworld items even in underworld worlds
+Fixed Nightmare grass seeds being unobtainable
+Fixed Shadow shrubs being unobtainable
 ==========================================
 -=Credits=-
 ==========================================
@@ -40,4 +70,5 @@ Ghast tear - 1.3 & 1.4.4 World Creation UI
 Syntrin - For making the default depths underworld background
 Moddingus - Chasme AI
 Hariq - Chasme's base, movement and conjoinment
+Kurtis - Rocket boot dust IL edit
 bingchilling18, Pannoniæ, righteousryan - No underworld evaporation

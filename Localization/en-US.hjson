@@ -6,7 +6,7 @@ Mods: {
 			DepthsTip2: Defeat the Shadowstone giant Chasme to change the world forever. Using a Ruby Relic at a Gemforge might summon her...
 			DepthsTip3: Arquerite is super poisonous, craft a Crystal Skull to be immue to its poisoning.
 			DepthsTip4: Don't fall into quicksilver without drinking a Crystal Skin Potion first!
-			DepthsTip5: You can spend up to 8 seconds in quicksilver without consequences with the right gear!
+			DepthsTip5: You can spend up to 16 seconds in quicksilver without consequences with the right gear!
 		}
 
 		common: {
@@ -56,7 +56,7 @@ Mods: {
 		QuicksilverBuckets: {
 			QuicksilverBucketName: Quicksilver Bucket
 			QuicksilverBucketDescription: Contains a small amount of quicksilver
-			BottomlessQuicksilverBucketName: Bottom Quicksilver Bucket
+			BottomlessQuicksilverBucketName: Bottomless Quicksilver Bucket
 			BottomlessQuicksilverBucketDescription: Contains an endless amount of quicksilver
 			QuicksilverAbsorbantSpongeName: Quicksilver Absorbant Sponge
 			QuicksilverAbsorbantSpongeDescription: Capable of soaking up an endless amount of quicksilver
@@ -100,7 +100,7 @@ Mods: {
 				interesting. They have all learnt to live within the darkness and adapt to their surroundings. One interesting part I learnt from exploring
 				the Depths is the almost ever expanding cult there. They built these castles and apartments just to worship Chasme. They are a tricky kind. Every
 				one that my men have captured or killed have either been able to escape or have turned to gems and I still have no idea whether the geomancers are
-				humans or a whole new species. I should also note that the nightmare grove is quite the place. Its unique bio-luminescent grass, vines and more 
+				humans or a whole new species. The nightmare grove is quite the place. Its unique bio-luminescent grass, vines and more 
 				serve as the Depth's only source of light, apart from the geomancer's own torches. I will have Draedon conduct tests and observations here
 				to explore this place's true potential. The only trouble is keeping Chasme at bay...
 				'''
@@ -198,11 +198,12 @@ Mods: {
 			DepthsOtherworldlyMusicBox.MapEntry: Music Box
 			AltarOfGems.MapEntry: Altar Of Gems
 			ForTheSakeOfMakingGadgets.MapEntry: For The Sake Of Making Gadgets
-			ImPurrSonation.MapEntry: Im Purr Sonation
+			ImPurrSonation.MapEntry: Im Purr-sonation
 			Mercury.MapEntry: Mercury
 			MusiciansBestFriend.MapEntry: Musicians Best Friend
 			ChaosCat.MapEntry: Chaos Cat
-			DONOTDRINK.MapEntry: D O N O T D R I N K
+			DONOTDRINK.MapEntry: DO NOT DRINK
+			WaterGeyser.MapEntry: Water Geyser
 		}
 
 		Buffs: {
@@ -733,24 +734,6 @@ Mods: {
 			Mercury: {
 				DisplayName: Mercury
 				Tooltip: "'L. Cake'"
-			}
-
-			MiracfulSaber: {
-				DisplayName: Miracful Saber
-				Tooltip:
-					'''
-
-					Changes blade color every 14 swings
-					There are 8 weapon modes in total
-					[c/A500EC:Amethyst Mode]: Transforms in amethyst whip
-					[c/F19F01:Topaz Mode]: Shoots 4-6 hot fire every swing
-					[c/0D6BD8:Sapphire Mode]: Sword now able to freeze enemies!
-					[c/21B873:Emerald Mode]: Power of nature blesses your weapon...
-					[c/C3292C:Ruby Mode]: Sword begins to shoot crimson musical notes
-					[c/DFE6EE:Diamond Mode]: Blade becomes so shiny, so it begins to shoot with sparkles!
-					[c/D58E30:Amber Mode]: Shoots with amber snakes those able to deal colossal damage
-					[c/393940:Onyx Mode]: Shoots 5 onyx blasters
-					'''
 			}
 
 			NightFury: {
@@ -1428,9 +1411,119 @@ Mods: {
 				DisplayName: Intense Shadow Dye
 			}
 
-			test: {
-				DisplayName: test
+			CrystalHorseshoe: {
+				DisplayName: Crystal Horseshoe
+				Tooltip:
+					'''
+					Negates fall damage
+					Grants immunity to Mercury Radiation
+					'''
+			}
+
+			SilverCharm: {
+				DisplayName: Silver Charm
+				Tooltip:
+					'''
+					Grants immunity to Mercury Radiation
+					Grants 4 additional seconds of quicksilver immunity
+					'''
+			}
+
+			AzuriteRose: {
+				DisplayName: Azurite Rose
+				Tooltip:
+					'''
+					Grants 4 additional seconds of quicksilver immunity
+					Grants immunity to Mercury Radiation
+					Reduced damage from Mercury debuffs
+					'''
+			}
+
+			CryingSkull: {
+				DisplayName: Crying Skull
+				Tooltip:
+					'''
+					Grants 4 additional seconds of quicksilver immunity
+					Grants immunity to Mercury Radiation
+					'''
+			}
+
+			CrystalRose: {
+				DisplayName: Crystal Rose
+				Tooltip:
+					'''
+					Grants immunity to Mercury Radiation
+					Reduced damage from Mercury debuffs
+					'''
+			}
+
+			MercuryMoss: {
+				DisplayName: Mercury Moss
+				Tooltip: "'A sight to dwell upon and never forget'"
+			}
+
+			MercuryMossFishingBobber: {
+				DisplayName: Mercury Moss Fishing Bobber
+				Tooltip:
+					'''
+					Increases fishing power by 10
+					Your bobber now glows
+					'''
+			}
+
+			MercuryMossBricks: {
+				DisplayName: Mercury Moss Bricks
 				Tooltip: ""
+			}
+
+			MercuryMossBrickWall: {
+				DisplayName: Mercury Moss Brick Wall
+				Tooltip: ""
+			}
+
+			QuartzStackWall: {
+				DisplayName: Quartz Stack Wall
+				Tooltip: ""
+			}
+
+			LeakyMercuryWall: {
+				DisplayName: Leaky Mercury Wall
+				Tooltip: ""
+			}
+
+			MercuryBubbleWall: {
+				DisplayName: Mercury Bubble Wall
+				Tooltip: ""
+			}
+
+			DottedQuicksilverWall: {
+				DisplayName: Dotted Quicksilver Wall
+				Tooltip: ""
+			}
+
+			WaterGeyser: {
+				DisplayName: Water Geyser
+				Tooltip: ""
+			}
+
+			AquaQuiver: {
+				DisplayName: Aqua Quiver
+				Tooltip:
+					'''
+					Increases arrow damage by 10% and greatly increases arrow speed
+					20% chance not to consume arrows
+					Dips wooden arrows in freezing Water
+					'FREEZE!'
+					'''
+			}
+
+			PalladiumShield: {
+				DisplayName: Palladium Shield
+				Tooltip:
+					'''
+					Halves all projectile damage
+					Reflects most projectiles towards attackers
+					'''
 			}
 		}
 
@@ -1529,6 +1622,9 @@ Mods: {
 			ChasmeShockwave.DisplayName: Chasme Shockwave
 			ChasVoid.DisplayName: Chasme Void
 			Chlaser.DisplayName: Chasme Laser
+			MercuryMossFishingBobber.DisplayName: Mercury Moss Fishing Bobber
+			WaterGeyser.DisplayName: Water Geyser
+			AquaArrow.DisplayName: Aqua Arrow
 		}
 
 		Biomes: {
@@ -1616,6 +1712,9 @@ Mods: {
 				Description: Cast a line into a pool of quicksilver to find some mercury resistant marine life.
 			}
 		}
+
+		InDepths: Mods.TheDepths.InDepths
+		OutDepths: Mods.TheDepths.OutDepths
 	}
 }
 
@@ -1626,5 +1725,5 @@ ItemTooltip.TerrasparkBoots:
 	8% increased movement speed
 	Provides the ability to walk on water, honey, quicksilver & lava
 	Grants immunity to fire & poisonus blocks, 7 seconds of immunity to lava and 8 secconds immunity to quicksilver
-	Reduces damage from touching lava
+	Reduces damage from touching lava and quicksilver debuffs
 	'''

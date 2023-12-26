@@ -23,7 +23,7 @@ namespace TheDepths.Projectiles
 			Projectile.DamageType = DamageClass.Melee;
 		}
 
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
 			for (int i = 0; i < 15; i++)

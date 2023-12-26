@@ -24,7 +24,7 @@ namespace TheDepths.Projectiles
 			return true;
 		}
 
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			Projectile.Resize(22, 22);
 			SoundEngine.PlaySound(SoundID.Item14, Projectile.position);

@@ -25,7 +25,8 @@ namespace TheDepths.UI
 		}
 
 		public override void Draw(SpriteBatch spriteBatch) {
-			if (Main.player[Main.myPlayer].GetModPlayer<TheDepthsPlayer>().aAmulet == false || Main.player[Main.myPlayer].GetModPlayer<TheDepthsPlayer>().AmuletTimer == 60 * 4)
+			var player = Main.player[Main.myPlayer].GetModPlayer<TheDepthsPlayer>();
+			if ((!player.aAmulet && !player.aAmulet2 && !player.aAmulet3) || player.AmuletTimerCap)
 				return;
 			base.Draw(spriteBatch);
 		}
@@ -52,7 +53,7 @@ namespace TheDepths.UI
 					vector.Y = Main.screenHeight - 32;
 				}
 			}
-			if (MercuryTimer < 60 * 4 && !Main.LocalPlayer.ghost)
+			if (!Main.player[Main.myPlayer].GetModPlayer<TheDepthsPlayer>().AmuletTimerCap && !Main.LocalPlayer.ghost)
 			{
 				_ = MercuryTimer / 28;
 				int num = 28;
@@ -80,10 +81,15 @@ namespace TheDepths.UI
                     }
                     int num5 = 0;
 					int num6 = 0;
-					if (i > 10)
+					if (i > 8)
 					{
-						num5 -= 260;
-						num6 += 26;
+						num5 -= 208;
+						num6 -= 26;
+					}
+					if (i > 16)
+					{
+						num5 -= 208;
+						num6 -= 26;
 					}
 					spriteBatch.Draw(cloudtexture.Value, vector + new Vector2((float)(26 * (i) + num5) - 125f, 32f + ((float)cloudtexture.Height() - (float)cloudtexture.Height() * num3) / 2f + (float)num6), new Microsoft.Xna.Framework.Rectangle(0, 0, cloudtexture.Width(), cloudtexture.Height()), new Microsoft.Xna.Framework.Color(num2, num2, num2, num2), 0f, default(Vector2), num3, SpriteEffects.None, 0f);
 				}
@@ -91,8 +97,8 @@ namespace TheDepths.UI
 		}
 
         public override void Update(GameTime gameTime) {
-			var modPlayer = Main.LocalPlayer.GetModPlayer<TheDepthsPlayer>();
-			if (Main.player[Main.myPlayer].GetModPlayer<TheDepthsPlayer>().aAmulet == false || modPlayer.AmuletTimer == 60 * 4)
+			var player = Main.player[Main.myPlayer].GetModPlayer<TheDepthsPlayer>();
+			if ((!player.aAmulet && !player.aAmulet2 && !player.aAmulet3) || player.AmuletTimerCap)
 				return;
 		}
 	}

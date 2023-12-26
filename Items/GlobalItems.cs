@@ -10,6 +10,8 @@ using TheDepths.Buffs;
 using Terraria.DataStructures;
 using Terraria.Localization;
 using System;
+using Terraria.GameContent.ItemDropRules;
+using System.Linq;
 
 namespace TheDepths.Items
 {
@@ -49,7 +51,27 @@ namespace TheDepths.Items
             ItemID.Sets.ShimmerTransformToItem[ItemID.CobaltOre] = ModContent.ItemType<ArqueriteOre>();
             ItemID.Sets.ShimmerTransformToItem[ItemID.Hellstone] = ItemID.PlatinumOre;
         }
-	}
+
+		public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback)
+		{
+			if (player.GetModPlayer<TheDepthsPlayer>().HasAquaQuiver && type == ProjectileID.WoodenArrowFriendly)
+			{
+                type = ModContent.ProjectileType<Projectiles.AquaArrow>();
+                damage += 2f;
+            }
+		}
+
+        public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
+        {
+            if (item.type == ItemID.LockBox)
+            {
+                foreach (var rule in itemLoot.Get())
+                {
+                    itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Accessories.PalladiumShield>(), 7));
+                }
+            }
+        }
+    }
 
     public class DemonConch : GlobalItem
     {
@@ -77,7 +99,7 @@ namespace TheDepths.Items
 
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
-            player.GetModPlayer<TheDepthsPlayer>().aAmulet = true;
+            player.GetModPlayer<TheDepthsPlayer>().aAmulet2 = true;
             player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
             player.GetModPlayer<TheDepthsPlayer>().stoneRose = true;
         }

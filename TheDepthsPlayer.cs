@@ -43,13 +43,27 @@ namespace TheDepths
         public bool aStone;
         public bool lodeStone;
         public bool stoneRose;
+        public bool HasAquaQuiver;
+        /// <summary>
+		///   Used for First Tier Updrages to the Amalgam Amulet, This contains all items such as Crying Skull, Silver Charm, Azurite Rose and Alagam Amulet
+		/// </summary>
         public bool aAmulet;
+        /// <summary>
+		///   Used For Second Tier Upgrades to the amalgam Amulet, This contains all items such as the Silver Slippers and Terraspark Boots
+		/// </summary>
+        public bool aAmulet2;
+        /// <summary>
+		///   Used for third party items not related to the amalgam amulet but still use its effects. Only used by the Geomancer's mining Cart
+		/// </summary>
+        public bool aAmulet3;
         public bool sEmbers;
         public bool nFlare;
+        public bool pShield;
         public bool quicksilverSurfboard;
         public int tremblingDepthsScreenshakeTimer;
         public int QuicksilverTimer;
         public int AmuletTimer;
+        public bool AmuletTimerCap;
         public bool quicksilverWet;
         public int EmberTimer;
         public bool NightwoodBuff;
@@ -73,12 +87,16 @@ namespace TheDepths
             aStone = false;
             lodeStone = false;
             stoneRose = false;
+            HasAquaQuiver = false;
             aAmulet = false;
+            aAmulet2 = false;
+            aAmulet3 = false;
             sEmbers = false;
             nFlare = false;
             quicksilverSurfboard = false;
             quicksilverWet = false;
             NightwoodBuff = false;
+            pShield = false;
 
             geodeCrystal = false;
             livingShadow = false;
@@ -216,7 +234,19 @@ namespace TheDepths
             }
         }
 
-        public override void GetDyeTraderReward(List<int> rewardPool)
+		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
+		{
+			if (pShield && !TheDepthsIDs.Sets.UnreflectiveProjectiles[proj.type])
+			{
+                modifiers.FinalDamage *= 0.5f;
+                proj.hostile = false;
+                proj.friendly = true;
+                proj.velocity = -proj.oldVelocity;
+                proj.owner = Main.myPlayer;
+            }
+		}
+
+		public override void GetDyeTraderReward(List<int> rewardPool)
         {
             rewardPool.Add(ModContent.ItemType<Items.LivingFogDye>());
         }
@@ -430,19 +460,37 @@ namespace TheDepths
                     QuicksilverTimer = 60 * 2;
                 }
             }
-            if (AmuletTimer < 60 * 4 && aAmulet == true && quicksilverWet == false || AmuletTimer < 60 * 4 && aAmulet == true && !Worldgen.TheDepthsWorldGen.InDepths)
+            int AmuletsActive = 0;
+            if ((aAmulet && !aAmulet2 && !aAmulet3) || (!aAmulet && !aAmulet2 && aAmulet3) || (!aAmulet && aAmulet2 && !aAmulet3))
             {
-                AmuletTimer++;
+                AmuletsActive = 1;
             }
-            if (AmuletTimer <= 60 * 4 && aAmulet == true && quicksilverWet == true)
+            else if ((aAmulet && aAmulet2 && !aAmulet3) || (aAmulet && !aAmulet2 && aAmulet3) || (!aAmulet && aAmulet2 && aAmulet3))
+			{
+                AmuletsActive = 2;
+			}
+            else if ((aAmulet && aAmulet2 && aAmulet3))
+            {
+                AmuletsActive = 3;
+            }
+            if (AmuletTimer < 60 * 4 * AmuletsActive)
+            {
+                if ((AmuletsActive > 0) && (quicksilverWet == false || !Worldgen.TheDepthsWorldGen.InDepths))
+				{
+                    AmuletTimer++;
+                }
+                AmuletTimerCap = false;
+            }
+            if (AmuletTimer <= 60 * 4 * AmuletsActive && (AmuletsActive > 0) && quicksilverWet == true)
             {
                 AmuletTimer--;
             }
-            if (AmuletTimer >= 60 * 4)
+            if (AmuletTimer >= 60 * 4 * AmuletsActive)
             {
-                AmuletTimer = 60 * 4;
+                AmuletTimer = 60 * 4 * AmuletsActive;
+                AmuletTimerCap = true;
             }
-            if (AmuletTimer <= 0 || aAmulet == false || Main.LocalPlayer.dead)
+            if (AmuletTimer <= 0 || (AmuletsActive <= 0) || Main.LocalPlayer.dead)
             {
                 AmuletTimer = 0;
             }
@@ -451,7 +499,7 @@ namespace TheDepths
             //Main.NewText("Depths in on the left : " + Worldgen.TheDepthsWorldGen.DrunkDepthsLeft); //Debugging for the drunkseed tag checker
 
             //Shalestone Conch and shellphone
-			Item item = Player.inventory[Player.selectedItem];
+            Item item = Player.inventory[Player.selectedItem];
 			if (!Player.JustDroppedAnItem)
 			{
 				if ((item.type == ModContent.ItemType<ShalestoneConch>() || item.type == ModContent.ItemType<ShellPhoneDepths>()) && Player.itemAnimation > 0 && Worldgen.TheDepthsWorldGen.InDepths)

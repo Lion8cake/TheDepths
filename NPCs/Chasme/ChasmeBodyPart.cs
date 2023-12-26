@@ -65,7 +65,8 @@ public abstract class ChasmeBodyPart : ModNPC
 
 	public override void SetDefaults()
 	{
-		NPC.HitSound = SoundID.NPCHit8;
+		NPC.HitSound = SoundID.Item70;
+		NPC.DeathSound = SoundID.NPCDeath14;
 		NPC.noGravity = true;
 		NPC.noTileCollide = true;
 		NPC.knockBackResist = 0f;

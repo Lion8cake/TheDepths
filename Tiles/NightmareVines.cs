@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +27,16 @@ namespace TheDepths.Tiles
             AddMapEntry(new Color(44, 25, 96));
         }
 
-        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+		public override bool CanDrop(int i, int j)
+		{
+            if (Main.rand.NextBool(99))
+			{
+                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<Items.Placeable.NightmareSeeds>());
+            }
+            return false;
+		}
+
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
             bool intoRenderTargets = true;
             bool flag = intoRenderTargets || Main.LightingEveryFrame;

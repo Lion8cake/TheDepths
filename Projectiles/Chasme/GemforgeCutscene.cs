@@ -90,7 +90,7 @@ namespace TheDepths.Projectiles.Chasme
 			{
 				Geomancer.TheRelicMadeHimExplode = true;
 				Gemforge.RubyRelicIsOnForge = 1;
-				SoundEngine.PlaySound(SoundID.NPCDeath10, Projectile.position);
+				SoundEngine.PlaySound(SoundID.DD2_BetsyDeath, Projectile.position);
 
 				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{

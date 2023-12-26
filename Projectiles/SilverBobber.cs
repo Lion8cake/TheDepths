@@ -22,10 +22,5 @@ namespace TheDepths.Projectiles
 
 			DrawOriginOffsetY = -8;
 		}
-
-		public override void ModifyFishingLine(ref Vector2 lineOriginOffset, ref Color lineColor)
-		{
-			lineOriginOffset = new Vector2(47, -31);
-		}
 	}
 }

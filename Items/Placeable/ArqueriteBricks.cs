@@ -34,6 +34,7 @@ namespace TheDepths.Items.Placeable
 			recipe.AddIngredient(ItemID.StoneBlock, 5);
 			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteOre>(), 1);
 			recipe.AddTile(TileID.Furnaces);
+			recipe.DisableDecraft();
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();

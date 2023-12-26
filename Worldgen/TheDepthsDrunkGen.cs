@@ -80,6 +80,53 @@ namespace TheDepths.Worldgen
 						Tile tile = Main.tile[k, l];
 						tile.HasTile = true;
 					}
+					if (Main.tile[k, l].WallType == WallID.ObsidianBackUnsafe)
+					{
+						WorldGen.KillWall(k, l);
+						Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.NaturalQuicksilverWall1>();
+					}
+					if (Main.tile[k, l].WallType == WallID.LavaUnsafe1 || Main.tile[k, l].WallType == WallID.LavaUnsafe4)
+					{
+						WorldGen.KillWall(k, l);
+						Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.NaturalQuicksilverWall2>();
+					}
+					if (Main.tile[k, l].WallType == WallID.LavaUnsafe2)
+					{
+						WorldGen.KillWall(k, l);
+						Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.NaturalQuicksilverWall3>();
+					}
+					if (Main.tile[k, l].WallType == WallID.LavaUnsafe3)
+					{
+						WorldGen.KillWall(k, l);
+						Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.NaturalQuicksilverWall4>();
+					}
+					if (Main.tile[k, l].TileType == TileID.GeyserTrap)
+					{
+						WorldGen.KillTile(k, l);
+						WorldGen.Place2x1(k, l, (ushort)ModContent.TileType<WaterGeyser>(), 0);
+						Tile tile = Main.tile[k, l];
+						tile.HasTile = true;
+					}
+				}
+			}
+		}
+		#endregion
+
+		#region DrunkMossLeft
+		public static void MossGenLeft(GenerationProgress progress, GameConfiguration configuration)
+		{
+			progress.Message = "Growing Sparkly Moss";
+			for (int k = 0; k < Main.maxTilesX / 2; k++)
+			{
+				for (int l = 0; l < Main.maxTilesY; l++)
+				{
+					if (Main.tile[k, l].TileType == TileID.LavaMoss)
+					{
+						WorldGen.KillTile(k, l);
+						Main.tile[k, l].TileType = (ushort)ModContent.TileType<MercuryMoss>();
+						Tile tile = Main.tile[k, l];
+						tile.HasTile = true;
+					}
 				}
 			}
 		}
@@ -1672,34 +1719,6 @@ namespace TheDepths.Worldgen
 		}
 		#endregion
 
-		#region DrunkPetrifiedTreesLeft
-		public static void TreeGenLeft(GenerationProgress progress, GameConfiguration configuration)
-        {
-            progress.Message = "Petrifying Trees";
-            progress.Set(0.0f);
-            for (int hbx = 50; hbx < (Main.maxTilesX / 2) - 50; hbx++)
-            {
-                for (int hby = Main.maxTilesY - 200; hby < Main.maxTilesY - 50; hby++)
-                {
-                    if (Main.tile[hbx, hby].HasTile && !Main.tile[hbx, hby - 1].HasTile ||
-                        Main.tile[hbx, hby].HasTile && !Main.tile[hbx, hby + 1].HasTile ||
-                        Main.tile[hbx, hby].HasTile && !Main.tile[hbx - 1, hby].HasTile ||
-                        Main.tile[hbx, hby].HasTile && !Main.tile[hbx + 1, hby].HasTile)
-                    {
-                        if (Main.tile[hbx, hby].TileType == (ushort)TileType<ShaleBlock>())
-                        {
-                            if (WorldGen.genRand.Next(1) == 0)
-                            {
-                                WorldGen.GrowTree(hbx, hby - 1);
-                            }
-                        }
-                    }
-                }
-            }
-            progress.Set(1f);
-        }
-		#endregion
-
 		#endregion
 
 		#region DrunkGenRight
@@ -1762,6 +1781,60 @@ namespace TheDepths.Worldgen
 					{
 						WorldGen.KillTile(k, l);
 						Main.tile[k, l].TileType = (ushort)ModContent.TileType<QuicksilverDropletSource>();
+						Tile tile = Main.tile[k, l];
+						tile.HasTile = true;
+					}
+					if (Main.tile[k, l].WallType == WallID.ObsidianBackUnsafe)
+					{
+						WorldGen.KillWall(k, l);
+						Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.NaturalQuicksilverWall1>();
+					}
+					if (Main.tile[k, l].WallType == WallID.LavaUnsafe1 || Main.tile[k, l].WallType == WallID.LavaUnsafe4)
+					{
+						WorldGen.KillWall(k, l);
+						Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.NaturalQuicksilverWall2>();
+					}
+					if (Main.tile[k, l].WallType == WallID.LavaUnsafe2)
+					{
+						WorldGen.KillWall(k, l);
+						Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.NaturalQuicksilverWall3>();
+					}
+					if (Main.tile[k, l].WallType == WallID.LavaUnsafe3)
+					{
+						WorldGen.KillWall(k, l);
+						Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.NaturalQuicksilverWall4>();
+					}
+					if (Main.tile[k, l].TileType == TileID.GeyserTrap)
+					{
+						WorldGen.KillTile(k, l);
+						WorldGen.Place2x1(k, l, (ushort)ModContent.TileType<WaterGeyser>(), 0);
+						Tile tile = Main.tile[k, l];
+						tile.HasTile = true;
+					}
+					if (Main.tile[k, l].TileType == ModContent.TileType<MercuryMoss>())
+					{
+						if ((!Main.tileSolid[Main.tile[k, l + 1].TileType] || !Main.tile[k, l + 1].HasTile) && (!Main.tileSolid[Main.tile[k, l - 1].TileType] || !Main.tile[k, l - 1].HasTile) && (!Main.tileSolid[Main.tile[k + 1, l].TileType] || !Main.tile[k + 1, l].HasTile) && (!Main.tileSolid[Main.tile[k - 1, l].TileType] || !Main.tile[k - 1, l].HasTile))
+						{
+							WorldGen.KillTile(k, l);
+						}
+					}
+				}
+			}
+		}
+		#endregion
+
+		#region DrunkMossRight
+		public static void MossGenRight(GenerationProgress progress, GameConfiguration configuration)
+		{
+			progress.Message = "Growing Sparkly Moss";
+			for (int k = Main.maxTilesX / 2; k < Main.maxTilesX; k++)
+			{
+				for (int l = 0; l < Main.maxTilesY; l++)
+				{
+					if (Main.tile[k, l].TileType == TileID.LavaMoss)
+					{
+						WorldGen.KillTile(k, l);
+						Main.tile[k, l].TileType = (ushort)ModContent.TileType<MercuryMoss>();
 						Tile tile = Main.tile[k, l];
 						tile.HasTile = true;
 					}
@@ -3283,34 +3356,6 @@ namespace TheDepths.Worldgen
 		}
 		#endregion
 
-		#region DrunkPetrifiedTreesRight
-		public static void TreeGenRight(GenerationProgress progress, GameConfiguration configuration)
-		{
-			progress.Message = "Petrifying Trees";
-			progress.Set(0.0f);
-			for (int hbx = 50 + Main.maxTilesX / 2; hbx < (Main.maxTilesX) - 50; hbx++)
-			{
-				for (int hby = Main.maxTilesY - 200; hby < Main.maxTilesY - 50; hby++)
-				{
-					if (Main.tile[hbx, hby].HasTile && !Main.tile[hbx, hby - 1].HasTile ||
-						Main.tile[hbx, hby].HasTile && !Main.tile[hbx, hby + 1].HasTile ||
-						Main.tile[hbx, hby].HasTile && !Main.tile[hbx - 1, hby].HasTile ||
-						Main.tile[hbx, hby].HasTile && !Main.tile[hbx + 1, hby].HasTile)
-					{
-						if (Main.tile[hbx, hby].TileType == (ushort)TileType<ShaleBlock>())
-						{
-							if (WorldGen.genRand.Next(1) == 0)
-							{
-								WorldGen.GrowTree(hbx, hby - 1);
-							}
-						}
-					}
-				}
-			}
-			progress.Set(1f);
-		}
-		#endregion
-
 		#endregion
 
 		#region DrunkChestStuff
@@ -3331,6 +3376,53 @@ namespace TheDepths.Worldgen
 				list3.RemoveAt(index);
 			}
 			GenVars.hellChestItem = list4.ToArray();
+		}
+
+		public static void DepthsBuriedDrunkChests(GenerationProgress progress, GameConfiguration configuration)
+		{
+			for (int chestID = 0; chestID < (Main.maxChests / 2); chestID++)
+			{
+				Chest chest = Main.chest[chestID];
+				if (chest != null)
+				{
+					for (int chestslot = 0; chestslot < Chest.maxItems; chestslot++)
+					{
+						switch (chest.item[chestslot].type)
+						{
+							case ItemID.LavaCharm:
+								chest.item[chestslot].TurnToAir(true);
+								chest.item[chestslot].SetDefaults(ModContent.ItemType<Items.Accessories.AmalgamAmulet>());
+								break;
+							case ItemID.HellMinecart:
+								chest.item[chestslot] = new Item(ModContent.ItemType<Items.PhantomFirecart>());
+								break;
+							case ItemID.HellfireArrow:
+								chest.item[chestslot] = new Item(ModContent.ItemType<Items.Weapons.DiamondArrow>());
+								chest.item[chestslot].stack = WorldGen.genRand.Next(25) + 50;
+								break;
+							case ItemID.HellCake:
+								chest.item[chestslot] = new Item(ModContent.ItemType<Items.GeodeLazerPointer>());
+								break;
+							case ItemID.TreasureMagnet:
+								chest.item[chestslot].TurnToAir(true);
+								chest.item[chestslot].SetDefaults(ModContent.ItemType<Items.Accessories.LodeStone>());
+								break;
+							case ItemID.ObsidianSkinPotion:
+								chest.item[chestslot] = new Item(ModContent.ItemType<Items.CrystalSkinPotion>());
+								chest.item[chestslot].stack = WorldGen.genRand.Next(1, 3);
+								break;
+							case ItemID.InfernoPotion:
+								chest.item[chestslot] = new Item(ModContent.ItemType<Items.SilverSpherePotion>());
+								chest.item[chestslot].stack = WorldGen.genRand.Next(1, 3);
+								break;
+							case ItemID.CobaltShield:
+								chest.item[chestslot].TurnToAir(true);
+								chest.item[chestslot].SetDefaults(ModContent.ItemType<Items.Accessories.PalladiumShield>());
+								break;
+						}
+					}
+				}
+			}
 		}
 		#endregion
 	}

@@ -36,20 +36,20 @@ namespace TheDepths.Items
 
 		public override void ModifyItemLoot(ItemLoot itemLoot)
 		{
-            var DepthsItems1 = new IItemDropRule[]
+            IItemDropRule skyfallRemixseed = ItemDropRule.ByCondition(new Conditions.NotRemixSeed(), ModContent.ItemType<Skyfall>());
+            skyfallRemixseed.OnFailedConditions(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<BlueSphere>()), hideLootReport: true);
+
+            IItemDropRule[] quartzLockBoxList = new IItemDropRule[]
             {
-                ItemDropRule.NotScalingWithLuck(ItemID.DarkLance, 1),
-                ItemDropRule.NotScalingWithLuck(ModContent.ItemType<SilverStar>(), 1),
-                ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Skyfall>(), 1),
-                ItemDropRule.NotScalingWithLuck(ModContent.ItemType<WhiteLightning>(), 1),
-                //ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Skyfall>(), 1), //Alt Hellwing bow is yet to be made
-                ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Accessories.LodeStone>(), 1)
+            ItemDropRule.NotScalingWithLuck(ItemID.DarkLance),
+            ItemDropRule.NotScalingWithLuck(ModContent.ItemType<SilverStar>()),
+            skyfallRemixseed,
+            ItemDropRule.NotScalingWithLuck(ModContent.ItemType<WhiteLightning>()),
+            ItemDropRule.NotScalingWithLuck(ModContent.ItemType<NightFury>()),
             };
 
-            IItemDropRule[] hell = new IItemDropRule[] {
-                new OneFromRulesRule(1, DepthsItems1),
-            };
-            itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(hell));
+            itemLoot.Add(new OneFromRulesRule(1, quartzLockBoxList));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Accessories.LodeStone>(), 5));
         }
     }
 }

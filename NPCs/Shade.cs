@@ -11,7 +11,6 @@ using Microsoft.Xna.Framework.Graphics;
 using TheDepths.Items.Banners;
 using Terraria.GameContent.ItemDropRules;
 using TheDepths.Items;
-using TheDepths.Pets.ShadePet;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;   
 
