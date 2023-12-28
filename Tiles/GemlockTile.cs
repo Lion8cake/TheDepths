@@ -31,6 +31,12 @@ namespace TheDepths.Tiles
         {
             return true;
         }
+
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+            return false;
+        }
+
         public static void ShowItemIcon(int tX, int tY, int itemType)
         {
             Player player = Main.LocalPlayer;
@@ -38,25 +44,20 @@ namespace TheDepths.Tiles
             player.cursorItemIconEnabled = true;
             player.cursorItemIconID = itemType;
         }
-        /*public override void KillMultiTile(int i, int j, int frameX, int frameY)
+
+        public override bool CanDrop(int i, int j)
         {
-            int gemLock = 0;
-            int gem = SelectGem((short)frameX);
-            switch (frameX / 54)
+            return false;
+        }
+
+        public override void KillMultiTile(int i, int j, int frameX, int frameY)
+        {
+            Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<Items.Placeable.OnyxGemLock>());
+            if (frameY >= 54)
             {
-                case 0:
-                    gemLock = Mod.Find<ModItem>("OnyxGemLock").Type;
-                    break;
+                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 54, 32, ModContent.ItemType<Items.LargeOnyx>());
             }
-            if (gemLock > 0)
-            {
-                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 54, 32, gemLock);
-                if (frameY >= 54)
-				{
-                    Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 54, 32, gem);
-				}
-            }
-        }*/
+        }
 
         public override void MouseOver(int i, int j)
         {
@@ -98,7 +99,7 @@ namespace TheDepths.Tiles
         {
             Tile tile = Framing.GetTileSafely(i, j);
             Mod mod = ModLoader.GetMod("TheDepths");
-            if (!tile.HasTile || tile.TileType != mod.Find<ModTile>("GemlockTile").Type)
+            if (!tile.HasTile || tile.TileType != ModContent.TileType<GemlockTile>())
                 return;
 
             bool IsOn = tile.TileFrameY / 54 == 1;
@@ -144,12 +145,11 @@ namespace TheDepths.Tiles
         
 		public static int SelectGem(short frameX)
 		{
-			Mod mod = ModLoader.GetMod("TheDepths");
 			int gem = 0;
 			switch (frameX / 54)
 			{
 				case 0:
-					gem = mod.Find<ModItem>("LargeOnyx").Type;
+					gem = ModContent.ItemType<Items.LargeOnyx>();
 					break;
 			}
 			return gem;

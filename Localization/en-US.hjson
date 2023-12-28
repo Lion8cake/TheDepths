@@ -300,8 +300,8 @@ Mods: {
 				DisplayName: Crystal Shield
 				Tooltip:
 					'''
-					Increases damage reduction by 10% 
-					Immune to knockback
+					Halves all projectile damage
+					Reflects most projectiles towards attackers
 					Immune to mercury radiation
 					'''
 			}
@@ -334,8 +334,9 @@ Mods: {
 				DisplayName: Sanctus Shield
 				Tooltip:
 					'''
-					Grants immunity to knockback and mercury radiation
-					Increases damage reduction by 10% 
+					Grants immunity to mercury radiation
+					Halves all projectile damage
+					Reflects most projectiles towards attackers
 					Grants immunity to most debuffs
 					'''
 			}
@@ -585,7 +586,7 @@ Mods: {
 
 			OnyxGemLock: {
 				DisplayName: Onyx Gem Lock
-				Tooltip: ""
+				Tooltip: Right Click to place or remove Large Onyxes
 			}
 
 			PetrifiedWood: {
@@ -1625,6 +1626,7 @@ Mods: {
 			MercuryMossFishingBobber.DisplayName: Mercury Moss Fishing Bobber
 			WaterGeyser.DisplayName: Water Geyser
 			AquaArrow.DisplayName: Aqua Arrow
+			OnyxExplosion.DisplayName: Onyx Explosion
 		}
 
 		Biomes: {

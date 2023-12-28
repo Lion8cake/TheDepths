@@ -17,7 +17,7 @@ namespace TheDepths.Dusts
 			{
 				num = 1f;
 			}
-			Lighting.AddLight(dust.position, 0.15f * num, 0.15f * num, 0.15f * num);
+			Lighting.AddLight(dust.position, 0.058f * num, 0.061f * num, 0.06f * num);
 			return false;
 		}
 	}

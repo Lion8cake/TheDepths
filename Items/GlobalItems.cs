@@ -12,6 +12,7 @@ using Terraria.Localization;
 using System;
 using Terraria.GameContent.ItemDropRules;
 using System.Linq;
+using Terraria.GameContent;
 
 namespace TheDepths.Items
 {
@@ -50,6 +51,9 @@ namespace TheDepths.Items
             ItemID.Sets.ShimmerTransformToItem[ItemID.Amber] = ItemID.Diamond;
             ItemID.Sets.ShimmerTransformToItem[ItemID.CobaltOre] = ModContent.ItemType<ArqueriteOre>();
             ItemID.Sets.ShimmerTransformToItem[ItemID.Hellstone] = ItemID.PlatinumOre;
+
+            ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(ItemID.AshBlock, 1, ModContent.ItemType<ShaleBlock>(), 1);
+            ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(ItemID.Hellstone, 1, ModContent.ItemType<ArqueriteOre>(), 1);
         }
 
 		public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback)
@@ -71,7 +75,62 @@ namespace TheDepths.Items
                 }
             }
         }
-    }
+
+		public override void ExtractinatorUse(int extractType, int extractinatorBlockType, ref int resultType, ref int resultStack)
+		{
+            if (extractinatorBlockType == TileID.ChlorophyteExtractinator && (extractType == ItemID.LavaMoss || extractType == ItemID.ArgonMoss || extractType == ItemID.XenonMoss || extractType == ItemID.KryptonMoss || extractType == ItemID.VioletMoss))
+            {
+                int ItemType = ItemID.BlueMoss;
+                if (Main.rand.Next(100) <= 12)
+                {
+                    switch (Main.rand.Next(6))
+                    {
+                        case 0:
+                            ItemType = ItemID.LavaMoss;
+                            break;
+                        case 1:
+                            ItemType = ItemID.XenonMoss;
+                            break;
+                        case 2:
+                            ItemType = ItemID.KryptonMoss;
+                            break;
+                        case 3:
+                            ItemType = ItemID.ArgonMoss;
+                            break;
+                        case 4:
+                            ItemType = ItemID.VioletMoss;
+                            break;
+                        case 5:
+                            ItemType = ModContent.ItemType<MercuryMoss>();
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (Main.rand.Next(5))
+                    {
+                        case 0:
+                            ItemType = ItemID.BlueMoss;
+                            break;
+                        case 1:
+                            ItemType = ItemID.BrownMoss;
+                            break;
+                        case 2:
+                            ItemType = ItemID.GreenMoss;
+                            break;
+                        case 3:
+                            ItemType = ItemID.PurpleMoss;
+                            break;
+                        case 4:
+                            ItemType = ItemID.RedMoss;
+                            break;
+                    }
+                }
+                resultType = ItemType;
+                resultStack = 1;
+            }
+        }
+	}
 
     public class DemonConch : GlobalItem
     {

@@ -2,6 +2,7 @@ using TheDepths.Items.Placeable;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
+using Terraria.GameContent;
 
 namespace TheDepths.Items.Placeable
 {
@@ -12,6 +13,8 @@ namespace TheDepths.Items.Placeable
 			ItemID.Sets.SortingPriorityMaterials[Item.type] = 58;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Hellstone;
+
+			ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(Type, 1, ItemID.Hellstone, 1);
 		}
 
 		public override void SetDefaults()

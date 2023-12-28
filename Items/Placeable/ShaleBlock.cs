@@ -3,6 +3,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.GameContent;
 
 namespace TheDepths.Items.Placeable
 {
@@ -11,6 +12,8 @@ namespace TheDepths.Items.Placeable
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+
+			ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(Type, 1, ItemID.AshBlock, 1);
 		}
 
         public override LocalizedText DisplayName

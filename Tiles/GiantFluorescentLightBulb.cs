@@ -34,25 +34,51 @@ namespace TheDepths.Tiles
 			return false;
 		}
 
+		public override bool CanDrop(int i, int j)
+		{
+			return false;
+		}
+
+		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+		{
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 48, ModContent.ItemType<Items.Placeable.GiantFluorescentLightBulb>());
+		}
+
 		public override void HitWire(int i, int j)
 		{
-			int x = i - Main.tile[i, j].TileFrameX / 18 % 2;
-			int y = j - Main.tile[i, j].TileFrameY / 18 % 2;
+			Tile tile = Main.tile[i, j];
+			int x = i - tile.TileFrameX / 18 % 2;
+			int y = j - tile.TileFrameY / 18 % 2;
 			for (int m = x; m < x + 2; m++)
 			{
 				for (int n = y; n < y + 2; n++)
 				{
-					if (Main.tile[m, n].HasTile && Main.tile[m, n].TileType == Type)
+					tile = Main.tile[m, n];
+					if (!tile.HasTile)
 					{
-						if (Main.tile[m, n].TileFrameX < 18 * 2)
-						{
-							Main.tile[m, n].TileFrameX += (short)(18 * 2);
-						}
-						else if (Main.tile[m, n].TileFrameX > 18 * 2)
-						{
-							Main.tile[m, n].TileFrameX -= (short)(18 * 2);
-						}
+						continue;
 					}
+					if (tile.TileFrameX < 18 * 2)
+					{
+						tile = Main.tile[m, n];
+						tile.TileFrameX += (short)(18 * 2);
+					}
+					else
+					{
+						tile = Main.tile[m, n];
+						tile.TileFrameX -= (short)(18 * 2);
+					}
+				}
+			}
+			if (!Wiring.running)
+			{
+				return;
+			}
+			for (int k = 0; k < 2; k++)
+			{
+				for (int l = 0; l < 2; l++)
+				{
+					Wiring.SkipWire(x + k, y + l);
 				}
 			}
 		}

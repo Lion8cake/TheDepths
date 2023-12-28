@@ -56,27 +56,81 @@ namespace TheDepths.Items.Placeable
 
 		public override void ExtractinatorUse(int extractinatorBlockType, ref int resultType, ref int resultStack)
 		{
-			int ItemType = ItemID.BlueMoss;
-			switch (Main.rand.Next(5))
+			if (extractinatorBlockType == TileID.ChlorophyteExtractinator)
 			{
-				case 0:
-					ItemType = ItemID.BlueMoss;
-					break;
-				case 1:
-					ItemType = ItemID.BrownMoss;
-					break;
-				case 2:
-					ItemType = ItemID.GreenMoss;
-					break;
-				case 3:
-					ItemType = ItemID.PurpleMoss;
-					break;
-				case 4:
-					ItemType = ItemID.RedMoss;
-					break;
+				int ItemType = ItemID.BlueMoss;
+				if (Main.rand.Next(100) <= 12)
+				{
+					switch (Main.rand.Next(6))
+					{
+						case 0:
+							ItemType = ItemID.LavaMoss;
+							break;
+						case 1:
+							ItemType = ItemID.XenonMoss;
+							break;
+						case 2:
+							ItemType = ItemID.KryptonMoss;
+							break;
+						case 3:
+							ItemType = ItemID.ArgonMoss;
+							break;
+						case 4:
+							ItemType = ItemID.VioletMoss;
+							break;
+						case 5:
+							ItemType = ModContent.ItemType<MercuryMoss>();
+							break;
+					}
+				}
+				else
+				{
+					switch (Main.rand.Next(5))
+					{
+						case 0:
+							ItemType = ItemID.BlueMoss;
+							break;
+						case 1:
+							ItemType = ItemID.BrownMoss;
+							break;
+						case 2:
+							ItemType = ItemID.GreenMoss;
+							break;
+						case 3:
+							ItemType = ItemID.PurpleMoss;
+							break;
+						case 4:
+							ItemType = ItemID.RedMoss;
+							break;
+					}
+				}
+				resultType = ItemType;
+				resultStack = 1;
 			}
-			resultType = ItemType;
-			resultStack = 1;
+			else
+			{
+				int ItemType = ItemID.BlueMoss;
+				switch (Main.rand.Next(5))
+				{
+					case 0:
+						ItemType = ItemID.BlueMoss;
+						break;
+					case 1:
+						ItemType = ItemID.BrownMoss;
+						break;
+					case 2:
+						ItemType = ItemID.GreenMoss;
+						break;
+					case 3:
+						ItemType = ItemID.PurpleMoss;
+						break;
+					case 4:
+						ItemType = ItemID.RedMoss;
+						break;
+				}
+				resultType = ItemType;
+				resultStack = 1;
+			}
 		}
 	}
 }

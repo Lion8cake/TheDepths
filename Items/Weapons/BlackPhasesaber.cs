@@ -15,23 +15,32 @@ namespace TheDepths.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			Item.CloneDefaults(3764);
-			Item.damage = 41;
-			Item.DamageType = DamageClass.Melee;
+			Item.useStyle = 1;
+			Item.knockBack = 3f;
 			Item.width = 40;
 			Item.height = 40;
+			Item.UseSound = SoundID.Item15;
+			Item.DamageType = DamageClass.Melee;
+			Item.damage = 48;
+			Item.useTime = 16;
+			Item.useAnimation = 16;
+			Item.scale = 1f;
+			Item.autoReuse = true;
+			Item.useTurn = true;
+			Item.rare = 4;
+			Item.value = Item.sellPrice(0, 1);
 		}
 		
 		public override void MeleeEffects(Player player, Rectangle hitbox)
 		{
-			Lighting.AddLight(player.itemLocation + new Vector2(6f + player.velocity.X, 14f), 0.3f, 0.275f, 0.3f);
+			Lighting.AddLight(player.itemLocation + new Vector2(6f + player.velocity.X, 14f), 0.058f, 0.061f, 0.06f);
 		}
 	    
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.CrystalShard, 50);
-			recipe.AddIngredient(ModContent.ItemType<Items.Weapons.BlackPhaseblade>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<BlackPhaseblade>(), 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

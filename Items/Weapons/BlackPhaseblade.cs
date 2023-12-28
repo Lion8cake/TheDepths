@@ -15,23 +15,30 @@ namespace TheDepths.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			Item.CloneDefaults(198);
-			Item.damage = 21;
-			Item.DamageType = DamageClass.Melee;
+			Item.useStyle = 1;
+			Item.useTime = 18;
+			Item.useAnimation = 18;
+			Item.knockBack = 3f;
 			Item.width = 40;
 			Item.height = 40;
+			Item.damage = 26;
+			Item.scale = 1f;
+			Item.UseSound = SoundID.Item15;
+			Item.rare = 1;
+			Item.value = 27000;
+			Item.DamageType = DamageClass.Melee;
 		}
 	
 		public override void MeleeEffects(Player player, Rectangle hitbox)
 		{
-			Lighting.AddLight(player.itemLocation + new Vector2(6f + player.velocity.X, 14f), 0.3f, 0.275f, 0.3f);
+			Lighting.AddLight(player.itemLocation + new Vector2(6f + player.velocity.X, 14f), 0.058f, 0.061f, 0.06f);
 		}
 		
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.MeteoriteBar, 15);
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Onyx>(), 10);
+			recipe.AddIngredient(ModContent.ItemType<Placeable.Onyx>(), 10);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

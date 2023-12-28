@@ -8,12 +8,27 @@ namespace TheDepths.Items
 {
     public class OnyxHook : ModItem
     {
-        public override void SetDefaults()
-        {
-            Item.CloneDefaults(ItemID.SapphireHook);
-            Item.shootSpeed = 18f;
-            Item.shoot = ModContent.ProjectileType<Projectiles.OnyxHook>();
+		public override void SetStaticDefaults()
+		{
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
+
+		public override void SetDefaults()
+        {
+			Item.noUseGraphic = true;
+			Item.damage = 0;
+			Item.knockBack = 7f;
+			Item.useStyle = 5;
+			Item.width = 18;
+			Item.height = 28;
+			Item.UseSound = SoundID.Item1;
+			Item.useAnimation = 20;
+			Item.useTime = 20;
+			Item.rare = 1;
+			Item.noMelee = true;
+			Item.value = Item.sellPrice(0, 1, 0, 0);
+			Item.shootSpeed = 13f;
+            Item.shoot = ModContent.ProjectileType<Projectiles.OnyxHook>();
         }
 		
 		public override void AddRecipes()

@@ -23,7 +23,14 @@ namespace TheDepths.Projectiles
 
         public override void SetDefaults()
         {
-            Projectile.CloneDefaults(ProjectileID.GemHookSapphire);
+            Projectile.netImportant = true;
+            Projectile.width = 18;
+            Projectile.height = 18;
+            Projectile.aiStyle = 7;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.timeLeft *= 10;
         }
 
         public override bool? CanUseGrapple(Player player)
@@ -36,16 +43,12 @@ namespace TheDepths.Projectiles
                     hooksOut++;
                 }
             }
-            if(hooksOut > 2)
-            {
-                return false;
-            }
-            return true;
+            return hooksOut <= 2;
         }
 
         public override float GrappleRange()
         {
-            return 350f;
+            return 400f;
         }
 
         public override void NumGrappleHooks(Player player, ref int numHooks)
@@ -55,12 +58,12 @@ namespace TheDepths.Projectiles
 
         public override void GrappleRetreatSpeed(Player player, ref float speed)
         {
-            speed = 15f;
+            speed = 13f;
         }
 
         public override void GrapplePullSpeed(Player player, ref float speed)
         {
-            speed = 15f;
+            speed = 13f;
         }
 
         public override bool PreDrawExtras()
