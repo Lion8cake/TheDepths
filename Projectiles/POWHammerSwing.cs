@@ -66,17 +66,12 @@ namespace TheDepths.Projectiles
 		public override void OnSpawn(IEntitySource source) {
 			Projectile.spriteDirection = Main.MouseWorld.X > Owner.MountedCenter.X ? 1 : -1;
 			float targetAngle = Owner.MountedCenter.ToRotation();
+			targetAngle = MathHelper.Clamp(targetAngle, (float)Math.PI * 5 / 6, (float)Math.PI * 4 / 3);
 
 			if (Projectile.spriteDirection == 1) {
-				targetAngle = MathHelper.Clamp(targetAngle, (float)-Math.PI * 5 / 6, (float)Math.PI * 4 / 3);
-				InitialAngle = targetAngle - 0.38f * (1.67f * (float)Math.PI) * Projectile.spriteDirection;
+				InitialAngle = (targetAngle - 0.45f * (1.67f * (float)Math.PI) * Projectile.spriteDirection) - 2.1f;
 			}
 			else {
-				if (targetAngle < 0) {
-					targetAngle += 2 * (float)Math.PI; 
-				}
-
-				targetAngle = MathHelper.Clamp(targetAngle, (float)Math.PI * 5 / 6, (float)Math.PI * 4 / 3);
 				InitialAngle = targetAngle - 0.45f * (1.67f * (float)Math.PI) * Projectile.spriteDirection;
 			}
 		}

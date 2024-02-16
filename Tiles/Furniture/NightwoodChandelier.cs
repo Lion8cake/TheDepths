@@ -1,12 +1,19 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
+using System.Reflection;
+using System.Threading;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Terraria.Utilities;
+using static Terraria.GameContent.Drawing.TileDrawing;
 
 namespace TheDepths.Tiles.Furniture
 {
@@ -30,28 +37,28 @@ namespace TheDepths.Tiles.Furniture
             DustType = ModContent.DustType<Dusts.NightWoodDust>();
         }
 
-        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
-        {
-            bool intoRenderTargets = true;
-            bool flag = intoRenderTargets || Main.LightingEveryFrame;
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+		{
+			bool intoRenderTargets = true;
+			bool flag = intoRenderTargets || Main.LightingEveryFrame;
 
-            if (Main.tile[i, j].TileFrameX % 54 == 0 && Main.tile[i, j].TileFrameY % 54 == 0 && flag)
-            {
-                Main.instance.TilesRenderer.AddSpecialPoint(i, j, 5);
-            }
+			if (Main.tile[i, j].TileFrameX % 54 == 0 && Main.tile[i, j].TileFrameY % 54 == 0 && flag)
+			{
+				Main.instance.TilesRenderer.AddSpecialPoint(i, j, 5);
+			}
 
-            return false;
-        }
+			return false;
+		}
 
-        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
-        {
-            Tile tile = Main.tile[i, j];
-            if (tile.TileFrameX < 88)
-            {
-                r = 0.55f;
-                g = 0.31f;
-                b = 1.2f;
-            }
-        }
-    }
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			Tile tile = Main.tile[i, j];
+			if (tile.TileFrameX < 88)
+			{
+				r = 0.55f;
+				g = 0.31f;
+				b = 1.2f;
+			}
+		}
+	}
 }

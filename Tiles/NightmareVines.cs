@@ -49,7 +49,7 @@ namespace TheDepths.Tiles
             return false;
         }
 
-        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
             Tile tile = Framing.GetTileSafely(i, j + 1);
             if (tile.HasTile && tile.TileType == Type)

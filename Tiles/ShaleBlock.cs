@@ -17,18 +17,22 @@ namespace TheDepths.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
             AddMapEntry(new Color(27, 29, 33));
-			Main.tileMerge[Type][Mod.Find<ModTile>("ArqueriteOre").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("Quartz").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("ShaleBlock").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("Shalestone").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("ShalestoneAmethyst").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("ShalestoneDiamond").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("ShalestoneEmerald").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("ShalestoneRuby").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("ShalestoneSapphire").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("ShalestoneTopaz").Type] = true;
-			Main.tileMerge[Type][Mod.Find<ModTile>("OnyxShalestone").Type] = true;
-            DustType = ModContent.DustType<ShaleDust>();
+            TileID.Sets.CanBeDugByShovel[Type] = true;
+			TileID.Sets.ChecksForMerge[Type] = true;
+			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
+			Main.tileMerge[Type][ModContent.TileType<ArqueriteOre>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<Quartz>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<ShaleBlock>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<Shalestone>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<ShalestoneAmethyst>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<ShalestoneDiamond>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<ShalestoneEmerald>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<ShalestoneRuby>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<ShalestoneSapphire>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<ShalestoneTopaz>()] = true;
+            Main.tileMerge[Type][ModContent.TileType<OnyxShalestone>()] = true;
+            Main.tileMerge[Type][TileID.Stone] = true;
+			DustType = ModContent.DustType<ShaleDust>();
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

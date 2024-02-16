@@ -37,7 +37,7 @@ namespace TheDepths.Walls
 				zero = Vector2.Zero;
 			}
 			Vector2 pos = new Vector2(i * 16, j * 16) + zero - Main.screenPosition;
-			Main.spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Walls/MercuryMossBrickWall_Glow").Value, pos + new Vector2(-8, -8), frame, Color.White);
+			Main.spriteBatch.Draw(ModContent.Request<Texture2D>("TheDepths/Walls/MercuryMossBrickWall_Glow").Value, pos + new Vector2(-8, -8), frame, Color.White);
         }
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

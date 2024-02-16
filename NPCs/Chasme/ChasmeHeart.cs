@@ -18,6 +18,7 @@ using TheDepths.Projectiles.Chasme;
 using TheDepths.Biomes;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Worldgen;
+using TheDepths.Items;
 
 namespace TheDepths.NPCs.Chasme;
 
@@ -546,7 +547,7 @@ public class ChasmeHeart : ModNPC
 
 		npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Placeable.ChasmeRelic>()));
 
-		//npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<ShadowHorse>(), 4));
+		npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<MidnightHorseshoe>(), 4));
 
 		LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
 

@@ -10,6 +10,8 @@ using Terraria.Audio;
 using Terraria;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
+using static Humanizer.In;
+using TheDepths.Tiles.Trees;
 
 namespace TheDepths.Projectiles
 {
@@ -55,7 +57,7 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != NetmodeID.MultiplayerClient && !Worldgen.TheDepthsWorldGen.InDepths)
+			if (Main.netMode != NetmodeID.MultiplayerClient && !Worldgen.TheDepthsWorldGen.InDepths(Main.player[projectile.owner]))
 			{
 				Point pt3 = projectile.Center.ToTileCoordinates();
 				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);
@@ -106,7 +108,7 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != NetmodeID.MultiplayerClient && !Worldgen.TheDepthsWorldGen.InDepths)
+			if (Main.netMode != NetmodeID.MultiplayerClient && !Worldgen.TheDepthsWorldGen.InDepths(Main.player[projectile.owner]))
 			{
 				Point pt3 = projectile.Center.ToTileCoordinates();
 				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);
@@ -157,7 +159,7 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != NetmodeID.MultiplayerClient && !Worldgen.TheDepthsWorldGen.InDepths)
+			if (Main.netMode != NetmodeID.MultiplayerClient && !Worldgen.TheDepthsWorldGen.InDepths(Main.player[projectile.owner]))
 			{
 				Point pt3 = projectile.Center.ToTileCoordinates();
 				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);
@@ -208,7 +210,7 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != NetmodeID.MultiplayerClient && !Worldgen.TheDepthsWorldGen.InDepths)
+			if (Main.netMode != NetmodeID.MultiplayerClient && !Worldgen.TheDepthsWorldGen.InDepths(Main.player[projectile.owner]))
 			{
 				Point pt3 = projectile.Center.ToTileCoordinates();
 				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);
@@ -259,12 +261,89 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != NetmodeID.MultiplayerClient && !Worldgen.TheDepthsWorldGen.InDepths)
+			if (Main.netMode != NetmodeID.MultiplayerClient && !Worldgen.TheDepthsWorldGen.InDepths(Main.player[projectile.owner]))
 			{
 				Point pt3 = projectile.Center.ToTileCoordinates();
 				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);
 			}
 			return false;
+		}
+	}
+
+	public class DepthsGlobalProj : GlobalProjectile
+	{
+		public override void AI(Projectile projectile)
+		{
+			if (projectile.aiStyle == 6)
+			{
+				bool flag23 = projectile.type == 1019;
+				bool flag34 = Main.myPlayer == projectile.owner;
+				if (flag23)
+				{
+					flag34 = Main.netMode != 1;
+				}
+				if (flag34 && (flag23))
+				{
+					int num988 = (int)(projectile.position.X / 16f) - 1;
+					int num999 = (int)((projectile.position.X + (float)projectile.width) / 16f) + 2;
+					int num1010 = (int)(projectile.position.Y / 16f) - 1;
+					int num1021 = (int)((projectile.position.Y + (float)projectile.height) / 16f) + 2;
+					if (num988 < 0)
+					{
+						num988 = 0;
+					}
+					if (num999 > Main.maxTilesX)
+					{
+						num999 = Main.maxTilesX;
+					}
+					if (num1010 < 0)
+					{
+						num1010 = 0;
+					}
+					if (num1021 > Main.maxTilesY)
+					{
+						num1021 = Main.maxTilesY;
+					}
+					Vector2 vector57 = default(Vector2);
+					for (int num1032 = num988; num1032 < num999; num1032++)
+					{
+						for (int num1043 = num1010; num1043 < num1021; num1043++)
+						{
+							vector57.X = num1032 * 16;
+							vector57.Y = num1043 * 16;
+							if (!(projectile.position.X + (float)projectile.width > vector57.X) || !(projectile.position.X < vector57.X + 16f) || !(projectile.position.Y + (float)projectile.height > vector57.Y) || !(projectile.position.Y < vector57.Y + 16f) || !Main.tile[num1032, num1043].HasTile)
+							{
+								continue;
+							}
+							Tile tile = Main.tile[num1032, num1043];
+							if (tile.TileType == ModContent.TileType<OnyxGemtreeSapling>())
+							{
+								if (Main.remixWorld && num1043 >= (int)Main.worldSurface - 1 && num1043 < Main.maxTilesY - 20)
+								{
+									OnyxGemtreeSapling.AttemptToGrowOnyxFromSapling(num1032, num1043, underground: false);
+								}
+								OnyxGemtreeSapling.AttemptToGrowOnyxFromSapling(num1032, num1043, num1043 > (int)Main.worldSurface - 1);
+							}
+							if (tile.TileType == ModContent.TileType<PetrifiedSapling>())
+							{
+								if (Main.remixWorld && num1043 >= (int)Main.worldSurface - 1 && num1043 < Main.maxTilesY - 20)
+								{
+									PetrifiedSapling.AttemptToGrowPetrifiedFromSapling(num1032, num1043);
+								}
+								PetrifiedSapling.AttemptToGrowPetrifiedFromSapling(num1032, num1043);
+							}
+							if (tile.TileType == ModContent.TileType<NightSapling>())
+							{
+								if (Main.remixWorld && num1043 >= (int)Main.worldSurface - 1 && num1043 < Main.maxTilesY - 20)
+								{
+									NightSapling.AttemptToGrowNightmareFromSapling(num1032, num1043);
+								}
+								NightSapling.AttemptToGrowNightmareFromSapling(num1032, num1043);
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }

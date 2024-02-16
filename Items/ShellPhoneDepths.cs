@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheDepths.Dusts;
@@ -12,11 +13,19 @@ namespace TheDepths.Items
 	{
         public override void SetStaticDefaults()
         {
-			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+			//ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+			ItemID.Sets.CanBeQuickusedOnGamepad[Type] = true;
         }
 
         public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.ShellphoneHell);
+			Item.useTurn = true;
+			Item.width = 20;
+			Item.height = 20;
+			Item.useStyle = 4;
+			Item.useTime = 90;
+			Item.UseSound = SoundID.Item6;
+			Item.useAnimation = 90;
+			Item.SetShopValues(ItemRarityColor.Yellow8, Item.sellPrice(0, 10));
 		}
 
         public override void UpdateInfoAccessory(Player player)

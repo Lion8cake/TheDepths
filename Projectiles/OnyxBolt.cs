@@ -23,7 +23,7 @@ namespace TheDepths.Projectiles
 		{
 			for (int i = 0; i < 2; i++)
 			{
-				int num = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<BlackGemsparkDust>(), Projectile.velocity.X, Projectile.velocity.Y, 150, default(Color), 1.25f);
+				int num = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<GemOnyxDust>(), Projectile.velocity.X, Projectile.velocity.Y, 150, default(Color), 1.25f);
 				Main.dust[num].noGravity = true;
 				Dust obj = Main.dust[num];
 				obj.velocity *= 0.3f;
@@ -34,7 +34,7 @@ namespace TheDepths.Projectiles
 		{
 			for (int i = 0; i < 8; i++)
 			{
-				int num = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<BlackGemsparkDust>(), Projectile.velocity.X * 0.75f, Projectile.velocity.Y * 0.75f, 150);
+				int num = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<GemOnyxDust>(), Projectile.velocity.X * 0.75f, Projectile.velocity.Y * 0.75f, 150);
 				Main.dust[num].noGravity = true;
 			}
 			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<OnyxExplosion>(), (int)(Projectile.damage * 0.5), Projectile.knockBack, Main.myPlayer, 0f, 0f);

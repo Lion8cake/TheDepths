@@ -6,6 +6,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using Terraria.DataStructures;
+using System;
+using Terraria.Utilities;
 
 namespace TheDepths.Items.Weapons
 {
@@ -38,7 +40,8 @@ namespace TheDepths.Items.Weapons
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			Projectile.NewProjectile(source, position, velocity, type, damage * 3, knockback, Main.myPlayer);
+			Projectile proj = Main.projectile[Projectile.NewProjectile(source, position, velocity, type, damage * 3, knockback, Main.myPlayer)];
+			proj.scale = Item.scale;
 			return false;
 		}
 	}

@@ -18,6 +18,8 @@ using TheDepths.Items.Accessories;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;
+using TheDepths.Items;
+using TheDepths.Projectiles;
 
 namespace TheDepths.NPCs
 {
@@ -47,7 +49,7 @@ namespace TheDepths.NPCs
 			NPC.defense = 4;
 			NPC.lifeMax = 220;
 			NPC.netAlways = true;
-            NPC.scale = 1f;
+            NPC.npcSlots = 6f;
 			NPC.value = Item.buyPrice(0, 0, 12, 0);
             NPC.noTileCollide = true;
             NPC.noGravity = true;
@@ -56,7 +58,6 @@ namespace TheDepths.NPCs
             NPC.knockBackResist = 0f;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
-            Banner = NPC.type;
             Banner = NPC.type;
 			BannerItem = ModContent.ItemType<SapphireSerpentBanner>();
             SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
@@ -99,17 +100,55 @@ namespace TheDepths.NPCs
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SapphireShovel>(), 50, 1, 1));
             npcLoot.Add(ItemDropRule.Common(ItemID.Sapphire, 50, 1, 1));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AquaStone>(), 50, 1, 1));
-        }
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.WindyEnoughForKiteDrops(), ModContent.ItemType<Items.SapphireSerpentKite>(), 15));
+			npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Lamington>(), 150));
+		}
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if ((spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && !Main.remixWorld) || (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && (spawnInfo.SpawnTileX < Main.maxTilesX * 0.38 + 50.0 || spawnInfo.SpawnTileX > Main.maxTilesX * 0.62) && Main.remixWorld))
+            if ((spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(spawnInfo.Player) && !Main.remixWorld) || (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(spawnInfo.Player) && (spawnInfo.SpawnTileX < Main.maxTilesX * 0.38 + 50.0 || spawnInfo.SpawnTileX > Main.maxTilesX * 0.62) && Main.remixWorld))
             {
-                return 0.5f;
+                return 0.4f;
             }
             return 0f;
         }
-    }
+
+		private int attackCounter;
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(attackCounter);
+		}
+
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			attackCounter = reader.ReadInt32();
+		}
+
+		public override void PostAI()
+		{
+			if (Main.netMode != NetmodeID.MultiplayerClient)
+			{
+				if (attackCounter > 0)
+				{
+					attackCounter--;
+				}
+
+				Player target = Main.player[NPC.target];
+				if (attackCounter <= 0 && Vector2.Distance(NPC.Center, target.Center) < 200 && Collision.CanHit(NPC.Center, 1, 1, target.Center, 1, 1))
+				{
+					Vector2 direction = (target.Center - NPC.Center).SafeNormalize(Vector2.UnitX);
+					direction = direction.RotatedByRandom(MathHelper.ToRadians(10));
+
+					int projectile = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, direction * 10, ModContent.ProjectileType<SapphireShovelProj>(), 5, 0, Main.myPlayer);
+					Main.projectile[projectile].timeLeft = 300;
+                    Main.projectile[projectile].friendly = false;
+                    Main.projectile[projectile].hostile = true;
+					attackCounter = 60;
+					NPC.netUpdate = true;
+				}
+			}
+		}
+	}
 
     internal class SapphireSerpentBody : DepthsWorm
     {
@@ -133,12 +172,12 @@ namespace TheDepths.NPCs
 			NPC.defense = 14;
 			NPC.lifeMax = 220;
             NPC.netAlways = true;
-            NPC.scale = 1f;
             NPC.noTileCollide = true;
             NPC.noGravity = true;
             NPC.aiStyle = -1;
             NPC.behindTiles = true;
             NPC.knockBackResist = 0f;
+            NPC.dontCountMe = true;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
 			NPC.value = Item.buyPrice(0, 0, 12, 0);
@@ -186,12 +225,12 @@ namespace TheDepths.NPCs
 			NPC.defense = 24;
 			NPC.lifeMax = 220;
             NPC.netAlways = true;
-            NPC.scale = 1f;
 			NPC.value = Item.buyPrice(0, 0, 12, 0);
             NPC.noTileCollide = true;
             NPC.noGravity = true;
             NPC.aiStyle = -1;
             NPC.behindTiles = true;
+            NPC.dontCountMe = true;
             NPC.knockBackResist = 0f;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;

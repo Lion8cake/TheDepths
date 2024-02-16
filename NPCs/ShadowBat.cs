@@ -12,6 +12,7 @@ using TheDepths.Items.Banners;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;
+using TheDepths.Items;
 
 namespace TheDepths.NPCs
 {
@@ -64,7 +65,7 @@ namespace TheDepths.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (Main.hardMode && (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && !Main.remixWorld) || Main.hardMode && (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && (spawnInfo.SpawnTileX < Main.maxTilesX * 0.38 + 50.0 || spawnInfo.SpawnTileX > Main.maxTilesX * 0.62) && Main.remixWorld))
+			if (Main.hardMode && (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(spawnInfo.Player) && !Main.remixWorld) || Main.hardMode && (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(spawnInfo.Player) && (spawnInfo.SpawnTileX < Main.maxTilesX * 0.38 + 50.0 || spawnInfo.SpawnTileX > Main.maxTilesX * 0.62) && Main.remixWorld))
 			{
 				return 1.25f;
 			}
@@ -74,6 +75,7 @@ namespace TheDepths.NPCs
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
 			npcLoot.Add(ItemDropRule.Common(ItemID.Emerald, 50, 1, 1));
+			npcLoot.Add(ItemDropRule.Food(ModContent.ItemType<Lamington>(), 150));
 		}
 
 		public override void HitEffect(NPC.HitInfo hit)

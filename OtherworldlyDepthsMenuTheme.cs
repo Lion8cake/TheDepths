@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System;
 using ReLogic.Content;
 
+using Terraria.GameContent.Events;
+using System.Reflection;
+
 namespace TheDepths
 {
     public class OtherworldlyDepthsMenuTheme : ModMenu

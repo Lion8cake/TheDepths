@@ -11,16 +11,15 @@ using TheDepths.Items.Weapons;
 using TheDepths.Items.Accessories;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;
+using System.IO;
 
 namespace TheDepths.NPCs
 {
 	public class Geomancer : ModNPC
 	{
-		public static bool PraiseTheRelic;
+		private bool PraiseTheRelic = false;
 
-		public static bool TheRelicMadeHimExplode;
-
-		public bool shouldFrameCounterIncrease;
+		private bool shouldFrameCounterIncrease = true;
 
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 20;
@@ -55,29 +54,36 @@ namespace TheDepths.NPCs
 		}
 
 		public override void AI()
-        {
-            if (PraiseTheRelic == true)
+		{
+			PraiseTheRelic = false;
+			for (int i = 0; i < Main.maxProjectiles; i++)
+			{
+				if (Main.projectile[i].active && Main.projectile[i].type == ModContent.ProjectileType<Projectiles.Chasme.GemforgeCutscene>())
+				{
+					PraiseTheRelic = true;
+				}
+			}
+			if (PraiseTheRelic == true)
             {
 				NPC.aiStyle = 0;
 				AIType = NPCID.BoundGoblin;
 				AnimationType = 0;
 			}
-			if (TheRelicMadeHimExplode == true)
-            {
-				NPC.life = -1;
-				AnimationType = NPCID.ChaosElemental;
-				PraiseTheRelic = false;
-			}
-			for (int i = 0; i < Main.maxProjectiles; i++)
-			{
-				if (!Main.projectile[i].active && Main.projectile[i].type == ModContent.ProjectileType<Projectiles.Chasme.GemforgeCutscene>())
-				{
-					PraiseTheRelic = false;
-				}
-			}
         }
 
-        public override void FindFrame(int frameHeight)
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(PraiseTheRelic);
+			writer.Write(shouldFrameCounterIncrease);
+		}
+
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			PraiseTheRelic = reader.ReadBoolean();
+			shouldFrameCounterIncrease = reader.ReadBoolean();
+		}
+
+		public override void FindFrame(int frameHeight)
         {
 			if (PraiseTheRelic == true)
 			{
@@ -157,7 +163,7 @@ namespace TheDepths.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if ((spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && !Main.remixWorld) || (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && (spawnInfo.SpawnTileX < Main.maxTilesX * 0.38 + 50.0 || spawnInfo.SpawnTileX > Main.maxTilesX * 0.62) && Main.remixWorld))
+			if ((spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(spawnInfo.Player) && !Main.remixWorld) || (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(spawnInfo.Player) && (spawnInfo.SpawnTileX < Main.maxTilesX * 0.38 + 50.0 || spawnInfo.SpawnTileX > Main.maxTilesX * 0.62) && Main.remixWorld))
 			{
 				return 1f;
 			}

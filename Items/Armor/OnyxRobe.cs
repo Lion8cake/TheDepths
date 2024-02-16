@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.GameContent.Creative;
+using Terraria.Localization;
 
 namespace TheDepths.Items.Armor
 {
@@ -32,7 +33,27 @@ namespace TheDepths.Items.Armor
 			robes = true;
 			equipSlot = EquipLoader.GetEquipSlot(Mod, "OnyxRobe_Legs", EquipType.Legs);
 		}
-		
+
+		public override bool IsArmorSet(Item head, Item body, Item legs)
+		{
+			return body.type == Type && (head.type == ItemID.WizardHat || head.type == ItemID.MagicHat);
+		}
+		public override void UpdateArmorSet(Player player)
+		{
+			if (player.head == 14)
+			{
+				player.setBonus = Language.GetTextValue("Mods.TheDepths.SetBonus.OnyxRobeWizard");
+				player.GetCritChance(DamageClass.Magic) += 18;
+				player.statDefense += 2;
+			}
+			else if (player.head == 159)
+			{
+				player.setBonus = Language.GetTextValue("Mods.TheDepths.SetBonus.OnyxRobeMagic");
+				player.statManaMax2 += 100;
+				player.statDefense += 3;
+			}
+		}
+
 		public override void UpdateEquip(Player player)
 		{
 			player.manaCost -= 0.22f;

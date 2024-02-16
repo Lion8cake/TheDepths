@@ -58,7 +58,7 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != 1 && Worldgen.TheDepthsWorldGen.InDepths)
+			if (Main.netMode != 1 && Worldgen.TheDepthsWorldGen.InDepths(Main.player[Projectile.owner]))
 			{
 				Point pt3 = base.Projectile.Center.ToTileCoordinates();
 				Projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);

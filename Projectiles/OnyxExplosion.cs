@@ -30,13 +30,13 @@ namespace TheDepths.Projectiles
 			SoundEngine.PlaySound(in SoundID.Item14, Projectile.position);
 			for (int num980 = 0; num980 < 10; num980++)
 			{
-				int num981 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<Dusts.BlackGemsparkDust>(), 0f, 0f, 200, default(Color), 1.7f);
+				int num981 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<Dusts.GemOnyxDust>(), 0f, 0f, 200, default(Color), 1.7f);
 				Main.dust[num981].position = Projectile.Center + Vector2.UnitY.RotatedByRandom(3.1415927410125732) * (float)Main.rand.NextDouble() * (float)Projectile.width / 2f;
 				Main.dust[num981].noGravity = true;
 				Dust dust36 = Main.dust[num981];
 				Dust dust212 = dust36;
 				dust212.velocity *= 3f;
-				num981 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<Dusts.BlackGemsparkDust>(), 0f, 0f, 100, default(Color), 0.5f);
+				num981 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<Dusts.GemOnyxDust>(), 0f, 0f, 100, default(Color), 0.5f);
 				Main.dust[num981].position = Projectile.Center + Vector2.UnitY.RotatedByRandom(3.1415927410125732) * (float)Main.rand.NextDouble() * (float)Projectile.width / 2f;
 				dust36 = Main.dust[num981];
 				dust212 = dust36;
@@ -46,7 +46,7 @@ namespace TheDepths.Projectiles
 			}
 			for (int num982 = 0; num982 < 5; num982++)
 			{
-				int num983 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<Dusts.BlackGemsparkDust>(), 0f, 0f, 0, default(Color), 1.7f);
+				int num983 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<Dusts.GemOnyxDust>(), 0f, 0f, 0, default(Color), 1.7f);
 				Dust obj5 = Main.dust[num983];
 				Vector2 center24 = Projectile.Center;
 				Vector2 spinningpoint67 = Vector2.UnitX.RotatedByRandom(3.1415927410125732);

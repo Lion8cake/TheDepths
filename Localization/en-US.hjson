@@ -18,13 +18,23 @@ Mods: {
 			GeodeHelmet: Summons 4 Geode Crystals that will deal 20 damage
 			MercuryHelmet:
 				'''
-				3 Defence
+				3 defence
 				Mercury cannot infect you
 				'''
 			NightwoodHelmet:
 				'''
 				Doubles duration of Mercury Footing
 				Halves the duration of Mercury Poisoning from Quicksilver
+				'''
+			OnyxRobeWizard:
+				'''
+				2 defence
+				18% increased magic critical strike chance
+				'''
+			OnyxRobeMagic:
+				'''
+				3 defence
+				Increases maximum mana by 100
 				'''
 		}
 
@@ -204,6 +214,16 @@ Mods: {
 			ChaosCat.MapEntry: Chaos Cat
 			DONOTDRINK.MapEntry: DO NOT DRINK
 			WaterGeyser.MapEntry: Water Geyser
+			PlacedGems.MapEntry: Placed Gems
+			PlacedOnyx.MapEntry: Placed Onyx
+			OnyxStone.MapEntry: Onyx Stone
+			OnyxGemtree.MapEntry: Onyx Gemtree
+			PetrifiedTree.MapEntry: Petrified Tree
+			TheUnknownDepthsBelow.MapEntry: The Unknown Depths Below
+			NightwoodTree.MapEntry: Nightwood Tree
+			NightwoodTrappedChest.MapEntry: Nightwood Chest
+			QuartzTrappedChest.MapEntry: Quartz Chest
+			HangingShadowShrub.MapEntry: Hanging Shadow Shrub
 		}
 
 		Buffs: {
@@ -273,6 +293,12 @@ Mods: {
 			}
 
 			PhantomFirecartBuff.DisplayName: Minecart
+			OnyxMinecartBuff.DisplayName: Minecart
+
+			NightmareHorseBuff: {
+				DisplayName: Nightmare Horse Buff
+				Description: Mods.TheDepths.Buffs.NightmareHorseBuff.Description
+			}
 		}
 
 		Items: {
@@ -405,7 +431,7 @@ Mods: {
 				DisplayName: Onyx Robe
 				Tooltip:
 					'''
-					20% decreased mana usage
+					22% reduced mana cost
 					Increases maximum mana by 60
 					'''
 			}
@@ -526,7 +552,7 @@ Mods: {
 			}
 
 			BlackGemspark: {
-				DisplayName: Black Gemspark
+				DisplayName: Black Gemspark Block
 				Tooltip: ""
 			}
 
@@ -1526,6 +1552,154 @@ Mods: {
 					Reflects most projectiles towards attackers
 					'''
 			}
+
+			OnyxMinecart: {
+				DisplayName: Onyx Minecart
+				Tooltip: ""
+			}
+
+			OnyxStoneBlock: {
+				DisplayName: Onyx Stone Block
+				Tooltip: ""
+			}
+
+			OnyxStoneWall: {
+				DisplayName: Onyx Stone Wall
+				Tooltip: ""
+			}
+
+			BlackGemsparkWall: {
+				DisplayName: Black Gemspark Wall
+				Tooltip: ""
+			}
+
+			BlackGemsparkWallOffline: {
+				DisplayName: Offline Black Gemspark Wall
+				Tooltip: ""
+			}
+
+			OnyxSquirrel: {
+				Tooltip: ""
+				DisplayName: Onyx Squirrel
+			}
+
+			OnyxBunny: {
+				Tooltip: ""
+				DisplayName: Onyx Bunny
+			}
+
+			OnyxBunnyCage: {
+				DisplayName: Onyx Bunny Cage
+				Tooltip: ""
+			}
+
+			OnyxSquirrelCage: {
+				DisplayName: Onyx Squirrel Cage
+				Tooltip: ""
+			}
+
+			BlackStainedGlass: {
+				DisplayName: Black Stained Glass
+				Tooltip: ""
+			}
+
+			OnyxGemcorn: {
+				DisplayName: Onyx Gemcorn
+				Tooltip: ""
+			}
+
+			TheUnknownDepthsBelow: {
+				DisplayName: The Unknown Depths Below
+				Tooltip: "'D. Colin & D. Rious'"
+			}
+
+			FlowingQuicksilver: {
+				DisplayName: Flowing Quicksilver
+				Tooltip: "'D. Colin & D. Rious'"
+			}
+
+			GeoCampfire: {
+				DisplayName: Geo Campfire
+				Tooltip: ""
+			}
+
+			NightwoodTrappedChest: {
+				DisplayName: Nightwood Trapped Chest
+				Tooltip: ""
+			}
+
+			QuartzTrappedChest: {
+				DisplayName: Quartz Trapped Chest
+				Tooltip: ""
+			}
+
+			SapphireSerpentKite: {
+				DisplayName: Sapphire Serpent Kite
+				Tooltip:
+					'''
+					Kites can be flown on windy days
+					Reel it in with Right Click
+					'''
+			}
+
+			Lamington: {
+				DisplayName: Lamington
+				Tooltip:
+					'''
+					{$CommonItemTooltip.MajorStats}
+					'...from a place down-under.'
+					'''
+			}
+
+			HangingShadowShrub: {
+				DisplayName: Hanging Shadow Shrub
+				Tooltip: ""
+			}
+
+			MidnightHorseshoe: {
+				DisplayName: Midnight Horseshoe
+				Tooltip: ""
+			}
+
+			AmethystShalestoneBlock: {
+				DisplayName: Amethyst Shalestone Block
+				Tooltip: ""
+			}
+
+			DiamondShalestoneBlock: {
+				DisplayName: Diamond Shalestone Block
+				Tooltip: ""
+			}
+
+			EmeraldShalestoneBlock: {
+				DisplayName: Emerald Shalestone Block
+				Tooltip: ""
+			}
+
+			OnyxShalestoneBlock: {
+				DisplayName: Onyx Shalestone Block
+				Tooltip: ""
+			}
+
+			RubyShalestoneBlock: {
+				DisplayName: Ruby Shalestone Block
+				Tooltip: ""
+			}
+
+			SapphireShalestoneBlock: {
+				DisplayName: Sapphire Shalestone Block
+				Tooltip: ""
+			}
+
+			TopazShalestoneBlock: {
+				DisplayName: Topaz Shalestone Block
+				Tooltip: ""
+			}
+
+			ShaleWall: {
+				DisplayName: Shale Wall
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -1551,6 +1725,8 @@ Mods: {
 			EnchantedNightmareWorm.DisplayName: Nightmare Slug
 			QuartzCrawler.DisplayName: Quartz Crawler
 			AlbinoRat.DisplayName: Albino Rat
+			OnyxSquirrel.DisplayName: Onyx Squirrel
+			OnyxBunny.DisplayName: Onyx Bunny
 		}
 
 		Projectiles: {
@@ -1627,6 +1803,7 @@ Mods: {
 			WaterGeyser.DisplayName: Water Geyser
 			AquaArrow.DisplayName: Aqua Arrow
 			OnyxExplosion.DisplayName: Onyx Explosion
+			SapphireSerpentKite.DisplayName: Sapphire Serpent Kite
 		}
 
 		Biomes: {
@@ -1717,10 +1894,34 @@ Mods: {
 
 		InDepths: Mods.TheDepths.InDepths
 		OutDepths: Mods.TheDepths.OutDepths
+		GameUI.LayerDepths: Depths
+
+		CreditsRollCategory_DepthsTeam: {
+			1: The Depths Team
+			2: Lion8cake
+			3: Snickerbobble
+			4: HBDeus
+			5: Gasttear1
+			6: Syntrin
+			7: Darkrious
+			8: Larfleeze
+			9: Moddingus
+			10: Hariq “Hariq53”
+			11: Kurtis
+			12: Syntrin
+		}
+
+		MusicDisplay: {
+			ModName: The Depths
+			Author: by HBDues
+			Depths.DisplayName: The Unsound Deep
+			DepthsOtherworldly.DisplayName: The Deep Unsound
+			Chasme.DisplayName: Chasmic to the Rock
+		}
 	}
 }
 
-GameUI.LayerUnderworld: Core
+#GameUI.LayerUnderworld: Core
 ItemTooltip.TerrasparkBoots:
 	'''
 	Allows flight, super fast running, and extra mobility on ice

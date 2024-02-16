@@ -13,6 +13,8 @@ using Terraria.GameContent.Bestiary;
 using TheDepths.Biomes;
 using TheDepths.Dusts;
 using Terraria.GameContent.ItemDropRules;
+using Microsoft.CodeAnalysis;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 
 namespace TheDepths.NPCs
 {
@@ -34,8 +36,7 @@ namespace TheDepths.NPCs
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.value = 400f;
 			NPC.knockBackResist = 0.5f;
-			NPC.aiStyle = 1;
-			AIType = NPCID.Crimslime;
+			NPC.aiStyle = -1;
 			AnimationType = NPCID.Crimslime;
 			NPC.lavaImmune = true;
 			Banner = NPC.type;
@@ -58,9 +59,193 @@ namespace TheDepths.NPCs
 			});
 		}
 
+		public override void AI()
+		{
+			bool flag = false;
+			if (!Main.dayTime || NPC.life != NPC.lifeMax || (double)NPC.position.Y > Main.worldSurface * 16.0 || Main.slimeRain)
+			{
+				flag = true;
+			}
+			if (Main.remixWorld && NPC.life == NPC.lifeMax)
+			{
+				flag = false;
+			}
+			if (NPC.ai[2] > 1f)
+			{
+				NPC.ai[2] -= 1f;
+			}
+			if (NPC.wet)
+			{
+				if (NPC.collideY)
+				{
+					NPC.velocity.Y = -2f;
+				}
+				if (NPC.velocity.Y < 0f && NPC.ai[3] == NPC.position.X)
+				{
+					NPC.direction *= -1;
+					NPC.ai[2] = 200f;
+				}
+				if (NPC.velocity.Y > 0f)
+				{
+					NPC.ai[3] = NPC.position.X;
+				}
+				if (!Main.remixWorld)
+				{
+					if (NPC.velocity.Y > 2f)
+					{
+						NPC.velocity.Y *= 0.9f;
+					}
+					else if (NPC.directionY < 0)
+					{
+						NPC.velocity.Y -= 0.9f;
+					}
+					NPC.velocity.Y -= 0.5f;
+					if (NPC.velocity.Y < -12f)
+					{
+						NPC.velocity.Y = -12f;
+					}
+				}
+				else
+				{
+					if (NPC.velocity.Y > 2f)
+					{
+						NPC.velocity.Y *= 0.9f;
+					}
+					NPC.velocity.Y -= 0.5f;
+					if (NPC.velocity.Y < -4f)
+					{
+						NPC.velocity.Y = -4f;
+					}
+				}
+				if (NPC.ai[2] == 1f && flag)
+				{
+					NPC.TargetClosest();
+				}
+			}
+			NPC.aiAction = 0;
+			if (NPC.ai[2] == 0f)
+			{
+				NPC.ai[0] = -100f;
+				NPC.ai[2] = 1f;
+				NPC.TargetClosest();
+			}
+			if (NPC.velocity.Y == 0f)
+			{
+				if (NPC.collideY && NPC.oldVelocity.Y != 0f && Collision.SolidCollision(NPC.position, NPC.width, NPC.height))
+				{
+					NPC.position.X -= NPC.velocity.X + (float)NPC.direction;
+				}
+				if (NPC.ai[3] == NPC.position.X)
+				{
+					NPC.direction *= -1;
+					NPC.ai[2] = 200f;
+				}
+				NPC.ai[3] = 0f;
+				NPC.velocity.X *= 0.8f;
+				if ((double)NPC.velocity.X > -0.1 && (double)NPC.velocity.X < 0.1)
+				{
+					NPC.velocity.X = 0f;
+				}
+				if (flag)
+				{
+					NPC.ai[0] += 1f;
+				}
+				NPC.ai[0] += 1f;
+				if (!Main.remixWorld)
+				{
+					NPC.ai[0] += 2f;
+				}
+				float num27 = -1000f;
+				int num28 = 0;
+				if (NPC.ai[0] >= 0f)
+				{
+					num28 = 1;
+				}
+				if (NPC.ai[0] >= num27 && NPC.ai[0] <= num27 * 0.5f)
+				{
+					num28 = 2;
+				}
+				if (NPC.ai[0] >= num27 * 2f && NPC.ai[0] <= num27 * 1.5f)
+				{
+					num28 = 3;
+				}
+				if (num28 > 0)
+				{
+					NPC.netUpdate = true;
+					if (flag && NPC.ai[2] == 1f)
+					{
+						NPC.TargetClosest();
+					}
+					if (num28 == 3)
+					{
+						NPC.velocity.Y = -8f;
+						if (!Main.remixWorld)
+						{
+							NPC.velocity.Y -= 2f;
+						}
+						NPC.velocity.X += 3 * NPC.direction;
+						if (!Main.remixWorld)
+						{
+							NPC.velocity.X += 0.5f * (float)NPC.direction;
+						}
+						NPC.ai[0] = -200f;
+						NPC.ai[3] = NPC.position.X;
+					}
+					else
+					{
+						NPC.velocity.Y = -6f;
+						NPC.velocity.X += 2 * NPC.direction;
+						if (!Main.remixWorld)
+						{
+							NPC.velocity.X += 2 * NPC.direction;
+						}
+						NPC.ai[0] = -120f;
+						if (num28 == 1)
+						{
+							NPC.ai[0] += num27;
+						}
+						else
+						{
+							NPC.ai[0] += num27 * 2f;
+						}
+					}
+				}
+				else if (NPC.ai[0] >= -30f)
+				{
+					NPC.aiAction = 1;
+				}
+			}
+			else if (NPC.target < 255 && ((NPC.direction == 1 && NPC.velocity.X < 3f) || (NPC.direction == -1 && NPC.velocity.X > -3f)))
+			{
+				if (NPC.collideX && Math.Abs(NPC.velocity.X) == 0.2f)
+				{
+					NPC.position.X -= 1.4f * (float)NPC.direction;
+				}
+				if (NPC.collideY && NPC.oldVelocity.Y != 0f && Collision.SolidCollision(NPC.position, NPC.width, NPC.height))
+				{
+					NPC.position.X -= NPC.velocity.X + (float)NPC.direction;
+				}
+				if ((NPC.direction == -1 && (double)NPC.velocity.X < 0.01) || (NPC.direction == 1 && (double)NPC.velocity.X > -0.01))
+				{
+					NPC.velocity.X += 0.2f * (float)NPC.direction;
+				}
+				else
+				{
+					NPC.velocity.X *= 0.93f;
+				}
+			}
+		}
+
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
     	{
-    		target.AddBuff(BuffID.Darkness, 180);
+			if (Main.rand.NextBool(2))
+			{
+				target.AddBuff(BuffID.Darkness, 180);
+			}
+    		else if (Main.rand.NextBool(20))
+			{
+				target.AddBuff(BuffID.Blackout, 180);
+			}
 		}
 
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -71,7 +256,7 @@ namespace TheDepths.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths)
+			if (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(spawnInfo.Player))
 			{
 				return 1.75f;
 			}

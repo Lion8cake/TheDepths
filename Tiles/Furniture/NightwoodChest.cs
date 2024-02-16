@@ -188,8 +188,8 @@ namespace TheDepths.Tiles.Furniture
             }
             else
             {
-                player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Creamwood Chest";
-                if (player.cursorItemIconText == "Creamwood Chest")
+                player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : "Nightwood Chest";
+                if (player.cursorItemIconText == "Nightwood Chest")
                 {
                     player.cursorItemIconID = ModContent.ItemType<Items.Placeable.Furniture.NightwoodChest>();
 

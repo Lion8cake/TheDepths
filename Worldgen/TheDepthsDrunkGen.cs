@@ -107,6 +107,13 @@ namespace TheDepths.Worldgen
 						Tile tile = Main.tile[k, l];
 						tile.HasTile = true;
 					}
+					if (Main.tile[k, l].TileType == ModContent.TileType<MercuryMoss>())
+					{
+						if ((!Main.tileSolid[Main.tile[k, l + 1].TileType] || !Main.tile[k, l + 1].HasTile) && (!Main.tileSolid[Main.tile[k, l - 1].TileType] || !Main.tile[k, l - 1].HasTile) && (!Main.tileSolid[Main.tile[k + 1, l].TileType] || !Main.tile[k + 1, l].HasTile) && (!Main.tileSolid[Main.tile[k - 1, l].TileType] || !Main.tile[k - 1, l].HasTile))
+						{
+							WorldGen.KillTile(k, l);
+						}
+					}
 				}
 			}
 		}

@@ -18,6 +18,7 @@ namespace TheDepths.Tiles
             Main.tileLighted[Type] = false;
             AddMapEntry(new Color(55, 55, 45));
 			DustType = ModContent.DustType<PetrifiedWoodDust>();
+            HitSound = SoundID.Tink;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

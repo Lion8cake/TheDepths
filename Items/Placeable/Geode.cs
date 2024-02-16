@@ -24,6 +24,24 @@ namespace TheDepths.Items.Placeable
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<Tiles.PlacedGems>();
+			Item.placeStyle = 1;
+		}
+
+		public override bool? UseItem(Player player)
+		{
+			int i = Player.tileTargetX;
+			int j = Player.tileTargetY;
+			if ((WorldGen.SolidTile(i - 1, j) || WorldGen.SolidTile(i + 1, j) || WorldGen.SolidTile(i, j - 1) || WorldGen.SolidTile(i, j + 1)))
+			{
+				Item.createTile = ModContent.TileType<Tiles.PlacedGems>();
+				Item.consumable = true;
+			}
+			else
+			{
+				Item.createTile = -1;
+				Item.consumable = false;
+			}
+			return null;
 		}
 	}
 }

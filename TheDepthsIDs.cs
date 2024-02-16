@@ -37,6 +37,10 @@ namespace TheDepths {
 				public static bool[] LivingFireBlockOnlyItem = ItemID.Sets.Factory.CreateBoolSet(ItemID.LivingCursedFireBlock, ItemID.LivingDemonFireBlock, ItemID.LivingFrostFireBlock, ItemID.LivingIchorBlock, ItemID.LivingUltrabrightFireBlock);
 
 				public static bool[] CobaltShieldOnlyItem = ItemID.Sets.Factory.CreateBoolSet(ItemID.ObsidianShield);
+
+				public static bool[] CascadeOnlyItem = ItemID.Sets.Factory.CreateBoolSet(); //For Modders
+
+				public static bool[] TreasureMagnetOnlyItem = ItemID.Sets.Factory.CreateBoolSet(); //For Modders
 			}
 
 			public static bool[] UnreflectiveProjectiles = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.FairyQueenSunDance, ProjectileID.PhantasmalDeathray);

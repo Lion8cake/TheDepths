@@ -11,12 +11,12 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
+using TheDepths.Projectiles.SilverSpherePotion;
 
 namespace TheDepths.Buffs
 {
 	public class SilverSphereBuff : ModBuff
 	{
-	
 	    public int timer;
 	
 		public override void SetStaticDefaults() {
@@ -26,24 +26,25 @@ namespace TheDepths.Buffs
 			BuffID.Sets.LongerExpertDebuff[Type] = false;
 		}
 
-		public override void Update(Player player, ref int buffIndex) {
-		timer++;
-		if (player.ownedProjectileCounts[Mod.Find<ModProjectile>("SilverSpheres").Type] < 1 && timer > 20)
+		public override void Update(Player player, ref int buffIndex) 
 		{
-			for (int i = 0; i < 4; i++)
+			timer++;
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<SilverSpheres>()] < 1 && timer > 20)
 			{
-				Projectile.NewProjectile(new EntitySource_Misc(""), player.Center.X, player.Center.Y, 0f, 0f, Mod.Find<ModProjectile>("SilverSpheres").Type, 50, 8f, player.whoAmI, i);
+				for (int i = 0; i < 4; i++)
+				{
+					Projectile.NewProjectile(new EntitySource_Misc(""), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<SilverSpheres>(), 50, 8f, player.whoAmI, i);
+				}
+				timer = 0;
 			}
-			timer = 0;
-		}
-		for (int j = 0; j < 1000; j++)
-		{
-			Projectile projectile = Main.projectile[j];
-			if (projectile.active && projectile.owner == player.whoAmI && projectile.type == Mod.Find<ModProjectile>("SilverSpheres").Type)
+			for (int j = 0; j < Main.maxProjectiles; j++)
 			{
-				projectile.timeLeft = 2;
+				Projectile projectile = Main.projectile[j];
+				if (projectile.active && projectile.owner == player.whoAmI && projectile.type == ModContent.ProjectileType<SilverSpheres>())
+				{
+					projectile.timeLeft = 2;
+				}
 			}
-		}
 		}
 	}
 }

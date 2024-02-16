@@ -13,9 +13,9 @@ namespace TheDepths.NPCs
 {
     public class NpcDrops : GlobalNPC
     {
-        public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
+		/*public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<DepthsBiome>()) || Worldgen.TheDepthsWorldGen.InDepths)
+            if (spawnInfo.Player.InModBiome(ModContent.GetInstance<DepthsBiome>()) || Worldgen.TheDepthsWorldGen.InDepths(spawnInfo.Player))
             {
                 pool.Remove(NPCID.Hellbat);
                 pool.Remove(NPCID.LavaSlime);
@@ -29,9 +29,11 @@ namespace TheDepths.NPCs
                 pool.Remove(NPCID.Lavabat);
                 pool.Remove(NPCID.RedDevil);
             }
-        }
-        #region DepthsBiomeDropRule
-        public class DepthsBiomeDropRule : IItemDropRuleCondition, IProvideItemConditionDescription
+        }*/
+		//Doesnt work properly, gotta thank tmod for the half baked features
+		//Please see NPCSpawningEdit IL edit for removing hell enemies
+		#region DepthsBiomeDropRule
+		public class DepthsBiomeDropRule : IItemDropRuleCondition, IProvideItemConditionDescription
         {
             public bool CanDrop(DropAttemptInfo info)
             {

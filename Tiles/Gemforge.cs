@@ -130,10 +130,6 @@ namespace TheDepths.Tiles
 							if (Main.tile[m, n].TileFrameX < 18 * 3)
 							{
 								Main.tile[m, n].TileFrameX += (short)(18 * 3);
-								for (int dust = 0; dust < 6; dust++)
-								{
-									Projectile.NewProjectile(new EntitySource_Misc(""), new Vector2(x, y).ToWorldCoordinates() + new Vector2(17, 24), Vector2.Zero, ModContent.ProjectileType<GemforgeExtraDusts>(), 0, 0f, Main.myPlayer);
-								}
 							}
 						}
 					}
@@ -141,7 +137,6 @@ namespace TheDepths.Tiles
                 player.HeldItem.stack -= 1;
 				Main.mouseItem.stack -= 1;
 				Projectile.NewProjectile(new EntitySource_Misc(""), new Vector2(x, y).ToWorldCoordinates() + new Vector2(17, 24), Vector2.Zero, ModContent.ProjectileType<GemforgeCutscene>(), 0, 0f, Main.myPlayer);
-				//player.AddBuff(ModContent.BuffType<RelicsCurse>(), 301);
 			}
 			else if (Main.maxTilesY >= 210 && player.HeldItem.type == ModContent.ItemType<RubyRelic>())
 			{

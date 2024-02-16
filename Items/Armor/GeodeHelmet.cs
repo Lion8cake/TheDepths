@@ -39,18 +39,18 @@ namespace TheDepths.Items.Armor
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("Mods.TheDepths.SetBonus.GeodeHelmet");
 			timer++;
-			if (player.ownedProjectileCounts[Mod.Find<ModProjectile>("GeodeCrystalSummon").Type] < 1 && timer > 20)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<GeodeCrystalSummon>()] < 1 && timer > 20)
 			{
 				for (int i = 0; i < 6; i++)
 				{
-					Projectile.NewProjectile(new EntitySource_Misc(""), player.Center.X, player.Center.Y, 0f, 0f, Mod.Find<ModProjectile>("GeodeCrystalSummon").Type, 15, 8f, player.whoAmI, i);
+					Projectile.NewProjectile(new EntitySource_Misc(""), player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<GeodeCrystalSummon>(), 15, 8f, player.whoAmI, i);
 				}
 				timer = 0;
 			}
 			for (int j = 0; j < 1000; j++)
 			{
 				Projectile projectile = Main.projectile[j];
-				if (projectile.active && projectile.owner == player.whoAmI && projectile.type == Mod.Find<ModProjectile>("GeodeCrystalSummon").Type)
+				if (projectile.active && projectile.owner == player.whoAmI && projectile.type == ModContent.ProjectileType<GeodeCrystalSummon>())
 				{
 					projectile.timeLeft = 2;
 				}

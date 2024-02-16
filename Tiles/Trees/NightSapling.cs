@@ -8,6 +8,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using TheDepths.Dusts;
+using static Terraria.WorldGen;
 
 namespace TheDepths.Tiles.Trees
 {
@@ -38,9 +39,9 @@ namespace TheDepths.Tiles.Trees
             TileObjectData.addTile(Type);
 
             LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(55, 55, 45), name);
+            AddMapEntry(new Color(42, 43, 51), name);
 
-            TileID.Sets.TreeSapling[Type] = true;
+            //TileID.Sets.TreeSapling[Type] = true;
             TileID.Sets.CommonSapling[Type] = true;
             TileID.Sets.SwaysInWindBasic[Type] = true;
 
@@ -54,39 +55,95 @@ namespace TheDepths.Tiles.Trees
             num = fail ? 1 : 3;
         }
 
-        public override void RandomUpdate(int i, int j)
-        {
-            if (!WorldGen.genRand.NextBool(20))
-            {
-                return;
-            }
+		public override void RandomUpdate(int i, int j)
+		{
+			Tile tile = Main.tile[i, j];
+			if (tile.HasUnactuatedTile)
+			{
+				for (int k = 0; k < (Main.maxTilesX * Main.maxTilesY); k++)
+				{
+					if (j > Main.rockLayer)
+					{
+						if (WorldGen.genRand.Next(5) == 0)
+						{
+							AttemptToGrowNightmareFromSapling(i, j);
+						}
+					}
+					else
+					{
+						if (WorldGen.genRand.Next(20) == 0)
+						{
+							AttemptToGrowNightmareFromSapling(i, j);
+						}
+					}
+				}
+			}
+		}
 
-            Tile tile = Framing.GetTileSafely(i, j);
-            bool growSucess;
-
-            if (tile.TileFrameX < 54)
-            {
-                growSucess = WorldGen.GrowTree(i, j);
-            }
-            else
-            {
-                growSucess = WorldGen.GrowPalmTree(i, j);
-            }
-
-            bool isPlayerNear = WorldGen.PlayerLOS(i, j);
-
-            if (growSucess && isPlayerNear)
-            {
-                WorldGen.TreeGrowFXCheck(i, j);
-            }
-        }
-
-        public override void SetSpriteEffects(int i, int j, ref SpriteEffects effects)
+		public override void SetSpriteEffects(int i, int j, ref SpriteEffects effects)
         {
             if (i % 2 == 1)
             {
                 effects = SpriteEffects.FlipHorizontally;
             }
         }
-    }
+
+		public static bool AttemptToGrowNightmareFromSapling(int x, int y)
+		{
+			if (Main.netMode == 1)
+			{
+				return false;
+			}
+			if (!InWorld(x, y, 2))
+			{
+				return false;
+			}
+			Tile tile = Main.tile[x, y];
+			if (tile == null || !tile.HasTile)
+			{
+				return false;
+			}
+			bool flag = DepthsModTree.GrowModdedTreeWithSettings(x, y, NightwoodTree.Tree_Nightmare);
+			if (flag && PlayerLOS(x, y))
+			{
+				GrowNightmareTreeFXCheck(x, y);
+			}
+			return flag;
+		}
+
+		public static void GrowNightmareTreeFXCheck(int x, int y)
+		{
+			int treeHeight = 1;
+			for (int num = -1; num > -100; num--)
+			{
+				Tile tile = Main.tile[x, y + num];
+				if (!tile.HasTile || !TileID.Sets.GetsCheckedForLeaves[tile.TileType])
+				{
+					break;
+				}
+				treeHeight++;
+			}
+			for (int i = 1; i < 5; i++)
+			{
+				Tile tile2 = Main.tile[x, y + i];
+				if (tile2.HasTile && TileID.Sets.GetsCheckedForLeaves[tile2.TileType])
+				{
+					treeHeight++;
+					continue;
+				}
+				break;
+			}
+			if (treeHeight > 0)
+			{
+				if (Main.netMode == 2)
+				{
+					NetMessage.SendData(112, -1, -1, null, 1, x, y, treeHeight, ModContent.GoreType<PetrifiedTreeLeaf>());
+				}
+				if (Main.netMode == 0)
+				{
+					WorldGen.TreeGrowFX(x, y, treeHeight, ModContent.GoreType<PetrifiedTreeLeaf>());
+				}
+			}
+		}
+	}
 }

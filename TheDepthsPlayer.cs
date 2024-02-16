@@ -27,6 +27,9 @@ using System.Reflection;
 using Terraria.Map;
 using Terraria.GameContent.Liquid;
 using ReLogic.Content;
+using TheDepths.Tiles;
+using TheDepths.Tiles.Trees;
+using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace TheDepths
 {
@@ -76,6 +79,7 @@ namespace TheDepths
         public bool miniChasmeArms;
         public bool ShadePet;
         private PlayerDeathReason damageSource;
+        public bool FogMonolith;
 
         public override void ResetEffects()
         {
@@ -104,6 +108,7 @@ namespace TheDepths
             miniChasmeArms = false;
             ShadePet = false;
             tremblingDepthsScreenshakeTimer = 0;
+            FogMonolith = false;
         }
 
         public override void ModifyScreenPosition()
@@ -133,16 +138,18 @@ namespace TheDepths
 
                 for (int i = 0; i < 14; i++)
                 {
-                    TextureAssets.Underworld[i] = Main.Assets.Request<Texture2D>("Images/Backgrounds/Underworld " + i);
+                    //TextureAssets.Underworld[i] = Main.Assets.Request<Texture2D>("Images/Backgrounds/Underworld " + i);
                 }
 
                 TextureAssets.Item[3729] = Main.Assets.Request<Texture2D>("Images/Item_3729");
                 TextureAssets.Tile[423] = Main.Assets.Request<Texture2D>("Images/Tiles_423");
 
                 ushort LiquidPosition = (ushort)typeof(MapHelper).GetField("liquidPosition", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
-                Color[] ColorLookup = (Color[])typeof(MapHelper).GetField("colorLookup", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+				ushort hellPosition = (ushort)typeof(MapHelper).GetField("hellPosition", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+				Color[] ColorLookup = (Color[])typeof(MapHelper).GetField("colorLookup", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
                 ColorLookup[LiquidPosition + 1] = new Color(253, 32, 3);
-            }
+				ColorLookup[hellPosition] = new Color(50, 44, 38);
+			}
 
             if (!Main.dedServ)
             {
@@ -253,7 +260,8 @@ namespace TheDepths
 
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
-            if (Worldgen.TheDepthsWorldGen.InDepths)
+            Player player = Main.LocalPlayer;
+            if (Worldgen.TheDepthsWorldGen.InDepths(player))
             {
                 if (itemDrop == ItemID.Obsidifish)
                 {
@@ -283,7 +291,7 @@ namespace TheDepths
 
             if (attempt.questFish == ModContent.ItemType<Chasmefish>())
             {
-                if (Player.ZoneRockLayerHeight && Worldgen.TheDepthsWorldGen.InDepths && attempt.uncommon || Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && attempt.uncommon)
+                if (Player.ZoneRockLayerHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && attempt.uncommon || Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && attempt.uncommon)
                 {
                     itemDrop = ModContent.ItemType<Chasmefish>();
                     return;
@@ -291,7 +299,7 @@ namespace TheDepths
             }
             if (attempt.questFish == ModContent.ItemType<Relicarp>())
             {
-                if (Player.ZoneRockLayerHeight && Worldgen.TheDepthsWorldGen.InDepths && attempt.uncommon || Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && attempt.uncommon)
+                if (Player.ZoneRockLayerHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && attempt.uncommon || Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && attempt.uncommon)
                 {
                     itemDrop = ModContent.ItemType<Relicarp>();
                     return;
@@ -299,7 +307,7 @@ namespace TheDepths
             }
             if (attempt.questFish == ModContent.ItemType<GlimmerDepthFish>())
             {
-                if (Player.ZoneRockLayerHeight && Worldgen.TheDepthsWorldGen.InDepths && attempt.uncommon || Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths && attempt.uncommon)
+                if (Player.ZoneRockLayerHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && attempt.uncommon || Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && attempt.uncommon)
                 {
                     itemDrop = ModContent.ItemType<GlimmerDepthFish>();
                     return;
@@ -343,20 +351,28 @@ namespace TheDepths
 
             #region QuicksilverMapColor
             ushort LiquidPosition = (ushort)typeof(MapHelper).GetField("liquidPosition", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
-            Color[] ColorLookup = (Color[])typeof(MapHelper).GetField("colorLookup", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
-            if (Worldgen.TheDepthsWorldGen.InDepths)
+			ushort hellPosition = (ushort)typeof(MapHelper).GetField("hellPosition", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+			Color[] ColorLookup = (Color[])typeof(MapHelper).GetField("colorLookup", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+            if (Worldgen.TheDepthsWorldGen.InDepths(player))
             {
-                ColorLookup[LiquidPosition + 1] = new Color(85, 96, 102);
-            }
+                ColorLookup[LiquidPosition + 1] = new Color(85, 96, 102);//192, 189, 196);
+				ColorLookup[hellPosition] = new Color(5, 5, 7);
+			}
             else
             {
                 ColorLookup[LiquidPosition + 1] = new Color(253, 32, 3);
-            }
+				ColorLookup[hellPosition] = new Color(50, 44, 38);
+			}
             #endregion
+
+            if (Player.controlRight)
+            {
+                Main.AnglerQuestSwap();
+            }
 
             if (!Main.dedServ)
             {
-                if (Worldgen.TheDepthsWorldGen.InDepths)
+                if (Worldgen.TheDepthsWorldGen.InDepths(player))
                 {
                     LiquidRenderer.Instance._liquidTextures[1] = ModContent.Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver", (AssetRequestMode)1);
                     int[] liquidAssetRegularNum = new int[14] { 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
@@ -372,11 +388,6 @@ namespace TheDepths
                         LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
                     }
                 }
-            }
-
-            if (lodeStone)
-            {
-                Player.defaultItemGrabRange = 107;
             }
             if (sEmbers)
             {
@@ -426,7 +437,7 @@ namespace TheDepths
             {
                 tremblingDepthsScreenshakeTimer--;
             }
-            if (Player.dead)
+            if (player.dead)
             {
                 MercuryTimer = 0;
             }
@@ -475,7 +486,7 @@ namespace TheDepths
             }
             if (AmuletTimer < 60 * 4 * AmuletsActive)
             {
-                if ((AmuletsActive > 0) && (quicksilverWet == false || !Worldgen.TheDepthsWorldGen.InDepths))
+                if ((AmuletsActive > 0) && (quicksilverWet == false || !Worldgen.TheDepthsWorldGen.InDepths(player)))
 				{
                     AmuletTimer++;
                 }
@@ -496,13 +507,17 @@ namespace TheDepths
             }
             //Main.NewText(AmuletTimer);
             //Main.NewText(MercuryTimer); //For Debugging, posts number of ticks that have passed when the player is on Mercury
-            //Main.NewText("Depths in on the left : " + Worldgen.TheDepthsWorldGen.DrunkDepthsLeft); //Debugging for the drunkseed tag checker
+            //Main.NewText("Depths in on the left: " + Worldgen.TheDepthsWorldGen.IsPlayerInLeftDepths(player)); //Debugging for the drunkseed tag checker
+			//Main.NewText("Depths in on the Right: " + Worldgen.TheDepthsWorldGen.IsPlayerInRightDepths(player));
+			//Main.NewText("World Tag DrunkDepthsLeft: " + Worldgen.TheDepthsWorldGen.DrunkDepthsLeft);
+			//Main.NewText("World Tag DrunkDepthsRight: " + Worldgen.TheDepthsWorldGen.DrunkDepthsRight);
+			//Main.NewText("World Tag depthsorHell: " + Worldgen.TheDepthsWorldGen.depthsorHell);
 
-            //Shalestone Conch and shellphone
-            Item item = Player.inventory[Player.selectedItem];
+			//Shalestone Conch and shellphone
+			Item item = Player.inventory[Player.selectedItem];
 			if (!Player.JustDroppedAnItem)
 			{
-				if ((item.type == ModContent.ItemType<ShalestoneConch>() || item.type == ModContent.ItemType<ShellPhoneDepths>()) && Player.itemAnimation > 0 && Worldgen.TheDepthsWorldGen.InDepths)
+				if ((item.type == ModContent.ItemType<ShalestoneConch>() || item.type == ModContent.ItemType<ShellPhoneDepths>()) && Player.itemAnimation > 0 && Worldgen.TheDepthsWorldGen.InDepths(player))
                 {
 					Vector2 vector2 = Vector2.UnitY.RotatedBy((float)Player.itemAnimation * ((float)Math.PI * 2f) / 30f) * new Vector2(15f, 0f);
 					for (int num = 0; num < 2; num++)
@@ -535,7 +550,25 @@ namespace TheDepths
 						}
 					}
 				}
-            }
+                if (item.type == ItemID.Acorn) //Sapling Fix due to custom trees
+                {
+                    int x = Player.tileTargetX;
+                    int y = Player.tileTargetY;
+					Tile tileBelow = Main.tile[x, y + 1];
+                    if (tileBelow.TileType == ModContent.TileType<ShaleBlock>())
+                    {
+                        item.createTile = ModContent.TileType<PetrifiedSapling>();
+                    }
+					if (tileBelow.TileType == ModContent.TileType<NightmareGrass>())
+					{
+						item.createTile = ModContent.TileType<NightSapling>();
+					}
+					else
+                    {
+                        item.createTile = TileID.Saplings;
+                    }
+                }
+            } 
 
             if (player.InModBiome<DepthsBiome>())
 			{
@@ -576,7 +609,7 @@ namespace TheDepths
             if (canSpawn)
             {
                 Vector2 newPos = vector;
-                player.Teleport(newPos, 7);
+                player.Teleport(newPos, 13);
                 player.velocity = Vector2.Zero;
                 if (Main.netMode == 2)
                 {
@@ -587,7 +620,7 @@ namespace TheDepths
             else
             {
                 Vector2 newPos2 = player.position;
-                player.Teleport(newPos2, 7);
+                player.Teleport(newPos2, 13);
                 player.velocity = Vector2.Zero;
                 if (Main.netMode == 2)
                 {
@@ -641,11 +674,12 @@ namespace TheDepths
 
         public override void UpdateBadLifeRegen()
         {
+            Player player = Main.LocalPlayer;
             if (merPoison || merBoiling)
             {
-                if (Player.lifeRegen > 0)
+                if (player.lifeRegen > 0)
                 {
-                    Player.lifeRegen = 0;
+                    player.lifeRegen = 0;
                 }
                 MercuryTimer++;
                 int multiplier = 2;
@@ -653,17 +687,17 @@ namespace TheDepths
                 {
                     multiplier--;
                 }
-                Player.lifeRegen -= Utils.Clamp(MercuryTimer / 60, 0, 10) * multiplier;
+                player.lifeRegen -= Utils.Clamp(MercuryTimer / 60, 0, 10) * multiplier;
             }
             if (merBoiling)
             {
                 if (Main.remixWorld)
                 {
-                    if (Player.lifeRegen > 0)
+                    if (player.lifeRegen > 0)
                     {
-                        Player.lifeRegen = 0;
+                        player.lifeRegen = 0;
                     }
-                    Player.lifeRegen -= 10;
+                    player.lifeRegen -= 10;
                 }
             }
             if (!merPoison && !merBoiling && MercuryTimer >= 1)
@@ -760,14 +794,13 @@ namespace TheDepths
                 {
                     TextureAssets.FlyingCarpet = Main.Assets.Request<Texture2D>("Images/FlyingCarpet");
                 }
-                if (Worldgen.TheDepthsWorldGen.InDepths)
+                if (Worldgen.TheDepthsWorldGen.InDepths(player))
                 {
                     TextureAssets.Liquid[1] = Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver_Block");
                     TextureAssets.LiquidSlope[1] = Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver_Slope");
                     TextureAssets.Item[207] = Request<Texture2D>("TheDepths/Assets/Lava/QuicksilverBucket");
                     TextureAssets.Item[4820] = Request<Texture2D>("TheDepths/Assets/Lava/BottomlessQuicksilverBucket");
                     TextureAssets.Item[4872] = Request<Texture2D>("TheDepths/Assets/Lava/QuicksilverSponge");
-                    TextureAssets.Item[5361] = Request<Texture2D>("TheDepths/Items/ShellPhoneDepths");
 
                     //Old Texture/lava layer background
                     int[] bgnum = new int[30] { 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 150, 151, 152, 157, 158, 159, 185, 186, 187 };
@@ -777,7 +810,7 @@ namespace TheDepths
                     }
                     for (int i = 0; i < 14; i++)
                     {
-                        TextureAssets.Underworld[i] = Request<Texture2D>("TheDepths/Backgrounds/DepthsUnderworldBG_" + i);
+                        //TextureAssets.Underworld[i] = Request<Texture2D>("TheDepths/Backgrounds/DepthsUnderworldBG_" + i);
                     }
                 }
                 else
@@ -787,7 +820,6 @@ namespace TheDepths
                     TextureAssets.Item[207] = Main.Assets.Request<Texture2D>("Images/Item_207");
                     TextureAssets.Item[4820] = Main.Assets.Request<Texture2D>("Images/Item_4820");
                     TextureAssets.Item[4872] = Main.Assets.Request<Texture2D>("Images/Item_4872");
-                    TextureAssets.Item[5361] = Main.Assets.Request<Texture2D>("Images/Item_5361");
 
                     //Old Texture/lava layer background
                     int[] bgnumOriginal = new int[30] { 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 150, 151, 152, 157, 158, 159, 185, 186, 187 };
@@ -798,7 +830,7 @@ namespace TheDepths
 
                     for (int i = 0; i < 14; i++)
                     {
-                        TextureAssets.Underworld[i] = Main.Assets.Request<Texture2D>("Images/Backgrounds/Underworld " + i);
+                       // TextureAssets.Underworld[i] = Main.Assets.Request<Texture2D>("Images/Backgrounds/Underworld " + i);
                     }
                 }
             }
@@ -807,7 +839,7 @@ namespace TheDepths
                 TextureAssets.Item[3729] = Main.Assets.Request<Texture2D>("Images/Item_3729");
                 TextureAssets.Tile[423] = Main.Assets.Request<Texture2D>("Images/Tiles_423");
             }
-            if (player.lavaWet && Worldgen.TheDepthsWorldGen.InDepths || Collision.LavaCollision(Main.LocalPlayer.position, Main.LocalPlayer.width, Main.LocalPlayer.height) && Worldgen.TheDepthsWorldGen.InDepths)
+            if (player.lavaWet && Worldgen.TheDepthsWorldGen.InDepths(player) || Collision.LavaCollision(player.position, player.width, player.height) && Worldgen.TheDepthsWorldGen.InDepths(player))
             {
                 if (Main.remixWorld)
                 {
@@ -887,4 +919,218 @@ namespace TheDepths
             AmuletTimer = 0;
         }
     }
+
+	public class NightwoodHelmetGlowmask : PlayerDrawLayer
+	{
+		public override Position GetDefaultPosition()
+		{
+			return new AfterParent(PlayerDrawLayers.Head);
+		}
+
+		protected override void Draw(ref PlayerDrawSet drawInfo)
+		{
+			Player drawPlayer = drawInfo.drawPlayer;
+			if (drawInfo.drawPlayer.dead)
+			{
+				return;
+			}
+
+            if (drawPlayer.armor[10].type == ModContent.ItemType<Items.Armor.NightwoodHelmet>() || (drawPlayer.armor[10].type == 0 && drawPlayer.armor[0].type == ModContent.ItemType<Items.Armor.NightwoodHelmet>()))
+            {
+                Color color = drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
+
+                Texture2D texture = ModContent.Request<Texture2D>("TheDepths/Items/Armor/NightwoodHelmet_Head_Glow").Value;
+                Vector2 drawPos = drawInfo.Position - Main.screenPosition + new Vector2(drawPlayer.width / 2 - drawPlayer.bodyFrame.Width / 2, drawPlayer.height - drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition;
+                Vector2 headVect = drawInfo.headVect;
+                DrawData drawData = new DrawData(texture, drawPos.Floor() + headVect, drawPlayer.bodyFrame, color, drawPlayer.headRotation, headVect, 1f, drawInfo.playerEffect, 0)
+                {
+                    shader = drawInfo.cHead
+                };
+                drawInfo.DrawDataCache.Add(drawData);
+            }
+		}
+	}
+
+	public class NightwoodChestplateGlowmask : PlayerDrawLayer
+	{
+		public override Position GetDefaultPosition()
+		{
+			return new AfterParent(PlayerDrawLayers.Torso);
+		}
+
+		protected override void Draw(ref PlayerDrawSet drawInfo)
+		{
+			Player drawPlayer = drawInfo.drawPlayer;
+			if (drawInfo.drawPlayer.dead)
+			{
+				return;
+			}
+
+			if (drawPlayer.armor[11].type == ModContent.ItemType<Items.Armor.NightwoodBreastplate>() || (drawPlayer.armor[11].type == 0 && drawPlayer.armor[1].type == ModContent.ItemType<Items.Armor.NightwoodBreastplate>()))
+			{
+				Color color = drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
+
+				Texture2D texture = ModContent.Request<Texture2D>("TheDepths/Items/Armor/NightwoodBreastplate_Body_Glow").Value;
+				float drawX = (int)drawInfo.Position.X + drawPlayer.width / 2;
+				float drawY = (int)drawInfo.Position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f;
+				Vector2 origin = drawInfo.bodyVect;
+				Vector2 position = new Vector2(drawX, drawY) + drawPlayer.bodyPosition - Main.screenPosition;
+				Rectangle frame = new(0, 0, 40, 56);
+				if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 7, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 8, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 9, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 14, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 15, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 16, 40, 56))
+				{
+					frame = new(0, 2, 40, 56); //walking bop
+				}
+				if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 6, 40, 56))
+				{
+					frame = new(40, 0, 40, 56); //jumping frame
+				}
+				if (!drawPlayer.Male)
+				{
+					frame = new(0, 112, 40, 56);
+					if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 7, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 8, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 9, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 14, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 15, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 16, 40, 56))
+					{
+						frame = new(0, 114, 40, 56); //walking bop
+					}
+					if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 6, 40, 56))
+					{
+						frame = new(40, 112, 40, 56); //jumping frame
+					}
+				}
+				float rotation = drawPlayer.bodyRotation;
+				SpriteEffects spriteEffects = drawInfo.playerEffect;
+
+				DrawData drawData = new(texture, position, frame, color, rotation, origin, 1f, spriteEffects, 0);
+				drawData.shader = drawInfo.cBody;
+				drawInfo.DrawDataCache.Add(drawData);
+			}
+		}
+	}
+	public class NightwoodBrestpadGlowmask : PlayerDrawLayer
+	{ //Shoulder Drawing
+		public override Position GetDefaultPosition()
+		{
+			return new AfterParent(PlayerDrawLayers.ArmOverItem);
+		}
+
+		protected override void Draw(ref PlayerDrawSet drawInfo)
+		{
+			Player drawPlayer = drawInfo.drawPlayer;
+			if (drawInfo.drawPlayer.dead)
+			{
+				return;
+			}
+
+			if (drawPlayer.armor[11].type == ModContent.ItemType<Items.Armor.NightwoodBreastplate>() || (drawPlayer.armor[11].type == 0 && drawPlayer.armor[1].type == ModContent.ItemType<Items.Armor.NightwoodBreastplate>()))
+			{
+				Color color = drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
+
+				Texture2D texture = ModContent.Request<Texture2D>("TheDepths/Items/Armor/NightwoodBreastplate_Body_Glow").Value;
+
+				float drawX = (int)drawInfo.Position.X + drawPlayer.width / 2;
+				float drawY = (int)drawInfo.Position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f;
+				Vector2 origin = drawInfo.bodyVect;
+				Vector2 position = new Vector2(drawX, drawY) + drawPlayer.bodyPosition - Main.screenPosition;
+				Rectangle frame = new(0, 56, 40, 56);
+				if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 7, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 8, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 9, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 14, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 15, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 16, 40, 56))
+				{
+					frame = new(0, 58, 40, 56); //walking bop
+				}
+				if (!drawPlayer.Male)
+				{
+					frame = new(0, 168, 40, 56);
+					if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 7, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 8, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 9, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 14, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 15, 40, 56) || drawPlayer.bodyFrame == new Rectangle(0, 56 * 16, 40, 56))
+					{
+						frame = new(0, 170, 40, 56); //walking bop
+					}
+				}
+				float rotation = drawPlayer.bodyRotation;
+				SpriteEffects spriteEffects = drawInfo.playerEffect;
+
+				DrawData drawData = new(texture, position, frame, color, rotation, origin, 1f, spriteEffects, 0);
+				drawData.shader = drawInfo.cBody;
+				drawInfo.DrawDataCache.Add(drawData);
+			}
+		}
+	}
+
+	public class NightwoodLimbGlowmaskRemover : PlayerDrawLayer
+	{ //Arm Drawing
+		public override Position GetDefaultPosition()
+		{
+			return new AfterParent(PlayerDrawLayers.ArmOverItem);
+		}
+
+		protected override void Draw(ref PlayerDrawSet drawInfo)
+		{
+			Player drawPlayer = drawInfo.drawPlayer;
+			if (drawInfo.drawPlayer.dead)
+			{
+				return;
+			}
+
+			if (drawPlayer.armor[11].type == ModContent.ItemType<Items.Armor.NightwoodBreastplate>() || (drawPlayer.armor[11].type == 0 && drawPlayer.armor[1].type == ModContent.ItemType<Items.Armor.NightwoodBreastplate>()))
+			{
+				Texture2D texture = ModContent.Request<Texture2D>("TheDepths/Items/Armor/NightwoodBreastplate_Body").Value;
+
+				float drawX = (int)drawInfo.Position.X + drawPlayer.width / 2;
+				float drawY = (int)drawInfo.Position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height / 2 + 4f;
+				Vector2 origin = drawInfo.bodyVect;
+				Vector2 position = new Vector2(drawX, drawY) + drawPlayer.bodyPosition - Main.screenPosition;
+				Rectangle frame;
+				if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 5, 40, 56))
+				{
+					frame = new(80, 56, 40, 56); //Jumping
+				}
+				else if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 1, 40, 56))
+				{
+					frame = new(120, 0, 40, 56); //Use1
+				}
+				else if (drawPlayer.bodyFrame == new Rectangle(0, 56 * 2, 40, 56))
+				{
+					frame = new(160, 0, 40, 56); //Use2
+				}
+				else
+				{
+					frame = new(0, 0, 0, 0); //None
+				}
+				float rotation = drawPlayer.bodyRotation;
+				SpriteEffects spriteEffects = drawInfo.playerEffect;
+
+				DrawData drawData = new(texture, position, frame, drawInfo.colorArmorBody, rotation, origin, 1f, spriteEffects, 0);
+				drawData.shader = drawInfo.cBody;
+				drawInfo.DrawDataCache.Add(drawData);
+			}
+		}
+	}
+
+	public class NightwoodLeggingsGlowmask : PlayerDrawLayer
+	{
+		public override Position GetDefaultPosition()
+		{
+			return new AfterParent(PlayerDrawLayers.Leggings);
+		}
+
+		protected override void Draw(ref PlayerDrawSet drawInfo)
+		{
+			Player drawPlayer = drawInfo.drawPlayer;
+			if (drawInfo.drawPlayer.dead)
+			{
+				return;
+			}
+
+			if (drawPlayer.armor[12].type == ModContent.ItemType<Items.Armor.NightwoodGreaves>() || (drawPlayer.armor[12].type == 0 && drawPlayer.armor[2].type == ModContent.ItemType<Items.Armor.NightwoodGreaves>()))
+			{
+				Color color = drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
+
+				Texture2D texture = ModContent.Request<Texture2D>("TheDepths/Items/Armor/NightwoodGreaves_Legs_Glow").Value;
+				Vector2 drawPos = drawInfo.Position - Main.screenPosition + new Vector2(drawPlayer.width / 2 - drawPlayer.legFrame.Width / 2, drawPlayer.height - drawPlayer.legFrame.Height + 4f) + drawPlayer.legPosition;
+				Vector2 legsOffset = drawInfo.legsOffset;
+				DrawData drawData = new DrawData(texture, drawPos.Floor() + legsOffset, drawPlayer.legFrame, color, drawPlayer.legRotation, legsOffset, 1f, drawInfo.playerEffect, 0)
+				{
+					shader = drawInfo.cLegs
+				};
+				drawInfo.DrawDataCache.Add(drawData);
+			}
+		}
+	}
 }

@@ -4,6 +4,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using TheDepths.Items.Accessories;
 using TheDepths.Items.Placeable;
+using TheDepths.Items.Weapons;
 
 namespace TheDepths
 {
@@ -24,8 +25,10 @@ namespace TheDepths
         public static RecipeGroup HellforgeRecipeGroup;
         public static RecipeGroup LivingFireBlockRecipeGroup;
         public static RecipeGroup CobaltShieldRecipeGroup;
+		public static RecipeGroup CascadeRecipeGroup;
+        public static RecipeGroup TreasureMagnetGroup;
 
-        public override void Unload()
+		public override void Unload()
         {
             HellstoneBarRecipeGroup = null;
             HellstoneRecipeGroup = null;
@@ -42,6 +45,8 @@ namespace TheDepths
             HellforgeRecipeGroup = null;
             LivingFireBlockRecipeGroup = null;
             CobaltShieldRecipeGroup = null;
+            CascadeRecipeGroup = null;
+            TreasureMagnetGroup = null;
         }
 
         public override void AddRecipes()
@@ -93,7 +98,13 @@ namespace TheDepths
                 .AddIngredient(ModContent.ItemType<Items.ShalestoneConch>())
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
-        }
+			Recipe recipe7 = Recipe.Create(ItemID.FishingPotion);
+			    recipe7.AddIngredient(ItemID.BottledWater)
+			    .AddIngredient(ModContent.ItemType<Items.Placeable.GlitterBlock>())
+			    .AddIngredient(ItemID.Waterleaf)
+			    .AddTile(TileID.Bottles)
+			    .Register();
+		}
 
         public override void AddRecipeGroups()
         {
@@ -131,7 +142,11 @@ namespace TheDepths
             RecipeGroup.RegisterGroup("LivingFireBlock", LivingFireBlockRecipeGroup);
             CobaltShieldRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.CobaltShield)}", ItemID.CobaltShield, ModContent.ItemType<PalladiumShield>());
             RecipeGroup.RegisterGroup("CobaltShield", CobaltShieldRecipeGroup);
-        }
+			CascadeRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.Cascade)}", ItemID.Cascade, ModContent.ItemType<Skyfall>());
+			RecipeGroup.RegisterGroup("Cascade", CascadeRecipeGroup);
+            TreasureMagnetGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.TreasureMagnet)}", ItemID.TreasureMagnet, ModContent.ItemType<LodeStone>());
+			RecipeGroup.RegisterGroup("TreasureMagnet", TreasureMagnetGroup);
+		}
 
         public override void PostAddRecipes()
         {
@@ -213,7 +228,17 @@ namespace TheDepths
                     recipe.AddRecipeGroup("CobaltShield", CS.stack);
                     recipe.RemoveIngredient(CS);
                 }
-            }
+				if (recipe.TryGetIngredient(ItemID.Cascade, out var Cascade) && !TheDepthsIDs.Sets.RecipeBlacklist.CascadeOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup("Cascade", Cascade.stack);
+					recipe.RemoveIngredient(Cascade);
+				}
+				if (recipe.TryGetIngredient(ItemID.TreasureMagnet, out var TM) && !TheDepthsIDs.Sets.RecipeBlacklist.TreasureMagnetOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup("TreasureMagnet", TM.stack);
+					recipe.RemoveIngredient(TM);
+				}
+			}
         }
     }
 }

@@ -1,14 +1,9 @@
-using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 using Terraria.ObjectData;
-using Terraria.DataStructures;
+using Microsoft.Xna.Framework;
+using Terraria.Localization;
 
 namespace TheDepths.Tiles
 {
@@ -21,50 +16,17 @@ namespace TheDepths.Tiles
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16 };
             TileObjectData.newTile.CoordinatePadding = 2;
-            //TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.AnchorInvalidTiles = new int[] {
-                TileID.Platforms
-            };
             TileObjectData.addTile(Type);
             Main.tileFrameImportant[Type] = true;
             Main.tileObsidianKill[Type] = true;
             Main.tileShine2[Type] = true;
             Main.tileShine[Type] = 500;
             Main.tileSpelunker[Type] = true;
-        }
-
-        public override ushort GetMapOption(int i, int j)
-        {
-            return (ushort)(Main.tile[i, j].TileFrameX / 18);
-        }
-
-        public override IEnumerable<Item> GetItemDrops(int i, int j)
-        {
-            Tile t = Main.tile[i, j];
-            int style = t.TileFrameX / 18;
-            if (style == 0)
-            {
-                yield return new Item(ModContent.ItemType<Items.Placeable.Geode>());
-            }
-            else if (style == 1)
-            {
-                yield return new Item(ModContent.ItemType<Items.Placeable.Onyx>());
-            }
-        }
-
-        public override bool CreateDust(int i, int j, ref int type)
-        {
-            int style = Main.tile[i, j].TileFrameX / 18;
-            if (style == 0)
-            {
-                type = ModContent.DustType<Dusts.GeodeDust>(); 
-            }
-            if (style == 1)
-            {
-                type = ModContent.DustType<Dusts.OnyxCrystalDust>();
-            }
-            return true;
+            LocalizedText name = CreateMapEntryName();
+            AddMapEntry(new Color(125, 21, 188), name);
+            RegisterItemDrop(ModContent.ItemType<Items.Placeable.Geode>());
+            DustType = ModContent.DustType<Dusts.GeodeCrystalDust>();
         }
 
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
@@ -78,6 +40,17 @@ namespace TheDepths.Tiles
             var bottomType = -1;
             var leftType = -1;
             var rightType = -1;
+            if (tile.TileFrameX >= 18)
+            {
+                if (WorldGen.SolidTile(i - 1, j) || WorldGen.SolidTile(i + 1, j) || WorldGen.SolidTile(i, j - 1) || WorldGen.SolidTile(i, j + 1))
+                {
+                    tile.TileFrameX = 0;
+                }
+                else
+                {
+                    tile.HasTile = false;
+                }
+            }
             if (topTile.HasTile && !topTile.BottomSlope)
                 bottomType = topTile.TileType;
             if (bottomTile.HasTile && !bottomTile.IsHalfBlock && !bottomTile.TopSlope)
@@ -89,7 +62,7 @@ namespace TheDepths.Tiles
             var variation = WorldGen.genRand.Next(3) * 18;
             if (topType >= 0 && Main.tileSolid[topType] && !Main.tileSolidTop[topType])
             {
-                if (tile.TileFrameY < 0 || tile.TileFrameY > 36)
+                if (tile.TileFrameY > 0 || tile.TileFrameY < 36)
                     tile.TileFrameY = (short)variation;
             }
             else if (leftType >= 0 && Main.tileSolid[leftType] && !Main.tileSolidTop[leftType])
@@ -116,7 +89,6 @@ namespace TheDepths.Tiles
         {
             return WorldGen.SolidTile(i - 1, j) || WorldGen.SolidTile(i + 1, j) || WorldGen.SolidTile(i, j - 1) || WorldGen.SolidTile(i, j + 1);
         }
-
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
         {
             if (Main.tile[i, j].TileFrameY / 18 < 3)

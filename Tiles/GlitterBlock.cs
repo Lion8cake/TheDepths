@@ -15,10 +15,10 @@ namespace TheDepths.Tiles
 			Main.tileMergeDirt[Type] = false;
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
+			Main.tileShine2[Type] = true;
+			Main.tileShine[Type] = 60;
 			DustType = ModContent.DustType<GlitterDust>();
-
 			AddMapEntry(new Color(205, 181, 82));
-
 		}
 	}
 }

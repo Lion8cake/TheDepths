@@ -32,11 +32,11 @@ namespace TheDepths.Items
 
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
         {
-            if (Worldgen.TheDepthsWorldGen.InDepths && Collision.LavaCollision(item.position, item.width, item.height))
+            if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer) && Collision.LavaCollision(item.position, item.width, item.height))
             {
                 ItemID.Sets.IsLavaImmuneRegardlessOfRarity[item.type] = true;
             }
-            if (!Worldgen.TheDepthsWorldGen.InDepths && Collision.LavaCollision(item.position, item.width, item.height) && LavaProof == false)
+            if (!Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer) && Collision.LavaCollision(item.position, item.width, item.height) && LavaProof == false)
             {
                 ItemID.Sets.IsLavaImmuneRegardlessOfRarity[item.type] = false;
             }
@@ -65,16 +65,33 @@ namespace TheDepths.Items
             }
 		}
 
-        public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
+		public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
         {
             if (item.type == ItemID.LockBox)
             {
-                foreach (var rule in itemLoot.Get())
-                {
-                    itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Accessories.PalladiumShield>(), 7));
-                }
+                itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Accessories.PalladiumShield>(), 7));
             }
         }
+
+		public override bool IsAnglerQuestAvailable(int type)
+		{
+            if (Worldgen.TheDepthsWorldGen.depthsorHell && (!Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && !Worldgen.TheDepthsWorldGen.DrunkDepthsRight))
+            {
+                if (type == ItemID.DemonicHellfish)
+                {
+                    return false;
+                }
+				if (type == ItemID.GuideVoodooFish)
+				{
+					return false;
+				}
+				if (type == ItemID.Hungerfish)
+				{
+					return false;
+				}
+			}
+            return true;
+		}
 
 		public override void ExtractinatorUse(int extractType, int extractinatorBlockType, ref int resultType, ref int resultStack)
 		{
@@ -141,7 +158,7 @@ namespace TheDepths.Items
 
         public override bool CanUseItem(Item item, Player player)
         {
-            if (!Worldgen.TheDepthsWorldGen.InDepths)
+            if (!Worldgen.TheDepthsWorldGen.InDepths(player))
             {
                 return true;
             }
@@ -149,7 +166,24 @@ namespace TheDepths.Items
         }
     }
 
-    public class TerrasparkUpgrade : GlobalItem
+	public class ShellPhoneUnderworld : GlobalItem
+	{
+		public override bool AppliesToEntity(Item entity, bool lateInstantiation)
+		{
+            return entity.type == ItemID.ShellphoneHell;
+		}
+
+		public override bool CanUseItem(Item item, Player player)
+		{
+			if (!Worldgen.TheDepthsWorldGen.InDepths(player))
+			{
+				return true;
+			}
+			return false;
+		}
+	}
+
+	public class TerrasparkUpgrade : GlobalItem
     {
         public override bool AppliesToEntity(Item entity, bool lateInstantiation)
         {
@@ -172,7 +206,7 @@ namespace TheDepths.Items
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (Worldgen.TheDepthsWorldGen.InDepths)
+            if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
             {
                 tooltips.RemoveAll(t => t.Text.Contains("lava"));
                 tooltips.RemoveAll(t => t.Text.Contains("poured"));
@@ -187,7 +221,7 @@ namespace TheDepths.Items
         }
         public override void UpdateInventory(Item item, Player player)
         {
-            if (Worldgen.TheDepthsWorldGen.InDepths)
+            if (Worldgen.TheDepthsWorldGen.InDepths(player))
             {
                 item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverBucketName"));
             }
@@ -199,7 +233,7 @@ namespace TheDepths.Items
 
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
         {
-            if (Worldgen.TheDepthsWorldGen.InDepths)
+            if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
             {
                 item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverBucketName"));
             }
@@ -218,7 +252,7 @@ namespace TheDepths.Items
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (Worldgen.TheDepthsWorldGen.InDepths)
+            if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
             {
                 tooltips.RemoveAll(t => t.Text.Contains("lava"));
                 tooltips.RemoveAll(t => t.Text.Contains("poured"));
@@ -234,7 +268,7 @@ namespace TheDepths.Items
 
         public override void UpdateInventory(Item item, Player player)
         {
-            if (Worldgen.TheDepthsWorldGen.InDepths)
+            if (Worldgen.TheDepthsWorldGen.InDepths(player))
             {
                 item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.BottomlessQuicksilverBucketName"));
             }
@@ -246,7 +280,7 @@ namespace TheDepths.Items
 
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
         {
-            if (Worldgen.TheDepthsWorldGen.InDepths)
+            if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
             {
                 item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.BottomlessQuicksilverBucketName"));
             }
@@ -265,7 +299,7 @@ namespace TheDepths.Items
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (Worldgen.TheDepthsWorldGen.InDepths)
+            if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
             {
                 tooltips.RemoveAll(t => t.Text.Contains("lava"));
                 tooltips.Add(new(Mod, "NewDescription", (string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverAbsorbantSpongeDescription")));
@@ -279,7 +313,7 @@ namespace TheDepths.Items
 
         public override void UpdateInventory(Item item, Player player)
         {
-            if (Worldgen.TheDepthsWorldGen.InDepths)
+            if (Worldgen.TheDepthsWorldGen.InDepths(player))
             {
                 item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverAbsorbantSpongeName"));
             }
@@ -291,7 +325,7 @@ namespace TheDepths.Items
 
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
         {
-            if (Worldgen.TheDepthsWorldGen.InDepths)
+            if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
             {
                 item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverAbsorbantSpongeName"));
             }
@@ -299,117 +333,6 @@ namespace TheDepths.Items
             {
                 item.SetNameOverride((string)Language.GetOrRegister("ItemName.LavaAbsorbantSponge"));
             }
-        }
-    }
-
-    public class ShellphoneHell : GlobalItem
-    {
-        public override bool AppliesToEntity(Item entity, bool lateInstantiation)
-        {
-            return entity.type == ItemID.ShellphoneHell;
-        }
-        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
-        {
-            if (Worldgen.TheDepthsWorldGen.InDepths)
-            {
-                tooltips.RemoveAll(t => t.Text.Contains("everything"));
-                tooltips.RemoveAll(t => t.Text.Contains("underworld"));
-                tooltips.RemoveAll(t => t.Text.Contains("toggle"));
-                tooltips.RemoveAll(t => t.Text.Contains("you"));
-                tooltips.Add(new(Mod, "NewDescription", (string)Language.GetOrRegister("Mods.TheDepths.Items.ShellPhoneDepths.Tooltip")));
-                item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.Items.ShellPhoneDepths.DisplayName"));
-            }
-            else
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneHell"));
-            }
-        }
-
-        public override void UpdateInventory(Item item, Player player)
-        {
-            if (Worldgen.TheDepthsWorldGen.InDepths)
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.Items.ShellPhoneDepths.DisplayName"));
-            }
-            else
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneHell"));
-            }
-        }
-
-        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
-        {
-            if (Worldgen.TheDepthsWorldGen.InDepths)
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.Items.ShellPhoneDepths.DisplayName"));
-            }
-            else
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneHell"));
-            }
-        }
-    }
-
-    public class ShellPhoneNameFix : GlobalItem
-    {
-        public override bool AppliesToEntity(Item entity, bool lateInstantiation)
-        {
-            return entity.type == ItemID.ShellphoneSpawn;
-        }
-        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
-        {
-            item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneSpawn"));
-        }
-        public override void UpdateInventory(Item item, Player player)
-        {
-            item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneSpawn"));
-        }
-
-        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
-        {
-            item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneSpawn"));
-        }
-    }
-
-    public class ShellPhoneNameFix2 : GlobalItem
-    {
-        public override bool AppliesToEntity(Item entity, bool lateInstantiation)
-        {
-            return entity.type == ItemID.Shellphone;
-        }
-        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
-        {
-            item.SetNameOverride((string)Language.GetOrRegister("ItemName.Shellphone"));
-        }
-        public override void UpdateInventory(Item item, Player player)
-        {
-            item.SetNameOverride((string)Language.GetOrRegister("ItemName.Shellphone"));
-        }
-
-        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
-        {
-            item.SetNameOverride((string)Language.GetOrRegister("ItemName.Shellphone"));
-        }
-    }
-
-    public class ShellPhoneNameFix3 : GlobalItem
-    {
-        public override bool AppliesToEntity(Item entity, bool lateInstantiation)
-        {
-            return entity.type == ItemID.ShellphoneOcean;
-        }
-        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
-        {
-            item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneOcean"));
-        }
-        public override void UpdateInventory(Item item, Player player)
-        {
-            item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneOcean"));
-        }
-
-        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
-        {
-            item.SetNameOverride((string)Language.GetOrRegister("ItemName.ShellphoneOcean"));
         }
     }
 }

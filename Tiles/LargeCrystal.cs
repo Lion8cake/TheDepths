@@ -19,16 +19,24 @@ namespace TheDepths.Tiles
 			Main.tileLavaDeath[Type] = true;
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
-
 			//Top
+			TileObjectData.newTile.StyleHorizontal = true;
+			TileObjectData.newTile.AnchorAlternateTiles = new int[] { 124 };		
+			TileObjectData.newTile.Origin = new Point16(0, 0);
+			TileObjectData.newTile.AnchorLeft = AnchorData.Empty;
+			TileObjectData.newTile.AnchorRight = AnchorData.Empty;
+			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom | AnchorType.PlanterBox, TileObjectData.newTile.Width, 0);
+			TileObjectData.newTile.AnchorTop = AnchorData.Empty;
+
+			//Bottom
 			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
 			TileObjectData.newAlternate.StyleHorizontal = true;
-			TileObjectData.newAlternate.AnchorAlternateTiles = new int[] { 124 };		
+			TileObjectData.newAlternate.AnchorAlternateTiles = new int[] { 124 };
 			TileObjectData.newAlternate.Origin = new Point16(0, 0);
 			TileObjectData.newAlternate.AnchorLeft = AnchorData.Empty;
+			TileObjectData.newAlternate.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom | AnchorType.PlanterBox, TileObjectData.newTile.Width, 0);
+			TileObjectData.newAlternate.AnchorBottom = default;
 			TileObjectData.newAlternate.AnchorRight = AnchorData.Empty;
-			TileObjectData.newAlternate.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
-			TileObjectData.newAlternate.AnchorBottom = AnchorData.Empty;
 			TileObjectData.addAlternate(1);
 
 			//Left
@@ -48,14 +56,6 @@ namespace TheDepths.Tiles
 			TileObjectData.newAlternate.AnchorRight = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.Tree, TileObjectData.newTile.Width, 0);
 			TileObjectData.newAlternate.AnchorBottom = AnchorData.Empty;
 			TileObjectData.addAlternate(3);
-
-
-			//Bottom
-			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
-			TileObjectData.newAlternate.StyleHorizontal = true;
-			TileObjectData.newAlternate.AnchorAlternateTiles = new int[] { 124 };
-			TileObjectData.newAlternate.Origin = new Point16(0, 0);
-			TileObjectData.addAlternate(4);
 			TileObjectData.addTile(Type);
 
 			LocalizedText name = CreateMapEntryName();

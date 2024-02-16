@@ -19,6 +19,8 @@ using Terraria.UI;
 using Terraria.GameContent.UI.States;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Utilities;
+using TheDepths.Tiles.Trees;
+using System.Linq;
 
 namespace TheDepths.Worldgen
 {    
@@ -41,24 +43,23 @@ namespace TheDepths.Worldgen
 		/// <summary>
 		/// Detects if the player is on the depths side of the drunk seed if the depths is on the Right
 		/// </summary>
-		public static bool IsPlayerInRightDepths => DrunkDepthsRight && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) > Main.maxTilesX / 2;
+		public static bool IsPlayerInRightDepths(Player player) => DrunkDepthsRight && Math.Abs(player.position.ToTileCoordinates().X) > Main.maxTilesX / 2;
 
 		/// <summary>
 		///   Detects if the player is on the depths side of the drunk seed if the depths is on the left
 		/// </summary>
-		public static bool IsPlayerInLeftDepths => DrunkDepthsLeft && Math.Abs(Main.LocalPlayer.position.ToTileCoordinates().X) < Main.maxTilesX / 2;
+		public static bool IsPlayerInLeftDepths(Player player) => DrunkDepthsLeft && Math.Abs(player.position.ToTileCoordinates().X) < Main.maxTilesX / 2;
 
 		/// <summary>
 		///   Checks if the player is in the depths part of the world. This is used to reduce repetion within code as previously all the check needed was depthsorHell == true.
 		/// </summary>
-		public static bool InDepths => ((depthsorHell && !DrunkDepthsLeft && !DrunkDepthsRight) || (IsPlayerInLeftDepths || IsPlayerInRightDepths));
+		public static bool InDepths(Player player) => ((depthsorHell && !DrunkDepthsLeft && !DrunkDepthsRight) || (IsPlayerInLeftDepths(player) || IsPlayerInRightDepths(player)));
 
 		public override void OnWorldLoad()
 		{
 			DrunkDepthsLeft = false;
 			DrunkDepthsRight = false;
 			downedChasme = false;
-
 			//World Converter (1.4.3 => 1.4.4)
 			//Also contains some explinations 
 			if (!Main.dedServ) //Make sure that we are not on a server so we dont infinatly get stuck on Syncing Mods
@@ -187,7 +188,7 @@ namespace TheDepths.Worldgen
 			flags[0] = depthsorHell;
 			flags[1] = DrunkDepthsLeft;
 			flags[2] = DrunkDepthsRight;
-			flags[2] = downedChasme;
+			flags[3] = downedChasme;
 			writer.Write(flags);
 		}
 
@@ -1310,7 +1311,7 @@ namespace TheDepths.Worldgen
 					{
 						if (Main.tile[num864, num865].TileType == ModContent.TileType<NightmareGrass>() && Main.tile[num864, num865].HasTile && !Main.tile[num864, num865 - 1].HasTile && WorldGen.genRand.Next(3) == 0)
 						{
-							WorldGen.GrowTree(num864, num865);
+							DepthsModTree.GrowModdedTreeWithSettings(num864, num865, NightwoodTree.Tree_Nightmare);
 						}
 					}
 				}
@@ -1338,7 +1339,7 @@ namespace TheDepths.Worldgen
 						{
 							if (Main.tile[num868, num869].TileType == ModContent.TileType<NightmareGrass>() && Main.tile[num868, num869].HasTile && !Main.tile[num868, num869 - 1].HasTile && WorldGen.genRand.Next(3) == 0)
 							{
-								WorldGen.GrowTree(num868, num869);
+								DepthsModTree.GrowModdedTreeWithSettings(num868, num869, NightwoodTree.Tree_Nightmare);
 							}
 						}
 					}
@@ -1362,7 +1363,7 @@ namespace TheDepths.Worldgen
 					{
 						if (Main.tile[num868, num869].TileType == ModContent.TileType<NightmareGrass>() && Main.tile[num868, num869].HasTile && !Main.tile[num868, num869 - 1].HasTile && WorldGen.genRand.Next(3) == 0)
 						{
-							WorldGen.GrowTree(num868, num869);
+							DepthsModTree.GrowModdedTreeWithSettings(num868, num869, NightwoodTree.Tree_Nightmare);
 						}
 					}
 				}
@@ -2608,17 +2609,13 @@ namespace TheDepths.Worldgen
                     {
                         if (Main.tile[hbx, hby].TileType == (ushort)TileType<ShaleBlock>())
                         {
-                            if (WorldGen.genRand.Next(1) == 0)
-                            {
-                                WorldGen.GrowTree(hbx, hby - 1);
-                            }
+                            DepthsModTree.GrowModdedTreeWithSettings(hbx, hby - 1, PetrifiedTree.Tree_Petrfied);
                         }
                     }
                 }
             }
-            progress.Set(1f);
+            progress.Set(1f); 
         }
-
 
 		/// <summary>
 		///  Checks for nearby Depths Paintings. 
@@ -2633,7 +2630,7 @@ namespace TheDepths.Worldgen
 			{
 				for (int j = y - 5; j <= y + 5; j++)
 				{
-					if (Main.tile[i, j].HasTile && (Main.tile[i, j].TileType == ModContent.TileType<ForTheSakeOfMakingGadgets>() || Main.tile[i, j].TileType == ModContent.TileType<AltarOfGems>() || Main.tile[i, j].TileType == ModContent.TileType<DONOTDRINK>() || Main.tile[i, j].TileType == ModContent.TileType<OtherPortal>() || Main.tile[i, j].TileType == ModContent.TileType<ImPurrSonation>() || Main.tile[i, j].TileType == ModContent.TileType<MusiciansBestFriend>() || Main.tile[i, j].TileType == ModContent.TileType<Mercury>())) //3x3, 4x3, 3x4, 4x6
+					if (Main.tile[i, j].HasTile && (Main.tile[i, j].TileType == ModContent.TileType<FlowingQuicksilver>() || Main.tile[i, j].TileType == ModContent.TileType<ForTheSakeOfMakingGadgets>() || Main.tile[i, j].TileType == ModContent.TileType<AltarOfGems>() || Main.tile[i, j].TileType == ModContent.TileType<DONOTDRINK>() || Main.tile[i, j].TileType == ModContent.TileType<OtherPortal>() || Main.tile[i, j].TileType == ModContent.TileType<TheUnknownDepthsBelow>() || Main.tile[i, j].TileType == ModContent.TileType<ImPurrSonation>() || Main.tile[i, j].TileType == ModContent.TileType<MusiciansBestFriend>() || Main.tile[i, j].TileType == ModContent.TileType<Mercury>())) //3x3, 4x3, 3x4, 4x6
 					{
 						return true;
 					}
@@ -2668,6 +2665,12 @@ namespace TheDepths.Worldgen
 					break;
 				case 6:
 					num = ModContent.TileType<ChaosCat>();
+					break;
+				case 7:
+					num = ModContent.TileType<TheUnknownDepthsBelow>();
+					break;
+				case 8:
+					num = ModContent.TileType<FlowingQuicksilver>();
 					break;
 				default:
 					num = ModContent.TileType<DONOTDRINK>();

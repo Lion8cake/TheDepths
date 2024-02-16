@@ -60,6 +60,7 @@ Added nightmare grass to the shadow shrub avaible tiles
 Fixed NPCs not selling underworld items even in underworld worlds
 Fixed Nightmare grass seeds being unobtainable
 Fixed Shadow shrubs being unobtainable
+
 ==========================================
 -=Credits=-
 ==========================================
@@ -68,7 +69,8 @@ Snickerbobble - The main concept creator
 HBDeus - Depths and Chasme Boss theme, (these are very awesome check him out on yt)
 Ghast tear - 1.3 & 1.4.4 World Creation UI
 Syntrin - For making the default depths underworld background
+Darkrious & Larfleeze - For two Depths paintings and the Nightmare Tree Retexture
 Moddingus - Chasme AI
 Hariq - Chasme's base, movement and conjoinment
 Kurtis - Rocket boot dust IL edit
-bingchilling18, Pannoniæ, righteousryan - No underworld evaporation
+bingchilling18 - No underworld evaporation
