@@ -76,7 +76,6 @@ namespace TheDepths
         public bool geodeCrystal;
         public bool livingShadow;
         public bool miniChasme;
-        public bool miniChasmeArms;
         public bool ShadePet;
         private PlayerDeathReason damageSource;
         public bool FogMonolith;
@@ -105,7 +104,6 @@ namespace TheDepths
             geodeCrystal = false;
             livingShadow = false;
             miniChasme = false;
-            miniChasmeArms = false;
             ShadePet = false;
             tremblingDepthsScreenshakeTimer = 0;
             FogMonolith = false;
@@ -136,11 +134,6 @@ namespace TheDepths
                     TextureAssets.Background[i] = Main.Assets.Request<Texture2D>("Images/Background_" + i);
                 }
 
-                for (int i = 0; i < 14; i++)
-                {
-                    //TextureAssets.Underworld[i] = Main.Assets.Request<Texture2D>("Images/Backgrounds/Underworld " + i);
-                }
-
                 TextureAssets.Item[3729] = Main.Assets.Request<Texture2D>("Images/Item_3729");
                 TextureAssets.Tile[423] = Main.Assets.Request<Texture2D>("Images/Tiles_423");
 
@@ -162,7 +155,7 @@ namespace TheDepths
 
 		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
-            Player player = Main.LocalPlayer;
+            Player player = Player;
 
             if (merPoison)
             {
@@ -260,7 +253,7 @@ namespace TheDepths
 
         public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
-            Player player = Main.LocalPlayer;
+            Player player = Player;
             if (Worldgen.TheDepthsWorldGen.InDepths(player))
             {
                 if (itemDrop == ItemID.Obsidifish)
@@ -347,7 +340,7 @@ namespace TheDepths
 
         public override void PostUpdate()
         {
-            Player player = Main.LocalPlayer;
+            Player player = Player;
 
             #region QuicksilverMapColor
             ushort LiquidPosition = (ushort)typeof(MapHelper).GetField("liquidPosition", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
@@ -375,18 +368,10 @@ namespace TheDepths
                 if (Worldgen.TheDepthsWorldGen.InDepths(player))
                 {
                     LiquidRenderer.Instance._liquidTextures[1] = ModContent.Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver", (AssetRequestMode)1);
-                    int[] liquidAssetRegularNum = new int[14] { 0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
-                    foreach (int i in liquidAssetRegularNum)
-                    {
-                        LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
-                    }
                 }
                 else
                 {
-                    for (int i = 0; i < 15; i++)
-                    {
-                        LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
-                    }
+                    LiquidRenderer.Instance._liquidTextures[1] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + 1, (AssetRequestMode)1);
                 }
             }
             if (sEmbers)
@@ -559,7 +544,7 @@ namespace TheDepths
                     {
                         item.createTile = ModContent.TileType<PetrifiedSapling>();
                     }
-					if (tileBelow.TileType == ModContent.TileType<NightmareGrass>())
+					else if (tileBelow.TileType == ModContent.TileType<NightmareGrass>())
 					{
 						item.createTile = ModContent.TileType<NightSapling>();
 					}
@@ -674,7 +659,7 @@ namespace TheDepths
 
         public override void UpdateBadLifeRegen()
         {
-            Player player = Main.LocalPlayer;
+            Player player = Player;
             if (merPoison || merBoiling)
             {
                 if (player.lifeRegen > 0)
@@ -712,11 +697,11 @@ namespace TheDepths
 
         public override void PostUpdateEquips()
         {
-            if (Main.LocalPlayer.HeldItem.type == ModContent.ItemType<BlueSphere>())
+            if (Player.HeldItem.type == ModContent.ItemType<BlueSphere>())
             {
                 Player.stringColor = PaintID.DeepYellowPaint;
             }
-            if (Main.LocalPlayer.HeldItem.type == ModContent.ItemType<SilverLiner>())
+            if (Player.HeldItem.type == ModContent.ItemType<SilverLiner>())
             {
                 Player.stringColor = PaintID.WhitePaint;
             }
@@ -780,7 +765,7 @@ namespace TheDepths
 
         public override void PostUpdateMiscEffects()
         {
-            Player player = Main.LocalPlayer;
+            Player player = Player;
             if (Main.netMode != 2 && Player.whoAmI == Main.myPlayer)
             {
                 TextureAssets.Item[3729] = Request<Texture2D>("TheDepths/Assets/Retextures/LiquidSensor");
@@ -808,10 +793,6 @@ namespace TheDepths
                     {
                         TextureAssets.Background[i] = Request<Texture2D>("TheDepths/Backgrounds/Background_" + i);
                     }
-                    for (int i = 0; i < 14; i++)
-                    {
-                        //TextureAssets.Underworld[i] = Request<Texture2D>("TheDepths/Backgrounds/DepthsUnderworldBG_" + i);
-                    }
                 }
                 else
                 {
@@ -826,11 +807,6 @@ namespace TheDepths
                     foreach (int i in bgnumOriginal)
                     {
                         TextureAssets.Background[i] = Main.Assets.Request<Texture2D>("Images/Background_" + i);
-                    }
-
-                    for (int i = 0; i < 14; i++)
-                    {
-                       // TextureAssets.Underworld[i] = Main.Assets.Request<Texture2D>("Images/Backgrounds/Underworld " + i);
                     }
                 }
             }

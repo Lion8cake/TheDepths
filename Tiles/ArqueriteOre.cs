@@ -22,6 +22,16 @@ namespace TheDepths.Tiles
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			DustType = ModContent.DustType<ArqueriteDust>();
+			Main.tileMerge[Type][ModContent.TileType<Shalestone>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<Quartz>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<ShaleBlock>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<ShalestoneAmethyst>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<ShalestoneDiamond>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<ShalestoneEmerald>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<ShalestoneRuby>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<ShalestoneSapphire>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<ShalestoneTopaz>()] = true;
+			Main.tileMerge[Type][ModContent.TileType<OnyxShalestone>()] = true;
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(119, 134, 162), name);
 

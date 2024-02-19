@@ -19,6 +19,7 @@ using TheDepths.Biomes;
 using Terraria.GameContent.Bestiary;
 using TheDepths.Worldgen;
 using TheDepths.Items;
+using TheDepths.Items.Weapons;
 
 namespace TheDepths.NPCs.Chasme;
 
@@ -131,8 +132,11 @@ public class ChasmeHeart : ModNPC
 			{
 				return true;
 			}
+			else
+			{
+				return false;
+			}
 		}
-		return false;
 	}
 
 	public override void AI()
@@ -556,7 +560,7 @@ public class ChasmeHeart : ModNPC
 
 		notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.POWHammer>()));
 
-		notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Items.Weapons.ShadeBlade>(), ModContent.ItemType<Items.Weapons.QuartzCannon>(), ModContent.ItemType<Items.Weapons.ShadowClaw>()));
+		notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Items.Weapons.ShadeBlade>(), ModContent.ItemType<Items.Weapons.QuartzCannon>(), ModContent.ItemType<Items.Weapons.ShadowClaw>(), ModContent.ItemType<StaffOfAThousandYears>()));
 
 		notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(1, ItemID.WarriorEmblem, ItemID.RangerEmblem, ItemID.SorcererEmblem, ItemID.SummonerEmblem));
 

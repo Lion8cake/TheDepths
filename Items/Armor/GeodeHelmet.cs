@@ -24,7 +24,7 @@ namespace TheDepths.Items.Armor
 			Item.width = 18;
 			Item.height = 18;
 			Item.rare = ItemRarityID.LightRed;
-			Item.defense = 5;
+			Item.defense = 4;
 			Item.value = 4500;
 		}
 		
@@ -61,12 +61,10 @@ namespace TheDepths.Items.Armor
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 2);
-			recipe.AddIngredient(ItemID.TissueSample, 5);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 			Recipe recipe2 = CreateRecipe();
 			recipe2.AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 2);
-			recipe2.AddIngredient(ItemID.ShadowScale, 5);
 			recipe2.AddTile(TileID.Anvils);
 			recipe2.Register();
 		}

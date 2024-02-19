@@ -45,10 +45,10 @@ namespace TheDepths
 	{
 		public static Mod mod;
 		public static List<int> livingFireBlockList;
-		public static float[] UWBGAlpha = new float[2];
-		public static int UWBGStyle;
-		public Color[] UWBGBottomColor = new Color[2];
-		public Asset<Texture2D>[][] UWBGTexture = new Asset<Texture2D>[2][];
+		private static float[] UWBGAlpha = new float[2];
+		private static int UWBGStyle;
+		private Color[] UWBGBottomColor = new Color[2];
+		private Asset<Texture2D>[][] UWBGTexture = new Asset<Texture2D>[2][];
 
 		public override void Load()
 		{
@@ -72,7 +72,7 @@ namespace TheDepths
 			}
 
 			IL_Liquid.Update += Evaporation;
-			Terraria.IL_Player.UpdateBiomes += NoHeap;
+			Terraria.IL_Player.UpdateBiomes += HeatRemoval;
 
 			IL_Main.DrawBG += UWBGInsert;
 			IL_Main.DrawCapture += UWBGInsertCapture;
@@ -95,7 +95,7 @@ namespace TheDepths
 			On_Liquid.GetLiquidMergeTypes += On_Liquid_GetLiquidMergeTypes;
 			On_Player.PlaceThing_Tiles_CheckLavaBlocking += On_Player_PlaceThing_Tiles_CheckLavaBlocking;
 
-			Terraria.GameContent.UI.Elements.On_UIGenProgressBar.DrawSelf += On_UIGenProgressBar_DrawSelf;
+			IL_UIGenProgressBar.DrawSelf += ProgressBarEdit;
 			Terraria.GameContent.UI.States.IL_UIWorldCreation.BuildPage += DepthsSelectionMenu.ILBuildPage;
 			Terraria.GameContent.UI.States.IL_UIWorldCreation.MakeInfoMenu += DepthsSelectionMenu.ILMakeInfoMenu;
 			Terraria.GameContent.UI.States.IL_UIWorldCreation.ShowOptionDescription +=
@@ -136,6 +136,8 @@ namespace TheDepths
 			IL_CreditsRollEvent.SetRemainingTimeDirect += CreditsRollIngameTimeDurationExtention;
 		}
 
+		
+
 		public override void Unload()
 		{
 			TheDepthsWindUtilities.Unload();
@@ -146,7 +148,7 @@ namespace TheDepths
 
 			livingFireBlockList = null;
 			IL_Liquid.Update -= Evaporation;
-			Terraria.IL_Player.UpdateBiomes -= NoHeap;
+			Terraria.IL_Player.UpdateBiomes -= HeatRemoval;
 
 			IL_Main.DrawBG -= UWBGInsert;
 			IL_Main.DrawCapture -= UWBGInsertCapture;
@@ -163,7 +165,7 @@ namespace TheDepths
 			On_Liquid.GetLiquidMergeTypes -= On_Liquid_GetLiquidMergeTypes;
 			On_Player.PlaceThing_Tiles_CheckLavaBlocking -= On_Player_PlaceThing_Tiles_CheckLavaBlocking;
 
-			Terraria.GameContent.UI.Elements.On_UIGenProgressBar.DrawSelf -= On_UIGenProgressBar_DrawSelf;
+			IL_UIGenProgressBar.DrawSelf -= ProgressBarEdit;
 
 			On_Player.ItemCheck_CatchCritters -= On_Player_ItemCheck_CatchCritters;
 			IL_LiquidRenderer.InternalPrepareDraw -= LavaBubbleReplacer;
@@ -408,7 +410,7 @@ namespace TheDepths
 		}
 		#endregion
 
-		#region UnderworldandTimeSpawningILedits
+		#region UnderworldandTimSpawningILedits
 		private void NPCSpawningEdit(ILContext il)
 		{
 			ILCursor c = new ILCursor(il);
@@ -684,8 +686,8 @@ namespace TheDepths
 			c.EmitDelegate((CreditsRollComposer self, ref int num, ref int num3, ref Vector2 vector2) =>
 			{ //Get the needed variables and instance
 			  //Edit inside here for more text and animations, shown here is just how to add 1 text and 1 animation
-			  //num += PlaySegment_ModdedTextRoll(self, num, "Mods.TheDepths.CreditsRollCategory_DepthsTeam", vector2).totalTime; //Play our credit text
-			  //num += num3; //wait
+				num += PlaySegment_ModdedTextRoll(self, num, "Mods.TheDepths.CreditsRollCategory_DepthsTeam", vector2).totalTime; //Play our credit text
+				num += num3; //wait
 				num += PlaySegment_LionEightCake_ChasmesCurseIsLifted(self, num, vector2).totalTime; //Play our custom animation
 				num += num3; //wait
 			});
@@ -729,6 +731,7 @@ namespace TheDepths
 		}
 		#endregion
 
+		//v not needed in the march update
 		#region FishingBobberFix
 		private void On_Main_DrawProj_FishingLine(On_Main.orig_DrawProj_FishingLine orig, Projectile proj, ref float polePosX, ref float polePosY, Vector2 mountedCenter)
 		{
@@ -965,7 +968,7 @@ namespace TheDepths
 			bool data = uiItem.Data.TryGetHeaderData(ModContent.GetInstance<TheDepthsWorldGen>(), out var _data);
 			UIElement WorldIcon = (UIElement)typeof(UIWorldListItem).GetField("_worldIcon", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(uiItem);
 			WorldFileData Data = (WorldFileData)typeof(AWorldListItem).GetField("_data", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(uiItem);
-
+			WorldIcon.RemoveAllChildren();
 			#region UnopenedWorldIcon
 			if (!data)
 			{
@@ -1205,7 +1208,7 @@ namespace TheDepths
 		#region LavaSensorDetour
 		private bool On_TELogicSensor_GetState(On_TELogicSensor.orig_GetState orig, int x, int y, TELogicSensor.LogicCheckType type, TELogicSensor instance)
 		{
-			if (type == TELogicSensor.LogicCheckType.Lava && (Worldgen.TheDepthsWorldGen.depthsorHell || (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2)))
+			if (type == TELogicSensor.LogicCheckType.Lava && ((Worldgen.TheDepthsWorldGen.depthsorHell && !TheDepthsWorldGen.DrunkDepthsLeft && !TheDepthsWorldGen.DrunkDepthsRight) || (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2)))
 			{
 				return false;
 			}
@@ -1216,8 +1219,7 @@ namespace TheDepths
 		#region MercuryBugCatchingPunishmentDetour
 		private Rectangle On_Player_ItemCheck_CatchCritters(On_Player.orig_ItemCheck_CatchCritters orig, Player self, Item sItem, Rectangle itemRectangle)
 		{
-			orig.Invoke(self, sItem, itemRectangle);
-			bool flag = sItem.type == ModContent.ItemType<Items.QuicksilverproofBugNet>() || sItem.type == 4821;
+			bool flag = sItem.type == ModContent.ItemType<Items.QuicksilverproofBugNet>() || sItem.type == ItemID.FireproofBugNet;
 			for (int i = 0; i < 200; i++)
 			{
 				if (!Main.npc[i].active || Main.npc[i].catchItem <= 0)
@@ -1236,7 +1238,10 @@ namespace TheDepths
 						if (Main.npc[i].type == ModContent.NPCType<NPCs.EnchantedNightmareWorm>() || Main.npc[i].type == ModContent.NPCType<NPCs.AlbinoRat>() || Main.npc[i].type == ModContent.NPCType<NPCs.QuartzCrawler>())
 						{
 							Main.LocalPlayer.AddBuff(ModContent.BuffType<Buffs.MercuryBoiling>(), 300, quiet: false);
-							Main.LocalPlayer.ClearBuff(BuffID.OnFire);
+						}
+						else
+						{
+							orig.Invoke(self, sItem, itemRectangle);
 						}
 					}
 				}
@@ -1246,25 +1251,11 @@ namespace TheDepths
 		#endregion
 
 		#region OuterLowerDepthsProgressBar
-		private void On_UIGenProgressBar_DrawSelf(Terraria.GameContent.UI.Elements.On_UIGenProgressBar.orig_DrawSelf orig, Terraria.GameContent.UI.Elements.UIGenProgressBar self, SpriteBatch spriteBatch)
+		private void ProgressBarEdit(ILContext il)
 		{
-			orig.Invoke(self, spriteBatch);
-			Asset<Texture2D> OuterCorrupt = (Asset<Texture2D>)typeof(UIGenProgressBar).GetField("_texOuterCorrupt", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
-			Asset<Texture2D> OuterCrimson = (Asset<Texture2D>)typeof(UIGenProgressBar).GetField("_texOuterCrimson", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
-			Asset<Texture2D> OuterLower = (Asset<Texture2D>)typeof(UIGenProgressBar).GetField("_texOuterLower", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
-			if (OuterCorrupt.IsLoaded && OuterCrimson.IsLoaded && OuterLower.IsLoaded)
-			{
-				bool flag2 = Worldgen.TheDepthsWorldGen.depthsorHell;
-				if (WorldGen.drunkWorldGen && Main.rand.NextBool(2))
-				{
-					flag2 = !flag2;
-				}
-				Color color = default(Color);
-				color.PackedValue = 4290947159u;
-				Rectangle r = self.GetDimensions().ToRectangle();
-				r.X -= 8;
-				spriteBatch.Draw(flag2 ? ModContent.Request<Texture2D>("TheDepths/Assets/Loading/Depths_Outer_Lower").Value : OuterLower.Value, r.TopLeft() + new Vector2(44f, 60f), Color.White);
-			}
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After, i => i.MatchCallvirt<SpriteBatch>("Draw"), i => i.MatchLdarg1(), i => i.MatchLdarg0(), i => i.MatchLdfld<UIGenProgressBar>("_texOuterLower"));
+			c.EmitDelegate((Asset<Texture2D> texture) => (!WorldGen.drunkWorldGen && TheDepthsWorldGen.depthsorHell || (WorldGen.drunkWorldGen && Main.rand.NextBool(2))) ? ModContent.Request<Texture2D>("TheDepths/Assets/Loading/Depths_Outer_Lower") : texture);
 		}
 		#endregion
 
@@ -1713,39 +1704,45 @@ namespace TheDepths
 		#endregion
 
 		#region DepthsNoHeatDistortionILEdit
-		private void NoHeap(ILContext il)
+		private void HeatRemoval(ILContext il)
 		{
-			var c = new ILCursor(il);
-			try
-			{
-				c.GotoNext(MoveType.After,
-					i => i.MatchLdstr("HeatDistortion"),
-					i => i.MatchLdsfld<Main>("UseHeatDistortion"));
-
-				c.EmitDelegate((bool useHeatDistortion) =>
-				{
-					if (Worldgen.TheDepthsWorldGen.depthsorHell)
-					{
-						return false;
-					}
-					return useHeatDistortion;
-				});
-			}
-			catch (Exception e)
-			{
-				Logger.Error(e.Message);
-			}
+			ILCursor c = new ILCursor(il); //Make a cursor
+			c.GotoNext(MoveType.After, 
+				i => i.MatchLdloc0(), 
+				i => i.MatchLdfld<Point>("Y"), 
+				i => i.MatchLdsfld<Main>("maxTilesY"), 
+				i => i.MatchLdcI4(320), 
+				i => i.MatchSub(), 
+				i => i.MatchCgt());
+			//Finds the Flag7 Bool that controles the heat Y level
+			c.EmitDelegate<Func<bool, bool>>(currentBool => currentBool && !Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer)); //Adds ontop of the bool with our own
 		}
 		#endregion
 
 		#region NoEvaporationILEdit
 		private void Evaporation(ILContext il)
 		{
-			//This edit is horrible, ill need to remake it at some point
 			ILCursor c = new(il);
-			c.GotoNext(x => x.MatchCall(typeof(Main).GetMethod("get_UnderworldLayer")));
-			c.Index++;
-			c.EmitDelegate<Func<int, int>>(value => !TheDepthsWorldGen.depthsorHell ? value : int.MaxValue);
+			ILLabel IL_011e = null;
+			if (!c.TryGotoNext(MoveType.After,
+				i => i.MatchLdarg0(),
+				i => i.MatchLdfld<Liquid>("y"),
+				i => i.MatchCall<Main>("get_UnderworldLayer"),
+				i => i.MatchBle(out IL_011e)))
+			{
+				ModContent.GetInstance<TheDepths>().Logger.Debug("The Depths: Could not locate the Water Evaporation Code");
+				return;
+			}
+			if (IL_011e == null) return;
+			c.EmitLdarg0();//Terraria.Liquid instance
+			c.EmitLdfld(typeof(Liquid).GetField("x", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)); //X position variable used in the delegate
+			c.EmitDelegate((int x) =>
+			{
+				return (Worldgen.TheDepthsWorldGen.depthsorHell && !TheDepthsWorldGen.DrunkDepthsLeft && !TheDepthsWorldGen.DrunkDepthsRight) 
+				|| (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 
+				|| Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2);
+			});
+			c.EmitBrtrue(IL_011e);
 		}
 		#endregion
 	}

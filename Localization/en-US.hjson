@@ -26,6 +26,11 @@ Mods: {
 				Doubles duration of Mercury Footing
 				Halves the duration of Mercury Poisoning from Quicksilver
 				'''
+			QuartzArmor:
+				'''
+				Increases Whip Range by 35%
+				Increases Whip Speed by 35%
+				'''
 			OnyxRobeWizard:
 				'''
 				2 defence
@@ -289,15 +294,20 @@ Mods: {
 
 			MercuryContagion: {
 				DisplayName: Mercury Contagion
-				Description: Mods.TheDepths.Buffs.MercuryContagion.Description
+				Description: When enemies collide, their sickness will spread
 			}
 
 			PhantomFirecartBuff.DisplayName: Minecart
 			OnyxMinecartBuff.DisplayName: Minecart
 
 			NightmareHorseBuff: {
-				DisplayName: Nightmare Horse Buff
-				Description: Mods.TheDepths.Buffs.NightmareHorseBuff.Description
+				DisplayName: Nightmare Horse
+				Description: A ghastly looking shalestone horse constructed by chasme herself
+			}
+
+			BuffofaThousandYears: {
+				DisplayName: Chasmini
+				Description: Chasmini will use her hands to fight for you
 			}
 		}
 
@@ -394,17 +404,17 @@ Mods: {
 
 			GeodeChestplate: {
 				DisplayName: Geode Chestplate
-				Tooltip: Incressed maximum amount of minions by 1
+				Tooltip: Incresses maximum amount of minions by 1
 			}
 
 			GeodeHelmet: {
 				DisplayName: Geode Helmet
-				Tooltip: Incressed maximum amount of minions by 1
+				Tooltip: Incresses maximum amount of minions by 1
 			}
 
 			GeodeLeggings: {
 				DisplayName: Geode Leggings
-				Tooltip: Incressed maximum amount of minions by 1
+				Tooltip: Incresses maximum amount of minions by 1
 			}
 
 			Geode: {
@@ -1700,6 +1710,31 @@ Mods: {
 				DisplayName: Shale Wall
 				Tooltip: ""
 			}
+
+			StaffOfAThousandYears: {
+				DisplayName: Staff of a Thousand Years
+				Tooltip: Summons Chasminis to fight for you
+			}
+
+			QuartzHood: {
+				DisplayName: Quartz Hood
+				Tooltip: Increases Whip Range by 15%
+			}
+
+			QuartzLeggings: {
+				DisplayName: Quartz Leggings
+				Tooltip: Increases max number of minions by 1
+			}
+
+			QuartzWinterCoat: {
+				DisplayName: Quartz Winter Coat
+				Tooltip: Increases Whip Speed by 15%
+			}
+
+			HungryLeash: {
+				DisplayName: Hungry Leash
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -1804,6 +1839,8 @@ Mods: {
 			AquaArrow.DisplayName: Aqua Arrow
 			OnyxExplosion.DisplayName: Onyx Explosion
 			SapphireSerpentKite.DisplayName: Sapphire Serpent Kite
+			MiniChasme.DisplayName: Mini-Chasme
+			MiniChasmeHand.DisplayName: Mini-Chasme Hand
 		}
 
 		Biomes: {
@@ -1892,6 +1929,7 @@ Mods: {
 			}
 		}
 
+		BossChecklist.SpawnInfo.Chasme: Spawn by using a [i:TheDepths/RubyRelic] at a [i:TheDepths/Gemforge] in your world's core. [c/FF0000:Starts Hardmode!]
 		InDepths: Mods.TheDepths.InDepths
 		OutDepths: Mods.TheDepths.OutDepths
 		GameUI.LayerDepths: Depths
@@ -1921,7 +1959,6 @@ Mods: {
 	}
 }
 
-#GameUI.LayerUnderworld: Core
 ItemTooltip.TerrasparkBoots:
 	'''
 	Allows flight, super fast running, and extra mobility on ice
