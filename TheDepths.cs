@@ -53,7 +53,9 @@ namespace TheDepths
 		public override void Load()
 		{
 			Asset<Effect> shader = ModContent.Request<Effect>("TheDepths/Shaders/DepthsFog", AssetRequestMode.ImmediateLoad);
+			Asset<Effect> shader2 = ModContent.Request<Effect>("TheDepths/Shaders/myEffect", AssetRequestMode.ImmediateLoad);
 			Filters.Scene["TheDepths:FogShader"] = new Filter(new ScreenShaderData(new Ref<Effect>(shader.Value), "DepthsFogShaderPass"), EffectPriority.VeryHigh);
+			GameShaders.Misc["TheDepths:myShader"] = new MiscShaderData(new Ref<Effect>(ModContent.Request<Effect>("TheDepths/Shaders/myEffect", AssetRequestMode.ImmediateLoad).Value), "AutoloadPass").UseColor(140, 17, 206).UseSaturation(0f);
 
 			TheDepthsWindUtilities.Load();
 

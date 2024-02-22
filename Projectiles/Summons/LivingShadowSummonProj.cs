@@ -23,6 +23,9 @@ using static Humanizer.In;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
+using TheDepths.Mounts;
+using TheDepths.Items;
+using Terraria.GameContent;
 
 namespace TheDepths.Projectiles.Summons
 {
@@ -68,6 +71,8 @@ namespace TheDepths.Projectiles.Summons
 			int num = 450;
 			float num12 = 500f;
 			float num21 = 300f;
+			float num13 = 1400f;
+			float num22 = 800f;
 			int num32 = 15;
 			if (player.dead)
 			{
@@ -101,6 +106,12 @@ namespace TheDepths.Projectiles.Summons
 			Rectangle hitbox;
 			if (Projectile.ai[0] == 1f)
 			{
+				//if (player.wingTimeMax > 0)
+				//{
+				//	Projectile.ai[3] = 1f;
+				//}
+				Projectile.ai[3] = (player.wingTimeMax > 0 ? 1f : 0f);
+				Main.NewText("Im flying?");
 				Projectile.tileCollide = false;
 				float num9 = 0.2f;
 				float num10 = 10f;
@@ -258,7 +269,7 @@ namespace TheDepths.Projectiles.Summons
 			}
 			if (Projectile.ai[0] == 0f && attackTarget < 0)
 			{
-				if (Main.player[Projectile.owner].rocketDelay2 > 0)
+				if (player.rocketDelay2 > 0 && player.wingTimeMax > 0) //Wingtime because obv the minion shouldnt fly with withs when the player doesnt have wings
 				{
 					Projectile.ai[0] = 1f;
 					Projectile.netUpdate = true;
@@ -270,6 +281,20 @@ namespace TheDepths.Projectiles.Summons
 				}
 				else if ((vector11.Length() > num12 || Math.Abs(vector11.Y) > num21) && player.wingTimeMax > 0) //Wingtime because obv the minion shouldnt fly with withs when the player doesnt have wings
 				{
+					Projectile.ai[0] = 1f;//The initial trigger for when the summons are too far away
+					Projectile.netUpdate = true;
+					if (Projectile.velocity.Y > 0f && vector11.Y < 0f)
+					{
+						Projectile.velocity.Y = 0f;
+					}
+					if (Projectile.velocity.Y < 0f && vector11.Y > 0f)
+					{
+						Projectile.velocity.Y = 0f;
+					}
+				}
+				else if ((vector11.Length() > num13 || Math.Abs(vector11.Y) > num22)) //Wingtime because obv the minion shouldnt fly with withs when the player doesnt have wings
+				{
+					Main.NewText("Its Shadow ball time (and proceeds to shadow ball all over the place)");
 					Projectile.ai[0] = 1f;//The initial trigger for when the summons are too far away
 					Projectile.netUpdate = true;
 					if (Projectile.velocity.Y > 0f && vector11.Y < 0f)
@@ -587,7 +612,7 @@ namespace TheDepths.Projectiles.Summons
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Main.spriteBatch.End();
-			Main.spriteBatch.Begin((SpriteSortMode)0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, (Effect)null, Main.Transform);
+			Main.spriteBatch.Begin((SpriteSortMode)0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
 			int projectileAmount = 0;
 			for (int i = 0; i < Main.maxProjectiles; i++)
 			{
@@ -616,7 +641,24 @@ namespace TheDepths.Projectiles.Summons
 				player.wingFrame = Projectile.frame - 10;
 				player.PlayerFrame();
 				player.socialIgnoreLight = true;
-				Main.PlayerRenderer.DrawPlayer(Main.Camera, player, Projectile.position, 0f, player.fullRotationOrigin);
+				if (Projectile.ai[3] == 0f)
+				{
+					Main.PlayerRenderer.DrawPlayer(Main.Camera, player, Projectile.position, 0f, player.fullRotationOrigin);
+					GameShaders.Misc["TheDepths:myShader"].Apply();
+				}
+				else
+				{
+					Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+					Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
+					int height = texture.Height / 17;
+					int y = height * Projectile.frame;
+					Rectangle rect = new(0, y, texture.Width, height);
+					Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
+					var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+					Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+					Main.EntitySpriteDraw(glow, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+				}
 			}
 			catch (Exception e)
 			{
