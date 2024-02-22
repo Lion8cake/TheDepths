@@ -106,11 +106,7 @@ namespace TheDepths.Projectiles.Summons
 			Rectangle hitbox;
 			if (Projectile.ai[0] == 1f)
 			{
-				//if (player.wingTimeMax > 0)
-				//{
-				//	Projectile.ai[3] = 1f;
-				//}
-				Projectile.ai[3] = (player.wingTimeMax > 0 ? 1f : 0f);
+				Projectile.ai[2] = (player.wingTimeMax > 0 ? 0f : 1f);
 				Main.NewText("Im flying?");
 				Projectile.tileCollide = false;
 				float num9 = 0.2f;
@@ -641,7 +637,7 @@ namespace TheDepths.Projectiles.Summons
 				player.wingFrame = Projectile.frame - 10;
 				player.PlayerFrame();
 				player.socialIgnoreLight = true;
-				if (Projectile.ai[3] == 0f)
+				if (Projectile.ai[2] == 0f)
 				{
 					Main.PlayerRenderer.DrawPlayer(Main.Camera, player, Projectile.position, 0f, player.fullRotationOrigin);
 					GameShaders.Misc["TheDepths:myShader"].Apply();
@@ -657,7 +653,6 @@ namespace TheDepths.Projectiles.Summons
 					var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
 					Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
-					Main.EntitySpriteDraw(glow, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
 				}
 			}
 			catch (Exception e)
