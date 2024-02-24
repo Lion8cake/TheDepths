@@ -6,7 +6,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheDepths.Dusts;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 
@@ -15,16 +17,18 @@ namespace TheDepths.Projectiles.Summons
     public class LivingShadowSummonProj : ModProjectile
     {
 	    private static RenderTarget2D playerRT;
+	    private static Asset<Texture2D> livingShadowEyesAsset;
 		public static Player[] playerVisualClone = new Player[256];
 
 		public override void Load()
 		{
+			livingShadowEyesAsset = ModContent.Request<Texture2D>(Texture + "_Eyes");
+            
 			using var eventSlim = new ManualResetEventSlim();
 			
 			Main.QueueMainThreadAction(() =>
 			{
-				playerRT = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight,
-					mipMap: false, Main.graphics.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.None);
+				playerRT = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
 				
 				eventSlim.Set();
 			});
@@ -41,12 +45,13 @@ namespace TheDepths.Projectiles.Summons
 			var parameters = gd.PresentationParameters;
 			
 			playerRT?.Dispose();
-			playerRT = new RenderTarget2D(gd, parameters.BackBufferWidth, parameters.BackBufferHeight,
-				mipMap: false, parameters.BackBufferFormat, DepthFormat.None);
+			playerRT = new RenderTarget2D(gd, parameters.BackBufferWidth, parameters.BackBufferHeight);
 		}
 
 		public override void Unload()
 		{
+			livingShadowEyesAsset = null;
+			
 			Main.graphics.GraphicsDevice.DeviceReset -= OnDeviceReset;
 			
 			if (playerRT is not null)
@@ -734,11 +739,35 @@ namespace TheDepths.Projectiles.Summons
 			sb.End();
 			
 			sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
+            
 			var drawData = new DrawData(playerRT, Vector2.Zero, Color.White);
 			GameShaders.Misc["TheDepths:SilhouetteShader"].Apply(drawData);
 			drawData.Draw(Main.spriteBatch);
-			
+
+			var playerOwner = Main.player[Projectile.owner];
+			var visualPlayer = playerVisualClone[Projectile.owner];
+			var eyesNotVisible = playerOwner.head > 0 && !ArmorIDs.Head.Sets.DrawHead[playerOwner.head];
+			if (!eyesNotVisible)
+			{
+				var headVect = new Vector2(visualPlayer.legFrame.Width * 0.5f, visualPlayer.legFrame.Height * 0.4f);
+				var position = new Vector2(
+					(int)(visualPlayer.position.X - Main.screenPosition.X - (float)(visualPlayer.bodyFrame.Width / 2) + (float)(visualPlayer.width / 2)),
+					(int)(visualPlayer.position.Y - Main.screenPosition.Y + (float)visualPlayer.height - (float)visualPlayer.bodyFrame.Height + 4f)
+				) + visualPlayer.headPosition + headVect;
+				
+				sb.Draw(TextureAssets.Players[visualPlayer.skinVariant, 1].Value,
+					position,
+					visualPlayer.bodyFrame,
+					Color.White,
+					visualPlayer.headRotation,
+					headVect,
+					Projectile.scale,
+					Projectile.direction < 0 ? SpriteEffects.FlipHorizontally : 0,
+					0f);
+			}
+
 			sb.End();
+			
 			sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
 			return false;
 		}
