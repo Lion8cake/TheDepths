@@ -1,38 +1,69 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Terraria.WorldBuilding;
-using TheDepths;
-using TheDepths.Tiles;
-using TheDepths.Projectiles;
+using System.Threading;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 using TheDepths.Dusts;
-using TheDepths.Projectiles.Summons;
-using TheDepths.Buffs;
-using log4net.Util;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.Graphics.Renderers;
-using Terraria.Graphics;
-using Microsoft.CodeAnalysis;
-using static Humanizer.In;
-using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
-using TheDepths.Mounts;
-using TheDepths.Items;
-using Terraria.GameContent;
-using Terraria.GameContent.RGB;
 
 namespace TheDepths.Projectiles.Summons
 {
     public class LivingShadowSummonProj : ModProjectile
-	{
+    {
+	    private static RenderTarget2D playerRT;
 		public static Player[] playerVisualClone = new Player[256];
+
+		public override void Load()
+		{
+			using var eventSlim = new ManualResetEventSlim();
+			
+			Main.QueueMainThreadAction(() =>
+			{
+				playerRT = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight,
+					mipMap: false, Main.graphics.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.None);
+				
+				eventSlim.Set();
+			});
+
+			eventSlim.Wait();
+
+			Main.graphics.GraphicsDevice.DeviceReset += OnDeviceReset;
+		}
+
+		private static void OnDeviceReset(object sender, EventArgs eventArgs)
+		{
+			var gd = (GraphicsDevice)sender;
+
+			var parameters = gd.PresentationParameters;
+			
+			playerRT?.Dispose();
+			playerRT = new RenderTarget2D(gd, parameters.BackBufferWidth, parameters.BackBufferHeight,
+				mipMap: false, parameters.BackBufferFormat, DepthFormat.None);
+		}
+
+		public override void Unload()
+		{
+			Main.graphics.GraphicsDevice.DeviceReset -= OnDeviceReset;
+			
+			if (playerRT is not null)
+			{
+				using var eventSlim = new ManualResetEventSlim();
+			
+				Main.QueueMainThreadAction(() =>
+				{
+					playerRT.Dispose();
+					eventSlim.Set();
+				});
+
+				eventSlim.Wait();
+
+				playerRT = null;
+			}
+		}
 
 		public override void SetStaticDefaults()
 		{
@@ -614,13 +645,24 @@ namespace TheDepths.Projectiles.Summons
 			if (Projectile.ai[2] == 1f)
 			{
 				Projectile.rotation += 0.3f * (float)Projectile.direction;
+				
+				for (int x = 2; x < 30; x++)
+				{
+					for (int y = 2; y < 30; y++)
+					{
+						if (Main.rand.NextBool(400))
+						{
+							Dust.NewDust(Projectile.position + new Vector2(x, y), 0, 0, ModContent.DustType<DustSilhouette>());
+						}
+					}
+				}
 			}
 		}
 
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Main.spriteBatch.End();
-			Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
+            
 			int projectileAmount = 0;
 			for (int i = 0; i < Main.maxProjectiles; i++)
 			{
@@ -629,6 +671,19 @@ namespace TheDepths.Projectiles.Summons
 					projectileAmount++;
 				}
 			}
+
+			var graphicsDevice = Main.instance.GraphicsDevice;
+			var sb = Main.spriteBatch;
+			
+			graphicsDevice.SetRenderTarget(Main.screenTargetSwap);
+			graphicsDevice.Clear(Color.Transparent);
+			sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+			sb.Draw(Main.screenTarget, Vector2.Zero, Color.White);
+			sb.End();
+			
+			graphicsDevice.SetRenderTarget(playerRT);
+			graphicsDevice.Clear(Color.Transparent);
+			sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
 			try
 			{
 				int owner = Projectile.owner;
@@ -649,13 +704,12 @@ namespace TheDepths.Projectiles.Summons
 				player.wingFrame = Projectile.frame - 10;
 				player.PlayerFrame();
 				player.socialIgnoreLight = true;
+				
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 				if (Projectile.ai[2] == 0f)
 				{
-					//RenderTarget2D renderTarget = PlayerTarget.Target;
-					//GraphicsDevice.SetRenderTarget(s);
-					GameShaders.Misc["TheDepths:SilhouetteShader"].Apply();
-					Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-					Main.PlayerRenderer.DrawPlayer(Main.Camera, player, Projectile.position, 0f, player.fullRotationOrigin);
+					using (DefaultRenderTargetOverrider.OverrideSpecific(playerRT, Main.screenTarget))
+						Main.PlayerRenderer.DrawPlayer(Main.Camera, player, Projectile.position, 0f, player.fullRotationOrigin);
 				}
 				else
 				{
@@ -663,20 +717,7 @@ namespace TheDepths.Projectiles.Summons
 					Rectangle rect = new(0, 0, texture.Width, texture.Width);
 					Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 					var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-					DrawData data = new DrawData(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects);
-					GameShaders.Misc["TheDepths:SilhouetteShader"].Apply(data);
-					data.Draw(Main.spriteBatch);
-					Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-					for (int x = 2; x < texture.Width - 2; x++)
-					{
-						for (int y = 2; y < texture.Height - 2; y++)
-						{
-							if (Main.rand.NextBool(400))
-							{
-								Dust.NewDust(Projectile.position + new Vector2(x, y), 0, 0, ModContent.DustType<DustSilhouette>());
-							}
-						}
-					}
+					sb.Draw(texture, Projectile.Center - Main.screenPosition, rect, Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0f);
 				}
 			}
 			catch (Exception e)
@@ -684,8 +725,21 @@ namespace TheDepths.Projectiles.Summons
 				TimeLogger.DrawException(e);
 				Projectile.active = false;
 			}
-			Main.spriteBatch.End();
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
+			sb.End();
+			graphicsDevice.SetRenderTarget(Main.screenTarget);
+			graphicsDevice.Clear(Color.Transparent);
+			
+			sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+			sb.Draw(Main.screenTargetSwap, Vector2.Zero, Color.White);
+			sb.End();
+			
+			sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
+			var drawData = new DrawData(playerRT, Vector2.Zero, Color.White);
+			GameShaders.Misc["TheDepths:SilhouetteShader"].Apply(drawData);
+			drawData.Draw(Main.spriteBatch);
+			
+			sb.End();
+			sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
 			return false;
 		}
 

@@ -52,6 +52,8 @@ namespace TheDepths
 
 		public override void Load()
 		{
+			DefaultRenderTargetOverrider.Patch();
+			
 			Asset<Effect> shader = ModContent.Request<Effect>("TheDepths/Shaders/DepthsFog", AssetRequestMode.ImmediateLoad);
 			Asset<Effect> shader2 = ModContent.Request<Effect>("TheDepths/Shaders/SilhouetteShader", AssetRequestMode.ImmediateLoad);
 			Filters.Scene["TheDepths:FogShader"] = new Filter(new ScreenShaderData(new Ref<Effect>(shader.Value), "DepthsFogShaderPass"), EffectPriority.VeryHigh);
