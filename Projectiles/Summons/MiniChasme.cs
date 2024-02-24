@@ -15,6 +15,9 @@ using TheDepths.Dusts;
 using TheDepths.Projectiles.Summons;
 using TheDepths.Buffs;
 using Terraria.DataStructures;
+using log4net.Util;
+using TheDepths.Mounts;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace TheDepths.Projectiles.Summons
 {
@@ -47,6 +50,11 @@ namespace TheDepths.Projectiles.Summons
 		public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
+			if (!player.active)
+			{
+				Projectile.active = false;
+				return;
+			}
 			if (Main.projectile[ChasmeleftArm].type != ModContent.ProjectileType<MiniChasmeHand>())
 			{
 				int handleft = Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.position, Vector2.Zero, ModContent.ProjectileType<MiniChasmeHand>(), Projectile.damage, 0f, Projectile.owner);
@@ -272,6 +280,22 @@ namespace TheDepths.Projectiles.Summons
 		public override void ModifyDamageHitbox(ref Rectangle hitbox)
 		{
 			hitbox = new Rectangle(0, 0, 0, 0);
+		}
+
+		public override bool PreDraw(ref Color lightColor)
+		{
+			int projectileDesiredShader = 0;
+			if (Projectile.owner != 255)
+			{
+				projectileDesiredShader = Main.player[Projectile.owner].cMinion;
+			}
+			Matrix value = Main.Transform;
+			if (Projectile.isAPreviewDummy)
+			{
+				value = Main.UIScaleMatrix;
+			}
+			Main.instance.PrepareDrawnEntityDrawing(Projectile, projectileDesiredShader, value);
+			return true;
 		}
 	}
 }

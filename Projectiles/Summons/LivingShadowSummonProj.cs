@@ -26,6 +26,7 @@ using Terraria.Graphics.Shaders;
 using TheDepths.Mounts;
 using TheDepths.Items;
 using Terraria.GameContent;
+using Terraria.GameContent.RGB;
 
 namespace TheDepths.Projectiles.Summons
 {
@@ -37,6 +38,8 @@ namespace TheDepths.Projectiles.Summons
 		{
 			Main.projFrames[Projectile.type] = 15;
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+			ProjectileID.Sets.CultistIsResistantTo[Type] = true;
+			ProjectileID.Sets.MinionSacrificable[Type] = true;
 		}
 
 		public override void SetDefaults()
@@ -50,7 +53,7 @@ namespace TheDepths.Projectiles.Summons
 			Projectile.minion = true;
 			Projectile.minionSlots = 1f;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 18;
+			Projectile.localNPCHitCooldown = 12;
 			Projectile.decidesManualFallThrough = true;
 		}
 
@@ -69,10 +72,10 @@ namespace TheDepths.Projectiles.Summons
 			}
 			bool flag = true;
 			int num = 450;
-			float num12 = 500f;
+			float num12 = 500f; //distance before flight With wings
 			float num21 = 300f;
-			float num13 = 1400f;
-			float num22 = 800f;
+			float num13 = 1000f; //distance before flight Without wings
+			float num22 = 600f;
 			int num32 = 15;
 			if (player.dead)
 			{
@@ -107,7 +110,6 @@ namespace TheDepths.Projectiles.Summons
 			if (Projectile.ai[0] == 1f)
 			{
 				Projectile.ai[2] = (player.wingTimeMax > 0 ? 0f : 1f);
-				Main.NewText("Im flying?");
 				Projectile.tileCollide = false;
 				float num9 = 0.2f;
 				float num10 = 10f;
@@ -182,7 +184,14 @@ namespace TheDepths.Projectiles.Summons
 				{
 					Projectile.frame = 10;
 				}
-				Projectile.rotation = Projectile.velocity.X * 0.1f;
+				if (player.wingTimeMax > 0)
+				{
+					Projectile.rotation = Projectile.velocity.X * 0.1f;
+				}
+			}
+			else
+			{
+				Projectile.ai[2] = 0f;
 			}
 			if (Projectile.ai[0] == 2f && Projectile.ai[1] < 0f)
 			{
@@ -290,7 +299,6 @@ namespace TheDepths.Projectiles.Summons
 				}
 				else if ((vector11.Length() > num13 || Math.Abs(vector11.Y) > num22)) //Wingtime because obv the minion shouldnt fly with withs when the player doesnt have wings
 				{
-					Main.NewText("Its Shadow ball time (and proceeds to shadow ball all over the place)");
 					Projectile.ai[0] = 1f;//The initial trigger for when the summons are too far away
 					Projectile.netUpdate = true;
 					if (Projectile.velocity.Y > 0f && vector11.Y < 0f)
@@ -603,12 +611,16 @@ namespace TheDepths.Projectiles.Summons
 					Projectile.velocity.Y = 10f;
 				}
 			}
+			if (Projectile.ai[2] == 1f)
+			{
+				Projectile.rotation += 0.3f * (float)Projectile.direction;
+			}
 		}
 
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Main.spriteBatch.End();
-			Main.spriteBatch.Begin((SpriteSortMode)0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
+			Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
 			int projectileAmount = 0;
 			for (int i = 0; i < Main.maxProjectiles; i++)
 			{
@@ -639,20 +651,32 @@ namespace TheDepths.Projectiles.Summons
 				player.socialIgnoreLight = true;
 				if (Projectile.ai[2] == 0f)
 				{
+					//RenderTarget2D renderTarget = PlayerTarget.Target;
+					//GraphicsDevice.SetRenderTarget(s);
+					GameShaders.Misc["TheDepths:SilhouetteShader"].Apply();
+					Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 					Main.PlayerRenderer.DrawPlayer(Main.Camera, player, Projectile.position, 0f, player.fullRotationOrigin);
-					GameShaders.Misc["TheDepths:myShader"].Apply();
 				}
 				else
 				{
-					Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-					Texture2D glow = ModContent.Request<Texture2D>(Projectile.ModProjectile.Texture + "_Glow").Value;
-					int height = texture.Height / 17;
-					int y = height * Projectile.frame;
-					Rectangle rect = new(0, y, texture.Width, height);
-					Vector2 drawOrigin = new(texture.Width / 2, Projectile.height / 2);
+					Texture2D texture = Main.Assets.Request<Texture2D>("Images/UI/PanelBackground").Value;
+					Rectangle rect = new(0, 0, texture.Width, texture.Width);
+					Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 					var effects = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-
-					Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects, 0);
+					DrawData data = new DrawData(texture, Projectile.Center - Main.screenPosition, new Rectangle?(rect), Projectile.GetAlpha(lightColor), Projectile.rotation, drawOrigin, Projectile.scale, effects);
+					GameShaders.Misc["TheDepths:SilhouetteShader"].Apply(data);
+					data.Draw(Main.spriteBatch);
+					Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+					for (int x = 2; x < texture.Width - 2; x++)
+					{
+						for (int y = 2; y < texture.Height - 2; y++)
+						{
+							if (Main.rand.NextBool(400))
+							{
+								Dust.NewDust(Projectile.position + new Vector2(x, y), 0, 0, ModContent.DustType<DustSilhouette>());
+							}
+						}
+					}
 				}
 			}
 			catch (Exception e)
@@ -663,6 +687,18 @@ namespace TheDepths.Projectiles.Summons
 			Main.spriteBatch.End();
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
 			return false;
+		}
+
+		public override void ModifyDamageHitbox(ref Rectangle hitbox)
+		{
+			if (Projectile.ai[2] == 1f)
+			{
+				hitbox = new(0, 0, 0, 0);
+			}
+			else
+			{
+				base.ModifyDamageHitbox(ref hitbox);
+			}
 		}
 
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)

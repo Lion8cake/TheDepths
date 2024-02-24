@@ -53,6 +53,16 @@ namespace TheDepths.Projectiles.Summons
 
 		public override bool PreDraw(ref Color lightColor)
 		{
+			int projectileDesiredShader = 0;
+			if (Projectile.owner != 255)
+			{
+				projectileDesiredShader = Main.player[Projectile.owner].cMinion;
+			}
+			Matrix value = Main.Transform;
+			if (Projectile.isAPreviewDummy)
+			{
+				value = Main.UIScaleMatrix;
+			}
 			int num136 = 0;
 			int num137 = 0;
 			float num138 = (float)(TextureAssets.Projectile[Projectile.type].Width() - Projectile.width) * 0.5f + (float)Projectile.width * 0.5f;
@@ -85,8 +95,8 @@ namespace TheDepths.Projectiles.Summons
 				Vector2 position25 = Projectile.oldPos[num404] - Main.screenPosition + new Vector2(num138 + (float)num137, (float)(Projectile.height / 2) + Projectile.gfxOffY);
 				Main.EntitySpriteDraw(value110, position25, (Rectangle?)new Rectangle(0, y26, value110.Width, num401), newColor4, Projectile.rotation, new Vector2(num138, (float)(Projectile.height / 2 + num136)), Projectile.scale, dir, 0f);
 			}
-			Main.EntitySpriteDraw(value110, Projectile.position - Main.screenPosition + new Vector2(num138 + (float)num137, (float)(Projectile.height / 2) + Projectile.gfxOffY), (Rectangle?)new Rectangle(0, y26, value110.Width, num401), Projectile.GetAlpha(lightColor), Projectile.rotation, new Vector2(num138, (float)(Projectile.height / 2 + num136)), Projectile.scale, dir, 0f);
-			return false;
+			Main.instance.PrepareDrawnEntityDrawing(Projectile, projectileDesiredShader, value);
+			return true;
 		}
 
 		public override void AI()
