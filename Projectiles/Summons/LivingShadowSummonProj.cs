@@ -652,7 +652,8 @@ namespace TheDepths.Projectiles.Summons
 					{
 						if (Main.rand.NextBool(400))
 						{
-							Dust.NewDust(Projectile.position + new Vector2(x, y), 0, 0, ModContent.DustType<DustSilhouette>());
+							int dust = Dust.NewDust(Projectile.position + new Vector2(x, y), 0, 0, ModContent.DustType<DustSilhouette>());
+							Main.dust[dust].shader = GameShaders.Armor.GetSecondaryShader(player.cMinion, player);
 						}
 					}
 				}
@@ -736,12 +737,16 @@ namespace TheDepths.Projectiles.Summons
 			sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
             
 			var drawData = new DrawData(playerRT, Vector2.Zero, Color.White);
+			var playerOwner = Main.player[Projectile.owner];
 			GameShaders.Misc["TheDepths:SilhouetteShader"].Apply(drawData);
+			if (playerOwner.cMinion != 0)
+			{
+				GameShaders.Armor.ApplySecondary(playerOwner.cMinion, Projectile, drawData);
+			}
 			drawData.Draw(Main.spriteBatch);
 
-			var playerOwner = Main.player[Projectile.owner];
 			var visualPlayer = playerVisualClone[Projectile.owner];
-			var eyesNotVisible = playerOwner.head > 0 && !ArmorIDs.Head.Sets.DrawHead[playerOwner.head];
+			var eyesNotVisible = playerOwner.head > 0 && !ArmorIDs.Head.Sets.DrawHead[playerOwner.head] && Projectile.ai[2] != 0f;
 			if (!eyesNotVisible)
 			{
 				var headVect = new Vector2(visualPlayer.legFrame.Width * 0.5f, visualPlayer.legFrame.Height * 0.4f);
