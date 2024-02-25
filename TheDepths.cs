@@ -232,6 +232,26 @@ namespace TheDepths
 				["SetdepthsorHell", bool boolean] => TheDepthsWorldGen.depthsorHell = boolean,
 				["SetDrunkDepthsLeft", bool boolean] => TheDepthsWorldGen.DrunkDepthsLeft = boolean,
 				["SetDrunkDepthsRight", bool boolean] => TheDepthsWorldGen.DrunkDepthsRight = boolean,
+
+				//IDs
+				["UnreflectiveProjectiles", int projectileID, bool flag] => TheDepthsIDs.Sets.UnreflectiveProjectiles[projectileID] = flag,
+				["HellstoneBarOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.HellstoneBarOnlyItem[itemID] = flag,
+				["HellstoneOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.HellstoneOnlyItem[itemID] = flag,
+				["ObsidianOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.ObsidianOnlyItem[itemID] = flag,
+				["AnkhShieldOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.AnkhShieldOnlyItem[itemID] = flag,
+				["FireGauntletOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.FireGauntletOnlyItem[itemID] = flag,
+				["AshBlockOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.AshBlockOnlyItem[itemID] = flag,
+				["AshWoodOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.AshWoodOnlyItem[itemID] = flag,
+				["FireblossomOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.FireblossomOnlyItem[itemID] = flag,
+				["ObsidifishOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.ObsidifishOnlyItem[itemID] = flag,
+				["FlarefinKoiOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.FlarefinKoiOnlyItem[itemID] = flag,
+				["PwnhammerOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.PwnhammerOnlyItem[itemID] = flag,
+				["FireblossomSeedsOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.FireblossomSeedsOnlyItem[itemID] = flag,
+				["HellforgeOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.HellforgeOnlyItem[itemID] = flag,
+				["LivingFireBlockOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.LivingFireBlockOnlyItem[itemID] = flag,
+				["CobaltShieldOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.CobaltShieldOnlyItem[itemID] = flag,
+				["CascadeOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.CascadeOnlyItem[itemID] = flag,
+				["TreasureMagnetOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.TreasureMagnetOnlyItem[itemID] = flag,
 				_ => throw new Exception("TheDepths: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
 		}
