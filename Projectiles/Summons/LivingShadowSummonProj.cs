@@ -17,13 +17,10 @@ namespace TheDepths.Projectiles.Summons
     public class LivingShadowSummonProj : ModProjectile
     {
 	    private static RenderTarget2D playerRT;
-	    private static Asset<Texture2D> livingShadowEyesAsset;
 		public static Player[] playerVisualClone = new Player[256];
 
 		public override void Load()
-		{
-			livingShadowEyesAsset = ModContent.Request<Texture2D>(Texture + "_Eyes");
-            
+		{            
 			using var eventSlim = new ManualResetEventSlim();
 			
 			Main.QueueMainThreadAction(() =>
@@ -49,9 +46,7 @@ namespace TheDepths.Projectiles.Summons
 		}
 
 		public override void Unload()
-		{
-			livingShadowEyesAsset = null;
-			
+		{			
 			Main.graphics.GraphicsDevice.DeviceReset -= OnDeviceReset;
 			
 			if (playerRT is not null)
@@ -751,7 +746,7 @@ namespace TheDepths.Projectiles.Summons
 			{
 				var headVect = new Vector2(visualPlayer.legFrame.Width * 0.5f, visualPlayer.legFrame.Height * 0.4f);
 				var position = new Vector2(
-					(int)(visualPlayer.position.X - Main.screenPosition.X - (float)(visualPlayer.bodyFrame.Width / 2) + (float)(visualPlayer.width / 2)),
+					(int)(visualPlayer.position.X - Main.screenPosition.X - (float)(visualPlayer.bodyFrame.Width / 2) + (float)(visualPlayer.width / 2)) - (visualPlayer.direction == 1 ? 1 : 5),
 					(int)(visualPlayer.position.Y - Main.screenPosition.Y + (float)visualPlayer.height - (float)visualPlayer.bodyFrame.Height + 4f)
 				) + visualPlayer.headPosition + headVect;
 				

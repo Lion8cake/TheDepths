@@ -63,8 +63,8 @@ public sealed class DefaultRenderTargetOverrider {
 	}
 
 	internal static void Patch() {
-		var setRenderTargetsMethodInfo = typeof(GraphicsDevice)
-			.GetMethod(nameof(GraphicsDevice.SetRenderTarget), BindingFlags.Instance | BindingFlags.Public, [ typeof(RenderTarget2D) ]);
+		Type[] type = new Type[] { typeof(RenderTarget2D) };
+		var setRenderTargetsMethodInfo = typeof(GraphicsDevice).GetMethod(nameof(GraphicsDevice.SetRenderTarget), BindingFlags.Instance | BindingFlags.Public, type);
 		
 		Debug.Assert(setRenderTargetsMethodInfo is not null);
 		

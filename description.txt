@@ -73,4 +73,5 @@ Darkrious & Larfleeze - For two Depths paintings and the Nightmare Tree Retextur
 Moddingus - Chasme AI
 Hariq - Chasme's base, movement and conjoinment
 Kurtis - Rocket boot dust IL edit
-bingchilling18 - No underworld evaporation
+bingchilling18 - old No underworld evaporation
+BasicallyIAmFox - Silhouette summon rendertarget system and code

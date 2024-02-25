@@ -140,8 +140,6 @@ namespace TheDepths
 			IL_CreditsRollEvent.SetRemainingTimeDirect += CreditsRollIngameTimeDurationExtention;
 		}
 
-		
-
 		public override void Unload()
 		{
 			TheDepthsWindUtilities.Unload();
@@ -218,6 +216,24 @@ namespace TheDepths
 				UWBGBottomColor[0] = new Color(11, 3, 7);
 				UWBGBottomColor[1] = new Color(0, 0, 0);
 			}
+		}
+
+		public override object Call(params object[] args)
+		{
+			//For Content creators: Message me (Lion8cake) on discord if you have any mod call suggestions
+			return args switch
+			{
+				["InDepths", Player player] => TheDepthsWorldGen.InDepths(player),
+				["IsPlayerInRightDepths", Player player] => TheDepthsWorldGen.IsPlayerInRightDepths(player),
+				["IsPlayerInLeftDepths", Player player] => TheDepthsWorldGen.IsPlayerInLeftDepths(player),
+				["depthsorHell"] => TheDepthsWorldGen.depthsorHell,
+				["DrunkDepthsLeft"] => TheDepthsWorldGen.DrunkDepthsLeft,
+				["DrunkDepthsRight"] => TheDepthsWorldGen.DrunkDepthsRight,
+				["SetdepthsorHell", bool boolean] => TheDepthsWorldGen.depthsorHell = boolean,
+				["SetDrunkDepthsLeft", bool boolean] => TheDepthsWorldGen.DrunkDepthsLeft = boolean,
+				["SetDrunkDepthsRight", bool boolean] => TheDepthsWorldGen.DrunkDepthsRight = boolean,
+				_ => throw new Exception("TheDepths: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
+			};
 		}
 
 		#region AnglerDetoursILEdits

@@ -22,23 +22,26 @@ namespace TheDepths
 		{
 			Main.spriteBatch.End();
 			Main.spriteBatch.Begin(default, default, SamplerState.PointClamp, default, default, default, Main.UIScaleMatrix);
-
 			for (int k = 4; k >= 0; k--)
 			{
-				Texture2D tex = ModContent.Request<Texture2D>("TheDepths/Backgrounds/Menu/DepthsMenuUnderworldBG_" + k).Value;
+				Texture2D tex = ModContent.Request<Texture2D>("TheDepths/Backgrounds/DepthsUnderworldBG_" + k).Value;
+
+				int realWidth = (k == 1 ? tex.Width / 2 : tex.Width);
+
+				Rectangle? sourceRect = null;
+				if (k == 1)
+				{
+					sourceRect = tex.Frame(2, 2, 1, 1);
+				}
 
 				float heightRatio = Main.screenHeight / (float)Main.screenWidth;
-				int width = (int)(tex.Width * heightRatio);
-				var pos = new Vector2((int)(Main.screenPosition.X * 0.05f * -(k - 5)) % width, 0);
+				int width = (int)(realWidth * heightRatio) * 2;
+				var pos = new Vector2((int)(Main.screenPosition.X * 0.08f * -(k - 5)) % width, 0);
 
 				Color color = Color.White;
 
-				byte a = color.A;
-
-				color.A = a;
-
-				for (int h = 0; h < Main.screenWidth + width; h += width)//during loading the texture has a width of one
-					Main.spriteBatch.Draw(tex, new Rectangle(h - (int)pos.X, (int)pos.Y, width, Main.screenHeight), null, color, 0, default, 0, 0);
+				for (int h = 0; h < Main.screenWidth + width; h += width)
+					Main.spriteBatch.Draw(tex, new Rectangle(h - (int)pos.X, (int)pos.Y, width, Main.screenHeight), sourceRect, color, 0, default, 0, 0);
 			}
 			return true;
 		}
