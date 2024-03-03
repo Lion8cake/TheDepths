@@ -133,6 +133,7 @@ namespace TheDepths.Worldgen
 
 		public override void OnWorldUnload()
 		{
+			ModContent.GetInstance<PetrifiedWoodChandelier>().Coordinates = new();
 			depthsorHell = false;
 			DrunkDepthsLeft = false;
 			DrunkDepthsRight = false;
@@ -141,6 +142,7 @@ namespace TheDepths.Worldgen
 
 		public override void ClearWorld()
 		{
+			ModContent.GetInstance<PetrifiedWoodChandelier>().Coordinates = new();
 			depthsorHell = false;
 			DrunkDepthsLeft = false;
 			DrunkDepthsRight = false;
@@ -149,6 +151,7 @@ namespace TheDepths.Worldgen
 
 		public override void SaveWorldData(TagCompound tag)
 		{
+			tag["PetrifiedWoodChandelierPos"] = ModContent.GetInstance<PetrifiedWoodChandelier>().Coordinates;
 			if (depthsorHell)
 			{
 				tag["IsDepths"] = true;
@@ -176,6 +179,10 @@ namespace TheDepths.Worldgen
 
 		public override void LoadWorldData(TagCompound tag)
 		{
+			if (tag.ContainsKey("PetrifiedWoodChandelierPos"))
+			{
+				ModContent.GetInstance<PetrifiedWoodChandelier>().Coordinates = tag.Get<List<Point>>("PetrifiedWoodChandelierPos");
+			}
 			depthsorHell = tag.ContainsKey("IsDepths");
 			DrunkDepthsLeft = tag.ContainsKey("DepthsIsOnTheLeft");
 			DrunkDepthsRight = tag.ContainsKey("DepthsIsOnTheRight");

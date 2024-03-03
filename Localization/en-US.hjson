@@ -229,6 +229,13 @@ Mods: {
 			NightwoodTrappedChest.MapEntry: Nightwood Chest
 			QuartzTrappedChest.MapEntry: Quartz Chest
 			HangingShadowShrub.MapEntry: Hanging Shadow Shrub
+			PetrifiedWoodBath.MapEntry: Petrified Wood Bath
+			PetrifiedWoodBed.MapEntry: Petrified Wood Bed
+			PetrifiedWoodBookcase.MapEntry: Petrified Wood Bookcase
+			PetrifiedWoodCandelabra.MapEntry: Petrified Wood Candelabra
+			PetrifiedWoodCandle.MapEntry: Petrified Wood Candle
+			PetrifiedWoodChair.MapEntry: Petrified Wood Chair
+			PetrifiedWoodChandelier.MapEntry: Petrified Wood Chandelier
 		}
 
 		Buffs: {
@@ -1733,6 +1740,41 @@ Mods: {
 
 			HungryLeash: {
 				DisplayName: Hungry Leash
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBath: {
+				DisplayName: Petrified Wood Bath
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBed: {
+				DisplayName: Petrified Wood Bed
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBookcase: {
+				DisplayName: Petrified Wood Bookcase
+				Tooltip: ""
+			}
+
+			PetrifiedWoodCandelabra: {
+				DisplayName: Petrified Wood Candelabra
+				Tooltip: ""
+			}
+
+			PetrifiedWoodCandle: {
+				DisplayName: Petrified Wood Candle
+				Tooltip: ""
+			}
+
+			PetrifiedWoodChair: {
+				DisplayName: Petrified Wood Chair
+				Tooltip: ""
+			}
+
+			PetrifiedWoodChandelier: {
+				DisplayName: Petrified Wood Chandelier
 				Tooltip: ""
 			}
 		}

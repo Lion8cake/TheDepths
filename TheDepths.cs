@@ -36,6 +36,7 @@ using TheDepths.Hooks;
 using TheDepths.Items;
 using TheDepths.Items.Accessories;
 using TheDepths.Items.Weapons;
+using TheDepths.Tiles.Furniture;
 using TheDepths.Worldgen;
 using static Terraria.Graphics.FinalFractalHelper;
 
@@ -117,6 +118,7 @@ namespace TheDepths
 			On_TELogicSensor.GetState += On_TELogicSensor_GetState;
 
 			On_TileDrawing.DrawMultiTileVinesInWind += On_TileDrawing_DrawMultiTileVinesInWind;
+			On_TileDrawing.PostDrawTiles += On_TileDrawing_PostDrawTiles;
 			On_TileDrawing.GetWindCycle += On_TileDrawing_GetWindCycle;
 
 			On_AmbientSky.HellBatsGoupSkyEntity.ctor += HellBatsGoupSkyEntity_ctor;
@@ -179,6 +181,7 @@ namespace TheDepths
 			On_TELogicSensor.GetState -= On_TELogicSensor_GetState;
 
 			On_TileDrawing.DrawMultiTileVinesInWind -= On_TileDrawing_DrawMultiTileVinesInWind;
+			On_TileDrawing.PostDrawTiles -= On_TileDrawing_PostDrawTiles;
 			On_TileDrawing.GetWindCycle -= On_TileDrawing_GetWindCycle;
 
 			On_AmbientSky.HellBatsGoupSkyEntity.ctor -= HellBatsGoupSkyEntity_ctor;
@@ -975,20 +978,11 @@ namespace TheDepths
 		#region VineWindTileLength
 		private void On_TileDrawing_DrawMultiTileVinesInWind(On_TileDrawing.orig_DrawMultiTileVinesInWind orig, TileDrawing self, Vector2 screenPosition, Vector2 offSet, int topLeftX, int topLeftY, int sizeX, int sizeY)
 		{
-			if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.DepthsVanityBanners>())
+			if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.DepthsVanityBanners>() || Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.DepthsBanners>())
 			{
 				sizeY = 3;
 			}
-			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.DepthsBanners>())
-			{
-				sizeY = 3;
-			}
-			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.NightwoodChandelier>())
-			{
-				sizeX = 3;
-				sizeY = 3;
-			}
-			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.QuartzChandelier>())
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.NightwoodChandelier>() || Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.QuartzChandelier>() || Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.Furniture.PetrifiedWoodChandelier>())
 			{
 				sizeX = 3;
 				sizeY = 3;
@@ -999,6 +993,32 @@ namespace TheDepths
 				sizeY = 3;
 			}
 			orig.Invoke(self, screenPosition, offSet, topLeftX, topLeftY, sizeX, sizeY);
+		}
+
+		private void On_TileDrawing_PostDrawTiles(On_TileDrawing.orig_PostDrawTiles orig, TileDrawing self, bool solidLayer, bool forRenderTargets, bool intoRenderTargets)
+		{
+			orig.Invoke(self, solidLayer, forRenderTargets, intoRenderTargets);
+			if (!solidLayer && !intoRenderTargets)
+			{
+				Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
+				DrawChandeliers();
+				DrawLanterns();
+				Main.spriteBatch.End();
+			}
+		}
+		private void DrawLanterns()
+		{
+			/*for (int i = 0; i < ModContent.GetInstance<PetrifiedWoodlantern>().Coordinates.Count; i++)
+			{
+				ModContent.GetInstance<PetrifiedWoodlantern>().DrawMultiTileVines(ModContent.GetInstance<PetrifiedWoodlantern>().Coordinates[i].X, ModContent.GetInstance<PetrifiedWoodlantern>().Coordinates[i].Y, Main.spriteBatch);
+			}*/
+		}
+		private void DrawChandeliers()
+		{
+			for (int i = 0; i < ModContent.GetInstance<PetrifiedWoodChandelier>().Coordinates.Count; i++)
+			{
+				ModContent.GetInstance<PetrifiedWoodChandelier>().DrawMultiTileVines(ModContent.GetInstance<PetrifiedWoodChandelier>().Coordinates[i].X, ModContent.GetInstance<PetrifiedWoodChandelier>().Coordinates[i].Y, Main.spriteBatch);
+			}
 		}
 		#endregion
 
