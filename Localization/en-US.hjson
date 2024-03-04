@@ -236,6 +236,19 @@ Mods: {
 			PetrifiedWoodCandle.MapEntry: Petrified Wood Candle
 			PetrifiedWoodChair.MapEntry: Petrified Wood Chair
 			PetrifiedWoodChandelier.MapEntry: Petrified Wood Chandelier
+			PetrifiedWoodChest.MapEntry: Petrified Wood Chest
+			PetrifiedWoodClock.MapEntry: Petrified Wood Clock
+			PetrifiedWoodDresser.MapEntry: Petrified Wood Dresser
+			PetrifiedWoodLamp.MapEntry: Petrified Wood Lamp
+			PetrifiedWoodLantern.MapEntry: Petrified Wood Lantern
+			PetrifiedWoodBedShaleSheetsAreImpossible.MapEntry: Petrified Wood Bed Shale Sheets Are Impossible
+			PetrifiedWoodPiano.MapEntry: Petrified Wood Piano
+			PetrifiedWoodSink.MapEntry: Petrified Wood Sink
+			PetrifiedWoodSofa.MapEntry: Petrified Wood Sofa
+			PetrifiedWoodTable.MapEntry: Petrified Wood Table
+			PetrifiedWoodToilet.MapEntry: Petrified Wood Toilet
+			PetrifiedWoodTrappedChest.MapEntry: Petrified Wood Trapped Chest
+			PetrifiedWoodWorkbench.MapEntry: Petrified Wood Workbench
 		}
 
 		Buffs: {
@@ -1775,6 +1788,76 @@ Mods: {
 
 			PetrifiedWoodChandelier: {
 				DisplayName: Petrified Wood Chandelier
+				Tooltip: ""
+			}
+
+			PetrifiedWoodChest: {
+				DisplayName: Petrified Wood Chest
+				Tooltip: ""
+			}
+
+			PetrifiedWoodClock: {
+				DisplayName: Petrified Wood Clock
+				Tooltip: ""
+			}
+
+			PetrifiedWoodDoor: {
+				DisplayName: Petrified Wood Door
+				Tooltip: ""
+			}
+
+			PetrifiedWoodDresser: {
+				DisplayName: Petrified Wood Dresser
+				Tooltip: ""
+			}
+
+			PetrifiedWoodLamp: {
+				DisplayName: Petrified Wood Lamp
+				Tooltip: ""
+			}
+
+			PetrifiedWoodLantern: {
+				DisplayName: Petrified Wood Lantern
+				Tooltip: ""
+			}
+
+			PetrifiedWoodPiano: {
+				DisplayName: Petrified Wood Piano
+				Tooltip: ""
+			}
+
+			PetrifiedWoodPlatform: {
+				DisplayName: Petrified Wood Platform
+				Tooltip: ""
+			}
+
+			PetrifiedWoodSink: {
+				DisplayName: Petrified Wood Sink
+				Tooltip: ""
+			}
+
+			PetrifiedWoodSofa: {
+				DisplayName: Petrified Wood Sofa
+				Tooltip: ""
+			}
+
+			PetrifiedWoodTable: {
+				DisplayName: Petrified Wood Table
+				Tooltip: ""
+			}
+
+			PetrifiedWoodToilet: {
+				DisplayName: Petrified Wood Toilet
+				Tooltip: ""
+			}
+
+			PetrifiedWoodTrappedChest: {
+				DisplayName: Petrified Wood Trapped Chest
+				Tooltip: ""
+			}
+
+			PetrifiedWoodWorkbench: {
+				DisplayName: Petrified Wood Workbench
 				Tooltip: ""
 			}
 		}

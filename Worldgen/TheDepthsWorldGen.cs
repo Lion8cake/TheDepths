@@ -21,6 +21,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Utilities;
 using TheDepths.Tiles.Trees;
 using System.Linq;
+using MonoMod.Utils;
 
 namespace TheDepths.Worldgen
 {    
@@ -133,7 +134,8 @@ namespace TheDepths.Worldgen
 
 		public override void OnWorldUnload()
 		{
-			ModContent.GetInstance<PetrifiedWoodChandelier>().Coordinates = new();
+			ModContent.GetInstance<PetrifiedWoodChandelier>().Coordinates = new(); 
+			ModContent.GetInstance<PetrifiedWoodLantern>().Coordinates = new();
 			depthsorHell = false;
 			DrunkDepthsLeft = false;
 			DrunkDepthsRight = false;
@@ -143,6 +145,7 @@ namespace TheDepths.Worldgen
 		public override void ClearWorld()
 		{
 			ModContent.GetInstance<PetrifiedWoodChandelier>().Coordinates = new();
+			ModContent.GetInstance<PetrifiedWoodLantern>().Coordinates = new();
 			depthsorHell = false;
 			DrunkDepthsLeft = false;
 			DrunkDepthsRight = false;
@@ -151,7 +154,6 @@ namespace TheDepths.Worldgen
 
 		public override void SaveWorldData(TagCompound tag)
 		{
-			tag["PetrifiedWoodChandelierPos"] = ModContent.GetInstance<PetrifiedWoodChandelier>().Coordinates;
 			if (depthsorHell)
 			{
 				tag["IsDepths"] = true;
@@ -179,10 +181,6 @@ namespace TheDepths.Worldgen
 
 		public override void LoadWorldData(TagCompound tag)
 		{
-			if (tag.ContainsKey("PetrifiedWoodChandelierPos"))
-			{
-				ModContent.GetInstance<PetrifiedWoodChandelier>().Coordinates = tag.Get<List<Point>>("PetrifiedWoodChandelierPos");
-			}
 			depthsorHell = tag.ContainsKey("IsDepths");
 			DrunkDepthsLeft = tag.ContainsKey("DepthsIsOnTheLeft");
 			DrunkDepthsRight = tag.ContainsKey("DepthsIsOnTheRight");

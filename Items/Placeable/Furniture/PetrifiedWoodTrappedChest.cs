@@ -4,11 +4,12 @@ using Terraria.ModLoader;
 
 namespace TheDepths.Items.Placeable.Furniture
 {
-    public class PetrifiedWoodBed : ModItem
+    public class PetrifiedWoodTrappedChest : ModItem
     {
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            ItemID.Sets.TrapSigned[Type] = true;
         }
 
         public override void SetDefaults()
@@ -22,13 +23,13 @@ namespace TheDepths.Items.Placeable.Furniture
             Item.useTime = 10;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
-            Item.value = Terraria.Item.sellPrice(silver: 4);
-            Item.createTile = ModContent.TileType<Tiles.Furniture.PetrifiedWoodBedShaleSheetsAreImpossible>();
+            Item.value = Terraria.Item.sellPrice(silver: 5);
+            Item.createTile = ModContent.TileType<Tiles.Furniture.PetrifiedWoodTrappedChest>();
         }
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<PetrifiedWood>(), 15).AddIngredient(225, 5).AddTile(TileID.Sawmill).Register();
-        }
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<PetrifiedWoodChest>()).AddIngredient(ItemID.Wire, 10).AddTile(TileID.HeavyWorkBench).Register();
+		}
     }
 }

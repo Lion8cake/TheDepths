@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace TheDepths.Items.Placeable.Furniture
 {
-    public class PetrifiedWoodBed : ModItem
+    public class PetrifiedWoodSofa : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -22,13 +22,13 @@ namespace TheDepths.Items.Placeable.Furniture
             Item.useTime = 10;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
-            Item.value = Terraria.Item.sellPrice(silver: 4);
-            Item.createTile = ModContent.TileType<Tiles.Furniture.PetrifiedWoodBedShaleSheetsAreImpossible>();
+            Item.value = Terraria.Item.sellPrice(copper: 60);
+            Item.createTile = ModContent.TileType<Tiles.Furniture.PetrifiedWoodSofa>();
         }
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<PetrifiedWood>(), 15).AddIngredient(225, 5).AddTile(TileID.Sawmill).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<PetrifiedWood>(), 5).AddIngredient(ItemID.Silk, 2).AddTile(TileID.Sawmill).Register();
         }
     }
 }

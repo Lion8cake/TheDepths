@@ -34,7 +34,7 @@ namespace TheDepths.Items
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Armor.ShadowChasmeMask>(), 7));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Armor.ChasmeSoulMask>(), 7));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Weapons.POWHammer>()));
-			itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Items.Weapons.ShadeBlade>(), ModContent.ItemType<Items.Weapons.QuartzCannon>(), ModContent.ItemType<Items.Weapons.ShadowClaw>()));
+			itemLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Items.Weapons.ShadeBlade>(), ModContent.ItemType<Items.Weapons.QuartzCannon>(), ModContent.ItemType<Items.Weapons.ShadowClaw>(), ModContent.ItemType<Items.Weapons.StaffOfAThousandYears>()));
 			itemLoot.Add(ItemDropRule.OneFromOptions(1, ItemID.WarriorEmblem, ItemID.RangerEmblem, ItemID.SorcererEmblem, ItemID.SummonerEmblem));
 			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<NPCs.Chasme.ChasmeHeart>()));
 			itemLoot.Add(ItemDropRule.ByCondition(new Conditions.NotUsedDemonHeart(), ItemID.DemonHeart));

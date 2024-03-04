@@ -26,7 +26,7 @@ public class ChasmeHead : ChasmeBodyPart
     public override void SetStaticDefaults()
     {
         // DisplayName.SetDefault("chasme head");
-        Main.projFrames[Type] = 5;
+        Main.npcFrameCount[Type] = 6;
         NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
         {
             Hide = true

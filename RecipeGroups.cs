@@ -108,8 +108,9 @@ namespace TheDepths
 
         public override void AddRecipeGroups()
         {
-            RecipeGroup.recipeGroups[RecipeGroupID.Wood].ValidItems.Add(ModContent.ItemType<Items.Placeable.NightWood>());
-            RecipeGroup.recipeGroups[RecipeGroupID.Fruit].ValidItems.Add(ModContent.ItemType<Items.Ciamito>());
+            RecipeGroup.recipeGroups[RecipeGroupID.Wood].ValidItems.Add(ModContent.ItemType<NightWood>());
+			RecipeGroup.recipeGroups[RecipeGroupID.Wood].ValidItems.Add(ModContent.ItemType<PetrifiedWood>());
+			RecipeGroup.recipeGroups[RecipeGroupID.Fruit].ValidItems.Add(ModContent.ItemType<Items.Ciamito>());
             RecipeGroup.recipeGroups[RecipeGroupID.Fruit].ValidItems.Add(ModContent.ItemType<Items.BlackOlive>());
 
             HellstoneBarRecipeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.HellstoneBar)}", ItemID.HellstoneBar, ModContent.ItemType<Items.Placeable.ArqueriteBar>());

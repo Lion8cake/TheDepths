@@ -987,6 +987,11 @@ namespace TheDepths
 				sizeX = 3;
 				sizeY = 3;
 			}
+			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<NightwoodLantern>() || Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<QuartzLantern>() || Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<PetrifiedWoodLantern>())
+			{
+				sizeX = 1;
+				sizeY = 2;
+			}
 			else if (Main.tile[topLeftX, topLeftY].TileType == ModContent.TileType<Tiles.HangingShadowShrub>())
 			{
 				sizeX = 2;
@@ -1008,10 +1013,10 @@ namespace TheDepths
 		}
 		private void DrawLanterns()
 		{
-			/*for (int i = 0; i < ModContent.GetInstance<PetrifiedWoodlantern>().Coordinates.Count; i++)
+			for (int i = 0; i < ModContent.GetInstance<PetrifiedWoodLantern>().Coordinates.Count; i++)
 			{
-				ModContent.GetInstance<PetrifiedWoodlantern>().DrawMultiTileVines(ModContent.GetInstance<PetrifiedWoodlantern>().Coordinates[i].X, ModContent.GetInstance<PetrifiedWoodlantern>().Coordinates[i].Y, Main.spriteBatch);
-			}*/
+				ModContent.GetInstance<PetrifiedWoodLantern>().DrawMultiTileVines(ModContent.GetInstance<PetrifiedWoodLantern>().Coordinates[i].X, ModContent.GetInstance<PetrifiedWoodLantern>().Coordinates[i].Y, Main.spriteBatch);
+			}
 		}
 		private void DrawChandeliers()
 		{

@@ -11,7 +11,7 @@ using TheDepths.Dusts;
 
 namespace TheDepths.Tiles.Furniture
 {
-    public class PetrifiedWoodBed : ModTile
+    public class PetrifiedWoodBedShaleSheetsAreImpossible : ModTile
     {
         public override void SetStaticDefaults()
         {
