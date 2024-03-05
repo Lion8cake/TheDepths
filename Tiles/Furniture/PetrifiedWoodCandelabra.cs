@@ -30,9 +30,9 @@ namespace TheDepths.Tiles.Furniture
             AdjTiles = new int[] { TileID.Torches };
 			AddMapEntry(new Color(70, 65, 55), CreateMapEntryName());
 			HitSound = SoundID.Tink;
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.PetrifiedWoodCandelabra>());
 		}
 
-		
 		public override void HitWire(int i, int j)
 		{
 			int x = i - Main.tile[i, j].TileFrameX / 18 % 2;

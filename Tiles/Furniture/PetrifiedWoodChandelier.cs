@@ -46,6 +46,7 @@ namespace TheDepths.Tiles.Furniture
 			HitSound = SoundID.Tink;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<Dusts.PetrifiedWoodDust>();
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.PetrifiedWoodChandelier>());
 			Coordinates = new();
 		}
 		public override void HitWire(int i, int j)

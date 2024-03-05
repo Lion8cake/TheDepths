@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -16,8 +17,9 @@ namespace TheDepths.Tiles.Furniture
             Main.tileNoAttach[Type] = true;
             Main.tileLavaDeath[Type] = false;
             TileID.Sets.Clock[Type] = true;
+			TileID.Sets.HasOutlines[Type] = true;
 
-            DustType = ModContent.DustType<Dusts.QuartzCrystals>();
+			DustType = ModContent.DustType<Dusts.QuartzCrystals>();
             AdjTiles = new int[] { TileID.GrandfatherClocks };
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
@@ -29,7 +31,17 @@ namespace TheDepths.Tiles.Furniture
             AddMapEntry(new Color(255, 255, 255), CreateMapEntryName());
         }
 
-        public override bool RightClick(int x, int y)
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
+
+		public override void MouseOver(int i, int j)
+		{
+			Player player = Main.player[Main.myPlayer];
+			player.noThrow = 2;
+			player.cursorItemIconEnabled = true;
+            player.cursorItemIconID = ModContent.ItemType<Items.Placeable.Furniture.QuartzClock>();
+		}
+
+		public override bool RightClick(int x, int y)
         {
             string text = "AM";
             double time = Main.time;

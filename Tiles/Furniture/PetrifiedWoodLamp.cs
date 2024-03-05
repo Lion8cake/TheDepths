@@ -32,6 +32,7 @@ namespace TheDepths.Tiles.Furniture
 			DustType = ModContent.DustType<PetrifiedWoodDust>();
 			AddMapEntry(new Color(70, 65, 55), CreateMapEntryName());
 			HitSound = SoundID.Tink;
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.PetrifiedWoodLamp>());
 		}
 		public override void HitWire(int i, int j)
 		{

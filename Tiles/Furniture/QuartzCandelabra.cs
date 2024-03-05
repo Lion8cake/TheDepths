@@ -14,30 +14,27 @@ namespace TheDepths.Tiles.Furniture
     {
         public override void SetStaticDefaults()
         {
-            Main.tileLighted[Type] = true;
-            Main.tileFrameImportant[Type] = true;
-            Main.tileNoAttach[Type] = true;
-            TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
-            TileObjectData.newTile.Width = 2;
-            TileObjectData.newTile.Height = 2;
-            TileObjectData.newTile.Origin = new Point16(0, 1);
-            TileObjectData.newTile.CoordinateHeights = new int[]
-            {
-                16,
-                18
-            };
-            TileObjectData.addTile(Type);
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-            TileID.Sets.DisableSmartCursor[Type] = true;
-            DustType = ModContent.DustType<QuartzCrystals>();
+			Main.tileLighted[Type] = true;
+			Main.tileFrameImportant[Type] = true;
+			Main.tileNoAttach[Type] = true;
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+			TileObjectData.newTile.StyleHorizontal = true;
+			TileObjectData.newTile.StyleWrapLimit = 36;
+			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
+			TileObjectData.newTile.LavaDeath = true;
+			TileObjectData.addTile(Type);
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			DustType = ModContent.DustType<QuartzCrystals>();
             AdjTiles = new int[] { TileID.Torches };
             AddMapEntry(new Color(255, 255, 255), CreateMapEntryName());
-        }
+			RegisterItemDrop(ModContent.ItemType<Items.Placeable.Furniture.QuartzCandelabra>());
+		}
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             Tile tile = Main.tile[i, j];
-            if (tile.TileFrameX < 88)
+            if (tile.TileFrameX == 0)
             {
                 r = 0.55f;
                 g = 0.31f;
@@ -45,27 +42,38 @@ namespace TheDepths.Tiles.Furniture
             }
         }
 
-        public override void HitWire(int i, int j)
-        {
-            Tile tile = Main.tile[i, j];
-            int topY = j - tile.TileFrameY / 18 % 2;
-            int topX = i - tile.TileFrameX / 18 % 2;
-            short frameAdjustment = (short)(tile.TileFrameX > 0 ? -18 : 18);
-
-            Main.tile[i, topY].TileFrameX += frameAdjustment;
-            Main.tile[i, topY + 1].TileFrameX += frameAdjustment;
-            Main.tile[j, topX].TileFrameY += frameAdjustment;
-            Main.tile[j, topX + 1].TileFrameY += frameAdjustment;
-
-            Wiring.SkipWire(i, topY);
-            Wiring.SkipWire(i, topY + 1);
-            Wiring.SkipWire(j, topX);
-            Wiring.SkipWire(j, topX + 1);
-
-            if (Main.netMode != NetmodeID.SinglePlayer)
-            {
-                NetMessage.SendTileSquare(-1, topX, topY + 2, 2, TileChangeType.None);
-            }
-        }
-    }
+		public override void HitWire(int i, int j)
+		{
+			int x = i - Main.tile[i, j].TileFrameX / 18 % 2;
+			int y = j - Main.tile[i, j].TileFrameY / 18 % 2;
+			for (int l = x; l < x + 2; l++)
+			{
+				for (int m = y; m < y + 2; m++)
+				{
+					if (Main.tile[l, m].HasTile && Main.tile[l, m].TileType == Type)
+					{
+						if (Main.tile[l, m].TileFrameX < 36)
+						{
+							Main.tile[l, m].TileFrameX += 36;
+						}
+						else
+						{
+							Main.tile[l, m].TileFrameX -= 36;
+						}
+					}
+				}
+			}
+			if (Wiring.running)
+			{
+				Wiring.SkipWire(x, y);
+				Wiring.SkipWire(x, y + 1);
+				Wiring.SkipWire(x + 1, y);
+				Wiring.SkipWire(x + 1, y + 1);
+			}
+			NetMessage.SendTileSquare(-1, x, y, 2);
+			NetMessage.SendTileSquare(-1, x, y + 1, 2);
+			NetMessage.SendTileSquare(-1, x + 1, y, 2);
+			NetMessage.SendTileSquare(-1, x + 1, y + 1, 2);
+		}
+	}
 }

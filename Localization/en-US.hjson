@@ -230,7 +230,6 @@ Mods: {
 			QuartzTrappedChest.MapEntry: Quartz Chest
 			HangingShadowShrub.MapEntry: Hanging Shadow Shrub
 			PetrifiedWoodBath.MapEntry: Petrified Wood Bath
-			PetrifiedWoodBed.MapEntry: Petrified Wood Bed
 			PetrifiedWoodBookcase.MapEntry: Petrified Wood Bookcase
 			PetrifiedWoodCandelabra.MapEntry: Petrified Wood Candelabra
 			PetrifiedWoodCandle.MapEntry: Petrified Wood Candle
@@ -241,7 +240,7 @@ Mods: {
 			PetrifiedWoodDresser.MapEntry: Petrified Wood Dresser
 			PetrifiedWoodLamp.MapEntry: Petrified Wood Lamp
 			PetrifiedWoodLantern.MapEntry: Petrified Wood Lantern
-			PetrifiedWoodBedShaleSheetsAreImpossible.MapEntry: Petrified Wood Bed Shale Sheets Are Impossible
+			PetrifiedWoodBedShaleSheetsAreImpossible.MapEntry: Petrified Wood Bed
 			PetrifiedWoodPiano.MapEntry: Petrified Wood Piano
 			PetrifiedWoodSink.MapEntry: Petrified Wood Sink
 			PetrifiedWoodSofa.MapEntry: Petrified Wood Sofa
@@ -1860,6 +1859,16 @@ Mods: {
 				DisplayName: Petrified Wood Workbench
 				Tooltip: ""
 			}
+
+			PetrifiedWoodFence: {
+				DisplayName: Petrified Wood Fence
+				Tooltip: ""
+			}
+
+			PetrifiedWoodWall: {
+				DisplayName: Petrified Wood Wall
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -2030,7 +2039,7 @@ Mods: {
 			ChasmeEmote: chasme
 		}
 
-		DepthsBiome: Mods.TheDepths.DepthsBiome
+		DepthsBiome: Depths Biome
 
 		Achievements: {
 			HeartSmasher: {

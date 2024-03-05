@@ -36,10 +36,6 @@ namespace TheDepths.Items.Placeable
 			Recipe recipe2 = CreateRecipe();
 			recipe2.AddIngredient(ModContent.ItemType<Items.Placeable.Furniture.NightwoodPlatform>(), 2);
 			recipe2.Register();
-
-			Recipe recipe3 = CreateRecipe();
-			recipe3.AddIngredient(ModContent.ItemType<Items.Placeable.NightwoodWall>(), 4);
-			recipe3.Register();
 		}
 	}
 }
