@@ -16,7 +16,7 @@ namespace TheDepths.Tiles.Furniture
             Main.tileLavaDeath[Type] = false;
             TileID.Sets.DisableSmartCursor[Type] = true;
 
-            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
+            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 
             DustType = ModContent.DustType<QuartzCrystals>();
             AdjTiles = new int[] { TileID.Beds };

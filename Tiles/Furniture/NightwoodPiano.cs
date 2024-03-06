@@ -19,7 +19,8 @@ namespace TheDepths.Tiles.Furniture
             TileObjectData.newTile.Origin = new Point16(0, 1);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
             TileObjectData.addTile(Type);
-            AddMapEntry(new Color(30, 32, 36), CreateMapEntryName());
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
+			AddMapEntry(new Color(30, 32, 36), CreateMapEntryName());
             TileID.Sets.DisableSmartCursor[Type] = true;
             DustType = ModContent.DustType<NightWoodDust>();
         }

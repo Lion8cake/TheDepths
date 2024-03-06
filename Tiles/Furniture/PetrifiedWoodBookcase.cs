@@ -22,6 +22,7 @@ namespace TheDepths.Tiles.Furniture
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<Dusts.PetrifiedWoodDust>();
             AdjTiles = new int[] { 101 };
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			AddMapEntry(new Color(70, 65, 55), CreateMapEntryName());
 			HitSound = SoundID.Tink;
 		}

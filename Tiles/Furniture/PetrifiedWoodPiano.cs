@@ -20,6 +20,7 @@ namespace TheDepths.Tiles.Furniture
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
             TileObjectData.addTile(Type);
 			AddMapEntry(new Color(70, 65, 55), CreateMapEntryName());
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			HitSound = SoundID.Tink;
 			TileID.Sets.DisableSmartCursor[Type] = true;
             DustType = ModContent.DustType<PetrifiedWoodDust>();

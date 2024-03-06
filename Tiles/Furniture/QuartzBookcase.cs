@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -19,7 +20,8 @@ namespace TheDepths.Tiles.Furniture
             TileObjectData.newTile.Origin = new Point16(0, 3);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 18 };
             TileObjectData.addTile(Type);
-            DustType = ModContent.DustType<Dusts.QuartzCrystals>();
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
+			DustType = ModContent.DustType<Dusts.QuartzCrystals>();
             AdjTiles = new int[] { 101 };
             AddMapEntry(new Color(255, 255, 255), CreateMapEntryName());
         }

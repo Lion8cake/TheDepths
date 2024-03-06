@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -21,7 +22,8 @@ namespace TheDepths.Tiles.Furniture
             TileObjectData.addTile(Type);
             DustType = ModContent.DustType<Dusts.NightWoodDust>();
             AdjTiles = new int[] { 101 };
-            AddMapEntry(new Color(30, 32, 36), CreateMapEntryName());
+			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
+			AddMapEntry(new Color(30, 32, 36), CreateMapEntryName());
         }
     }
 }

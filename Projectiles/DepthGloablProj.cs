@@ -12,6 +12,7 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using static Humanizer.In;
 using TheDepths.Tiles.Trees;
+using TheDepths.NPCs;
 
 namespace TheDepths.Projectiles
 {
@@ -340,6 +341,29 @@ namespace TheDepths.Projectiles
 								}
 								NightSapling.AttemptToGrowNightmareFromSapling(num1032, num1043);
 							}
+						}
+					}
+				}
+			}
+		}
+
+		public override void PostAI(Projectile projectile)
+		{
+			Rectangle rectangle = projectile.Hitbox;
+			if (projectile.type == ProjectileID.PurificationPowder && Main.netMode != NetmodeID.MultiplayerClient)
+			{
+				for (int n = 0; n < Main.maxProjectiles; n++)
+				{
+					NPC nPC2 = Main.npc[n];
+					if (!nPC2.active)
+					{
+						continue;
+					}
+					if (nPC2.type == ModContent.NPCType<CrystalBoundTaxCollector>())
+					{
+						if (rectangle.Intersects(nPC2.Hitbox))
+						{
+							nPC2.Transform(441);
 						}
 					}
 				}
