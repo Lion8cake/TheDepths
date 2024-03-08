@@ -41,6 +41,7 @@ Mods: {
 				3 defence
 				Increases maximum mana by 100
 				'''
+			PetrifiedWoodHelmet: Increases damage reduction by 10%
 		}
 
 		Quest: {
@@ -1883,6 +1884,21 @@ Mods: {
 
 			PetrifiedWoodSword: {
 				DisplayName: Petrified Wood Sword
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBreastplate: {
+				DisplayName: Petrified Wood Breastplate
+				Tooltip: ""
+			}
+
+			PetrifiedWoodGreaves: {
+				DisplayName: Petrified Wood Greaves
+				Tooltip: ""
+			}
+
+			PetrifiedWoodHelmet: {
+				DisplayName: Petrified Wood Helmet
 				Tooltip: ""
 			}
 		}

@@ -349,10 +349,9 @@ namespace TheDepths.Projectiles
 
 		public override void PostAI(Projectile projectile)
 		{
-			Rectangle rectangle = projectile.Hitbox;
 			if (projectile.type == ProjectileID.PurificationPowder && Main.netMode != NetmodeID.MultiplayerClient)
 			{
-				for (int n = 0; n < Main.maxProjectiles; n++)
+				for (int n = 0; n < Main.maxNPCs; n++)
 				{
 					NPC nPC2 = Main.npc[n];
 					if (!nPC2.active)
@@ -361,7 +360,7 @@ namespace TheDepths.Projectiles
 					}
 					if (nPC2.type == ModContent.NPCType<CrystalBoundTaxCollector>())
 					{
-						if (rectangle.Intersects(nPC2.Hitbox))
+						if (projectile.Hitbox.Intersects(nPC2.Hitbox))
 						{
 							nPC2.Transform(441);
 						}
