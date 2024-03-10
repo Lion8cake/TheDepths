@@ -10,23 +10,24 @@ using Terraria.ModLoader;
 
 namespace TheDepths.Items.Weapons
 {
-	public class QuicksilverBucket : ModItem
+	public class QuicksilverAbsorbantSponge : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
 		}
 
-		public override void SetDefaults()
-		{
-			Item.width = 20;
-			Item.height = 24;
-			Item.maxStack = 9999;
-			Item.useTurn = true;
-			Item.autoReuse = true;
-			Item.useAnimation = 15;
-			Item.useTime = 10;
+		public override void SetDefaults() {
 			Item.useStyle = ItemUseStyleID.Swing;
+			Item.useTurn = true;
+			Item.useAnimation = 12;
+			Item.useTime = 5;
+			Item.width = 20;
+			Item.height = 20;
+			Item.autoReuse = true;
+			Item.rare = ItemRarityID.Lime;
+			Item.value = Item.sellPrice(0, 10);
+			Item.tileBoost += 2;
 		}
 
 		public override void HoldItem(Player player)
@@ -53,15 +54,15 @@ namespace TheDepths.Items.Weapons
 								}
 							}
 						}
-						if (tile.LiquidAmount != 0)
+						if (tile.LiquidType != LiquidID.Lava)
 						{
 							return;
 						}
-						SoundEngine.PlaySound(SoundID.SplashWeak, player.position);
-						tile.LiquidType = LiquidID.Lava;
-						tile.LiquidAmount = byte.MaxValue;
-						Item.stack--;
-						player.PutItemInInventoryFromItemUsage(ItemID.EmptyBucket, player.selectedItem);
+						if (tile.LiquidAmount > 0)
+						{
+							SoundEngine.PlaySound(SoundID.SplashWeak, player.position);
+						}
+						tile.LiquidAmount = 0;
 						WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
 						player.ApplyItemTime(Item);
 						if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -71,16 +72,6 @@ namespace TheDepths.Items.Weapons
 					}
 					player.cursorItemIconEnabled = true;
 					player.cursorItemIconID = Type;
-				}
-				else
-				{
-					if (player.itemTime == 0 && player.itemAnimation == 1 && player.controlUseItem)
-					{
-						for (int i = 0; i < 12; i++)
-						{
-							Dust.NewDustDirect(Main.MouseWorld + new Vector2(-4f, -4f), 4, 4, DustID.Smoke, 0f, -1f);
-						}
-					}
 				}
 			}
 		}

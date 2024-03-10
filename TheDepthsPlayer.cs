@@ -123,10 +123,6 @@ namespace TheDepths
             {
                 TextureAssets.Liquid[1] = Main.Assets.Request<Texture2D>("Images/Liquid_1");
                 TextureAssets.LiquidSlope[1] = Main.Assets.Request<Texture2D>("Images/LiquidSlope_1");
-                TextureAssets.Item[207] = Main.Assets.Request<Texture2D>("Images/Item_207");
-                TextureAssets.Item[4820] = Main.Assets.Request<Texture2D>("Images/Item_4820");
-                TextureAssets.Item[4872] = Main.Assets.Request<Texture2D>("Images/Item_4872");
-                TextureAssets.Item[5361] = Main.Assets.Request<Texture2D>("Images/Item_5361");
 
                 int[] bgnumOriginal = new int[30] { 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 150, 151, 152, 157, 158, 159, 185, 186, 187 };
                 foreach (int i in bgnumOriginal)
@@ -783,9 +779,6 @@ namespace TheDepths
                 {
                     TextureAssets.Liquid[1] = Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver_Block");
                     TextureAssets.LiquidSlope[1] = Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver_Slope");
-                    TextureAssets.Item[207] = Request<Texture2D>("TheDepths/Assets/Lava/QuicksilverBucket");
-                    TextureAssets.Item[4820] = Request<Texture2D>("TheDepths/Assets/Lava/BottomlessQuicksilverBucket");
-                    TextureAssets.Item[4872] = Request<Texture2D>("TheDepths/Assets/Lava/QuicksilverSponge");
 
                     //Old Texture/lava layer background
                     int[] bgnum = new int[30] { 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 150, 151, 152, 157, 158, 159, 185, 186, 187 };
@@ -798,9 +791,6 @@ namespace TheDepths
                 {
                     TextureAssets.Liquid[1] = Main.Assets.Request<Texture2D>("Images/Liquid_1");
                     TextureAssets.LiquidSlope[1] = Main.Assets.Request<Texture2D>("Images/LiquidSlope_1");
-                    TextureAssets.Item[207] = Main.Assets.Request<Texture2D>("Images/Item_207");
-                    TextureAssets.Item[4820] = Main.Assets.Request<Texture2D>("Images/Item_4820");
-                    TextureAssets.Item[4872] = Main.Assets.Request<Texture2D>("Images/Item_4872");
 
                     //Old Texture/lava layer background
                     int[] bgnumOriginal = new int[30] { 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 150, 151, 152, 157, 158, 159, 185, 186, 187 };

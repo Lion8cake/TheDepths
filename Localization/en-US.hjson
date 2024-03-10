@@ -69,16 +69,6 @@ Mods: {
 			Shalestone: Shalestone
 		}
 
-		QuicksilverBuckets: {
-			QuicksilverBucketName: Quicksilver Bucket
-			QuicksilverBucketDescription: Contains a small amount of quicksilver
-			BottomlessQuicksilverBucketName: Bottomless Quicksilver Bucket
-			BottomlessQuicksilverBucketDescription: Contains an endless amount of quicksilver
-			QuicksilverAbsorbantSpongeName: Quicksilver Absorbant Sponge
-			QuicksilverAbsorbantSpongeDescription: Capable of soaking up an endless amount of quicksilver
-			PouredOut: Can be poured out
-		}
-
 		Bestiary: {
 			# Enemies
 			AlbinoBat: A victum of a rare pigment mutation, this bat roams the deeper cavern system to blend in with the surrounding mercury in order to survive.
@@ -886,7 +876,11 @@ Mods: {
 
 			QuicksilverBucket: {
 				DisplayName: Quicksilver Bucket
-				Tooltip: ""
+				Tooltip:
+					'''
+					Contains a small amount of quicksilver
+					Can be poured out
+					'''
 			}
 
 			CoreGlobe: {
@@ -1900,6 +1894,20 @@ Mods: {
 			PetrifiedWoodHelmet: {
 				DisplayName: Petrified Wood Helmet
 				Tooltip: ""
+			}
+
+			BottomlessQuicksilverBucket: {
+				DisplayName: Bottomless Quicksilver Bucket
+				Tooltip:
+					'''
+					Contains an endless amount of quicksilver
+					Can be poured out
+					'''
+			}
+
+			QuicksilverAbsorbantSponge: {
+				DisplayName: Quicksilver Absorbant Sponge
+				Tooltip: Capable of soaking up an endless amount of quicksilver
 			}
 		}
 

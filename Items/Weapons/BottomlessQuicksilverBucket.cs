@@ -10,23 +10,24 @@ using Terraria.ModLoader;
 
 namespace TheDepths.Items.Weapons
 {
-	public class QuicksilverBucket : ModItem
+	public class BottomlessQuicksilverBucket : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
 		}
 
-		public override void SetDefaults()
-		{
-			Item.width = 20;
-			Item.height = 24;
-			Item.maxStack = 9999;
+		public override void SetDefaults() {
+			Item.useStyle = 1;
 			Item.useTurn = true;
+			Item.useAnimation = 12;
+			Item.useTime = 5;
+			Item.width = 20;
+			Item.height = 20;
 			Item.autoReuse = true;
-			Item.useAnimation = 15;
-			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.Swing;
+			Item.rare = ItemRarityID.Lime;
+			Item.value = Item.sellPrice(0, 10);
+			Item.tileBoost += 2;
 		}
 
 		public override void HoldItem(Player player)
@@ -60,8 +61,6 @@ namespace TheDepths.Items.Weapons
 						SoundEngine.PlaySound(SoundID.SplashWeak, player.position);
 						tile.LiquidType = LiquidID.Lava;
 						tile.LiquidAmount = byte.MaxValue;
-						Item.stack--;
-						player.PutItemInInventoryFromItemUsage(ItemID.EmptyBucket, player.selectedItem);
 						WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
 						player.ApplyItemTime(Item);
 						if (Main.netMode == NetmodeID.MultiplayerClient)

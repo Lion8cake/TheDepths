@@ -41,6 +41,12 @@ namespace TheDepths {
 				public static bool[] CascadeOnlyItem = ItemID.Sets.Factory.CreateBoolSet(); //For Modders
 
 				public static bool[] TreasureMagnetOnlyItem = ItemID.Sets.Factory.CreateBoolSet(); //For Modders
+
+				public static bool[] LavaBucketOnlyItem = ItemID.Sets.Factory.CreateBoolSet(); //For Modders
+
+				public static bool[] BottomlessLavaBucketOnlyItem = ItemID.Sets.Factory.CreateBoolSet(); //For Modders
+
+				public static bool[] LavaSpongeOnlyItem = ItemID.Sets.Factory.CreateBoolSet(); //For Modders
 			}
 
 			public static bool[] UnreflectiveProjectiles = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.FairyQueenSunDance, ProjectileID.PhantasmalDeathray);

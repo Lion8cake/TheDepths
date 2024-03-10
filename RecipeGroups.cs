@@ -27,6 +27,9 @@ namespace TheDepths
         public static RecipeGroup CobaltShieldRecipeGroup;
 		public static RecipeGroup CascadeRecipeGroup;
         public static RecipeGroup TreasureMagnetGroup;
+		public static RecipeGroup LavaBucketGroup;
+		public static RecipeGroup BottomlessLavaBucketGroup;
+		public static RecipeGroup LavaSpongeGroup;
 
 		public override void Unload()
         {
@@ -47,7 +50,10 @@ namespace TheDepths
             CobaltShieldRecipeGroup = null;
             CascadeRecipeGroup = null;
             TreasureMagnetGroup = null;
-        }
+			LavaBucketGroup = null;
+			BottomlessLavaBucketGroup = null;
+			LavaSpongeGroup = null;
+		}
 
         public override void AddRecipes()
         {
@@ -147,6 +153,12 @@ namespace TheDepths
 			RecipeGroup.RegisterGroup("Cascade", CascadeRecipeGroup);
             TreasureMagnetGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.TreasureMagnet)}", ItemID.TreasureMagnet, ModContent.ItemType<LodeStone>());
 			RecipeGroup.RegisterGroup("TreasureMagnet", TreasureMagnetGroup);
+			LavaBucketGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.LavaBucket)}", ItemID.LavaBucket, ModContent.ItemType<QuicksilverBucket>());
+			RecipeGroup.RegisterGroup("LavaBucket", LavaBucketGroup);
+			BottomlessLavaBucketGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.BottomlessLavaBucket)}", ItemID.BottomlessLavaBucket, ModContent.ItemType<BottomlessQuicksilverBucket>());
+			RecipeGroup.RegisterGroup("BottomlessLavaBucket", BottomlessLavaBucketGroup);
+			LavaSpongeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.LavaAbsorbantSponge)}", ItemID.LavaAbsorbantSponge, ModContent.ItemType<QuicksilverAbsorbantSponge>());
+			RecipeGroup.RegisterGroup("LavaAbsorbantSponge", LavaSpongeGroup);
 		}
 
         public override void PostAddRecipes()
@@ -238,6 +250,21 @@ namespace TheDepths
 				{
 					recipe.AddRecipeGroup("TreasureMagnet", TM.stack);
 					recipe.RemoveIngredient(TM);
+				}
+				if (recipe.TryGetIngredient(ItemID.LavaBucket, out var LB) && !TheDepthsIDs.Sets.RecipeBlacklist.LavaBucketOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup("LavaBucket", LB.stack);
+					recipe.RemoveIngredient(LB);
+				}
+				if (recipe.TryGetIngredient(ItemID.BottomlessLavaBucket, out var BLB) && !TheDepthsIDs.Sets.RecipeBlacklist.BottomlessLavaBucketOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup("BottomlessLavaBucket", BLB.stack);
+					recipe.RemoveIngredient(BLB);
+				}
+				if (recipe.TryGetIngredient(ItemID.LavaAbsorbantSponge, out var LS) && !TheDepthsIDs.Sets.RecipeBlacklist.LavaSpongeOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup("LavaAbsorbantSponge", LS.stack);
+					recipe.RemoveIngredient(LS);
 				}
 			}
         }

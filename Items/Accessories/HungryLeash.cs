@@ -9,6 +9,7 @@ using Terraria.GameContent.Creative;
 
 namespace TheDepths.Items.Accessories
 {
+	[AutoloadEquip(EquipType.Neck)]
 	public class HungryLeash : ModItem
 	{
 		public override void SetStaticDefaults() {
@@ -27,21 +28,20 @@ namespace TheDepths.Items.Accessories
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			if (player.statLife < player.statLifeMax2 / 4.8)
+			double playerlife = player.statLife;
+			double playermaxlife = player.statLifeMax2;
+			double playerLifePercentage = playerlife / playermaxlife * 100;
+			if (playerLifePercentage <= 25)
 			{
-				player.moveSpeed += 0.7f;
+				player.moveSpeed += 0.75f;
 			}
-			if (player.statLife < player.statLifeMax2 / 3)
+			else if (playerLifePercentage <= 50)
 			{
 				player.moveSpeed += 0.5f;
 			}
-			if (player.statLife < player.statLifeMax2 / 2)
+			else if (playerLifePercentage <= 75)
 			{
-				player.moveSpeed += 0.3f;
-			}
-			if (player.statLife < player.statLifeMax2 / 1.2)
-			{
-				player.moveSpeed += 0.2f;
+				player.moveSpeed += 0.25f;
 			}
 		}
 	}

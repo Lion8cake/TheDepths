@@ -122,6 +122,7 @@ namespace TheDepths
 			On_TileDrawing.GetWindCycle += On_TileDrawing_GetWindCycle;
 
 			On_AmbientSky.HellBatsGoupSkyEntity.ctor += HellBatsGoupSkyEntity_ctor;
+			IL_Player.ItemCheck_UseBuckets += BucketCollectionItem;
 
 			IL_Player.RocketBootVisuals += RocketBootVfx;
 			On_Main.DrawProj_FishingLine += On_Main_DrawProj_FishingLine;
@@ -185,6 +186,7 @@ namespace TheDepths
 			On_TileDrawing.GetWindCycle -= On_TileDrawing_GetWindCycle;
 
 			On_AmbientSky.HellBatsGoupSkyEntity.ctor -= HellBatsGoupSkyEntity_ctor;
+			IL_Player.ItemCheck_UseBuckets -= BucketCollectionItem;
 
 			IL_Player.RocketBootVisuals -= RocketBootVfx;
 			On_Main.DrawProj_FishingLine -= On_Main_DrawProj_FishingLine;
@@ -255,9 +257,22 @@ namespace TheDepths
 				["CobaltShieldOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.CobaltShieldOnlyItem[itemID] = flag,
 				["CascadeOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.CascadeOnlyItem[itemID] = flag,
 				["TreasureMagnetOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.TreasureMagnetOnlyItem[itemID] = flag,
+				["LavaBucketOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.LavaBucketOnlyItem[itemID] = flag,
+				["BottomlessLavaBucketOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.BottomlessLavaBucketOnlyItem[itemID] = flag,
+				["LavaSpongeOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.LavaSpongeOnlyItem[itemID] = flag,
 				_ => throw new Exception("TheDepths: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
 		}
+
+		#region BucketILEdit
+		private void BucketCollectionItem(ILContext il)
+		{
+			var c = new ILCursor(il);
+			c.GotoNext(MoveType.After, i => i.MatchLdcI4(1), i => i.MatchSub(), i => i.MatchStfld<Item>("stack"), i => i.MatchLdarg0(), i => i.MatchLdcI4(207));
+			c.EmitLdarg(0);
+			c.EmitDelegate((int item, Player player) => Worldgen.TheDepthsWorldGen.InDepths(player) ? ModContent.ItemType<QuicksilverBucket>() : item);
+		}
+		#endregion
 
 		#region AnglerDetoursILEdits
 		private void On_Player_RemoveAnglerAccOptionsFromRewardPool(On_Player.orig_RemoveAnglerAccOptionsFromRewardPool orig, Player self, List<int> itemIdsOfAccsWeWant, Item itemToTestAgainst)
@@ -477,7 +492,8 @@ namespace TheDepths
 			});
 			c.EmitBrfalse(IL_10d3d);
 
-			ILLabel IL_1185a = null;
+			//below code was implemented on 1/3/2024 through special ID for gemrobes
+			/*ILLabel IL_1185a = null;
 			if (!c.TryGotoNext(MoveType.After,
 				i => i.MatchLdsfld<Main>("player"),
 				i => i.MatchLdloc(14),
@@ -498,7 +514,7 @@ namespace TheDepths
 			{
 				return Main.player[k].armor[1].type == ModContent.ItemType<Items.Armor.OnyxRobe>();
 			});
-			c.EmitBrtrue(IL_1185a);
+			c.EmitBrtrue(IL_1185a);*/
 		}
 		#endregion
 

@@ -13,6 +13,8 @@ using System;
 using Terraria.GameContent.ItemDropRules;
 using System.Linq;
 using Terraria.GameContent;
+using Terraria.Audio;
+using TheDepths.Items.Weapons;
 
 namespace TheDepths.Items
 {
@@ -149,37 +151,37 @@ namespace TheDepths.Items
         }
 	}
 
-    public class DemonConch : GlobalItem
-    {
-        public override bool AppliesToEntity(Item entity, bool lateInstantiation)
-        {
-            return entity.type == ItemID.DemonConch;
-        }
-
-        public override bool CanUseItem(Item item, Player player)
-        {
-            if (!Worldgen.TheDepthsWorldGen.InDepths(player))
-            {
-                return true;
-            }
-            return false;
-        }
-    }
-
-	public class ShellPhoneUnderworld : GlobalItem
+	public class HellItemBlockig : GlobalItem
 	{
 		public override bool AppliesToEntity(Item entity, bool lateInstantiation)
 		{
-            return entity.type == ItemID.ShellphoneHell;
+            return entity.type == ItemID.ShellphoneHell || entity.type == ItemID.LavaBucket || entity.type == ItemID.BottomlessLavaBucket || entity.type == ItemID.DemonConch || entity.type == ItemID.LavaAbsorbantSponge;
 		}
 
 		public override bool CanUseItem(Item item, Player player)
 		{
+            if (item.type == ItemID.LavaBucket || item.type == ItemID.BottomlessLavaBucket)
+            {
+				item.autoReuse = !Worldgen.TheDepthsWorldGen.InDepths(player);
+			}
 			if (!Worldgen.TheDepthsWorldGen.InDepths(player))
 			{
 				return true;
 			}
-			return false;
+            else
+            {
+                if (item.type == ItemID.LavaBucket || item.type == ItemID.BottomlessLavaBucket)
+                {
+                    if (player.IsInTileInteractionRange(Player.tileTargetX, Player.tileTargetY, TileReachCheckSettings.Simple) && !Main.tile[Player.tileTargetX, Player.tileTargetY].HasTile && (Main.tile[Player.tileTargetX, Player.tileTargetY].LiquidAmount == 0 || Main.tile[Player.tileTargetX, Player.tileTargetY].LiquidType == LiquidID.Lava))
+                    {
+                        for (int i = 0; i < 12; i++)
+                        {
+                            Dust.NewDustDirect(Main.MouseWorld + new Vector2(-4f, -4f), 4, 4, DustID.Smoke, 0f, -1f);
+                        }
+                    }
+                }
+				return false;
+			}
 		}
 	}
 
@@ -195,144 +197,6 @@ namespace TheDepths.Items
             player.GetModPlayer<TheDepthsPlayer>().aAmulet2 = true;
             player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
             player.GetModPlayer<TheDepthsPlayer>().stoneRose = true;
-        }
-    }
-
-    public class LavaBucket : GlobalItem
-    {
-        public override bool AppliesToEntity(Item entity, bool lateInstantiation)
-        {
-            return entity.type == ItemID.LavaBucket;
-        }
-        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
-        {
-            if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
-            {
-                tooltips.RemoveAll(t => t.Text.Contains("lava"));
-                tooltips.RemoveAll(t => t.Text.Contains("poured"));
-                tooltips.Add(new(Mod, "NewDescription", (string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverBucketDescription")));
-                tooltips.Add(new(Mod, "NewDescription", (string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.PouredOut")));
-                item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverBucketName"));
-            }
-            else
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("ItemName.LavaBucket"));
-            }
-        }
-        public override void UpdateInventory(Item item, Player player)
-        {
-            if (Worldgen.TheDepthsWorldGen.InDepths(player))
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverBucketName"));
-            }
-            else
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("ItemName.LavaBucket"));
-            }
-        }
-
-        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
-        {
-            if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverBucketName"));
-            }
-            else
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("ItemName.LavaBucket"));
-            }
-        }
-    }
-
-    public class BottomlessLavaBucket : GlobalItem
-    {
-        public override bool AppliesToEntity(Item entity, bool lateInstantiation)
-        {
-            return entity.type == ItemID.BottomlessLavaBucket;
-        }
-        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
-        {
-            if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
-            {
-                tooltips.RemoveAll(t => t.Text.Contains("lava"));
-                tooltips.RemoveAll(t => t.Text.Contains("poured"));
-                tooltips.Add(new(Mod, "NewDescription", (string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.BottomlessQuicksilverBucketDescription")));
-                tooltips.Add(new(Mod, "NewDescription", (string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.PouredOut")));
-                item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.BottomlessQuicksilverBucketName"));
-            }
-            else
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("ItemName.BottomlessLavaBucket"));
-            }
-        }
-
-        public override void UpdateInventory(Item item, Player player)
-        {
-            if (Worldgen.TheDepthsWorldGen.InDepths(player))
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.BottomlessQuicksilverBucketName"));
-            }
-            else
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("ItemName.BottomlessLavaBucket"));
-            }
-        }
-
-        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
-        {
-            if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.BottomlessQuicksilverBucketName"));
-            }
-            else
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("ItemName.BottomlessLavaBucket"));
-            }
-        }
-    }
-
-    public class LavaSponge : GlobalItem
-    {
-        public override bool AppliesToEntity(Item entity, bool lateInstantiation)
-        {
-            return entity.type == ItemID.LavaAbsorbantSponge;
-        }
-        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
-        {
-            if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
-            {
-                tooltips.RemoveAll(t => t.Text.Contains("lava"));
-                tooltips.Add(new(Mod, "NewDescription", (string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverAbsorbantSpongeDescription")));
-                item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverAbsorbantSpongeName"));
-            }
-            else
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("ItemName.LavaAbsorbantSponge"));
-            }
-        }
-
-        public override void UpdateInventory(Item item, Player player)
-        {
-            if (Worldgen.TheDepthsWorldGen.InDepths(player))
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverAbsorbantSpongeName"));
-            }
-            else
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("ItemName.LavaAbsorbantSponge"));
-            }
-        }
-
-        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
-        {
-            if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("Mods.TheDepths.QuicksilverBuckets.QuicksilverAbsorbantSpongeName"));
-            }
-            else
-            {
-                item.SetNameOverride((string)Language.GetOrRegister("ItemName.LavaAbsorbantSponge"));
-            }
         }
     }
 }
