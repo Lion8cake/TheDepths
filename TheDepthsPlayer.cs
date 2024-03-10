@@ -276,7 +276,15 @@ namespace TheDepths
                 {
                     itemDrop = ModContent.ItemType<Items.ShalestoneConch>();
                 }
-            }
+				if (itemDrop == ItemID.BottomlessLavaBucket)
+				{
+					itemDrop = ModContent.ItemType<Items.Weapons.BottomlessQuicksilverBucket>();
+				}
+				if (itemDrop == ItemID.LavaAbsorbantSponge)
+				{
+					itemDrop = ModContent.ItemType<Items.Weapons.QuicksilverAbsorbantSponge>();
+				}
+			}
 
             if (attempt.questFish == ModContent.ItemType<Chasmefish>())
             {

@@ -1748,7 +1748,11 @@ Mods: {
 
 			HungryLeash: {
 				DisplayName: Hungry Leash
-				Tooltip: ""
+				Tooltip:
+					'''
+					For every 25% health lost, movement speed is increased by 25%
+					'How hungry?'
+					'''
 			}
 
 			PetrifiedWoodBath: {

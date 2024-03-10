@@ -73,7 +73,11 @@ namespace TheDepths.Items
             {
                 itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Accessories.PalladiumShield>(), 7));
             }
-        }
+			if (item.type == ItemID.WallOfFleshBossBag)
+			{
+				itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Accessories.HungryLeash>()));
+			}
+		}
 
 		public override bool IsAnglerQuestAvailable(int type)
 		{
