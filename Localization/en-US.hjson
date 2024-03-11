@@ -1913,6 +1913,11 @@ Mods: {
 				DisplayName: Quicksilver Absorbant Sponge
 				Tooltip: Capable of soaking up an endless amount of quicksilver
 			}
+
+			ShalestoneShackle: {
+				DisplayName: Shalestone Shackle
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {

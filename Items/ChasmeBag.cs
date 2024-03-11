@@ -38,6 +38,7 @@ namespace TheDepths.Items
 			itemLoot.Add(ItemDropRule.OneFromOptions(1, ItemID.WarriorEmblem, ItemID.RangerEmblem, ItemID.SorcererEmblem, ItemID.SummonerEmblem));
 			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<NPCs.Chasme.ChasmeHeart>()));
 			itemLoot.Add(ItemDropRule.ByCondition(new Conditions.NotUsedDemonHeart(), ItemID.DemonHeart));
+			itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Accessories.ShalestoneShackle>()));
 		}
 
 		public override Color? GetAlpha(Color lightColor) {
