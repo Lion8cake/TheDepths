@@ -9,6 +9,8 @@ using Terraria.DataStructures;
 using TheDepths.Items.Weapons;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Humanizer;
+using static Humanizer.On;
 
 namespace TheDepths.Projectiles
 {
@@ -19,7 +21,7 @@ namespace TheDepths.Projectiles
 			Projectile.height = 60;
 			Projectile.tileCollide = false;
 			Projectile.alpha = 255;
-			Projectile.timeLeft = 300;
+			Projectile.timeLeft = 5000;
 		}
 
         public override void AI()
@@ -31,15 +33,49 @@ namespace TheDepths.Projectiles
 			Player player = Main.player[Projectile.owner];
 			if (Projectile.alpha > 0)
 			{
-				Projectile.alpha -= 4;
+				Projectile.alpha -= 3;
 			}
 			if (Projectile.ai[0] == 1f) //Petting
 			{
-				Projectile.ai[1]++;
 				Projectile.position.X = player.position.X - Projectile.width / 2;
 				if (Projectile.alpha <= 0)
 				{
-					Projectile.velocity.Y = -4f;
+					Projectile.ai[1]++;
+					if (Projectile.ai[1] < 20)
+					{
+						Projectile.position.Y -= MathHelper.Lerp(0.1f, 1f, Projectile.ai[1] / 20);
+					}
+					else if (Projectile.ai[1] < 40)
+					{
+						Projectile.position.Y += MathHelper.Lerp(0.1f, 1f, Projectile.ai[1] / 40);
+					}
+					else if (Projectile.ai[1] < 60)
+					{
+						Projectile.position.Y -= MathHelper.Lerp(0.1f, 1f, Projectile.ai[1] / 60);
+					}
+					else if (Projectile.ai[1] < 80)
+					{
+						Projectile.position.Y += MathHelper.Lerp(0.1f, 1f, Projectile.ai[1] / 80);
+					}
+					else if (Projectile.ai[1] < 100)
+					{
+						Projectile.position.Y -= MathHelper.Lerp(0.1f, 1f, Projectile.ai[1] / 100);
+					}
+					else if (Projectile.ai[1] < 120)
+					{
+						Projectile.position.Y += MathHelper.Lerp(0.1f, 1f, Projectile.ai[1] / 120);
+					}
+				}
+				if (Projectile.ai[1] >= 120)
+				{
+					if (Projectile.alpha <= 255)
+					{
+						Projectile.alpha += 6;
+					}
+					if (Projectile.alpha >= 255)
+					{
+						Projectile.Kill();
+					}
 				}
 			}
 			else //Below the player

@@ -372,13 +372,9 @@ namespace TheDepths
             if (Gslam)
 			{
                 Main.NewText(player.afkCounter);
-                for (int MaxProj = 0; MaxProj < Main.maxProjectiles; MaxProj++)
-				{
-                    Projectile projectile = Main.projectile[MaxProj];
-                    if (player.afkCounter > 60 * 10 && projectile.type != ModContent.ProjectileType<ShalestoneHand>() && !projectile.active)//(60 * 60) * 2)
-                    {
-                        Projectile.NewProjectile(new EntitySource_Misc(""), player.position, new Vector2(0), ModContent.ProjectileType<ShalestoneHand>(), 0, 0, player.whoAmI, 1f);
-                    }
+                if (player.afkCounter > 60 * 10 && player.ownedProjectileCounts[ModContent.ProjectileType<ShalestoneHand>()] == 0)//(60 * 60) * 2)
+                {
+                    Projectile.NewProjectile(new EntitySource_Misc(""), player.position, new Vector2(0), ModContent.ProjectileType<ShalestoneHand>(), 0, 0, player.whoAmI, 1f);
                 }
 			}
 
