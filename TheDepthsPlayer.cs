@@ -62,6 +62,7 @@ namespace TheDepths
         public bool sEmbers;
         public bool nFlare;
         public bool pShield;
+        public bool Gslam;
         public bool quicksilverSurfboard;
         public int tremblingDepthsScreenshakeTimer;
         public int QuicksilverTimer;
@@ -100,6 +101,7 @@ namespace TheDepths
             quicksilverWet = false;
             NightwoodBuff = false;
             pShield = false;
+            Gslam = false;
 
             geodeCrystal = false;
             livingShadow = false;
@@ -366,6 +368,15 @@ namespace TheDepths
             {
                 Main.AnglerQuestSwap();
             }
+
+            if (Gslam)
+			{
+                Main.NewText(player.afkCounter);
+                if (player.afkCounter > 60 * 10)//(60 * 60) * 2)
+				{
+                    Projectile.NewProjectile(new EntitySource_Misc(""), player.position, new Vector2(0), ModContent.ProjectileType<ShalestoneHand>(), 0, 0, player.whoAmI, 1f);
+                }
+			}
 
             if (!Main.dedServ)
             {

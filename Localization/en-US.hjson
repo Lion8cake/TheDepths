@@ -2025,6 +2025,7 @@ Mods: {
 			SapphireSerpentKite.DisplayName: Sapphire Serpent Kite
 			MiniChasme.DisplayName: Mini-Chasme
 			MiniChasmeHand.DisplayName: Mini-Chasme Hand
+			ShalestoneHand.DisplayName: Shalestone Hand
 		}
 
 		Biomes: {

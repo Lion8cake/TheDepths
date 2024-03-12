@@ -28,5 +28,10 @@ namespace TheDepths.Items.Accessories
 			Item.rare = -12;
 			Item.accessory = true;
 		}
+
+		public override void UpdateAccessory(Player player, bool hideVisual)
+		{
+			player.GetModPlayer<TheDepthsPlayer>().Gslam = true;
+		}
 	}
 }
