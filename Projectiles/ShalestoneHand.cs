@@ -19,6 +19,7 @@ namespace TheDepths.Projectiles
 			Projectile.height = 60;
 			Projectile.tileCollide = false;
 			Projectile.alpha = 255;
+			Projectile.timeLeft = 300;
 		}
 
         public override void AI()
@@ -27,20 +28,23 @@ namespace TheDepths.Projectiles
 			//AI[1] is petting timer
 			//AI[2] unsued
 			//AI[3] unused
+			Player player = Main.player[Projectile.owner];
 			if (Projectile.alpha > 0)
 			{
-				Projectile.alpha--;
+				Projectile.alpha -= 4;
 			}
 			if (Projectile.ai[0] == 1f) //Petting
 			{
+				Projectile.ai[1]++;
+				Projectile.position.X = player.position.X - Projectile.width / 2;
 				if (Projectile.alpha <= 0)
 				{
-					Projectile.velocity.Y = 4f;
+					Projectile.velocity.Y = -4f;
 				}
 			}
 			else //Below the player
 			{
-				Projectile.position = Main.player[Projectile.owner].position;
+				Projectile.position = player.position;
 			}
 		}
 
