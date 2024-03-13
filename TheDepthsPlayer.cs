@@ -74,6 +74,7 @@ namespace TheDepths
 
         public int cShadowFlame;
 
+        public bool isSlamming;
         public bool geodeCrystal;
         public bool livingShadow;
         public bool miniChasme;
@@ -103,7 +104,11 @@ namespace TheDepths
             pShield = false;
             Gslam = false;
 
-            geodeCrystal = false;
+            if (isSlamming)
+            {
+                Player.maxFallSpeed = 20f;
+            }
+			geodeCrystal = false;
             livingShadow = false;
             miniChasme = false;
             ShadePet = false;
@@ -371,12 +376,34 @@ namespace TheDepths
 
             if (Gslam)
 			{
-                Main.NewText(player.afkCounter);
+                if (player.afkCounter > 0)
+                {
+					Main.NewText(player.afkCounter);
+				}
                 if (player.afkCounter > 60 * 10 && player.ownedProjectileCounts[ModContent.ProjectileType<ShalestoneHand>()] == 0)//(60 * 60) * 2)
                 {
                     Projectile.NewProjectile(new EntitySource_Misc(""), player.position, new Vector2(0), ModContent.ProjectileType<ShalestoneHand>(), 0, 0, player.whoAmI, 1f);
                 }
+                if (player.controlDown)
+                {
+                    Main.NewText(isSlamming);
+                    isSlamming = true;
+					if (player.ownedProjectileCounts[ModContent.ProjectileType<ShalestoneHand>()] == 0)
+					{
+						Projectile.NewProjectile(new EntitySource_Misc(""), player.position, new Vector2(0), ModContent.ProjectileType<ShalestoneHand>(), 0, 0, player.whoAmI);
+					}
+				}
 			}
+            if (player.velocity.Y == 0)
+            {
+                isSlamming = false;
+            }
+
+            if (isSlamming)
+            {
+                player.velocity.X = 0;
+                player.velocity.Y = 20;
+            }
 
             if (!Main.dedServ)
             {

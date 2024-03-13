@@ -31,12 +31,13 @@ namespace TheDepths.Projectiles
 			//AI[2] unsued
 			//AI[3] unused
 			Player player = Main.player[Projectile.owner];
-			if (Projectile.alpha > 0)
-			{
-				Projectile.alpha -= 3;
-			}
+			
 			if (Projectile.ai[0] == 1f) //Petting
 			{
+				if (Projectile.alpha > 0)
+				{
+					Projectile.alpha -= 3;
+				}
 				Projectile.position.X = player.position.X - Projectile.width / 2;
 				if (Projectile.alpha <= 0)
 				{
@@ -80,7 +81,25 @@ namespace TheDepths.Projectiles
 			}
 			else //Below the player
 			{
-				Projectile.position = player.position;
+				if (player.GetModPlayer<TheDepthsPlayer>().isSlamming)
+				{
+					if (Projectile.alpha > 0)
+					{
+						Projectile.alpha -= 20;
+					}
+				}
+				Projectile.position = player.position - new Vector2(Projectile.width / 2, -(player.height / 2 + 20));
+				if (!player.GetModPlayer<TheDepthsPlayer>().isSlamming)
+				{
+					if (Projectile.alpha <= 255)
+					{
+						Projectile.alpha += 20;
+					}
+					if (Projectile.alpha >= 255)
+					{
+						Projectile.Kill();
+					}
+				}
 			}
 		}
 

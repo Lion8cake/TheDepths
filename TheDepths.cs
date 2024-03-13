@@ -24,6 +24,7 @@ using Terraria.Graphics;
 using Terraria.Graphics.Capture;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Light;
+using Terraria.Graphics.Renderers;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.IO;
@@ -124,6 +125,7 @@ namespace TheDepths
 			On_AmbientSky.HellBatsGoupSkyEntity.ctor += HellBatsGoupSkyEntity_ctor;
 			IL_Player.ItemCheck_UseBuckets += BucketCollectionItem;
 
+			On_LegacyPlayerRenderer.DrawPlayerFull += PlayerAfterImages;
 			IL_Player.RocketBootVisuals += RocketBootVfx;
 			On_Main.DrawProj_FishingLine += On_Main_DrawProj_FishingLine;
 			On_Player.PlaceThing_PaintScrapper_LongMoss += On_Player_PlaceThing_PaintScrapper_LongMoss;
@@ -188,6 +190,7 @@ namespace TheDepths
 			On_AmbientSky.HellBatsGoupSkyEntity.ctor -= HellBatsGoupSkyEntity_ctor;
 			IL_Player.ItemCheck_UseBuckets -= BucketCollectionItem;
 
+			On_LegacyPlayerRenderer.DrawPlayerFull -= PlayerAfterImages;
 			IL_Player.RocketBootVisuals -= RocketBootVfx;
 			On_Main.DrawProj_FishingLine -= On_Main_DrawProj_FishingLine;
 			On_Player.PlaceThing_PaintScrapper_LongMoss -= On_Player_PlaceThing_PaintScrapper_LongMoss;
@@ -262,6 +265,26 @@ namespace TheDepths
 				["LavaSpongeOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.LavaSpongeOnlyItem[itemID] = flag,
 				_ => throw new Exception("TheDepths: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
+		}
+
+		private static void PlayerAfterImages(On_LegacyPlayerRenderer.orig_DrawPlayerFull orig, LegacyPlayerRenderer self, Terraria.Graphics.Camera camera, Player player)
+		{
+			SpriteBatch spriteBatch = camera.SpriteBatch;
+			SamplerState samplerState = camera.Sampler;
+			if (player.mount.Active && player.fullRotation != 0f)
+			{
+				samplerState = LegacyPlayerRenderer.MountedSamplerState;
+			}
+			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, samplerState, DepthStencilState.None, camera.Rasterizer, null, camera.GameViewMatrix.TransformationMatrix);
+			if (player.GetModPlayer<TheDepthsPlayer>().isSlamming)
+			{
+				for (int num12 = 0; num12 < 3; num12++)
+				{
+					self.DrawPlayer(camera, player, player.shadowPos[num12], player.shadowRotation[num12], player.shadowOrigin[num12], 0.5f + 0.2f * num12);
+				}
+			}
+			spriteBatch.End();
+			orig(self, camera, player);
 		}
 
 		#region BucketILEdit
