@@ -51,9 +51,11 @@ namespace TheDepths
 		private static int UWBGStyle;
 		private Color[] UWBGBottomColor = new Color[2];
 		private Asset<Texture2D>[][] UWBGTexture = new Asset<Texture2D>[2][];
+		public static ModKeybind GroundSlamKeybind { get; private set; }
 
 		public override void Load()
 		{
+			GroundSlamKeybind = KeybindLoader.RegisterKeybind(this, "GroundSlam", "LeftControl");
 			DefaultRenderTargetOverrider.Patch();
 			
 			Asset<Effect> shader = ModContent.Request<Effect>("TheDepths/Shaders/DepthsFog", AssetRequestMode.ImmediateLoad);
@@ -147,6 +149,7 @@ namespace TheDepths
 
 		public override void Unload()
 		{
+			GroundSlamKeybind = null;
 			TheDepthsWindUtilities.Unload();
 
 			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);

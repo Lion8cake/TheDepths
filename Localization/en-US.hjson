@@ -2026,6 +2026,7 @@ Mods: {
 			MiniChasme.DisplayName: Mini-Chasme
 			MiniChasmeHand.DisplayName: Mini-Chasme Hand
 			ShalestoneHand.DisplayName: Shalestone Hand
+			ShalestoneSlam.DisplayName: Shalestone Slam
 		}
 
 		Biomes: {
@@ -2141,6 +2142,8 @@ Mods: {
 			DepthsOtherworldly.DisplayName: The Deep Unsound
 			Chasme.DisplayName: Chasmic to the Rock
 		}
+
+		Keybinds.GroundSlam.DisplayName: Ground Slam
 	}
 }
 

@@ -14,8 +14,6 @@ namespace TheDepths.Items.Weapons
 {
 	public class Terminex : ModItem
 	{
-		
-
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
