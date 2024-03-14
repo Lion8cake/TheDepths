@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Humanizer;
 using static Humanizer.On;
+using System.Collections.Generic;
 
 namespace TheDepths.Projectiles
 {
@@ -26,19 +27,15 @@ namespace TheDepths.Projectiles
 
         public override void AI()
 		{
-			//AI[0] is different states
-			//AI[1] is petting timer
-			//AI[2] unsued
-			//AI[3] unused
 			Player player = Main.player[Projectile.owner];
 			
+			Projectile.spriteDirection = -player.direction;
 			if (Projectile.ai[0] == 1f) //Petting
 			{
 				if (Projectile.alpha > 0)
 				{
 					Projectile.alpha -= 3;
 				}
-				Projectile.position.X = player.position.X - Projectile.width / 2;
 				if (Projectile.alpha <= 0)
 				{
 					Projectile.ai[1]++;
@@ -78,6 +75,10 @@ namespace TheDepths.Projectiles
 						Projectile.Kill();
 					}
 				}
+				if (player.afkCounter != 0)
+				{
+					Projectile.position.X = player.position.X - Projectile.width / 2;
+				}
 			}
 			else //Below the player
 			{
@@ -89,18 +90,23 @@ namespace TheDepths.Projectiles
 					}
 				}
 				Projectile.position = player.position - new Vector2(Projectile.width / 2, -(player.height / 2 + 20));
-				if (!player.GetModPlayer<TheDepthsPlayer>().isSlamming)
+			}
+			if ((player.afkCounter == 0 && Projectile.ai[0] == 1f) || (!player.GetModPlayer<TheDepthsPlayer>().isSlamming && Projectile.ai[0] == 0f))
+			{
+				if (Projectile.alpha <= 255)
 				{
-					if (Projectile.alpha <= 255)
-					{
-						Projectile.alpha += 20;
-					}
-					if (Projectile.alpha >= 255)
-					{
-						Projectile.Kill();
-					}
+					Projectile.alpha += 20;
+				}
+				if (Projectile.alpha >= 255)
+				{
+					Projectile.Kill();
 				}
 			}
+		}
+
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+		{
+			overPlayers.Add(index);
 		}
 
 		public override bool? CanCutTiles()

@@ -1916,7 +1916,11 @@ Mods: {
 
 			ShalestoneShackle: {
 				DisplayName: Shalestone Shackle
-				Tooltip: ""
+				Tooltip:
+					'''
+					Allows the player to preform a ground slam
+					Double tap {$Key.DOWN}
+					'''
 			}
 		}
 
@@ -2006,8 +2010,8 @@ Mods: {
 			ShadowCat.DisplayName: Shadow Cat
 			ShadowflameEmber2.DisplayName: Shadowflame Ember
 			ShadowflameEmber3.DisplayName: Shadowflame Ember
-			POWHammerSwing.DisplayName: P O W Hammer Swing
-			POWEffect.DisplayName: P O W Effect
+			POWHammerSwing.DisplayName: POW Hammer Swing
+			POWEffect.DisplayName: POW Effect
 			MercuryExplosion1.DisplayName: Mercury Explosion
 			MercuryExplosion.DisplayName: Mercury Explosion
 			MercuryWarningSign.DisplayName: Mercury Warning Sign
@@ -2049,7 +2053,7 @@ Mods: {
 
 			Depths: {
 				Title: Depths
-				Description: The cold, dark Depths are guaranteeed to be present in your world.
+				Description: The cold, dark Depths are guaranteed to be present in your world.
 			}
 		}
 

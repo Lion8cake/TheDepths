@@ -64,6 +64,7 @@ namespace TheDepths
         public bool nFlare;
         public bool pShield;
         public bool Gslam;
+        public bool GslamVanity;
         public bool quicksilverSurfboard;
         public int tremblingDepthsScreenshakeTimer;
         public int QuicksilverTimer;
@@ -72,7 +73,7 @@ namespace TheDepths
         public bool quicksilverWet;
         public int EmberTimer;
         public bool NightwoodBuff;
-        private bool GSlamkeybindPressed;
+        public bool GSlamkeybindPressed = false;
 
         public int cShadowFlame;
 
@@ -106,7 +107,6 @@ namespace TheDepths
             pShield = false;
             Gslam = false;
 
-            GSlamkeybindPressed = false;
             if (isSlamming)
             {
                 Player.maxFallSpeed = 20f;
@@ -380,36 +380,30 @@ namespace TheDepths
 			}
             #endregion
 
-            if (Player.controlRight)
+            bool SlammingInteruptions = (player.velocity.Y == 0 || player.position == player.oldPosition);
+			if (Gslam || GslamVanity)
             {
-                Main.AnglerQuestSwap();
-            }
-
-            bool SlammingInteruptions = (player.velocity.Y == 0); //check for wings and rocketboots flying to cancel the slam
-
-            Main.NewText(GSlamkeybindPressed);
-
-            if (Gslam)
-			{
-                if (player.afkCounter > 0)
-                {
-					Main.NewText(player.afkCounter);
-				}
-                if (player.afkCounter > 60 * 10 && player.ownedProjectileCounts[ModContent.ProjectileType<ShalestoneHand>()] == 0)//(60 * 60) * 2)
+                if (player.afkCounter > 60 * 10 && player.ownedProjectileCounts[ModContent.ProjectileType<ShalestoneHand>()] == 0 && Main.rand.NextBool(600))
                 {
                     Projectile.NewProjectile(new EntitySource_Misc(""), player.position, Vector2.Zero, ModContent.ProjectileType<ShalestoneHand>(), 0, 0, player.whoAmI, 1f);
                 }
-                if ((GSlamkeybindPressed || player.controlDown) && !SlammingInteruptions)
+            }
+            if (Gslam)
+            {
+                if ((GSlamkeybindPressed) && !SlammingInteruptions)
                 {
                     Player.canRocket = false;
                     isSlamming = true;
-					if (player.ownedProjectileCounts[ModContent.ProjectileType<ShalestoneHand>()] == 0)
-					{
-						Projectile.NewProjectile(new EntitySource_Misc(""), player.position, Vector2.Zero, ModContent.ProjectileType<ShalestoneHand>(), 0, 0, player.whoAmI);
-					}
-				}
+                    if (player.ownedProjectileCounts[ModContent.ProjectileType<ShalestoneHand>()] == 0)
+                    {
+                        Projectile.NewProjectile(new EntitySource_Misc(""), player.position, Vector2.Zero, ModContent.ProjectileType<ShalestoneHand>(), 0, 0, player.whoAmI);
+                    }
+                }
+            }
+            if (GSlamkeybindPressed)
+            {
+				GSlamkeybindPressed = false;
 			}
-
             if (SlammingInteruptions)
             {
                 if (isSlamming && player.velocity.Y == 0)
@@ -419,7 +413,6 @@ namespace TheDepths
                 }
                 isSlamming = false;
             }
-
             if (isSlamming)
             {
                 player.velocity.X = 0;

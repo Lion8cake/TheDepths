@@ -128,6 +128,7 @@ namespace TheDepths
 			IL_Player.ItemCheck_UseBuckets += BucketCollectionItem;
 
 			On_LegacyPlayerRenderer.DrawPlayerFull += PlayerAfterImages;
+			On_Player.KeyDoubleTap += SlamDoubleTap;
 			IL_Player.RocketBootVisuals += RocketBootVfx;
 			On_Main.DrawProj_FishingLine += On_Main_DrawProj_FishingLine;
 			On_Player.PlaceThing_PaintScrapper_LongMoss += On_Player_PlaceThing_PaintScrapper_LongMoss;
@@ -194,6 +195,7 @@ namespace TheDepths
 			IL_Player.ItemCheck_UseBuckets -= BucketCollectionItem;
 
 			On_LegacyPlayerRenderer.DrawPlayerFull -= PlayerAfterImages;
+			On_Player.KeyDoubleTap -= SlamDoubleTap;
 			IL_Player.RocketBootVisuals -= RocketBootVfx;
 			On_Main.DrawProj_FishingLine -= On_Main_DrawProj_FishingLine;
 			On_Player.PlaceThing_PaintScrapper_LongMoss -= On_Player_PlaceThing_PaintScrapper_LongMoss;
@@ -287,7 +289,16 @@ namespace TheDepths
 				}
 			}
 			spriteBatch.End();
-			orig(self, camera, player);
+			orig.Invoke(self, camera, player);
+		}
+
+		private void SlamDoubleTap(On_Player.orig_KeyDoubleTap orig, Player self, int keyDir)
+		{
+			orig.Invoke(self, keyDir);
+			if (self.GetModPlayer<TheDepthsPlayer>().Gslam && keyDir == 0 && GroundSlamKeybind.GetAssignedKeys().Count == 0)
+			{
+				self.GetModPlayer<TheDepthsPlayer>().GSlamkeybindPressed = true;
+			}
 		}
 
 		#region BucketILEdit

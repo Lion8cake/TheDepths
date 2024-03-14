@@ -33,5 +33,10 @@ namespace TheDepths.Items.Accessories
 		{
 			player.GetModPlayer<TheDepthsPlayer>().Gslam = true;
 		}
+
+		public override void UpdateVanity(Player player)
+		{
+			player.GetModPlayer<TheDepthsPlayer>().GslamVanity = true;
+		}
 	}
 }
