@@ -58,6 +58,7 @@ namespace TheDepths.Items.Armor
 		{
 			player.manaCost -= 0.22f;
 			player.statManaMax2 += 60;
+			player.hasGemRobe = true;
 		}
 		
 		public override void AddRecipes()

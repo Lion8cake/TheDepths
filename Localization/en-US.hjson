@@ -90,7 +90,7 @@ Mods: {
 			ChasmeSoul: Chasme was born on a total eclipse that cursed her to what you saw then. She was locked away in the deep underground where she turned everything into an eternal dark abyss.        Sometimes I wonder if her curse could be broken someday.
 			CrystalBoundTaxCollector: The crystal formation remains of an old fellow who lived during the chaos Chasme brought to the surface. His ambitions years later lured him into the depths where he was turned to quartz by Chasme's geomancer cult.
 		}
-		
+
 		PlayerDeathReason: {
 			Gemforge: {
 				0: "{0} tried to summon a cult in pure light."
