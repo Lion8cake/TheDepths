@@ -1,0 +1,159 @@
+Beta v0.8.0
+=========================
+Added Onyx Minecart
+Added Black Gemspark Wall
+Added Offline Black Gemspark Wall
+Added Onyx Stone Block
+Added Onyx Stone Wall
+Added Onyx Squirrel
+Added Onyx Bunny
+Added Onyx Bunny Cage
+Added Onyx Squirrel Cage
+Added Onyx Gemtree
+Added Onyx Gemcorn
+Added Flowing Quicksilver
+Added The Unknown Depths Below
+Added Geo Campfire
+Added Nightwood Trapped Chest
+Added Quartz Trapped Chest
+Added Sapphire Serpent Kite
+Added Lamington
+Added Hanging Shadow Shrub
+Added Mignight Horseshoe
+Added Items for shalestone gems
+Added Shale wall
+Added Staff of a Thousand Years
+Added Quartz Hood
+Added Quartz Winter Coat
+Added Quartz Leggings
+Added Credits Sequence for the contributors of the Depths
+Added Petrified Wood furniture
+Added Petrified Wood Fence
+Added Petrified Wood Wall
+Added Petrified Wood Sword
+Added Petrified Wood Hammer
+Added Petrified Wood Bow
+Added Bound Crystal Formation
+Added Petrified Wood Helmet
+Added Petrified Wood Breastplate
+Added Petrified Wood Leggings
+Added Quicksilver Bucket
+Added Quicksilver Absorbant Sponge
+Added Bottomless Quicksilver Bucket
+Added Hungry Leash
+Added Shalestone Shackles
+Added licensing to the depth's code, assets and other 
+Fixed recipe with the Crystal Skull
+Resprited the onyx gemlock tile
+Fixed giant fluorescent lightbulbs not being activated properly
+Fixed giant fluorescent lightbulbs not dropping all the time
+Fixed onyx gemlock dropping dusts and no item when activated with large onyx
+Added onyx gemlock tooltip
+Fixed Black Phaseblade stats
+Fixed Black Phasesaber stats
+Nerfed onyx hook speed from 18/15 to 13
+Buffed onyx hook reach from 18.75 tiles to 25 tiles
+Added an explosion to the onyx sceptre bolt and the bolt ignores 10% of penetration
+Fixed Crystal and Sanctus shield still mentioning their removed knockback immunity
+Fixed Mercury moss being unobtainable through the chlorothyte extractinator
+Added chlorothyte extractinator support for Shale <=> Ash and Hellstone <=> arquerite ore
+Resprited offline black gemspark
+Fixed inconsistencies between black and vanilla gemspark blocks
+Fixed offline black gemspark not dropping anything
+Fixed Black gemspark Block being named Black gemspark
+Fixed description of the onyx robe saying 20% reduced mana cost instead of 22%
+Added set bonuses to onyx robe with Magic Hat and Wizard Hat
+Resprited Black torch
+Added black torch dust for black torches
+Fixed black torches not having any flames on their tiles
+Reduced light given by block torches
+Fixed placed gem duplication glitch
+Remade placed gems from the ground up
+Renamed Onyx Gemspark dust to Gem onyx dust
+Reduced light given by Gem Onyx Dust
+Resprited Gem Onyx Dust
+Updated map color of offline black gemspark
+Fixed unsafe brick walls not dropping their safe items when destroyed
+Fixed missing pixel on the petrified tree spaling
+Fixed pink lines appearing unintentionally on various tiles
+Fixed onyx gemrobe not increasing Tim spawnrates
+Added cascade recipe group
+Fixed multiplayer chasme issues with checking if she was actually killed chasme or not
+Fixed issues related to checking if the player was in the depths or not
+Changed obsidian and quartz creation on multiplayer servers being based on core world tag
+Resprited Nightwood tree
+Remade the nightmare tree and petrified tree to be unique tiles with unique properties
+Remade Depths Pots from the ground up (again) and now they work in multiplayer
+Fixed Glowmask rendering, they nolonger have a limit
+Added a glowmask to the nightmare tree
+Added Music Display Support
+Changed hit sound of petrified wood to the mining 'tick' sound
+Changed the nightwood chest opening animation
+Fixed name display for nightwood chests
+Slightly reduced the spawning of sapphire serpents
+Fixed each sapphire serpent segment counting as their own npc clogging up the radar and spawns
+Changed sapphire shovel projectile visuals
+Gave the Sapphire serpent a water attack
+Made Shadow slime inflict darkness when hitting the player and rarely inflicting blackout
+Made Shades inflict blackout
+Changed Shadow slime Ai to be faster on quicksilver
+Changed Archroma slime Ai to be agressivly bouncy on quicksilver
+Remade Crystal king and king coal AI
+Fixed Sapphire serpent bestiary having anti aliasing
+Fixed the left side of the drunk seed not generating mercury moss properly
+Made king coal drop hotdogs
+Removed code retexturing the underworld shellphone item
+Added the previously unobtainable depths shellphone item to the shellphone item list
+Made the underworld shellphone item unusable in depths worlds
+Edited depth meter to display 'Depths' and 'Underworld' instead of 'Core'
+Removed 2 mixels in the quicksilver fall texture
+Removed the orange tint on quicksilver falls
+Removed code that removed all lava bubble dust, making some items look really odd
+Added Quicksilver bubbles to Quicksilver
+Changed the particles produced when teleporting to the depths
+Resprited Nightwood Armour
+Added glowmask to the Nightwood armour
+Changed size of the quartz brick wall item
+Changed size of the quicksilver wall item
+Changed size of the Arquerite brick wall item
+Fixed large quartz being a lanky janky mess
+Fixed lode stone having its effects still apply when taking off the accessory
+Changed the reach of items from 98(under 7 tiles) to 160 (exactly 10 tiles)
+Fixed palladium shield appearing X amount of times in the lockbox loottable depending on how many items there were in the lockbox
+Resprited the glitter block item
+Fixed Glitter block not crafting fishing potions
+Made glitter block sparkle, ALOT
+Fixed hotline fishing rods not being replaced with silver liners in depths worlds
+Fixed some accessories not blocking some items from the angler reward pool
+Removed hell quests in depths worlds
+Fixed depths quest fish sometimes being unobtainable in drunk seeds
+Removed unnessesary projectile bloat from the chasme spawning cutscene 
+Fixed geomancers constantly praising the gemforge even after chasme had been summoned and killed
+Changed spawning postitions of chasme to now be closer to the player
+Added smartcursor support to the Shadow Shrub Planter Box
+Attempted to remove underworld enemies from the depths again
+Changed the depths map sky color
+Fixed shale not being minable with a shovel
+Removed all use of Mod.Find<> inside the code meaning less breaks with some content
+Fixed Shalestone and shale not allowing ores to generate inside of them
+Fixed positioning and scaling of the P.O.W hammer
+Remade the depths background code, now transitions between the depths and underworld
+Optimised liquid asset loading
+Fixed player run code using Main.Localplayer instead of ModPlayer's Player
+Changed the world creation bar detour to an IL edit, it replaces instead of overlaying
+Fixed heat distortion restrictions
+Remade the evaporation IL edit to be more flexible
+Fixed Depths/underworld world icon drawing every frame causing various issues
+Added Boss Checklist Support
+Removed tissue sample and shadow scales being required for the geode armour set
+Reduced geode armour defence from 5, 6, 5 => 4, 5, 4
+Remade the depths Menu theme background to use proper assets and be slightly faster
+Remade the otherworldly menu theme to use proper assets, be slightly faster and appearing after the depths menu theme
+Reworked the silhouette minion, now clones the player's looks and is much more polished
+Added Mod calls for several checks such as depths ID sets and depths biome checks
+Fixed Nightwood wall crafting nightwood twice
+Remade Candelabras, Candles, Chandeliers, Clocks, Lamps and Lanterns
+Fixed several tiles not counting as tables
+Tidied up GlobalItems code
+Removed Retexture code for Lava buckets, Bottomless Lava Buckets and Lava aborbant sponge
+Fixed Typo in the world creation screen
