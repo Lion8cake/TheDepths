@@ -90,28 +90,6 @@ Mods: {
 			ChasmeSoul: Chasme was born on a total eclipse that cursed her to what you saw then. She was locked away in the deep underground where she turned everything into an eternal dark abyss.        Sometimes I wonder if her curse could be broken someday.
 			CrystalBoundTaxCollector: The crystal formation remains of an old fellow who lived during the chaos Chasme brought to the surface. His ambitions years later lured him into the depths where he was turned to quartz by Chasme's geomancer cult.
 		}
-
-		#CalamityLore: {
-		#	Chasme:
-		#		'''
-		#		Many of my men have been lost to her, exploring the Depths was truly a challenge. As old as I am I also had heard the tales of Chasme long
-		#		before discovering she was real. I don't think the child wanted that fight. She built a home there, it wasn't perfect but nor was it nothing.
-		#		You went through her homeplace and defeated her and her man-made guardian. I think she knew when fighting you that she was going to lose, she
-		#		was up against the legend of Terraria, I would think too myself that if I were in that position I would also would have no hope for myself.
-		#		I know the destruction of the brimstone crags was cruel and the constant regret I have of the sulphurous sea but this..., I hope you are
-		#		happy with the progression you have made defeating her. If only there was a more peaceful option between you two.
-		#		'''
-		#	TheDepths:
-		#		'''
-		#		The Depths is a cold harsh place, nothing like I have ever seen before. Despite being that, I also find its unique flora and fauna quite
-		#		interesting. They have all learnt to live within the darkness and adapt to their surroundings. One interesting thing I learnt from exploring
-		#		the Depths is the almost ever expanding cult there. They built these castles and apartments just to worship Chasme. They're a tricky kind. Every
-		#		one that my men have captured or killed have either been able to escape or have turned to gems. and the mystery of if the geomancers are
-		#		humans or a whole new species remains. The nightmare grove is also quite the sub place. Its unique bio-luminescent grass, vines and more
-		#		serve as the Depth's only natural source of light. I will have Draedon conduct tests and observations here to explore this place's true potential.
-		#		The only trouble is keeping Chasme at bay...
-		#		'''
-		#}
 		
 		PlayerDeathReason: {
 			Gemforge: {
@@ -1915,7 +1893,7 @@ Mods: {
 			}
 
 			ShalestoneShackle: {
-				DisplayName: Shalestone Shackle
+				DisplayName: Shalestone Shackles
 				Tooltip:
 					'''
 					Allows the player to preform a ground slam

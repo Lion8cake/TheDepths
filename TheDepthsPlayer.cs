@@ -383,7 +383,7 @@ namespace TheDepths
             bool SlammingInteruptions = (player.velocity.Y == 0 || player.position == player.oldPosition);
 			if (Gslam || GslamVanity)
             {
-                if (player.afkCounter > 60 * 10 && player.ownedProjectileCounts[ModContent.ProjectileType<ShalestoneHand>()] == 0 && Main.rand.NextBool(600))
+                if (player.afkCounter > 60 * 10 && player.ownedProjectileCounts[ModContent.ProjectileType<ShalestoneHand>()] == 0 && Main.rand.NextBool(1200))
                 {
                     Projectile.NewProjectile(new EntitySource_Misc(""), player.position, Vector2.Zero, ModContent.ProjectileType<ShalestoneHand>(), 0, 0, player.whoAmI, 1f);
                 }
