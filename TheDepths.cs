@@ -272,6 +272,7 @@ namespace TheDepths
 			};
 		}
 
+		#region GroundSlamDetours
 		private static void PlayerAfterImages(On_LegacyPlayerRenderer.orig_DrawPlayerFull orig, LegacyPlayerRenderer self, Terraria.Graphics.Camera camera, Player player)
 		{
 			SpriteBatch spriteBatch = camera.SpriteBatch;
@@ -300,6 +301,7 @@ namespace TheDepths
 				self.GetModPlayer<TheDepthsPlayer>().GSlamkeybindPressed = true;
 			}
 		}
+		#endregion
 
 		#region BucketILEdit
 		private void BucketCollectionItem(ILContext il)
@@ -347,13 +349,16 @@ namespace TheDepths
 		#region lodestonedetour
 		private int On_Player_GetItemGrabRange(On_Player.orig_GetItemGrabRange orig, Player self, Item item)
 		{
-			orig.Invoke(self, item);
 			int num = Player.defaultItemGrabRange;
 			if (self.GetModPlayer<TheDepthsPlayer>().lodeStone)
 			{
 				num += 160;
+				return num;
 			}
-			return num;
+			else
+			{
+				return orig.Invoke(self, item);
+			}
 		}
 		#endregion
 
@@ -827,7 +832,7 @@ namespace TheDepths
 		}
 		#endregion
 
-		//v not needed in the march update
+		//v not needed in the april update
 		#region FishingBobberFix
 		private void On_Main_DrawProj_FishingLine(On_Main.orig_DrawProj_FishingLine orig, Projectile proj, ref float polePosX, ref float polePosY, Vector2 mountedCenter)
 		{
@@ -1337,6 +1342,7 @@ namespace TheDepths
 		#region MercuryBugCatchingPunishmentDetour
 		private Rectangle On_Player_ItemCheck_CatchCritters(On_Player.orig_ItemCheck_CatchCritters orig, Player self, Item sItem, Rectangle itemRectangle)
 		{
+			orig.Invoke(self, sItem, itemRectangle);
 			bool flag = sItem.type == ModContent.ItemType<Items.QuicksilverproofBugNet>() || sItem.type == ItemID.FireproofBugNet;
 			for (int i = 0; i < 200; i++)
 			{
@@ -1356,10 +1362,7 @@ namespace TheDepths
 						if (Main.npc[i].type == ModContent.NPCType<NPCs.EnchantedNightmareWorm>() || Main.npc[i].type == ModContent.NPCType<NPCs.AlbinoRat>() || Main.npc[i].type == ModContent.NPCType<NPCs.QuartzCrawler>())
 						{
 							Main.LocalPlayer.AddBuff(ModContent.BuffType<Buffs.MercuryBoiling>(), 300, quiet: false);
-						}
-						else
-						{
-							orig.Invoke(self, sItem, itemRectangle);
+							Main.LocalPlayer.ClearBuff(BuffID.OnFire);
 						}
 					}
 				}

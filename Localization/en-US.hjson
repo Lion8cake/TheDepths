@@ -1896,7 +1896,7 @@ Mods: {
 				DisplayName: Shalestone Shackles
 				Tooltip:
 					'''
-					Allows the player to preform a ground slam
+					Allows the player to perform a ground slam
 					Double tap {$Key.DOWN}
 					'''
 			}
