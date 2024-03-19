@@ -23,11 +23,10 @@ namespace TheDepths.Items.Placeable
         public override bool? UseItem(Player player)
 		{
 			Tile tile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
-
 			if (tile.HasTile && tile.TileType == ModContent.TileType<Tiles.ShaleBlock>() && player.IsInTileInteractionRange(Player.tileTargetX, Player.tileTargetY, Terraria.DataStructures.TileReachCheckSettings.Simple))
 			{
 				Main.tile[Player.tileTargetX, Player.tileTargetY].TileType = (ushort)ModContent.TileType<Tiles.NightmareGrass>();
-
+				WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY, true);
 				return true;
 			}
 			return false;

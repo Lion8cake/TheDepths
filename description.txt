@@ -1,7 +1,7 @@
 =========================================
 The Depths (Alternate Hell)
 =========================================
-Depths version 0.8.0
+Depths version 0.8.1
 Please report any bugs to our discord: https://discord.gg/JwEKrVhjA6
 Worlds can be converted from 1.4.3 to 1.4.4 just by opening them
 
@@ -16,6 +16,18 @@ This mod has Boss Checklist Support, When enabled chasme will have her own check
 =========================================
 Change Log
 =========================================
+0.8.1
+===============================
+Fixed bugnets being unable to catch no critters exceot for depths/quicksilver ones
+Fixed accessories that increased pickup range not working exceot for the lodestone
+Fixed typo in the shalestone Shackles tooltip
+Fixed Nightwood and petrified trees not being replanted by the Axe of Regrowth
+Changed how acorns place nightwood and petrified saplings
+Added ability for the axe of regrowth to chop down Petrified Trees
+Added AxesAbleToBreakStone ID Set for modders
+Fixed Tile framing issues with nightmare grass
+Moved some unused assets to the 'old assets' folder
+===============================
 0.8.0
 ===============================
 Added Onyx Minecart
@@ -83,14 +95,6 @@ Fixed description of the onyx robe saying 20% reduced mana cost instead of 22%
 Added set bonuses to onyx robe with Magic Hat and Wizard Hat
 Resprited Black torch
 Added black torch dust for black torches
-Fixed black torches not having any flames on their tiles
-Reduced light given by block torches
-Fixed placed gem duplication glitch
-Remade placed gems from the ground up
-Renamed Onyx Gemspark dust to Gem onyx dust
-Reduced light given by Gem Onyx Dust
-Resprited Gem Onyx Dust
-Updated map color of offline black gemspark
 ... view the changelogs for the rest of the changes
 ==========================================
 -=Credits=-

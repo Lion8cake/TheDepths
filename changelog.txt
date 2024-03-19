@@ -1,3 +1,16 @@
+Beta v0.8.1
+=========================
+Fixed bugnets being unable to catch no critters exceot for depths/quicksilver ones
+Fixed accessories that increased pickup range not working exceot for the lodestone
+Fixed typo in the shalestone Shackles tooltip
+Fixed Nightwood and petrified trees not being replanted by the Axe of Regrowth
+Changed how acorns place nightwood and petrified saplings
+Added ability for the axe of regrowth to chop down Petrified Trees
+Added AxesAbleToBreakStone ID Set for modders
+Fixed Tile framing issues with nightmare grass
+Moved some unused assets to the 'old assets' folder
+
+
 Beta v0.8.0
 =========================
 Added Onyx Minecart
