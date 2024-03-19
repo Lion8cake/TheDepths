@@ -35,9 +35,9 @@ namespace TheDepths
 {
     public class TheDepthsModSystem : ModSystem
     {
-        //public static bool NotLavaDestroyable;
+		//public static bool NotLavaDestroyable;
 
-        /*public override void PreUpdateWorld()
+		/*public override void PreUpdateWorld()
         {
             //if (Worldgen.TheDepthsWorldGen.InDepths)
             //{
@@ -55,7 +55,18 @@ namespace TheDepths
             //}
         }*/
 
-        public override void PostAddRecipes()
+		public override void PostSetupContent()
+		{
+			for (int i = 0; i < ItemLoader.ItemCount; i++)
+			{
+				if (TheDepthsIDs.Sets.AxesAbleToBreakStone[i] == true && ContentSamples.ItemsByType[i].pick > 0)
+				{
+					TheDepthsIDs.Sets.AxesAbleToBreakStone[i] = false;
+				}
+			}
+		}
+
+		public override void PostAddRecipes()
         {
             for (int i = 0; i < Recipe.numRecipes; i++)
             {

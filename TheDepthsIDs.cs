@@ -49,7 +49,17 @@ namespace TheDepths {
 				public static bool[] LavaSpongeOnlyItem = ItemID.Sets.Factory.CreateBoolSet(); //For Modders
 			}
 
-			public static bool[] UnreflectiveProjectiles = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.FairyQueenSunDance, ProjectileID.PhantasmalDeathray);
+			/// <summary>
+			/// Projectiles that cannot be reflected by the Palladium shield and its upgrades, for example the moonlord's Phantasmal Deathray is unparry-able due to it reversing its movement and attacking itself
+			/// <br />This is usefull for not breaking bossfights or special attacks done by enemies or pvp players. Also used by various sand balls for obious reasons
+			/// </summary>
+			public static bool[] UnreflectiveProjectiles = ProjectileID.Sets.Factory.CreateBoolSet(ProjectileID.FairyQueenSunDance, ProjectileID.PhantasmalDeathray, ProjectileID.SandBallFalling, ProjectileID.PearlSandBallFalling, ProjectileID.CrimsandBallFalling, ProjectileID.EbonsandBallFalling);
+
+			/// <summary>
+			/// For axes that can destroy petrified trees, normally this is only used by the Axe of Regrowth.
+			/// <br />Make sure that said axes that can break petrified trees have their pick value set to 0. Axes with a pickaxe value higher than 0 will already be able to destroy Petrified Trees
+			/// </summary>
+			public static bool[] AxesAbleToBreakStone = ItemID.Sets.Factory.CreateBoolSet(ItemID.AcornAxe);
 		}
     }
 }

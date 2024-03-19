@@ -40,6 +40,7 @@ using TheDepths.Items.Weapons;
 using TheDepths.Tiles.Furniture;
 using TheDepths.Worldgen;
 using static Terraria.Graphics.FinalFractalHelper;
+using Terraria.ObjectData;
 
 namespace TheDepths
 {
@@ -127,6 +128,7 @@ namespace TheDepths
 			On_AmbientSky.HellBatsGoupSkyEntity.ctor += HellBatsGoupSkyEntity_ctor;
 			IL_Player.ItemCheck_UseBuckets += BucketCollectionItem;
 
+			On_Player.TryReplantingTree += TreeReplantingDetour;
 			On_LegacyPlayerRenderer.DrawPlayerFull += PlayerAfterImages;
 			On_Player.KeyDoubleTap += SlamDoubleTap;
 			IL_Player.RocketBootVisuals += RocketBootVfx;
@@ -194,6 +196,7 @@ namespace TheDepths
 			On_AmbientSky.HellBatsGoupSkyEntity.ctor -= HellBatsGoupSkyEntity_ctor;
 			IL_Player.ItemCheck_UseBuckets -= BucketCollectionItem;
 
+			On_Player.TryReplantingTree -= TreeReplantingDetour;
 			On_LegacyPlayerRenderer.DrawPlayerFull -= PlayerAfterImages;
 			On_Player.KeyDoubleTap -= SlamDoubleTap;
 			IL_Player.RocketBootVisuals -= RocketBootVfx;
@@ -248,6 +251,7 @@ namespace TheDepths
 
 				//IDs
 				["UnreflectiveProjectiles", int projectileID, bool flag] => TheDepthsIDs.Sets.UnreflectiveProjectiles[projectileID] = flag,
+				["AxesAbleToBreakStone", int itemID, bool flag] => TheDepthsIDs.Sets.AxesAbleToBreakStone[itemID] = flag,
 				["HellstoneBarOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.HellstoneBarOnlyItem[itemID] = flag,
 				["HellstoneOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.HellstoneOnlyItem[itemID] = flag,
 				["ObsidianOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.ObsidianOnlyItem[itemID] = flag,
@@ -271,6 +275,33 @@ namespace TheDepths
 				_ => throw new Exception("TheDepths: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
 		}
+
+		#region AxeofRegrowthDetour
+		private void TreeReplantingDetour(On_Player.orig_TryReplantingTree orig, Player self, int x, int y)
+		{
+			orig.Invoke(self, x, y);
+			int style = 0;
+			Tile GrownOn = Main.tile[x, y + 1];
+			if (GrownOn.TileType == ModContent.TileType<Tiles.NightmareGrass>() || GrownOn.TileType == ModContent.TileType<Tiles.ShaleBlock>())
+			{
+				int type = (GrownOn.TileType == ModContent.TileType<Tiles.NightmareGrass>() ? ModContent.TileType<Tiles.Trees.NightSapling>() : ModContent.TileType<Tiles.Trees.PetrifiedSapling>());
+				if (!TileObject.CanPlace(Player.tileTargetX, Player.tileTargetY, type, style, self.direction, out var objectData))
+				{
+					return;
+				}
+				bool num = TileObject.Place(objectData);
+				WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
+				if (num)
+				{
+					TileObjectData.CallPostPlacementPlayerHook(Player.tileTargetX, Player.tileTargetY, type, style, self.direction, objectData.alternate, objectData);
+					if (Main.netMode == 1)
+					{
+						NetMessage.SendObjectPlacement(-1, Player.tileTargetX, Player.tileTargetY, objectData.type, objectData.style, objectData.alternate, objectData.random, self.direction);
+					}
+				}
+			}
+		}
+		#endregion
 
 		#region GroundSlamDetours
 		private static void PlayerAfterImages(On_LegacyPlayerRenderer.orig_DrawPlayerFull orig, LegacyPlayerRenderer self, Terraria.Graphics.Camera camera, Player player)

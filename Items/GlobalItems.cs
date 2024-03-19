@@ -15,6 +15,8 @@ using System.Linq;
 using Terraria.GameContent;
 using Terraria.Audio;
 using TheDepths.Items.Weapons;
+using TheDepths.Tiles.Trees;
+using Terraria.ObjectData;
 
 namespace TheDepths.Items
 {
@@ -201,6 +203,43 @@ namespace TheDepths.Items
             player.GetModPlayer<TheDepthsPlayer>().aAmulet2 = true;
             player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
             player.GetModPlayer<TheDepthsPlayer>().stoneRose = true;
+        }
+    }
+
+    public class AcornTreeEdit : GlobalItem //Thanks Gabe and the Verdant mod for this
+    {
+        public override bool AppliesToEntity(Item entity, bool lateInstantiation) => entity.type == ItemID.Acorn;
+
+        public override void HoldItem(Item item, Player player)
+        {
+            if (CanPlaceAtNight(Main.MouseWorld.ToTileCoordinates(), player)) // Replace placement with lush sapling if it can be placed here
+                item.createTile = ModContent.TileType<NightSapling>();
+            else if (CanPlaceAtPetrified(Main.MouseWorld.ToTileCoordinates(), player))
+                item.createTile = ModContent.TileType<PetrifiedSapling>();
+            else if (item.createTile == ModContent.TileType<PetrifiedSapling>() || item.createTile == ModContent.TileType<NightSapling>()) // Otherwise revert only if it's still a lush sapling
+                item.createTile = TileID.Saplings;
+        }
+
+        /// <summary>
+        /// Whether a nightwood sapling can be planted here. Checks the tile below the given coordinates.
+        /// </summary>
+        public static bool CanPlaceAtNight(Point pos, Player player)
+        {
+            Tile tile = Main.tile[pos.X, pos.Y + 1];
+            bool inRange = player.IsInTileInteractionRange(pos.X, pos.Y + 1, TileReachCheckSettings.Simple);
+
+            return inRange && tile.HasTile && TileObjectData.GetTileData(ModContent.TileType<NightSapling>(), 0).AnchorValidTiles.Contains(tile.TileType);
+        }
+
+        /// <summary>
+        /// Whether a petrified sapling can be planted here. Checks the tile below the given coordinates.
+        /// </summary>
+        public static bool CanPlaceAtPetrified(Point pos, Player player)
+        {
+            Tile tile = Main.tile[pos.X, pos.Y + 1];
+            bool inRange = player.IsInTileInteractionRange(pos.X, pos.Y + 1, TileReachCheckSettings.Simple);
+
+            return inRange && tile.HasTile && TileObjectData.GetTileData(ModContent.TileType<PetrifiedSapling>(), 0).AnchorValidTiles.Contains(tile.TileType);
         }
     }
 }

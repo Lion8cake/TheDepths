@@ -556,57 +556,58 @@ namespace TheDepths
 
 			//Shalestone Conch and shellphone
 			Item item = Player.inventory[Player.selectedItem];
-			if (!Player.JustDroppedAnItem)
-			{
-				if ((item.type == ModContent.ItemType<ShalestoneConch>() || item.type == ModContent.ItemType<ShellPhoneDepths>()) && Player.itemAnimation > 0 && Worldgen.TheDepthsWorldGen.InDepths(player))
+            if (!Player.JustDroppedAnItem)
+            {
+                if ((item.type == ModContent.ItemType<ShalestoneConch>() || item.type == ModContent.ItemType<ShellPhoneDepths>()) && Player.itemAnimation > 0 && Worldgen.TheDepthsWorldGen.InDepths(player))
                 {
-					Vector2 vector2 = Vector2.UnitY.RotatedBy((float)Player.itemAnimation * ((float)Math.PI * 2f) / 30f) * new Vector2(15f, 0f);
-					for (int num = 0; num < 2; num++)
-					{
-						if (Main.rand.Next(3) == 0)
-						{
-							Dust dust2 = Dust.NewDustPerfect(Player.Bottom + vector2, ModContent.DustType<QuicksilverTeleportFire>()); //Change the dust to be unique
-							dust2.velocity.Y *= 0f;
-							dust2.velocity.Y -= 4.5f;
-							dust2.velocity.X *= 1.5f;
-							dust2.scale = 0.8f;
-							dust2.alpha = 130;
-							dust2.noGravity = true;
-							dust2.fadeIn = 1.1f;
-						}
-					}
-					if (Player.ItemTimeIsZero)
-					{
-                        Player.ApplyItemTime(item);
-					}
-					else if (Player.itemTime == item.useTime / 2)
-					{
-						if (Main.netMode == 0)
-						{
-                            ShalestoneConch(Player);
-						}
-						else if (Main.netMode == 1 && Player.whoAmI == Main.myPlayer)
-						{
-							NetMessage.SendData(73, -1, -1, null, 2);
-						}
-					}
-				}
-                if (item.type == ItemID.Acorn) //Sapling Fix due to custom trees
-                {
-                    int x = Player.tileTargetX;
-                    int y = Player.tileTargetY;
-					Tile tileBelow = Main.tile[x, y + 1];
-                    if (tileBelow.TileType == ModContent.TileType<ShaleBlock>())
+                    Vector2 vector2 = Vector2.UnitY.RotatedBy((float)Player.itemAnimation * ((float)Math.PI * 2f) / 30f) * new Vector2(15f, 0f);
+                    for (int num = 0; num < 2; num++)
                     {
-                        item.createTile = ModContent.TileType<PetrifiedSapling>();
+                        if (Main.rand.Next(3) == 0)
+                        {
+                            Dust dust2 = Dust.NewDustPerfect(Player.Bottom + vector2, ModContent.DustType<QuicksilverTeleportFire>()); //Change the dust to be unique
+                            dust2.velocity.Y *= 0f;
+                            dust2.velocity.Y -= 4.5f;
+                            dust2.velocity.X *= 1.5f;
+                            dust2.scale = 0.8f;
+                            dust2.alpha = 130;
+                            dust2.noGravity = true;
+                            dust2.fadeIn = 1.1f;
+                        }
                     }
-					else if (tileBelow.TileType == ModContent.TileType<NightmareGrass>())
-					{
-						item.createTile = ModContent.TileType<NightSapling>();
-					}
-					else
+                    if (Player.ItemTimeIsZero)
                     {
-                        item.createTile = TileID.Saplings;
+                        Player.ApplyItemTime(item);
+                    }
+                    else if (Player.itemTime == item.useTime / 2)
+                    {
+                        if (Main.netMode == 0)
+                        {
+                            ShalestoneConch(Player);
+                        }
+                        else if (Main.netMode == 1 && Player.whoAmI == Main.myPlayer)
+                        {
+                            NetMessage.SendData(73, -1, -1, null, 2);
+                        }
+                    }
+                }
+                if (TheDepthsIDs.Sets.AxesAbleToBreakStone[item.type])
+                {
+                    Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
+                    if (tile.TileType == ModContent.TileType<PetrifiedTree>() && ((Main.playerInventory && TheDepthsIDs.Sets.AxesAbleToBreakStone[player.inventory[58].type]) || !Main.playerInventory))
+                    {
+                        item.pick = item.axe * 5;
+                    }
+                    else
+                    {
+                        item.pick = 0;
+                    }
+                }
+                for (int slot = 0; slot < Main.InventorySlotsTotal; slot++)
+                {
+                    if (TheDepthsIDs.Sets.AxesAbleToBreakStone[player.inventory[slot].type] && slot != Player.selectedItem)
+                    {
+                        player.inventory[slot].pick = 0;
                     }
                 }
             } 
