@@ -1,7 +1,7 @@
 =========================================
 The Depths (Alternate Hell)
 =========================================
-Depths version 0.8.1
+Depths version 0.8.1.1
 Please report any bugs to our discord: https://discord.gg/JwEKrVhjA6
 Worlds can be converted from 1.4.3 to 1.4.4 just by opening them
 
@@ -16,6 +16,11 @@ This mod has Boss Checklist Support, When enabled chasme will have her own check
 =========================================
 Change Log
 =========================================
+v0.8.1.1
+===============================
+Fixed NPCs basing what liquid damage they took based on what side of the world their target was on
+Fixed the Silhouette minion breaking servers and not letting them start
+===============================
 0.8.1
 ===============================
 Fixed bugnets being unable to catch no critters exceot for depths/quicksilver ones

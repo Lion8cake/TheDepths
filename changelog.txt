@@ -1,3 +1,8 @@
+Beta v0.8.1.1
+=========================
+Fixed NPCs basing what liquid damage they took based on what side of the world their target was on
+Fixed the Silhouette minion breaking servers and not letting them start
+
 Beta v0.8.1
 =========================
 Fixed bugnets being unable to catch no critters exceot for depths/quicksilver ones

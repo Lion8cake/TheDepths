@@ -57,7 +57,6 @@ namespace TheDepths
 		public override void Load()
 		{
 			GroundSlamKeybind = KeybindLoader.RegisterKeybind(this, "GroundSlam", "LeftControl");
-			DefaultRenderTargetOverrider.Patch();
 			
 			Asset<Effect> shader = ModContent.Request<Effect>("TheDepths/Shaders/DepthsFog", AssetRequestMode.ImmediateLoad);
 			Asset<Effect> shader2 = ModContent.Request<Effect>("TheDepths/Shaders/SilhouetteShader", AssetRequestMode.ImmediateLoad);
@@ -75,6 +74,7 @@ namespace TheDepths
 
 			if (!Main.dedServ)
 			{
+				DefaultRenderTargetOverrider.Patch();
 				EquipLoader.AddEquipTexture(this, "TheDepths/Items/Armor/OnyxRobe_Legs", EquipType.Legs, name: "OnyxRobe_Legs");
 
 				//GameShaders.Misc["TheDepths:ChasmeDeath"] = new MiscShaderData(new Ref<Effect>((Effect)ModContent.Request<Effect>("TheDepths/Shaders/ChasmeDeathEffect", ReLogic.Content.AssetRequestMode.ImmediateLoad)), "ChasmeAnimation").UseImage0("Images/Misc/Perlin");

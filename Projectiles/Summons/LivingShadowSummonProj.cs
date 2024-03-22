@@ -20,19 +20,22 @@ namespace TheDepths.Projectiles.Summons
 		public static Player[] playerVisualClone = new Player[256];
 
 		public override void Load()
-		{            
-			using var eventSlim = new ManualResetEventSlim();
-			
-			Main.QueueMainThreadAction(() =>
+		{
+			if (!Main.dedServ)
 			{
-				playerRT = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
-				
-				eventSlim.Set();
-			});
+				using var eventSlim = new ManualResetEventSlim();
 
-			eventSlim.Wait();
+				Main.QueueMainThreadAction(() =>
+				{
+					playerRT = new RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
 
-			Main.graphics.GraphicsDevice.DeviceReset += OnDeviceReset;
+					eventSlim.Set();
+				});
+
+				eventSlim.Wait();
+
+				Main.graphics.GraphicsDevice.DeviceReset += OnDeviceReset;
+			}
 		}
 
 		private static void OnDeviceReset(object sender, EventArgs eventArgs)
