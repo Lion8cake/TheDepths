@@ -1,10 +1,10 @@
 Mods: {
 	TheDepths: {
 		GameTips: {
-			DepthsTip0: An unknown friendly NPC sits bound the Depths as a crystal of their former self. If only there were a way to purify them . . .
+			DepthsTip0: An unknown friendly NPC sits bound in the Depths as a crystal of their former self. If only there were a way to purify them . . .
 			DepthsTip1: If you dig deep enough in the right world, you might end up in The Depths!
 			DepthsTip2: Defeat the Shadowstone giant Chasme to change the world forever. Using a Ruby Relic at a Gemforge might summon her...
-			DepthsTip3: Arquerite is super poisonous, craft a Crystal Skull to be immue to its poisoning.
+			DepthsTip3: Arquerite is super poisonous, craft a Crystal Skull to be immune to its poisoning.
 			DepthsTip4: Don't fall into quicksilver without drinking a Crystal Skin Potion first!
 			DepthsTip5: You can spend up to 16 seconds in quicksilver without consequences with the right gear!
 		}
@@ -18,7 +18,7 @@ Mods: {
 			GeodeHelmet: Summons 4 Geode Crystals that will deal 20 damage
 			MercuryHelmet:
 				'''
-				3 defence
+				3 defense
 				Mercury cannot infect you
 				'''
 			NightwoodHelmet:
@@ -26,19 +26,15 @@ Mods: {
 				Doubles duration of Mercury Footing
 				Halves the duration of Mercury Poisoning from Quicksilver
 				'''
-			QuartzArmor:
-				'''
-				Increases Whip Range by 35%
-				Increases Whip Speed by 35%
-				'''
+			QuartzArmor: Increases Whip Range and Speed by 35%
 			OnyxRobeWizard:
 				'''
-				2 defence
-				18% increased magic critical strike chance
+				2 defense
+				Icreases Magic critical strike chance by 18%
 				'''
 			OnyxRobeMagic:
 				'''
-				3 defence
+				3 defense
 				Increases maximum mana by 100
 				'''
 			PetrifiedWoodHelmet: Increases damage reduction by 10%
@@ -47,7 +43,7 @@ Mods: {
 		Quest: {
 			Description: {
 				Chasmefish: There is an old legend that says that a royal fish was born on the rise of a solar eclipse and was cursed to the depths of this world. I want you to find this fish so I can see how powerful it truly is.
-				Relicarp: You probably already know about the rituals that the geomancers proform on mulitple different objects whether they are alive or not. Aparently they cursed a fish and a relic at the same time merging it together to make a relic fish. Get it for me so I can see what happens when I place one in a pot.
+				Relicarp: If you don't know already but there is a magical cult in the Depths that worship gemstones. Their practices remain unknown to me but you know what I do know? They have a magical fish that looks just like their special cult relics. Go get one for me so I can find out what happens when I place it in a pot.
 				GlimmerDepthFish: I was playing on a layer of quartz when all of a sudden a quartz chunk broke off into the quicksilver and it grew fins and swam away. I've always wanted to know what quartz tastes like, so get me this fish so I can be the first to taste it.
 			}
 
@@ -311,7 +307,7 @@ Mods: {
 				Tooltip:
 					'''
 					Increases Melee knockback and inflicts freezing water on attack
-					12% increased melee speed and damage
+					Increases melee speed and damage by 12%
 					Enables auto swing for melee weapons
 					'''
 			}
@@ -383,12 +379,12 @@ Mods: {
 
 			CharredCrown: {
 				DisplayName: Charred Crown
-				Tooltip: 18% Increased Magic Damage
+				Tooltip: Increases Magic Damage by 18%
 			}
 
 			CrystalCrown: {
 				DisplayName: Crystal Crown
-				Tooltip: 20% Increased Magic Critical Strike Chance
+				Tooltip: Increases Magic Critical Strike Chance by 20%
 			}
 
 			GeodeChestplate: {
@@ -413,24 +409,24 @@ Mods: {
 
 			MercuryChestplate: {
 				DisplayName: Mercury Chestplate
-				Tooltip: 19% Increased Melee Damage
+				Tooltip: Increases Melee Damage by 19%
 			}
 
 			MercuryGreaves: {
 				DisplayName: Mercury Greaves
-				Tooltip: 10% Increased Movement Speed
+				Tooltip: Increases Movement Speed by 10%
 			}
 
 			MercuryHelmet: {
 				DisplayName: Mercury Helmet
-				Tooltip: 6% Increased melee critical strike chance
+				Tooltip: Increases melee critical strike chance by 6%
 			}
 
 			OnyxRobe: {
 				DisplayName: Onyx Robe
 				Tooltip:
 					'''
-					22% reduced mana cost
+					Reduces mana cost by 22%
 					Increases maximum mana by 60
 					'''
 			}
@@ -1092,7 +1088,7 @@ Mods: {
 			}
 
 			NightWood: {
-				DisplayName: Night Wood
+				DisplayName: Nightwood
 				Tooltip: ""
 			}
 
@@ -2014,7 +2010,7 @@ Mods: {
 		Biomes: {
 			DepthsBiome: {
 				DisplayName: Depths Biome
-				TownNPCDialogueName: the Depths Biome
+				TownNPCDialogueName: The Depths
 			}
 		}
 
@@ -2045,10 +2041,6 @@ Mods: {
 					Tooltip: Renames Shale to Slate, Requires the mod to reload for the config to work
 				}
 
-				CoreIconConfig: {
-					Label: Enables Core Icon
-					Tooltip: Enables the core icon overlay on world icons, disable this if issues persist when entering the world select screen
-				}
 
 				EnableFog: {
 					Label: Enable Depths Fog
@@ -2073,7 +2065,7 @@ Mods: {
 			ChasmeEmote: chasme
 		}
 
-		DepthsBiome: Depths Biome
+		DepthsBiome: The Depths
 
 		Achievements: {
 			HeartSmasher: {
@@ -2098,8 +2090,8 @@ Mods: {
 		}
 
 		BossChecklist.SpawnInfo.Chasme: Spawn by using a [i:TheDepths/RubyRelic] at a [i:TheDepths/Gemforge] in your world's core. [c/FF0000:Starts Hardmode!]
-		InDepths: Mods.TheDepths.InDepths
-		OutDepths: Mods.TheDepths.OutDepths
+		InDepths: Inside of the Depths
+		OutDepths: Outside of The Depths
 		GameUI.LayerDepths: Depths
 
 		CreditsRollCategory_DepthsTeam: {
@@ -2119,7 +2111,7 @@ Mods: {
 
 		MusicDisplay: {
 			ModName: The Depths
-			Author: by HBDues
+			Author: by HBDeus
 			Depths.DisplayName: The Unsound Deep
 			DepthsOtherworldly.DisplayName: The Deep Unsound
 			Chasme.DisplayName: Chasmic to the Rock
