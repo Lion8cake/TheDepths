@@ -15,10 +15,6 @@ namespace TheDepths.NPCs.Chasme;
 
 public class ChasmeHandLeft : ChasmeHand
 {
-	public override bool IsLoadingEnabled(Mod mod) => true;
-
-	protected override Vector2 BaseOffset => new(x: 114, y: 95);
-
     public override void SetStaticDefaults()
     {
 		NPCID.Sets.BossBestiaryPriority.Add(Type);
@@ -37,10 +33,8 @@ public class ChasmeHandLeft : ChasmeHand
 
     public override void SetDefaults()
 	{
-		base.SetDefaults();
 		NPC.width = 160;
 		NPC.height = 166;
-		shootOffset = 100;
 		SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
 	}
 
@@ -51,27 +45,5 @@ public class ChasmeHandLeft : ChasmeHand
 
 				new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.ChasmeHands")
 			});
-	}
-}
-public class ChasmeHandLeftExpert : ChasmeHandLeft
-{
-	public override bool IsLoadingEnabled(Mod mod) => false;
-
-	protected override Vector2 BaseOffset => new(x: 114, y: 95);
-
-    public override void SetDefaults()
-	{
-        NPC.width = 160;
-        NPC.height = 166;
-        shootOffset = 150;
-	}
-
-	public override void SetStaticDefaults()
-	{
-		NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
-		{
-			Hide = true
-		};
-		NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, value);
 	}
 }

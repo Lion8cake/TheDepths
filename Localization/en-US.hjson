@@ -2041,7 +2041,6 @@ Mods: {
 					Tooltip: Renames Shale to Slate, Requires the mod to reload for the config to work
 				}
 
-
 				EnableFog: {
 					Label: Enable Depths Fog
 					Tooltip: Enables the intense fog seen within the depths, disable to turn off the fog.

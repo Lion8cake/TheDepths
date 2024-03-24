@@ -20,54 +20,18 @@ using Terraria.GameContent.Bestiary;
 using TheDepths.Worldgen;
 using TheDepths.Items;
 using TheDepths.Items.Weapons;
+using Terraria.GameContent.UI.Elements;
+using TheDepths.Projectiles.Summons;
 
 namespace TheDepths.NPCs.Chasme;
 
 [AutoloadBossHead] // For loading "ChasmeHeart_Head_Boss" automatically
 public class ChasmeHeart : ModNPC
 {
-	//TODO add drops also
-    /// <summary>
-    /// list of body part NPC indexes in this order: Head, Body, Right Hand, Left Hand, Right Hand Expert, Left Hand Expert
-    /// </summary>
-    int[] bodyParts = new int[6];
-
-    public ref float ActionTimer => ref NPC.localAI[2];
-
-    public float drawTimer;
-
-    int startLife;
-	int lastActionState;
-	bool open = false;
-    Vector2 point = Vector2.Zero;
-	float ShootRot;
-    float speed = 3f;
-    float inertia = 20f;
-	bool second;
-
-    private enum ActionState
-	{
-		Idle,
-		Chase,
-		Dead
-	}
-
-	private uint AI_State_uint
-	{
-		get => BitConverter.SingleToUInt32Bits(NPC.ai[1]);
-		set => NPC.ai[1] = BitConverter.ToSingle(BitConverter.GetBytes(value), 0);
-	}
-
-	private ActionState AI_State
-	{
-		get => (ActionState)AI_State_uint;
-		set => AI_State_uint = (uint)value;
-	}
+	int[] ChasmePartIDs = new int[4];
 
 	public override void SetStaticDefaults()
 	{
-		// DisplayName.SetDefault("Chasme");
-
 		NPCID.Sets.BossBestiaryPriority.Add(Type);
 
 		NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
@@ -106,19 +70,48 @@ public class ChasmeHeart : ModNPC
 		SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
 	}
 
+	public override void AI()
+	{
+		//1 head
+		//2 body
+		//3 hand left
+		//4 hand right
+
+		//Head spawning
+		if (Main.npc[ChasmePartIDs[1]].type != ModContent.NPCType<ChasmeHead>())
+		{
+			int head = NPC.NewNPC(new EntitySource_Misc(""), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<ChasmeHead>());
+			(Main.npc[head].ModNPC as ChasmeHead).HeartID = NPC.whoAmI;
+			ChasmePartIDs[1] = Main.npc[head].whoAmI;
+		}
+		//Body Spawning
+		if (Main.npc[ChasmePartIDs[2]].type != ModContent.NPCType<ChasmeBody>())
+		{
+			int body = NPC.NewNPC(new EntitySource_Misc(""), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<ChasmeBody>());
+			(Main.npc[body].ModNPC as ChasmeBody).HeartID = NPC.whoAmI;
+			ChasmePartIDs[2] = Main.npc[body].whoAmI;
+		}
+
+		NPC.TargetClosestUpgraded();
+		Player player = Main.player[NPC.target];
+
+		//Movement, will change maybe
+		Vector2 direction = NPC.DirectionTo(player.Center + new Vector2(1600 * NPC.Center.X > player.Center.X ? 1 : -1, 0));
+		direction *= 3f;
+		NPC.velocity = (NPC.velocity * (20f - 1) + direction) / 20f;
+		if (NPC.velocity == Vector2.Zero)
+		{
+			NPC.velocity = new Vector2(0.1f, 0.1f);
+		}
+	}
+
 	public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 	{
 		bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-
-				new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.ChasmeSoul")
-			});
+			new FlavorTextBestiaryInfoElement("Mods.TheDepths.Bestiary.ChasmeSoul")
+		});
 	}
 
-	public bool BodyPartsSpawned
-	{
-		get => NPC.ai[0] == 1f;
-		set => NPC.ai[0] = value ? 1f : -1f;
-	}
     public override void BossLoot(ref string name, ref int potionType)
     {
 		potionType = ItemID.HealingPotion;
@@ -139,248 +132,11 @@ public class ChasmeHeart : ModNPC
 		}
 	}
 
-	public override void AI()
-	{
-		if (NPC.ai[3] > 0f)
-		{
-			NPC.dontTakeDamage = true;
-			NPC.ai[3] += 1f; // increase our death timer.
-		}
-		if (NPC.ai[3] >= 180f)
-		{
-			NPC.life = 0;
-			NPC.HitEffect(0, 0);
-			NPC.checkDead(); // This will trigger ModNPC.CheckDead the second time, causing the real death.
-		}
-
-		if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
-		{
-			NPC.TargetClosest();
-		}
-
-		Player player0 = Main.LocalPlayer;
-		float chaspos = NPC.position.X + 40f;
-		if (player0.position.Y > (float)((Main.maxTilesY - 250) * 16) && player0.position.X > chaspos - 1920f && player0.position.X < chaspos + 1920f)
-		{
-			player0.AddBuff(37, 10);
-		}
-
-		Player player = Main.player[NPC.target];
-
-		if (player.dead)
-		{
-			//flee downwards
-			NPC.velocity.Y += 0.05f;
-			//despawn in 10 ticks outside of player's screen
-			NPC.EncourageDespawn(10);
-			return;
-		}
-
-		if (NPC.life <= NPC.lifeMax / 4 && !second)
-		{
-			speed *= 1.5f;
-			foreach (int i in bodyParts)
-			{
-				NPC npc = Main.npc[i];
-				npc.damage = (int)(npc.damage * 1.5f);
-
-			}
-			second = true;
-		}
-		if (!BodyPartsSpawned)
-			SpawnBodyParts();
-		NPC.TargetClosestUpgraded();
-
-		switch (DetermineState(AI_State))
-		{
-			case ActionState.Idle:
-				{
-					break;
-				}
-			case ActionState.Chase:
-				{
-					ChaseAI(player);
-					break;
-				}
-		}
-
-
-
-
-
-		if ((int)Main.npc[bodyParts[0]].ai[2] == 1 && lastActionState != 1 && !open)
-		{
-
-			open = true;
-			drawTimer = 0;
-			startLife = NPC.life;
-			ActionTimer = 1200;
-			ShootRot = 0;
-
-		}
-		lastActionState = (int)Main.npc[bodyParts[0]].ai[2];
-
-		if (open)
-		{
-			Vector2 pos = NPC.Center - new Vector2(0, 10);
-			Vector2 aim = Vector2.One.RotatedBy(ShootRot);
-			pos += aim * 26;
-			if (ActionTimer % 3 == 0)
-			{
-				int a = Projectile.NewProjectile(NPC.GetSource_FromThis(), pos, aim * 30, ProjectileID.Shadowflames, NPC.damage, 3, NPC.whoAmI, Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1)); //TODO maybe replace this with chlaser that might look cool
-				Main.projectile[a].friendly = false;
-				Main.projectile[a].hostile = true;
-
-			}
-			--ActionTimer;
-			NPC.dontTakeDamage = false;
-			ShootRot += MathHelper.PiOver4 / 24;
-
-
-			//shadowflame projectiles
-
-
-
-			if (ActionTimer <= 0 || startLife - NPC.life >= 1651)
-			{
-				open = false;
-				NPC.netUpdate = true;
-			}
-		}
-		else
-		{
-			NPC.dontTakeDamage = true;
-		}
-
-	}
-
-	private ActionState DetermineState(ActionState previousState) //i abandond this system
-	{
-		switch (AI_State)
-		{
-			case ActionState.Idle:
-				{
-					return ActionState.Chase;
-				}
-			case ActionState.Chase:
-				{
-					return ActionState.Chase;
-				}
-			case ActionState.Dead:
-				{
-					return ActionState.Dead;
-				}
-			default:
-				{
-					return ActionState.Chase;
-				}
-		}
-	}
-
-	private void ChaseAI(Player player)
-	{
-
-
-		Vector2 direction = NPC.DirectionTo(player.Center + new Vector2(1600 * NPC.Center.X > player.Center.X ? 1 : -1, 0));
-
-		direction *= speed;
-
-		NPC.velocity = (NPC.velocity * (inertia - 1) + direction) / inertia;
-	}
-
-
-	private void SpawnBodyParts()
-	{
-		if (Main.netMode == NetmodeID.MultiplayerClient)
-			return;
-
-		var entitySource = NPC.GetSource_FromAI();
-		Point spawnPos = NPC.Center.ToPoint();
-
-		int a = NPC.NewNPC
-		(
-			entitySource,
-			spawnPos.X,
-			spawnPos.Y,
-			ModContent.NPCType<ChasmeHead>(),
-			Start: NPC.whoAmI,
-			ai0: NPC.whoAmI // Give the body part a reference to the main NPC (this one)
-		);
-
-		bodyParts[0] = a;
-
-		a = NPC.NewNPC
-		(
-			entitySource,
-			spawnPos.X,
-			spawnPos.Y,
-			ModContent.NPCType<ChasmeBody>(),
-			Start: NPC.whoAmI,
-			ai0: NPC.whoAmI
-		);
-
-		bodyParts[1] = a;
-
-		a = NPC.NewNPC
-		(
-			entitySource,
-			spawnPos.X,
-			spawnPos.Y,
-			ModContent.NPCType<ChasmeHandRight>(),
-			Start: NPC.whoAmI,
-			ai0: NPC.whoAmI
-		);
-
-		bodyParts[2] = a;
-
-		a = NPC.NewNPC
-		(
-			entitySource,
-			spawnPos.X,
-			spawnPos.Y,
-			ModContent.NPCType<ChasmeHandLeft>(),
-			Start: NPC.whoAmI,
-			ai0: NPC.whoAmI
-		);
-		bodyParts[3] = a;
-
-		if (Main.expertMode)
-		{
-			a = NPC.NewNPC
-		(
-			entitySource,
-			spawnPos.X,
-			spawnPos.Y,
-			ModContent.NPCType<ChasmeHandRightExpert>(),
-			Start: NPC.whoAmI,
-			ai0: NPC.whoAmI
-		);
-
-			bodyParts[4] = a;
-
-			a = NPC.NewNPC
-			(
-				entitySource,
-				spawnPos.X,
-				spawnPos.Y,
-				ModContent.NPCType<ChasmeHandLeftExpert>(),
-				Start: NPC.whoAmI,
-				ai0: NPC.whoAmI
-			);
-			bodyParts[5] = a;
-		}
-
-
-
-
-		BodyPartsSpawned = true;
-	}
-	float alpha = 0;
-	int fadeTimer = 0;
 	public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 	{
-		Main.spriteBatch.End();
-		Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+		//Most likely will go unused and removed sometime soon
+		//Main.spriteBatch.End();
+		//Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 
 		// Retrieve reference to shader //TODO compile the shader in the effects file that i stole and uncomment/debug this part
 		// 
@@ -417,15 +173,15 @@ public class ChasmeHeart : ModNPC
 
 		Texture2D texture2D2 = TextureAssets.Extra[98].Value;
 		Vector2 origin2 = texture2D2.Size() / 2f;
-		float num9 = (float)((double)Utils.GetLerpValue(15f, 30f, drawTimer, true) * (double)Utils.GetLerpValue(240f, 200f, drawTimer, true) * (1.0 + 0.200000002980232 * Math.Cos((double)Main.GlobalTimeWrappedHourly % 30.0 / 0.5 * 6.28318548202515 * 3.0)) * 0.800000011920929);
+		float num9 = (float)((double)Utils.GetLerpValue(15f, 30f, 0/*drawTimer*/, true) * (double)Utils.GetLerpValue(240f, 200f, 0/*drawTimer*/, true) * (1.0 + 0.200000002980232 * Math.Cos((double)Main.GlobalTimeWrappedHourly % 30.0 / 0.5 * 6.28318548202515 * 3.0)) * 0.800000011920929);
 		Vector2 scale1 = new Vector2(0.5f, 5f) * 2 * num9;
 		Vector2 scale2 = new Vector2(0.5f, 2f) * 2 * num9;
 
 
 		float height = 7;
-		drawTimer++;
+		//drawTimer++;
 
-		if (open)
+		/*if (open)
 		{
 			if (drawTimer >= 20)
 			{
@@ -462,21 +218,7 @@ public class ChasmeHeart : ModNPC
 				spriteBatch.Draw(ChasmeSoul, DrawPos - Vector2.UnitY * height, Source, color1, 0, Vector2.Zero, 1, fx, 0f);
 			}
 
-		}
-		base.PostDraw(spriteBatch, screenPos, drawColor);
-	}
-	public override bool CheckDead()
-	{
-		if (NPC.ai[3] == 0f)
-		{
-			NPC.ai[3] = 1f;
-			NPC.damage = 0;
-			NPC.life = 1;
-			NPC.dontTakeDamage = true;
-			NPC.netUpdate = true;
-			return false;
-		}
-		return true;
+		}*/
 	}
 
 	public override void OnKill()
@@ -519,28 +261,15 @@ public class ChasmeHeart : ModNPC
 
 	public override void HitEffect(NPC.HitInfo hit)
 	{
-		if (Main.netMode == NetmodeID.Server)
-		{
-			return;
-		}
-
-		if (NPC.life <= 0)
-		{
-			var entitySource = NPC.GetSource_Death();
-
-			Gore.NewGore(entitySource, NPC.BottomLeft, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("ChasmeHeart1").Type);
-			Gore.NewGore(entitySource, NPC.BottomRight, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("ChasmeHeart2").Type);
-			Gore.NewGore(entitySource, NPC.TopLeft, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("ChasmeHeart3").Type);
-			Gore.NewGore(entitySource, NPC.TopRight, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), Mod.Find<ModGore>("ChasmeHeart4").Type);
-
-			for (int l = 0; l < NPC.width; l++)
-			{
-				if (Main.rand.NextBool(2))
-				{
-					Dust.NewDust(NPC.position + new Vector2(l, l), 8, 8, ModContent.DustType<Dusts.SmashedHeartDust>());
-				}
-			}
-		}
+		//Death animation
+		// Slow down
+		// Crack small
+		// Crack Big
+		// Cracks glow white
+		// Screen flash
+		// Lots of stone and heart gores
+		// Drop a pendant
+		// Pendant falls after a while, smashing and starting hardmode/spawning the lootbox
 	}
 
 	public override void ModifyNPCLoot(NPCLoot npcLoot)
