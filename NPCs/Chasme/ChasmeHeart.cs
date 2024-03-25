@@ -22,6 +22,7 @@ using TheDepths.Items;
 using TheDepths.Items.Weapons;
 using Terraria.GameContent.UI.Elements;
 using TheDepths.Projectiles.Summons;
+using TheDepths.Projectiles;
 
 namespace TheDepths.NPCs.Chasme;
 
@@ -64,6 +65,7 @@ public class ChasmeHeart : ModNPC
 		NPC.noGravity = true;
 		NPC.noTileCollide = true;
 		NPC.knockBackResist = 0f;
+		NPC.damage = 50;
 		NPC.boss = true;
 		NPC.value = 80000;
 		NPC.HitSound = SoundID.Item30;
@@ -87,7 +89,7 @@ public class ChasmeHeart : ModNPC
 		//NPC AI array
 		//ai[0] is the core timer, The timer for when the core gets crammed back into chasme
 		//ai[1] is the invicibility timer
-		//ai[2]
+		//ai[2] is the delay between shot chasme shadowlashes
 		//ai[3]
 
 		//Attacks
@@ -111,7 +113,7 @@ public class ChasmeHeart : ModNPC
 		//Hands and Head lose accuracy when the core is out, TBD on how much accuracy is lost
 		//Speed is increased by 1.5x when the head starts crying
 		//Attack is slowly increased up to a max of 1.5x as the core loses health
-		//Core and head become invicible for 3 seconds between transition
+		//Core and head become invicible for 2 seconds between transition (core closing only)
 
 		//Head spawning
 		if (Main.npc[ChasmePartIDs[1]].type != ModContent.NPCType<ChasmeHead>())
@@ -152,24 +154,47 @@ public class ChasmeHeart : ModNPC
 		{
 			headNPC.life = headNPC.lifeMax;
 			NPC.ai[1]++;
-			if (NPC.ai[1] >= 60 * 3)
+			if (NPC.ai[1] >= 2 * 60)
 			{
 				headNPC.dontTakeDamage = false;
+				TimesDownedHead++;
 				NPC.ai[1] = 0;
+				NPC.ai[0] = 0;
 			}
 			NPC.dontTakeDamage = true;
-			TimesDownedHead++;
+		}
+		else
+		{
+			NPC.dontTakeDamage = !headNPC.dontTakeDamage;
 		}
 		if (!headNPC.dontTakeDamage)
 		{
 			drawTimer = 0;
 		}
-		else
+		if (!NPC.dontTakeDamage)
 		{
 			NPC.ai[0]++;
 			if (NPC.ai[0] > 60 * 20)
 			{
 				NPC.ai[0] = 60 * 20;
+			}
+
+			//Spawn chasme shadowlashs
+			NPC.ai[2]++;
+
+			if (NPC.ai[2] >= 2 * 60) //maybe 2 seconds per shot (she needs to hold he orbs for a second too)
+			{
+				if (Main.netMode != 1)
+				{
+					//taken from crystal king, some values need to be changed
+					Vector2 val = Main.player[NPC.target].Center + new Vector2(NPC.Center.X, NPC.Center.Y);
+					Vector2 val2 = NPC.Center + new Vector2(NPC.Center.X, NPC.Center.Y);
+					float num10 = (float)Math.Atan2(val2.Y - val.Y, val2.X - val.X);
+					int proj = Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X, NPC.Center.Y, (float)(Math.Cos(num10) * 14.0 * -1.0), (float)(Math.Sin(num10) * 14.0 * -1.0), ModContent.ProjectileType<ShadowLash>(), 42, 0f, 0);
+					Main.projectile[proj].hostile = true;
+					Main.projectile[proj].friendly = false;
+				}
+				NPC.ai[2] = 0;
 			}
 		}
 	}

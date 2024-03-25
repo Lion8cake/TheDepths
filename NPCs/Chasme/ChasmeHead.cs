@@ -73,12 +73,7 @@ namespace TheDepths.NPCs.Chasme
             {
                 NPC.life = 1;
             }
-            NPC.dontTakeDamage = NPC.life == 1;
-
-            if (NPC.dontTakeDamage)
-            {
-
-            }
+            NPC.dontTakeDamage = (NPC.life == 1 || chasmeSoul.ai[1] != 0);
 		}
 
 		public override void FindFrame(int frameHeight)

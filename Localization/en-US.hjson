@@ -2005,6 +2005,7 @@ Mods: {
 			MiniChasmeHand.DisplayName: Mini-Chasme Hand
 			ShalestoneHand.DisplayName: Shalestone Hand
 			ShalestoneSlam.DisplayName: Shalestone Slam
+			ShadowLash.DisplayName: Shadow Lash
 		}
 
 		Biomes: {
