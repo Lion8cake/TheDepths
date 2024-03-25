@@ -30,6 +30,12 @@ public class ChasmeHeart : ModNPC
 {
 	int[] ChasmePartIDs = new int[4];
 
+	private int TimesDownedHead = 0;
+
+	public float drawTimer;
+	float alpha = 0;
+	int fadeTimer = 0;
+
 	public override void SetStaticDefaults()
 	{
 		NPCID.Sets.BossBestiaryPriority.Add(Type);
@@ -72,10 +78,40 @@ public class ChasmeHeart : ModNPC
 
 	public override void AI()
 	{
+		//ChasmePartID array
 		//1 head
 		//2 body
 		//3 hand left
 		//4 hand right
+
+		//NPC AI array
+		//ai[0] is the core timer, The timer for when the core gets crammed back into chasme
+		//ai[1] is the invicibility timer
+		//ai[2]
+		//ai[3]
+
+		//Attacks
+		//Head shoots ruby rays that are very similar to the ruby bolt from the ruby staff
+		//at 50% health (red eyes) Ruby rays will be 50% bigger, deal more damage and explode into 2 slow to fast moving blazing wheel like projectiles
+		//Maybe: Moonlord like lazer for the ruby ray in expert instead of an exploding upgraded ruby ray at 50% health
+
+		//Hands shoot emerald shots when alive
+		//Hands lunge at the player every now and then
+		//2 hands normal, 4 hands expert, 8 hands legendary
+
+		//Chasme's soul shoots Shadowlash projectiles, she has a small summoning frame when congelling up an orb
+
+		//Legendary mod:
+		//8 hands
+		//geomancers spawn during the 2nd half of the fight
+		//head and core is smaller by 50%, body and hands are bigger by 50%
+		//speed and damage are already at max 1.5x increase
+
+		//Extra notes:
+		//Hands and Head lose accuracy when the core is out, TBD on how much accuracy is lost
+		//Speed is increased by 1.5x when the head starts crying
+		//Attack is slowly increased up to a max of 1.5x as the core loses health
+		//Core and head become invicible for 3 seconds between transition
 
 		//Head spawning
 		if (Main.npc[ChasmePartIDs[1]].type != ModContent.NPCType<ChasmeHead>())
@@ -92,16 +128,49 @@ public class ChasmeHeart : ModNPC
 			ChasmePartIDs[2] = Main.npc[body].whoAmI;
 		}
 
+		//targetting/getting the correct player
 		NPC.TargetClosestUpgraded();
 		Player player = Main.player[NPC.target];
 
 		//Movement, will change maybe
+		float speed = 3f;
+		if (NPC.life <= NPC.lifeMax / 4)
+			speed *= 1.5f;
 		Vector2 direction = NPC.DirectionTo(player.Center + new Vector2(1600 * NPC.Center.X > player.Center.X ? 1 : -1, 0));
-		direction *= 3f;
+		direction *= speed;
 		NPC.velocity = (NPC.velocity * (20f - 1) + direction) / 20f;
 		if (NPC.velocity == Vector2.Zero)
+			NPC.velocity = new Vector2(0.1f, 0.1f); //Make sure the velocity is never 0 (npcs despawn when its 0 for some reason)
+
+		NPC headNPC = Main.npc[ChasmePartIDs[1]];
+
+		//Stages, goes head -> core -> head 4 times
+		bool Headlife3 = NPC.life <= NPC.lifeMax / 4;
+		bool Headlife2 = NPC.life <= NPC.lifeMax / 2;
+		bool Headlife1 = NPC.life <= (NPC.lifeMax / 4 + NPC.lifeMax / 2);
+		if (headNPC.dontTakeDamage && ((Headlife1 && TimesDownedHead == 0) || (Headlife2 && TimesDownedHead == 1) || (Headlife3 && TimesDownedHead == 2) || NPC.ai[0] >= 60 * 20))
 		{
-			NPC.velocity = new Vector2(0.1f, 0.1f);
+			headNPC.life = headNPC.lifeMax;
+			NPC.ai[1]++;
+			if (NPC.ai[1] >= 60 * 3)
+			{
+				headNPC.dontTakeDamage = false;
+				NPC.ai[1] = 0;
+			}
+			NPC.dontTakeDamage = true;
+			TimesDownedHead++;
+		}
+		if (!headNPC.dontTakeDamage)
+		{
+			drawTimer = 0;
+		}
+		else
+		{
+			NPC.ai[0]++;
+			if (NPC.ai[0] > 60 * 20)
+			{
+				NPC.ai[0] = 60 * 20;
+			}
 		}
 	}
 
@@ -173,15 +242,15 @@ public class ChasmeHeart : ModNPC
 
 		Texture2D texture2D2 = TextureAssets.Extra[98].Value;
 		Vector2 origin2 = texture2D2.Size() / 2f;
-		float num9 = (float)((double)Utils.GetLerpValue(15f, 30f, 0/*drawTimer*/, true) * (double)Utils.GetLerpValue(240f, 200f, 0/*drawTimer*/, true) * (1.0 + 0.200000002980232 * Math.Cos((double)Main.GlobalTimeWrappedHourly % 30.0 / 0.5 * 6.28318548202515 * 3.0)) * 0.800000011920929);
+		float num9 = (float)((double)Utils.GetLerpValue(15f, 30f, drawTimer, true) * (double)Utils.GetLerpValue(240f, 200f, drawTimer, true) * (1.0 + 0.200000002980232 * Math.Cos((double)Main.GlobalTimeWrappedHourly % 30.0 / 0.5 * 6.28318548202515 * 3.0)) * 0.800000011920929);
 		Vector2 scale1 = new Vector2(0.5f, 5f) * 2 * num9;
 		Vector2 scale2 = new Vector2(0.5f, 2f) * 2 * num9;
 
 
 		float height = 7;
-		//drawTimer++;
+		drawTimer++;
 
-		/*if (open)
+		if (!NPC.dontTakeDamage)
 		{
 			if (drawTimer >= 20)
 			{
@@ -217,8 +286,7 @@ public class ChasmeHeart : ModNPC
 				spriteBatch.Draw(texture2D2, position1, new Rectangle?(), color, 0.0f, origin2, scale2 * 0.6f, effects, 0);
 				spriteBatch.Draw(ChasmeSoul, DrawPos - Vector2.UnitY * height, Source, color1, 0, Vector2.Zero, 1, fx, 0f);
 			}
-
-		}*/
+		}
 	}
 
 	public override void OnKill()

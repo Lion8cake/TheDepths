@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -97,7 +98,7 @@ namespace TheDepths.NPCs.Chasme
 			}
             else
             {
-                if (frame > 0 && frame <= 3)
+                if (frame > 0 && frame < 5)
                 {
 					NPC.frameCounter++;
 					if (NPC.frameCounter >= 6)
@@ -112,6 +113,42 @@ namespace TheDepths.NPCs.Chasme
                 frame = 0;
             }
             NPC.frame.Y = frame * frameHeight;
+		}
+
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+		{
+            NPC chasmeSoul = Main.npc[HeartID];
+            string TextureExtention = "";
+            if (chasmeSoul.life <= chasmeSoul.lifeMax / 4)
+			{
+                TextureExtention += "_Crying";
+			}
+            if (NPC.dontTakeDamage)
+            {
+                TextureExtention += "_BrokenEyes";
+            }
+
+            if (TextureExtention != "")
+			{
+                Texture2D asset = ModContent.Request<Texture2D>(Texture + TextureExtention).Value;
+                Vector2 pos = NPC.Center - screenPos;
+                pos.Y += NPC.gfxOffY + 4;
+                spriteBatch.Draw(asset, pos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, (NPC.direction == 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                return false;
+            }
+            else
+			{
+                return true;
+			}
+        }
+
+		public override void DrawEffects(ref Color drawColor)
+		{
+            bool invincible = NPC.life == 1;
+            if (NPC.dontTakeDamage != invincible)
+			{
+                //Spawn crystal dusts at the eye position
+            }
 		}
 	}
 }
