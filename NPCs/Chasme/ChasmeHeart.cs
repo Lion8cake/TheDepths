@@ -157,7 +157,10 @@ public class ChasmeHeart : ModNPC
 			if (NPC.ai[1] >= 2 * 60)
 			{
 				headNPC.dontTakeDamage = false;
-				TimesDownedHead++;
+				if (NPC.ai[0] !>= 60 * 20)
+				{
+					TimesDownedHead++;
+				}
 				NPC.ai[1] = 0;
 				NPC.ai[0] = 0;
 			}
@@ -173,10 +176,13 @@ public class ChasmeHeart : ModNPC
 		}
 		if (!NPC.dontTakeDamage)
 		{
-			NPC.ai[0]++;
-			if (NPC.ai[0] > 60 * 20)
+			if (NPC.ai[1] <= 0)
 			{
-				NPC.ai[0] = 60 * 20;
+				NPC.ai[0]++;
+				if (NPC.ai[0] > 60 * 20)
+				{
+					NPC.ai[0] = 60 * 20;
+				}
 			}
 
 			//Spawn chasme shadowlashs
@@ -190,7 +196,7 @@ public class ChasmeHeart : ModNPC
 					Vector2 val = Main.player[NPC.target].Center + new Vector2(NPC.Center.X, NPC.Center.Y);
 					Vector2 val2 = NPC.Center + new Vector2(NPC.Center.X, NPC.Center.Y);
 					float num10 = (float)Math.Atan2(val2.Y - val.Y, val2.X - val.X);
-					int proj = Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X, NPC.Center.Y, (float)(Math.Cos(num10) * 14.0 * -1.0), (float)(Math.Sin(num10) * 14.0 * -1.0), ModContent.ProjectileType<ShadowLash>(), 42, 0f, 0);
+					int proj = Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X, NPC.Center.Y, (float)(Math.Cos(num10) * 14.0 * -1.0), (float)(Math.Sin(num10) * 14.0 * -1.0), ModContent.ProjectileType<ShadowLash>(), 42 / 2, 0f, 0);
 					Main.projectile[proj].hostile = true;
 					Main.projectile[proj].friendly = false;
 				}

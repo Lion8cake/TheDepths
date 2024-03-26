@@ -19,16 +19,19 @@ namespace TheDepths.Projectiles.Chasme
 {
     public class ShadowLash : ModProjectile
     {
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailCacheLength[Type] = 25;
+            ProjectileID.Sets.TrailingMode[Type] = 2;
+            //ProjectileID.Sets.DrawScreenCheckFluff[Type] = 960;
+            Main.projFrames[Type] = 6;
+        }
+
         public override void SetDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[Type] = 10;
-            ProjectileID.Sets.TrailingMode[Type] = 1;
-			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 960;
-
-			Main.projFrames[Type] = 6;
             Projectile.width = 32;
 			Projectile.height = 32;
-            Projectile.aiStyle = -1;//9;
+			Projectile.aiStyle = 9;//-1;//9;
 			Projectile.friendly = true;
 			Projectile.light = 0.8f;
 			Projectile.penetrate = 2;
@@ -36,60 +39,20 @@ namespace TheDepths.Projectiles.Chasme
 			Projectile.localNPCHitCooldown = 12;
 		}
 
-		//Inflict Shadowflame?
-
-		//Add purple light
-
-		public override bool PreDraw(ref Color lightColor)
-		{
-			default(ShadowLashDrawer).Draw(Projectile);
-
-			SpriteEffects dir = (SpriteEffects)0;
-			if (Projectile.spriteDirection == -1)
-			{
-				dir = (SpriteEffects)1;
-			}
-			Vector2 vector161 = Projectile.position + new Vector2((float)Projectile.width, (float)Projectile.height) / 2f + Vector2.UnitY * Projectile.gfxOffY - Main.screenPosition;
-			Texture2D value179 = TextureAssets.Projectile[Projectile.type].Value;
-			Color color155 = Projectile.GetAlpha(Color.White);
-			Vector2 origin21 = new Vector2((float)value179.Width, (float)value179.Height) / 2f;
-			float num314 = Projectile.rotation;
-			Vector2 vector162 = Vector2.One * Projectile.scale;
-			Rectangle? sourceRectangle5 = null;
-
-			float lerpValue8 = Utils.GetLerpValue(0f, 8f, Projectile.velocity.Length(), clamped: true);
-			num314 *= lerpValue8;
-			vector162.X *= MathHelper.Lerp(1f, 0.8f, lerpValue8);
-			num314 += -(float)Math.PI / 2f * lerpValue8;
-			sourceRectangle5 = value179.Frame(1, Main.projFrames[Projectile.type], 0, Projectile.frame);
-			origin21 = sourceRectangle5.Value.Size() / 2f;
-			vector161 -= Projectile.velocity * 1f;
-			vector161 = Projectile.oldPos[0] + Projectile.Size / 2f - Main.screenPosition - Projectile.velocity / 2f;
-
-			float lerpValue9 = Utils.GetLerpValue(0f, 6f, Projectile.localAI[0], clamped: true);
-			Color color167 = new Color(255, 255, 255, 127) * 0.75f;
-			Vector2 scale13 = new(lerpValue9);
-			Vector2 spinningpoint31 = new Vector2(4f * scale13.X, 0f);
-			double radians31 = num314;
-			Vector2 spinningpoint3 = Utils.RotatedBy(spinningpoint31, radians31);
-			for (float num333 = 0f; num333 < 1f; num333 += 0.25f)
-			{
-				Texture2D texture10 = value179;
-				Vector2 val25 = vector161;
-				double radians32 = num333 * ((float)Math.PI * 2f);
-				Main.EntitySpriteDraw(texture10, val25 + spinningpoint3.RotatedBy(radians32), sourceRectangle5, color167, num314, origin21, scale13, dir);
-			}
-			return true;
-		}
-
-		public override Color? GetAlpha(Color lightColor)
-		{
-			return Color.White * Projectile.Opacity;
-		}
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (Main.rand.NextBool(3))
+                target.AddBuff(BuffID.ShadowFlame, 160);
+        }
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
+        {
+            if (Main.rand.NextBool(3))
+                target.AddBuff(BuffID.ShadowFlame, 160);
+        }
 
 		public override void AI()
 		{
-			int num4 = Main.maxTilesY * 16;
+			/*int num4 = Main.maxTilesY * 16;
 			int num5 = 0;
 			if (Projectile.ai[0] >= 0f)
 			{
@@ -128,7 +91,7 @@ namespace TheDepths.Projectiles.Chasme
 			{
 				Projectile.rotation = Projectile.rotation.AngleLerp(0f, 0.2f);
 			}
-			
+
 			bool flag3 = Projectile.velocity.Length() > 0.1f && Vector2.Dot(Projectile.oldVelocity.SafeNormalize(Vector2.Zero), Projectile.velocity.SafeNormalize(Vector2.Zero)) < 0.2f;
 
 			float lerpValue = Utils.GetLerpValue(0f, 10f, Projectile.localAI[0], clamped: true);
@@ -160,11 +123,76 @@ namespace TheDepths.Projectiles.Chasme
 					dust4.fadeIn = 2.2f;
 					dust4.position += (dust4.position - Projectile.Center) * lerpValue * 10f;
 				}
+			}*/
+		}
+
+		public override void OnKill(int timeLeft)
+        {
+            SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
+            float decreaseBy = 0.05f;
+            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Projectile.type] / 2; i++)
+            {
+                if (Projectile.oldPos[i].DirectionFrom(Projectile.oldPos[i + 1]).Length() > 0.6f)
+                {
+                    for (int i2 = 0; i2 < Main.rand.Next(2, 4); i2++)
+                    {
+                        Dust d = Dust.NewDustPerfect(Projectile.oldPos[i], DustID.Shadowflame, Projectile.oldPos[i].DirectionFrom(Projectile.oldPos[i + 1]).RotateRandom(0.4f) * Main.rand.NextFloat(7, 9));
+                        d.noGravity = !Main.rand.NextBool(3);
+                        d.scale = (Main.rand.NextFloat(0.25f, 0.5f) * i2) - (decreaseBy * i);
+                        d.fadeIn = (Main.rand.NextFloat(0.75f, 1f) * i2) - (decreaseBy * i * 2);
+                        //d.noLight = true;
+                        if (!d.noGravity)
+                        {
+                            d.scale *= 0.5f;
+                        }
+                    }
+                }
+            }
+        }
+		public override bool PreDraw(ref Color lightColor)
+		{
+			default(FlameLashDrawer).Draw(Projectile);
+
+			SpriteEffects dir = (SpriteEffects)0;
+			if (Projectile.spriteDirection == -1)
+			{
+				dir = (SpriteEffects)1;
 			}
+			Vector2 vector161 = Projectile.position + new Vector2((float)Projectile.width, (float)Projectile.height) / 2f + Vector2.UnitY * Projectile.gfxOffY - Main.screenPosition;
+			Texture2D value179 = TextureAssets.Projectile[Projectile.type].Value;
+			Color color155 = Projectile.GetAlpha(Color.White);
+			Vector2 origin21 = new Vector2((float)value179.Width, (float)value179.Height) / 2f;
+			float num314 = Projectile.rotation;
+			Vector2 vector162 = Vector2.One * Projectile.scale;
+			Rectangle? sourceRectangle5 = null;
+
+			float lerpValue8 = Utils.GetLerpValue(0f, 8f, Projectile.velocity.Length(), clamped: true);
+			num314 *= lerpValue8;
+			vector162.X *= MathHelper.Lerp(1f, 0.8f, lerpValue8);
+			num314 += -(float)Math.PI / 2f * lerpValue8;
+			sourceRectangle5 = value179.Frame(1, Main.projFrames[Projectile.type], 0, Projectile.frame);
+			origin21 = sourceRectangle5.Value.Size() / 2f;
+			vector161 -= Projectile.velocity * 1f;
+			vector161 = Projectile.oldPos[0] + Projectile.Size / 2f - Main.screenPosition - Projectile.velocity / 2f;
+
+			float lerpValue9 = Utils.GetLerpValue(0f, 6f, Projectile.localAI[0], clamped: true);
+			Color color167 = new Color(255, 255, 255, 127) * 0.75f;
+			Vector2 scale13 = new(lerpValue9);
+			Vector2 spinningpoint31 = new Vector2(4f * scale13.X, 0f);
+			double radians31 = num314;
+			Vector2 spinningpoint3 = Utils.RotatedBy(spinningpoint31, radians31);
+			for (float num333 = 0f; num333 < 1f; num333 += 0.25f)
+			{
+				Texture2D texture10 = value179;
+				Vector2 val25 = vector161;
+				double radians32 = num333 * ((float)Math.PI * 2f);
+				Main.EntitySpriteDraw(texture10, val25 + spinningpoint3.RotatedBy(radians32), sourceRectangle5, color167, num314, origin21, scale13, dir);
+			}
+			return true;
 		}
 	}
 
-	public struct ShadowLashDrawer
+    public struct ShadowLashDrawer
 	{
 		private static VertexStrip _vertexStrip = new VertexStrip();
 
@@ -173,7 +201,7 @@ namespace TheDepths.Projectiles.Chasme
 		public void Draw(Projectile proj)
 		{
 			transitToDark = Utils.GetLerpValue(0f, 6f, proj.localAI[0], clamped: true);
-			MiscShaderData miscShaderData = GameShaders.Misc["FlameLash"];
+			MiscShaderData miscShaderData = GameShaders.Misc["FlameLash"];//["TheDepths:ShadowLash"];
 			miscShaderData.UseSaturation(-2f);
 			miscShaderData.UseOpacity(MathHelper.Lerp(4f, 8f, transitToDark));
 			miscShaderData.Apply();
