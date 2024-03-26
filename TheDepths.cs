@@ -64,7 +64,7 @@ namespace TheDepths
 			Filters.Scene["TheDepths:FogShader"] = new Filter(new ScreenShaderData(new Ref<Effect>(shader.Value), "DepthsFogShaderPass"), EffectPriority.VeryHigh);
 			GameShaders.Misc["TheDepths:SilhouetteShader"] = new MiscShaderData(new Ref<Effect>(shader2.Value), "SilhouettePass");
 			GameShaders.Misc["TheDepths:ShadowLash"] = new MiscShaderData(vertexPixelShaderRef, "MagicMissile").UseProjectionMatrix(doUse: true);
-			GameShaders.Misc["TheDepths:ShadowLash"].UseImage0("Images/Extra_" + (short)192);
+			GameShaders.Misc["TheDepths:ShadowLash"].UseImage0(ModContent.Request<Texture2D>("TheDepths/Shaders/ShadowflameFlameHue", AssetRequestMode.ImmediateLoad));
 			GameShaders.Misc["TheDepths:ShadowLash"].UseImage1("Images/Extra_" + (short)189);
 			GameShaders.Misc["TheDepths:ShadowLash"].UseImage2("Images/Extra_" + (short)190);
 

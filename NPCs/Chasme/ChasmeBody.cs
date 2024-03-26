@@ -72,6 +72,7 @@ namespace TheDepths.NPCs.Chasme
 				NPC.life = 0;
 				NPC.checkDead();
 			}
+			Main.BestiaryTracker.Kills.SetKillCountDirectly(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ChasmeBody>()], Main.BestiaryTracker.Kills.GetKillCount(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ChasmeHeart>()]));
 		}
 	}
 }

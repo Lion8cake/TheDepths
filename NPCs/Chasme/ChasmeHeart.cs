@@ -23,6 +23,7 @@ using TheDepths.Items.Weapons;
 using Terraria.GameContent.UI.Elements;
 using TheDepths.Projectiles.Summons;
 using TheDepths.Projectiles;
+using ReLogic.Content;
 
 namespace TheDepths.NPCs.Chasme;
 
@@ -95,6 +96,7 @@ public class ChasmeHeart : ModNPC
 		//Attacks
 		//Head shoots ruby rays that are very similar to the ruby bolt from the ruby staff
 		//at 50% health (red eyes) Ruby rays will be 50% bigger, deal more damage and explode into 2 slow to fast moving blazing wheel like projectiles
+		//at 25% core health (crying) the head will drop quicksilver tears on the player, these inflict damage and quicksilver poisoning
 		//Maybe: Moonlord like lazer for the ruby ray in expert instead of an exploding upgraded ruby ray at 50% health
 
 		//Hands shoot emerald shots when alive
@@ -134,17 +136,33 @@ public class ChasmeHeart : ModNPC
 		NPC.TargetClosestUpgraded();
 		Player player = Main.player[NPC.target];
 
-		//Movement, will change maybe
-		float speed = 3f;
-		if (NPC.life <= NPC.lifeMax / 4)
-			speed *= 1.5f;
-		Vector2 direction = NPC.DirectionTo(player.Center + new Vector2(1600 * NPC.Center.X > player.Center.X ? 1 : -1, 0));
-		direction *= speed;
-		NPC.velocity = (NPC.velocity * (20f - 1) + direction) / 20f;
-		if (NPC.velocity == Vector2.Zero)
-			NPC.velocity = new Vector2(0.1f, 0.1f); //Make sure the velocity is never 0 (npcs despawn when its 0 for some reason)
+		//Movement/despawning
+		if (player.dead || NPC.target < 0 || Math.Abs(NPC.Center.X - player.Center.X) / 16f > (float)750)
+		{
+			NPC.velocity.Y += 0.05f;
+			NPC.EncourageDespawn(10);
+		}
+		else
+		{
+			float speed = 3f;
+			if (NPC.life <= NPC.lifeMax / 4)
+				speed *= 1.5f;
+			Vector2 direction = NPC.DirectionTo(player.Center + new Vector2(1600 * NPC.Center.X > player.Center.X ? 1 : -1, 0));
+			direction *= speed;
+			NPC.velocity = (NPC.velocity * (20f - 1) + direction) / 20f;
+			if (NPC.velocity == Vector2.Zero)
+				NPC.velocity = new Vector2(0.1f, 0.1f); //Make sure the velocity is never 0 (npcs despawn when its 0 for some reason)
+		}
+
+		//Alpha to not have 2 hearts
+		NPC.alpha += NPC.dontTakeDamage ? -4 : 4;
+		if (NPC.alpha >= 255)
+			NPC.alpha = 255;
+		if (NPC.alpha <= 0)
+			NPC.alpha = 0;
 
 		NPC headNPC = Main.npc[ChasmePartIDs[1]];
+		NPC bodyNPC = Main.npc[ChasmePartIDs[2]];
 
 		//Stages, goes head -> core -> head 4 times
 		bool Headlife3 = NPC.life <= NPC.lifeMax / 4;
@@ -157,10 +175,7 @@ public class ChasmeHeart : ModNPC
 			if (NPC.ai[1] >= 2 * 60)
 			{
 				headNPC.dontTakeDamage = false;
-				if (NPC.ai[0] !>= 60 * 20)
-				{
-					TimesDownedHead++;
-				}
+				TimesDownedHead = (Headlife3 ? 3 : (Headlife2 ? 2 : (Headlife1 ? 1 : 0))); //not the best programmer, may cause the head to need to be fought twice in some stages, if this ever happens in testing, CHANGE THIS!!
 				NPC.ai[1] = 0;
 				NPC.ai[0] = 0;
 			}
@@ -187,18 +202,15 @@ public class ChasmeHeart : ModNPC
 
 			//Spawn chasme shadowlashs
 			NPC.ai[2]++;
-
-			if (NPC.ai[2] >= 2 * 60) //maybe 2 seconds per shot (she needs to hold he orbs for a second too)
+			if (NPC.ai[2] >= 2 * 60)
 			{
 				if (Main.netMode != 1)
 				{
-					//taken from crystal king, some values need to be changed
-					Vector2 val = Main.player[NPC.target].Center + new Vector2(NPC.Center.X, NPC.Center.Y);
-					Vector2 val2 = NPC.Center + new Vector2(NPC.Center.X, NPC.Center.Y);
-					float num10 = (float)Math.Atan2(val2.Y - val.Y, val2.X - val.X);
-					int proj = Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X, NPC.Center.Y, (float)(Math.Cos(num10) * 14.0 * -1.0), (float)(Math.Sin(num10) * 14.0 * -1.0), ModContent.ProjectileType<ShadowLash>(), 42 / 2, 0f, 0);
-					Main.projectile[proj].hostile = true;
-					Main.projectile[proj].friendly = false;
+					int projDamage = 42 / 2; //divided by 2 because projectiles multiply the damage by 2 for some dumbass reason
+					Vector2 val = Main.player[NPC.target].Center + new Vector2(NPC.Center.X, NPC.Center.Y - 26);
+					Vector2 val2 = NPC.Center + new Vector2(NPC.Center.X, NPC.Center.Y - 26);
+					float shootSpeed = (float)Math.Atan2(val2.Y - val.Y, val2.X - val.X);
+					Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X, NPC.Center.Y - 26, (float)(Math.Cos(shootSpeed) * 14.0 * -1.0), (float)(Math.Sin(shootSpeed) * 14.0 * -1.0), ModContent.ProjectileType<ShadowLash>(), projDamage, 0f, 0);
 				}
 				NPC.ai[2] = 0;
 			}
@@ -260,7 +272,11 @@ public class ChasmeHeart : ModNPC
 		Main.spriteBatch.End();
 		Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
-		Texture2D ChasmeSoul = ModContent.Request<Texture2D>("TheDepths/NPCs/Chasme/ChasmeSoul").Value;
+		Texture2D ChasmeSoul = ModContent.Request<Texture2D>("TheDepths/NPCs/Chasme/ChasmeSoul", AssetRequestMode.ImmediateLoad).Value;
+		if (NPC.ai[2] >= 60 * 1)
+		{
+			ChasmeSoul = ModContent.Request<Texture2D>("TheDepths/NPCs/Chasme/ChasmeSoul_Summoning", AssetRequestMode.ImmediateLoad).Value;
+		}
 
 		Color color = new(195, 136, 251);
 		Vector2 DrawPos = NPC.Center - screenPos + new Vector2(-27, -50);

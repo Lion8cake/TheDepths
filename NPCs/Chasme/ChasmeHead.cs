@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -125,7 +126,7 @@ namespace TheDepths.NPCs.Chasme
 
             if (TextureExtention != "")
 			{
-                Texture2D asset = ModContent.Request<Texture2D>(Texture + TextureExtention).Value;
+                Texture2D asset = ModContent.Request<Texture2D>(Texture + TextureExtention, AssetRequestMode.ImmediateLoad).Value;
                 Vector2 pos = NPC.Center - screenPos;
                 pos.Y += NPC.gfxOffY + 4;
                 spriteBatch.Draw(asset, pos, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, (NPC.direction == 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
