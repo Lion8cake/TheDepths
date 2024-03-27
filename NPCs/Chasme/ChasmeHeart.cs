@@ -200,7 +200,7 @@ public class ChasmeHeart : ModNPC
 				}
 			}
 
-			//Spawn chasme shadowlashs
+			//Shoot chasme shadowlashs
 			NPC.ai[2]++;
 			if (NPC.ai[2] >= 2 * 60)
 			{

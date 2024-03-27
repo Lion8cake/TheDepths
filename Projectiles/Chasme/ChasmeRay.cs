@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,45 +13,40 @@ namespace TheDepths.Projectiles.Chasme
 {
     public class ChasmeRay : ModProjectile
     {
-
-        public ref float type => ref Projectile.ai[1];
-
-
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 16;
+            Projectile.width = 16;
+            Projectile.height = 16;
             Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.alpha = 255;
             Projectile.penetrate = 1;
             Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
-            Projectile.light = 1f;
-
+            //Projectile.light = 1f;
         }
+
         public override void AI()
         {
-            int[] dustTypes = { DustID.GemRuby, DustID.GemEmerald };
             for (int i = 0; i < 2; i++)
             {
-                int num = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 10, 10, dustTypes[(int)Projectile.ai[1]], Projectile.velocity.X, Projectile.velocity.Y, 150, default(Color), 1.25f);
+                int num = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 10, 10, DustID.GemRuby, Projectile.velocity.X, Projectile.velocity.Y, 150, default(Color), 1.25f);
                 Dust dust = Main.dust[num];
                 dust.noGravity = true;
                 dust.velocity *= 0.3f;
             }
-            switch (type)
-            {
-                case 0:
-                    break;
-                case 1:
-                    break;
-            }
         }
+
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            for (int i = 0; i < 2; i++) { }
-                //Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<ChasmeShockwave>(), Projectile.damage/2, 6, Projectile.owner, 2*i-1, Projectile.ai[1]);
-            return base.OnTileCollide(oldVelocity);
+            if (Projectile.ai[0] == 1f)
+			{
+                for (int i = -1; i < 1; i++)
+				{
+                    Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center, new Vector2(3 * i, 3), ModContent.ProjectileType<ChasmeShockwave>(), Projectile.damage, 0f, 0);
+                }
+            }
+            return true;
         }
     }
 }

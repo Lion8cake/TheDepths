@@ -9,143 +9,128 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent;
+using Terraria.Audio;
 
 namespace TheDepths.Projectiles.Chasme
 {
 	public class ChasmeShockwave : ModProjectile
 	{
-        public override void SetStaticDefaults()
-        {
-            ProjectileID.Sets.TrailCacheLength[Type] = 10;
-            ProjectileID.Sets.TrailingMode[Type] = 1;
-        }
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 16;
-            Projectile.friendly = false;
-            Projectile.hostile = true;
-            Projectile.penetrate = 1;
-            Projectile.tileCollide = false;
-            Projectile.ignoreWater = true;
-            Projectile.light = 1f;
-            Projectile.timeLeft = 60;
-        }
-        float magnitude = 1;
-        public override void AI()
-        {
-            int direction = (int)Projectile.ai[0];
-            Point tileCoords = Projectile.Center.ToTileCoordinates();
-            Vector2 nextVelocity = new Vector2(0, 0);
+			Projectile.width = 48;
+			Projectile.height = 48;
+			Projectile.alpha = 100;
+			Projectile.light = 0.2f;
+			Projectile.aiStyle = -1;
+			Projectile.hostile = true;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = true;
+			Projectile.scale = 0.9f;
+			Projectile.ignoreWater = true;
+		}
 
-            if (Main.tile[tileCoords + new Point(0, -1)].HasTile)
-            {
-            }
-            else if (Main.tile[tileCoords + new Point(0, 1)].HasTile)
-            {
-                nextVelocity = new Vector2(3, 0);
-            }
-            else if (Main.tile[tileCoords + new Point(1, 0)].HasTile || Main.tile[tileCoords + new Point(-1, 0)].HasTile)
-            {
-                nextVelocity = new Vector2(0, -3);
-            }
-            else
-            {
-                nextVelocity = Projectile.oldVelocity;
-               
-            }
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+		{
+			Vector2 vector = new(Projectile.position.X + (float)(width / 2), Projectile.position.Y + (float)(height / 2));
+			int num = 12;
+			int num2 = 12;
+			vector.X -= num / 2;
+			vector.Y -= num2 / 2;
+			Projectile.velocity = Collision.noSlopeCollision(vector, Projectile.velocity, num, num2, fallThrough: true, fall2: true);
+			return false;
+		}
 
-            Projectile.velocity = nextVelocity * direction * magnitude;
-            Projectile.rotation = Projectile.velocity.ToRotation();
-            magnitude *= 1.05f;
+		public override bool OnTileCollide(Vector2 oldVelocity)
+		{
+			return false;
+		}
 
-            if (Main.tileSolid[((int)Main.tile[tileCoords].BlockType)])
-            {
-                //Projectile.Kill();
-            }
-        }
-        Color[] colors = { Color.Red, Color.Green };
-        public override bool PreDraw(ref Color lightColor)
-        {
-            SpriteEffects spriteEffects = Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+		public override void AI()
+		{
+			if (Projectile.ai[0] == 0f)
+			{
+				Projectile.direction = 1;
+				Projectile.ai[0] = 1f;
+			}
+			int num825 = 6;
+			if (Projectile.ai[1] == 0f)
+			{
+				Projectile.rotation += (float)(Projectile.direction * Projectile.directionY) * 0.13f;
+				if (Projectile.collideY)
+				{
+					Projectile.ai[0] = 2f;
+				}
+				if (!Projectile.collideY && Projectile.ai[0] == 2f)
+				{
+					Projectile.direction = -Projectile.direction;
+					Projectile.ai[1] = 1f;
+					Projectile.ai[0] = 1f;
+				}
+				if (Projectile.collideX)
+				{
+					Projectile.directionY = -Projectile.directionY;
+					Projectile.ai[1] = 1f;
+				}
+				Projectile.Colliding(new Rectangle((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height), new Rectangle((int)Projectile.position.X - 1, (int)Projectile.position.Y - 1, Projectile.width + 2, Projectile.height + 2));
+			}
+			else
+			{
+				Projectile.rotation -= (float)(Projectile.direction * Projectile.directionY) * 0.13f;
+				if (Projectile.collideX)
+				{
+					Projectile.ai[0] = 2f;
+				}
+				if (!Projectile.collideX && this.ai[0] == 2f)
+				{
+					Projectile.directionY = -Projectile.directionY;
+					Projectile.ai[1] = 0f;
+					Projectile.ai[0] = 1f;
+				}
+				if (Projectile.collideY)
+				{
+					Projectile.direction = -Projectile.direction;
+					Projectile.ai[1] = 0f;
+				}
+			}
+			Projectile.velocity.X = num825 * Projectile.direction;
+			Projectile.velocity.Y = num825 * Projectile.directionY;
+			float num826 = (float)(270 - Main.mouseTextColor) / 400f;
+			Lighting.AddLight((int)(Projectile.position.X + (float)(Projectile.width / 2)) / 16, (int)(Projectile.position.Y + (float)(Projectile.height / 2)) / 16, 0.9f, 0.3f + num826, 0.2f);
+			/*if (Projectile.ai[1] == 0f)
+			{
+				Projectile.ai[1] = 1f;
+				SoundEngine.PlaySound(in SoundID.Item8, Projectile.position) ;
+			}
+			Projectile.rotation += (float)Projectile.direction * 0.8f;
+			Projectile.ai[0] += 1f;
+			if (!(Projectile.ai[0] < 30f))
+			{
+				if (Projectile.ai[0] < 100f)
+				{
+					Projectile.velocity *= 1.06f;
+				}
+				else
+				{
+					Projectile.ai[0] = 200f;
+				}
+			}
+			for (int num159 = 0; num159 < 2; num159++)
+			{
+				int num160 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 27, 0f, 0f, 100);
+				Main.dust[num160].noGravity = true;
+			}*/
+		}
 
-            Texture2D texture = TextureAssets.Extra[189].Value;
-            Rectangle sourceRect = new(0, 0, texture.Width, texture.Height);
-            Vector2 projOrigin = sourceRect.Size() / 2f;
-
-            int numIs0 = 0;
-            int iterationAmount = -1;
-            float maxScale = 0.7f;
-            float scaleDiv = 20f;
-            float rotationMulti = 0f;
-
-            int trailLength = 19;
-            float shineScale = 1f;
-            Color color = colors[(int)Projectile.ai[1]];
-
-            
-
-            for (int i = trailLength; (iterationAmount > 0 && i < numIs0) || (iterationAmount < 0 && i > numIs0); i += iterationAmount)
-            {
-                if (i >= Projectile.oldPos.Length)
-                {
-                    continue;
-                }
-
-                Color trailColor = Projectile.GetFairyQueenWeaponsColor(0.5f);
-                trailColor *= Utils.GetLerpValue(0f, 20f, Projectile.timeLeft, clamped: true);
-
-                float colorMulti = numIs0 - i;
-                if (iterationAmount < 0)
-                {
-                    colorMulti = trailLength - i;
-                }
-
-                trailColor *= colorMulti / ((float)ProjectileID.Sets.TrailCacheLength[Projectile.type] * 1.5f);
-                Vector2 trailOldPos = Projectile.oldPos[i];
-
-                float trailRotation = Projectile.oldRot[i];
-                SpriteEffects trailSpriteEffects = ((Projectile.oldSpriteDirection[i] == -1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
-
-                if (trailOldPos == Vector2.Zero)
-                {
-                    continue;
-                }
-
-                Vector2 trailPos = trailOldPos + Projectile.Size / 2f - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
-                Main.EntitySpriteDraw(texture, trailPos, sourceRect, color, MathHelper.PiOver2, projOrigin, MathHelper.Lerp(Projectile.scale, maxScale, (float)i / scaleDiv), trailSpriteEffects, 0);
-
-            }
-
-            Color fairyQueenWeaponColor = Projectile.GetFairyQueenWeaponsColor(0f);
-
-            Vector2 shinyPos = Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY);
-            Main.EntitySpriteDraw(texture, shinyPos, sourceRect, fairyQueenWeaponColor, Projectile.rotation, projOrigin, Projectile.scale * 0.9f, spriteEffects, 0);
-            Texture2D textureExtra98 = TextureAssets.Extra[98].Value;
-            Vector2 shinyOrigin = textureExtra98.Size() / 2f;
-            Color colorTopBot = fairyQueenWeaponColor * 0.5f;
-            Color ColorLeftRight = fairyQueenWeaponColor;
-            float scaleWarping = Utils.GetLerpValue(15f, 30f, Projectile.timeLeft, clamped: true) * Utils.GetLerpValue(60, 60 - 40f, Projectile.timeLeft, clamped: true) * (1f + 0.2f * (float)Math.Cos(Main.GlobalTimeWrappedHourly % 30f / 0.5f * ((float)Math.PI * 2f) * 3f)) * 0.8f;
-            Vector2 scale1 = new Vector2(0.5f, 5f) * scaleWarping * shineScale;
-            Vector2 scale2 = new Vector2(0.5f, 2f) * scaleWarping * shineScale;
-            colorTopBot *= scaleWarping;
-            ColorLeftRight *= scaleWarping;
-
-            Color projColor = Projectile.GetAlpha(lightColor);
-            float projScale = Projectile.scale;
-            float projRotation = Projectile.rotation;
-
-            //Terraria.Graphics.FlameLashDrawer;
-            projColor.A /= 2;
-
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), sourceRect, projColor, projRotation, projOrigin, projScale, spriteEffects, 0);
-
-            return false;
-        }
-        public override bool OnTileCollide(Vector2 oldVelocity)
-        {
-
-            return base.OnTileCollide(oldVelocity);
-        }
-    }
+		public override void OnKill(int timeLeft)
+		{
+			SoundEngine.PlaySound(in SoundID.Item10, Projectile.position);
+			for (int num728 = 0; num728 < 30; num728++)
+			{
+				int num730 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 27, Projectile.velocity.X, Projectile.velocity.Y, 100, default(Color), 1.7f);
+				Main.dust[num730].noGravity = true;
+				Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 27, Projectile.velocity.X, Projectile.velocity.Y, 100);
+			}
+		}
+	}
 }
 

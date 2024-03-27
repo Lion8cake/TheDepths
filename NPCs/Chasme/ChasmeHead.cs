@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -55,6 +56,11 @@ namespace TheDepths.NPCs.Chasme
 
 		public override void AI()
 		{
+            //ai[0] Ruby Ray timer
+            //ai[1] Crying Timer
+            //ai[2] unused
+            //ai[3] unused
+
 			if (Main.npc[HeartID].type != ModContent.NPCType<ChasmeHeart>())
             {
                 NPC.active = false;
@@ -63,6 +69,10 @@ namespace TheDepths.NPCs.Chasme
             //Positioning
 			NPC.spriteDirection = NPC.direction = chasmeSoul.direction;
 			NPC.Center = chasmeSoul.Center + new Vector2(36 * NPC.direction, -150);
+
+            //targetting
+            NPC.target = chasmeSoul.target;
+            Player player = Main.player[NPC.target];
 
             //Death checks
 			if (chasmeSoul.life <= 0)
@@ -75,7 +85,22 @@ namespace TheDepths.NPCs.Chasme
                 NPC.life = 1;
             }
             NPC.dontTakeDamage = (NPC.life == 1 || chasmeSoul.ai[1] != 0);
-		}
+
+            //Ruby Ray attacks
+            NPC.ai[0]++;
+            if (NPC.ai[0] >= 4.5 * 60)
+            {
+                if (Main.netMode != 1)
+                {
+                    int projDamage = 70 / 2; //divided by 2 because projectiles multiply the damage by 2 for some dumbass reason
+                    Vector2 val = player.Center + new Vector2(NPC.Center.X + 60 * NPC.direction, NPC.Center.Y + 16);
+                    Vector2 val2 = NPC.Center + new Vector2(NPC.Center.X + 60 * NPC.direction, NPC.Center.Y + 16);
+                    float shootSpeed = (float)Math.Atan2(val2.Y - val.Y, val2.X - val.X);
+                    Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X + 60 * NPC.direction, NPC.Center.Y + 16, (float)(Math.Cos(shootSpeed) * 14.0 * -1.0), (float)(Math.Sin(shootSpeed) * 14.0 * -1.0), ModContent.ProjectileType<ChasmeRay>(), projDamage, 0f, 0, NPC.life <= NPC.lifeMax / 2 ? 1f : 0f);
+                }
+                NPC.ai[0] = 0;
+            }
+        }
 
 		public override void FindFrame(int frameHeight)
 		{
