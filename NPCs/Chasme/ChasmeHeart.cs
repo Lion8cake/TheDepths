@@ -87,6 +87,13 @@ public class ChasmeHeart : ModNPC
 		//3 hand left
 		//4 hand right
 
+		//5 Expert hand left
+		//6 Expert hand right
+		//7 Legendary hand left 1
+		//8 Legendary hand left 2
+		//9 Legendary hand right 1
+		//10 Legendary hand right 2 //in total 8 hands in legendary
+
 		//NPC AI array
 		//ai[0] is the core timer, The timer for when the core gets crammed back into chasme
 		//ai[1] is the invicibility timer
@@ -95,7 +102,7 @@ public class ChasmeHeart : ModNPC
 
 		//Attacks
 		//Head shoots ruby rays that are very similar to the ruby bolt from the ruby staff
-		//at 50% health (red eyes) Ruby rays will be 50% bigger, deal more damage and explode into 2 slow to fast moving blazing wheel like projectiles
+		//at 50% health (red eyes) Ruby rays will be 50% bigger, deal more damage and explode into 2 slow to fast moving blazing wheel like projectiles 
 		//at 25% core health (crying) the head will drop quicksilver tears on the player, these inflict damage and quicksilver poisoning
 		//Maybe: Moonlord like lazer for the ruby ray in expert instead of an exploding upgraded ruby ray at 50% health
 
@@ -112,24 +119,38 @@ public class ChasmeHeart : ModNPC
 		//speed and damage are already at max 1.5x increase
 
 		//Extra notes:
-		//Hands and Head lose accuracy when the core is out, TBD on how much accuracy is lost
+		//Hands and Head lose accuracy by 256 when the core is out
 		//Speed is increased by 1.5x when the head starts crying
 		//Attack is slowly increased up to a max of 1.5x as the core loses health
 		//Core and head become invicible for 2 seconds between transition (core closing only)
 
 		//Head spawning
-		if (Main.npc[ChasmePartIDs[1]].type != ModContent.NPCType<ChasmeHead>())
+		if (Main.npc[ChasmePartIDs[0]].type != ModContent.NPCType<ChasmeHead>())
 		{
 			int head = NPC.NewNPC(new EntitySource_Misc(""), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<ChasmeHead>());
 			(Main.npc[head].ModNPC as ChasmeHead).HeartID = NPC.whoAmI;
-			ChasmePartIDs[1] = Main.npc[head].whoAmI;
+			ChasmePartIDs[0] = Main.npc[head].whoAmI;
 		}
 		//Body Spawning
-		if (Main.npc[ChasmePartIDs[2]].type != ModContent.NPCType<ChasmeBody>())
+		if (Main.npc[ChasmePartIDs[1]].type != ModContent.NPCType<ChasmeBody>())
 		{
 			int body = NPC.NewNPC(new EntitySource_Misc(""), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<ChasmeBody>());
 			(Main.npc[body].ModNPC as ChasmeBody).HeartID = NPC.whoAmI;
-			ChasmePartIDs[2] = Main.npc[body].whoAmI;
+			ChasmePartIDs[1] = Main.npc[body].whoAmI;
+		}
+		//Hand Left Spawning
+		if (Main.npc[ChasmePartIDs[2]].type != ModContent.NPCType<ChasmeHandLeft>())
+		{
+			int handLeft = NPC.NewNPC(new EntitySource_Misc(""), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<ChasmeHandLeft>());
+			(Main.npc[handLeft].ModNPC as ChasmeHandLeft).HeartID = NPC.whoAmI;
+			ChasmePartIDs[2] = Main.npc[handLeft].whoAmI;
+		}
+		//Hand Right Spawning
+		if (Main.npc[ChasmePartIDs[3]].type != ModContent.NPCType<ChasmeHandRight>())
+		{
+			int handRight = NPC.NewNPC(new EntitySource_Misc(""), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<ChasmeHandRight>());
+			(Main.npc[handRight].ModNPC as ChasmeHandRight).HeartID = NPC.whoAmI;
+			ChasmePartIDs[3] = Main.npc[handRight].whoAmI;
 		}
 
 		//targetting/getting the correct player
@@ -137,7 +158,7 @@ public class ChasmeHeart : ModNPC
 		Player player = Main.player[NPC.target];
 
 		//Movement/despawning
-		if (player.dead || NPC.target < 0 || Math.Abs(NPC.Center.X - player.Center.X) / 16f > (float)750)
+		if (player.dead || NPC.target < 0 || Math.Abs(NPC.Center.X - player.Center.X) / 16f > (float)750 || Math.Abs(NPC.Center.Y - player.Center.Y) / 16f > (float)750)
 		{
 			NPC.velocity.Y += 0.05f;
 			NPC.EncourageDespawn(10);
@@ -161,8 +182,10 @@ public class ChasmeHeart : ModNPC
 		if (NPC.alpha <= 0)
 			NPC.alpha = 0;
 
-		NPC headNPC = Main.npc[ChasmePartIDs[1]];
-		NPC bodyNPC = Main.npc[ChasmePartIDs[2]];
+		NPC headNPC = Main.npc[ChasmePartIDs[0]];
+		NPC bodyNPC = Main.npc[ChasmePartIDs[1]];
+		NPC hand1 = Main.npc[ChasmePartIDs[2]];
+		NPC hand2 = Main.npc[ChasmePartIDs[3]];
 
 		//Stages, goes head -> core -> head 4 times
 		bool Headlife3 = NPC.life <= NPC.lifeMax / 4;
@@ -214,6 +237,13 @@ public class ChasmeHeart : ModNPC
 				}
 				NPC.ai[2] = 0;
 			}
+		}
+
+		//Hand Regenerating controller
+		if (hand1.life == 1 && hand2.life == 1)
+		{
+			hand1.ai[0] = 1f;
+			hand2.ai[0] = 1f;
 		}
 	}
 
@@ -381,10 +411,12 @@ public class ChasmeHeart : ModNPC
 		// Crack small
 		// Crack Big
 		// Cracks glow white
-		// Screen flash
+		// Soul Melts (not sure how this will work)
 		// Lots of stone and heart gores
 		// Drop a pendant
-		// Pendant falls after a while, smashing and starting hardmode/spawning the lootbox
+		// Screen flash
+		// Pendant falls after a while, smashing, screenflash
+		// starting hardmode/spawning the lootbox
 	}
 
 	public override void ModifyNPCLoot(NPCLoot npcLoot)

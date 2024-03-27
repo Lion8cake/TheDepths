@@ -1931,8 +1931,6 @@ Mods: {
 			BlueExplosion.DisplayName: Blue Explosion
 			BlueSphereYoyo.DisplayName: Blue Sphere Yoyo
 			GemforgeCutscene.DisplayName: Gemforge
-			GemforgeExtraDusts.DisplayName: Gemforge
-			GemforgeScreenflash.DisplayName: Gemforge
 			CrystalBall.DisplayName: Crystal Ball
 			CrystalBallPassive.DisplayName: Crystal Orb
 			DiamondArrow.DisplayName: Diamond Arrow
@@ -1992,10 +1990,8 @@ Mods: {
 			ShadeBladeLeft.DisplayName: Shade Blade
 			ShadeBladeRight.DisplayName: Shade Blade
 			ShadeBladeCalculator.DisplayName: Shade Blade Calculator
-			ChasmeRay.DisplayName: Chasme Ray
-			ChasmeShockwave.DisplayName: Chasme Shockwave
-			ChasVoid.DisplayName: Chasme Void
-			Chlaser.DisplayName: Chasme Laser
+			ChasmeRay.DisplayName: Ruby Ray
+			ChasmeShockwave.DisplayName: Ruby Shockwave
 			MercuryMossFishingBobber.DisplayName: Mercury Moss Fishing Bobber
 			WaterGeyser.DisplayName: Water Geyser
 			AquaArrow.DisplayName: Aqua Arrow
@@ -2006,6 +2002,7 @@ Mods: {
 			ShalestoneHand.DisplayName: Shalestone Hand
 			ShalestoneSlam.DisplayName: Shalestone Slam
 			ShadowLash.DisplayName: Shadow Lash
+			QuicksilverTears.DisplayName: Quicksilver Tears
 		}
 
 		Biomes: {

@@ -15,7 +15,13 @@ namespace TheDepths.Projectiles.Chasme
 {
 	public class ChasmeShockwave : ModProjectile
 	{
-        public override void SetDefaults()
+		public override void SetStaticDefaults()
+		{
+			ProjectileID.Sets.TrailingMode[Type] = 1;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 25;
+		}
+
+		public override void SetDefaults()
         {
 			Projectile.width = 48;
 			Projectile.height = 48;
@@ -27,17 +33,7 @@ namespace TheDepths.Projectiles.Chasme
 			Projectile.tileCollide = true;
 			Projectile.scale = 0.9f;
 			Projectile.ignoreWater = true;
-		}
-
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
-		{
-			Vector2 vector = new(Projectile.position.X + (float)(width / 2), Projectile.position.Y + (float)(height / 2));
-			int num = 12;
-			int num2 = 12;
-			vector.X -= num / 2;
-			vector.Y -= num2 / 2;
-			Projectile.velocity = Collision.noSlopeCollision(vector, Projectile.velocity, num, num2, fallThrough: true, fall2: true);
-			return false;
+			Projectile.timeLeft = 300;
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
@@ -45,80 +41,116 @@ namespace TheDepths.Projectiles.Chasme
 			return false;
 		}
 
+		protected virtual Vector2 Collide()
+		{
+			return Collision.noSlopeCollision(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height, true, true);
+		}
+
+		public Vector2 moveDirection;
+		public Vector2 newVelocity = Vector2.Zero;
+
+		bool collideX = false;
+		bool collideY = false;
+		public float Speed = 0.1f;
+		float speedTimer = 0f;
+
 		public override void AI()
 		{
-			if (Projectile.ai[0] == 0f)
-			{
-				Projectile.direction = 1;
-				Projectile.ai[0] = 1f;
-			}
-			int num825 = 6;
+			//Some ai taken from SLR made by SkippZz
+			if (Projectile.tileCollide) //the projectile just collided with the tile, give the moveDirection the opposite of the owners direction
+				moveDirection = new Vector2(Projectile.ai[2], 1);
+
+			Projectile.tileCollide = false;
+
+			newVelocity = Collide();
+			if (Math.Abs(newVelocity.X) < 0.5f)
+				collideX = true;
+			else
+				collideX = false;
+
+			if (Math.Abs(newVelocity.Y) < 0.5f)
+				collideY = true;
+			else
+				collideY = false;
+
 			if (Projectile.ai[1] == 0f)
 			{
-				Projectile.rotation += (float)(Projectile.direction * Projectile.directionY) * 0.13f;
-				if (Projectile.collideY)
-				{
+				Projectile.rotation += (float)(moveDirection.X * moveDirection.Y) * 0.75f;
+				if (collideY)
 					Projectile.ai[0] = 2f;
-				}
-				if (!Projectile.collideY && Projectile.ai[0] == 2f)
+
+				if (!collideY && Projectile.ai[0] == 2f)
 				{
-					Projectile.direction = -Projectile.direction;
+					moveDirection.X = -moveDirection.X;
 					Projectile.ai[1] = 1f;
 					Projectile.ai[0] = 1f;
 				}
-				if (Projectile.collideX)
+
+				if (collideX)
 				{
-					Projectile.directionY = -Projectile.directionY;
+					moveDirection.Y = -moveDirection.Y;
 					Projectile.ai[1] = 1f;
 				}
-				Projectile.Colliding(new Rectangle((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height), new Rectangle((int)Projectile.position.X - 1, (int)Projectile.position.Y - 1, Projectile.width + 2, Projectile.height + 2));
 			}
 			else
 			{
-				Projectile.rotation -= (float)(Projectile.direction * Projectile.directionY) * 0.13f;
-				if (Projectile.collideX)
-				{
+				Projectile.rotation -= (float)(moveDirection.X * moveDirection.Y) * 0.45f;
+				if (collideX)
 					Projectile.ai[0] = 2f;
-				}
-				if (!Projectile.collideX && this.ai[0] == 2f)
+
+				if (!collideX && Projectile.ai[0] == 2f)
 				{
-					Projectile.directionY = -Projectile.directionY;
+					moveDirection.Y = -moveDirection.Y;
 					Projectile.ai[1] = 0f;
 					Projectile.ai[0] = 1f;
 				}
-				if (Projectile.collideY)
+
+				if (collideY)
 				{
-					Projectile.direction = -Projectile.direction;
+					moveDirection.X = -moveDirection.X;
 					Projectile.ai[1] = 0f;
 				}
 			}
-			Projectile.velocity.X = num825 * Projectile.direction;
-			Projectile.velocity.Y = num825 * Projectile.directionY;
-			float num826 = (float)(270 - Main.mouseTextColor) / 400f;
-			Lighting.AddLight((int)(Projectile.position.X + (float)(Projectile.width / 2)) / 16, (int)(Projectile.position.Y + (float)(Projectile.height / 2)) / 16, 0.9f, 0.3f + num826, 0.2f);
-			/*if (Projectile.ai[1] == 0f)
+
+			speedTimer += 1f;
+			if (!(speedTimer < 30f))
 			{
-				Projectile.ai[1] = 1f;
-				SoundEngine.PlaySound(in SoundID.Item8, Projectile.position) ;
-			}
-			Projectile.rotation += (float)Projectile.direction * 0.8f;
-			Projectile.ai[0] += 1f;
-			if (!(Projectile.ai[0] < 30f))
-			{
-				if (Projectile.ai[0] < 100f)
+				if (speedTimer < 100f)
 				{
-					Projectile.velocity *= 1.06f;
+					Speed += 0.106f;
 				}
 				else
 				{
-					Projectile.ai[0] = 200f;
+					speedTimer = 200f;
 				}
 			}
+			Projectile.velocity = Speed * moveDirection;
+			Projectile.velocity = Collide(); // set the velo based of Collision.NoSlopeCollision() and speed + movedirection.
+
 			for (int num159 = 0; num159 < 2; num159++)
 			{
-				int num160 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 27, 0f, 0f, 100);
+				int num160 = Dust.NewDust(new Vector2(Projectile.position.X + 4, Projectile.position.Y + 4), Projectile.width - 4, Projectile.height - 4, DustID.GemRuby, 0f, 0f, 100);
 				Main.dust[num160].noGravity = true;
-			}*/
+			}
+		}
+
+		public override bool PreDraw(ref Color lightColor)
+		{
+			float rotationMultiplier = 0.7f;
+
+			Texture2D texture = ModContent.Request<Texture2D>(Texture).Value;
+			int frameHeight = texture.Height;
+			Rectangle frame = new Rectangle(0, frameHeight * Projectile.frame, texture.Width, frameHeight);
+			int length = ProjectileID.Sets.TrailCacheLength[Projectile.type];
+			for (int i = 0; i < length; i++)
+			{
+				//float multiply = ((float)(length - i) / length) * projectile.Opacity * 0.2f;
+				float multiply = (float)(length - i) / length * 0.5f;
+				Main.EntitySpriteDraw(texture, Projectile.oldPos[i] - Main.screenPosition + (Projectile.Size / 2f), frame, new Color(255, 128, 128, 128) * multiply, Projectile.oldRot[i] * rotationMultiplier, new Vector2(texture.Width, frameHeight) / 2, Projectile.scale, SpriteEffects.None, 0);
+			}
+
+			Main.EntitySpriteDraw(texture, Projectile.position - Main.screenPosition + (Projectile.Size / 2f), frame, new Color(255, 255, 255, 175) * 0.7f, Projectile.rotation * rotationMultiplier, new Vector2(texture.Width, frameHeight) / 2, Projectile.scale, SpriteEffects.None, 0);
+			return false;
 		}
 
 		public override void OnKill(int timeLeft)
@@ -126,9 +158,9 @@ namespace TheDepths.Projectiles.Chasme
 			SoundEngine.PlaySound(in SoundID.Item10, Projectile.position);
 			for (int num728 = 0; num728 < 30; num728++)
 			{
-				int num730 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 27, Projectile.velocity.X, Projectile.velocity.Y, 100, default(Color), 1.7f);
+				int num730 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.GemRuby, Projectile.velocity.X, Projectile.velocity.Y, 100, default(Color), 1.7f);
 				Main.dust[num730].noGravity = true;
-				Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 27, Projectile.velocity.X, Projectile.velocity.Y, 100);
+				Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.GemRuby, Projectile.velocity.X, Projectile.velocity.Y, 100);
 			}
 		}
 	}

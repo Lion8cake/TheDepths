@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -37,15 +39,13 @@ namespace TheDepths.Projectiles.Chasme
             }
         }
 
-        public override bool OnTileCollide(Vector2 oldVelocity)
+		public override bool OnTileCollide(Vector2 oldVelocity)
         {
             if (Projectile.ai[0] == 1f)
 			{
-                for (int i = -1; i < 1; i++)
-				{
-                    Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center, new Vector2(3 * i, 3), ModContent.ProjectileType<ChasmeShockwave>(), Projectile.damage, 0f, 0);
-                }
-            }
+                Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.position, Vector2.Zero, ModContent.ProjectileType<ChasmeShockwave>(), Projectile.damage, 0f, 0, 0, 0, 1); //1
+				Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.position, Vector2.Zero, ModContent.ProjectileType<ChasmeShockwave>(), Projectile.damage, 0f, 0, 0, 0, -1); //-1
+			}
             return true;
         }
     }

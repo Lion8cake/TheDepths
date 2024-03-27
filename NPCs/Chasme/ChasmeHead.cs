@@ -11,6 +11,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using TheDepths.Projectiles;
 using TheDepths.Projectiles.Chasme;
 namespace TheDepths.NPCs.Chasme
 {
@@ -88,19 +89,45 @@ namespace TheDepths.NPCs.Chasme
 
             //Ruby Ray attacks
             NPC.ai[0]++;
-            if (NPC.ai[0] >= 4.5 * 60)
+            if (NPC.ai[0] >= (NPC.dontTakeDamage ? 4.5 : 3) * 60)
             {
                 if (Main.netMode != 1)
                 {
-                    int projDamage = 70 / 2; //divided by 2 because projectiles multiply the damage by 2 for some dumbass reason
-                    Vector2 val = player.Center + new Vector2(NPC.Center.X + 60 * NPC.direction, NPC.Center.Y + 16);
+                    Vector2 accuracy = NPC.dontTakeDamage ? new Vector2(Main.rand.Next(-128, 128), Main.rand.Next(-128, 128)) : Vector2.Zero; //Fuck up the accuracy when the core it out
+					int projDamage = 70 / 2; //divided by 2 because projectiles multiply the damage by 2 for some dumbass reason
+                    Vector2 val = player.Center + new Vector2(NPC.Center.X + 60 * NPC.direction, NPC.Center.Y + 16) + accuracy;
                     Vector2 val2 = NPC.Center + new Vector2(NPC.Center.X + 60 * NPC.direction, NPC.Center.Y + 16);
                     float shootSpeed = (float)Math.Atan2(val2.Y - val.Y, val2.X - val.X);
-                    Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X + 60 * NPC.direction, NPC.Center.Y + 16, (float)(Math.Cos(shootSpeed) * 14.0 * -1.0), (float)(Math.Sin(shootSpeed) * 14.0 * -1.0), ModContent.ProjectileType<ChasmeRay>(), projDamage, 0f, 0, NPC.life <= NPC.lifeMax / 2 ? 1f : 0f);
+                    Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X + 60 * NPC.direction, NPC.Center.Y + 16, (float)(Math.Cos(shootSpeed) * 14.0 * -1.0), (float)(Math.Sin(shootSpeed) * 14.0 * -1.0), ModContent.ProjectileType<ChasmeRay>(), projDamage, 0f, 0, NPC.life <= NPC.lifeMax / 2 ? 1f : 0f); //ai[0] for the projectile is whether it summons the shockwaves or not
                 }
                 NPC.ai[0] = 0;
             }
-        }
+
+			//Quicksilver tears
+			NPC.ai[1]++;
+			if (NPC.ai[1] >= 15 && chasmeSoul.life <= chasmeSoul.lifeMax / 4)
+			{
+				if (Main.netMode != 1)
+				{
+                    for (int i = 0; i < 40; i++)
+                    {
+                        for (int j = 0; j < 5; j++)
+                        {
+                            if (Main.rand.NextBool(200))
+                            {
+								int projDamage = 35 / 2; //divided by 2 because projectiles multiply the damage by 2 for some dumbass reason
+                                float tearsXSpeed = Main.rand.Next(-25, 25) / 10;
+								int projID = Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X + ((50 + i) * NPC.direction), NPC.Center.Y + 24 + j, tearsXSpeed, 1, ModContent.ProjectileType<QuicksilverTears>(), projDamage, 0f, 0);
+                                Projectile proj = Main.projectile[projID];
+                                proj.friendly = false;
+                                proj.hostile = true;
+							}
+                       }
+					}
+				}
+				NPC.ai[1] = 0;
+			}
+		}
 
 		public override void FindFrame(int frameHeight)
 		{
