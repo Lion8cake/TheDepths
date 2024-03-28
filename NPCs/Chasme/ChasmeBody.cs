@@ -20,7 +20,7 @@ namespace TheDepths.NPCs.Chasme
 		{
 			NPCID.Sets.BossBestiaryPriority.Add(Type);
 
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
 			{
 				CustomTexturePath = "TheDepths/NPCs/Chasme/Chasme_Preview",
 				PortraitScale = 0.5f,
@@ -37,7 +37,7 @@ namespace TheDepths.NPCs.Chasme
 			NPC.width = 364;
 			NPC.height = 208;
 			NPC.defense = 18;
-			NPC.lifeMax = 9999;
+			NPC.lifeMax = 2500;
 			NPC.damage = 40;
 			NPC.knockBackResist = 0f;
 			NPC.dontTakeDamage = true;
@@ -58,21 +58,34 @@ namespace TheDepths.NPCs.Chasme
 			});
 		}
 
+		public override bool CheckActive()
+		{
+			return false;
+		}
+
+
 		public override void AI()
 		{
-			if (Main.npc[HeartID].type != ModContent.NPCType<ChasmeHeart>())
+			if (Main.npc[HeartID].type != ModContent.NPCType<ChasmeHeart>() || !Main.npc[HeartID].active)
 			{
 				NPC.active = false;
+				return;
 			}
 			NPC chasmeSoul = Main.npc[HeartID];
 			NPC.spriteDirection = NPC.direction = chasmeSoul.direction;
-			NPC.Center = chasmeSoul.Center + new Vector2(-98 * NPC.direction, 0);
+			NPC.Center = chasmeSoul.Center + new Vector2((Main.getGoodWorld ? -138 : -98) * NPC.direction, Main.getGoodWorld ? 46 : 0);
 			if (chasmeSoul.life <= 0)
 			{
 				NPC.life = 0;
 				NPC.checkDead();
 			}
 			Main.BestiaryTracker.Kills.SetKillCountDirectly(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ChasmeBody>()], Main.BestiaryTracker.Kills.GetKillCount(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ChasmeHeart>()]));
+
+			// Legendary/FTW Mode Changes
+			if (Main.getGoodWorld)
+			{
+				NPC.scale = (float)(ContentSamples.NpcsByNetId[Type].scale * 1.3);
+			}
 		}
 	}
 }

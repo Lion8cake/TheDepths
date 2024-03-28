@@ -37,46 +37,56 @@ namespace TheDepths.NPCs.Chasme
             NPC.lifeMax = 2500;
             NPC.damage = 40;
             NPC.knockBackResist = 0f;
-			NPC.HitSound = SoundID.Item70;
-			NPC.DeathSound = SoundID.NPCDeath14;
-			NPC.noGravity = true;
-			NPC.noTileCollide = true;
-			NPC.aiStyle = -1;
-		}
+            NPC.HitSound = SoundID.Item70;
+            NPC.DeathSound = SoundID.NPCDeath14;
+            NPC.noGravity = true;
+            NPC.noTileCollide = true;
+            NPC.aiStyle = -1;
+        }
 
-		public override bool CheckDead()
-		{
-			if (Main.npc[HeartID].life > 0)
+        public override bool CheckDead()
+        {
+            if (Main.npc[HeartID].life > 0)
             {
                 NPC.life = 1;
                 return false;
             }
             else
                 return true;
+        }
+
+		public override bool CheckActive()
+		{
+			return false;
 		}
 
 		public override void AI()
-		{
-            //ai[0] Ruby Ray timer
-            //ai[1] Crying Timer
-            //ai[2] unused
-            //ai[3] unused
+        {
+			//ai[0] Ruby Ray timer
+			//ai[1] Crying Timer
+			//ai[2] unused
+			//ai[3] unused
 
-			if (Main.npc[HeartID].type != ModContent.NPCType<ChasmeHeart>())
-            {
-                NPC.active = false;
-            }
+			if (Main.npc[HeartID].type != ModContent.NPCType<ChasmeHeart>() || !Main.npc[HeartID].active)
+			{
+				NPC.active = false;
+                return;
+			}
 			NPC chasmeSoul = Main.npc[HeartID];
             //Positioning
-			NPC.spriteDirection = NPC.direction = chasmeSoul.direction;
-			NPC.Center = chasmeSoul.Center + new Vector2(36 * NPC.direction, -150);
+            NPC.spriteDirection = NPC.direction = chasmeSoul.direction;
+            NPC.Center = chasmeSoul.Center + new Vector2((Main.getGoodWorld ? 56 : 36) * NPC.direction, Main.getGoodWorld ? -162 : - 150);
+
+            //Damage scaling
+            float damagePer = Main.getGoodWorld ? 1 : (float)(1.00 - (float)(chasmeSoul.life) / (float)(chasmeSoul.lifeMax));
+            NPC.damage = (int)MathHelper.Lerp(ContentSamples.NpcsByNetId[Type].damage, (float)(ContentSamples.NpcsByNetId[Type].damage * 1.5), damagePer);
 
             //targetting
             NPC.target = chasmeSoul.target;
             Player player = Main.player[NPC.target];
 
             //Death checks
-			if (chasmeSoul.life <= 0)
+            if (chasmeSoul.life <= 0)
             {
                 NPC.life = 0;
                 NPC.checkDead();
@@ -94,7 +104,7 @@ namespace TheDepths.NPCs.Chasme
                 if (Main.netMode != 1)
                 {
                     Vector2 accuracy = NPC.dontTakeDamage ? new Vector2(Main.rand.Next(-128, 128), Main.rand.Next(-128, 128)) : Vector2.Zero; //Fuck up the accuracy when the core it out
-					int projDamage = 70 / 2; //divided by 2 because projectiles multiply the damage by 2 for some dumbass reason
+                    int projDamage = (int)MathHelper.Lerp(70, (float)(70 * 1.5), damagePer) / 2; //divided by 2 because projectiles multiply the damage by 2 for some dumbass reason
                     Vector2 val = player.Center + new Vector2(NPC.Center.X + 60 * NPC.direction, NPC.Center.Y + 16) + accuracy;
                     Vector2 val2 = NPC.Center + new Vector2(NPC.Center.X + 60 * NPC.direction, NPC.Center.Y + 16);
                     float shootSpeed = (float)Math.Atan2(val2.Y - val.Y, val2.X - val.X);
@@ -103,30 +113,39 @@ namespace TheDepths.NPCs.Chasme
                 NPC.ai[0] = 0;
             }
 
-			//Quicksilver tears
-			NPC.ai[1]++;
-			if (NPC.ai[1] >= 15 && chasmeSoul.life <= chasmeSoul.lifeMax / 4)
-			{
-				if (Main.netMode != 1)
-				{
-                    for (int i = 0; i < 40; i++)
+            //Quicksilver tears
+            if (chasmeSoul.life <= chasmeSoul.lifeMax / 4)
+            {
+                NPC.ai[1]++;
+                if (NPC.ai[1] >= 15)
+                {
+                    if (Main.netMode != 1)
                     {
-                        for (int j = 0; j < 5; j++)
+                        for (int i = 0; i < 40; i++)
                         {
-                            if (Main.rand.NextBool(200))
+                            for (int j = 0; j < 5; j++)
                             {
-								int projDamage = 35 / 2; //divided by 2 because projectiles multiply the damage by 2 for some dumbass reason
-                                float tearsXSpeed = Main.rand.Next(-25, 25) / 10;
-								int projID = Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X + ((50 + i) * NPC.direction), NPC.Center.Y + 24 + j, tearsXSpeed, 1, ModContent.ProjectileType<QuicksilverTears>(), projDamage, 0f, 0);
-                                Projectile proj = Main.projectile[projID];
-                                proj.friendly = false;
-                                proj.hostile = true;
-							}
-                       }
-					}
-				}
-				NPC.ai[1] = 0;
-			}
+                                if (Main.rand.NextBool(200))
+                                {
+                                    int projDamage = (int)MathHelper.Lerp(35, (float)(35 * 1.5), damagePer) / 2; //divided by 2 because projectiles multiply the damage by 2 for some dumbass reason
+                                    float tearsXSpeed = Main.rand.Next(-25, 25) / 10;
+                                    int projID = Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X + ((50 + i) * NPC.direction), NPC.Center.Y + 24 + j, tearsXSpeed, 1, ModContent.ProjectileType<QuicksilverTears>(), projDamage, 0f, 0);
+                                    Projectile proj = Main.projectile[projID];
+                                    proj.friendly = false;
+                                    proj.hostile = true;
+                                }
+                            }
+                        }
+                    }
+                    NPC.ai[1] = 0;
+                }
+            }
+
+            // Legendary/FTW Mode Changes
+            if (Main.getGoodWorld)
+            {
+                NPC.scale = (float)(ContentSamples.NpcsByNetId[Type].scale * 0.8);
+            }
 		}
 
 		public override void FindFrame(int frameHeight)
