@@ -31,6 +31,8 @@ using TheDepths.Tiles;
 using TheDepths.Tiles.Trees;
 using static Terraria.ModLoader.PlayerDrawLayer;
 using Terraria.GameInput;
+using static Terraria.ModLoader.ExtraJump;
+using TheDepths.NPCs.Chasme;
 
 namespace TheDepths
 {
@@ -364,6 +366,8 @@ namespace TheDepths
         {
             Player player = Player;
 
+            ChasmesCurse();
+
             #region QuicksilverMapColor
             ushort LiquidPosition = (ushort)typeof(MapHelper).GetField("liquidPosition", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
 			ushort hellPosition = (ushort)typeof(MapHelper).GetField("hellPosition", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
@@ -672,7 +676,31 @@ namespace TheDepths
             }
         }
 
-        public override void PostUpdateRunSpeeds()
+		public void ChasmesCurse()
+		{
+            int chasmeNPCIndex = -1;
+            for (int nPC = 0; nPC < Main.maxNPCs; nPC++)
+            {
+                if (Main.npc[nPC].type == ModContent.NPCType<ChasmeHeart>())
+                {
+					chasmeNPCIndex = nPC;
+                    continue;
+				}
+            }
+			if (chasmeNPCIndex < 0 || !Main.npc[chasmeNPCIndex].active)
+			{
+				return;
+			}
+			Vector2 center = Player.Center;
+			float num3 = Main.npc[chasmeNPCIndex].position.X + (float)(Main.npc[chasmeNPCIndex].width / 2) - center.X;
+			float num2 = Main.npc[chasmeNPCIndex].position.Y + (float)(Main.npc[chasmeNPCIndex].height / 2) - center.Y;
+			if ((float)Math.Sqrt(num3 * num3 + num2 * num2) > 20000f)
+			{
+				Player.KillMe(PlayerDeathReason.ByOther(11), 1000.0, 0);
+			}
+		}
+
+		public override void PostUpdateRunSpeeds()
         {
             if (nFlare)
             {

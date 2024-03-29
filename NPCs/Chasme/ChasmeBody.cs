@@ -1,10 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -63,7 +66,6 @@ namespace TheDepths.NPCs.Chasme
 			return false;
 		}
 
-
 		public override void AI()
 		{
 			if (Main.npc[HeartID].type != ModContent.NPCType<ChasmeHeart>() || !Main.npc[HeartID].active)
@@ -85,6 +87,63 @@ namespace TheDepths.NPCs.Chasme
 			if (Main.getGoodWorld)
 			{
 				NPC.scale = (float)(ContentSamples.NpcsByNetId[Type].scale * 1.3);
+			}
+
+			//Death
+			if (chasmeSoul.ai[3] == 341)
+			{
+				for (int goreX = 64; goreX < NPC.width - 64; goreX++)
+				{
+					for (int goreY = 64; goreY < NPC.height - 64; goreY++)
+					{
+						if (Main.rand.NextBool(400))
+						{
+							Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(goreX, goreY), new Vector2(Main.rand.Next(-2, 2), Main.rand.Next(-2, 2)), Mod.Find<ModGore>("ShaleStoneGore" + Main.rand.Next(1, 7)).Type);
+						}
+					}
+				}
+			}
+		}
+
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+		{
+			NPC chasmeSoul = Main.npc[HeartID];
+			if (chasmeSoul.ai[3] >= 340)
+			{
+				return false;
+			}
+			else if (chasmeSoul.ai[3] >= 120)
+			{
+				Texture2D asset = ModContent.Request<Texture2D>(Texture + "_Cracks", AssetRequestMode.ImmediateLoad).Value;
+				Rectangle frame = chasmeSoul.ai[3] >= 180 ? new Rectangle(0, asset.Height / 2, asset.Width, asset.Height / 2) : new Rectangle(0, 0, asset.Width, asset.Height / 2);
+				SpriteEffects effects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+				float num66 = Main.NPCAddHeight(NPC);
+				Vector2 origin = new Vector2(TextureAssets.Npc[NPC.type].Width() / 2, TextureAssets.Npc[NPC.type].Height() / Main.npcFrameCount[NPC.type] / 2);
+				Vector2 pos = new Vector2(NPC.position.X - screenPos.X + (NPC.width / 2) - (TextureAssets.Npc[NPC.type].Width() * NPC.scale / 2f) + (origin.X * NPC.scale), NPC.position.Y - Main.screenPosition.Y + NPC.height - (TextureAssets.Npc[NPC.type].Height() * NPC.scale / Main.npcFrameCount[NPC.type]) + 4f + (origin.Y * NPC.scale) + num66);
+				Main.spriteBatch.Draw(asset, pos, frame, drawColor, NPC.rotation, origin, NPC.scale, effects, 0f);
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+		{
+			NPC chasmeSoul = Main.npc[HeartID];
+			if (chasmeSoul.ai[3] >= 220 && chasmeSoul.ai[3] <= 340)
+			{
+				float percent = (float)(1f - ((float)(chasmeSoul.ai[3] < 340 ? chasmeSoul.ai[3] : 340) - 220) / 120f);
+				Color color = Color.White * (chasmeSoul.ai[3] >= 220 ? MathHelper.Lerp(1, 0, percent) : 0);
+
+				Texture2D asset = ModContent.Request<Texture2D>(Texture + "_CrackingOverlay", AssetRequestMode.ImmediateLoad).Value;
+				Rectangle frame = new Rectangle(0, 0, asset.Width, asset.Height);
+				SpriteEffects effects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+				float num66 = Main.NPCAddHeight(NPC);
+				Vector2 origin = new Vector2(TextureAssets.Npc[NPC.type].Width() / 2, TextureAssets.Npc[NPC.type].Height() / Main.npcFrameCount[NPC.type] / 2);
+				Vector2 pos = new Vector2(NPC.position.X - screenPos.X + (NPC.width / 2) - (TextureAssets.Npc[NPC.type].Width() * NPC.scale / 2f) + (origin.X * NPC.scale), NPC.position.Y - Main.screenPosition.Y + NPC.height - (TextureAssets.Npc[NPC.type].Height() * NPC.scale / Main.npcFrameCount[NPC.type]) + 4f + (origin.Y * NPC.scale) + num66);
+				spriteBatch.Draw(asset, pos, frame, color, NPC.rotation, origin, NPC.scale, effects, 0f);
 			}
 		}
 	}

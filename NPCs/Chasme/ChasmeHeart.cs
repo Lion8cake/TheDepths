@@ -24,6 +24,9 @@ using Terraria.GameContent.UI.Elements;
 using TheDepths.Projectiles.Summons;
 using TheDepths.Projectiles;
 using ReLogic.Content;
+using System.IO;
+using TheDepths.Dusts;
+using Terraria.GameContent.Events;
 
 namespace TheDepths.NPCs.Chasme
 {
@@ -80,16 +83,6 @@ namespace TheDepths.NPCs.Chasme
 			SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
 		}
 
-		public override bool CheckActive()
-		{
-			Player player = Main.player[NPC.target];
-			if (player.dead || NPC.target < 0 || Math.Abs(NPC.Center.X - player.Center.X) / 16f > (float)750 || Math.Abs(NPC.Center.Y - player.Center.Y) / 16f > (float)750)
-			{
-				return true;
-			}
-			return false;
-		}
-
 		public override void AI()
 		{
 			//ChasmePartID array
@@ -109,7 +102,7 @@ namespace TheDepths.NPCs.Chasme
 			//ai[0] is the core timer, The timer for when the core gets crammed back into chasme
 			//ai[1] is the invicibility timer
 			//ai[2] is the delay between shot chasme shadowlashes
-			//ai[3] unused
+			//ai[3] is the timer for death
 
 			//Attacks
 			//Head shoots ruby rays that are very similar to the ruby bolt from the ruby staff
@@ -137,21 +130,22 @@ namespace TheDepths.NPCs.Chasme
 			//Bossbar has to have a shield texture for the head to indicate how much damage the head has left
 
 			//unfinished stuff
-			//Death cutscene
-			//horrified debuff and chasmes magical barrier
-			//Cracked eyes shatter dust
-			//Chasme hand death scene (major maybe), with the limited NPC.ai i doubt ill be able to do it
+			//Check damage on death cutscene and other difficulties (expert, master, legendary)
+			//Add a visual to make the pendant more noticable
+			//Test shalestone outline during the crack glowing phase
+			//Soul melts into heart, heart breaks into gores
+			//Make the screenflash be like 20 frames faster so it doesnt feel disconected to the pendant
 			//multiplayer
 
 			//Spawn Body parts
 			CheckSpawnParts(); //In its own method due to it being incredibly lengthy for something so simple
 
 			//targetting/getting the correct player
-			NPC.TargetClosestUpgraded();
+			TargetClosestChasme();
 			Player player = Main.player[NPC.target];
 
 			//Movement/despawning
-			if (player.dead || NPC.target < 0 || Math.Abs(NPC.Center.X - player.Center.X) / 16f > (float)750 || Math.Abs(NPC.Center.Y - player.Center.Y) / 16f > (float)750)
+			if (player.dead || NPC.target < 0 || Math.Abs(NPC.Center.X - player.Center.X) / 16f > (float)750 || Math.Abs(NPC.Center.Y - player.Center.Y) / 16f > (float)750 || Math.Abs(player.position.ToTileCoordinates().Y) < Main.maxTilesY - 200)
 			{
 				NPC.velocity.Y += 0.05f;
 				NPC.EncourageDespawn(10);
@@ -161,6 +155,15 @@ namespace TheDepths.NPCs.Chasme
 				float speed = 3f;
 				if (NPC.life <= NPC.lifeMax / 4 || Main.getGoodWorld)
 					speed *= 1.5f;
+				if (NPC.ai[3] > 0)
+				{
+					float percent = (float)(1.00 - (float)(NPC.ai[3] < 120 ? NPC.ai[3] : 120) / (float)(120f));
+					speed = MathHelper.Lerp(0, (float)(3 * 1.5), percent);
+					if (speed <= 0)
+					{
+						speed = 0;
+					}
+				}
 				Vector2 direction = NPC.DirectionTo(player.Center + new Vector2(1600 * NPC.Center.X > player.Center.X ? 1 : -1, 0));
 				direction *= speed;
 				NPC.velocity = (NPC.velocity * (20f - 1) + direction) / 20f;
@@ -168,8 +171,28 @@ namespace TheDepths.NPCs.Chasme
 					NPC.velocity = new Vector2(0.1f, 0.1f); //Make sure the velocity is never 0 (npcs despawn when its 0 for some reason)
 			}
 
+			//Horrified Debuff
+			for (int plr = 0; plr < Main.maxPlayers; plr++)
+			{
+				Player nearPlayer = Main.player[plr];
+				float chaspos = NPC.position.X + 40f;
+				if (nearPlayer.position.Y > (float)((Main.maxTilesY - 250) * 16) && nearPlayer.position.X > chaspos - 1920f && nearPlayer.position.X < chaspos + 1920f)
+				{
+					nearPlayer.AddBuff(BuffID.Horrified, 10);
+					nearPlayer.gross = true;
+				}
+			}
+			for (int i = 0; i < Main.maxTilesX; i++)
+			{
+				if (!Main.tile[i, Main.maxTilesY - 200].HasTile && Main.rand.NextBool(2))
+				{
+					Dust dust = Dust.NewDustPerfect(new Vector2((i * 16) + 8, ((Main.maxTilesY - 200) * 16) + 8), 20);
+					dust.noGravity = true;
+				}
+			}
+
 			//Alpha to not have 2 hearts
-			NPC.alpha += NPC.dontTakeDamage ? -4 : 4;
+			NPC.alpha += (NPC.dontTakeDamage && NPC.ai[3] == 0) ? -4 : 4;
 			if (NPC.alpha >= 255)
 				NPC.alpha = 255;
 			if (NPC.alpha <= 0)
@@ -197,6 +220,10 @@ namespace TheDepths.NPCs.Chasme
 					NPC.ai[1] = 0;
 					NPC.ai[0] = 0;
 				}
+				NPC.dontTakeDamage = true;
+			}
+			else if (NPC.ai[3] > 0)
+			{
 				NPC.dontTakeDamage = true;
 			}
 			else
@@ -270,6 +297,28 @@ namespace TheDepths.NPCs.Chasme
 						}
 					}
 				}
+			}
+
+			//Death checks
+			if (NPC.ai[3] >= 60 * 5)
+			{
+				NPC.life = 0;
+				NPC.checkDead();
+			}
+			if (NPC.ai[3] > 0f)
+			{
+				NPC.ai[3]++;
+			}
+			if (NPC.ai[3] == 400)
+			{
+				for (int i = 0; i < 6; i++)
+				{
+					Dust.NewDust(new Vector2(NPC.Center.X + (12 * NPC.direction), NPC.Center.Y - 32), 6, 6, ModContent.DustType<SmashedHeartDust>());
+				}
+			}
+			if (NPC.ai[3] > 420)
+			{
+				MoonlordDeathDrama.RequestLight((920 - 480f) / 120f, NPC.Center);
 			}
 		}
 
@@ -464,6 +513,120 @@ namespace TheDepths.NPCs.Chasme
 			}
 		}
 
+		/// <summary>
+		/// Edit of NPC.TargetClosestUpgraded to allow chasme to ignore players outside of the depth's biome
+		/// </summary>
+		public void TargetClosestChasme(bool faceTarget = true, Vector2? checkPosition = null)
+		{
+			int num = -1;
+			int num2 = -1;
+			int num3 = -1;
+			Vector2 center = NPC.Center;
+			if (checkPosition.HasValue)
+			{
+				center = checkPosition.Value;
+			}
+			bool flag = NPC.direction == 0;
+			float num4 = 9999999f;
+			for (int i = 0; i < Main.maxPlayers; i++)
+			{
+				Player player = Main.player[i];
+				if (!player.active || player.dead || player.ghost || Math.Abs(player.position.ToTileCoordinates().Y) < Main.maxTilesY - 200)
+				{
+					continue;
+				}
+				float num5 = Vector2.Distance(center, player.Center);
+				num5 -= (float)player.aggro;
+				bool flag2 = player.npcTypeNoAggro[Type];
+				if (flag2 && !flag)
+				{
+					num5 += 1000f;
+				}
+				if (num5 < num4)
+				{
+					num = i;
+					num2 = -1;
+					num4 = num5;
+				}
+				if (player.tankPet >= 0 && !flag2)
+				{
+					num5 = Vector2.Distance(center, Main.projectile[player.tankPet].Center);
+					num5 -= 200f;
+					if (num5 < num4 && num5 < 200f && Collision.CanHit(NPC.Center, 0, 0, Main.projectile[player.tankPet].Center, 0, 0))
+					{
+						num2 = player.tankPet;
+						num4 = num5;
+					}
+				}
+			}
+			if (num4 == 9999999f)
+			{
+				return;
+			}
+			if (num3 >= 0)
+			{
+				NPC.target = Main.npc[num3].WhoAmIToTargettingIndex;
+				NPC.targetRect = Main.npc[num3].Hitbox;
+				NPC.direction = ((!((float)NPC.targetRect.Center.X < NPC.Center.X)) ? 1 : (-1));
+				NPC.directionY = ((!((float)NPC.targetRect.Center.Y < NPC.Center.Y)) ? 1 : (-1));
+				return;
+			}
+			if (num2 >= 0)
+			{
+				NPC.target = Main.projectile[num2].owner;
+				NPC.targetRect = Main.projectile[num2].Hitbox;
+				NPC.direction = ((!((float)NPC.targetRect.Center.X < NPC.Center.X)) ? 1 : (-1));
+				NPC.directionY = ((!((float)NPC.targetRect.Center.Y < NPC.Center.Y)) ? 1 : (-1));
+				return;
+			}
+			if (num < 0 || num >= 255)
+			{
+				num = 0;
+			}
+			Player player2 = Main.player[num];
+			NPC.targetRect = player2.Hitbox;
+			NPC.target = num;
+			if (player2.dead || (player2.npcTypeNoAggro[Type] && !flag))
+			{
+				faceTarget = false;
+			}
+			if (faceTarget)
+			{
+				float num7 = (float)(player2.width + player2.height + NPC.width + NPC.height) / 4f + 800f;
+				float num8 = num4 - (float)player2.aggro;
+				if (player2.itemAnimation != 0 || player2.aggro >= 0 || !(num8 > num7) || NPC.oldTarget < 0 || NPC.oldTarget >= Main.maxPlayers)
+				{
+					NPC.direction = ((!((float)NPC.targetRect.Center.X < NPC.Center.X)) ? 1 : (-1));
+					NPC.directionY = ((!((float)NPC.targetRect.Center.Y < NPC.Center.Y)) ? 1 : (-1));
+				}
+			}
+		}
+
+		public override bool CheckDead()
+		{
+			if (NPC.ai[3] < 502)
+			{
+				if (NPC.ai[3] <= 0f)
+				{
+					NPC.ai[3] = 1f;
+				}
+				NPC.life = 1;
+				return false;
+			}
+			else
+				return true;
+		}
+
+		public override bool CheckActive()
+		{
+			Player player = Main.player[NPC.target];
+			if (player.dead || NPC.target < 0 || Math.Abs(NPC.Center.X - player.Center.X) / 16f > (float)750 || Math.Abs(NPC.Center.Y - player.Center.Y) / 16f > (float)750)
+			{
+				return true;
+			}
+			return false;
+		}
+
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
@@ -478,24 +641,6 @@ namespace TheDepths.NPCs.Chasme
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 		{
-			//Most likely will go unused and removed sometime soon
-			//Main.spriteBatch.End();
-			//Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-
-			// Retrieve reference to shader //TODO compile the shader in the effects file that i stole and uncomment/debug this part
-			// 
-			/*var deathShader = GameShaders.Misc["TheDepths:ChasmeDeath"];
-			// Reset back to default value.
-			deathShader.UseOpacity(1f);
-			// We use npc.ai[3] as a counter since the real death.
-			if (NPC.ai[3] > 30f)
-			{
-				// Our shader uses the Opacity register to drive the effect. See ExampleEffectDeath.fx to see how the Opacity parameter factors into the shader math. 
-				deathShader.UseOpacity(1f - (NPC.ai[3] - 30f) / 150f);
-			}
-			// Call Apply to apply the shader to the SpriteBatch. Only 1 shader can be active at a time.
-			//deathShader.Apply();
-			*/
 			return true;
 		}
 
@@ -505,19 +650,27 @@ namespace TheDepths.NPCs.Chasme
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 
 			Texture2D ChasmeSoul = ModContent.Request<Texture2D>("TheDepths/NPCs/Chasme/ChasmeSoul", AssetRequestMode.ImmediateLoad).Value;
-			if (NPC.ai[2] >= 60 * 1)
+			Texture2D ChasmeHeart = ModContent.Request<Texture2D>("TheDepths/NPCs/Chasme/ChasmeSoul_Melting2", AssetRequestMode.ImmediateLoad).Value;
+			Texture2D ChasmePendant = ModContent.Request<Texture2D>("TheDepths/NPCs/Chasme/ChasmesPendant", AssetRequestMode.ImmediateLoad).Value;
+			if (NPC.ai[3] >= 160)
+			{
+				ChasmeSoul = ModContent.Request<Texture2D>("TheDepths/NPCs/Chasme/ChasmeSoul_Melting", AssetRequestMode.ImmediateLoad).Value;
+			}
+			else if (NPC.ai[2] >= 60 * 1)
 			{
 				ChasmeSoul = ModContent.Request<Texture2D>("TheDepths/NPCs/Chasme/ChasmeSoul_Summoning", AssetRequestMode.ImmediateLoad).Value;
 			}
 
+			float percent = (float)(1f - ((float)(NPC.ai[3] < 320 ? NPC.ai[3] : 320) - 220) / 100f);
+			float Scale = NPC.ai[3] >= 200 ? MathHelper.Lerp(0, 0.9f, percent) : 0.9f;
 			Color color = new(195, 136, 251);
 			Vector2 DrawPos = NPC.Center - screenPos + new Vector2(-27, -50);
 			Rectangle Source = new Rectangle(0, 0, ChasmeSoul.Width, ChasmeSoul.Height);
 			SpriteEffects fx = (NPC.direction == 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+			Vector2 origin = new(ChasmeSoul.Width / 2, ChasmeSoul.Height / 2);
 
 			SpriteEffects effects = SpriteEffects.None;
 			Vector2 position1 = DrawPos - new Vector2(-27, -50) + new Vector2(0, -30);
-
 
 			Texture2D texture2D2 = TextureAssets.Extra[98].Value;
 			Vector2 origin2 = texture2D2.Size() / 2f;
@@ -525,17 +678,16 @@ namespace TheDepths.NPCs.Chasme
 			Vector2 scale1 = new Vector2(0.5f, 5f) * 2 * num9;
 			Vector2 scale2 = new Vector2(0.5f, 2f) * 2 * num9;
 
-
 			float height = 7;
 			drawTimer++;
 
-			if (!NPC.dontTakeDamage)
+			if (!NPC.dontTakeDamage || NPC.ai[3] != 0)
 			{
 				if (drawTimer >= 20)
 				{
 					alpha = (float)(Math.Clamp(0.6375f * Math.Pow((drawTimer - 20), 2), 0, 1));
 					height = (float)(-3 * Math.Cos(MathHelper.Pi * (drawTimer - 15) / 45) + 7);
-					spriteBatch.Draw(ChasmeSoul, DrawPos - Vector2.UnitY * height, Source, Color.White * alpha, 0, Vector2.Zero, 1, fx, 0f);
+					spriteBatch.Draw(ChasmeSoul, (DrawPos + origin) - Vector2.UnitY * height, Source, Color.White * alpha, 0, origin, Scale, fx, 0f);
 				}
 				if (drawTimer < 50)
 				{
@@ -563,8 +715,14 @@ namespace TheDepths.NPCs.Chasme
 					spriteBatch.Draw(texture2D2, position1, new Rectangle?(), color, 0.0f, origin2, scale2, effects, 0);
 					spriteBatch.Draw(texture2D2, position1, new Rectangle?(), color, 1.570796f, origin2, scale1 * 0.6f, effects, 0);
 					spriteBatch.Draw(texture2D2, position1, new Rectangle?(), color, 0.0f, origin2, scale2 * 0.6f, effects, 0);
-					spriteBatch.Draw(ChasmeSoul, DrawPos - Vector2.UnitY * height, Source, color1, 0, Vector2.Zero, 1, fx, 0f);
+					spriteBatch.Draw(ChasmeSoul, (DrawPos + origin) - Vector2.UnitY * height, Source, color1, 0, origin, Scale, fx, 0f);
 				}
+			}
+
+			if (NPC.ai[3] >= 160 && NPC.ai[3] < 400)
+			{
+				spriteBatch.Draw(ChasmePendant, (DrawPos + new Vector2(NPC.direction == 1 ? -1 : -11, -3) + origin) - Vector2.UnitY * height, new Rectangle(0, 0, ChasmePendant.Width, ChasmePendant.Height), Color.White, 0, Vector2.Zero, 1, fx, 0f);
+				spriteBatch.Draw(ChasmeHeart, (DrawPos + new Vector2(0, 56) + origin) - Vector2.UnitY * height, Source, Color.White * alpha, 0, origin, Scale, fx, 0f);
 			}
 		}
 
