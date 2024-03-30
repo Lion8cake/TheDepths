@@ -27,6 +27,7 @@ using ReLogic.Content;
 using System.IO;
 using TheDepths.Dusts;
 using Terraria.GameContent.Events;
+using Terraria.Audio;
 
 namespace TheDepths.NPCs.Chasme
 {
@@ -83,6 +84,11 @@ namespace TheDepths.NPCs.Chasme
 			SpawnModBiomes = new int[1] { ModContent.GetInstance<DepthsBiome>().Type };
 		}
 
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+		{
+			NPC.lifeMax = ContentSamples.NpcsByNetId[Type].lifeMax;
+		}
+
 		public override void AI()
 		{
 			//ChasmePartID array
@@ -131,10 +137,8 @@ namespace TheDepths.NPCs.Chasme
 
 			//unfinished stuff
 			//Check damage on death cutscene and other difficulties (expert, master, legendary)
-			//Add a visual to make the pendant more noticable
-			//Test shalestone outline during the crack glowing phase
-			//Soul melts into heart, heart breaks into gores
-			//Make the screenflash be like 20 frames faster so it doesnt feel disconected to the pendant
+			//Give a better indication on when the hands are about to dash (maybe make them shoot the emerald energy twice before dashing)
+			//hands should not regen when the core is out
 			//multiplayer
 
 			//Spawn Body parts
@@ -200,7 +204,9 @@ namespace TheDepths.NPCs.Chasme
 
 			//Damage scaling
 			float damagePer = Main.getGoodWorld ? 1 : (float)(1.00 - (float)(NPC.life) / (float)(NPC.lifeMax));
-			NPC.damage = (int)MathHelper.Lerp(ContentSamples.NpcsByNetId[Type].damage, (float)(ContentSamples.NpcsByNetId[Type].damage * 1.5), damagePer);
+			NPC.damage = (int)MathHelper.Lerp(NPC.defDamage, (float)(NPC.defDamage * 1.5), damagePer);
+			if (NPC.ai[3] > 0)
+				NPC.damage = 0;
 
 			NPC headNPC = Main.npc[ChasmePartIDs[0]];
 
@@ -309,14 +315,29 @@ namespace TheDepths.NPCs.Chasme
 			{
 				NPC.ai[3]++;
 			}
-			if (NPC.ai[3] == 400)
+			if (NPC.ai[3] == 341)
+			{
+				for (int plr = 0; plr < Main.maxPlayers; plr++)
+				{
+					if (Main.player[plr].active)
+					{
+						Main.player[plr].GetModPlayer<TheDepthsPlayer>().tremblingDepthsScreenshakeTimer = 100;
+					}
+				}
+				SoundEngine.PlaySound(NPC.HitSound, NPC.position); //Core shatter 
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 92 - 66), Vector2.Zero, Mod.Find<ModGore>("ChasmeHeart1").Type);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(26, 92 - 66), Vector2.Zero, Mod.Find<ModGore>("ChasmeHeart2").Type);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 92 - 86), Vector2.Zero, Mod.Find<ModGore>("ChasmeHeart3").Type);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(26, 92 - 86), Vector2.Zero, Mod.Find<ModGore>("ChasmeHeart4").Type);
+			}
+			if (NPC.ai[3] == 440)
 			{
 				for (int i = 0; i < 6; i++)
 				{
 					Dust.NewDust(new Vector2(NPC.Center.X + (12 * NPC.direction), NPC.Center.Y - 32), 6, 6, ModContent.DustType<SmashedHeartDust>());
 				}
 			}
-			if (NPC.ai[3] > 420)
+			if (NPC.ai[3] > 440)
 			{
 				MoonlordDeathDrama.RequestLight((920 - 480f) / 120f, NPC.Center);
 			}
@@ -667,16 +688,21 @@ namespace TheDepths.NPCs.Chasme
 			Vector2 DrawPos = NPC.Center - screenPos + new Vector2(-27, -50);
 			Rectangle Source = new Rectangle(0, 0, ChasmeSoul.Width, ChasmeSoul.Height);
 			SpriteEffects fx = (NPC.direction == 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-			Vector2 origin = new(ChasmeSoul.Width / 2, ChasmeSoul.Height / 2);
+			Vector2 origin = new(ChasmeSoul.Width / 2, ChasmeSoul.Height);
+			Vector2 origin1 = new(ChasmeSoul.Width / 2, ChasmeSoul.Height / 2);
 
 			SpriteEffects effects = SpriteEffects.None;
 			Vector2 position1 = DrawPos - new Vector2(-27, -50) + new Vector2(0, -30);
+			Vector2 position2 = DrawPos - new Vector2(-27, -50) + new Vector2(NPC.direction == 1 ? 6 : -6, -30);
 
 			Texture2D texture2D2 = TextureAssets.Extra[98].Value;
 			Vector2 origin2 = texture2D2.Size() / 2f;
 			float num9 = (float)((double)Utils.GetLerpValue(15f, 30f, drawTimer, true) * (double)Utils.GetLerpValue(240f, 200f, drawTimer, true) * (1.0 + 0.200000002980232 * Math.Cos((double)Main.GlobalTimeWrappedHourly % 30.0 / 0.5 * 6.28318548202515 * 3.0)) * 0.800000011920929);
 			Vector2 scale1 = new Vector2(0.5f, 5f) * 2 * num9;
 			Vector2 scale2 = new Vector2(0.5f, 2f) * 2 * num9;
+			float pendantGlowscale = (float)((double)Utils.GetLerpValue(15f, 30f, NPC.ai[3] - 340, true) * (double)Utils.GetLerpValue(240f, 200f, NPC.ai[3] - 340, true) * (1.0 + 0.200000002980232 * Math.Cos((double)Main.GlobalTimeWrappedHourly % 30.0 / 0.5 * 6.28318548202515 * 3.0)) * 0.800000011920929);
+			Vector2 scale3 = new Vector2(0.5f, 5f) * 2 * pendantGlowscale;
+			Vector2 scale4 = new Vector2(0.5f, 2f) * 2 * pendantGlowscale;
 
 			float height = 7;
 			drawTimer++;
@@ -687,7 +713,7 @@ namespace TheDepths.NPCs.Chasme
 				{
 					alpha = (float)(Math.Clamp(0.6375f * Math.Pow((drawTimer - 20), 2), 0, 1));
 					height = (float)(-3 * Math.Cos(MathHelper.Pi * (drawTimer - 15) / 45) + 7);
-					spriteBatch.Draw(ChasmeSoul, (DrawPos + origin) - Vector2.UnitY * height, Source, Color.White * alpha, 0, origin, Scale, fx, 0f);
+					spriteBatch.Draw(ChasmeSoul, (DrawPos + origin) - Vector2.UnitY * (NPC.ai[3] >= 200 && NPC.ai[3] < 320 ? MathHelper.Lerp(-30, 0, percent) : height), Source, Color.White * alpha, 0, origin, Scale, fx, 0f);
 				}
 				if (drawTimer < 50)
 				{
@@ -696,8 +722,6 @@ namespace TheDepths.NPCs.Chasme
 					spriteBatch.Draw(texture2D2, position1, new Rectangle?(), color, 1.570796f, origin2, scale1 * 0.6f, effects, 0);
 					spriteBatch.Draw(texture2D2, position1, new Rectangle?(), color, 0.0f, origin2, scale2 * 0.6f, effects, 0);
 				}
-
-
 				fadeTimer = 45;
 			}
 			else
@@ -718,11 +742,17 @@ namespace TheDepths.NPCs.Chasme
 					spriteBatch.Draw(ChasmeSoul, (DrawPos + origin) - Vector2.UnitY * height, Source, color1, 0, origin, Scale, fx, 0f);
 				}
 			}
-
-			if (NPC.ai[3] >= 160 && NPC.ai[3] < 400)
+			if (NPC.ai[3] >= 160 && NPC.ai[3] <= 340)
 			{
-				spriteBatch.Draw(ChasmePendant, (DrawPos + new Vector2(NPC.direction == 1 ? -1 : -11, -3) + origin) - Vector2.UnitY * height, new Rectangle(0, 0, ChasmePendant.Width, ChasmePendant.Height), Color.White, 0, Vector2.Zero, 1, fx, 0f);
-				spriteBatch.Draw(ChasmeHeart, (DrawPos + new Vector2(0, 56) + origin) - Vector2.UnitY * height, Source, Color.White * alpha, 0, origin, Scale, fx, 0f);
+				spriteBatch.Draw(ChasmeHeart, (DrawPos + new Vector2(0, 56) + origin1) - Vector2.UnitY * height, new Rectangle(0, 0, ChasmeHeart.Width, ChasmeHeart.Height), Color.White * alpha, 0, origin1, 1, fx, 0f);
+			}
+			if (NPC.ai[3] >= 160 && NPC.ai[3] < 440)
+			{
+				spriteBatch.Draw(texture2D2, position2, new Rectangle?(), color, 1.570796f, origin2, scale3, effects, 0);
+				spriteBatch.Draw(texture2D2, position2, new Rectangle?(), color, 0.0f, origin2, scale4, effects, 0);
+				spriteBatch.Draw(texture2D2, position2, new Rectangle?(), color, 1.570796f, origin2, scale3 * 0.6f, effects, 0);
+				spriteBatch.Draw(texture2D2, position2, new Rectangle?(), color, 0.0f, origin2, scale4 * 0.6f, effects, 0);
+				spriteBatch.Draw(ChasmePendant, (DrawPos + new Vector2(NPC.direction == 1 ? -1 : -11, -3) + origin1) - Vector2.UnitY * height, new Rectangle(0, 0, ChasmePendant.Width, ChasmePendant.Height), Color.White, 0, Vector2.Zero, 1, fx, 0f);
 			}
 		}
 
@@ -762,21 +792,6 @@ namespace TheDepths.NPCs.Chasme
 			{
 				WorldGen.StartHardmode();
 			}
-		}
-
-		public override void HitEffect(NPC.HitInfo hit)
-		{
-			//Death animation
-			// Slow down
-			// Crack small
-			// Crack Big
-			// Cracks glow white
-			// Soul Melts (not sure how this will work)
-			// Lots of stone and heart gores
-			// Drop a pendant
-			// Screen flash
-			// Pendant falls after a while, smashing, screenflash
-			// starting hardmode/spawning the lootbox
 		}
 
 		public override void ModifyNPCLoot(NPCLoot npcLoot)

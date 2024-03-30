@@ -117,7 +117,14 @@ namespace TheDepths
             livingShadow = false;
             miniChasme = false;
             ShadePet = false;
-            tremblingDepthsScreenshakeTimer = 0;
+            if (tremblingDepthsScreenshakeTimer < 0)
+            {
+				tremblingDepthsScreenshakeTimer = 0;
+			}
+            else
+            {
+                tremblingDepthsScreenshakeTimer--;
+            }
             FogMonolith = false;
         }
 

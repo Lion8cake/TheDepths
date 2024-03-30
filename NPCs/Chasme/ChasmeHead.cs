@@ -82,10 +82,12 @@ namespace TheDepths.NPCs.Chasme
 
             //Damage scaling
             float damagePer = Main.getGoodWorld ? 1 : (float)(1.00 - (float)(chasmeSoul.life) / (float)(chasmeSoul.lifeMax));
-            NPC.damage = (int)MathHelper.Lerp(ContentSamples.NpcsByNetId[Type].damage, (float)(ContentSamples.NpcsByNetId[Type].damage * 1.5), damagePer);
+            NPC.damage = (int)MathHelper.Lerp(NPC.defDamage, (float)(NPC.defDamage * 1.5), damagePer);
+			if (chasmeSoul.ai[3] > 0)
+				NPC.damage = 0;
 
-            //targetting
-            NPC.target = chasmeSoul.target;
+			//targetting
+			NPC.target = chasmeSoul.target;
             Player player = Main.player[NPC.target];
 
             //Death checks

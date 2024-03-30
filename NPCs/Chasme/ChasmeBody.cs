@@ -81,7 +81,12 @@ namespace TheDepths.NPCs.Chasme
 				NPC.life = 0;
 				NPC.checkDead();
 			}
-			Main.BestiaryTracker.Kills.SetKillCountDirectly(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ChasmeBody>()], Main.BestiaryTracker.Kills.GetKillCount(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ChasmeHeart>()]));
+
+			//Damage scaling
+			float damagePer = Main.getGoodWorld ? 1 : (float)(1.00 - (float)(chasmeSoul.life) / (float)(chasmeSoul.lifeMax));
+			NPC.damage = (int)MathHelper.Lerp(NPC.defDamage, (float)(NPC.defDamage * 1.5), damagePer);
+			if (chasmeSoul.ai[3] > 0)
+				NPC.damage = 0;
 
 			// Legendary/FTW Mode Changes
 			if (Main.getGoodWorld)
@@ -103,6 +108,8 @@ namespace TheDepths.NPCs.Chasme
 					}
 				}
 			}
+
+			Main.BestiaryTracker.Kills.SetKillCountDirectly(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ChasmeBody>()], Main.BestiaryTracker.Kills.GetKillCount(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ChasmeHeart>()]));
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

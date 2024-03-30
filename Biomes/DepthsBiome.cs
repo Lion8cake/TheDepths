@@ -32,7 +32,7 @@ public class DepthsBiome : ModBiome
     {
         if (ModContent.GetInstance<TheDepthsClientConfig>().EnableFog)
         {
-            float FogStrength = (NPC.AnyNPCs(ModContent.NPCType<NPCs.Chasme.ChasmeHeart>()) ? 0.5f : (Main.bloodMoon ? 0.65f : 0.75f));
+            float FogStrength = (NPC.AnyNPCs(ModContent.NPCType<NPCs.Chasme.ChasmeHeart>()) ? 0.7f : (Main.bloodMoon ? 0.90f : 0.95f));
             Color FogColor = (Main.bloodMoon ? Color.Crimson : Color.White);
             var FogShader = Filters.Scene["TheDepths:FogShader"]?.GetShader().UseIntensity(FogStrength).UseColor(FogColor);
             FogShader.UseImage(ModContent.Request<Texture2D>("TheDepths/Shaders/Perlin", AssetRequestMode.ImmediateLoad).Value, 0);

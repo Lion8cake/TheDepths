@@ -64,6 +64,14 @@ public class ChasmeHandRight : ModNPC
 		return false;
 	}
 
+	public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+	{
+		if (Main.expertMode)
+		{
+			NPC.lifeMax /= 2;
+		}
+	}
+
 	public override void AI()
 	{
 		//ai[0] Regenerating
@@ -108,7 +116,9 @@ public class ChasmeHandRight : ModNPC
 
 		//Damage scaling
 		float damagePer = Main.getGoodWorld ? 1 : (float)(1.00 - (float)(chasmeSoul.life) / (float)(chasmeSoul.lifeMax));
-		NPC.damage = (int)MathHelper.Lerp(ContentSamples.NpcsByNetId[Type].damage, (float)(ContentSamples.NpcsByNetId[Type].damage * 1.5), damagePer);
+		NPC.damage = (int)MathHelper.Lerp(NPC.defDamage, (float)(NPC.defDamage * 1.5), damagePer);
+		if (chasmeSoul.ai[3] > 0)
+			NPC.damage = 0;
 
 		//Death checks
 		if (chasmeSoul.life <= 0)
@@ -120,7 +130,7 @@ public class ChasmeHandRight : ModNPC
 		{
 			NPC.life = 1;
 		}
-		if (NPC.ai[0] != 0f)
+		if (NPC.ai[0] != 0f && NPC.ai[1] <= 0)
 		{
 			Regenerating = true;
 		}
@@ -129,7 +139,7 @@ public class ChasmeHandRight : ModNPC
 		if (chasmeSoul.ai[3] <= 0)
 		{
 			//Regen
-			if (Regenerating)
+			if (Regenerating && chasmeSoul.dontTakeDamage)
 			{
 				NPC.ai[0]++;
 				if (NPC.ai[0] >= 4f)
