@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -78,7 +79,7 @@ public class ChasmeHandRight : ModNPC
 		//ai[1] Dashing timer
 		//ai[2] Dashing delay between dashes
 		//ai[3] Shooting timer
-
+		NPC.netUpdate = true;
 		int xOff = 136;
 		int yOff = -89;
 		float magnitude = 1;
@@ -116,7 +117,8 @@ public class ChasmeHandRight : ModNPC
 
 		//Damage scaling
 		float damagePer = Main.getGoodWorld ? 1 : (float)(1.00 - (float)(chasmeSoul.life) / (float)(chasmeSoul.lifeMax));
-		NPC.damage = (int)MathHelper.Lerp(NPC.defDamage, (float)(NPC.defDamage * 1.5), damagePer);
+		int damage = (int)MathHelper.Lerp(NPC.defDamage, (float)(NPC.defDamage * 1.5), damagePer);
+		NPC.damage = !chasmeSoul.dontTakeDamage ? damage / 2 : damage;
 		if (chasmeSoul.ai[3] > 0)
 			NPC.damage = 0;
 
@@ -139,22 +141,25 @@ public class ChasmeHandRight : ModNPC
 		if (chasmeSoul.ai[3] <= 0)
 		{
 			//Regen
-			if (Regenerating && chasmeSoul.dontTakeDamage)
+			if (Regenerating)
 			{
-				NPC.ai[0]++;
-				if (NPC.ai[0] >= 4f)
+				if (chasmeSoul.dontTakeDamage)
 				{
-					NPC.ai[0] = 1f;
-					if (NPC.life < NPC.lifeMax)
+					NPC.ai[0]++;
+					if (NPC.ai[0] >= 4f)
 					{
-						NPC.life++;
-					}
-					if (NPC.life >= NPC.lifeMax)
-					{
-						NPC.life = NPC.lifeMax;
-						NPC.ai[0] = 0f;
-						NPC.ai[1] = 0f;
-						NPC.ai[2] = 0f;
+						NPC.ai[0] = 1f;
+						if (NPC.life < NPC.lifeMax)
+						{
+							NPC.life++;
+						}
+						if (NPC.life >= NPC.lifeMax)
+						{
+							NPC.life = NPC.lifeMax;
+							NPC.ai[0] = 0f;
+							NPC.ai[1] = 0f;
+							NPC.ai[2] = 0f;
+						}
 					}
 				}
 			}
@@ -213,11 +218,13 @@ public class ChasmeHandRight : ModNPC
 				if (Main.netMode != 1)
 				{
 					Vector2 accuracy = !chasmeSoul.dontTakeDamage ? new Vector2(Main.rand.Next(-128, 128), Main.rand.Next(-128, 128)) : Vector2.Zero; //Fuck up the accuracy when the core it out
-					int projDamage = (int)MathHelper.Lerp(55, (float)(55 * 1.5), damagePer) / 2; //divided by 2 because projectiles multiply the damage by 2 for some dumbass reason
+					int damage2 = (int)MathHelper.Lerp(55, (float)(55 * 1.5), damagePer);
+					int projDamage = (!chasmeSoul.dontTakeDamage ? damage2 / 2 : damage2) / 2; //divided by 2 because projectiles multiply the damage by 2 for some dumbass reason
 					Vector2 val = player.Center + new Vector2(NPC.Center.X + 38 * NPC.direction, NPC.Center.Y + 16) + accuracy;
 					Vector2 val2 = NPC.Center + new Vector2(NPC.Center.X + 38 * NPC.direction, NPC.Center.Y + 16);
 					float shootSpeed = (float)Math.Atan2(val2.Y - val.Y, val2.X - val.X);
-					Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X + 38 * NPC.direction, NPC.Center.Y + 16, (float)(Math.Cos(shootSpeed) * 14.0 * -1.0), (float)(Math.Sin(shootSpeed) * 14.0 * -1.0), ModContent.ProjectileType<EmeraldEnergy>(), projDamage, 0f, 0);
+					int proj = Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X + 38 * NPC.direction, NPC.Center.Y + 16, (float)(Math.Cos(shootSpeed) * 14.0 * -1.0), (float)(Math.Sin(shootSpeed) * 14.0 * -1.0), ModContent.ProjectileType<EmeraldEnergy>(), projDamage, 0f, 0);
+					NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, proj);
 				}
 				NPC.ai[3] = 0;
 			}
@@ -311,5 +318,19 @@ public class ChasmeHandRight : ModNPC
 			Vector2 pos = new Vector2(NPC.position.X - screenPos.X + (NPC.width / 2) - (TextureAssets.Npc[NPC.type].Width() * NPC.scale / 2f) + (origin.X * NPC.scale), NPC.position.Y - Main.screenPosition.Y + NPC.height - (TextureAssets.Npc[NPC.type].Height() * NPC.scale / Main.npcFrameCount[NPC.type]) + 4f + (origin.Y * NPC.scale) + num66);
 			spriteBatch.Draw(asset, pos, frame, color, NPC.rotation, origin, NPC.scale, effects, 0f);
 		}
+	}
+
+	public override void SendExtraAI(BinaryWriter writer)
+	{
+		writer.Write(HeartID);
+		writer.Write(DirectionToTarget.X);
+		writer.Write(DirectionToTarget.Y);
+	}
+
+	public override void ReceiveExtraAI(BinaryReader reader)
+	{
+		HeartID = reader.ReadInt32();
+		DirectionToTarget.X = reader.ReadSingle();
+		DirectionToTarget.Y = reader.ReadSingle();
 	}
 }

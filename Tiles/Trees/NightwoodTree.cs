@@ -24,6 +24,7 @@ using ReLogic.Content;
 using TheDepths.Items;
 using Terraria.GameContent.Liquid;
 using static Terraria.GameContent.Drawing.TileDrawing;
+using Terraria.Graphics.Capture;
 
 namespace TheDepths.Tiles.Trees
 {
@@ -373,7 +374,7 @@ namespace TheDepths.Tiles.Trees
 			Vector2 zero = Vector2.Zero;
 			float num15 = 0.08f;
 			float num16 = 0.06f;
-			int PositioningFix = 192; //Fix to the positioning to the Branches and Tops being 192 pixels to the top and left
+			int PositioningFix = CaptureManager.Instance.IsCapturing ? 0 : 192; //Fix to the positioning to the Branches and Tops being 192 pixels to the top and left
 			int x = k;
 			int y = l;
 			Tile tile = Main.tile[x, y];

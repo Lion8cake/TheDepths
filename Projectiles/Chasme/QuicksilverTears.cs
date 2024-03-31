@@ -14,7 +14,8 @@ namespace TheDepths.Projectiles.Chasme
 		public override void SetDefaults() {
 			Projectile.width = 14;
 			Projectile.height = 22;
-			Projectile.friendly = true;
+			Projectile.friendly = false;
+			Projectile.hostile = true;
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 600;

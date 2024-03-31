@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,7 +70,7 @@ namespace TheDepths.NPCs.Chasme
 			//ai[1] Crying Timer
 			//ai[2] unused
 			//ai[3] unused
-
+			NPC.netUpdate = true;
 			if (Main.npc[HeartID].type != ModContent.NPCType<ChasmeHeart>() || !Main.npc[HeartID].active)
 			{
 				NPC.active = false;
@@ -82,7 +83,8 @@ namespace TheDepths.NPCs.Chasme
 
             //Damage scaling
             float damagePer = Main.getGoodWorld ? 1 : (float)(1.00 - (float)(chasmeSoul.life) / (float)(chasmeSoul.lifeMax));
-            NPC.damage = (int)MathHelper.Lerp(NPC.defDamage, (float)(NPC.defDamage * 1.5), damagePer);
+            int damage = (int)MathHelper.Lerp(NPC.defDamage, (float)(NPC.defDamage * 1.5), damagePer);
+			NPC.damage = !chasmeSoul.dontTakeDamage ? damage / 2 : damage;
 			if (chasmeSoul.ai[3] > 0)
 				NPC.damage = 0;
 
@@ -111,12 +113,14 @@ namespace TheDepths.NPCs.Chasme
                     if (Main.netMode != 1)
                     {
                         Vector2 accuracy = NPC.dontTakeDamage ? new Vector2(Main.rand.Next(-128, 128), Main.rand.Next(-128, 128)) : Vector2.Zero; //Fuck up the accuracy when the core it out
-                        int projDamage = (int)MathHelper.Lerp(70, (float)(70 * 1.5), damagePer) / 2; //divided by 2 because projectiles multiply the damage by 2 for some dumbass reason
+                        int damage2 = (int)MathHelper.Lerp(70, (float)(70 * 1.5), damagePer);
+						int projDamage = (!chasmeSoul.dontTakeDamage ? damage2 / 2 : damage2) / 2; //divided by 2 because projectiles multiply the damage by 2 for some dumbass reason
                         Vector2 val = player.Center + new Vector2(NPC.Center.X + 60 * NPC.direction, NPC.Center.Y + 16) + accuracy;
                         Vector2 val2 = NPC.Center + new Vector2(NPC.Center.X + 60 * NPC.direction, NPC.Center.Y + 16);
                         float shootSpeed = (float)Math.Atan2(val2.Y - val.Y, val2.X - val.X);
-                        Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X + 60 * NPC.direction, NPC.Center.Y + 16, (float)(Math.Cos(shootSpeed) * 14.0 * -1.0), (float)(Math.Sin(shootSpeed) * 14.0 * -1.0), ModContent.ProjectileType<ChasmeRay>(), projDamage, 0f, 0, NPC.life <= NPC.lifeMax / 2 ? 1f : 0f); //ai[0] for the projectile is whether it summons the shockwaves or not
-                    }
+                        int proj = Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X + 60 * NPC.direction, NPC.Center.Y + 16, (float)(Math.Cos(shootSpeed) * 14.0 * -1.0), (float)(Math.Sin(shootSpeed) * 14.0 * -1.0), ModContent.ProjectileType<ChasmeRay>(), projDamage, 0f, 0, NPC.life <= NPC.lifeMax / 2 ? 1f : 0f); //ai[0] for the projectile is whether it summons the shockwaves or not
+						NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, proj);
+					}
                     NPC.ai[0] = 0;
                 }
 
@@ -134,13 +138,12 @@ namespace TheDepths.NPCs.Chasme
                                 {
                                     if (Main.rand.NextBool(200))
                                     {
-                                        int projDamage = (int)MathHelper.Lerp(35, (float)(35 * 1.5), damagePer) / 2; //divided by 2 because projectiles multiply the damage by 2 for some dumbass reason
-                                        float tearsXSpeed = Main.rand.Next(-25, 25) / 10;
-                                        int projID = Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X + ((50 + i) * NPC.direction), NPC.Center.Y + 24 + j, tearsXSpeed, 1, ModContent.ProjectileType<QuicksilverTears>(), projDamage, 0f, 0);
-                                        Projectile proj = Main.projectile[projID];
-                                        proj.friendly = false;
-                                        proj.hostile = true;
-                                    }
+                                        int damage2 = (int)MathHelper.Lerp(35, (float)(35 * 1.5), damagePer);
+										int projDamage = (!chasmeSoul.dontTakeDamage ? damage2 / 2 : damage2) / 2; //divided by 2 because projectiles multiply the damage by 2 for some dumbass reason
+										float tearsXSpeed = Main.rand.Next(-25, 25) / 10;
+                                        int proj = Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X + ((50 + i) * NPC.direction), NPC.Center.Y + 24 + j, tearsXSpeed, 1, ModContent.ProjectileType<QuicksilverTears>(), projDamage, 0f, 0);
+										NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, proj);
+									}
                                 }
                             }
                         }
@@ -287,6 +290,16 @@ namespace TheDepths.NPCs.Chasme
 					}
 				}
 			}
+		}
+
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(HeartID);
+		}
+
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			HeartID = reader.ReadInt32();
 		}
 	}
 }

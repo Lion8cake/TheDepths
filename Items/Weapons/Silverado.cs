@@ -18,7 +18,7 @@ namespace TheDepths.Items.Weapons
 		}
 
 		public override void SetDefaults() {
-			Item.damage = 5;
+			Item.damage = 10;
 			Item.DamageType = DamageClass.Ranged; 
 			Item.width = 40;
 			Item.height = 20;

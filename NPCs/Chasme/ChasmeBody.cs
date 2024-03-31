@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -68,6 +69,7 @@ namespace TheDepths.NPCs.Chasme
 
 		public override void AI()
 		{
+			NPC.netUpdate = true;
 			if (Main.npc[HeartID].type != ModContent.NPCType<ChasmeHeart>() || !Main.npc[HeartID].active)
 			{
 				NPC.active = false;
@@ -84,7 +86,8 @@ namespace TheDepths.NPCs.Chasme
 
 			//Damage scaling
 			float damagePer = Main.getGoodWorld ? 1 : (float)(1.00 - (float)(chasmeSoul.life) / (float)(chasmeSoul.lifeMax));
-			NPC.damage = (int)MathHelper.Lerp(NPC.defDamage, (float)(NPC.defDamage * 1.5), damagePer);
+			int damage = (int)MathHelper.Lerp(NPC.defDamage, (float)(NPC.defDamage * 1.5), damagePer);
+			NPC.damage = !chasmeSoul.dontTakeDamage ? damage / 2 : damage;
 			if (chasmeSoul.ai[3] > 0)
 				NPC.damage = 0;
 
@@ -152,6 +155,16 @@ namespace TheDepths.NPCs.Chasme
 				Vector2 pos = new Vector2(NPC.position.X - screenPos.X + (NPC.width / 2) - (TextureAssets.Npc[NPC.type].Width() * NPC.scale / 2f) + (origin.X * NPC.scale), NPC.position.Y - Main.screenPosition.Y + NPC.height - (TextureAssets.Npc[NPC.type].Height() * NPC.scale / Main.npcFrameCount[NPC.type]) + 4f + (origin.Y * NPC.scale) + num66);
 				spriteBatch.Draw(asset, pos, frame, color, NPC.rotation, origin, NPC.scale, effects, 0f);
 			}
+		}
+
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(HeartID);
+		}
+
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			HeartID = reader.ReadInt32();
 		}
 	}
 }

@@ -7,6 +7,7 @@ Mods: {
 			DepthsTip3: Arquerite is super poisonous, craft a Crystal Skull to be immune to its poisoning.
 			DepthsTip4: Don't fall into quicksilver without drinking a Crystal Skin Potion first!
 			DepthsTip5: You can spend up to 16 seconds in quicksilver without consequences with the right gear!
+			DepthsTip6: During Chasme's fight a magical barrier between the Depths and the underground is created, going through it allows for a safe exit to the fight.
 		}
 
 		common: {
@@ -810,7 +811,7 @@ Mods: {
 
 			Silverado: {
 				DisplayName: Silverado
-				Tooltip: ""
+				Tooltip: Shoots a powerful, high velocity bullet
 			}
 
 			SilverStar: {
@@ -2104,7 +2105,8 @@ Mods: {
 			9: Moddingus
 			10: Hariq “Hariq53”
 			11: Kurtis
-			12: BasicallyIAmFox
+			12: andrey23454914
+			13: BasicallyIAmFox
 		}
 
 		MusicDisplay: {

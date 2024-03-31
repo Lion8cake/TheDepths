@@ -86,7 +86,7 @@ namespace TheDepths.NPCs.Chasme
 
 		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
 		{
-			NPC.lifeMax = ContentSamples.NpcsByNetId[Type].lifeMax;
+			NPC.lifeMax = (int)(5500 * 0.6f);
 		}
 
 		public override void AI()
@@ -134,12 +134,6 @@ namespace TheDepths.NPCs.Chasme
 			//Attack is slowly increased up to a max of 1.5x as the core loses health
 			//Core and head become invicible for 2 seconds between transition (core closing only)
 			//Bossbar has to have a shield texture for the head to indicate how much damage the head has left
-
-			//unfinished stuff
-			//Check damage on death cutscene and other difficulties (expert, master, legendary)
-			//Give a better indication on when the hands are about to dash (maybe make them shoot the emerald energy twice before dashing)
-			//hands should not regen when the core is out
-			//multiplayer
 
 			//Spawn Body parts
 			CheckSpawnParts(); //In its own method due to it being incredibly lengthy for something so simple
@@ -255,13 +249,14 @@ namespace TheDepths.NPCs.Chasme
 				NPC.ai[2]++;
 				if (NPC.ai[2] >= 2 * 60)
 				{
-					if (Main.netMode != 1)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						int projDamage = (int)MathHelper.Lerp(42, (float)(42 * 1.5), damagePer); //divided by 2 because projectiles multiply the damage by 2 for some dumbass reason
 						Vector2 val = Main.player[NPC.target].Center + new Vector2(NPC.Center.X, NPC.Center.Y - 26);
 						Vector2 val2 = NPC.Center + new Vector2(NPC.Center.X, NPC.Center.Y - 26);
 						float shootSpeed = (float)Math.Atan2(val2.Y - val.Y, val2.X - val.X);
-						Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X, NPC.Center.Y - 26, (float)(Math.Cos(shootSpeed) * 14.0 * -1.0), (float)(Math.Sin(shootSpeed) * 14.0 * -1.0), ModContent.ProjectileType<ShadowLash>(), projDamage, 0f, 0);
+						int proj = Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X, NPC.Center.Y - 26, (float)(Math.Cos(shootSpeed) * 14.0 * -1.0), (float)(Math.Sin(shootSpeed) * 14.0 * -1.0), ModContent.ProjectileType<ShadowLash>(), projDamage, 0f, 0);
+						NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, proj);
 					}
 					NPC.ai[2] = 0;
 				}
@@ -306,11 +301,6 @@ namespace TheDepths.NPCs.Chasme
 			}
 
 			//Death checks
-			if (NPC.ai[3] >= 60 * 5)
-			{
-				NPC.life = 0;
-				NPC.checkDead();
-			}
 			if (NPC.ai[3] > 0f)
 			{
 				NPC.ai[3]++;
@@ -340,6 +330,11 @@ namespace TheDepths.NPCs.Chasme
 			if (NPC.ai[3] > 440)
 			{
 				MoonlordDeathDrama.RequestLight((920 - 480f) / 120f, NPC.Center);
+			}
+			if (NPC.ai[3] >= 501)
+			{
+				NPC.life = 0;
+				NPC.checkDead();
 			}
 		}
 
@@ -535,7 +530,7 @@ namespace TheDepths.NPCs.Chasme
 		}
 
 		/// <summary>
-		/// Edit of NPC.TargetClosestUpgraded to allow chasme to ignore players outside of the depth's biome
+		/// Edit of NPC.TargetClosestUpgraded to allow chasme to ignore players outside of the depths' biome
 		/// </summary>
 		public void TargetClosestChasme(bool faceTarget = true, Vector2? checkPosition = null)
 		{
@@ -635,7 +630,9 @@ namespace TheDepths.NPCs.Chasme
 				return false;
 			}
 			else
+			{
 				return true;
+			}
 		}
 
 		public override bool CheckActive()
@@ -658,11 +655,6 @@ namespace TheDepths.NPCs.Chasme
 		public override void BossLoot(ref string name, ref int potionType)
 		{
 			potionType = ItemID.HealingPotion;
-		}
-
-		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-		{
-			return true;
 		}
 
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -818,6 +810,36 @@ namespace TheDepths.NPCs.Chasme
 			notExpertRule.OnSuccess(ItemDropRule.OneFromOptions(2, ItemID.Amethyst, ItemID.Topaz, ItemID.Sapphire, ItemID.Emerald, ItemID.Ruby, ItemID.Diamond, ItemID.Amber, ModContent.ItemType<Items.Placeable.Onyx>()));
 
 			npcLoot.Add(notExpertRule);
+		}
+
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(ChasmePartIDs[0]);
+			writer.Write(ChasmePartIDs[1]);
+			writer.Write(ChasmePartIDs[2]);
+			writer.Write(ChasmePartIDs[3]);
+			writer.Write(ChasmePartIDs[4]);
+			writer.Write(ChasmePartIDs[5]);
+			writer.Write(ChasmePartIDs[6]);
+			writer.Write(ChasmePartIDs[7]);
+			writer.Write(ChasmePartIDs[8]);
+			writer.Write(ChasmePartIDs[9]);
+			writer.Write(TimesDownedHead);
+		}
+
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			ChasmePartIDs[0] = reader.ReadInt32();
+			ChasmePartIDs[1] = reader.ReadInt32();
+			ChasmePartIDs[2] = reader.ReadInt32();
+			ChasmePartIDs[3] = reader.ReadInt32();
+			ChasmePartIDs[4] = reader.ReadInt32();
+			ChasmePartIDs[5] = reader.ReadInt32();
+			ChasmePartIDs[6] = reader.ReadInt32();
+			ChasmePartIDs[7] = reader.ReadInt32();
+			ChasmePartIDs[8] = reader.ReadInt32();
+			ChasmePartIDs[9] = reader.ReadInt32();
+			TimesDownedHead = reader.ReadInt32();
 		}
 	}
 }
