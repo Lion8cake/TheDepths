@@ -44,9 +44,9 @@ namespace TheDepths.Projectiles
 			{
 				return;
 			}
-			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8, -8, ModContent.ProjectileType<CrystalBallPassive>(), Projectile.damage % 2, Projectile.knockBack, Main.myPlayer, 0f, 0f);
-			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X - 2, Projectile.Center.Y - 2, 10, 10, ModContent.ProjectileType<CrystalBallPassive>(), Projectile.damage % 2, Projectile.knockBack, Main.myPlayer, 0f, 0f);
-			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X - 2, Projectile.Center.Y - 2, 0, 10, ModContent.ProjectileType<CrystalBallPassive>(), Projectile.damage % 2, Projectile.knockBack, Main.myPlayer, 0f, 0f);
+			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X, Projectile.Center.Y, -8, -8, ModContent.ProjectileType<CrystalBallPassive>(), Projectile.damage / 2, Projectile.knockBack, Main.myPlayer, 0f, 0f);
+			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X - 2, Projectile.Center.Y - 2, 10, 10, ModContent.ProjectileType<CrystalBallPassive>(), Projectile.damage / 2, Projectile.knockBack, Main.myPlayer, 0f, 0f);
+			Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.Center.X - 2, Projectile.Center.Y - 2, 0, 10, ModContent.ProjectileType<CrystalBallPassive>(), Projectile.damage / 2, Projectile.knockBack, Main.myPlayer, 0f, 0f);
 		}
 	}
 }

@@ -7,6 +7,7 @@ Mods: {
 			DepthsTip3: Arquerite is super poisonous, craft a Crystal Skull to be immune to its poisoning.
 			DepthsTip4: Don't fall into quicksilver without drinking a Crystal Skin Potion first!
 			DepthsTip5: You can spend up to 16 seconds in quicksilver without consequences with the right gear!
+			DepthsTip6: During Chasme's fight a magical barrier between the Depths and the underground is created, going through it allows for a safe exit to the fight.
 		}
 
 		common: {
@@ -810,7 +811,7 @@ Mods: {
 
 			Silverado: {
 				DisplayName: Silverado
-				Tooltip: ""
+				Tooltip: Shoots a powerful, high velocity bullet
 			}
 
 			SilverStar: {
@@ -1931,8 +1932,6 @@ Mods: {
 			BlueExplosion.DisplayName: Blue Explosion
 			BlueSphereYoyo.DisplayName: Blue Sphere Yoyo
 			GemforgeCutscene.DisplayName: Gemforge
-			GemforgeExtraDusts.DisplayName: Gemforge
-			GemforgeScreenflash.DisplayName: Gemforge
 			CrystalBall.DisplayName: Crystal Ball
 			CrystalBallPassive.DisplayName: Crystal Orb
 			DiamondArrow.DisplayName: Diamond Arrow
@@ -1992,10 +1991,8 @@ Mods: {
 			ShadeBladeLeft.DisplayName: Shade Blade
 			ShadeBladeRight.DisplayName: Shade Blade
 			ShadeBladeCalculator.DisplayName: Shade Blade Calculator
-			ChasmeRay.DisplayName: Chasme Ray
-			ChasmeShockwave.DisplayName: Chasme Shockwave
-			ChasVoid.DisplayName: Chasme Void
-			Chlaser.DisplayName: Chasme Laser
+			ChasmeRay.DisplayName: Ruby Ray
+			ChasmeShockwave.DisplayName: Ruby Shockwave
 			MercuryMossFishingBobber.DisplayName: Mercury Moss Fishing Bobber
 			WaterGeyser.DisplayName: Water Geyser
 			AquaArrow.DisplayName: Aqua Arrow
@@ -2005,6 +2002,9 @@ Mods: {
 			MiniChasmeHand.DisplayName: Mini-Chasme Hand
 			ShalestoneHand.DisplayName: Shalestone Hand
 			ShalestoneSlam.DisplayName: Shalestone Slam
+			ShadowLash.DisplayName: Shadow Lash
+			QuicksilverTears.DisplayName: Quicksilver Tears
+			EmeraldEnergy.DisplayName: Emerald Energy
 		}
 
 		Biomes: {
@@ -2040,7 +2040,6 @@ Mods: {
 					Label: Renames Shale to Slate
 					Tooltip: Renames Shale to Slate, Requires the mod to reload for the config to work
 				}
-
 
 				EnableFog: {
 					Label: Enable Depths Fog
@@ -2106,7 +2105,8 @@ Mods: {
 			9: Moddingus
 			10: Hariq “Hariq53”
 			11: Kurtis
-			12: BasicallyIAmFox
+			12: Andrey2345
+			13: BasicallyIAmFox
 		}
 
 		MusicDisplay: {

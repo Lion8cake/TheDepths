@@ -102,6 +102,11 @@ Resprited Black torch
 Added black torch dust for black torches
 ... view the changelogs for the rest of the changes
 ==========================================
+-=Credits - Translators=-
+==========================================
+Russian Translation: Andrey2345
+
+==========================================
 -=Credits=-
 ==========================================
 Lion8cake -  The Main Dev behind the mod

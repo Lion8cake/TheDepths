@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 
 namespace TheDepths.Projectiles.Chasme
 {
-    public class ChasmeRay : ModProjectile
+    public class EmeraldEnergy : ModProjectile
     {
         public override void SetDefaults()
         {
@@ -32,21 +32,11 @@ namespace TheDepths.Projectiles.Chasme
         {
             for (int i = 0; i < 2; i++)
             {
-                int num = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 10, 10, DustID.GemRuby, Projectile.velocity.X, Projectile.velocity.Y, 150, default(Color), 1.25f);
+                int num = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 10, 10, DustID.GemEmerald, Projectile.velocity.X, Projectile.velocity.Y, 150, default(Color), 1.25f);
                 Dust dust = Main.dust[num];
                 dust.noGravity = true;
                 dust.velocity *= 0.3f;
             }
-        }
-
-		public override bool OnTileCollide(Vector2 oldVelocity)
-        {
-            if (Projectile.ai[0] == 1f)
-			{
-                Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.position, Vector2.Zero, ModContent.ProjectileType<ChasmeShockwave>(), Projectile.damage, 0f, 0, 0, 0, 1); //1
-				Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.position, Vector2.Zero, ModContent.ProjectileType<ChasmeShockwave>(), Projectile.damage, 0f, 0, 0, 0, -1); //-1
-			}
-            return true;
         }
     }
 }
