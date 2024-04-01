@@ -57,6 +57,7 @@ namespace TheDepths.NPCs.Chasme
 				PortraitPositionYOverride = 0f
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Buffs.MercuryBoiling>()] = true;
 		}
 
 		public override void SetDefaults()
@@ -304,6 +305,16 @@ namespace TheDepths.NPCs.Chasme
 			if (NPC.ai[3] > 0f)
 			{
 				NPC.ai[3]++;
+			}
+			if (NPC.ai[3] == 340)
+			{
+				if (Main.netMode == NetmodeID.Server)
+				{
+					NPC.NPCLoot();
+					OnKill();
+					NPC.HitEffect();
+					NetMessage.SendData(MessageID.SyncNPC, -1, -1, null);
+				}
 			}
 			if (NPC.ai[3] == 341)
 			{

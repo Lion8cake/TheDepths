@@ -31,6 +31,7 @@ public class ChasmeHandLeft : ModNPC
 		NPCID.Sets.TrailCacheLength[Type] = 10;
 		NPCID.Sets.TrailingMode[Type] = 1;
 		NPCID.Sets.BossBestiaryPriority.Add(Type);
+		NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Buffs.MercuryBoiling>()] = true;
 
 		NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
 		{
@@ -254,8 +255,6 @@ public class ChasmeHandLeft : ModNPC
 		if (!Dashing && !Returning)
 			NPC.Center = chasmeSoul.Center + new Vector2(xOff * NPC.direction, yOff);
 
-		Main.BestiaryTracker.Kills.SetKillCountDirectly(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ChasmeHandLeft>()], Main.BestiaryTracker.Kills.GetKillCount(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ChasmeHeart>()]));
-
 		// Legendary/FTW Mode Changes
 		if (Main.getGoodWorld)
 		{
@@ -276,6 +275,8 @@ public class ChasmeHandLeft : ModNPC
 				}
 			}
 		}
+
+		Main.BestiaryTracker.Kills.SetKillCountDirectly(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ChasmeHandLeft>()], Main.BestiaryTracker.Kills.GetKillCount(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<ChasmeHeart>()]));
 	}
 
 	public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

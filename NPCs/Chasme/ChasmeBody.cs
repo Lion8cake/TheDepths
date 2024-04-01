@@ -34,6 +34,7 @@ namespace TheDepths.NPCs.Chasme
 				PortraitPositionXOverride = 50f
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Buffs.MercuryBoiling>()] = true; //How would you even inflict the body with this debuff
 		}
 
 		public override void SetDefaults()

@@ -104,7 +104,7 @@ Added black torch dust for black torches
 ==========================================
 -=Credits - Translators=-
 ==========================================
-Russian Translation: andrey23454914
+Russian Translation: Andrey2345
 
 ==========================================
 -=Credits=-

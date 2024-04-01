@@ -32,6 +32,7 @@ public class ChasmeHandRight : ModNPC
 			Hide = true
 		};
 		NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, value);
+		NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Buffs.MercuryBoiling>()] = true;
 	}
 
 	public override void SetDefaults()
