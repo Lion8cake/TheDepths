@@ -81,8 +81,6 @@ namespace TheDepths
 			{
 				DefaultRenderTargetOverrider.Patch();
 				EquipLoader.AddEquipTexture(this, "TheDepths/Items/Armor/OnyxRobe_Legs", EquipType.Legs, name: "OnyxRobe_Legs");
-
-				//GameShaders.Misc["TheDepths:ChasmeDeath"] = new MiscShaderData(new Ref<Effect>((Effect)ModContent.Request<Effect>("TheDepths/Shaders/ChasmeDeathEffect", ReLogic.Content.AssetRequestMode.ImmediateLoad)), "ChasmeAnimation").UseImage0("Images/Misc/Perlin");
 			}
 
 			IL_Liquid.Update += Evaporation;
@@ -137,7 +135,6 @@ namespace TheDepths
 			On_LegacyPlayerRenderer.DrawPlayerFull += PlayerAfterImages;
 			On_Player.KeyDoubleTap += SlamDoubleTap;
 			IL_Player.RocketBootVisuals += RocketBootVfx;
-			On_Main.DrawProj_FishingLine += On_Main_DrawProj_FishingLine;
 			On_Player.PlaceThing_PaintScrapper_LongMoss += On_Player_PlaceThing_PaintScrapper_LongMoss;
 			On_TileLightScanner.ApplySurfaceLight += On_TileLightScanner_ApplySurfaceLight;
 			IL_NPC.SpawnNPC += NPCSpawningEdit;
@@ -205,7 +202,6 @@ namespace TheDepths
 			On_LegacyPlayerRenderer.DrawPlayerFull -= PlayerAfterImages;
 			On_Player.KeyDoubleTap -= SlamDoubleTap;
 			IL_Player.RocketBootVisuals -= RocketBootVfx;
-			On_Main.DrawProj_FishingLine -= On_Main_DrawProj_FishingLine;
 			On_Player.PlaceThing_PaintScrapper_LongMoss -= On_Player_PlaceThing_PaintScrapper_LongMoss;
 			On_TileLightScanner.ApplySurfaceLight -= On_TileLightScanner_ApplySurfaceLight;
 			IL_NPC.SpawnNPC -= NPCSpawningEdit;
@@ -864,128 +860,6 @@ namespace TheDepths
 			{
 				int number = Item.NewItem(new EntitySource_ItemUse(self, self.HeldItem), x * 16, y * 16, 16, 16, ModContent.ItemType<Items.Placeable.MercuryMoss>());
 				NetMessage.SendData(21, -1, -1, null, number, 1f);
-			}
-		}
-		#endregion
-
-		//v not needed in the april update
-		#region FishingBobberFix
-		private void On_Main_DrawProj_FishingLine(On_Main.orig_DrawProj_FishingLine orig, Projectile proj, ref float polePosX, ref float polePosY, Vector2 mountedCenter)
-		{
-			Player player = Main.player[proj.owner];
-			polePosX = mountedCenter.X;
-			polePosY = mountedCenter.Y;
-			polePosY += player.gfxOffY;
-			int type = player.inventory[player.selectedItem].type;
-			if (player.mount.Active && player.mount.Type == 52)
-			{
-				polePosX -= player.direction * 14;
-				polePosY -= -10f;
-			}
-			if (type == ModContent.ItemType<Items.SilverLiner>())
-			{
-				polePosX += 47 * (float)player.direction;
-				if (player.direction < 0)
-				{
-					polePosX -= 13f;
-				}
-				polePosY += -31 * player.gravDir;
-				Vector2 vector = new(polePosX, polePosY);
-				vector = Main.player[proj.owner].RotatedRelativePoint(vector + new Vector2(8f)) - new Vector2(8f);
-				float num = proj.position.X + (float)proj.width * 0.5f - vector.X;
-				float num2 = proj.position.Y + (float)proj.height * 0.5f - vector.Y;
-				Math.Sqrt(num * num + num2 * num2);
-				float num3 = (float)Math.Atan2(num2, num) - 1.57f;
-				bool flag = true;
-				if (num == 0f && num2 == 0f)
-				{
-					flag = false;
-				}
-				else
-				{
-					float num4 = (float)Math.Sqrt(num * num + num2 * num2);
-					num4 = 12f / num4;
-					num *= num4;
-					num2 *= num4;
-					vector.X -= num;
-					vector.Y -= num2;
-					num = proj.position.X + (float)proj.width * 0.5f - vector.X;
-					num2 = proj.position.Y + (float)proj.height * 0.5f - vector.Y;
-				}
-				while (flag)
-				{
-					float num5 = 12f;
-					float num6 = (float)Math.Sqrt(num * num + num2 * num2);
-					float num7 = num6;
-					if (float.IsNaN(num6) || float.IsNaN(num7))
-					{
-						flag = false;
-						continue;
-					}
-					if (num6 < 20f)
-					{
-						num5 = num6 - 8f;
-						flag = false;
-					}
-					num6 = 12f / num6;
-					num *= num6;
-					num2 *= num6;
-					vector.X += num;
-					vector.Y += num2;
-					num = proj.position.X + (float)proj.width * 0.5f - vector.X;
-					num2 = proj.position.Y + (float)proj.height * 0.1f - vector.Y;
-					if (num7 > 12f)
-					{
-						float num8 = 0.3f;
-						float num9 = Math.Abs(proj.velocity.X) + Math.Abs(proj.velocity.Y);
-						if (num9 > 16f)
-						{
-							num9 = 16f;
-						}
-						num9 = 1f - num9 / 16f;
-						num8 *= num9;
-						num9 = num7 / 80f;
-						if (num9 > 1f)
-						{
-							num9 = 1f;
-						}
-						num8 *= num9;
-						if (num8 < 0f)
-						{
-							num8 = 0f;
-						}
-						num9 = 1f - proj.localAI[0] / 100f;
-						num8 *= num9;
-						if (num2 > 0f)
-						{
-							num2 *= 1f + num8;
-							num *= 1f - num8;
-						}
-						else
-						{
-							num9 = Math.Abs(proj.velocity.X) / 3f;
-							if (num9 > 1f)
-							{
-								num9 = 1f;
-							}
-							num9 -= 0.5f;
-							num8 *= num9;
-							if (num8 > 0f)
-							{
-								num8 *= 2f;
-							}
-							num2 *= 1f + num8;
-							num *= 1f - num8;
-						}
-					}
-					num3 = (float)Math.Atan2(num2, num) - 1.57f;
-					Color color = Lighting.GetColor((int)vector.X / 16, (int)(vector.Y / 16f), Color.Silver);
-					Main.EntitySpriteDraw(TextureAssets.FishingLine.Value, new Vector2(vector.X - Main.screenPosition.X + (float)TextureAssets.FishingLine.Width() * 0.5f, vector.Y - Main.screenPosition.Y + (float)TextureAssets.FishingLine.Height() * 0.5f), (Rectangle?)new Rectangle(0, 0, TextureAssets.FishingLine.Width(), (int)num5), color, num3, new Vector2((float)TextureAssets.FishingLine.Width() * 0.5f, 0f), 1f, (SpriteEffects)0, 0f);
-				}
-			}
-			else
-			{
-				orig.Invoke(proj, ref polePosX, ref polePosY, mountedCenter);
 			}
 		}
 		#endregion

@@ -1,7 +1,7 @@
 =========================================
 The Depths (Alternate Hell)
 =========================================
-Depths version 0.8.1.1
+Depths version 0.8.2
 Please report any bugs to our discord: https://discord.gg/JwEKrVhjA6
 Worlds can be converted from 1.4.3 to 1.4.4 just by opening them
 
@@ -16,7 +16,32 @@ This mod has Boss Checklist Support, When enabled chasme will have her own check
 =========================================
 Change Log
 =========================================
-v0.8.1.1
+0.8.2
+===============================
+Reworked Chasme Completely, she is now an actually enjoyable and fully functioning fight
+- Added Death Animation to chasme
+- Fixed damage scaling
+- Added some animations
+- Added Legendary mode changes
+Added Russian Translation by Andrey2345
+Fixed typos in the english translation with some descriptions and armour tooltips
+Changed the Angler quest text for the Relicarp
+Fixed Nightwood being named Night Wood
+Fixed HBDeus being named as HBDues in the Music Titles support
+Fixed several texts still using the default Mods.TheDepths... name or being too basic
+Increased visibility in the depth's fog when chasme or a bloodmoon is active
+Fixed Diamond shard projectiles from diamond arrows dealing the remaineder damage indead of the actual damage divided by 2
+Buffed the Silverado's damage
+Gave the Silverado a ToolTip
+Fixed Trees having incorrect positioning in captures
+Added Projectiles related to chasme
+Removed now unused projectiles related to chasme (such as Chas voids)
+Resprited Chasme boss icon (this came 2 update prior unknowningly)
+Removed Unused chasme death shader
+Fixed Campfires using the wrong spritebatch for drawing their glowmasks
+Replaced the fishing bobber detour with proper offsetment code added by tml
+===============================
+0.8.1.1
 ===============================
 Fixed NPCs basing what liquid damage they took based on what side of the world their target was on
 Fixed the Silhouette minion breaking servers and not letting them start
@@ -35,72 +60,7 @@ Moved some unused assets to the 'old assets' folder
 ===============================
 0.8.0
 ===============================
-Added Onyx Minecart
-Added Black Gemspark Wall
-Added Offline Black Gemspark Wall
-Added Onyx Stone Block
-Added Onyx Stone Wall
-Added Onyx Squirrel
-Added Onyx Bunny
-Added Onyx Bunny Cage
-Added Onyx Squirrel Cage
-Added Onyx Gemtree
-Added Onyx Gemcorn
-Added Flowing Quicksilver
-Added The Unknown Depths Below
-Added Geo Campfire
-Added Nightwood Trapped Chest
-Added Quartz Trapped Chest
-Added Sapphire Serpent Kite
-Added Lamington
-Added Hanging Shadow Shrub
-Added Mignight Horseshoe
-Added Items for shalestone gems
-Added Shale wall
-Added Staff of a Thousand Years
-Added Quartz Hood
-Added Quartz Winter Coat
-Added Quartz Leggings
-Added Credits Sequence for the contributors of the Depths
-Added Petrified Wood furniture
-Added Petrified Wood Fence
-Added Petrified Wood Wall
-Added Petrified Wood Sword
-Added Petrified Wood Hammer
-Added Petrified Wood Bow
-Added Bound Crystal Formation
-Added Petrified Wood Helmet
-Added Petrified Wood Breastplate
-Added Petrified Wood Leggings
-Added Quicksilver Bucket
-Added Quicksilver Absorbant Sponge
-Added Bottomless Quicksilver Bucket
-Added Hungry Leash
-Added Shalestone Shackles
-Added licensing to the depth's code, assets and other 
-Fixed recipe with the Crystal Skull
-Resprited the onyx gemlock tile
-Fixed giant fluorescent lightbulbs not being activated properly
-Fixed giant fluorescent lightbulbs not dropping all the time
-Fixed onyx gemlock dropping dusts and no item when activated with large onyx
-Added onyx gemlock tooltip
-Fixed Black Phaseblade stats
-Fixed Black Phasesaber stats
-Nerfed onyx hook speed from 18/15 to 13
-Buffed onyx hook reach from 18.75 tiles to 25 tiles
-Added an explosion to the onyx sceptre bolt and the bolt ignores 10% of penetration
-Fixed Crystal and Sanctus shield still mentioning their removed knockback immunity
-Fixed Mercury moss being unobtainable through the chlorothyte extractinator
-Added chlorothyte extractinator support for Shale <=> Ash and Hellstone <=> arquerite ore
-Resprited offline black gemspark
-Fixed inconsistencies between black and vanilla gemspark blocks
-Fixed offline black gemspark not dropping anything
-Fixed Black gemspark Block being named Black gemspark
-Fixed description of the onyx robe saying 20% reduced mana cost instead of 22%
-Added set bonuses to onyx robe with Magic Hat and Wizard Hat
-Resprited Black torch
-Added black torch dust for black torches
-... view the changelogs for the rest of the changes
+... view the changelogs for the changes in the 0.8.0 update
 ==========================================
 -=Credits - Translators=-
 ==========================================
@@ -115,8 +75,8 @@ HBDeus - Depths and Chasme Boss theme, (these are very awesome check him out on 
 Ghast tear - 1.3 & 1.4.4 World Creation UI
 Syntrin - For making the default depths underworld background
 Darkrious & Larfleeze - For two Depths paintings and the Nightmare Tree and Armor Retexture
-Moddingus - Chasme AI
-Hariq - Chasme's base, movement and conjoinment
+Moddingus - Old Chasme AI
+Hariq - Old Chasme's base, movement and conjoinment
 Kurtis - Rocket boot dust IL edit
 bingchilling18 - old No underworld evaporation
 BasicallyIAmFox - Silhouette summon rendertarget system and code

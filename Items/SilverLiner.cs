@@ -26,5 +26,10 @@ namespace TheDepths.Items
 			Item.shootSpeed = 13f;
 			Item.shoot = ModContent.ProjectileType<Projectiles.SilverBobber>();
 		}
+
+		public override void ModifyFishingLine(Projectile bobber, ref Vector2 lineOriginOffset, ref Color lineColor)
+		{
+			lineOriginOffset = new Vector2(47, -31);
+		}
 	}
 }

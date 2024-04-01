@@ -1,3 +1,28 @@
+Beta v0.8.2
+=========================
+Reworked Chasme Completely, she is now an actually enjoyable and fully functioning fight
+- Added Death Animation to chasme
+- Fixed damage scaling
+- Added some animations
+- Added Legendary mode changes
+Added Russian Translation by Andrey2345
+Fixed typos in the english translation with some descriptions and armour tooltips
+Changed the Angler quest text for the Relicarp
+Fixed Nightwood being named Night Wood
+Fixed HBDeus being named as HBDues in the Music Titles support
+Fixed several texts still using the default Mods.TheDepths... name or being too basic
+Increased visibility in the depth's fog when chasme or a bloodmoon is active
+Fixed Diamond shard projectiles from diamond arrows dealing the remaineder damage indead of the actual damage divided by 2
+Buffed the Silverado's damage
+Gave the Silverado a ToolTip
+Fixed Trees having incorrect positioning in captures
+Added Projectiles related to chasme
+Removed now unused projectiles related to chasme (such as Chas voids)
+Resprited Chasme boss icon (this came 2 update prior unknowningly)
+Removed Unused chasme death shader
+Fixed Campfires using the wrong spritebatch for drawing their glowmasks
+Replaced the fishing bobber detour with proper offsetment code added by tml
+
 Beta v0.8.1.1
 =========================
 Fixed NPCs basing what liquid damage they took based on what side of the world their target was on
