@@ -1897,6 +1897,11 @@ Mods: {
 					Double tap {$Key.DOWN}
 					'''
 			}
+
+			WorldGenTestItem: {
+				DisplayName: World Gen Test Item
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {

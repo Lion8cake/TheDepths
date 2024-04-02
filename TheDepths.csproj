@@ -15,6 +15,7 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Items\WorldGenTestItem.png" />
     <None Remove="Shaders\ModdersToolkit_Shader.fx" />
   </ItemGroup>
   <ItemGroup>
