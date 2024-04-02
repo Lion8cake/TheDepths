@@ -31,13 +31,7 @@ namespace TheDepths.Items
 
         public override bool? UseItem(Player player)
         {
-            DepthsGen.AddBaseTiles((int)Main.MouseWorld.X / 16, Main.maxTilesY - 200, 800, 198);
-
-            for (int i = 0; i < 2; ++i)
-            {
-                DepthsGen.ClearTunnel((int)Main.MouseWorld.X / 16, Main.maxTilesY - 160, 800, 80, 0.3f);
-                DepthsGen.ClearTunnel((int)Main.MouseWorld.X / 16, Main.maxTilesY - 80, 800, 80, 0.05f);
-            }
+            DepthsGen.Generate(new(), new(null));
             return true;
         }
     }

@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Terraria;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
@@ -11,18 +10,11 @@ using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
 using TheDepths.Tiles;
 using TheDepths.Walls;
-using static Terraria.ModLoader.ModContent;
 using TheDepths.Tiles.Furniture;
 using System.IO;
-using Terraria.GameContent.UI.Elements;
-using Terraria.UI;
-using Terraria.GameContent.UI.States;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Utilities;
 using TheDepths.Tiles.Trees;
-using System.Linq;
-using MonoMod.Utils;
 using TheDepths.Worldgen.Generation;
+using static Terraria.ModLoader.ModContent;
 
 namespace TheDepths.Worldgen
 {    
@@ -235,161 +227,171 @@ namespace TheDepths.Worldgen
 			if (depthsorHell && (!Main.drunkWorld && !ModSupport.DepthsModCalling.FargoBoBWSupport))
 			{
 				int baseUnderWorldIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Underworld"));
-				tasks[baseUnderWorldIndex] = new PassLegacy("Depths: Depths", DepthsGen.Generate); // Generate the Depths tile base
+
+				if (baseUnderWorldIndex >= 0)
+					tasks[baseUnderWorldIndex] = new PassLegacy("Depths: Depths", DepthsGen.Generate); // Generate the Depths tile base
 
                 int hellforgeIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Hellforge"));
-				tasks[hellforgeIndex].Disable();
-            }
-			//		if (baseUnderWorldIndex != -1)
-			//              {
-			//                  tasks.Insert(baseUnderWorldIndex + 1, new PassLegacy("Underworld", Depths));
-			//			tasks.Insert(baseUnderWorldIndex + 2, new PassLegacy("Remix Middle Island", new WorldGenLegacyMethod(RemixIsland)));
-			//			tasks.RemoveAt(baseUnderWorldIndex);
-			//              }
-			//		int index3 = tasks.FindIndex(genpass => genpass.Name.Equals("Hellforge"));
-			//		if (index3 != -1)
-			//              {
-			//                  tasks.Insert(index3 + 1, new PassLegacy("Hellforge", new WorldGenLegacyMethod(Gemforge)));
-			//                  tasks.Insert(index3 + 2, new PassLegacy("Petrifying Trees", new WorldGenLegacyMethod(TreeGen)));
-			//                  tasks.RemoveAt(index3);
-			//              }
-			//		int index4 = tasks.FindIndex(genpass => genpass.Name.Equals("Pots"));
-			//		if (index4 != -1)
-			//		{
-			//			tasks.Insert(index4 + 1, new PassLegacy("Nightmare Grove", new WorldGenLegacyMethod(NightmareGrove)));
-			//			tasks.Insert(index4 + 2, new PassLegacy("Pots", new WorldGenLegacyMethod(Pots)));
-			//			tasks.RemoveAt(index4);
-			//		}
-			//		int index5 = tasks.FindIndex(genpass => genpass.Name.Equals("Buried Chests"));
-			//		if (index5 != -1)
-			//		{
-			//			tasks.Insert(index5 + 1, new PassLegacy("Depths item replacer", new WorldGenLegacyMethod(DepthsBuriedChests))); 
-			//		}
-			//		int index6 = tasks.FindIndex(genpass => genpass.Name.Equals("Herbs"));
-			//		if (index6 != -1)
-			//		{
-			//			tasks.Insert(index6 + 1, new PassLegacy("Shadow Herbs", new WorldGenLegacyMethod(ShadowShrubGen)));
-			//		}
-			//		int index7 = tasks.FindIndex(genpass => genpass.Name.Equals("Moss Grass"));
-			//		if (index7 != -1)
-			//		{
-			//			tasks.Insert(index7 - 1, new PassLegacy("Quicksilver moss", new WorldGenLegacyMethod(MossGen)));
-			//			tasks.Insert(index7 + 1, new PassLegacy("Quicksilver Moss Foliage", new WorldGenLegacyMethod(MossFoliageGen)));
-			//		}
-			//		int index8 = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
-			//              if (index8 != -1)
-			//              {
-			//                  tasks.Insert(index8 - 2, new PassLegacy("Depths Remix Shuffling", new WorldGenLegacyMethod(FinishDepthsRemix)));
-			//			tasks.Insert(index8 - 1, new PassLegacy("Depths Tile Resetting", new WorldGenLegacyMethod(DrippingQuicksilverTileCleanup)));
-			//              }
-			//		int index9 = tasks.FindIndex(genpass => genpass.Name.Equals("Reset"));
-			//		if (index9 != -1)
-			//		{
-			//			tasks.Insert(index9 + 2, new PassLegacy("Shadow Chest Shuffler", new WorldGenLegacyMethod(DepthsShadowchestGenResetter)));
-			//		}
-			//	}
 
-			//	if (DrunkDepthsLeft && (Main.drunkWorld || ModSupport.DepthsModCalling.FargoBoBWSupport))
-			//	{
-			//		int index2 = tasks.FindIndex(genpass => genpass.Name.Equals("Underworld"));
-			//		if (index2 != -1)
-			//		{
-			//			tasks.Insert(index2 + 1, new PassLegacy("DepthsLeft", new WorldGenLegacyMethod(TheDepthsDrunkGen.DepthsLeft)));
-			//			tasks.Insert(index2 + 2, new PassLegacy("Remix Middle Island Left", new WorldGenLegacyMethod(TheDepthsDrunkGen.RemixIslandLeft)));
-			//		}
-			//		int index3 = tasks.FindIndex(genpass => genpass.Name.Equals("Hellforge"));
-			//		if (index3 != -1)
-			//		{
-			//			tasks.Insert(index3 + 1, new PassLegacy("GemForges", new WorldGenLegacyMethod(TheDepthsDrunkGen.GemforgeLeft)));
-			//			tasks.Insert(index3 + 2, new PassLegacy("PetrifyingTrees", new WorldGenLegacyMethod(TreeGen)));
-			//		}
-			//		int index4 = tasks.FindIndex(genpass => genpass.Name.Equals("Pots"));
-			//		if (index4 != -1)
-			//		{
-			//			tasks.Insert(index4 - 2, new PassLegacy("Nightmare Grove", new WorldGenLegacyMethod(NightmareGrove)));
-			//			tasks.Insert(index4 - 1, new PassLegacy("Remix Middle Island Left Again", new WorldGenLegacyMethod(TheDepthsDrunkGen.RemixIslandStuffLeft)));
-			//			tasks.Insert(index4 + 1, new PassLegacy("DepthsPots", new WorldGenLegacyMethod(TheDepthsDrunkGen.PotsLeft)));
-			//		}
-			//		int index8 = tasks.FindIndex(genpass => genpass.Name.Equals("Buried Chests"));
-			//		if (index8 != -1)
-			//		{
-			//			tasks.Insert(index8 + 1, new PassLegacy("Depths item replacer", new WorldGenLegacyMethod(TheDepthsDrunkGen.DepthsBuriedDrunkChests)));
-			//		}
-			//		int index9 = tasks.FindIndex(genpass => genpass.Name.Equals("Herbs"));
-			//		if (index9 != -1)
-			//		{
-			//			tasks.Insert(index9 + 1, new PassLegacy("Shadow Herbs", new WorldGenLegacyMethod(ShadowShrubGen)));
-			//		}
-			//		int index7 = tasks.FindIndex(genpass => genpass.Name.Equals("Moss Grass"));
-			//		if (index7 != -1)
-			//		{
-			//			tasks.Insert(index7 - 1, new PassLegacy("Quicksilver moss", new WorldGenLegacyMethod(TheDepthsDrunkGen.MossGenLeft)));
-			//			tasks.Insert(index7 + 1, new PassLegacy("Quicksilver Moss Foliage", new WorldGenLegacyMethod(MossFoliageGen)));
-			//		}
-			//		int index5 = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
-			//		if (index5 != -1)
-			//		{
-			//			tasks.Insert(index5 - 3, new PassLegacy("Depths Remix Shuffling", new WorldGenLegacyMethod(FinishDepthsRemix)));
-			//			tasks.Insert(index5 - 2, new PassLegacy("KillingHellPots", new WorldGenLegacyMethod(TheDepthsDrunkGen.KILLTHEPOTSLeft)));
-			//			tasks.Insert(index5 - 1, new PassLegacy("Depths Tile Resetting", new WorldGenLegacyMethod(TheDepthsDrunkGen.DrippingQuicksilverTileCleanupLeft)));
-			//		}
-			//		int index6 = tasks.FindIndex(genpass => genpass.Name.Equals("Reset"));
-			//		if (index6 != -1)
-			//		{
-			//			tasks.Insert(index6 + 2, new PassLegacy("Shadow Chest Shuffler", new WorldGenLegacyMethod(TheDepthsDrunkGen.DepthsShadowchestGenResetterDrunk)));
-			//		}
-			//	}
-			//	if (DrunkDepthsRight && (Main.drunkWorld || ModSupport.DepthsModCalling.FargoBoBWSupport))
-			//	{
-			//		int index2 = tasks.FindIndex(genpass => genpass.Name.Equals("Underworld"));
-			//		if (index2 != -1)
-			//		{
-			//			tasks.Insert(index2 + 1, new PassLegacy("DepthsRight", new WorldGenLegacyMethod(TheDepthsDrunkGen.DepthsRight)));
-			//			tasks.Insert(index2 + 2, new PassLegacy("Remix Middle Island Right", new WorldGenLegacyMethod(RemixIsland)));
-			//		}
-			//		int index3 = tasks.FindIndex(genpass => genpass.Name.Equals("Hellforge"));
-			//		if (index3 != -1)
-			//		{
-			//			tasks.Insert(index3 + 1, new PassLegacy("GemForges", new WorldGenLegacyMethod(Gemforge)));
-			//			tasks.Insert(index3 + 2, new PassLegacy("PetrifyingTrees", new WorldGenLegacyMethod(TreeGen)));
-			//		}
-			//		int index4 = tasks.FindIndex(genpass => genpass.Name.Equals("Pots"));
-			//		if (index4 != -1)
-			//		{
-			//			tasks.Insert(index4 - 2, new PassLegacy("Nightmare Grove", new WorldGenLegacyMethod(TheDepthsDrunkGen.NightmareGroveRight)));
-			//			tasks.Insert(index4 - 1, new PassLegacy("Remix Middle Island Right Again", new WorldGenLegacyMethod(TheDepthsDrunkGen.RemixIslandStuffRight)));
-			//			tasks.Insert(index4 + 1, new PassLegacy("DepthsPots", new WorldGenLegacyMethod(TheDepthsDrunkGen.PotsRight)));
-			//		}
-			//		int index8 = tasks.FindIndex(genpass => genpass.Name.Equals("Buried Chests"));
-			//		if (index8 != -1)
-			//		{
-			//			tasks.Insert(index8 + 1, new PassLegacy("Depths item replacer", new WorldGenLegacyMethod(TheDepthsDrunkGen.DepthsBuriedDrunkChests)));
-			//		}
-			//		int index9 = tasks.FindIndex(genpass => genpass.Name.Equals("Herbs"));
-			//		if (index9 != -1)
-			//		{
-			//			tasks.Insert(index9 + 1, new PassLegacy("Shadow Herbs", new WorldGenLegacyMethod(ShadowShrubGen)));
-			//		}
-			//		int index7 = tasks.FindIndex(genpass => genpass.Name.Equals("Moss Grass"));
-			//		if (index7 != -1)
-			//		{
-			//			tasks.Insert(index7 - 1, new PassLegacy("Quicksilver moss", new WorldGenLegacyMethod(TheDepthsDrunkGen.MossGenRight)));
-			//			tasks.Insert(index7 + 1, new PassLegacy("Quicksilver Moss Foliage", new WorldGenLegacyMethod(MossFoliageGen)));
-			//		}
-			//		int index5 = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
-			//		if (index5 != -1)
-			//		{
-			//			tasks.Insert(index5 - 3, new PassLegacy("Depths Remix Shuffling", new WorldGenLegacyMethod(FinishDepthsRemix)));
-			//			tasks.Insert(index5 - 2, new PassLegacy("KillingHellPots", new WorldGenLegacyMethod(TheDepthsDrunkGen.KILLTHEPOTSRight)));
-			//			tasks.Insert(index5 - 1, new PassLegacy("Depths Tile Resetting", new WorldGenLegacyMethod(TheDepthsDrunkGen.DrippingQuicksilverTileCleanupRight)));
-			//		}
-			//		int index6 = tasks.FindIndex(genpass => genpass.Name.Equals("Reset"));
-			//		if (index6 != -1)
-			//		{
-			//			tasks.Insert(index6 + 2, new PassLegacy("Shadow Chest Shuffler", new WorldGenLegacyMethod(TheDepthsDrunkGen.DepthsShadowchestGenResetterDrunk)));
-			//		}
-			//	}
-		}
+				if (hellforgeIndex >= 0)
+					tasks[hellforgeIndex].Disable();
+
+				int potsIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Pots"));
+
+				if (potsIndex >= 0)
+                    tasks[potsIndex] = new PassLegacy("Depths: Depths", Pots);
+			}
+
+            //		if (baseUnderWorldIndex != -1)
+            //              {
+            //                  tasks.Insert(baseUnderWorldIndex + 1, new PassLegacy("Underworld", Depths));
+            //			tasks.Insert(baseUnderWorldIndex + 2, new PassLegacy("Remix Middle Island", new WorldGenLegacyMethod(RemixIsland)));
+            //			tasks.RemoveAt(baseUnderWorldIndex);
+            //              }
+            //		int index3 = tasks.FindIndex(genpass => genpass.Name.Equals("Hellforge"));
+            //		if (index3 != -1)
+            //              {
+            //                  tasks.Insert(index3 + 1, new PassLegacy("Hellforge", new WorldGenLegacyMethod(Gemforge)));
+            //                  tasks.Insert(index3 + 2, new PassLegacy("Petrifying Trees", new WorldGenLegacyMethod(TreeGen)));
+            //                  tasks.RemoveAt(index3);
+            //              }
+            //		int index4 = tasks.FindIndex(genpass => genpass.Name.Equals("Pots"));
+            //		if (index4 != -1)
+            //		{
+            //			tasks.Insert(index4 + 1, new PassLegacy("Nightmare Grove", new WorldGenLegacyMethod(NightmareGrove)));
+            //			tasks.Insert(index4 + 2, new PassLegacy("Pots", new WorldGenLegacyMethod(Pots)));
+            //			tasks.RemoveAt(index4);
+            //		}
+            //		int index5 = tasks.FindIndex(genpass => genpass.Name.Equals("Buried Chests"));
+            //		if (index5 != -1)
+            //		{
+            //			tasks.Insert(index5 + 1, new PassLegacy("Depths item replacer", new WorldGenLegacyMethod(DepthsBuriedChests))); 
+            //		}
+            //		int index6 = tasks.FindIndex(genpass => genpass.Name.Equals("Herbs"));
+            //		if (index6 != -1)
+            //		{
+            //			tasks.Insert(index6 + 1, new PassLegacy("Shadow Herbs", new WorldGenLegacyMethod(ShadowShrubGen)));
+            //		}
+            //		int index7 = tasks.FindIndex(genpass => genpass.Name.Equals("Moss Grass"));
+            //		if (index7 != -1)
+            //		{
+            //			tasks.Insert(index7 - 1, new PassLegacy("Quicksilver moss", new WorldGenLegacyMethod(MossGen)));
+            //			tasks.Insert(index7 + 1, new PassLegacy("Quicksilver Moss Foliage", new WorldGenLegacyMethod(MossFoliageGen)));
+            //		}
+            //		int index8 = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
+            //              if (index8 != -1)
+            //              {
+            //                  tasks.Insert(index8 - 2, new PassLegacy("Depths Remix Shuffling", new WorldGenLegacyMethod(FinishDepthsRemix)));
+            //			tasks.Insert(index8 - 1, new PassLegacy("Depths Tile Resetting", new WorldGenLegacyMethod(DrippingQuicksilverTileCleanup)));
+            //              }
+            //		int index9 = tasks.FindIndex(genpass => genpass.Name.Equals("Reset"));
+            //		if (index9 != -1)
+            //		{
+            //			tasks.Insert(index9 + 2, new PassLegacy("Shadow Chest Shuffler", new WorldGenLegacyMethod(DepthsShadowchestGenResetter)));
+            //		}
+            //	}
+
+            //	if (DrunkDepthsLeft && (Main.drunkWorld || ModSupport.DepthsModCalling.FargoBoBWSupport))
+            //	{
+            //		int index2 = tasks.FindIndex(genpass => genpass.Name.Equals("Underworld"));
+            //		if (index2 != -1)
+            //		{
+            //			tasks.Insert(index2 + 1, new PassLegacy("DepthsLeft", new WorldGenLegacyMethod(TheDepthsDrunkGen.DepthsLeft)));
+            //			tasks.Insert(index2 + 2, new PassLegacy("Remix Middle Island Left", new WorldGenLegacyMethod(TheDepthsDrunkGen.RemixIslandLeft)));
+            //		}
+            //		int index3 = tasks.FindIndex(genpass => genpass.Name.Equals("Hellforge"));
+            //		if (index3 != -1)
+            //		{
+            //			tasks.Insert(index3 + 1, new PassLegacy("GemForges", new WorldGenLegacyMethod(TheDepthsDrunkGen.GemforgeLeft)));
+            //			tasks.Insert(index3 + 2, new PassLegacy("PetrifyingTrees", new WorldGenLegacyMethod(TreeGen)));
+            //		}
+            //		int index4 = tasks.FindIndex(genpass => genpass.Name.Equals("Pots"));
+            //		if (index4 != -1)
+            //		{
+            //			tasks.Insert(index4 - 2, new PassLegacy("Nightmare Grove", new WorldGenLegacyMethod(NightmareGrove)));
+            //			tasks.Insert(index4 - 1, new PassLegacy("Remix Middle Island Left Again", new WorldGenLegacyMethod(TheDepthsDrunkGen.RemixIslandStuffLeft)));
+            //			tasks.Insert(index4 + 1, new PassLegacy("DepthsPots", new WorldGenLegacyMethod(TheDepthsDrunkGen.PotsLeft)));
+            //		}
+            //		int index8 = tasks.FindIndex(genpass => genpass.Name.Equals("Buried Chests"));
+            //		if (index8 != -1)
+            //		{
+            //			tasks.Insert(index8 + 1, new PassLegacy("Depths item replacer", new WorldGenLegacyMethod(TheDepthsDrunkGen.DepthsBuriedDrunkChests)));
+            //		}
+            //		int index9 = tasks.FindIndex(genpass => genpass.Name.Equals("Herbs"));
+            //		if (index9 != -1)
+            //		{
+            //			tasks.Insert(index9 + 1, new PassLegacy("Shadow Herbs", new WorldGenLegacyMethod(ShadowShrubGen)));
+            //		}
+            //		int index7 = tasks.FindIndex(genpass => genpass.Name.Equals("Moss Grass"));
+            //		if (index7 != -1)
+            //		{
+            //			tasks.Insert(index7 - 1, new PassLegacy("Quicksilver moss", new WorldGenLegacyMethod(TheDepthsDrunkGen.MossGenLeft)));
+            //			tasks.Insert(index7 + 1, new PassLegacy("Quicksilver Moss Foliage", new WorldGenLegacyMethod(MossFoliageGen)));
+            //		}
+            //		int index5 = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
+            //		if (index5 != -1)
+            //		{
+            //			tasks.Insert(index5 - 3, new PassLegacy("Depths Remix Shuffling", new WorldGenLegacyMethod(FinishDepthsRemix)));
+            //			tasks.Insert(index5 - 2, new PassLegacy("KillingHellPots", new WorldGenLegacyMethod(TheDepthsDrunkGen.KILLTHEPOTSLeft)));
+            //			tasks.Insert(index5 - 1, new PassLegacy("Depths Tile Resetting", new WorldGenLegacyMethod(TheDepthsDrunkGen.DrippingQuicksilverTileCleanupLeft)));
+            //		}
+            //		int index6 = tasks.FindIndex(genpass => genpass.Name.Equals("Reset"));
+            //		if (index6 != -1)
+            //		{
+            //			tasks.Insert(index6 + 2, new PassLegacy("Shadow Chest Shuffler", new WorldGenLegacyMethod(TheDepthsDrunkGen.DepthsShadowchestGenResetterDrunk)));
+            //		}
+            //	}
+            //	if (DrunkDepthsRight && (Main.drunkWorld || ModSupport.DepthsModCalling.FargoBoBWSupport))
+            //	{
+            //		int index2 = tasks.FindIndex(genpass => genpass.Name.Equals("Underworld"));
+            //		if (index2 != -1)
+            //		{
+            //			tasks.Insert(index2 + 1, new PassLegacy("DepthsRight", new WorldGenLegacyMethod(TheDepthsDrunkGen.DepthsRight)));
+            //			tasks.Insert(index2 + 2, new PassLegacy("Remix Middle Island Right", new WorldGenLegacyMethod(RemixIsland)));
+            //		}
+            //		int index3 = tasks.FindIndex(genpass => genpass.Name.Equals("Hellforge"));
+            //		if (index3 != -1)
+            //		{
+            //			tasks.Insert(index3 + 1, new PassLegacy("GemForges", new WorldGenLegacyMethod(Gemforge)));
+            //			tasks.Insert(index3 + 2, new PassLegacy("PetrifyingTrees", new WorldGenLegacyMethod(TreeGen)));
+            //		}
+            //		int index4 = tasks.FindIndex(genpass => genpass.Name.Equals("Pots"));
+            //		if (index4 != -1)
+            //		{
+            //			tasks.Insert(index4 - 2, new PassLegacy("Nightmare Grove", new WorldGenLegacyMethod(TheDepthsDrunkGen.NightmareGroveRight)));
+            //			tasks.Insert(index4 - 1, new PassLegacy("Remix Middle Island Right Again", new WorldGenLegacyMethod(TheDepthsDrunkGen.RemixIslandStuffRight)));
+            //			tasks.Insert(index4 + 1, new PassLegacy("DepthsPots", new WorldGenLegacyMethod(TheDepthsDrunkGen.PotsRight)));
+            //		}
+            //		int index8 = tasks.FindIndex(genpass => genpass.Name.Equals("Buried Chests"));
+            //		if (index8 != -1)
+            //		{
+            //			tasks.Insert(index8 + 1, new PassLegacy("Depths item replacer", new WorldGenLegacyMethod(TheDepthsDrunkGen.DepthsBuriedDrunkChests)));
+            //		}
+            //		int index9 = tasks.FindIndex(genpass => genpass.Name.Equals("Herbs"));
+            //		if (index9 != -1)
+            //		{
+            //			tasks.Insert(index9 + 1, new PassLegacy("Shadow Herbs", new WorldGenLegacyMethod(ShadowShrubGen)));
+            //		}
+            //		int index7 = tasks.FindIndex(genpass => genpass.Name.Equals("Moss Grass"));
+            //		if (index7 != -1)
+            //		{
+            //			tasks.Insert(index7 - 1, new PassLegacy("Quicksilver moss", new WorldGenLegacyMethod(TheDepthsDrunkGen.MossGenRight)));
+            //			tasks.Insert(index7 + 1, new PassLegacy("Quicksilver Moss Foliage", new WorldGenLegacyMethod(MossFoliageGen)));
+            //		}
+            //		int index5 = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
+            //		if (index5 != -1)
+            //		{
+            //			tasks.Insert(index5 - 3, new PassLegacy("Depths Remix Shuffling", new WorldGenLegacyMethod(FinishDepthsRemix)));
+            //			tasks.Insert(index5 - 2, new PassLegacy("KillingHellPots", new WorldGenLegacyMethod(TheDepthsDrunkGen.KILLTHEPOTSRight)));
+            //			tasks.Insert(index5 - 1, new PassLegacy("Depths Tile Resetting", new WorldGenLegacyMethod(TheDepthsDrunkGen.DrippingQuicksilverTileCleanupRight)));
+            //		}
+            //		int index6 = tasks.FindIndex(genpass => genpass.Name.Equals("Reset"));
+            //		if (index6 != -1)
+            //		{
+            //			tasks.Insert(index6 + 2, new PassLegacy("Shadow Chest Shuffler", new WorldGenLegacyMethod(TheDepthsDrunkGen.DepthsShadowchestGenResetterDrunk)));
+            //		}
+            //	}
+        }
 
         public override void ModifyHardmodeTasks(List<GenPass> list)
 		{
