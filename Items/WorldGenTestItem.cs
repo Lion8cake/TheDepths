@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -20,7 +21,7 @@ namespace TheDepths.Items
             Item.autoReuse = true;
             Item.useTurn = true;
             Item.useAnimation = 15;
-            Item.useTime = 10;
+            Item.useTime = 15;
             Item.maxStack = 9999;
             Item.consumable = false;
             Item.width = 20;
@@ -31,7 +32,9 @@ namespace TheDepths.Items
 
         public override bool? UseItem(Player player)
         {
-            DepthsGen.Generate(new(), new(null));
+            Point p = Main.MouseWorld.ToTileCoordinates();
+            DepthsBuilding.BuildBuilding(p.X, p.Y);
+            //DepthsGen.Generate(new(), new(null));
             return true;
         }
     }

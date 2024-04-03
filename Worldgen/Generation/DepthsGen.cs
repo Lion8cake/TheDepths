@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
@@ -7,6 +8,7 @@ using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 using TheDepths.Tiles;
 using TheDepths.Tiles.Trees;
+using TheDepths.Walls;
 
 namespace TheDepths.Worldgen.Generation;
 
@@ -24,23 +26,137 @@ internal class DepthsGen
         ModContent.TileType<ShalestoneSapphire>(),  ModContent.TileType<ShalestoneEmerald>(), ModContent.TileType<ShalestoneRuby>()];
 
     /// <summary>
-    /// The generation for the main Depths. This does not include the pots, but it does include trees and nightmare grove.
+    /// The generation for the main Depths. This does not include the pots (as that's a different step to override), but it does include trees and nightmare grove.
     /// </summary>
     internal static void Generate(GenerationProgress progress, GameConfiguration configuration)
     {
+        int biomeWidth = Main.maxTilesX; // Change this and the biome will adjust in size accordingly. It is not currently programmed to start anywhere but the left side, however.
+        
         progress.Message = "Digging the Depths...";
 
-        AddBaseTiles(0, Main.maxTilesY - 220, Main.maxTilesX, 220, 20);
+        int centerSizeHalved = Main.maxTilesX / 6; // Middle area with the buildings takes up 1/3rd of the world
+        AddBaseTiles(0, Main.maxTilesY - 220, biomeWidth, 220, 20, centerSizeHalved);
 
         for (int i = 0; i < 2; ++i)
         {
-            ClearTunnel(0, Main.maxTilesY - 160, Main.maxTilesX, 80, 0.32f);
-            AddStalactites(0, Main.maxTilesY - 160, Main.maxTilesX, 15, 20, 30, 60);
-            ClearTunnel(0, Main.maxTilesY - 80, Main.maxTilesX, 80, 0.06f);
-            AddStalactites(0, Main.maxTilesY - 80, Main.maxTilesX, 10, 14, 20, 50);
+            ClearTunnel(0, Main.maxTilesY - 160, biomeWidth, 80, 0.32f, true);
+            AddStalactites(0, Main.maxTilesY - 160, biomeWidth, 15, 20, 30, 60);
+            ClearTunnel(0, Main.maxTilesY - 80, biomeWidth, 80, 0.06f, false);
+            AddStalactites(0, Main.maxTilesY - 80, biomeWidth, 10, 14, 20, 50);
         }
 
-        AddNightmareForest(Main.maxTilesX / 6);
+        AddHolesBetweenTunnels(0, Main.maxTilesY - 160, biomeWidth, 120, 240);
+        AddWaterHoles(0, Main.maxTilesY - 200, biomeWidth, 160);
+
+        int nightmareGroveSize = Main.maxTilesX / 6; // Each nightmare grove takes up 1/6th of the world, and non-grove is the rest
+        AddNightmareGrove(nightmareGroveSize);
+        AddDepthsDecor(nightmareGroveSize);
+        AddMiddleAreaBuildings(centerSizeHalved, Main.maxTilesY - 160);
+    }
+
+    private static void AddMiddleAreaBuildings(int halfWidth, int startY)
+    {
+        const int MinSpace = 80;
+        const int MaxSpace = 160;
+
+        int x = Main.maxTilesX / 2 - halfWidth;
+        int width = Main.maxTilesX / 2 + halfWidth;
+
+        while (x < width)
+        {
+            x += WorldGen.genRand.Next(MinSpace, MaxSpace);
+
+            int y = startY;
+
+            while (!WorldGen.SolidTile(x, y))
+            {
+                y++;
+
+                if (y > Main.maxTilesY - 20)
+                    break;
+            }
+
+            if (y > Main.maxTilesY - 20)
+                continue;
+
+            y -= WorldGen.genRand.Next(10, 20); // Offset buildings up to give a varied depth
+
+            DepthsBuilding.BuildBuilding(x, y);
+        }
+    }
+
+    private static void AddWaterHoles(int x, int y, int width, int height)
+    {
+        for (int i = 0; i < Main.maxTilesX / 4200f * 300; ++i)
+        {
+            int placeX = x + WorldGen.genRand.Next(width);
+            int placeY = y + WorldGen.genRand.Next(height);
+            Tile tile = Main.tile[placeX, placeY];
+
+            if (tile.HasTile)
+                WorldGen.digTunnel(placeX, placeY, WorldGen.genRand.NextFloat(-2, 2f), WorldGen.genRand.NextFloat(-2f, 2f), WorldGen.genRand.Next(2, 15), 2, true);
+        }
+    }
+
+    private static void AddHolesBetweenTunnels(int x, int y, int width, int minSpace, int maxSpace)
+    {
+        while (x < width)
+        {
+            x += WorldGen.genRand.Next(minSpace, maxSpace);
+
+            if (Main.tile[x, y].HasTile || x > Main.maxTilesX) // Stop if there's no space or if out of bounds
+                continue;
+
+            int j = y;
+
+            while (!WorldGen.SolidTile(x, j))
+                j++;
+
+            WorldGen.digTunnel(x, j, WorldGen.genRand.NextFloat(-2f, 2f), WorldGen.genRand.NextFloat(3, 9), WorldGen.genRand.Next(14, 18), 10);
+        }
+    }
+
+    private static void AddDepthsDecor(int nightmareGroveSize)
+    {
+        for (int i = nightmareGroveSize; i < Main.maxTilesX - nightmareGroveSize; ++i)
+        {
+            for (int j = Main.maxTilesY - 300; j < Main.maxTilesY - 10; ++j)
+            {
+                Tile tile = Main.tile[i, j];
+
+                if (!tile.HasTile || tile.TileType != ModContent.TileType<ShaleBlock>())
+                    continue;
+
+                PlaceDepthsDecor(i, j);
+            }
+        }
+    }
+
+    private static void PlaceDepthsDecor(int i, int j)
+    {
+        if (!WorldGen.SolidTile(i, j - 1))
+        {
+            if (WorldGen.genRand.NextBool(50))
+            {
+                if (WorldGen.PlaceObject(i, j - 1, ModContent.TileType<PetrifiedSapling>(), true, 0))
+                {
+                    if (!DepthsModTree.GrowModdedTreeWithSettings(i, j - 1, PetrifiedTree.Tree_Petrfied))
+                        WorldGen.KillTile(i, j - 1, false, false, true);
+                }
+            }
+            else if (WorldGen.genRand.NextBool(30))
+                WorldGen.PlaceObject(i, j - 2, ModContent.TileType<LargeCrystal>(), true);
+            else if (WorldGen.genRand.NextBool(20))
+                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<ShadowShrub>(), true, 0);
+        }
+
+        if (!WorldGen.SolidTile(i, j + 1))
+        {
+            if (WorldGen.genRand.NextBool(40))
+                WorldGen.TileRunner(i, j + 1, WorldGen.genRand.NextFloat(2, 5), 3, ModContent.TileType<Quartz>(), true);
+            else if (WorldGen.genRand.NextBool(26))
+                WorldGen.PlaceObject(i, j + 1, ModContent.TileType<LargeCrystal>(), true);
+        }
     }
 
     /// <summary>
@@ -57,6 +173,7 @@ internal class DepthsGen
     {
         while (x < width)
         {
+        retry: // Goto is easier to set up here to escape the while
             x += WorldGen.genRand.Next(minSpace, maxSpace);
 
             if (Main.tile[x, y].HasTile || x > Main.maxTilesX) // Stop if there's no space or if out of bounds
@@ -65,7 +182,12 @@ internal class DepthsGen
             int j = y;
 
             while (!WorldGen.SolidTile(x, j))
+            {
                 j--;
+
+                if (j < y / 2)
+                    goto retry;
+            }
 
             PlaceStalactite(x, j, WorldGen.genRand.Next(minHeight, maxHeight));
         }
@@ -107,7 +229,7 @@ internal class DepthsGen
     /// </summary>
     /// <param name="x">X position (left).</param>
     /// <param name="y">Y position (top).</param>
-    public static void AddBaseTiles(int x, int y, int width, int height, int fadeHeight)
+    public static void AddBaseTiles(int x, int y, int width, int height, int fadeHeight, int middleAreaSizeHalved)
     {
         FastNoiseLite noise = new(WorldGen._genRandSeed + _seedNumber++);
         noise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
@@ -129,7 +251,7 @@ internal class DepthsGen
                 int currentDepth = j - baseY;
                 float adjustment = currentDepth / (float)height;
 
-                if (value > 0.42f - (adjustment * 0.15f) && adjustment > 0.25f)
+                if (value > 0.42f - (adjustment * 0.15f) && adjustment > 0.28f)
                     type = ModContent.TileType<ArqueriteOre>();
                 else if (value < -0.78f)
                     type = ModContent.TileType<Shalestone>();
@@ -154,12 +276,20 @@ internal class DepthsGen
                 tile.TileType = (ushort)type;
                 tile.HasTile = true;
                 tile.Slope = SlopeType.Solid;
+                tile.WallType = (ushort)ModContent.WallType<ShaleWallUnsafe>();
             }
         }
 
         for (int i = 0; i < width * (height / 60f); ++i) // Spam gems
         {
             int gemX = WorldGen.genRand.Next(x, x + width);
+
+            if (gemX > Main.maxTilesX / 2 - middleAreaSizeHalved && gemX < Main.maxTilesX / 2 + middleAreaSizeHalved) // Do not place gems in the middle area
+            {
+                i--;
+                continue;
+            }
+
             int gemY = WorldGen.genRand.Next(y, y + height);
             float str = WorldGen.genRand.NextFloat(1, 3);
             int steps = WorldGen.genRand.Next(1, 6);
@@ -174,7 +304,7 @@ internal class DepthsGen
     /// <param name="x">X position (left).</param>
     /// <param name="y">Y position (top).</param>
     /// <param name="widenFactor">How much to bias noise towards being empty space. This is used to make the top channel bigger.</param>
-    public static void ClearTunnel(int x, int y, int width, int height, float? widenFactor)
+    public static void ClearTunnel(int x, int y, int width, int height, float? widenFactor, bool clearWalls)
     {
         const float NoiseCutoff = -0.2f;
 
@@ -203,7 +333,12 @@ internal class DepthsGen
                     realX -= width;
 
                 if (Main.tile[realX, y - j].HasTile && value > NoiseCutoff)
-                    Main.tile[realX, y - j].ClearEverything();
+                {
+                    if (clearWalls)
+                        Main.tile[realX, y - j].ClearEverything();
+                    else
+                        Main.tile[realX, y - j].Clear(Terraria.DataStructures.TileDataType.Tile);
+                }
 
                 realX = (Math.Abs(i - j)) % Main.maxTilesX;
 
@@ -211,7 +346,12 @@ internal class DepthsGen
                     realX += width;
 
                 if (Main.tile[realX, y + j].HasTile && value > NoiseCutoff)
-                    Main.tile[realX, y + j].ClearEverything();
+                {
+                    if (clearWalls)
+                        Main.tile[realX, y + j].ClearEverything();
+                    else
+                        Main.tile[realX, y + j].Clear(Terraria.DataStructures.TileDataType.Tile);
+                }
             }
         }
     }
@@ -220,7 +360,7 @@ internal class DepthsGen
     /// Replaces the distance from each edge with a Nightmare Grove.
     /// </summary>
     /// <param name="distanceFromBothEdges">Distance to replace from each edge.</param>
-    internal static void AddNightmareForest(int distanceFromBothEdges)
+    internal static void AddNightmareGrove(int distanceFromBothEdges)
     {
         for (int i = 0; i < distanceFromBothEdges; ++i)
         {
@@ -248,22 +388,41 @@ internal class DepthsGen
             return;
 
         tile.TileType = (ushort)ModContent.TileType<NightmareGrass>();
-        OnPlaceNightmareGrass(i, j);
+        PlaceNightmareDecor(i, j);
     }
 
     /// <summary>
-    /// Called when placing Nightmare Grass on shale.
+    /// Called when placing Nightmare Grass on shale.<br/>
+    /// Currently, grows Trees and foliage.
     /// </summary>
     /// <param name="i">X position of the tile.</param>
     /// <param name="j">Y position of the tile.</param>
-    private static void OnPlaceNightmareGrass(int i, int j)
+    private static void PlaceNightmareDecor(int i, int j)
     {
-        if (WorldGen.genRand.NextBool(50))
+        if (!WorldGen.SolidTile(i, j - 1))
         {
-            if (WorldGen.PlaceObject(i, j - 1, ModContent.TileType<NightSapling>(), true, 0))
+            if (WorldGen.genRand.NextBool(50))
             {
-                if (!DepthsModTree.GrowModdedTreeWithSettings(i, j - 1, NightwoodTree.Tree_Nightmare))
-                    WorldGen.KillTile(i, j - 1, false, false, true);
+                if (WorldGen.PlaceObject(i, j - 1, ModContent.TileType<NightSapling>(), true, 0))
+                {
+                    if (!DepthsModTree.GrowModdedTreeWithSettings(i, j - 1, NightwoodTree.Tree_Nightmare))
+                        WorldGen.KillTile(i, j - 1, false, false, true);
+                }
+            }
+            else if (!WorldGen.genRand.NextBool(3))
+                WorldGen.PlaceObject(i, j - 1, ModContent.TileType<NightmareGrass_Foliage>(), true, 0);
+        }
+
+        if (!WorldGen.SolidTile(i, j + 1) && WorldGen.genRand.NextBool(3))
+        {
+            int height = WorldGen.genRand.Next(4, 17);
+
+            for (int y = j + 1; y < j + height; y++)
+            {
+                if (WorldGen.SolidTile(i, y))
+                    break;  
+
+                WorldGen.PlaceTile(i, y, ModContent.TileType<NightmareVines>());
             }
         }
     }
