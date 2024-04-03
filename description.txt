@@ -1,4 +1,4 @@
-=========================================
+﻿=========================================
 The Depths (Alternate Hell)
 =========================================
 Depths version 0.8.2
@@ -65,6 +65,7 @@ Moved some unused assets to the 'old assets' folder
 -=Credits - Translators=-
 ==========================================
 Russian Translation: Andrey2345
+Chinese Translation: Yee苍棱
 
 ==========================================
 -=Credits=-
