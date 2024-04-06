@@ -66,6 +66,7 @@ Moved some unused assets to the 'old assets' folder
 ==========================================
 Russian Translation: Andrey2345
 Chinese Translation: Yee苍棱
+Brazilian Portuguese: Seceip
 
 ==========================================
 -=Credits=-
