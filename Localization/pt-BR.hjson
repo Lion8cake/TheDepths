@@ -607,7 +607,7 @@ Mods: {
 			}
 
 			OnyxGemLock: {
-				DisplayName: Cadeado de Gema Ônix 
+				DisplayName: Cadeado de Gema Ônix
 				Tooltip: Clique direito para colocar ou remover Ônixes Grandes
 			}
 
@@ -627,7 +627,7 @@ Mods: {
 			}
 
 			QuartzBricks: {
-				DisplayName: Tijolos de Quartzo 
+				DisplayName: Tijolos de Quartzo
 				Tooltip: ""
 			}
 
@@ -1999,7 +1999,7 @@ Mods: {
 			OnyxExplosion.DisplayName: Explosão Ônix
 			SapphireSerpentKite.DisplayName: Pipa da Serpente Safira
 			MiniChasme.DisplayName: Mini-Chasme
-			MiniChasmeHand.DisplayName: Mão Mini-Chasme 
+			MiniChasmeHand.DisplayName: Mão Mini-Chasme
 			ShalestoneHand.DisplayName: Mão Xisto
 			ShalestoneSlam.DisplayName: Golpe Xisto
 			ShadowLash.DisplayName: Chicote Sombrio

@@ -119,7 +119,7 @@ namespace TheDepths.Tiles
 			int x = i - Main.tile[i, j].TileFrameX / 18 % 3;
 			int y = j - Main.tile[i, j].TileFrameY / 18 % 2;
 			Player player = Main.LocalPlayer;
-			if ((player.HeldItem.type == ModContent.ItemType<RubyRelic>() || Main.mouseItem.type == ModContent.ItemType<RubyRelic>()) && Main.LocalPlayer.ZoneUnderworldHeight && !player.HasBuff(ModContent.BuffType<RelicsCurse>()) && !NPC.AnyNPCs(ModContent.NPCType<NPCs.Chasme.ChasmeHeart>()))
+			if ((player.HeldItem.type == ModContent.ItemType<RubyRelic>() || Main.mouseItem.type == ModContent.ItemType<RubyRelic>()) && Main.LocalPlayer.ZoneUnderworldHeight && !NPC.AnyNPCs(ModContent.NPCType<NPCs.Chasme.ChasmeHeart>()) && !TheDepthsModSystem.AnyProjectiles(ModContent.ProjectileType<GemforgeCutscene>()))
 			{
 				for (int m = x; m < x + 3; m++)
 				{
