@@ -229,7 +229,12 @@ namespace TheDepths.Worldgen
 				int baseUnderWorldIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Underworld"));
 
 				if (baseUnderWorldIndex >= 0)
-					tasks[baseUnderWorldIndex] = new PassLegacy("Depths: Depths", DepthsGen.Generate); // Generate the Depths tile base
+				{
+                    if (Main.drunkWorld || ModSupport.DepthsModCalling.FargoBoBWSupport)
+                        tasks[baseUnderWorldIndex] = new PassLegacy("Depths: Depths", DepthsGen.SpecialGenerate);
+                    else
+                        tasks[baseUnderWorldIndex] = new PassLegacy("Depths: Depths", DepthsGen.Generate); // Generate the Depths tile base
+				}
 
                 int hellforgeIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Hellforge"));
 
