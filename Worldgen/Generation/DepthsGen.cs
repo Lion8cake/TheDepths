@@ -49,37 +49,90 @@ internal class DepthsGen
         AddWaterHoles(0, Main.maxTilesY - 200, biomeWidth, 160);
 
         int nightmareGroveSize = Main.maxTilesX / 6; // Each nightmare grove takes up 1/6th of the world, and non-grove is the rest
-        AddNightmareGrove(nightmareGroveSize);
+        AddNightmareGrove(nightmareGroveSize, 0);
         AddDepthsDecor(nightmareGroveSize);
-        AddBuildings(Main.maxTilesX - centerSizeHalved, Main.maxTilesY + centerSizeHalved, Main.maxTilesY - 160); // Adds all of the buildings
+        AddBuildings(Main.maxTilesX / 2 - centerSizeHalved, Main.maxTilesX / 2 + centerSizeHalved, Main.maxTilesY - 160); // Adds all of the buildings
     }
 
     internal static void SpecialGenerate(GenerationProgress progress, GameConfiguration configuration)
     {
-        int biomeWidth = WorldGen.drunkWorldGen ? Main.maxTilesX / 2 : Main.maxTilesX; // Change this and the biome will adjust in size accordingly.
+        int biomeWidth = WorldGen.drunkWorldGen ? (int)(Main.maxTilesX / 2.6f) : Main.maxTilesX; // Change this and the biome will adjust in size accordingly.
+        int x = 0;
+        int side = 0;
 
-        progress.Message = "Digging the Depths...";
+        if (WorldGen.drunkWorldGen)
+        {
+            if (WorldGen.genRand.NextBool(2))
+            {
+                side = -1;
+                TheDepthsWorldGen.DrunkDepthsLeft = true;
+                TheDepthsWorldGen.DrunkDepthsRight = false;
+            }
+            else
+            {
+                side = 1;
+                x = Main.maxTilesX - (int)(Main.maxTilesX / 2.6f);
+                TheDepthsWorldGen.DrunkDepthsLeft = false;
+                TheDepthsWorldGen.DrunkDepthsRight = true;
+            }
+        }
+
+        progress.Message = "Digging the depths...";
 
         int buildingArea = Main.maxTilesX / 6; // Middle area with the buildings takes up 1/3rd of the world
-        AddBaseTiles(0, Main.maxTilesY - 220, biomeWidth, 220, 20, buildingArea); // Adds base tiles - Shale, Arquerite, Shalestone
+        AddBaseTiles(x, Main.maxTilesY - 220, biomeWidth, 220, 20, buildingArea); // Adds base tiles - Shale, Arquerite, Shalestone
 
         for (int i = 0; i < 2; ++i) // Adds the two chasms, and their stalactites
         {
-            ClearTunnel(0, Main.maxTilesY - 160, biomeWidth, 80, 0.32f, true); // Top one is bigger (as per the widenFactor of .32)
-            AddStalactites(0, Main.maxTilesY - 160, biomeWidth, 15, 20, 30, 60);
-            ClearTunnel(0, Main.maxTilesY - 80, biomeWidth, 80, 0.06f, false); // and the bottom one is smaller (widenFactor of .06)
-            AddStalactites(0, Main.maxTilesY - 80, biomeWidth, 10, 14, 20, 50);
+            ClearTunnel(x, Main.maxTilesY - 160, biomeWidth, 80, 0.32f, true); // Top one is bigger (as per the widenFactor of .32)
+            AddStalactites(x, Main.maxTilesY - 160, biomeWidth, 15, 20, 30, 60);
+            ClearTunnel(x, Main.maxTilesY - 80, biomeWidth, 80, 0.06f, false); // and the bottom one is smaller (widenFactor of .06)
+            AddStalactites(x, Main.maxTilesY - 80, biomeWidth, 10, 14, 20, 50);
         }
 
-        AddHolesBetweenTunnels(0, Main.maxTilesY - 160, biomeWidth, 120, 240); // Digs pits between the two chasms
-        AddWaterHoles(0, Main.maxTilesY - 200, biomeWidth, 160);
+        AddHolesBetweenTunnels(x, Main.maxTilesY - 160, biomeWidth, 120, 240); // Digs pits between the two chasms
+        AddWaterHoles(x, Main.maxTilesY - 200, biomeWidth, 160);
 
-        //int nightmareGroveSize = Main.maxTilesX / 6; // Each nightmare grove takes up 1/6th of the world, and non-grove is the rest
-        //AddNightmareGrove(nightmareGroveSize);
+        progress.Message = "Growing bioluminecent plants in very dark areas";
+
+        int nightmareGroveSize = WorldGen.drunkWorldGen ? Main.maxTilesX / 2 :  Main.maxTilesX / 6; // Each nightmare grove takes up 1/6th of the world, and non-grove is the rest
+        AddNightmareGrove(nightmareGroveSize, side);
         //AddDepthsDecor(nightmareGroveSize);
 
-        AddBuildings(60, buildingArea, Main.maxTilesY - 160); // Adds all of the buildings
-        AddBuildings(Main.maxTilesX - buildingArea, Main.maxTilesX - 60, Main.maxTilesY - 160);
+        progress.Message = "Building ruined homes...";
+
+        if (side is 0 or (-1))
+            AddBuildings(60, buildingArea, Main.maxTilesY - 160); // Adds all of the buildings
+
+        if (side is 0 or 1)
+            AddBuildings(Main.maxTilesX - buildingArea, Main.maxTilesX - 60, Main.maxTilesY - 160);
+    }
+
+    /// <summary>
+    /// Replaces ceiling tiles in the middle area of a drunk world without me having to add them manually.
+    /// </summary>
+    /// <param name="startX">Start X position of the generation. Always assumes width is 1/2 of the world.</param>
+    internal static void ReplaceHalfCeilingOnDrunkWorldGen(int startX)
+    {
+        int biomeWidth = Main.maxTilesX / 2;
+
+        for (int i = startX; i < startX + biomeWidth; i++)
+        {
+            for (int j = Main.maxTilesY - 250; j < Main.maxTilesY - 50; ++j)
+            {
+                Tile tile = Main.tile[i, j];
+                ushort type = tile.TileType;
+
+                if (tile.TileType == TileID.Ash)
+                    tile.TileType = (ushort)ModContent.TileType<ShaleBlock>();
+
+                if (tile.TileType == TileID.AshGrass)
+                    tile.TileType = (ushort)ModContent.TileType<NightmareGrass>();
+
+                if (type != tile.TileType)
+                    WorldGen.SquareTileFrame(i, j, true);
+            }
+        }
     }
 
     /// <summary>
@@ -307,7 +360,7 @@ internal class DepthsGen
                 int currentDepth = j - baseY;
                 float adjustment = currentDepth / (float)height;
 
-                if (value > 0.42f - (adjustment * 0.15f) && adjustment > 0.28f)
+                if (value > 0.42f - adjustment * 0.15f && adjustment > 0.28f)
                     type = ModContent.TileType<ArqueriteOre>();
                 else if (value < -0.78f)
                     type = ModContent.TileType<Shalestone>();
@@ -416,14 +469,17 @@ internal class DepthsGen
     /// Replaces the distance from each edge with a Nightmare Grove.
     /// </summary>
     /// <param name="distanceFromBothEdges">Distance to replace from each edge.</param>
-    internal static void AddNightmareGrove(int distanceFromBothEdges)
+    internal static void AddNightmareGrove(int distanceFromBothEdges, int side)
     {
         for (int i = 0; i < distanceFromBothEdges; ++i)
         {
             for (int j = Main.maxTilesY - 400; j < Main.maxTilesY; ++j)
             {
-                TryGivingShaleNightmare(i, j);
-                TryGivingShaleNightmare(Main.maxTilesX - i, j);
+                if (side is 0 or -1)
+                    TryGivingShaleNightmare(i, j);
+
+                if (side is 0 or 1)
+                    TryGivingShaleNightmare(Main.maxTilesX - i, j);
             }
         }
     }

@@ -29,7 +29,7 @@ namespace TheDepths.NPCs
 
 		public override void PostAI(NPC npc)
 		{
-			bool NPCInDepths = ((TheDepthsWorldGen.depthsorHell && !TheDepthsWorldGen.DrunkDepthsLeft && !TheDepthsWorldGen.DrunkDepthsRight) || ((TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(npc.position.ToTileCoordinates().X) < Main.maxTilesX / 2) || (TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(npc.position.ToTileCoordinates().X) > Main.maxTilesX / 2)));
+			bool NPCInDepths = ((TheDepthsWorldGen.isWorldDepths && !TheDepthsWorldGen.DrunkDepthsLeft && !TheDepthsWorldGen.DrunkDepthsRight) || ((TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(npc.position.ToTileCoordinates().X) < Main.maxTilesX / 2) || (TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(npc.position.ToTileCoordinates().X) > Main.maxTilesX / 2)));
 			if (Main.player[npc.target] != null)
 			{
 				if (NPCInDepths && Collision.LavaCollision(npc.position, npc.width, npc.height))

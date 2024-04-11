@@ -26,7 +26,7 @@ namespace TheDepths.Worldgen
     
     public class TheDepthsWorldGen : ModSystem {
 	    public UnderworldOptions SelectedUnderworldOption { get; set; } = UnderworldOptions.Random;
-		public static bool depthsorHell;
+		public static bool isWorldDepths;
 
 		public static bool DrunkDepthsLeft;
 		public static bool DrunkDepthsRight;
@@ -47,7 +47,7 @@ namespace TheDepths.Worldgen
 		/// <summary>
 		///   Checks if the player is in the depths part of the world. This is used to reduce repetion within code as previously all the check needed was depthsorHell == true.
 		/// </summary>
-		public static bool InDepths(Player player) => ((depthsorHell && !DrunkDepthsLeft && !DrunkDepthsRight) || (IsPlayerInLeftDepths(player) || IsPlayerInRightDepths(player)));
+		public static bool InDepths(Player player) => ((isWorldDepths && !DrunkDepthsLeft && !DrunkDepthsRight) || (IsPlayerInLeftDepths(player) || IsPlayerInRightDepths(player)));
 
 		public override void OnWorldLoad()
 		{
@@ -72,7 +72,7 @@ namespace TheDepths.Worldgen
 
 								if (dataTag.Get<string>("AltLibrary:WorldHell") == "TheDepths/AltDepthsBiome")
 								{ //Look for the correct string that WorldHallow is saved under
-									depthsorHell = true; //Convert world by giving it the tag
+									isWorldDepths = true; //Convert world by giving it the tag
 									ModContent.GetInstance<TheDepths>().Logger.Debug("Altlib save!, converting world!"); //Announce converting
 								}
 								else
@@ -98,7 +98,7 @@ namespace TheDepths.Worldgen
 
 											if (dataTag2.Get<string>("AltLibrary:WorldHell") == "TheDepths/AltDepthsBiome")
 											{ //same as the lines previously when altlib was enabled
-												depthsorHell = true;
+												isWorldDepths = true;
 												ModContent.GetInstance<TheDepths>().Logger.Debug("Altlib save!, converting world!");
 											}
 											else
@@ -129,7 +129,7 @@ namespace TheDepths.Worldgen
 		{
 			ModContent.GetInstance<PetrifiedWoodChandelier>().Coordinates = new(); 
 			ModContent.GetInstance<PetrifiedWoodLantern>().Coordinates = new();
-			depthsorHell = false;
+			isWorldDepths = false;
 			DrunkDepthsLeft = false;
 			DrunkDepthsRight = false;
 			downedChasme = false;
@@ -139,7 +139,7 @@ namespace TheDepths.Worldgen
 		{
 			ModContent.GetInstance<PetrifiedWoodChandelier>().Coordinates = new();
 			ModContent.GetInstance<PetrifiedWoodLantern>().Coordinates = new();
-			depthsorHell = false;
+			isWorldDepths = false;
 			DrunkDepthsLeft = false;
 			DrunkDepthsRight = false;
 			downedChasme = false;
@@ -147,7 +147,7 @@ namespace TheDepths.Worldgen
 
 		public override void SaveWorldData(TagCompound tag)
 		{
-			if (depthsorHell)
+			if (isWorldDepths)
 			{
 				tag["IsDepths"] = true;
 			}
@@ -167,14 +167,14 @@ namespace TheDepths.Worldgen
 
 		public override void SaveWorldHeader(TagCompound tag)
 		{
-			tag["HasDepths"] = depthsorHell;
+			tag["HasDepths"] = isWorldDepths;
 			tag["DrunkDepthsLeft"] = DrunkDepthsLeft;
 			tag["DrunkDepthsRight"] = DrunkDepthsRight;
 		}
 
 		public override void LoadWorldData(TagCompound tag)
 		{
-			depthsorHell = tag.ContainsKey("IsDepths");
+			isWorldDepths = tag.ContainsKey("IsDepths");
 			DrunkDepthsLeft = tag.ContainsKey("DepthsIsOnTheLeft");
 			DrunkDepthsRight = tag.ContainsKey("DepthsIsOnTheRight");
 			downedChasme = tag.ContainsKey("downedChasme");
@@ -183,7 +183,7 @@ namespace TheDepths.Worldgen
 		public override void NetSend(BinaryWriter writer)
 		{
 			var flags = new BitsByte();
-			flags[0] = depthsorHell;
+			flags[0] = isWorldDepths;
 			flags[1] = DrunkDepthsLeft;
 			flags[2] = DrunkDepthsRight;
 			flags[3] = downedChasme;
@@ -193,14 +193,14 @@ namespace TheDepths.Worldgen
 		public override void NetReceive(BinaryReader reader)
 		{
 			BitsByte flags = reader.ReadByte();
-			depthsorHell = flags[0];
+			isWorldDepths = flags[0];
 			DrunkDepthsLeft = flags[1];
 			DrunkDepthsRight = flags[2];
 			downedChasme = flags[3];
 		}
 
 		public override void PreWorldGen() {
-			depthsorHell = SelectedUnderworldOption switch {
+			isWorldDepths = SelectedUnderworldOption switch {
 				UnderworldOptions.Random => Main.rand.NextBool(),
 				UnderworldOptions.Underworld => false,
 				UnderworldOptions.Depths => true,
@@ -224,19 +224,24 @@ namespace TheDepths.Worldgen
 
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
 		{
-			if (depthsorHell && (!Main.drunkWorld && !ModSupport.DepthsModCalling.FargoBoBWSupport))
+			if (isWorldDepths || !ModSupport.DepthsModCalling.FargoBoBWSupport)
 			{
 				int baseUnderWorldIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Underworld"));
 
 				if (baseUnderWorldIndex >= 0)
 				{
-                    if (Main.drunkWorld || ModSupport.DepthsModCalling.FargoBoBWSupport)
-                        tasks[baseUnderWorldIndex] = new PassLegacy("Depths: Depths", DepthsGen.SpecialGenerate);
-                    else
-                        tasks[baseUnderWorldIndex] = new PassLegacy("Depths: Depths", DepthsGen.Generate); // Generate the Depths tile base
+					if (WorldGen.drunkWorldGen || WorldGen.remixWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport)
+					{
+						if (WorldGen.drunkWorldGen)
+							tasks.Insert(baseUnderWorldIndex + 1, new PassLegacy("Depths: Depths", DepthsGen.SpecialGenerate)); // Overwrite some amount of space with the Depths
+						else
+							tasks[baseUnderWorldIndex] = new PassLegacy("Depths: Depths", DepthsGen.SpecialGenerate); // Replace the entire Underworld with only Depths for ddu
+					}
+					else
+						tasks[baseUnderWorldIndex] = new PassLegacy("Depths: Depths", DepthsGen.Generate); // Replace the Underworld entirely with the Depths
 				}
 
-                int hellforgeIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Hellforge"));
+				int hellforgeIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Hellforge"));
 
 				if (hellforgeIndex >= 0)
 					tasks[hellforgeIndex].Disable();
@@ -244,7 +249,18 @@ namespace TheDepths.Worldgen
 				int potsIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Pots"));
 
 				if (potsIndex >= 0)
-                    tasks[potsIndex] = new PassLegacy("Depths: Depths", Pots);
+				{
+					if (!WorldGen.drunkWorldGen && !ModSupport.DepthsModCalling.FargoBoBWSupport)
+						tasks[potsIndex] = new PassLegacy("Depths: Depths Pots", Pots); // Replaces the Pots method entirely
+					else
+                        tasks.Insert(potsIndex + 1, new PassLegacy("Depths: Depths Pots", Pots)); // Adds the Pots method in addition to the vanilla method. It has a check for if it should skip all other pots in drunk world gen, so it doesn't add extra pots everywhere.
+
+                    if (WorldGen.drunkWorldGen)
+                    {
+                        tasks.Insert(potsIndex + 1, new PassLegacy("Depths: Depths Ceiling Replacement", // The ceiling replacement wasn't working earlier, so this does that later.
+                            (_, _) => DepthsGen.ReplaceHalfCeilingOnDrunkWorldGen(DrunkDepthsLeft ? 0 : Main.maxTilesX / 2)));
+                    }
+                }
 			}
 
             //		if (baseUnderWorldIndex != -1)
@@ -400,7 +416,7 @@ namespace TheDepths.Worldgen
 
         public override void ModifyHardmodeTasks(List<GenPass> list)
 		{
-			if (depthsorHell || WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport)
+			if (isWorldDepths || WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport)
 			{
 				list.Add(new PassLegacy("The Depths: Onyx Shalestone", new WorldGenLegacyMethod(OnyxShale)));
 			}
@@ -702,20 +718,20 @@ namespace TheDepths.Worldgen
 			}
 		}
 
-
 		private void Pots(GenerationProgress progress, GameConfiguration configuration)
 		{
 			Main.tileSolid[137] = true;
 			Main.tileSolid[130] = true;
 			progress.Message = Lang.gen[35].Value;
+
 			if (WorldGen.noTrapsWorldGen)
 			{
 				Main.tileSolid[138] = true;
-				int num440 = (int)((double)(Main.maxTilesX * Main.maxTilesY) * 0.0004);
+				int num440 = (int)((Main.maxTilesX * Main.maxTilesY) * 0.0004);
+
 				if (WorldGen.remixWorldGen)
-				{
 					num440 /= 2;
-				}
+
 				for (int num441 = 0; num441 < num440; num441++)
 				{
 					int num442 = WorldGen.genRand.Next(50, Main.maxTilesX - 50);
@@ -723,6 +739,7 @@ namespace TheDepths.Worldgen
 					for (num443 = WorldGen.genRand.Next((int)Main.worldSurface, Main.maxTilesY - 250); !Main.tile[num442, num443].HasTile && num443 < Main.maxTilesY - 250; num443++)
 					{
 					}
+
 					num443--;
 					if (!(Main.tile[num442, num443].LiquidType == LiquidID.Shimmer))
 					{
@@ -731,13 +748,15 @@ namespace TheDepths.Worldgen
 						WorldGen.PlaceTile(num442 + 1, num443 - 2, 138, mute: true);
 					}
 				}
+
 				Main.tileSolid[138] = false;
 			}
-			double num444 = (double)(Main.maxTilesX * Main.maxTilesY) * 0.0008;
+
+			double num444 = (Main.maxTilesX * Main.maxTilesY) * 0.0008;
+
 			if (Main.starGame)
-			{
 				num444 *= Main.starGameMath(0.2);
-			}
+
 			for (int num445 = 0; (double)num445 < num444; num445++)
 			{
 				double num446 = (double)num445 / num444;
@@ -805,19 +824,30 @@ namespace TheDepths.Worldgen
 							{
 								style = WorldGen.genRand.Next(31, 34);
 							}
+
 							if (num451 == 226)
 							{
 								style = WorldGen.genRand.Next(28, 31);
 							}
+
 							if (num452 == 187 || num452 == 216)
 							{
 								style = WorldGen.genRand.Next(34, 37);
 							}
+
 							if (num450 > Main.UnderworldLayer)
 							{
 								style = 0;
-								type = ModContent.TileType<DepthsPot>();
+
+								if (!WorldGen.drunkWorldGen)
+									type = ModContent.TileType<DepthsPot>();
+								else if ((DrunkDepthsLeft && num449 < Main.maxTilesX / 2) || (DrunkDepthsRight && num449 > Main.maxTilesX / 2))
+									type = ModContent.TileType<DepthsPot>(); 
 							}
+
+							if (WorldGen.drunkWorldGen && type != ModContent.TileType<DepthsPot>())
+								return;
+
 							if (!WorldGen.oceanDepths(num449, num450) && !(Main.tile[num449, num450].LiquidType == LiquidID.Shimmer) && WorldGen.PlacePot(num449, num450, (ushort)type, style))
 							{
 								flag25 = true;

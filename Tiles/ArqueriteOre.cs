@@ -69,7 +69,7 @@ namespace TheDepths.Tiles
 			int x = i - Main.tile[i, j].TileFrameX / 18 % 1;
 			if (Main.netMode != 1)
 			{
-				if (j > Main.UnderworldLayer && (Worldgen.TheDepthsWorldGen.depthsorHell || (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2)))
+				if (j > Main.UnderworldLayer && (Worldgen.TheDepthsWorldGen.isWorldDepths || (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2)))
 				{
 					tile.LiquidType = LiquidID.Lava;
 					tile.LiquidAmount = 128;
