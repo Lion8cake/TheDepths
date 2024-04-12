@@ -1,4 +1,4 @@
-=========================================
+﻿=========================================
 The Depths (Alternate Hell)
 =========================================
 Depths version 0.8.2
@@ -16,6 +16,15 @@ This mod has Boss Checklist Support, When enabled chasme will have her own check
 =========================================
 Change Log
 =========================================
+0.8.2.1
+===============================
+Added Chinese Translation by Yee苍棱
+Added Brazilian Portuguese by Seceip
+Fixed rotation of the Aqua Arrow
+Fixed rotation of diamond arrows and them not having gravity
+Fixed gemforges allowing for multiple chasme's to be spawned during the cutscene
+Fixed gemforges not giving all nearby players the relic's curse debuff
+Added Updated icon by Yee苍棱
 0.8.2
 ===============================
 Reworked Chasme Completely, she is now an actually enjoyable and fully functioning fight
@@ -65,6 +74,8 @@ Moved some unused assets to the 'old assets' folder
 -=Credits - Translators=-
 ==========================================
 Russian Translation: Andrey2345
+Chinese Translation: Yee苍棱
+Brazilian Portuguese: Seceip
 
 ==========================================
 -=Credits=-

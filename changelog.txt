@@ -1,3 +1,13 @@
+Beta v0.8.2.1
+=========================
+Added Chinese Translation by Yee苍棱
+Added Brazilian Portuguese by Seceip
+Fixed rotation of the Aqua Arrow
+Fixed rotation of diamond arrows and them not having gravity
+Fixed gemforges allowing for multiple chasme's to be spawned during the cutscene
+Fixed gemforges not giving all nearby players the relic's curse debuff
+Added Updated icon by Yee苍棱
+
 Beta v0.8.2
 =========================
 Reworked Chasme Completely, she is now an actually enjoyable and fully functioning fight

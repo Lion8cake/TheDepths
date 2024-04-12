@@ -56,12 +56,9 @@ namespace TheDepths.NPCs
 		public override void AI()
 		{
 			PraiseTheRelic = false;
-			for (int i = 0; i < Main.maxProjectiles; i++)
+			if (TheDepthsModSystem.AnyProjectiles(ModContent.ProjectileType<Projectiles.Chasme.GemforgeCutscene>()))
 			{
-				if (Main.projectile[i].active && Main.projectile[i].type == ModContent.ProjectileType<Projectiles.Chasme.GemforgeCutscene>())
-				{
-					PraiseTheRelic = true;
-				}
+				PraiseTheRelic = true;
 			}
 			if (PraiseTheRelic == true)
             {

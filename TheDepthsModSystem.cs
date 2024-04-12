@@ -100,6 +100,19 @@ namespace TheDepths
             Gemforge.RubyRelicIsOnForge = 1;
         }
 
+		public static bool AnyProjectiles(int Type)
+		{
+			for (int i = 0; i < Main.maxProjectiles; i++)
+			{
+				Projectile proj = Main.projectile[i];
+				if (proj.active && proj.type == Type)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
 		private static void TileGlowmaskList(TileDrawInfo drawData, int type, out Texture2D altGlowTexture, out Texture2D glowTexture, out Rectangle glowSourceRect, out Color glowColor)
 		{
 			glowTexture = null;

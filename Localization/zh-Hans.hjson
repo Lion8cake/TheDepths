@@ -1,0 +1,2133 @@
+Mods: {
+	TheDepths: {
+		GameTips: {
+			DepthsTip0: 一名未知的友好NPC被束缚在死渊中，其如同一颗水晶一般. 如果有办法净化他就好了. . .
+			DepthsTip1: 如果你正确的世界中挖的足够深的话，你最终就可能会进入死渊!
+			DepthsTip2: 击败暗影石的巨人猎渊魔像以永久改变世界.在玉石熔炉使用红玉圣物可能会召唤她...
+			DepthsTip3: 银汞是超级毒药，制作一颗水晶颅骨来免疫它的毒害
+			DepthsTip4: 要是不先喝水晶皮肤药水，就千万别掉进水银里!
+			DepthsTip5: 使用正确的装备，可以让你在水银中度过16秒的时间而不会产生任何后果!
+			DepthsTip6: 在与猎渊魔像战斗时，在死渊和地下之间将建立一道魔法屏障，穿过它便能够安全地退出战斗
+		}
+
+		common: {
+			Banner: 旗
+			Banner2: 附近的玩家针对以下情况获得奖励:
+		}
+
+		SetBonus: {
+			GeodeHelmet: 召唤4颗会造成20点伤害的晶岩石水晶
+			MercuryHelmet:
+				'''
+				增加3点防御
+				使水银无法污染你
+				'''
+			NightwoodHelmet:
+				'''
+				使水银足buff的持续时间翻倍
+				使来自水银的汞中毒debuff的持续时间减半
+				'''
+			QuartzArmor: 增加35%鞭子范围和攻速
+			OnyxRobeWizard:
+				'''
+				增加2点防御
+				增加18%魔法暴击率
+				'''
+			OnyxRobeMagic:
+				'''
+				增加3点防御
+				增加100点最大魔力值
+				'''
+			PetrifiedWoodHelmet: 降低10%所受伤害
+		}
+
+		Quest: {
+			Description: {
+				Chasmefish: 有个古老的传说，说有一条皇族鱼在日食升起时降生，并被诅咒于这个世界的死渊.我想让你找到这条鱼，这样我就能看到它到底有多强大
+				Relicarp: 以防你不知道，死渊里有一个崇拜宝石的神秘邪教. 他们在干什么我不知道，但是你想知道我知道的吗? 他们有一条神奇的鱼，和他们的特殊邪教的那种遗物长得一样，去帮我弄来，这样我就能知道把它放在锅里时会发生什么了
+				GlimmerDepthFish: 我在一层石英上玩时，突然一团石英块断了后掉进到了水银里，然后它长出鳍游走了. 我一直想尝尝石英的味道，所以帮我抓到这条鱼，这样的话我就能够第一个品尝它了
+			}
+
+			CaughtLocation: {
+				Chasmefish: 抓捕位置：洞穴
+				Relicarp: 抓捕位置：洞穴
+				GlimmerDepthFish: 抓捕位置：洞穴
+			}
+		}
+
+		Recipes.NearQuicksilver: 靠近水银
+
+		ShaleConfig: {
+			SlateBlock: 板岩块
+			ShaleBlock: 页岩块
+			SlateBricks: 板岩砖
+			ShaleBricks: 页岩砖
+			Slatestone: 板岩石
+			Shalestone: 页岩石
+		}
+
+		Bestiary: {
+			# Enemies
+			AlbinoBat: 一种稀有色素突变的受害种群，这种蝙蝠能在更深的洞穴系统中漫游，与周围的汞融为一体以生存
+			Archroma: 小粉的表亲，有着类似的密度，使得它们非常强大，它们会吃钱
+			CrystalKing: 一位地心法师的皇室国王，虽然不能行走，但可以像其他大多数法师一样瞬移
+			Ferroslime: 这种史莱姆可能看起来很扎人，但这只是它的铁磁流体尖峰而已，以使它表现得比平时更有威胁性
+			Geomancer: 忠实的邪教成员们对地心法术非常熟练.传说他们崇拜着一团活体的影焰存在体
+			GoldBat: 死渊中一种罕见的蝙蝠，被地心法师诅咒成了宝石般的生物.尽管它们的名字是这样，但它们实际上和黄玉的颜色相同
+			KingCoal: 他不是欢愉的古老之魂，他是水晶国王的对手兄弟，生于火焰的他将会竭尽全力把你打倒!
+			DepthsWorm: 一种由岩石和蓝玉构成，用水流过它的血管的蛇.它携带着一把与众不同的铲子
+			Shade: 在死渊漂流纯粹的黑暗存在体，拥有在空中自由漂浮的能力.一群的影子体会被称为暗群
+			ShadowBat: 这种半黑半翠绿的蝙蝠是在死渊中发现的更强大的蝙蝠变种，这是蝙蝠的影子还是影子做的蝙蝠?
+			ShadowSlime: 一种会在硬化的死渊游荡的纯黑史莱姆，被它击中后会让人眼花缭乱
+			EnchantedNightmareWorm: 随着时间推移，找到通往地下深处的蠕虫将会发现噩梦树林.被迫融入其中的它们继承了周围环境的自然紫色调
+			QuartzCrawler: 一种外壳看起来和石英团十分相像的黑色蜗牛.对于浸泡在水银中的鱼来说，这是一种特别美味的食物
+			AlbinoRat: 一种有着稀有色素的老鼠，试图与周围的石英和汞融为一体.你到底是怎么用那种东西钓到鱼的?
+			Chasme: 一位巨匠制造的一块纯净页岩.尽管被称为猎渊魔像，但这只是她在死渊破坏和防护的工具而已.          猎渊魔像很强大，但她从来都不想战斗.也许这一切都只是一场误会
+			ChasmeHands: 猎渊魔像制造的页岩化身，以帮助塑造你今天所看到的死渊.这两只手和鹿角怪的手没有关系.           你摧毁了她的家，这都是为了古代灵魂们的自由.幸福是有代价的
+			ChasmeSoul: 猎渊魔像降生于日全食，诅咒她变成你所看到的她的样貌.        有时我在想，她的诅咒会不会在某一天被打破
+			CrystalBoundTaxCollector: 由水晶的残骸形成的一位老人，他生活在猎渊魔所带来的混乱之中.在数年后，他的野心将其引诱至深处，在那里，他被猎渊魔的地心法师的邪教仪式转化成了石英
+		}
+
+		PlayerDeathReason: {
+			Gemforge: {
+				0: "{0} 试图在纯净之光中召唤邪教"
+				1: "{0} 将宝石锻造炉从它的家中移开了"
+				2: "{0} 试图在地表烧毁圣物"
+			}
+
+			MercuryPoisoning: {
+				0: "{0} 无法找到治愈方法"
+				1: "{0} 死于疾病"
+				2: "{0} 喝了一个灯泡"
+				3: "{0} 舔了一块特殊的岩石"
+			}
+
+			ChasmeHead: {
+				0: "{0} 被猎渊魔像所吞噬."
+				1: "{0} 倒在了阴影之下."
+				2: "{0} 正中了下怀."
+			}
+		}
+
+		Tiles: {
+			ArqueriteOre.MapEntry: 银汞矿
+			BlackTorch.MapEntry: 火把
+			CoreBuilderTile.MapEntry: 星核构造炉
+			DepthsBanners.MapEntry: 旗帜
+			DepthsMusicBox.MapEntry: 音乐盒
+			DepthsPot.MapEntry: 罐子
+			EmberUpdated.MapEntry: 余烬
+			Gemforge.MapEntry: 宝石锻造炉
+			GemlockTile.MapEntry: 宝石锁物块
+			GeoTorch.MapEntry: 火把
+			LargeCrystal.MapEntry: 大水晶
+			OnyxShalestone.MapEntry: 黑玛瑙
+			Quartz.MapEntry: 石英
+			QuartzChair.MapEntry: 椅
+			QuartzDoorClosed.MapEntry: 门
+			QuartzDoorOpen.MapEntry: 门
+			QuartzTable.MapEntry: 桌子
+			QuartzWorkbench.MapEntry: 工作台
+			QuicksilverDropletSource.MapEntry: 水银滴
+			ShadowShrub.MapEntry: 矮影树
+			Shalestone.MapEntry: 页岩石
+			ShalestoneAmethyst.MapEntry: 紫晶
+			ShalestoneDiamond.MapEntry: 钻石
+			ShalestoneEmerald.MapEntry: 翡翠
+			ShalestoneRuby.MapEntry: 红玉
+			ShalestoneSapphire.MapEntry: 蓝玉
+			ShalestoneTopaz.MapEntry: 黄玉
+			PetrifiedSapling.MapEntry: 石化树苗
+			NightSapling.MapEntry: 暗夜木树苗
+			QuicksilverSensor.MapEntry: 液体感应器(水银)
+			OtherPortal.MapEntry: 另一个传送门
+			NightwoodBath.MapEntry: 暗夜木浴缸
+			NightwoodBed.MapEntry: 暗夜木床
+			NightwoodBookcase.MapEntry: 暗夜木书架
+			NightwoodCandelabra.MapEntry: 暗夜木烛台
+			NightwoodCandle.MapEntry: 暗夜木蜡烛
+			NightwoodChair.MapEntry: 暗夜木椅
+			NightwoodChandelier.MapEntry: 暗夜木吊灯
+			NightwoodChest.MapEntry: 暗夜木箱
+			NightwoodClock.MapEntry: 暗夜木钟
+			NightwoodDoorClosed.MapEntry: 暗夜木门关闭
+			NightwoodDoorOpen.MapEntry: 暗夜木门开启
+			NightwoodDresser.MapEntry: 暗夜木梳妆台
+			NightwoodLamp.MapEntry: 暗夜木灯
+			NightwoodLantern.MapEntry: 暗夜木灯笼
+			NightwoodPiano.MapEntry: 暗夜木钢琴
+			NightwoodSink.MapEntry: 暗夜木水槽
+			NightwoodSofa.MapEntry: 暗夜木沙发
+			NightwoodTable.MapEntry: 暗夜木桌
+			NightwoodToilet.MapEntry: 暗夜木马桶
+			NightwoodWorkbench.MapEntry: 暗夜木工作台
+			QuartzToilet.MapEntry: 石英马桶
+			QuartzSofa.MapEntry: 石英沙发
+			QuartzSink.MapEntry: 石英水槽
+			QuartzPiano.MapEntry: 石英钢琴
+			QuartzLantern.MapEntry: 石英灯笼
+			QuartzLamp.MapEntry: 石英灯
+			QuartzDresser.MapEntry: 石英梳妆台
+			QuartzClock.MapEntry: 石英钟
+			QuartzChest.MapEntry: 石英箱
+			QuartzChandelier.MapEntry: 石英吊灯
+			QuartzCandle.MapEntry: 石英蜡烛
+			QuartzCandelabra.MapEntry: 石英烛台
+			QuartzBookcase.MapEntry: 石英书架
+			QuartzBed.MapEntry: 石英床
+			QuartzBath.MapEntry: 石英浴缸
+			DepthsVanityBanners.MapEntry: 死渊装饰旗
+			DepthsOtherworldlyMusicBox.MapEntry: 音乐盒
+			AltarOfGems.MapEntry: 宝石祭坛
+			ForTheSakeOfMakingGadgets.MapEntry: 为了制作一些小玩意
+			ImPurrSonation.MapEntry: 我的不洁呼噜和声
+			Mercury.MapEntry: 水星
+			MusiciansBestFriend.MapEntry: 音乐家最好的朋友
+			ChaosCat.MapEntry: 混沌猫咪
+			DONOTDRINK.MapEntry: 请 勿 饮 用
+			WaterGeyser.MapEntry: 水喷泉
+			PlacedGems.MapEntry: 宝石
+			PlacedOnyx.MapEntry: 黑玛瑙
+			OnyxStone.MapEntry: 黑玛瑙石
+			OnyxGemtree.MapEntry: 黑玛瑙宝石树
+			PetrifiedTree.MapEntry: 石化树
+			TheUnknownDepthsBelow.MapEntry: 未知深渊的下方
+			NightwoodTree.MapEntry: 暗夜木树
+			NightwoodTrappedChest.MapEntry: 暗夜木箱
+			QuartzTrappedChest.MapEntry: 石英箱
+			HangingShadowShrub.MapEntry: 吊挂矮影树
+			PetrifiedWoodBath.MapEntry: 石化木浴缸
+			PetrifiedWoodBookcase.MapEntry: 石化木书架
+			PetrifiedWoodCandelabra.MapEntry: 石化木烛台
+			PetrifiedWoodCandle.MapEntry: 石化木蜡烛
+			PetrifiedWoodChair.MapEntry: 石化木椅
+			PetrifiedWoodChandelier.MapEntry: 石化木吊灯
+			PetrifiedWoodChest.MapEntry: 石化木箱
+			PetrifiedWoodClock.MapEntry: 石化木钟
+			PetrifiedWoodDresser.MapEntry: 石化木梳妆台
+			PetrifiedWoodLamp.MapEntry: 石化木灯
+			PetrifiedWoodLantern.MapEntry: 石化木灯笼
+			PetrifiedWoodBedShaleSheetsAreImpossible.MapEntry: 石化木床
+			PetrifiedWoodPiano.MapEntry: 石化木钢琴
+			PetrifiedWoodSink.MapEntry: 石化木水槽
+			PetrifiedWoodSofa.MapEntry: 石化木沙发
+			PetrifiedWoodTable.MapEntry: 石化木桌
+			PetrifiedWoodToilet.MapEntry: 石化木马桶
+			PetrifiedWoodTrappedChest.MapEntry: 受困石化木箱
+			PetrifiedWoodWorkbench.MapEntry: 石化木工作台
+		}
+
+		Buffs: {
+			CrystalSkin: {
+				DisplayName: 水晶皮肤
+				Description: 对水银免疫
+			}
+
+			FlaskofMercury: {
+				DisplayName: 武器灌注：水银
+				Description: 近战攻击会用水银使敌人沸腾
+			}
+
+			FreezingWater: {
+				DisplayName: 冷冻水
+				Description: 移动被完全禁止
+			}
+
+			LivingShadowSummonBuff: {
+				DisplayName: 影子
+				Description: 一个和你相似的人物将为你而战
+			}
+
+			MercuryBoiling: {
+				DisplayName: 汞中毒
+				Description: 缓慢流失生命值
+			}
+
+			MercuryFooting: {
+				DisplayName: 水银足
+				Description: 增加15%移动速度
+			}
+
+			MercuryPoisoning: {
+				DisplayName: 汞辐射
+				Description: 流失生命值并将降低移动速度
+			}
+
+			RelicsCurse: {
+				DisplayName: 圣物之咒
+				Description: 无法使用更多圣物
+			}
+
+			SilverSphereBuff: {
+				DisplayName: 白银珠
+				Description: 四颗白银珠将环绕你
+			}
+
+			ShadePetBuff: {
+				DisplayName: 影子体宠物
+				Description: '''"一个影子体将和你漂浮在一起!"'''
+			}
+
+			ShadowCatBuff: {
+				DisplayName: 暗影猫咪
+				Description: 这是影子猫咪，还是猫咪的影子?
+			}
+
+			PurpleflameJellyBuff: {
+				DisplayName: 紫焰水母
+				Description: 一只独特但稀有且是被动物种的水母，生活在水银中
+			}
+
+			MercuryContagion: {
+				DisplayName: 汞传染
+				Description: 每当敌人相互触碰时，疾病就会传染
+			}
+
+			PhantomFirecartBuff.DisplayName: 矿车
+			OnyxMinecartBuff.DisplayName: 矿车
+
+			NightmareHorseBuff: {
+				DisplayName: 梦魇马
+				Description: 一匹看上去很可怕的页岩马，由猎渊魔亲手铸造
+			}
+
+			BuffofaThousandYears: {
+				DisplayName: 迷你猎渊魔
+				Description: 迷你猎渊魔将用她的双手为你而战
+			}
+		}
+
+		Items: {
+			AmalgamAmulet: {
+				DisplayName: 汞合金护符
+				Tooltip: 使你对水银免疫4秒
+			}
+
+			AquaGlove: {
+				DisplayName: 水之手套
+				Tooltip:
+					'''
+					增加近战击退力，且攻击时会造成冷冻水debuff
+					增加12%近战攻速和伤害
+					使近战武器可自动挥击
+					'''
+			}
+
+			AquaStone: {
+				DisplayName: 水之石
+				Tooltip: 攻击时会造成冷冻水debuff
+			}
+
+			CrystalShield: {
+				DisplayName: 水晶盾
+				Tooltip:
+					'''
+					所有弹幕的伤害减半
+					将大多数弹幕反弹至攻击者身上
+					对汞辐射debuff免疫
+					'''
+			}
+
+			CrystalSkull: {
+				DisplayName: 水晶颅骨
+				Tooltip: 使你对汞辐射debuff免疫
+			}
+
+			CrystalWaterWalkingBoots: {
+				DisplayName: 结晶水上漂靴
+				Tooltip:
+					'''
+					提供在水和蜂蜜上行走的能力
+					使你对汞辐射debuff免疫
+					'''
+			}
+
+			LodeStone: {
+				DisplayName: 矿脉石
+				Tooltip: 增加物品拾取范围
+			}
+
+			QuickSilverSurfboard: {
+				DisplayName: 水银冲浪板
+				Tooltip: 可以让拥有者漂浮数秒
+			}
+
+			SanctusShield: {
+				DisplayName: 圣神护盾
+				Tooltip:
+					'''
+					使你对击退和汞辐射debuff免疫
+					所有弹幕的伤害减半
+					将大多数弹幕反弹至攻击者身上
+					使你对大多数debuff免疫
+					'''
+			}
+
+			SilverSlippers: {
+				DisplayName: 白银短靴
+				Tooltip:
+					'''
+					提供在水，蜂蜜，岩浆和水银上行走的能力
+					使你对汞辐射debuff免疫
+					使你额外对水银免疫4秒
+					'''
+			}
+
+			StoneRose: {
+				DisplayName: 岩石玫瑰
+				Tooltip: 降低汞类debuff的伤害
+			}
+
+			CharredCrown: {
+				DisplayName: 烧焦皇冠
+				Tooltip: 增加18%魔法伤害
+			}
+
+			CrystalCrown: {
+				DisplayName: 水晶皇冠
+				Tooltip: 增加20%魔法暴击率
+			}
+
+			GeodeChestplate: {
+				DisplayName: 晶岩石胸甲
+				Tooltip: +1召唤栏
+			}
+
+			GeodeHelmet: {
+				DisplayName: 晶岩石头盔
+				Tooltip: +1召唤栏
+			}
+
+			GeodeLeggings: {
+				DisplayName: 晶岩石护腿
+				Tooltip: +1召唤栏
+			}
+
+			Geode: {
+				DisplayName: 晶岩石
+				Tooltip: ""
+			}
+
+			MercuryChestplate: {
+				DisplayName: 水银胸甲
+				Tooltip: 增加19%近战伤害
+			}
+
+			MercuryGreaves: {
+				DisplayName: 水银护胫
+				Tooltip: 增加10%移动速度
+			}
+
+			MercuryHelmet: {
+				DisplayName: 水银头盔
+				Tooltip: 增加6%近战暴击率
+			}
+
+			OnyxRobe: {
+				DisplayName: 黑玛瑙长袍
+				Tooltip:
+					'''
+					降低22%魔力消耗
+					增加60点最大魔力值
+					'''
+			}
+
+			PurplePlumbersHat: {
+				DisplayName: 紫色水管工帽
+				Tooltip: ""
+			}
+
+			PurplePlumbersPants: {
+				DisplayName: 紫水管工裤
+				Tooltip: ""
+			}
+
+			PurplePlumbersShirt: {
+				DisplayName: 紫水管工衬衫
+				Tooltip: ""
+			}
+
+			AchromaBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.Archroma.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.Archroma.DisplayName}"
+			}
+
+			AlbinoBatBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.AlbinoBat.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.AlbinoBat.DisplayName}"
+			}
+
+			CrystalKingBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.CrystalKing.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.CrystalKing.DisplayName}"
+			}
+
+			FerroslimeBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.Ferroslime.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.Ferroslime.DisplayName}"
+			}
+
+			GeomancerBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.Geomancer.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.Geomancer.DisplayName}"
+			}
+
+			GoldBatBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.GoldBat.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.GoldBat.DisplayName}"
+			}
+
+			KingCoalBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.KingCoal.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.KingCoal.DisplayName}"
+			}
+
+			SapphireSerpentBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.DepthsWorm.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.DepthsWorm.DisplayName}"
+			}
+
+			ShadeBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.Shade.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.Shade.DisplayName}"
+			}
+
+			ShadowBatBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.ShadowBat.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.ShadowBat.DisplayName}"
+			}
+
+			ShadowSlimeBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.ShadowSlime.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.ShadowSlime.DisplayName}"
+			}
+
+			CrystalSkinPotion: {
+				DisplayName: 水晶皮肤药水
+				Tooltip: 对水银提供免疫
+			}
+
+			FlaskofMercury: {
+				DisplayName: 水银烧瓶
+				Tooltip: 近战攻击会用水银使敌人沸腾
+			}
+
+			LargeOnyx: {
+				DisplayName: 大黑玛瑙
+				Tooltip: 用于宝石争夺战.它会在你死亡后掉落
+			}
+
+			OnyxHook: {
+				DisplayName: 黑玛瑙钩
+				Tooltip: ""
+			}
+
+			Onyx: {
+				DisplayName: 黑玛瑙
+				Tooltip: ""
+			}
+
+			ArqueriteBar: {
+				DisplayName: 银汞锭
+				Tooltip: "'摸起来非常恶心'"
+			}
+
+			ArqueriteBricks: {
+				DisplayName: 银汞砖
+				Tooltip: ""
+			}
+
+			ArqueriteBrickWall: {
+				DisplayName: 银汞砖墙
+				Tooltip: ""
+			}
+
+			ArqueriteOre: {
+				DisplayName: 银汞矿
+				Tooltip: ""
+			}
+
+			BlackGemspark: {
+				DisplayName: 黑色晶莹宝石块
+				Tooltip: ""
+			}
+
+			BlackTorch: {
+				DisplayName: 黑火把
+				Tooltip: ""
+			}
+
+			CoreBuilder: {
+				DisplayName: 星核构造炉
+				Tooltip:
+					'''
+					可使你将地狱的材料转化为死渊的替代物，反之依旧如此
+					'一个传说中的锻造炉，传闻它制造了世界的核心'
+					'''
+			}
+
+			DepthsMusicBox: {
+				DisplayName: 音乐盒 (死渊)
+				Tooltip: ""
+			}
+
+			DiamondDust: {
+				DisplayName: 钻石尘
+				Tooltip: ""
+			}
+
+			Ember: {
+				DisplayName: 余烬
+				Tooltip: ""
+			}
+
+			Gemforge: {
+				DisplayName: 宝石锻造炉
+				Tooltip: ""
+			}
+
+			GeoTorch: {
+				DisplayName: 地心火把
+				Tooltip: ""
+			}
+
+			LargeCrystal: {
+				DisplayName: 大水晶
+				Tooltip: ""
+			}
+
+			LivingFog: {
+				DisplayName: 活雾块
+				Tooltip: ""
+			}
+
+			MagicQuicksilverDropper: {
+				DisplayName: 魔法水银滴管
+				Tooltip: ""
+			}
+
+			OnyxGemLock: {
+				DisplayName: 黑玛瑙宝石锁
+				Tooltip: 右键点击可放置或移除大黑玛瑙
+			}
+
+			PetrifiedWood: {
+				DisplayName: 石化木
+				Tooltip: ""
+			}
+
+			Quartz: {
+				DisplayName: 石英
+				Tooltip: ""
+			}
+
+			QuartzBlock: {
+				DisplayName: 石英块
+				Tooltip: ""
+			}
+
+			QuartzBricks: {
+				DisplayName: 石英砖
+				Tooltip: ""
+			}
+
+			QuartzBrickWall: {
+				DisplayName: 石英砖墙
+				Tooltip: ""
+			}
+
+			QuartzChair: {
+				DisplayName: 石英椅
+				Tooltip: ""
+			}
+
+			QuartzDoor: {
+				DisplayName: 石英门
+				Tooltip: ""
+			}
+
+			QuartzPillar: {
+				DisplayName: 石英柱
+				Tooltip: ""
+			}
+
+			QuartzPlatform: {
+				DisplayName: 石英平台
+				Tooltip: ""
+			}
+
+			QuartzTable: {
+				DisplayName: 石英桌
+				Tooltip: ""
+			}
+
+			QuartzWorkbench: {
+				DisplayName: 石英工作台
+				Tooltip: ""
+			}
+
+			ShadowBrick: {
+				DisplayName: 暗影砖
+				Tooltip: ""
+			}
+
+			ShadowShrubPlanterBox: {
+				DisplayName: 矮影树种植盆
+				Tooltip: ""
+			}
+
+			ShadowShrubSeeds: {
+				DisplayName: 矮影树种子
+				Tooltip: ""
+			}
+
+			ShadowShrub: {
+				DisplayName: 矮影树
+				Tooltip: ""
+			}
+
+			ShaleBlock.Tooltip: ""
+			ShaleBricks.Tooltip: ""
+			Shalestone.Tooltip: ""
+
+			SilverfallBlock: {
+				DisplayName: 水银瀑布块
+				Tooltip: ""
+			}
+
+			SilverfallWall: {
+				DisplayName: 水银瀑布墙
+				Tooltip: ""
+			}
+
+			RubyRelic: {
+				DisplayName: 红玉圣物
+				Tooltip:
+					'''
+					'你有听到什么吗?'
+					也许把它放到宝石锻造炉上不是个好主意
+					'''
+			}
+
+			SilverSpherePotion: {
+				DisplayName: 白银珠药水
+				Tooltip: 召唤四颗白银珠将环绕玩家并对敌人造成伤害
+			}
+
+			BlackPhaseblade: {
+				DisplayName: 黑陨石光剑
+				Tooltip: ""
+			}
+
+			BlackPhasesaber: {
+				DisplayName: 黑晶光刃
+				Tooltip: ""
+			}
+
+			BlueSphere: {
+				DisplayName: 水蓝球
+				Tooltip: 全部聚集起来!
+			}
+
+			DiamondArrow: {
+				DisplayName: 钻石箭
+				Tooltip: 撞击时会向随机方向射出3颗水晶
+			}
+
+			DiamondBolt: {
+				DisplayName: 钻石矢
+				Tooltip: ""
+			}
+
+			LivingShadowStaff: {
+				DisplayName: 活体影子杖
+				Tooltip: 召唤一个影子为你而战
+			}
+
+			MercuryHamaxe: {
+				DisplayName: 水银锤斧
+				Tooltip: ""
+			}
+
+			MercuryPickaxe: {
+				DisplayName: 水银镐
+				Tooltip: ""
+			}
+
+			Mercury: {
+				DisplayName: 水星
+				Tooltip: "'L. Cake'"
+			}
+
+			NightFury: {
+				DisplayName: 暗夜之怒
+				Tooltip: ""
+			}
+
+			OnyxSepter: {
+				DisplayName: 黑玛瑙权杖
+				Tooltip: ""
+			}
+
+			POWHammer: {
+				DisplayName: 破邪锤
+				Tooltip: "'有强大的敲击能力'"
+			}
+
+			QuartzCannon: {
+				DisplayName: 石英加农炮
+				Tooltip: ""
+			}
+
+			RubyBolt: {
+				DisplayName: 红玉矢
+				Tooltip: ""
+			}
+
+			SapphireShovel: {
+				DisplayName: 蓝玉铲
+				Tooltip: 使敌人瘫痪数秒
+			}
+
+			ShadeBlade: {
+				DisplayName: 影之剑
+				Tooltip: ""
+			}
+
+			Shaderang: {
+				DisplayName: 影之回旋镖
+				Tooltip: ""
+			}
+
+			ShadowClaw: {
+				DisplayName: 暗影爪
+				Tooltip: 会释放暗能量
+			}
+
+			ShadowSphere: {
+				DisplayName: 暗影球
+				Tooltip: ""
+			}
+
+			Silverado: {
+				DisplayName: 白银暴徒
+				Tooltip: 射出强大且高速的子弹
+			}
+
+			SilverStar: {
+				DisplayName: 白银之星
+				Tooltip: ""
+			}
+
+			Skyfall: {
+				DisplayName: 天坠
+				Tooltip: 会从球中落下水银雨
+			}
+
+			Steelocanth: {
+				DisplayName: 钢铁长棘鱼
+				Tooltip: ""
+			}
+
+			WhiteLightning: {
+				DisplayName: 白色闪电杖
+				Tooltip: 召唤3颗会互相连接的闪电球
+			}
+
+			Terminex: {
+				DisplayName: 边界之末
+				Tooltip: ""
+			}
+
+			ShadePetItem: {
+				DisplayName: 奶酪饼干
+				Tooltip: 召唤一个影子体宠物跟随你
+			}
+
+			GlitterBlock: {
+				DisplayName: 闪耀块
+				Tooltip: ""
+			}
+
+			QuicksilverBucket: {
+				DisplayName: 水银桶
+				Tooltip:
+					'''
+					内含少量的水银
+					可倒出
+					'''
+			}
+
+			CoreGlobe: {
+				DisplayName: 星核球
+				Tooltip:
+					'''
+					将其投出，来改变星核的外观!
+					'该换换风景了'
+					'''
+			}
+
+			NightmareSeeds: {
+				DisplayName: 噩梦种子
+				Tooltip: ""
+			}
+
+			QuicksilverSensor: {
+				DisplayName: 液体感应器(水银)
+				Tooltip: 当被水银占据时激活，否则停用
+			}
+
+			QuicksilverBomb: {
+				DisplayName: 水银炸弹
+				Tooltip: 一颗会小爆炸并散播水银的炸弹
+			}
+
+			QuicksilverRocket: {
+				DisplayName: 水银火箭
+				Tooltip: 撞击时会散播水银
+			}
+
+			QuartzCrate: {
+				DisplayName: 石英匣
+				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+			}
+
+			QuartzFeeder: {
+				DisplayName: 石英吞食鱼
+				Tooltip: ""
+			}
+
+			ShadowFightingFish: {
+				DisplayName: 暗影斗鱼
+				Tooltip: ""
+			}
+
+			SilverLiner: {
+				DisplayName: 白银线竿
+				Tooltip: 可在水银中钓鱼
+			}
+
+			ArqueriteCrate: {
+				DisplayName: 银汞匣
+				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+			}
+
+			QuicksilverproofFishingHook: {
+				DisplayName: 防水银钓钩
+				Tooltip: 可在水银中钓鱼
+			}
+
+			QuartzLockBox: {
+				DisplayName: 石英锁盒
+				Tooltip:
+					'''
+					{$CommonItemTooltip.RightClickToOpen}
+					需要暗影钥匙
+					'''
+			}
+
+			FluorescentLightBulb: {
+				DisplayName: 荧光灯泡
+				Tooltip: ""
+			}
+
+			GiantFluorescentLightBulb: {
+				DisplayName: 巨型荧光灯泡
+				Tooltip: "'它太重了，不能挂在任何的天花板上'"
+			}
+
+			OtherPortal: {
+				DisplayName: 另一个传送门
+				Tooltip:
+					'''
+					'只需消耗一颗钻石'
+					'L. Cake'
+					'''
+			}
+
+			PottedMercuryTendrils: {
+				DisplayName: 水银卷须盆栽
+				Tooltip: ""
+			}
+
+			PottedNightmarePalm: {
+				DisplayName: 噩梦棕榈盆栽
+				Tooltip: ""
+			}
+
+			PottedNightterrorBush: {
+				DisplayName: 夜惊灌木盆栽
+				Tooltip: ""
+			}
+
+			PottedPurplestarBrambles: {
+				DisplayName: 紫星荆棘盆栽
+				Tooltip: ""
+			}
+
+			PottedShadowflameBulb: {
+				DisplayName: 影焰球茎盆栽
+				Tooltip: ""
+			}
+
+			ShadowFightingFishBowl: {
+				DisplayName: 暗影斗鱼缸
+				Tooltip: "'我不觉得你会想让一盆水银在你头上'"
+			}
+
+			ShadowflameEmberedTreads: {
+				DisplayName: 暗影焰余烬靴
+				Tooltip: "'称它们为余烬是不是点太大了，对吧?'"
+			}
+
+			NightmareFlareTreads: {
+				DisplayName: 噩梦闪耀靴
+				Tooltip:
+					'''
+					可飞行
+					穿戴者能以超快速度奔跑
+					行走时会散发出暗影焰余烬
+					'''
+			}
+
+			QuicksilverproofTackleBag: {
+				DisplayName: 防水银渔具袋
+				Tooltip:
+					'''
+					鱼线永不断裂，降低诱饵消耗率，增加10点渔力
+					可在水银中钓鱼
+					'''
+			}
+
+			PurpleflameNecklace: {
+				DisplayName: 紫焰项链
+				Tooltip:
+					'''
+					召唤一只可骑乘的紫焰水母
+					'他不会电人的，对吗?'
+					'''
+			}
+
+			EnchantedNightmareWorm: {
+				DisplayName: 噩梦鼻涕虫
+				Tooltip: ""
+			}
+
+			QuartzCrawler: {
+				DisplayName: 石英爬虫
+				Tooltip: ""
+			}
+
+			AlbinoRat: {
+				DisplayName: 白化老鼠
+				Tooltip: ""
+			}
+
+			QuicksilverproofBugNet: {
+				DisplayName: 防水银虫网
+				Tooltip: "'当事情处理起来变得有点太毒辣时使用'"
+			}
+
+			AlbinoRatCage: {
+				DisplayName: 白化老鼠笼
+				Tooltip: ""
+			}
+
+			EnchantedNightmareWormCage: {
+				DisplayName: 噩梦鼻涕虫笼
+				Tooltip: ""
+			}
+
+			QuartzCrawlerCage: {
+				DisplayName: 石英爬虫笼
+				Tooltip: ""
+			}
+
+			GeodeLazerPointer: {
+				DisplayName: 晶岩石激光笔
+				Tooltip:
+					'''
+					召唤一只暗影猫咪
+					'影子会走路吗?'
+					'''
+			}
+
+			Chasmefish: {
+				DisplayName: 猎渊鱼
+				Tooltip: 抓捕位置：洞穴
+			}
+
+			GlimmerDepthFish: {
+				DisplayName: 闪耀深渊鱼
+				Tooltip: 抓捕位置：洞穴
+			}
+
+			Relicarp: {
+				DisplayName: 圣物鲤鱼
+				Tooltip: 抓捕位置：洞穴
+			}
+
+			ShalestoneConch: {
+				DisplayName: 页岩石海螺
+				Tooltip: 如果你仔细听，你就能听到仪式咏唱声
+			}
+
+			ShellPhoneDepths: {
+				DisplayName: 贝壳电话（死渊）
+				Tooltip:
+					'''
+					显示所有信息
+					允许你随意前往死渊
+					右键点击以切换目的地
+					'如果你仔细听，你就能听到你的汽车保修信息'
+					'''
+			}
+
+			AncientShadowBrick: {
+				DisplayName: 远古暗影砖
+				Tooltip: ""
+			}
+
+			NightWood: {
+				DisplayName: 暗夜木
+				Tooltip: ""
+			}
+
+			NightwoodBath: {
+				DisplayName: 暗夜木浴缸
+				Tooltip: ""
+			}
+
+			NightwoodBed: {
+				DisplayName: 暗夜木床
+				Tooltip: ""
+			}
+
+			NightwoodBookcase: {
+				DisplayName: 暗夜木书架
+				Tooltip: ""
+			}
+
+			NightwoodCandelabra: {
+				DisplayName: 暗夜木烛台
+				Tooltip: ""
+			}
+
+			NightwoodCandle: {
+				DisplayName: 暗夜木蜡烛
+				Tooltip: ""
+			}
+
+			NightwoodChair: {
+				DisplayName: 暗夜木椅
+				Tooltip: ""
+			}
+
+			NightwoodChandelier: {
+				DisplayName: 暗夜木吊灯
+				Tooltip: ""
+			}
+
+			NightwoodChest: {
+				DisplayName: 暗夜木箱
+				Tooltip: ""
+			}
+
+			NightwoodClock: {
+				DisplayName: 暗夜木钟
+				Tooltip: ""
+			}
+
+			NightwoodDoor: {
+				DisplayName: 暗夜木门
+				Tooltip: ""
+			}
+
+			NightwoodDresser: {
+				DisplayName: 暗夜木梳妆台
+				Tooltip: ""
+			}
+
+			NightwoodLamp: {
+				DisplayName: 暗夜木灯
+				Tooltip: ""
+			}
+
+			NightwoodLantern: {
+				DisplayName: 暗夜木灯笼
+				Tooltip: ""
+			}
+
+			NightwoodPiano: {
+				DisplayName: 暗夜木钢琴
+				Tooltip: ""
+			}
+
+			NightwoodPlatform: {
+				DisplayName: 暗夜木平台
+				Tooltip: ""
+			}
+
+			NightwoodSink: {
+				DisplayName: 暗夜木水槽
+				Tooltip: ""
+			}
+
+			NightwoodSofa: {
+				DisplayName: 暗夜木沙发
+				Tooltip: ""
+			}
+
+			NightwoodTable: {
+				DisplayName: 暗夜木桌
+				Tooltip: ""
+			}
+
+			NightwoodToilet: {
+				DisplayName: 暗夜木马桶
+				Tooltip: ""
+			}
+
+			NightwoodWorkbench: {
+				DisplayName: 暗夜木工作台
+				Tooltip: ""
+			}
+
+			NightwoodWall: {
+				DisplayName: 暗夜木墙
+				Tooltip: ""
+			}
+
+			ChasmeBag: {
+				DisplayName: 宝藏袋 (猎渊魔像)
+				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+			}
+
+			ChasmeSoulMask: {
+				DisplayName: 猎渊魔像灵魂面具
+				Tooltip: ""
+			}
+
+			ShadowChasmeMask: {
+				DisplayName: 暗影猎渊魔像面具
+				Tooltip: ""
+			}
+
+			ChasmeTrophy: {
+				DisplayName: 猎渊魔像纪念章
+				Tooltip: ""
+			}
+
+			ChasmeMusicBox: {
+				DisplayName: 音乐盒 (猎渊魔像)
+				Tooltip: ""
+			}
+
+			ChasmeRelic: {
+				DisplayName: 猎渊魔像圣物
+				Tooltip: ""
+			}
+
+			PhantomFirecart: {
+				DisplayName: 地心法师采矿车
+				Tooltip: 使你额外对水银免疫4秒
+			}
+
+			QuartzCandelabra: {
+				Tooltip: ""
+				DisplayName: 石英烛台
+			}
+
+			QuartzBookcase: {
+				Tooltip: ""
+				DisplayName: 石英书架
+			}
+
+			QuartzBed: {
+				Tooltip: ""
+				DisplayName: 石英床
+			}
+
+			QuartzBath: {
+				Tooltip: ""
+				DisplayName: 石英浴缸
+			}
+
+			QuartzCandle: {
+				DisplayName: 石英蜡烛
+				Tooltip: ""
+			}
+
+			QuartzChandelier: {
+				DisplayName: 石英吊灯
+				Tooltip: ""
+			}
+
+			QuartzChest: {
+				DisplayName: 石英箱
+				Tooltip: ""
+			}
+
+			QuartzClock: {
+				DisplayName: 石英钟
+				Tooltip: ""
+			}
+
+			QuartzDresser: {
+				DisplayName: 石英梳妆台
+				Tooltip: ""
+			}
+
+			QuartzLamp: {
+				DisplayName: 石英灯
+				Tooltip: ""
+			}
+
+			QuartzLantern: {
+				DisplayName: 石英灯笼
+				Tooltip: ""
+			}
+
+			QuartzPiano: {
+				DisplayName: 石英钢琴
+				Tooltip: ""
+			}
+
+			QuartzSink: {
+				DisplayName: 石英水槽
+				Tooltip: ""
+			}
+
+			QuartzSofa: {
+				DisplayName: 石英沙发
+				Tooltip: ""
+			}
+
+			QuartzToilet: {
+				DisplayName: 石英马桶
+				Tooltip: ""
+			}
+
+			QuartzVase: {
+				DisplayName: 石英花瓶
+				Tooltip: ""
+			}
+
+			GemforgeBanner: {
+				DisplayName: 宝石锻造炉旗
+				Tooltip: ""
+			}
+
+			GlowingQuicksilverBanner: {
+				DisplayName: 辉光水银旗
+				Tooltip: ""
+			}
+
+			LostHeartBanner: {
+				DisplayName: 迷失之心旗
+				Tooltip: ""
+			}
+
+			QuartzStackBanner: {
+				DisplayName: 石英堆旗
+				Tooltip: ""
+			}
+
+			RackedCollectionBanner: {
+				DisplayName: 痛苦聚集旗
+				Tooltip: ""
+			}
+
+			RelicBanner: {
+				DisplayName: 圣物旗
+				Tooltip: ""
+			}
+
+			SwordOfTheCavesBanner: {
+				DisplayName: 洞窟之剑旗
+				Tooltip: ""
+			}
+
+			NightwoodFence: {
+				DisplayName: 暗夜木栅栏
+				Tooltip: ""
+			}
+
+			NightwoodSword: {
+				Tooltip: ""
+				DisplayName: 暗夜木剑
+			}
+
+			NightwoodHammer: {
+				DisplayName: 暗夜木锤
+				Tooltip: ""
+			}
+
+			NightwoodBow: {
+				Tooltip: ""
+				DisplayName: 暗夜木弓
+			}
+
+			NightwoodHelmet: {
+				Tooltip: ""
+				DisplayName: 暗夜木头盔
+			}
+
+			NightwoodGreaves: {
+				Tooltip: ""
+				DisplayName: 暗夜木护胫
+			}
+
+			NightwoodBreastplate: {
+				Tooltip: ""
+				DisplayName: 暗夜木胸甲
+			}
+
+			Ciamito: {
+				Tooltip: "{$CommonItemTooltip.MinorStats}"
+				DisplayName: 黄晶果
+			}
+
+			BlackOlive: {
+				Tooltip: "{$CommonItemTooltip.MinorStats}"
+				DisplayName: 黑橄榄
+			}
+
+			DepthsOtherworldlyMusicBox: {
+				DisplayName: 异界音乐盒 (死渊)
+				Tooltip: ""
+			}
+
+			AltarOfGems: {
+				DisplayName: 宝石祭坛
+				Tooltip: "'L. Cake'"
+			}
+
+			ForTheSakeOfMakingGadgets: {
+				DisplayName: 为了制作一些小玩意
+				Tooltip: "'L. Cake'"
+			}
+
+			ImPurrSonation: {
+				DisplayName: 我的不洁呼噜和声
+				Tooltip: "'L. Cake & W. Sephi'"
+			}
+
+			MusiciansBestFriend: {
+				DisplayName: 音乐家最好的朋友
+				Tooltip: "'L. Cake'"
+			}
+
+			ChaosCat: {
+				DisplayName: 混沌猫咪
+				Tooltip: "'L. Cake & B. Cat'"
+			}
+
+			DONOTDRINK: {
+				DisplayName: 请勿饮用
+				Tooltip: "'L. Cake'"
+			}
+
+			LivingFogDye: {
+				DisplayName: 活雾染料
+				Tooltip: ""
+			}
+
+			IntenseShadowDye: {
+				Tooltip: ""
+				DisplayName: 浓烈暗影染料
+			}
+
+			CrystalHorseshoe: {
+				DisplayName: 水晶马掌
+				Tooltip:
+					'''
+					对摔落伤害免疫
+					对汞辐射debuff免疫
+					'''
+			}
+
+			SilverCharm: {
+				DisplayName: 白银护身符
+				Tooltip:
+					'''
+					对汞辐射debuff免疫
+					对水银免疫4秒
+					'''
+			}
+
+			AzuriteRose: {
+				DisplayName: 蓝铜矿玫瑰
+				Tooltip:
+					'''
+					对水银免疫4秒
+					对汞辐射debuff免疫
+					降低来自水银的debuff伤害
+					'''
+			}
+
+			CryingSkull: {
+				DisplayName: 哭泣颅骨
+				Tooltip:
+					'''
+					对水银免疫4秒
+					对汞辐射debuff免疫
+					'''
+			}
+
+			CrystalRose: {
+				DisplayName: 水晶玫瑰
+				Tooltip:
+					'''
+					对汞辐射debuff免疫
+					降低来自水银的debuff伤害
+					'''
+			}
+
+			MercuryMoss: {
+				DisplayName: 水银苔藓
+				Tooltip: "'一片值得细看的景色，让人难以忘怀'"
+			}
+
+			MercuryMossFishingBobber: {
+				DisplayName: 水银苔藓浮标
+				Tooltip:
+					'''
+					增加10点渔力
+					你的浮标现在会发光
+					'''
+			}
+
+			MercuryMossBricks: {
+				DisplayName: 水银苔藓砖
+				Tooltip: ""
+			}
+
+			MercuryMossBrickWall: {
+				DisplayName: 水银苔藓砖墙
+				Tooltip: ""
+			}
+
+			QuartzStackWall: {
+				DisplayName: 石英堆墙
+				Tooltip: ""
+			}
+
+			LeakyMercuryWall: {
+				DisplayName: 漏缝水银墙
+				Tooltip: ""
+			}
+
+			MercuryBubbleWall: {
+				DisplayName: 水银泡沫墙
+				Tooltip: ""
+			}
+
+			DottedQuicksilverWall: {
+				DisplayName: 点状水银墙
+				Tooltip: ""
+			}
+
+			WaterGeyser: {
+				DisplayName: 水喷泉
+				Tooltip: ""
+			}
+
+			AquaQuiver: {
+				DisplayName: 水之箭袋
+				Tooltip:
+					'''
+					增加10%箭矢伤害，大幅增加箭矢速度
+					有20%的概率不消耗箭矢
+					会将木箭浸满冷冻水
+					'冻 住!'
+					'''
+			}
+
+			PalladiumShield: {
+				DisplayName: 钯金护盾
+				Tooltip:
+					'''
+					减半所有弹幕伤害
+					会将大多数的弹幕反弹到攻击者身上
+					'''
+			}
+
+			OnyxMinecart: {
+				DisplayName: 黑玛瑙矿车
+				Tooltip: ""
+			}
+
+			OnyxStoneBlock: {
+				DisplayName: 黑玛瑙石块
+				Tooltip: ""
+			}
+
+			OnyxStoneWall: {
+				DisplayName: 黑玛瑙石墙
+				Tooltip: ""
+			}
+
+			BlackGemsparkWall: {
+				DisplayName: 黑色晶莹宝石墙
+				Tooltip: ""
+			}
+
+			BlackGemsparkWallOffline: {
+				DisplayName: 暗淡黑色晶莹宝石墙
+				Tooltip: ""
+			}
+
+			OnyxSquirrel: {
+				Tooltip: ""
+				DisplayName: 黑玛瑙松鼠
+			}
+
+			OnyxBunny: {
+				Tooltip: ""
+				DisplayName: 黑玛瑙兔兔
+			}
+
+			OnyxBunnyCage: {
+				DisplayName: 黑玛瑙兔笼
+				Tooltip: ""
+			}
+
+			OnyxSquirrelCage: {
+				DisplayName: 黑玛瑙松鼠笼
+				Tooltip: ""
+			}
+
+			BlackStainedGlass: {
+				DisplayName: 黑花窗玻璃
+				Tooltip: ""
+			}
+
+			OnyxGemcorn: {
+				DisplayName: 黑玛瑙宝石果
+				Tooltip: ""
+			}
+
+			TheUnknownDepthsBelow: {
+				DisplayName: 未知深渊的下方
+				Tooltip: "'D. Colin & D. Rious'"
+			}
+
+			FlowingQuicksilver: {
+				DisplayName: 流动的水银
+				Tooltip: "'D. Colin & D. Rious'"
+			}
+
+			GeoCampfire: {
+				DisplayName: 地心篝火
+				Tooltip: ""
+			}
+
+			NightwoodTrappedChest: {
+				DisplayName: 受困暗夜木箱
+				Tooltip: ""
+			}
+
+			QuartzTrappedChest: {
+				DisplayName: 受困石英箱
+				Tooltip: ""
+			}
+
+			SapphireSerpentKite: {
+				DisplayName: 蓝玉蛇风筝
+				Tooltip:
+					'''
+					在大风天时能够放飞风筝
+					右键点击可收线
+					'''
+			}
+
+			Lamington: {
+				DisplayName: 拉明顿蛋糕
+				Tooltip:
+					'''
+					{$CommonItemTooltip.MajorStats}
+					'...来源于一个遥远的地方'
+					'''
+			}
+
+			HangingShadowShrub: {
+				DisplayName: 吊挂矮影树
+				Tooltip: ""
+			}
+
+			MidnightHorseshoe: {
+				DisplayName: 午夜马掌
+				Tooltip: ""
+			}
+
+			AmethystShalestoneBlock: {
+				DisplayName: 紫晶页岩块
+				Tooltip: ""
+			}
+
+			DiamondShalestoneBlock: {
+				DisplayName: 钻石页岩块
+				Tooltip: ""
+			}
+
+			EmeraldShalestoneBlock: {
+				DisplayName: 翡翠页岩块
+				Tooltip: ""
+			}
+
+			OnyxShalestoneBlock: {
+				DisplayName: 黑玛瑙页岩块
+				Tooltip: ""
+			}
+
+			RubyShalestoneBlock: {
+				DisplayName: 红玉页岩块
+				Tooltip: ""
+			}
+
+			SapphireShalestoneBlock: {
+				DisplayName: 蓝玉页岩块
+				Tooltip: ""
+			}
+
+			TopazShalestoneBlock: {
+				DisplayName: 黄玉页岩块
+				Tooltip: ""
+			}
+
+			ShaleWall: {
+				DisplayName: 页岩墙
+				Tooltip: ""
+			}
+
+			StaffOfAThousandYears: {
+				DisplayName: 千年之杖
+				Tooltip: 召唤迷你猎渊魔为你而战
+			}
+
+			QuartzHood: {
+				DisplayName: 石英兜帽
+				Tooltip: 增加15%鞭子范围
+			}
+
+			QuartzLeggings: {
+				DisplayName: 石英护腿
+				Tooltip: +1召唤栏
+			}
+
+			QuartzWinterCoat: {
+				DisplayName: 石英大衣
+				Tooltip: 增加15%鞭子攻速
+			}
+
+			HungryLeash: {
+				DisplayName: 饿鬼束带
+				Tooltip:
+					'''
+					每流失25%生命值时，都会增加25%移动速度
+					'饿了吗?'
+					'''
+			}
+
+			PetrifiedWoodBath: {
+				DisplayName: 石化木浴缸
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBed: {
+				DisplayName: 石化木床
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBookcase: {
+				DisplayName: 石化木书架
+				Tooltip: ""
+			}
+
+			PetrifiedWoodCandelabra: {
+				DisplayName: 石化木烛台
+				Tooltip: ""
+			}
+
+			PetrifiedWoodCandle: {
+				DisplayName: 石化木蜡烛
+				Tooltip: ""
+			}
+
+			PetrifiedWoodChair: {
+				DisplayName: 石化木椅
+				Tooltip: ""
+			}
+
+			PetrifiedWoodChandelier: {
+				DisplayName: 石化木吊灯
+				Tooltip: ""
+			}
+
+			PetrifiedWoodChest: {
+				DisplayName: 石化木箱子
+				Tooltip: ""
+			}
+
+			PetrifiedWoodClock: {
+				DisplayName: 石化木钟
+				Tooltip: ""
+			}
+
+			PetrifiedWoodDoor: {
+				DisplayName: 石化木门
+				Tooltip: ""
+			}
+
+			PetrifiedWoodDresser: {
+				DisplayName: 石化木梳妆台
+				Tooltip: ""
+			}
+
+			PetrifiedWoodLamp: {
+				DisplayName: 石化木灯
+				Tooltip: ""
+			}
+
+			PetrifiedWoodLantern: {
+				DisplayName: 石化木灯笼
+				Tooltip: ""
+			}
+
+			PetrifiedWoodPiano: {
+				DisplayName: 石化木钢琴
+				Tooltip: ""
+			}
+
+			PetrifiedWoodPlatform: {
+				DisplayName: 石化木平台
+				Tooltip: ""
+			}
+
+			PetrifiedWoodSink: {
+				DisplayName: 石化木水槽
+				Tooltip: ""
+			}
+
+			PetrifiedWoodSofa: {
+				DisplayName: 石化木沙发
+				Tooltip: ""
+			}
+
+			PetrifiedWoodTable: {
+				DisplayName: 石化木桌
+				Tooltip: ""
+			}
+
+			PetrifiedWoodToilet: {
+				DisplayName: 石化木马桶
+				Tooltip: ""
+			}
+
+			PetrifiedWoodTrappedChest: {
+				DisplayName: 受困石化木箱
+				Tooltip: ""
+			}
+
+			PetrifiedWoodWorkbench: {
+				DisplayName: 石化木工作台
+				Tooltip: ""
+			}
+
+			PetrifiedWoodFence: {
+				DisplayName: 石化木栅栏
+				Tooltip: ""
+			}
+
+			PetrifiedWoodWall: {
+				DisplayName: 石化木墙
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBow: {
+				DisplayName: 石化木弓
+				Tooltip: ""
+			}
+
+			PetrifiedWoodHammer: {
+				DisplayName: 石化木锤
+				Tooltip: ""
+			}
+
+			PetrifiedWoodSword: {
+				DisplayName: 石化木剑
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBreastplate: {
+				DisplayName: 石化木胸甲
+				Tooltip: ""
+			}
+
+			PetrifiedWoodGreaves: {
+				DisplayName: 石化木护胫
+				Tooltip: ""
+			}
+
+			PetrifiedWoodHelmet: {
+				DisplayName: 石化木头盔
+				Tooltip: ""
+			}
+
+			BottomlessQuicksilverBucket: {
+				DisplayName: 无底水银桶
+				Tooltip:
+					'''
+					内含无尽的水银
+					可倒出
+					'''
+			}
+
+			QuicksilverAbsorbantSponge: {
+				DisplayName: 水银吸收绵
+				Tooltip: 能够无限吸收水银
+			}
+
+			ShalestoneShackle: {
+				DisplayName: 页岩枷锁
+				Tooltip:
+					'''
+					可使玩家向地面猛击
+					双击{$Key.DOWN}下砸
+					'''
+			}
+		}
+
+		NPCs: {
+			AlbinoBat.DisplayName: 白化蝙蝠
+			Archroma.DisplayName: 大白
+			ChasmeBody.DisplayName: 猎渊魔像
+			ChasmeHandLeft.DisplayName: 猎渊魔像手
+			ChasmeHandRight.DisplayName: 猎渊魔像手
+			ChasmeHead.DisplayName: 猎渊魔像头
+			ChasmeHeart.DisplayName: 猎渊魔像之心
+			CrystalKing.DisplayName: 水晶国王
+			Ferroslime.DisplayName: 铁磁流体史莱姆
+			Geomancer.DisplayName: 地心法师
+			GoldBat.DisplayName: 黄金蝙蝠
+			KingCoal.DisplayName: 煤炭国王
+			Shade.DisplayName: 影子体
+			ShadowBat.DisplayName: 暗影蝙蝠
+			ShadowSlime.DisplayName: 暗影史莱姆
+			DepthsWorm.DisplayName: 蓝玉蛇
+			SapphireSerpentBody.DisplayName: 蓝玉蛇身体
+			SapphireSerpentHead.DisplayName: 蓝玉蛇头
+			SapphireSerpentTail.DisplayName: 蓝玉蛇尾巴
+			EnchantedNightmareWorm.DisplayName: 噩梦鼻涕虫
+			QuartzCrawler.DisplayName: 石英爬虫
+			AlbinoRat.DisplayName: 白化老鼠
+			OnyxSquirrel.DisplayName: 黑玛瑙松鼠
+			OnyxBunny.DisplayName: 黑玛瑙兔兔
+			CrystalBoundTaxCollector.DisplayName: 受缚水晶结构
+		}
+
+		Projectiles: {
+			ShadePetProjectile.DisplayName: Shade Pet
+			BlueExplosion.DisplayName: Blue Explosion
+			BlueSphereYoyo.DisplayName: Blue Sphere Yoyo
+			GemforgeCutscene.DisplayName: Gemforge
+			CrystalBall.DisplayName: Crystal Ball
+			CrystalBallPassive.DisplayName: Crystal Orb
+			DiamondArrow.DisplayName: Diamond Arrow
+			DiamondBolt.DisplayName: Diamond Bolt
+			DiamondDustProj.DisplayName: Diamond Dust
+			GeodeCrystalSummon.DisplayName: Geode Crystal
+			GlitteringGoldenLine.DisplayName: Glittering Golden Line
+			LumpOfCoal.DisplayName: Lump of Coal
+			MiracfulCrimson1.DisplayName: Ruby Note
+			MiracfulCrimson2.DisplayName: Ruby Note
+			MiracfulCrimson3.DisplayName: Ruby Note
+			MiracfulSapphire.DisplayName: Sapphire Flameball
+			MiracfulSnake.DisplayName: Amber Snake
+			MiracfulSparkle.DisplayName: Diamond Spark
+			MiracfulWhip.DisplayName: Amethyst Whip
+			OnyxBolt.DisplayName: Onyx Bolt
+			OnyxHook.DisplayName: Onyx Hook
+			QuartzChunk.DisplayName: Quartz
+			RubyBolt.DisplayName: Ruby Bolt
+			SapphireShovelProj.DisplayName: Bolt of Water
+			Shaderang.DisplayName: Shaderang
+			ShadowBall.DisplayName: Large Shadow Ball
+			ShadowBall2.DisplayName: Shadow Ball
+			ShadowBall3.DisplayName: Small Shadow Ball
+			ShadowClawBottom.DisplayName: Shadow Claw
+			ShadowClawMiddle.DisplayName: Shadow Claw
+			ShadowClawTip.DisplayName: Shadow Claw
+			SilverSpheres.DisplayName: Silver Sphere
+			SilverStar.DisplayName: Silver Star
+			SkyFallRain.DisplayName: Quicksilver Rain
+			SkyfallYoyo.DisplayName: Skyfall Yoyo
+			Steelocanth.DisplayName: Steelocanth
+			LivingShadowSummonProj.DisplayName: Silhouette
+			CoreGlobe.DisplayName: Core Globe
+			WhiteLightning.DisplayName: White Lightning
+			WhiteLightningOrb.DisplayName: White Lightning Orb
+			WhiteLightningOrb2.DisplayName: White Lightning Orb
+			WhiteLightningOrb3.DisplayName: White Lightning Orb
+			WhiteLightningTo2.DisplayName: White Lightning
+			WhiteLightningTo1.DisplayName: White Lightning
+			WhiteLightningTo3.DisplayName: White Lightning
+			QuicksilverBomb.DisplayName: Quicksilver Bomb
+			QuicksilverGrenade.DisplayName: Quicksilver Grenade
+			QuicksilverMine.DisplayName: Quicksilver Mine
+			QuicksilverRocket.DisplayName: Quicksilver Rocket
+			QuicksilverSnowmanRocket.DisplayName: Quicksilver Snowman Rocket
+			SilverBobber.DisplayName: Silver Bobber
+			ShadowflameEmber1.DisplayName: Shadowflame Ember
+			ShadowCat.DisplayName: Shadow Cat
+			ShadowflameEmber2.DisplayName: Shadowflame Ember
+			ShadowflameEmber3.DisplayName: Shadowflame Ember
+			POWHammerSwing.DisplayName: P O W Hammer Swing
+			POWEffect.DisplayName: P O W Effect
+			MercuryExplosion1.DisplayName: Mercury Explosion
+			MercuryExplosion.DisplayName: Mercury Explosion
+			MercuryWarningSign.DisplayName: Mercury Warning Sign
+			ShadeBladeLeft.DisplayName: Shade blade
+			ShadeBladeRight.DisplayName: Shade Blade
+			ShadeBladeCalculator.DisplayName: Shade Blade Calculator
+			ChasmeRay.DisplayName: 红玉射线
+			ChasmeShockwave.DisplayName: 红玉冲击波
+			MercuryMossFishingBobber.DisplayName: Mercury Moss Fishing Bobber
+			WaterGeyser.DisplayName: 水喷泉
+			AquaArrow.DisplayName: 水之箭
+			OnyxExplosion.DisplayName: Onyx Explosion
+			SapphireSerpentKite.DisplayName: Sapphire Serpent Kite
+			MiniChasme.DisplayName: Mini-Chasme
+			MiniChasmeHand.DisplayName: Mini-Chasme Hand
+			ShalestoneHand.DisplayName: Shalestone Hand
+			ShalestoneSlam.DisplayName: Shalestone Slam
+			ShadowLash.DisplayName: 暗影猛击
+			QuicksilverTears.DisplayName: 水银之泪
+			EmeraldEnergy.DisplayName: 翡翠能量
+		}
+
+		Biomes: {
+			DepthsBiome: {
+				DisplayName: 死渊生物群系
+				TownNPCDialogueName: 死渊
+			}
+		}
+
+		UnderworldSelection: {
+			Random: {
+				Title: 随机
+				Description: 让自然决定是地狱还是死渊为世界核心
+			}
+
+			Underworld: {
+				Title: 地狱
+				Description: 充满熔岩的地狱将保证存在于你的世界
+			}
+
+			Depths: {
+				Title: 死渊
+				Description: 寒冷而黑暗的死渊将保证存在于你的世界
+			}
+		}
+
+		Configs: {
+			TheDepthsClientConfig: {
+				DisplayName: 死渊客户端配置
+				Headers.DepthsClientsideConfig: 死渊客户端配置标题
+
+				SlateConfig: {
+					Label: 将页岩重命名为板岩
+					Tooltip: 将页岩重命名为板岩，需要重新加载模组才能使配置生效
+				}
+
+				EnableFog: {
+					Label: 启用死渊雾气
+					Tooltip: 启用在死渊看到的浓雾，禁用将关闭雾气
+				}
+			}
+
+			FargosBoBWConfig: {
+				DisplayName: 法狗双地形共存的死渊设置
+				Headers.DrunkSeedRequiresFargosbestofbothworldsmod: 醉酒世界 (需要Fargo's Best of Both Worlds模组)
+
+				BothCores: {
+					Label: "[i:174][i:TheDepths/ArqueriteOre] 两种星核共存"
+					Tooltip: ""
+				}
+			}
+		}
+
+		Emotes: {
+			DepthsBiomeEmote: 黑暗生物群系
+			ShadowCatEmote: 暗影猫咪
+			ChasmeEmote: 猎渊魔
+		}
+
+		DepthsBiome: 死渊
+
+		Achievements: {
+			HeartSmasher: {
+				Name: 碎心者
+				Description: 击败猎渊魔和她的页岩魔像.死渊的创造者和地心法师们的指挥者
+			}
+
+			PickaxeOfPoison: {
+				Name: 剧毒之镐
+				Description: 使用最致命的液体制作一把镐子
+			}
+
+			MysteriesOfTheDark: {
+				Name: 暗黑之谜
+				Description: 去到足够深的地方找到死渊
+			}
+
+			MercuryAngler: {
+				Name: 水银垂钓者
+				Description: 在水银中投掷一根鱼线，寻找某些抗水银的海中生命
+			}
+		}
+
+		BossChecklist.SpawnInfo.Chasme: 在你世界核心处的[i:TheDepths/Gemforge]中使用一个[i:TheDepths/RubyRelic] [c/FF0000:将开启困难模式!]
+		InDepths: 死渊之中
+		OutDepths: 死渊之外
+		GameUI.LayerDepths: 死渊
+
+		CreditsRollCategory_DepthsTeam: {
+			1: 死渊团队
+			2: Lion8cake
+			3: Snickerbobble
+			4: HBDeus
+			5: Ghasttear1
+			6: Syntrin
+			7: Darkrious
+			8: Larfleeze
+			9: Moddingus
+			10: Hariq “Hariq53”
+			11: Kurtis
+			12: Andrey2345
+			13: Yee苍棱
+			14: Seceip
+			15: BasicallyIAmFox
+		}
+
+		MusicDisplay: {
+			ModName: 死渊
+			Author: HBDeus
+			Depths.DisplayName: 不定深渊
+			DepthsOtherworldly.DisplayName: 险恶之渊
+			Chasme.DisplayName: 猎渊摇滚
+		}
+
+		Keybinds.GroundSlam.DisplayName: 猛击地面
+	}
+}
+
+ItemTooltip.TerrasparkBoots:
+	'''
+	可飞行，超快速奔跑，并且在冰上会获得额外的机动性
+	增加8%移动速度
+	提供在水，蜂蜜，水银和岩浆上行走的能力
+	对火块和毒性方块免疫，对熔岩免疫7秒，对水银免疫8秒
+	降低接触熔岩和水银debuff的伤害
+	'''

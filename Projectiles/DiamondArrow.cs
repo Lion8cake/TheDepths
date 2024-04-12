@@ -17,19 +17,12 @@ namespace TheDepths.Projectiles
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.penetrate = 1;
-			Projectile.timeLeft = 600;
+			Projectile.aiStyle = ProjAIStyleID.Arrow;
 		}
 
-		public override void AI() {
-			Projectile.ai[0] += 1f;
-			Projectile.direction = Projectile.spriteDirection = Projectile.velocity.X > 0f ? 1 : -1;
-			Projectile.rotation = Projectile.velocity.ToRotation();
-			if (Projectile.velocity.Y > 16f) {
-				Projectile.velocity.Y = 16f;
-			}
-			if (Projectile.spriteDirection == -1) {
-				Projectile.rotation += MathHelper.Pi;
-			}
+		public override void AI()
+		{
+			Projectile.rotation += MathHelper.Pi;
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {

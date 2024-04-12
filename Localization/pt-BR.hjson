@@ -1,0 +1,2133 @@
+Mods: {
+	TheDepths: {
+		GameTips: {
+			DepthsTip0: Um NPC desconhecido se encontra preso nas Profundezas em forma de cristal. Se houvesse um jeito de purificá-lo...
+			DepthsTip1: Se você escavar bem fundo no mundo certo, talvez encontre as Pronfudezas!
+			DepthsTip2: Derrote a Pedra-Sombria Chasme gigante para mudar o mundo para sempre. Usar uma relíquia rubi na Forja das Gemas talvez a invoque...
+			DepthsTip3: Arquerite é extremamente venenoso, crie uma Caveira Cristal para ficar imune ao envenenamento.
+			DepthsTip4: Não mergulhe no mercúrio antes de beber a poção Pele de Cristal primeiro!
+			DepthsTip5: Você pode ficar até 16 segundos no mercúrio sem consequências com o equipamento certo!
+			DepthsTip6: Durante a luta contra Chasme, uma barreira mágica aparecerá entre as Profundezas e o subterrâneo, passar por ele garante uma saída segura para a luta.
+		}
+
+		common: {
+			Banner: " Bandeira"
+			Banner2: Jogadores próximos ganham bônus contra:
+		}
+
+		SetBonus: {
+			GeodeHelmet: Invoca 4 Cristais de Geodo que causam 20 de dano
+			MercuryHelmet:
+				'''
+				3 defesa
+				Mercúrio não pode te infectar
+				'''
+			NightwoodHelmet:
+				'''
+				Dobra a duração dos Passos de Mercúrio
+				Reduz pela metade a duração de envenenamento do Mercúrio
+				'''
+			QuartzArmor: Aumenta a velocidade e a distância do Chicote em 35%
+			OnyxRobeWizard:
+				'''
+				2 defesa
+				Aumenta a chance crítica de ataques Mágicos em 18%
+				'''
+			OnyxRobeMagic:
+				'''
+				3 defesa
+				Aumenta a mana máxima em 100
+				'''
+			PetrifiedWoodHelmet: Aumenta a redução de dano em 10%
+		}
+
+		Quest: {
+			Description: {
+				Chasmefish: Existe uma lenda antiga que diz que um peixe da realeza nasceu durante um eclipse solar e foi amaldiçoado nas profundezas deste mundo. Quero que o encontre para ver o quão poderoso este peixe realmente é.
+				Relicarp: Se você ainda não sabe, existe um culto mágico nas Profundezas que adoram gemas. Suas práticas ainda são um mistério para mim, mas sabe o que eu sei? Eles possuem um peixe mágico que parece justamente com as relíquias especiais do seu culto. Vá e traga-o até mim para que eu finalmente possa descobrir o que acontece quando o coloco no pote.
+				GlimmerDepthFish: Eu estava jogando em uma camada de quartzo quando de repente um bloco de quartzo se separou do mercúrio criando barbatanas e nadando para longe. Sempre quis saber como é o gosto do quartzo, então traga-me este peixe para que eu possa experimentar.
+			}
+
+			CaughtLocation: {
+				Chasmefish: Encontrado em Cavernas
+				Relicarp: Encontrado em Cavernas
+				GlimmerDepthFish: Encontrado em Cavernas
+			}
+		}
+
+		Recipes.NearQuicksilver: Próximo a mercúrio
+
+		ShaleConfig: {
+			SlateBlock: Bloco de Ardósia
+			ShaleBlock: Bloco de Xisto
+			SlateBricks: Cimento de Ardósia
+			ShaleBricks: Cimento de Xisto
+			Slatestone: Ardósia
+			Shalestone: Xisto
+		}
+
+		Bestiary: {
+			# Enemies
+			AlbinoBat: Vítima de uma rara mutação pigmentar, esse morcego percorre as profundas cavernas para se misturar com o mercúrio e sobreviver.
+			Archroma: O primo de Pinky com uma densidade similar tornando-o muito forte, além de comerem dinheiro.
+			CrystalKing: Um nobre rei da Geomancia, embora incapaz de andar mas ele pode se teleportar assim como a maioria dos magos.
+			Ferroslime: Essa geleia pode parecer pontiaguda, This slime may appear spiky, mas isso é apenas o aumento de Ferro-Fluido para parecer mais ameaçador do que realmente é.
+			Geomancer: Membros leais do culto bem desenvolvidos em Geomancia. Reza a lenda que eles adoram um ser vivo de sombra e chama.
+			GoldBat: Um morcego raro nas profundezas que foi amaldiçoado por Geomancers para serem uma criatura parecida com gemas. Apesar de seu nome, são da mesma cor do Topázio.
+			KingCoal: Ele não é uma alma alegre, ele é o irmão rival do Rei Cristal, nascido no fogo, ele fará tudo o que puder para derrubá-lo!
+			DepthsWorm: Uma serpente de pedra e safira com água fluindo em suas veias. Ela carrega uma pá como nenhuma outra.
+			Shade: Seres de pura escuridão que vagam pelas profundezas com a capacidade de flutuar livremente no ar. Um grupo deles é chamado de escurecimento.
+			ShadowBat: Este morcego metade sombra e metade esmeralda é uma variante mais forte dos morcegos encontrados nas profundezas. É a sombra de um morcego ou uma sombra feita de morcego?
+			ShadowSlime: Uma geleia puramente negra que vaga as profundezas endurecidas, ao levar dano dela poderia causar cegeira.
+			EnchantedNightmareWorm: Com o tempo, os vermes que chegaram às profundezas do subsolo terão descoberto o Bosque do Pesadelo. Forçados a se misturar, eles herdaram a tonalidade roxa natural do ambiente ao seu redor.
+			QuartzCrawler: Um caracol preto com uma concha que se parece muito com um pedaço de quartzo. Um deleite especialmente saboroso para peixes que se escondem no mercúrio.
+			AlbinoRat: Um rato raro e pigmentado que tentou se misturar com o quartzo e o mercúrio circundantes. Como diabos você pega um peixe com essa coisa?
+			Chasme: Um gigante feito de puro Xisto. Apesar de ser chamado de Chasme, esta é apenas sua ferramenta profunda de destruição e segurança.          Chasme também era poderosa, mas ela nunca quis essa luta. Talvez tudo isso tenha sido um mal-entendido
+			ChasmeHands: Manifestações de Xisto feitas por Chasme para ajudar a moldar as Profundezas ao qual se encontra hoje. Elas não têm correlação com as mãos dos Deerclops.           Você destruiu ela e sua casa pela liberdade dos espíritos antigos. A felicidade tem um custo.
+			ChasmeSoul: Chasme nasceu em um eclipse total que a amaldiçoou com o que você viu até agora. Ela foi trancada nas profundezas do subsolo, onde transformou tudo em um eterno abismo escuro. Às vezes me pergunto se a maldição dela poderá ser quebrada algum dia.
+			CrystalBoundTaxCollector: A velha formação cristalina que permanece de um antigo amigo viveu durante o caos que Chasme trouxe à tona. Anos mais tarde, suas ambições o atraíram para as profundezas, onde ele foi transformado em quartzo pelo culto geomante de Chasme.
+		}
+
+		PlayerDeathReason: {
+			Gemforge: {
+				0: "{0} tentou invocar um culto na pura luz."
+				1: "{0} moveu a forja gemática pra longe de sua casa."
+				2: "{0} tentou queimar uma reliquia na superfice."
+			}
+
+			MercuryPoisoning: {
+				0: "{0} não encontrou uma cura."
+				1: "{0} sucumbiu as esperanças."
+				2: "{0} bebeu uma lâmpada."
+				3: "{0} lambeu uma rocha especial."
+			}
+
+			ChasmeHead: {
+				0: "{0} foi devorado pelo Abismo."
+				1: "{0} tentou fugir pela escotilha."
+				2: "{0} acertou em cheio."
+			}
+		}
+
+		Tiles: {
+			ArqueriteOre.MapEntry: Minério de Arquerite
+			BlackTorch.MapEntry: Tocha
+			CoreBuilderTile.MapEntry: Núcleo Construtor
+			DepthsBanners.MapEntry: Bandeira
+			DepthsMusicBox.MapEntry: Caixa de Música
+			DepthsPot.MapEntry: Pote
+			EmberUpdated.MapEntry: Brasa
+			Gemforge.MapEntry: Forja Gemática
+			GemlockTile.MapEntry: Azulejo Gemlock
+			GeoTorch.MapEntry: Tocha
+			LargeCrystal.MapEntry: Cristal Largo
+			OnyxShalestone.MapEntry: Ônix
+			Quartz.MapEntry: Quartzo
+			QuartzChair.MapEntry: Cadeira
+			QuartzDoorClosed.MapEntry: Porta
+			QuartzDoorOpen.MapEntry: Porta
+			QuartzTable.MapEntry: Mesa
+			QuartzWorkbench.MapEntry: Bancada de Trabalho
+			QuicksilverDropletSource.MapEntry: Mercúrio Gotejando
+			ShadowShrub.MapEntry: Arbusto das Sombras
+			Shalestone.MapEntry: Xisto
+			ShalestoneAmethyst.MapEntry: Ametista
+			ShalestoneDiamond.MapEntry: Diamante
+			ShalestoneEmerald.MapEntry: Esmeralda
+			ShalestoneRuby.MapEntry: Rubi
+			ShalestoneSapphire.MapEntry: Safira
+			ShalestoneTopaz.MapEntry: Topázio
+			PetrifiedSapling.MapEntry: Muda Petrificada
+			NightSapling.MapEntry: Muda Paunoite
+			QuicksilverSensor.MapEntry: Sensor Líqudio (Mercúrio)
+			OtherPortal.MapEntry: Outro Portal
+			NightwoodBath.MapEntry: Banheira de Paunoite
+			NightwoodBed.MapEntry: Cama de Paunoite
+			NightwoodBookcase.MapEntry: Estante de Livros de Paunoite
+			NightwoodCandelabra.MapEntry: Candelabro de Paunoite
+			NightwoodCandle.MapEntry: Vela de Paunoite
+			NightwoodChair.MapEntry: Cadeira de Paunoite
+			NightwoodChandelier.MapEntry: Lustre de Paunoite
+			NightwoodChest.MapEntry: Baú de Paunoite
+			NightwoodClock.MapEntry: Relógio de Paunoite
+			NightwoodDoorClosed.MapEntry: Porta de Paunoite
+			NightwoodDoorOpen.MapEntry: Porta de Paunoite
+			NightwoodDresser.MapEntry: Guarda-Roupa de Paunoite
+			NightwoodLamp.MapEntry: Lâmpada de Paunoite
+			NightwoodLantern.MapEntry: Lanterna de Paunoite
+			NightwoodPiano.MapEntry: Piano de Paunoite
+			NightwoodSink.MapEntry: Pia de Paunoite
+			NightwoodSofa.MapEntry: Sofá de Paunoite
+			NightwoodTable.MapEntry: Mesa de Paunoite
+			NightwoodToilet.MapEntry: Porcelana de Paunoite
+			NightwoodWorkbench.MapEntry: Bancada de Trabalho de Paunoite
+			QuartzToilet.MapEntry: Porcelana de Quartzo
+			QuartzSofa.MapEntry: Sofá de Quartzo
+			QuartzSink.MapEntry: Pia de Quartzo
+			QuartzPiano.MapEntry: Piano de Quartzo
+			QuartzLantern.MapEntry: Lanterna de Quartzo
+			QuartzLamp.MapEntry: Lâmpada de Quartzo
+			QuartzDresser.MapEntry: Guarda-Roupa de Quartzo
+			QuartzClock.MapEntry: Relógio de Quartzo
+			QuartzChest.MapEntry: Baú de Quartzo
+			QuartzChandelier.MapEntry: Lustre de Quartzo
+			QuartzCandle.MapEntry: Vela de Quartzo
+			QuartzCandelabra.MapEntry: Candelabro de Quartzo
+			QuartzBookcase.MapEntry: Estante de Livros de Quartzo
+			QuartzBed.MapEntry: Cama de Quartzo
+			QuartzBath.MapEntry: Banheira de Quartzo
+			DepthsVanityBanners.MapEntry: Bandeiras Vaidosas das Profundezas
+			DepthsOtherworldlyMusicBox.MapEntry: Caixa de Música
+			AltarOfGems.MapEntry: Altar de Gemas
+			ForTheSakeOfMakingGadgets.MapEntry: Para fazer Gadgets
+			ImPurrSonation.MapEntry: Estou ronronando
+			Mercury.MapEntry: Mercúrio
+			MusiciansBestFriend.MapEntry: Melhor Amigo dos Músicos
+			ChaosCat.MapEntry: Gato do Caos
+			DONOTDRINK.MapEntry: NÃO BEBA
+			WaterGeyser.MapEntry: Gêiser de Água
+			PlacedGems.MapEntry: Gemas Colocadas
+			PlacedOnyx.MapEntry: Ônix posicionada
+			OnyxStone.MapEntry: Pedra de Ônix
+			OnyxGemtree.MapEntry: Árvore de Gemas Ônix
+			PetrifiedTree.MapEntry: Árvore Petrificada
+			TheUnknownDepthsBelow.MapEntry: As Profundezas Desconhecidas Abaixo
+			NightwoodTree.MapEntry: Árvore de Paunoite
+			NightwoodTrappedChest.MapEntry: Baú de Paunoite
+			QuartzTrappedChest.MapEntry: Baú de Quartzo
+			HangingShadowShrub.MapEntry: Arbusto Sombrio Pendurado
+			PetrifiedWoodBath.MapEntry: Banheira de Madeira Petrificada
+			PetrifiedWoodBookcase.MapEntry: Estante de Livros de Madeira Petrificada
+			PetrifiedWoodCandelabra.MapEntry: Candelabro de Madeira Petrificada
+			PetrifiedWoodCandle.MapEntry: Vela de Madeira Petrificada
+			PetrifiedWoodChair.MapEntry: Cadeira de Madeira Petrificada
+			PetrifiedWoodChandelier.MapEntry: Lustre de Madeira Petrificada
+			PetrifiedWoodChest.MapEntry: Baú de Madeira Petrificada
+			PetrifiedWoodClock.MapEntry: Relógio de Madeira Petrificada
+			PetrifiedWoodDresser.MapEntry: Guarda-Roupa de Madeira Petrificada
+			PetrifiedWoodLamp.MapEntry: Lâmpada de Madeira Petrificada
+			PetrifiedWoodLantern.MapEntry: Lanterna de Madeira Petrificada
+			PetrifiedWoodBedShaleSheetsAreImpossible.MapEntry: Cama de Madeira Petrificada
+			PetrifiedWoodPiano.MapEntry: Piano de Madeira Petrificada
+			PetrifiedWoodSink.MapEntry: Pia de Madeira Petrificada
+			PetrifiedWoodSofa.MapEntry: Sofá de Madeira Petrificada
+			PetrifiedWoodTable.MapEntry: Mesa de Madeira Petrificada
+			PetrifiedWoodToilet.MapEntry: Porcelana de Madeira Petrificada
+			PetrifiedWoodTrappedChest.MapEntry: Baú-Armadilha de Madeira Petrificada
+			PetrifiedWoodWorkbench.MapEntry: Bancada de Trabalho de Madeira Petrificada
+		}
+
+		Buffs: {
+			CrystalSkin: {
+				DisplayName: Pele de Cristal
+				Description: Imune a Mercúrio
+			}
+
+			FlaskofMercury: {
+				DisplayName: Imbuir Arma: Mercúrio
+				Description: Ataques corpo a corpo fervem inimigos com Mercúrio
+			}
+
+			FreezingWater: {
+				DisplayName: Congelando Água
+				Description: Movimento foi completamente desativado
+			}
+
+			LivingShadowSummonBuff: {
+				DisplayName: Silhueta
+				Description: Uma figura similar a você irá lutar por você.
+			}
+
+			MercuryBoiling: {
+				DisplayName: Envenenamento por Mercúrio
+				Description: Lentamente perdendo vida
+			}
+
+			MercuryFooting: {
+				DisplayName: Passos de Mercúrio
+				Description: Aumento de 15% em velocidade de movimento
+			}
+
+			MercuryPoisoning: {
+				DisplayName: Radiação de Mercúrio
+				Description: Perdendo vida e movimento reduzido
+			}
+
+			RelicsCurse: {
+				DisplayName: Maldição da Relíquia
+				Description: Incapaz de usar mais relíquias
+			}
+
+			SilverSphereBuff: {
+				DisplayName: Esfera Prateada
+				Description: Quatro esferas de prata orbitam você
+			}
+
+			ShadePetBuff: {
+				DisplayName: Pet Sombra
+				Description: '''"Uma sombra está flutuando ao seu redor!"'''
+			}
+
+			ShadowCatBuff: {
+				DisplayName: Gato Sombra
+				Description: Seria isso a sombra de um gato, ou um gato sombra?
+			}
+
+			PurpleflameJellyBuff: {
+				DisplayName: Água-Viva Chama-Roxa
+				Description: Uma rara e única espécie de águas vivas que são pacíficas e vivem no mercúrio
+			}
+
+			MercuryContagion: {
+				DisplayName: Contágio de Mercúrio
+				Description: Quando inimigos colidem, a sua doença se espalha
+			}
+
+			PhantomFirecartBuff.DisplayName: Carrinho das Minas
+			OnyxMinecartBuff.DisplayName: Carrinho de Minerador
+
+			NightmareHorseBuff: {
+				DisplayName: Cavalo do Pesadelo
+				Description: Um cavalo espectral de xisto feito pelo própia Chasme
+			}
+
+			BuffofaThousandYears: {
+				DisplayName: Chasmini
+				Description: Chasmini usará suas mãos para lutar por você
+			}
+		}
+
+		Items: {
+			AmalgamAmulet: {
+				DisplayName: Amuleto Amálgama
+				Tooltip: Garante 4 segundos de imunidade à Mercúrio
+			}
+
+			AquaGlove: {
+				DisplayName: Luva Aqua
+				Tooltip:
+					'''
+					Aumenta o empurrão corpo a corpo e inflige água congelante ao atacar
+					Aumenta a velocidade corpo a corpo e dano em 12%
+					Ativa o balanço automático para armas corpo a corpo
+					'''
+			}
+
+			AquaStone: {
+				DisplayName: Pedra Aqua
+				Tooltip: Inflige água congelante ao atacar
+			}
+
+			CrystalShield: {
+				DisplayName: Escudo de Cristal
+				Tooltip:
+					'''
+					Diminui pela metade todos os danos de projéteis
+					Reflete a maioria dos projéteis aos atacantes
+					Imune a radição de mercúrio
+					'''
+			}
+
+			CrystalSkull: {
+				DisplayName: Crânio de Cristal
+				Tooltip: Garante imunidade à radiação de Mercúrio
+			}
+
+			CrystalWaterWalkingBoots: {
+				DisplayName: Botas de Cristal
+				Tooltip:
+					'''
+					Permite andar sobre as águas e o mel
+					Garante imunidade à radiação de mercúrio
+					'''
+			}
+
+			LodeStone: {
+				DisplayName: Magnetita
+				Tooltip: Aumenta o alcance da coleta de itens
+			}
+
+			QuickSilverSurfboard: {
+				DisplayName: Surfista Mercurial
+				Tooltip: Permite o usuário flutuar por alguns segundos
+			}
+
+			SanctusShield: {
+				DisplayName: Escudo Santificado
+				Tooltip:
+					'''
+					Garante a imunidade à radiação de mercúrio
+					Reduz pela metade todo dano de projéteis
+					Reflete a maioria dos projéteis para os atacantes
+					Garante imunidade à maioria dos debuffs
+					'''
+			}
+
+			SilverSlippers: {
+				DisplayName: Chinelo Prateado
+				Tooltip:
+					'''
+					Fornece a habilidade de andar sobre a água, mel, lava e mercúrio
+					Garante imunidade à radiação
+					Garante 4 segundos de imunidade extra para o mercúrio
+					'''
+			}
+
+			StoneRose: {
+				DisplayName: Rosa-Pedra
+				Tooltip: Dano reduzido de debuffs de Mercúrio
+			}
+
+			CharredCrown: {
+				DisplayName: Coroa Carbonizada
+				Tooltip: Aumenta o dano Mágico em 18%
+			}
+
+			CrystalCrown: {
+				DisplayName: Coroa de Cristal
+				Tooltip: Aumenta a Chance Crítica Mágica em 20%
+			}
+
+			GeodeChestplate: {
+				DisplayName: Peitoral de Geodo
+				Tooltip: Aumenta o número máximo de minions em 1
+			}
+
+			GeodeHelmet: {
+				DisplayName: Capacete de Geodo
+				Tooltip: Aumenta o número máximo de minions em 1
+			}
+
+			GeodeLeggings: {
+				DisplayName: Pernas de Geodo
+				Tooltip: Aumenta o número máximo de minions em 1
+			}
+
+			Geode: {
+				DisplayName: Geodo
+				Tooltip: ""
+			}
+
+			MercuryChestplate: {
+				DisplayName: Peitoral Mercurial
+				Tooltip: Aumenta o dano Corpo a Corpo em 19%
+			}
+
+			MercuryGreaves: {
+				DisplayName: Manoplas Mercuriais
+				Tooltip: Aumenta a velocidade de movimento em 10%
+			}
+
+			MercuryHelmet: {
+				DisplayName: Capacete Mercurial
+				Tooltip: Aumenta a chance crítica corpo a corpo em 6%
+			}
+
+			OnyxRobe: {
+				DisplayName: Manto Ônix
+				Tooltip:
+					'''
+					Reduz o custo de mana em 22%
+					Aumenta a mana máxima em 60
+					'''
+			}
+
+			PurplePlumbersHat: {
+				DisplayName: Chapéu de Encanador Roxo
+				Tooltip: ""
+			}
+
+			PurplePlumbersPants: {
+				DisplayName: Calça de Encanador Roxo
+				Tooltip: ""
+			}
+
+			PurplePlumbersShirt: {
+				DisplayName: Camisa de Encanador Roxo
+				Tooltip: ""
+			}
+
+			AchromaBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.Archroma.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.Archroma.DisplayName}"
+			}
+
+			AlbinoBatBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.AlbinoBat.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.AlbinoBat.DisplayName}"
+			}
+
+			CrystalKingBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.CrystalKing.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.CrystalKing.DisplayName}"
+			}
+
+			FerroslimeBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.Ferroslime.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.Ferroslime.DisplayName}"
+			}
+
+			GeomancerBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.Geomancer.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.Geomancer.DisplayName}"
+			}
+
+			GoldBatBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.GoldBat.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.GoldBat.DisplayName}"
+			}
+
+			KingCoalBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.KingCoal.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.KingCoal.DisplayName}"
+			}
+
+			SapphireSerpentBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.DepthsWorm.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.DepthsWorm.DisplayName}"
+			}
+
+			ShadeBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.Shade.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.Shade.DisplayName}"
+			}
+
+			ShadowBatBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.ShadowBat.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.ShadowBat.DisplayName}"
+			}
+
+			ShadowSlimeBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.ShadowSlime.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.ShadowSlime.DisplayName}"
+			}
+
+			CrystalSkinPotion: {
+				DisplayName: Poção Pele de Cristal
+				Tooltip: Garante imunidade à Mercúrio
+			}
+
+			FlaskofMercury: {
+				DisplayName: Frasco de Mercúrio
+				Tooltip: Ataques corpo a corpo fervem inimigos com Mercúrio
+			}
+
+			LargeOnyx: {
+				DisplayName: Ônix Grande
+				Tooltip: Para capturar a Joia. Cai quando você morre
+			}
+
+			OnyxHook: {
+				DisplayName: Gancho Ônix
+				Tooltip: ""
+			}
+
+			Onyx: {
+				DisplayName: Ônix
+				Tooltip: ""
+			}
+
+			ArqueriteBar: {
+				DisplayName: Barra de Arquerite
+				Tooltip: "'Doentio ao toque'"
+			}
+
+			ArqueriteBricks: {
+				DisplayName: Tijolos de Arquerite
+				Tooltip: ""
+			}
+
+			ArqueriteBrickWall: {
+				DisplayName: Parede de Tijolos de Arquerite
+				Tooltip: ""
+			}
+
+			ArqueriteOre: {
+				DisplayName: Minério de Arquerite
+				Tooltip: ""
+			}
+
+			BlackGemspark: {
+				DisplayName: Bloco da Centelha da Joia Negra
+				Tooltip: ""
+			}
+
+			BlackTorch: {
+				DisplayName: Tocha Negra
+				Tooltip: ""
+			}
+
+			CoreBuilder: {
+				DisplayName: Núcleo Construtor
+				Tooltip:
+					'''
+					Permite você a converter materiais do inferno em materiais das profundezas e vice-versa
+					'O rumor de uma forja lendária que criou o núcleo do mundo'
+					'''
+			}
+
+			DepthsMusicBox: {
+				DisplayName: Caixa de Música (Profundezas)
+				Tooltip: ""
+			}
+
+			DiamondDust: {
+				DisplayName: Pó de Diamante
+				Tooltip: ""
+			}
+
+			Ember: {
+				DisplayName: Brasa
+				Tooltip: ""
+			}
+
+			Gemforge: {
+				DisplayName: Forja das Gemas
+				Tooltip: ""
+			}
+
+			GeoTorch: {
+				DisplayName: Geo Tocha
+				Tooltip: ""
+			}
+
+			LargeCrystal: {
+				DisplayName: Cristal Grande
+				Tooltip: ""
+			}
+
+			LivingFog: {
+				DisplayName: Bloco de Nevoeiro Vivo
+				Tooltip: ""
+			}
+
+			MagicQuicksilverDropper: {
+				DisplayName: Conta-Gotas mágico de mercúrio
+				Tooltip: ""
+			}
+
+			OnyxGemLock: {
+				DisplayName: Cadeado de Gema Ônix
+				Tooltip: Clique direito para colocar ou remover Ônixes Grandes
+			}
+
+			PetrifiedWood: {
+				DisplayName: Madeira Petrificada
+				Tooltip: ""
+			}
+
+			Quartz: {
+				DisplayName: Quartzo
+				Tooltip: ""
+			}
+
+			QuartzBlock: {
+				DisplayName: Bloco de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzBricks: {
+				DisplayName: Tijolos de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzBrickWall: {
+				DisplayName: Parede de Tijolos de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzChair: {
+				DisplayName: Cadeira de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzDoor: {
+				DisplayName: Porta de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzPillar: {
+				DisplayName: Pilar de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzPlatform: {
+				DisplayName: Plataforma de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzTable: {
+				DisplayName: Mesa de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzWorkbench: {
+				DisplayName: Bancada de Trabalho de Quartzo
+				Tooltip: ""
+			}
+
+			ShadowBrick: {
+				DisplayName: Tijolo da Sombra
+				Tooltip: ""
+			}
+
+			ShadowShrubPlanterBox: {
+				DisplayName: Caixa Plantadora de Arbusto Sombrio
+				Tooltip: ""
+			}
+
+			ShadowShrubSeeds: {
+				DisplayName: Sementes de Arbusto Sombrio
+				Tooltip: ""
+			}
+
+			ShadowShrub: {
+				DisplayName: Arbusto Sombrio
+				Tooltip: ""
+			}
+
+			ShaleBlock.Tooltip: ""
+			ShaleBricks.Tooltip: ""
+			Shalestone.Tooltip: ""
+
+			SilverfallBlock: {
+				DisplayName: Bloco Queda-de-Prata
+				Tooltip: ""
+			}
+
+			SilverfallWall: {
+				DisplayName: Parede Queda-de-Prata
+				Tooltip: ""
+			}
+
+			RubyRelic: {
+				DisplayName: Relíquia de Rubi
+				Tooltip:
+					'''
+					'Você consegue ouvir alguma coisa?'
+					Colocar isso numa forja das gemas talvez não seja uma boa ideia
+					'''
+			}
+
+			SilverSpherePotion: {
+				DisplayName: Poção da Esfera Prateada
+				Tooltip: Invoca 4 esferas de prata para orbitar o jogador e dar dano aos inimigos!
+			}
+
+			BlackPhaseblade: {
+				DisplayName: Fase da Lâmina Negra
+				Tooltip: ""
+			}
+
+			BlackPhasesaber: {
+				DisplayName: Fase do Sabre Negro
+				Tooltip: ""
+			}
+
+			BlueSphere: {
+				DisplayName: Esfera Azul
+				Tooltip: Colete todas elas!
+			}
+
+			DiamondArrow: {
+				DisplayName: Flecha de Diamante
+				Tooltip: 3 rajadas de cristais são disparadas em direções aleatórias após o impacto
+			}
+
+			DiamondBolt: {
+				DisplayName: Dardo de Diamante
+				Tooltip: ""
+			}
+
+			LivingShadowStaff: {
+				DisplayName: Cajado da Sombra Viva
+				Tooltip: Invoca uma Silhueta para lutar por você
+			}
+
+			MercuryHamaxe: {
+				DisplayName: Martelo-Machado de Mercúrio
+				Tooltip: ""
+			}
+
+			MercuryPickaxe: {
+				DisplayName: Picareta de Mercúrio
+				Tooltip: ""
+			}
+
+			Mercury: {
+				DisplayName: Mercúrio
+				Tooltip: "'L. Cake'"
+			}
+
+			NightFury: {
+				DisplayName: Fúria da Noite
+				Tooltip: ""
+			}
+
+			OnyxSepter: {
+				DisplayName: Cetro de Ônix
+				Tooltip: ""
+			}
+
+			POWHammer: {
+				DisplayName: Martelo P.O.W
+				Tooltip: "'Alta capacidade para bonks'"
+			}
+
+			QuartzCannon: {
+				DisplayName: Canhão de Quartzo
+				Tooltip: ""
+			}
+
+			RubyBolt: {
+				DisplayName: Dardo de Rubi
+				Tooltip: ""
+			}
+
+			SapphireShovel: {
+				DisplayName: Pá de Safira
+				Tooltip: Desativa inimigos por alguns segundos.
+			}
+
+			ShadeBlade: {
+				DisplayName: Lâmina da Sombra
+				Tooltip: ""
+			}
+
+			Shaderang: {
+				DisplayName: Bumerangue das Sombras
+				Tooltip: ""
+			}
+
+			ShadowClaw: {
+				DisplayName: Garra das Sombras
+				Tooltip: Liberta energias das trevas
+			}
+
+			ShadowSphere: {
+				DisplayName: Esfera Sombria
+				Tooltip: ""
+			}
+
+			Silverado: {
+				DisplayName: Silverado
+				Tooltip: Atira uma bala poderosa, de alta velocidade
+			}
+
+			SilverStar: {
+				DisplayName: Estrela Prata
+				Tooltip: ""
+			}
+
+			Skyfall: {
+				DisplayName: Queda-do-Céu
+				Tooltip: Chuva de mercúrio cai desta jogada
+			}
+
+			Steelocanth: {
+				DisplayName: Açoacanto
+				Tooltip: ""
+			}
+
+			WhiteLightning: {
+				DisplayName: Relâmpago Branco
+				Tooltip: Invoca 3 orbes de raio que conectam um ao outro
+			}
+
+			Terminex: {
+				DisplayName: Terminex
+				Tooltip: ""
+			}
+
+			ShadePetItem: {
+				DisplayName: Carambolas!
+				Tooltip: Invoca um Pet Sombra para te seguir
+			}
+
+			GlitterBlock: {
+				DisplayName: Bloco Glitter
+				Tooltip: ""
+			}
+
+			QuicksilverBucket: {
+				DisplayName: Balde de Mercúrio
+				Tooltip:
+					'''
+					Contém uma pequena quantidade de Mercúrio
+					Pode ser derramado
+					'''
+			}
+
+			CoreGlobe: {
+				DisplayName: Núcleo Globo
+				Tooltip:
+					'''
+					Jogue-o para mudar a aparência do núcleo!
+					'Hora de mudar o cenário.'
+					'''
+			}
+
+			NightmareSeeds: {
+				DisplayName: Sementes de Pesadelo
+				Tooltip: ""
+			}
+
+			QuicksilverSensor: {
+				DisplayName: Sensor Líquido (Mercúrio)
+				Tooltip: Ativa sempre que ocupado por mercúrio, desativa caso contrário
+			}
+
+			QuicksilverBomb: {
+				DisplayName: Bomba de Mercúrio
+				Tooltip: Uma pequena explosão que espalhará mercúrio
+			}
+
+			QuicksilverRocket: {
+				DisplayName: Foguete Mercurial
+				Tooltip: Espalha mercúrio no impacto
+			}
+
+			QuartzCrate: {
+				DisplayName: Caixa de Quartzo
+				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+			}
+
+			QuartzFeeder: {
+				DisplayName: Alimentador de Quartzo
+				Tooltip: ""
+			}
+
+			ShadowFightingFish: {
+				DisplayName: Peixe Lutador das Sombras
+				Tooltip: ""
+			}
+
+			SilverLiner: {
+				DisplayName: Revestimento Prateado
+				Tooltip: Permite pescar no mercúrio
+			}
+
+			ArqueriteCrate: {
+				DisplayName: Caixa de Arquerite
+				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+			}
+
+			QuicksilverproofFishingHook: {
+				DisplayName: Vara de Pesca à prova de Mercúrio
+				Tooltip: Permite pescar no mercúrio
+			}
+
+			QuartzLockBox: {
+				DisplayName: Caixa Trancada de Quartzo
+				Tooltip:
+					'''
+					{$CommonItemTooltip.RightClickToOpen}
+					Precisa de uma chave das Sombras
+					'''
+			}
+
+			FluorescentLightBulb: {
+				DisplayName: Lâmpada Fluorescente
+				Tooltip: ""
+			}
+
+			GiantFluorescentLightBulb: {
+				DisplayName: Lâmpada Fluorescente Gigante
+				Tooltip: "'É pesado demais para se pendurar em qualquer teto.'"
+			}
+
+			OtherPortal: {
+				DisplayName: Outro Portal
+				Tooltip:
+					'''
+					'Custa apenas um diamante.'
+					'L. Cake'
+					'''
+			}
+
+			PottedMercuryTendrils: {
+				DisplayName: Gavinhas de Mercúrio em Vaso
+				Tooltip: ""
+			}
+
+			PottedNightmarePalm: {
+				DisplayName: Palmeira do Pesadelo em Vaso
+				Tooltip: ""
+			}
+
+			PottedNightterrorBush: {
+				DisplayName: Arbusto do Terror Noturno em Vaso
+				Tooltip: ""
+			}
+
+			PottedPurplestarBrambles: {
+				DisplayName: Amoreiras Estrela-Roxa em Vaso
+				Tooltip: ""
+			}
+
+			PottedShadowflameBulb: {
+				DisplayName: Bulbo Chama-Sombria em Vaso
+				Tooltip: ""
+			}
+
+			ShadowFightingFishBowl: {
+				DisplayName: Aquário de Peixe Lutador das Sombras
+				Tooltip: "'Eu não acho que você iria querer um pote de mercúrio na sua cabeça'"
+			}
+
+			ShadowflameEmberedTreads: {
+				DisplayName: Passos Emberados da Chama Sombria
+				Tooltip: "'Muito grande para chama-la de brasas, em?'"
+			}
+
+			NightmareFlareTreads: {
+				DisplayName: Botas do Pesadelo
+				Tooltip:
+					'''
+					Permite o voo
+					O usuário pode correr super rápido
+					Andar emite brasas de Chama-Sombria
+					'''
+			}
+
+			QuicksilverproofTackleBag: {
+				DisplayName: Bolsa de Equipamento à prova de Mercúrio
+				Tooltip:
+					'''
+					A linha de pesca nunca irá quebrar, diminui a chance de perder a isca, aumenta o poder de pesca em 10
+					Permite pescar no Mercúrio
+					'''
+			}
+
+			PurpleflameNecklace: {
+				DisplayName: Colar Chama Roxa
+				Tooltip:
+					'''
+					Invoca uma água viva da chama roxa montável
+					'Ela não vai me queimar, não é?'
+					'''
+			}
+
+			EnchantedNightmareWorm: {
+				DisplayName: Lesma do Pesadelo
+				Tooltip: ""
+			}
+
+			QuartzCrawler: {
+				DisplayName: Rastejador de Quartzo
+				Tooltip: ""
+			}
+
+			AlbinoRat: {
+				DisplayName: Rato Albino
+				Tooltip: ""
+			}
+
+			QuicksilverproofBugNet: {
+				DisplayName: Rede de insetos à prova de mercúrio
+				Tooltip: "'Para as coisas quando for um pouco venenoso demais de se lidar'"
+			}
+
+			AlbinoRatCage: {
+				DisplayName: Jaula do Rato Albino
+				Tooltip: ""
+			}
+
+			EnchantedNightmareWormCage: {
+				DisplayName: Gaiola de Lesma do Pesadelo
+				Tooltip: ""
+			}
+
+			QuartzCrawlerCage: {
+				DisplayName: Gaiola do Rastejador de Quartzo
+				Tooltip: ""
+			}
+
+			GeodeLazerPointer: {
+				DisplayName: Ponteiro Laser-Geodo
+				Tooltip:
+					'''
+					Invoca um Gato Sombra
+					'Sombras podem andar?'
+					'''
+			}
+
+			Chasmefish: {
+				DisplayName: Chasme-Peixe
+				Tooltip: Captura-se em cavernas
+			}
+
+			GlimmerDepthFish: {
+				DisplayName: Peixe Brilhante das Profundezas
+				Tooltip: Captura-se em cavernas
+			}
+
+			Relicarp: {
+				DisplayName: Relicarpa
+				Tooltip: Captura-se em cavernas
+			}
+
+			ShalestoneConch: {
+				DisplayName: Concha de Xisto
+				Tooltip: Se você escutar com atenção, pode-se escutar o ritual sendo cantado
+			}
+
+			ShellPhoneDepths: {
+				DisplayName: Celular-Concha (Profundezas)
+				Tooltip:
+					'''
+					Exibe tudo
+					Permite a viagem para as profundezas a qualquer momento
+					Clique com o botão direito para alternar o destino
+					'Se você ouvir com atenção, poderá ouvir algo sobre a garantia do seu carro'
+					'''
+			}
+
+			AncientShadowBrick: {
+				DisplayName: Tijolo Sombra Antigo
+				Tooltip: ""
+			}
+
+			NightWood: {
+				DisplayName: Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodBath: {
+				DisplayName: Banheira Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodBed: {
+				DisplayName: Cama Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodBookcase: {
+				DisplayName: Estante de Livros Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodCandelabra: {
+				DisplayName: Candelabro Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodCandle: {
+				DisplayName: Vela Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodChair: {
+				DisplayName: Cadeira Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodChandelier: {
+				DisplayName: Lustre Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodChest: {
+				DisplayName: Baú Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodClock: {
+				DisplayName: Relógio Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodDoor: {
+				DisplayName: Porta Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodDresser: {
+				DisplayName: Guarda-Roupa Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodLamp: {
+				DisplayName: Lâmpada Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodLantern: {
+				DisplayName: Lanterna Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodPiano: {
+				DisplayName: Piano Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodPlatform: {
+				DisplayName: Plataforma Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodSink: {
+				DisplayName: Pia Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodSofa: {
+				DisplayName: Sofá Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodTable: {
+				DisplayName: Mesa Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodToilet: {
+				DisplayName: Porcelana Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodWorkbench: {
+				DisplayName: Bancada de Trabalho Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodWall: {
+				DisplayName: Parede Paunoite
+				Tooltip: ""
+			}
+
+			ChasmeBag: {
+				DisplayName: Baú do Tesouro (Chasme)
+				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+			}
+
+			ChasmeSoulMask: {
+				DisplayName: Máscara das Almas de Chasme
+				Tooltip: ""
+			}
+
+			ShadowChasmeMask: {
+				DisplayName: Máscara das Sombras de Chasme
+				Tooltip: ""
+			}
+
+			ChasmeTrophy: {
+				DisplayName: Troféu do Chasme
+				Tooltip: ""
+			}
+
+			ChasmeMusicBox: {
+				DisplayName: Caixa de Música (Chasme)
+				Tooltip: ""
+			}
+
+			ChasmeRelic: {
+				DisplayName: Relíquia do Chasme
+				Tooltip: ""
+			}
+
+			PhantomFirecart: {
+				DisplayName: Carrinho de mineração do Geomante
+				Tooltip: Garante 4 segundos extras de imunidade á mercúrio
+			}
+
+			QuartzCandelabra: {
+				Tooltip: ""
+				DisplayName: Candelabro de Quartzo
+			}
+
+			QuartzBookcase: {
+				Tooltip: ""
+				DisplayName: Estante de Livros de Quartzo
+			}
+
+			QuartzBed: {
+				Tooltip: ""
+				DisplayName: Cama de Quartzo
+			}
+
+			QuartzBath: {
+				Tooltip: ""
+				DisplayName: Banheira de Quartzo
+			}
+
+			QuartzCandle: {
+				DisplayName: Vela de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzChandelier: {
+				DisplayName: Lustre de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzChest: {
+				DisplayName: Baú de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzClock: {
+				DisplayName: Relógio de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzDresser: {
+				DisplayName: Guarda-Roupa de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzLamp: {
+				DisplayName: Lâmpada de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzLantern: {
+				DisplayName: Lanterna de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzPiano: {
+				DisplayName: Piano de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzSink: {
+				DisplayName: Pia de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzSofa: {
+				DisplayName: Sofá de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzToilet: {
+				DisplayName: Porcelana de Quartzo
+				Tooltip: ""
+			}
+
+			QuartzVase: {
+				DisplayName: Vaso de Quartzo
+				Tooltip: ""
+			}
+
+			GemforgeBanner: {
+				DisplayName: Bandeira da Forja das Almas
+				Tooltip: ""
+			}
+
+			GlowingQuicksilverBanner: {
+				DisplayName: Bandeira Mercúrio Brilhante
+				Tooltip: ""
+			}
+
+			LostHeartBanner: {
+				DisplayName: Bandeira Coração Perdido
+				Tooltip: ""
+			}
+
+			QuartzStackBanner: {
+				DisplayName: Bandeira de Pilha de Quartzo
+				Tooltip: ""
+			}
+
+			RackedCollectionBanner: {
+				DisplayName: Bandeira Coleção Atormentada
+				Tooltip: ""
+			}
+
+			RelicBanner: {
+				DisplayName: Bandeira Relíquia
+				Tooltip: ""
+			}
+
+			SwordOfTheCavesBanner: {
+				DisplayName: Bandeira Espadas das Cavernas
+				Tooltip: ""
+			}
+
+			NightwoodFence: {
+				DisplayName: Cerca Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodSword: {
+				Tooltip: ""
+				DisplayName: Espada Paunoite
+			}
+
+			NightwoodHammer: {
+				DisplayName: Martelo Paunoite
+				Tooltip: ""
+			}
+
+			NightwoodBow: {
+				Tooltip: ""
+				DisplayName: Arco Paunoite
+			}
+
+			NightwoodHelmet: {
+				Tooltip: ""
+				DisplayName: Capacete Paunoite
+			}
+
+			NightwoodGreaves: {
+				Tooltip: ""
+				DisplayName: Manoplas Paunoite
+			}
+
+			NightwoodBreastplate: {
+				Tooltip: ""
+				DisplayName: Peitoal Paunoite
+			}
+
+			Ciamito: {
+				Tooltip: "{$CommonItemTooltip.MinorStats}"
+				DisplayName: Ciamito
+			}
+
+			BlackOlive: {
+				Tooltip: "{$CommonItemTooltip.MinorStats}"
+				DisplayName: Azeitona Preta
+			}
+
+			DepthsOtherworldlyMusicBox: {
+				DisplayName: Caixa de música de Outro Mundo (Profundezas)
+				Tooltip: ""
+			}
+
+			AltarOfGems: {
+				DisplayName: Altar de Gemas
+				Tooltip: "'L. Cake'"
+			}
+
+			ForTheSakeOfMakingGadgets: {
+				DisplayName: Para fazer gadgets
+				Tooltip: "'L. Cake'"
+			}
+
+			ImPurrSonation: {
+				DisplayName: Estou ronronando
+				Tooltip: "'L. Cake & W. Sephi'"
+			}
+
+			MusiciansBestFriend: {
+				DisplayName: Melhor Amigo dos Músicos
+				Tooltip: "'L. Cake'"
+			}
+
+			ChaosCat: {
+				DisplayName: Gato Caos
+				Tooltip: "'L. Cake & B. Cat'"
+			}
+
+			DONOTDRINK: {
+				DisplayName: NÃO BEBA
+				Tooltip: "'L. Cake'"
+			}
+
+			LivingFogDye: {
+				DisplayName: Corante Névoa Viva
+				Tooltip: ""
+			}
+
+			IntenseShadowDye: {
+				Tooltip: ""
+				DisplayName: Tintura de Sombra Intensa
+			}
+
+			CrystalHorseshoe: {
+				DisplayName: Ferradura de Cristal
+				Tooltip:
+					'''
+					Nega o dano de queda
+					Garante a imunidade à radiação de mercúrio
+					'''
+			}
+
+			SilverCharm: {
+				DisplayName: Encanto de Prata
+				Tooltip:
+					'''
+					Garante a imunidade à radiação de mercúrio
+					Garante 4 segundos extras de imunidade à Mercúrio
+					'''
+			}
+
+			AzuriteRose: {
+				DisplayName: Rosa de Azurite
+				Tooltip:
+					'''
+					Garante 4 segundos extras de imunidade à Mercúrio
+					Garante a imunidade à radiação de mercúrio
+					Dano reduzido de debuffs de Mercúrio
+					'''
+			}
+
+			CryingSkull: {
+				DisplayName: Crânio Chorão
+				Tooltip:
+					'''
+					Garante 4 segundos extras de imunidade à Mercúrio
+					Garante a imunidade à radiação de mercúrio
+					'''
+			}
+
+			CrystalRose: {
+				DisplayName: Rosa de Cristal
+				Tooltip:
+					'''
+					Garante a imunidade à radiação de mercúrio
+					Dano reduzido de debuffs de Mercúrio
+					'''
+			}
+
+			MercuryMoss: {
+				DisplayName: Musgo de Mercúrio
+				Tooltip: "'Uma visão para meditar e nunca esquecer'"
+			}
+
+			MercuryMossFishingBobber: {
+				DisplayName: Bóia de Pesca com Musgo de Mercúrio
+				Tooltip:
+					'''
+					Aumenta o poder de pesca em 10
+					Sua bóia agora brilha
+					'''
+			}
+
+			MercuryMossBricks: {
+				DisplayName: Tijolos de Musgo de Mercúrio
+				Tooltip: ""
+			}
+
+			MercuryMossBrickWall: {
+				DisplayName: Parede de Tijolos de Musgo de Mercúrio
+				Tooltip: ""
+			}
+
+			QuartzStackWall: {
+				DisplayName: Parede de Pilha de Quartzo
+				Tooltip: ""
+			}
+
+			LeakyMercuryWall: {
+				DisplayName: Parede de Mercúrio com vazamento
+				Tooltip: ""
+			}
+
+			MercuryBubbleWall: {
+				DisplayName: Parede de Bolhas de Mercúrio
+				Tooltip: ""
+			}
+
+			DottedQuicksilverWall: {
+				DisplayName: Parede de Mercúrio Pontilhada
+				Tooltip: ""
+			}
+
+			WaterGeyser: {
+				DisplayName: Gêiser de Água
+				Tooltip: ""
+			}
+
+			AquaQuiver: {
+				DisplayName: Aljava Aqua
+				Tooltip:
+					'''
+					Aumenta o dano das flechas em 10% e aumenta bastante a velocidade das flechas
+					20% de Chance de não consumir flechas
+					Mergulha flechas de madeira em água congelante
+					'CONGELA AI!'
+					'''
+			}
+
+			PalladiumShield: {
+				DisplayName: Escudo de Paládio
+				Tooltip:
+					'''
+					Reduz pela metade todo dano de projéteis
+					Reflete a maioria dos projéteis para os atacantes
+					'''
+			}
+
+			OnyxMinecart: {
+				DisplayName: Carrinho das Minas de Ônix
+				Tooltip: ""
+			}
+
+			OnyxStoneBlock: {
+				DisplayName: Bloco de Pedra de Ônix
+				Tooltip: ""
+			}
+
+			OnyxStoneWall: {
+				DisplayName: Parede de Pedra de Ônix
+				Tooltip: ""
+			}
+
+			BlackGemsparkWall: {
+				DisplayName: Parede de Pedras Preciosas Negras
+				Tooltip: ""
+			}
+
+			BlackGemsparkWallOffline: {
+				DisplayName: Parede de Pedras Preciosas Negras Desligada
+				Tooltip: ""
+			}
+
+			OnyxSquirrel: {
+				Tooltip: ""
+				DisplayName: Esquilo Ônix
+			}
+
+			OnyxBunny: {
+				Tooltip: ""
+				DisplayName: Coelho Ônix
+			}
+
+			OnyxBunnyCage: {
+				DisplayName: Jaula para Coelho Ônix
+				Tooltip: ""
+			}
+
+			OnyxSquirrelCage: {
+				DisplayName: Jaula para Esquilo Ônix
+				Tooltip: ""
+			}
+
+			BlackStainedGlass: {
+				DisplayName: Vidro Tingido Preto
+				Tooltip: ""
+			}
+
+			OnyxGemcorn: {
+				DisplayName: Semente de Gemas Ônix
+				Tooltip: ""
+			}
+
+			TheUnknownDepthsBelow: {
+				DisplayName: As Profundezas Desconhecidas Abaixo
+				Tooltip: "'D. Colin & D. Rious'"
+			}
+
+			FlowingQuicksilver: {
+				DisplayName: Mercúrio Fluindo
+				Tooltip: "'D. Colin & D. Rious'"
+			}
+
+			GeoCampfire: {
+				DisplayName: Fogueira Geo
+				Tooltip: ""
+			}
+
+			NightwoodTrappedChest: {
+				DisplayName: Baú-Armadilha de Paunoite
+				Tooltip: ""
+			}
+
+			QuartzTrappedChest: {
+				DisplayName: Baú-Armadilha de Quartzo
+				Tooltip: ""
+			}
+
+			SapphireSerpentKite: {
+				DisplayName: Pipa da Serpente de Safira
+				Tooltip:
+					'''
+					Pipas podem ser empinadas em dias ventosos
+					Recolha com Clique Direito
+					'''
+			}
+
+			Lamington: {
+				DisplayName: Lamington
+				Tooltip:
+					'''
+					{$CommonItemTooltip.MajorStats}
+					'...De um lugar lá de baixo.'
+					'''
+			}
+
+			HangingShadowShrub: {
+				DisplayName: Arbusto Sombrio Pendurado
+				Tooltip: ""
+			}
+
+			MidnightHorseshoe: {
+				DisplayName: Ferradura da Meia-Noite
+				Tooltip: ""
+			}
+
+			AmethystShalestoneBlock: {
+				DisplayName: Amethyst Bloco de Xisto
+				Tooltip: ""
+			}
+
+			DiamondShalestoneBlock: {
+				DisplayName: Bloco de Xisto de Diamante
+				Tooltip: ""
+			}
+
+			EmeraldShalestoneBlock: {
+				DisplayName: Bloco de Xisto de Esmeralda
+				Tooltip: ""
+			}
+
+			OnyxShalestoneBlock: {
+				DisplayName: Bloco de Xisto de Ônix
+				Tooltip: ""
+			}
+
+			RubyShalestoneBlock: {
+				DisplayName: Bloco de Xisto de Rubi
+				Tooltip: ""
+			}
+
+			SapphireShalestoneBlock: {
+				DisplayName: Bloco de Xisto de Safira
+				Tooltip: ""
+			}
+
+			TopazShalestoneBlock: {
+				DisplayName: Bloco de Xisto de Topázio
+				Tooltip: ""
+			}
+
+			ShaleWall: {
+				DisplayName: Parede de Xisto
+				Tooltip: ""
+			}
+
+			StaffOfAThousandYears: {
+				DisplayName: Cajado de Mil Anos
+				Tooltip: Invoca Chasminis para lutar por você
+			}
+
+			QuartzHood: {
+				DisplayName: Capuz de Quartzo
+				Tooltip: Aumenta o alcance do chicote em 15%
+			}
+
+			QuartzLeggings: {
+				DisplayName: Calça de Quartzo
+				Tooltip: Aumenta o número máximo de minions em 1
+			}
+
+			QuartzWinterCoat: {
+				DisplayName: Casaco de Inverno de Quartzo
+				Tooltip: Aumenta o alcance do chicote em 15%
+			}
+
+			HungryLeash: {
+				DisplayName: Coleira Faminta
+				Tooltip:
+					'''
+					Para cada 25% de vida perdida, velocidade de movimento aumenta em 25%
+					'Está com fome?'
+					'''
+			}
+
+			PetrifiedWoodBath: {
+				DisplayName: Banheira de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBed: {
+				DisplayName: Cama de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBookcase: {
+				DisplayName: Estante de Livros de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodCandelabra: {
+				DisplayName: Candelabro de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodCandle: {
+				DisplayName: Vela de de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodChair: {
+				DisplayName: Cadeira de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodChandelier: {
+				DisplayName: Lustre de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodChest: {
+				DisplayName: Baú de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodClock: {
+				DisplayName: Relógio de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodDoor: {
+				DisplayName: Porta de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodDresser: {
+				DisplayName: Guarda-Roupa de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodLamp: {
+				DisplayName: Lâmpada de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodLantern: {
+				DisplayName: Lanterna de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodPiano: {
+				DisplayName: Piano de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodPlatform: {
+				DisplayName: Plataforma de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodSink: {
+				DisplayName: Pia de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodSofa: {
+				DisplayName: Sofá de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodTable: {
+				DisplayName: Mesa de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodToilet: {
+				DisplayName: Porcelana de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodTrappedChest: {
+				DisplayName: Baú-Armadilha de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodWorkbench: {
+				DisplayName: Bancada de Trabalho de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodFence: {
+				DisplayName: Cerca de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodWall: {
+				DisplayName: Parede de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBow: {
+				DisplayName: Arco de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodHammer: {
+				DisplayName: Martelo de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodSword: {
+				DisplayName: Espada de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBreastplate: {
+				DisplayName: Peitoral de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodGreaves: {
+				DisplayName: Manoplas de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			PetrifiedWoodHelmet: {
+				DisplayName: Capacete de Madeira Petrificada
+				Tooltip: ""
+			}
+
+			BottomlessQuicksilverBucket: {
+				DisplayName: Balde de Mercúrio Sem Fundo
+				Tooltip:
+					'''
+					Contém uma quantidade infinita de mercúrio dentro
+					Pode ser derramado
+					'''
+			}
+
+			QuicksilverAbsorbantSponge: {
+				DisplayName: Esponja de Absorção de Mercúrio
+				Tooltip: Pode secar uma quantidade infinita de mercúrio
+			}
+
+			ShalestoneShackle: {
+				DisplayName: Algemas de Xisto
+				Tooltip:
+					'''
+					Permite ao jogador realizar uma pancada no chão
+					Toque duplo {$Key.DOWN}
+					'''
+			}
+		}
+
+		NPCs: {
+			AlbinoBat.DisplayName: Morcego Albino
+			Archroma.DisplayName: Archroma
+			ChasmeBody.DisplayName: Chasme
+			ChasmeHandLeft.DisplayName: Mão de Chasme
+			ChasmeHandRight.DisplayName: Mão de Chasme
+			ChasmeHead.DisplayName: Cabeça de Chasme
+			ChasmeHeart.DisplayName: Coração de Chasme
+			CrystalKing.DisplayName: Rei Cristal
+			Ferroslime.DisplayName: Limo de Ferro
+			Geomancer.DisplayName: Geomante
+			GoldBat.DisplayName: Morcego de Ouro
+			KingCoal.DisplayName: Rei Carvão
+			Shade.DisplayName: Escuridão
+			ShadowBat.DisplayName: Morcego Sombrio
+			ShadowSlime.DisplayName: Geléia Sombria
+			DepthsWorm.DisplayName: Serpente de Safira
+			SapphireSerpentBody.DisplayName: Corpo da Serpente de Safira
+			SapphireSerpentHead.DisplayName: Cabeça da Serpente de Safira
+			SapphireSerpentTail.DisplayName: Rabo da Serpente de Safira
+			EnchantedNightmareWorm.DisplayName: Lesma do Pesadelo
+			QuartzCrawler.DisplayName: Rastejador de Quartzo
+			AlbinoRat.DisplayName: Rato Albino
+			OnyxSquirrel.DisplayName: Esquilo Ônix
+			OnyxBunny.DisplayName: Coelho Ônix
+			CrystalBoundTaxCollector.DisplayName: Formação de Cristal Amarrado
+		}
+
+		Projectiles: {
+			ShadePetProjectile.DisplayName: Pet Sombra
+			BlueExplosion.DisplayName: Explosão Azul
+			BlueSphereYoyo.DisplayName: Ioiô de Esfera Azul
+			GemforgeCutscene.DisplayName: Forja das Gemas
+			CrystalBall.DisplayName: Bola de Cristal
+			CrystalBallPassive.DisplayName: Orbe de Cristal
+			DiamondArrow.DisplayName: Flecha de Diamante
+			DiamondBolt.DisplayName: Dardo de Diamante
+			DiamondDustProj.DisplayName: Pó de Diamante
+			GeodeCrystalSummon.DisplayName: Cristal de Geodo
+			GlitteringGoldenLine.DisplayName: Linha Dourada Brilhante
+			LumpOfCoal.DisplayName: Pedaço de Carvão
+			MiracfulCrimson1.DisplayName: Nota Rubi
+			MiracfulCrimson2.DisplayName: Nota Rubi
+			MiracfulCrimson3.DisplayName: Nota Rubi
+			MiracfulSapphire.DisplayName: Bola Flamejante Safira
+			MiracfulSnake.DisplayName: Cobra Âmbar
+			MiracfulSparkle.DisplayName: Faísca de Diamante
+			MiracfulWhip.DisplayName: Chicote de Ametista
+			OnyxBolt.DisplayName: Dardo Ônix
+			OnyxHook.DisplayName: Gancho Ônix
+			QuartzChunk.DisplayName: Quartzo
+			RubyBolt.DisplayName: Dardo Rubi
+			SapphireShovelProj.DisplayName: Dardo de Água
+			Shaderang.DisplayName: Bumerangue das Sombras
+			ShadowBall.DisplayName: Bola Sombria Grande
+			ShadowBall2.DisplayName: Bola Sombria
+			ShadowBall3.DisplayName: Bola Sombria Pequena
+			ShadowClawBottom.DisplayName: Garra das Sombras
+			ShadowClawMiddle.DisplayName: Garra das Sombras
+			ShadowClawTip.DisplayName: Garra das Sombras
+			SilverSpheres.DisplayName: Esfera de Prata
+			SilverStar.DisplayName: Estrela Prata
+			SkyFallRain.DisplayName: Chuva de Mercúrio
+			SkyfallYoyo.DisplayName: Ioiô Queda-do-Céu
+			Steelocanth.DisplayName: Açoacanto
+			LivingShadowSummonProj.DisplayName: Silhueta
+			CoreGlobe.DisplayName: Núcleo Globo
+			WhiteLightning.DisplayName: Relâmpago Branco
+			WhiteLightningOrb.DisplayName: Orbe Relâmpago Branco
+			WhiteLightningOrb2.DisplayName: Orbe Relâmpago Branco
+			WhiteLightningOrb3.DisplayName: Orbe Relâmpago Branco
+			WhiteLightningTo2.DisplayName: Relâmpago Branco
+			WhiteLightningTo1.DisplayName: Relâmpago Branco
+			WhiteLightningTo3.DisplayName: Relâmpago Branco
+			QuicksilverBomb.DisplayName: Bomba de Mercúrio
+			QuicksilverGrenade.DisplayName: Granada de Mercúrio
+			QuicksilverMine.DisplayName: Mina de Mercúrio
+			QuicksilverRocket.DisplayName: Foguete de Mercúrio
+			QuicksilverSnowmanRocket.DisplayName: Foguete de Boneco de Neve de Mercúrio
+			SilverBobber.DisplayName: Bóia de Prata
+			ShadowflameEmber1.DisplayName: Brasa de Chama Sombria
+			ShadowCat.DisplayName: Gato Sombra
+			ShadowflameEmber2.DisplayName: Brasa de Chama Sombria
+			ShadowflameEmber3.DisplayName: Brasa de Chama Sombria
+			POWHammerSwing.DisplayName: Balanço do Martelo POW
+			POWEffect.DisplayName: Efeito POW
+			MercuryExplosion1.DisplayName: Explosão Mercurial
+			MercuryExplosion.DisplayName: Explosão Mercurial
+			MercuryWarningSign.DisplayName: Sinal de Aviso de Mercúrio
+			ShadeBladeLeft.DisplayName: Lâmina Sombria
+			ShadeBladeRight.DisplayName: Lâmina Sombria
+			ShadeBladeCalculator.DisplayName: Calculadora Lâmina Sombria
+			ChasmeRay.DisplayName: Raio Rubi
+			ChasmeShockwave.DisplayName: Onda de Choque Rubi
+			MercuryMossFishingBobber.DisplayName: Boia de Pesca com Musgo de Mercúrio
+			WaterGeyser.DisplayName: Gêiser de Água
+			AquaArrow.DisplayName: Flecha Aqua
+			OnyxExplosion.DisplayName: Explosão Ônix
+			SapphireSerpentKite.DisplayName: Pipa da Serpente Safira
+			MiniChasme.DisplayName: Mini-Chasme
+			MiniChasmeHand.DisplayName: Mão Mini-Chasme
+			ShalestoneHand.DisplayName: Mão Xisto
+			ShalestoneSlam.DisplayName: Golpe Xisto
+			ShadowLash.DisplayName: Chicote Sombrio
+			QuicksilverTears.DisplayName: Lágrimas de Mercúrio
+			EmeraldEnergy.DisplayName: Energia Esmeralda
+		}
+
+		Biomes: {
+			DepthsBiome: {
+				DisplayName: Bioma das Profundezas
+				TownNPCDialogueName: As Profundezas
+			}
+		}
+
+		UnderworldSelection: {
+			Random: {
+				Title: Aleatório
+				Description: Deixe a natureza decidir se haverá o Submundo ou as Profundezas no núcleo do mundo.
+			}
+
+			Underworld: {
+				Title: Submundo
+				Description: O Submundo cheio de lava estará presente em seu mundo.
+			}
+
+			Depths: {
+				Title: Profundezas
+				Description: As Profundezas frias e escuras estarão presentes em seu mundo.
+			}
+		}
+
+		Configs: {
+			TheDepthsClientConfig: {
+				DisplayName: The Depths Configuração do Client
+				Headers.DepthsClientsideConfig: Cabeçalho de configuração do client Das Profundezas
+
+				SlateConfig: {
+					Label: Renomeia Xisto para Ardósia
+					Tooltip: Renomeia Xisto para Ardósia, Requer o recarregamento do mod para funcionar
+				}
+
+				EnableFog: {
+					Label: Ativa a névoa no The Depths
+					Tooltip: Ativa uma névoa intensa visível nas Profundezas, desative para remover a névoa.
+				}
+			}
+
+			FargosBoBWConfig: {
+				DisplayName: Configuração do The Depths e Fargo's Best of Both Worlds Mod
+				Headers.DrunkSeedRequiresFargosbestofbothworldsmod: Semente Bêbada (Requer Fargo's Best of Both Worlds Mod)
+
+				BothCores: {
+					Label: "[i:174][i:TheDepths/ArqueriteOre] Dois Núcleos"
+					Tooltip: ""
+				}
+			}
+		}
+
+		Emotes: {
+			DepthsBiomeEmote: escuridaobioma
+			ShadowCatEmote: gatosombra
+			ChasmeEmote: chasme
+		}
+
+		DepthsBiome: As Profundezas
+
+		Achievements: {
+			HeartSmasher: {
+				Name: Esmagador de Coração
+				Description: Derrote Chasme e sua Gigante de Xisto. O criador das Profundezas e comandante dos Geomantes.
+			}
+
+			PickaxeOfPoison: {
+				Name: Picareta do Veneno
+				Description: Crie uma picareta de Mercúrio usando o líquido mais letal de todos.
+			}
+
+			MysteriesOfTheDark: {
+				Name: Mistérios da Escuridão
+				Description: Vá fundo o bastante para encontras As Profundezas.
+			}
+
+			MercuryAngler: {
+				Name: Pescador de Mercúrio
+				Description: Lance uma linha em uma poça de mercúrio para encontrar alguma vida marinha resistente ao mercúrio.
+			}
+		}
+
+		BossChecklist.SpawnInfo.Chasme: Invoque usando uma [i:TheDepths/RubyRelic] numa [i:TheDepths/Gemforge] no núcleo do seu mundo. [c/FF0000:Starts Hardmode!]
+		InDepths: Dentro das Profundezas
+		OutDepths: Fora das Profundezas
+		GameUI.LayerDepths: Profundezas
+
+		CreditsRollCategory_DepthsTeam: {
+			1: The Depths Team
+			2: Lion8cake
+			3: Snickerbobble
+			4: HBDeus
+			5: Ghasttear1
+			6: Syntrin
+			7: Darkrious
+			8: Larfleeze
+			9: Moddingus
+			10: Hariq “Hariq53”
+			11: Kurtis
+			12: Andrey2345
+			13: Yee苍棱
+			14: Seceip
+			15: BasicallyIAmFox
+		}
+
+		MusicDisplay: {
+			ModName: The Depths
+			Author: by HBDeus
+			Depths.DisplayName: A Profundeza Doentia
+			DepthsOtherworldly.DisplayName: A Profunda Doença
+			Chasme.DisplayName: Chamuscado até a Rocha
+		}
+
+		Keybinds.GroundSlam.DisplayName: Impacto no Chão
+	}
+}
+
+ItemTooltip.TerrasparkBoots:
+	'''
+	Permite o Voo, Corrida Super Veloz, e mobilidade extra no gelo
+	Aumento de 8% na velocidade de movimento
+	Ganha a habilidade de andar sobre as águas, mel, mercúrio e lava
+	Concede imunidade a blocos de fogo e veneno, 7 segundos de imunidade a lava e 8 segundos de imunidade a mercúrio
+	Reduz o dano causado por debuffs de tocar na lava e mercúrio
+	'''

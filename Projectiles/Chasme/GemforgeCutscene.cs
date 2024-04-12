@@ -198,6 +198,15 @@ namespace TheDepths.Projectiles.Chasme
 					}
 				}
 			}
+			for (int plr = 0; plr < Main.maxPlayers; plr++)
+			{
+				Player nearPlayer = Main.player[plr];
+				float gemforgePos = Projectile.position.X + 40f;
+				if (nearPlayer.position.Y > (float)((Main.maxTilesY - 250) * 16) && nearPlayer.position.X > gemforgePos - 1920f && nearPlayer.position.X < gemforgePos + 1920f)
+				{
+					nearPlayer.AddBuff(ModContent.BuffType<RelicsCurse>(), 10);
+				}
+			}
 		}
 
 		/*public override void Kill(int timeLeft)

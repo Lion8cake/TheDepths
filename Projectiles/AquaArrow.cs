@@ -21,6 +21,11 @@ namespace TheDepths.Projectiles
 			Projectile.aiStyle = ProjAIStyleID.Arrow;
 		}
 
+		public override void AI()
+		{
+			Projectile.rotation += MathHelper.Pi;
+		}
+
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			target.AddBuff(ModContent.BuffType<Buffs.FreezingWater>(), 120, false);
