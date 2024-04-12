@@ -16,14 +16,14 @@ namespace TheDepths.Tiles.Furniture
         public override void SetStaticDefaults()
         {
 			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = true;
+			Main.tileLavaDeath[Type] = false;
 			Main.tileWaterDeath[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
 			TileObjectData.newTile.Height = 3;
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.StyleWrapLimit = 36;
-			TileObjectData.newTile.LavaDeath = true;
+			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.WaterDeath = true;
 			TileObjectData.addTile(Type);
 			Main.tileLighted[Type] = true;

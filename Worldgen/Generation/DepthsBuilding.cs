@@ -9,6 +9,8 @@ using TheDepths.Tiles;
 using TheDepths.Tiles.Furniture;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.GameContent.Generation;
+using System.Net.Http.Headers;
 
 namespace TheDepths.Worldgen.Generation;
 
@@ -20,8 +22,9 @@ internal class DepthsBuilding
     /// <summary>
     /// All floor furnitures.
     /// </summary>
-    private static int[] Furnitures => [ModContent.TileType<QuartzDresser>(), ModContent.TileType<QuartzTable>(), ModContent.TileType<QuartzChair>(), ModContent.TileType<QuartzBookcase>(),
-        ModContent.TileType<QuartzLamp>()];
+    private static int[] Furnitures => new int[] { ModContent.TileType<QuartzWorkbench>(), ModContent.TileType<QuartzDresser>(), ModContent.TileType<QuartzTable>(), ModContent.TileType<QuartzChair>(), ModContent.TileType<QuartzBookcase>(), 
+        ModContent.TileType<QuartzLamp>(), ModContent.TileType<QuartzBath>(), ModContent.TileType<QuartzBed>(), ModContent.TileType<QuartzClock>(), ModContent.TileType<QuartzPiano>(), 
+        ModContent.TileType<QuartzSofa>(), ModContent.TileType<QuartzVase>(), ModContent.TileType<QuartzCandelabra>() };
 
     /// <summary>
     /// Builds a single building - that is, set of connected rooms.
@@ -36,8 +39,8 @@ internal class DepthsBuilding
         if (WorldGen.drunkWorldGen) // Increase width in drunk worlds
             size.X = WorldGen.genRand.Next(32, 40);
 
-        HashSet<Point> placedBuildings = [];
-        HashSet<Point16> allTiles = [];
+        HashSet<Point> placedBuildings = new(); //tmod doesnt recognise [] so we use new() instead
+        HashSet<Point16> allTiles = new();
         int tileType = !WorldGen.genRand.NextBool(4) ? ModContent.TileType<QuartzBricks>() : ModContent.TileType<ArqueriteBricks>(); // Randomize base tile type
 
         while (WorldGen.genRand.NextBool(Math.Max(1, count / 3))) // Condition makes it possible to make very large buildings, but usually it'll be fairly small (~5 rooms)
@@ -109,10 +112,6 @@ internal class DepthsBuilding
             if (placeWalls != WallID.None) // Place appropriate walls in the door's space
                 WorldGen.PlaceWall(position.X, position.Y - i, placeWalls);
         }
-
-        if (WorldGen.genRand.NextBool(6)) // Sometimes, just have a hole in the wall
-            return;
-        
         WorldGen.PlaceTile(position.X, position.Y - 2, ModContent.TileType<QuartzDoorClosed>(), true);
     }
 
@@ -145,9 +144,7 @@ internal class DepthsBuilding
                 if (!makeHole)
                 {
                     WorldGen.KillTile(i, y, false, false, true);
-
-                    if (!WorldGen.genRand.NextBool(12)) // Platforms have a chance to fail to give a more weathered look
-                        WorldGen.PlaceTile(i, y, ModContent.TileType<QuartzPlatform>(), true);
+                    WorldGen.PlaceTile(i, y, ModContent.TileType<QuartzPlatform>(), true);
                 }
                 else
                     tile.ClearTile();
@@ -193,21 +190,37 @@ internal class DepthsBuilding
         {
             bool noWalls = !WorldGen.SolidTile(pos.X - 1, pos.Y - 1) && !WorldGen.SolidTile(pos.X + 1, pos.Y - 1);
 
-            if (Main.tile[pos.X, pos.Y - 1].WallType != WallID.None && WorldGen.SolidTile(pos.ToPoint()) && noWalls && TryPlaceFurnitureOnHouseFloor(pos)) // Ground furniture
+			bool WallBehindTop = Main.tile[pos.X, pos.Y - 1].WallType == ModContent.WallType<QuartzBrickWallUnsafe>() || Main.tile[pos.X, pos.Y - 1].WallType == ModContent.WallType<ArqueriteBrickWallUnsafe>();
+			bool WallBehindBelow = Main.tile[pos.X, pos.Y + 1].WallType == ModContent.WallType<QuartzBrickWallUnsafe>() || Main.tile[pos.X, pos.Y + 1].WallType == ModContent.WallType<ArqueriteBrickWallUnsafe>();
+			bool WallBehind = Main.tile[pos].WallType == ModContent.WallType<QuartzBrickWallUnsafe>() || Main.tile[pos].WallType == ModContent.WallType<ArqueriteBrickWallUnsafe>();
+
+			if (WallBehindTop && WorldGen.SolidTile(pos.ToPoint()) && noWalls && TryPlaceFurnitureOnHouseFloor(pos) && !Main.tile[pos].HasTile) // Ground furniture
                 continue;
 
-            noWalls = !WorldGen.SolidTile(pos.X - 1, pos.Y + 1) && !WorldGen.SolidTile(pos.X + 1, pos.Y + 1);
+			noWalls = !WorldGen.SolidTile(pos.X - 1, pos.Y + 1) && !WorldGen.SolidTile(pos.X + 1, pos.Y + 1);
 
-            if (Main.tile[pos.X, pos.Y + 1].WallType != WallID.None && WorldGen.SolidTile(pos.ToPoint()) && noWalls && TryPlaceFurnitureOnCeiling(pos))
+            if (WallBehindBelow && WorldGen.SolidTile(pos.ToPoint()) && noWalls && TryPlaceFurnitureOnCeiling(pos) && !Main.tile[pos].HasTile)
                 continue;
 
             noWalls = !WorldGen.SolidTile(pos.X - 1, pos.Y) && !WorldGen.SolidTile(pos.X + 1, pos.Y);
 
-            if (!noWalls && Main.tile[pos].WallType != WallID.None && GoodPlaceForTorch(pos) && WorldGen.genRand.NextBool(60))
+            if (!noWalls && WallBehind && GoodPlaceForTorch(pos) && WorldGen.genRand.NextBool(60) && !Main.tile[pos].HasTile)
                 WorldGen.PlaceTile(pos.X, pos.Y, ModContent.TileType<GeoTorch>(), true);
 
-            if (!HasSolidAdjacent(pos.X, pos.Y) && WorldGen.genRand.NextBool(2600))
-                WorldGen.PlaceObject(pos.X, pos.Y, ModContent.TileType<ForTheSakeOfMakingGadgets>(), true);
+            if (!HasSolidAdjacent(pos.X, pos.Y) && WorldGen.genRand.NextBool(200) && !Main.tile[pos].HasTile)
+            {
+				bool canPlacePainting = true;
+				if (nearDepthsPainting(pos.X, pos.Y))
+					canPlacePainting = false;
+				if (canPlacePainting)
+				{
+					PaintingEntry paintingEntry = RandDarknessPicture();
+					if (!WorldGen.nearPicture(pos.X, pos.Y))
+					{
+						WorldGen.PlaceTile(pos.X, pos.Y, paintingEntry.tileType, mute: true, forced: false, -1, paintingEntry.style);
+					}
+				}
+			}
         }
     }
 
@@ -266,7 +279,19 @@ internal class DepthsBuilding
     {
         if (WorldGen.genRand.NextBool(18))
         {
-            WorldGen.PlaceObject(pos.X, pos.Y + 1, ModContent.TileType<DepthsVanityBanners>(), style: 3, direction: WorldGen.genRand.NextBool() ? -1 : 1);
+			int HangingTile = WorldGen.genRand.Next(3);
+			switch (HangingTile)
+			{
+				case 0:
+					WorldGen.PlaceObject(pos.X, pos.Y + 1, ModContent.TileType<DepthsVanityBanners>(), style: WorldGen.genRand.Next(6), direction: WorldGen.genRand.NextBool() ? -1 : 1);
+					break;
+				case 1:
+					WorldGen.PlaceObject(pos.X, pos.Y + 1, ModContent.TileType<QuartzChandelier>(), direction: WorldGen.genRand.NextBool() ? -1 : 1);
+					break;
+				case 2:
+					WorldGen.PlaceObject(pos.X, pos.Y + 1, ModContent.TileType<QuartzLantern>(), direction: WorldGen.genRand.NextBool() ? -1 : 1);
+					break;
+			}
             return true;
         }
         return false;
@@ -279,7 +304,7 @@ internal class DepthsBuilding
     /// <returns>Whether any furniture was placed or not.</returns>
     private static bool TryPlaceFurnitureOnHouseFloor(Point16 pos)
     {
-        if (WorldGen.genRand.NextBool(6))
+        if (WorldGen.genRand.NextBool(14))
         {
             int type = WorldGen.genRand.Next(Furnitures);
 
@@ -292,9 +317,82 @@ internal class DepthsBuilding
                 yOff = 2;
 
             WorldGen.PlaceObject(pos.X, pos.Y - yOff, type, direction: WorldGen.genRand.NextBool() ? -1 : 1);
-            return true;
+
+            if (type == ModContent.TileType<QuartzWorkbench>())
+            {
+                if (Main.rand.NextBool(3))
+                    WorldGen.PlaceObject(pos.X, pos.Y - yOff - 1, ModContent.TileType<QuartzCandle>(), direction: WorldGen.genRand.NextBool() ? -1 : 1);
+                bool chairDir = WorldGen.genRand.NextBool();
+                WorldGen.PlaceObject(pos.X - (chairDir ? -2 : 1), pos.Y - yOff, ModContent.TileType<QuartzChair>(), direction: chairDir ? -1 : 1);
+            }
+			return true;
         }
 
         return false;
     }
+
+	/// <summary>
+	///  Checks for nearby Depths Paintings. 
+	///  Mainly used for depths houses to not place paintings both too close each other and make sure paintings dont overlap each other as well
+	/// </summary>
+	/// <param name="x">The tied x position of the search</param>
+	/// <param name="y">The tied y position of the search</param>
+	/// <returns>False if no paintings are found</returns>
+	public static bool nearDepthsPainting(int x, int y)
+	{
+		for (int i = x - 8; i <= x + 8; i++)
+		{
+			for (int j = y - 5; j <= y + 5; j++)
+			{
+				if (Main.tile[i, j].HasTile && (Main.tile[i, j].TileType == ModContent.TileType<FlowingQuicksilver>() || Main.tile[i, j].TileType == ModContent.TileType<ForTheSakeOfMakingGadgets>() || Main.tile[i, j].TileType == ModContent.TileType<AltarOfGems>() || Main.tile[i, j].TileType == ModContent.TileType<DONOTDRINK>() || Main.tile[i, j].TileType == ModContent.TileType<OtherPortal>() || Main.tile[i, j].TileType == ModContent.TileType<TheUnknownDepthsBelow>() || Main.tile[i, j].TileType == ModContent.TileType<ImPurrSonation>() || Main.tile[i, j].TileType == ModContent.TileType<MusiciansBestFriend>() || Main.tile[i, j].TileType == ModContent.TileType<Mercury>())) //3x3, 4x3, 3x4, 4x6
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public static PaintingEntry RandDarknessPicture()
+	{
+		int num = WorldGen.genRand.Next(8);
+		int num2 = 0;
+		switch (num)
+		{
+			case 0:
+				num = ModContent.TileType<OtherPortal>();
+				break;
+			case 1:
+				num = ModContent.TileType<MusiciansBestFriend>();
+				break;
+			case 2:
+				num = ModContent.TileType<ImPurrSonation>();
+				break;
+			case 3:
+				num = ModContent.TileType<AltarOfGems>();
+				break;
+			case 4:
+				num = ModContent.TileType<ForTheSakeOfMakingGadgets>();
+				break;
+			case 5:
+				num = ModContent.TileType<Mercury>();
+				break;
+			case 6:
+				num = ModContent.TileType<ChaosCat>();
+				break;
+			case 7:
+				num = ModContent.TileType<TheUnknownDepthsBelow>();
+				break;
+			case 8:
+				num = ModContent.TileType<FlowingQuicksilver>();
+				break;
+			default:
+				num = ModContent.TileType<DONOTDRINK>();
+				break;
+		}
+		PaintingEntry result = default(PaintingEntry);
+		result.tileType = num;
+		result.style = num2;
+		return result;
+	}
 }

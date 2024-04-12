@@ -17,9 +17,10 @@ namespace TheDepths.Tiles.Furniture
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileTable[Type] = true;
-			Main.tileLavaDeath[Type] = true;
+			Main.tileLavaDeath[Type] = false;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x1);
 			TileObjectData.newTile.CoordinateHeights = new int[]{ 18 };
+			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			LocalizedText name = CreateMapEntryName();

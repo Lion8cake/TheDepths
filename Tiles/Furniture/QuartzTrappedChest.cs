@@ -22,6 +22,7 @@ namespace TheDepths.Tiles.Furniture
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileSpelunker[Type] = true;
+			Main.tileLavaDeath[Type] = false;
             TileID.Sets.HasOutlines[Type] = true;
             TileID.Sets.BasicChestFake[Type] = true;
             TileID.Sets.AvoidedByNPCs[Type] = true;

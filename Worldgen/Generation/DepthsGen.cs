@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using ReLogic.Utilities;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -33,11 +34,13 @@ internal class DepthsGen
         int biomeWidth = Main.maxTilesX; // Change this and the biome will adjust in size accordingly.
         
         progress.Message = "Digging the Depths...";
+		progress.Set(0.0);
 
-        int centerSizeHalved = Main.maxTilesX / 6; // Middle area with the buildings takes up 1/3rd of the world
-        AddBaseTiles(0, Main.maxTilesY - 220, biomeWidth, 220, 20, centerSizeHalved); // Adds base tiles - Shale, Arquerite, Shalestone
+		int centerSizeHalved = Main.maxTilesX / 6; // Middle area with the buildings takes up 1/3rd of the world
+        AddBaseTiles(0, Main.maxTilesY - 220, biomeWidth, 220, 20, centerSizeHalved, out var baseProgress); // Adds base tiles - Shale, Arquerite, Shalestone
+		progress.Set(baseProgress / 2.0 + 0.5);
 
-        for (int i = 0; i < 2; ++i) // Adds the two chasms, and their stalactites
+		for (int i = 0; i < 2; ++i) // Adds the two chasms, and their stalactites
         {
             ClearTunnel(0, Main.maxTilesY - 160, biomeWidth, 80, 0.32f, true); // Top one is bigger (as per the widenFactor of .32)
             AddStalactites(0, Main.maxTilesY - 160, biomeWidth, 15, 20, 30, 60);
@@ -46,7 +49,7 @@ internal class DepthsGen
         }
 
         AddHolesBetweenTunnels(0, Main.maxTilesY - 160, biomeWidth, 120, 240); // Digs pits between the two chasms
-        AddWaterHoles(0, Main.maxTilesY - 200, biomeWidth, 160);
+        AddLiquidHoles(0, Main.maxTilesY - 200, biomeWidth, 160);
 
         int nightmareGroveSize = Main.maxTilesX / 6; // Each nightmare grove takes up 1/6th of the world, and non-grove is the rest
         AddNightmareGrove(nightmareGroveSize, 0);
@@ -60,7 +63,7 @@ internal class DepthsGen
         int x = 0;
         int side = 0;
 
-        if (WorldGen.drunkWorldGen)
+		if (WorldGen.drunkWorldGen)
         {
             if (WorldGen.genRand.NextBool(2))
             {
@@ -78,11 +81,13 @@ internal class DepthsGen
         }
 
         progress.Message = "Digging the depths...";
+		progress.Set(0.0);
 
-        int buildingArea = Main.maxTilesX / 6; // Middle area with the buildings takes up 1/3rd of the world
-        AddBaseTiles(x, Main.maxTilesY - 220, biomeWidth, 220, 20, buildingArea); // Adds base tiles - Shale, Arquerite, Shalestone
+		int buildingArea = Main.maxTilesX / 6; // Middle area with the buildings takes up 1/3rd of the world
+        AddBaseTiles(x, Main.maxTilesY - 220, biomeWidth, 220, 20, buildingArea, out var baseProgress); // Adds base tiles - Shale, Arquerite, Shalestone
+		progress.Set(baseProgress / 2.0 + 0.5);
 
-        for (int i = 0; i < 2; ++i) // Adds the two chasms, and their stalactites
+		for (int i = 0; i < 2; ++i) // Adds the two chasms, and their stalactites
         {
             ClearTunnel(x, Main.maxTilesY - 160, biomeWidth, 80, 0.32f, true); // Top one is bigger (as per the widenFactor of .32)
             AddStalactites(x, Main.maxTilesY - 160, biomeWidth, 15, 20, 30, 60);
@@ -91,7 +96,7 @@ internal class DepthsGen
         }
 
         AddHolesBetweenTunnels(x, Main.maxTilesY - 160, biomeWidth, 120, 240); // Digs pits between the two chasms
-        AddWaterHoles(x, Main.maxTilesY - 200, biomeWidth, 160);
+        AddLiquidHoles(x, Main.maxTilesY - 200, biomeWidth, 160);
 
         progress.Message = "Growing bioluminecent plants in very dark areas";
 
@@ -171,24 +176,32 @@ internal class DepthsGen
     }
 
     /// <summary>
-    /// Spams holes full of water throughout the biome.
+    /// Spams holes full of liquid (water or quicksilver) throughout the biome.
     /// </summary>
     /// <param name="x">X position (left).</param>
     /// <param name="y">Y position (top).</param>
     /// <param name="width">Width of the area to add water holes to.</param>
     /// <param name="height">Height of the area to add water holes to.</param>
-    private static void AddWaterHoles(int x, int y, int width, int height)
+    private static void AddLiquidHoles(int x, int y, int width, int height)
     {
-        for (int i = 0; i < Main.maxTilesX / 4200f * 300; ++i)
+		for (int i = 0; i < Main.maxTilesX / 4200f * 300; ++i)
         {
-            int placeX = x + WorldGen.genRand.Next(width);
-            int placeY = y + WorldGen.genRand.Next(height);
-            Tile tile = Main.tile[placeX, placeY];
-
-            if (tile.HasTile)
-                WorldGen.digTunnel(placeX, placeY, WorldGen.genRand.NextFloat(-2, 2f), WorldGen.genRand.NextFloat(-2f, 2f), WorldGen.genRand.Next(2, 15), 2, true);
+			int placeX = x + WorldGen.genRand.Next(width);
+			int placeY = y + WorldGen.genRand.Next(height);
+			Tile tile = Main.tile[placeX, placeY];
+			if (tile.HasTile)
+                digTunnel(placeX, placeY, WorldGen.genRand.NextFloat(-2, 2f), WorldGen.genRand.NextFloat(-2f, 2f), WorldGen.genRand.Next(2, 15), 2, LiquidID.Water);
         }
-    }
+
+		for (int i = 0; i < Main.maxTilesX / 2100f * 150; ++i)
+		{
+			int placeX = x + WorldGen.genRand.Next(width);
+			int placeY = y + WorldGen.genRand.Next(height);
+			Tile tile = Main.tile[placeX, placeY];
+			if (tile.HasTile)
+				digTunnel(placeX, placeY, WorldGen.genRand.NextFloat(-2, 2f), WorldGen.genRand.NextFloat(-2f, 2f), WorldGen.genRand.Next(2, 30), 4, LiquidID.Lava);
+		}
+	}
 
     /// <summary>
     /// Adds holes between the chasms for easier player access.
@@ -212,7 +225,7 @@ internal class DepthsGen
             while (!WorldGen.SolidTile(x, j)) // Go to ground
                 j++;
 
-            WorldGen.digTunnel(x, j, WorldGen.genRand.NextFloat(-2f, 2f), WorldGen.genRand.NextFloat(3, 9), WorldGen.genRand.Next(14, 18), 10);
+            digTunnel(x, j, WorldGen.genRand.NextFloat(-2f, 2f), WorldGen.genRand.NextFloat(3, 9), WorldGen.genRand.Next(14, 18), 10);
         }
     }
 
@@ -336,7 +349,7 @@ internal class DepthsGen
     /// </summary>
     /// <param name="x">X position (left).</param>
     /// <param name="y">Y position (top).</param>
-    public static void AddBaseTiles(int x, int y, int width, int height, int fadeHeight, int middleAreaSizeHalved)
+    public static void AddBaseTiles(int x, int y, int width, int height, int fadeHeight, int middleAreaSizeHalved, out double progress)
     {
         FastNoiseLite noise = new(WorldGen._genRandSeed + _seedNumber++);
         noise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
@@ -345,10 +358,11 @@ internal class DepthsGen
         noise.SetFractalGain(0.13f);
         noise.SetFractalLacunarity(3.95f);
         noise.SetFractalPingPongStrength(0.39f);
-
+        progress = 0;
         for (int i = x; i < x + width; ++i)
         {
-            float modFadeHeight = fadeHeight * (noise.GetNoise(i, -100) + 1); // Increases or decreases the depth of the gradient
+			progress = (double)i / (double)(Main.maxTilesX - 1);
+			float modFadeHeight = fadeHeight * (noise.GetNoise(i, -100) + 1); // Increases or decreases the depth of the gradient
             int baseY = y - (int)modFadeHeight;
 
             for (int j = baseY; j < baseY + height + modFadeHeight; ++j)
@@ -393,6 +407,16 @@ internal class DepthsGen
 
                 if (!skipWalls)
                     tile.WallType = (ushort)ModContent.WallType<ShaleWallUnsafe>();
+            }
+
+            for (int l = Main.maxTilesY; l > y - 60; l--)
+            {
+                Tile tile = Main.tile[i, l];
+                if (tile.LiquidType > -1)
+                {
+                    tile.LiquidType = -1;
+                    tile.LiquidAmount = 0;
+                }
             }
         }
 
@@ -455,15 +479,11 @@ internal class DepthsGen
                     if (clearWalls)
                     {
                         tile.ClearEverything();
-						tile.LiquidAmount = 0;
-						tile.LiquidType = -1;
 						Main.tile[realX, y - j + 1].Clear(Terraria.DataStructures.TileDataType.Wall);
                         Main.tile[realX, y - j - 1].Clear(Terraria.DataStructures.TileDataType.Wall);
                     }
                     else
                     {
-						tile.LiquidAmount = 0;
-						tile.LiquidType = -1;
 						tile.Clear(Terraria.DataStructures.TileDataType.Tile);
 					}
                 }
@@ -479,15 +499,11 @@ internal class DepthsGen
                     if (clearWalls)
                     {
                         tile2.ClearEverything();
-						tile2.LiquidAmount = 0;
-						tile2.LiquidType = -1;
 						Main.tile[realX, y + j + 1].Clear(Terraria.DataStructures.TileDataType.Wall);
                         Main.tile[realX, y + j - 1].Clear(Terraria.DataStructures.TileDataType.Wall);
 					}
                     else
                     {
-                        tile2.LiquidAmount = 0;
-                        tile2.LiquidType = -1;
                         tile2.Clear(Terraria.DataStructures.TileDataType.Tile);
                     }
                 }
@@ -559,7 +575,7 @@ internal class DepthsGen
         {
             int height = WorldGen.genRand.Next(4, 17);
 
-            for (int y = j + 1; y < j + height; y++)
+            for (int y = j + 1; y < j + (height); y++)
             {
                 if (WorldGen.SolidTile(i, y))
                     break;  
@@ -583,4 +599,82 @@ internal class DepthsGen
                     return true;
         return false;
     }
+
+    /// <summary>
+    /// A clone of WorldGen.digTunnel, Creates a simple cave that can either be filled with a liquid or set with air (return liquid as -1)
+    /// Added by Lion8cake, the decompiled terraria junkie
+    /// </summary>
+    /// <param name="X">X position of the tunnel</param>
+    /// <param name="Y">Y position of the tunnel</param>
+    /// <param name="xDir">X direction of the tunnel</param>
+    /// <param name="yDir">Y direction of the tunnel</param>
+    /// <param name="Steps">How mant steps the tunnel has to generate</param>
+    /// <param name="Size">How bug the tunnel is</param>
+    /// <param name="liquid">the liquid ID of what the cave is filled with</param>
+    /// <returns></returns>
+	public static Vector2D digTunnel(double X, double Y, double xDir, double yDir, int Steps, int Size, int liquid = -1)
+	{
+		double num = X;
+		double num2 = Y;
+		try
+		{
+			double num3 = 0.0;
+			double num4 = 0.0;
+			double num5 = Size;
+			num = Utils.Clamp(num, num5 + 1.0, (double)Main.maxTilesX - num5 - 1.0);
+			num2 = Utils.Clamp(num2, num5 + 1.0, (double)Main.maxTilesY - num5 - 1.0);
+			for (int i = 0; i < Steps; i++)
+			{
+				for (int j = (int)(num - num5); (double)j <= num + num5; j++)
+				{
+					for (int k = (int)(num2 - num5); (double)k <= num2 + num5; k++)
+					{
+						if (Math.Abs((double)j - num) + Math.Abs((double)k - num2) < num5 * (1.0 + (double)WorldGen.genRand.Next(-10, 11) * 0.005) && j >= 0 && j < Main.maxTilesX && k >= 0 && k < Main.maxTilesY)
+						{
+                            Tile tile = Main.tile[j, k];
+                            tile.HasTile = false;
+							if (liquid > -1)
+							{
+								tile.LiquidAmount = byte.MaxValue;
+                                tile.LiquidType = liquid;
+							}
+						}
+					}
+				}
+				num5 += (double)WorldGen.genRand.Next(-50, 51) * 0.03;
+				if (num5 < (double)Size * 0.6)
+				{
+					num5 = (double)Size * 0.6;
+				}
+				if (num5 > (double)(Size * 2))
+				{
+					num5 = Size * 2;
+				}
+				num3 += (double)WorldGen.genRand.Next(-20, 21) * 0.01;
+				num4 += (double)WorldGen.genRand.Next(-20, 21) * 0.01;
+				if (num3 < -1.0)
+				{
+					num3 = -1.0;
+				}
+				if (num3 > 1.0)
+				{
+					num3 = 1.0;
+				}
+				if (num4 < -1.0)
+				{
+					num4 = -1.0;
+				}
+				if (num4 > 1.0)
+				{
+					num4 = 1.0;
+				}
+				num += (xDir + num3) * 0.6;
+				num2 += (yDir + num4) * 0.6;
+			}
+		}
+		catch
+		{
+		}
+		return new Vector2D(num, num2);
+	}
 }

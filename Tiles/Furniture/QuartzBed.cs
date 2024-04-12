@@ -16,7 +16,7 @@ namespace TheDepths.Tiles.Furniture
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
-            Main.tileLavaDeath[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             TileID.Sets.HasOutlines[Type] = true;
             TileID.Sets.CanBeSleptIn[Type] = true;
             TileID.Sets.InteractibleByNPCs[Type] = true;
@@ -30,7 +30,8 @@ namespace TheDepths.Tiles.Furniture
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2);
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
-            TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
+			TileObjectData.newTile.LavaDeath = false;
+			TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
             TileObjectData.addTile(Type);
 
             AddMapEntry(new Color(255, 255, 255), CreateMapEntryName());

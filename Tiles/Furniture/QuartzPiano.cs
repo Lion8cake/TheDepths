@@ -18,7 +18,8 @@ namespace TheDepths.Tiles.Furniture
             TileObjectData.newTile.Height = 2;
             TileObjectData.newTile.Origin = new Point16(0, 1);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
-            TileObjectData.addTile(Type);
+			TileObjectData.newTile.LavaDeath = false;
+			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			AddMapEntry(new Color(255, 255, 255), CreateMapEntryName());
             TileID.Sets.DisableSmartCursor[Type] = true;

@@ -16,13 +16,13 @@ namespace TheDepths.Tiles.Furniture
         public override void SetStaticDefaults()
         {
 			Main.tileFrameImportant[Type] = true;
-			Main.tileLavaDeath[Type] = true;
+			Main.tileLavaDeath[Type] = false;
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleOnTable1x1);
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.StyleWrapLimit = 36;
 			TileObjectData.newTile.CoordinateHeights = new int[] { 20 };
 			TileObjectData.newTile.DrawYOffset = -4;
-			TileObjectData.newTile.LavaDeath = true;
+			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
 			Main.tileLighted[Type] = true;
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);

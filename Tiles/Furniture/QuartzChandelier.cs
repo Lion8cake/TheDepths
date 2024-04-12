@@ -16,7 +16,7 @@ namespace TheDepths.Tiles.Furniture
         {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
-			Main.tileLavaDeath[Type] = true;
+			Main.tileLavaDeath[Type] = false;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
 			TileObjectData.newTile.Height = 3;
 			TileObjectData.newTile.Width = 3;
@@ -26,7 +26,7 @@ namespace TheDepths.Tiles.Furniture
 			TileObjectData.newTile.Origin = new Point16(1, 0);
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide, 1, 1);
 			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
-			TileObjectData.newTile.LavaDeath = true;
+			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 			Main.tileLighted[Type] = true;
