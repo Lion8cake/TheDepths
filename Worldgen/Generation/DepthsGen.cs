@@ -200,7 +200,7 @@ internal class DepthsGen
     /// <param name="maxSpace">Maximum distance between holes.</param>
     private static void AddHolesBetweenTunnels(int x, int y, int width, int minSpace, int maxSpace)
     {
-        while (x < width)
+        while (x < (width - maxSpace))
         {
             x += WorldGen.genRand.Next(minSpace, maxSpace);
 
@@ -278,12 +278,12 @@ internal class DepthsGen
     /// <param name="maxSpace">Maximum spacing between each stalactite.</param>
     private static void AddStalactites(int x, int y, int width, int minHeight, int maxHeight, int minSpace, int maxSpace)
     {
-        while (x < width)
+        while (x < (width - maxSpace))
         {
         retry: // Goto is easier to set up here to escape the while
-            x += WorldGen.genRand.Next(minSpace, maxSpace);
+			x += WorldGen.genRand.Next(minSpace, maxSpace);
 
-            if (Main.tile[x, y].HasTile || x > Main.maxTilesX) // Stop if there's no space or if out of bounds
+			if (Main.tile[x, y].HasTile || x > Main.maxTilesX) // Stop if there's no space or if out of bounds
                 continue;
 
             int j = y;
@@ -351,7 +351,7 @@ internal class DepthsGen
             float modFadeHeight = fadeHeight * (noise.GetNoise(i, -100) + 1); // Increases or decreases the depth of the gradient
             int baseY = y - (int)modFadeHeight;
 
-            for (int j = baseY; j < baseY + height; ++j)
+            for (int j = baseY; j < baseY + height + modFadeHeight; ++j)
             {
                 float value = noise.GetNoise(i, j);
                 int type = ModContent.TileType<ShaleBlock>();
@@ -387,6 +387,8 @@ internal class DepthsGen
                 Tile tile = Main.tile[i, j];
                 tile.TileType = (ushort)type;
                 tile.HasTile = true;
+                tile.LiquidType = -1;
+                tile.LiquidAmount = 0;
                 tile.Slope = SlopeType.Solid;
 
                 if (!skipWalls)
@@ -453,11 +455,17 @@ internal class DepthsGen
                     if (clearWalls)
                     {
                         tile.ClearEverything();
-                        Main.tile[realX, y - j + 1].Clear(Terraria.DataStructures.TileDataType.Wall);
+						tile.LiquidAmount = 0;
+						tile.LiquidType = -1;
+						Main.tile[realX, y - j + 1].Clear(Terraria.DataStructures.TileDataType.Wall);
                         Main.tile[realX, y - j - 1].Clear(Terraria.DataStructures.TileDataType.Wall);
                     }
                     else
-                        Main.tile[realX, y - j].Clear(Terraria.DataStructures.TileDataType.Tile);
+                    {
+						tile.LiquidAmount = 0;
+						tile.LiquidType = -1;
+						tile.Clear(Terraria.DataStructures.TileDataType.Tile);
+					}
                 }
 
                 realX = Math.Abs(i - j) % Main.maxTilesX; // This offsets the tunnel so it looks random, even though it's technically mirrored
@@ -467,14 +475,21 @@ internal class DepthsGen
 
                 if (Main.tile[realX, y + j].HasTile && value > NoiseCutoff) // Clear tiles in the bottom half
                 {
+                    Tile tile2 = Main.tile[realX, y + j];
                     if (clearWalls)
                     {
-                        Main.tile[realX, y + j].ClearEverything();
-                        Main.tile[realX, y + j + 1].Clear(Terraria.DataStructures.TileDataType.Wall);
+                        tile2.ClearEverything();
+						tile2.LiquidAmount = 0;
+						tile2.LiquidType = -1;
+						Main.tile[realX, y + j + 1].Clear(Terraria.DataStructures.TileDataType.Wall);
                         Main.tile[realX, y + j - 1].Clear(Terraria.DataStructures.TileDataType.Wall);
-                    }
+					}
                     else
-                        Main.tile[realX, y + j].Clear(Terraria.DataStructures.TileDataType.Tile);
+                    {
+                        tile2.LiquidAmount = 0;
+                        tile2.LiquidType = -1;
+                        tile2.Clear(Terraria.DataStructures.TileDataType.Tile);
+                    }
                 }
             }
         }

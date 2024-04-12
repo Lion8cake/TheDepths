@@ -1897,6 +1897,11 @@ Mods: {
 					双击{$Key.DOWN}下砸
 					'''
 			}
+
+			WorldGenTestItem: {
+				// DisplayName: World Gen Test Item
+				// Tooltip: ""
+			}
 		}
 
 		NPCs: {
