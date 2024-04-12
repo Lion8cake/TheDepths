@@ -152,7 +152,8 @@ internal class DepthsBuilding
                 else
                     tile.ClearTile();
 
-                tile.WallType = Main.tile[center.X, y - dir].WallType; // Copy wall to here
+                if (above.WallType != WallID.None)
+                    tile.WallType = Main.tile[center.X, y - dir].WallType; // Copy wall to here
             }
         }
     }

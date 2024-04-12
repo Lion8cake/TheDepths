@@ -224,7 +224,7 @@ namespace TheDepths.Worldgen
 
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
 		{
-			if (isWorldDepths || !ModSupport.DepthsModCalling.FargoBoBWSupport)
+			if (isWorldDepths || WorldGen.drunkWorldGen || WorldGen.remixWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport)
 			{
 				int baseUnderWorldIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Underworld"));
 

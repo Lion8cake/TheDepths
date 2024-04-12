@@ -42,7 +42,7 @@ internal class DepthsGen
             ClearTunnel(0, Main.maxTilesY - 160, biomeWidth, 80, 0.32f, true); // Top one is bigger (as per the widenFactor of .32)
             AddStalactites(0, Main.maxTilesY - 160, biomeWidth, 15, 20, 30, 60);
             ClearTunnel(0, Main.maxTilesY - 80, biomeWidth, 80, 0.06f, false); // and the bottom one is smaller (widenFactor of .06)
-            AddStalactites(0, Main.maxTilesY - 80, biomeWidth, 10, 14, 20, 50);
+            AddStalactites(0, Main.maxTilesY - 80, biomeWidth, 4, 8, 20, 50);
         }
 
         AddHolesBetweenTunnels(0, Main.maxTilesY - 160, biomeWidth, 120, 240); // Digs pits between the two chasms
@@ -87,7 +87,7 @@ internal class DepthsGen
             ClearTunnel(x, Main.maxTilesY - 160, biomeWidth, 80, 0.32f, true); // Top one is bigger (as per the widenFactor of .32)
             AddStalactites(x, Main.maxTilesY - 160, biomeWidth, 15, 20, 30, 60);
             ClearTunnel(x, Main.maxTilesY - 80, biomeWidth, 80, 0.06f, false); // and the bottom one is smaller (widenFactor of .06)
-            AddStalactites(x, Main.maxTilesY - 80, biomeWidth, 10, 14, 20, 50);
+            AddStalactites(x, Main.maxTilesY - 80, biomeWidth, 4, 8, 20, 50);
         }
 
         AddHolesBetweenTunnels(x, Main.maxTilesY - 160, biomeWidth, 120, 240); // Digs pits between the two chasms
@@ -253,8 +253,6 @@ internal class DepthsGen
                         WorldGen.KillTile(i, j - 1, false, false, true);
                 }
             }
-            else if (WorldGen.genRand.NextBool(30)) // Try and place a large crystal, or
-                WorldGen.PlaceObject(i, j - 2, ModContent.TileType<LargeCrystal>(), true);
             else if (WorldGen.genRand.NextBool(20)) // Try and place a shadow shrub.
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<ShadowShrub>(), true, 0);
         }
@@ -262,7 +260,7 @@ internal class DepthsGen
         if (!WorldGen.SolidTile(i, j + 1)) // If no tile below...
         {
             if (WorldGen.genRand.NextBool(40)) // Try and place a quartz chunk,
-                WorldGen.TileRunner(i, j + 1, WorldGen.genRand.NextFloat(2, 5), 3, ModContent.TileType<Quartz>(), true);
+                WorldGen.TileRunner(i, j + 1, WorldGen.genRand.NextFloat(1, 4), 3, ModContent.TileType<Quartz>(), true);
             else if (WorldGen.genRand.NextBool(26)) // Or try and place a large crystal.
                 WorldGen.PlaceObject(i, j + 1, ModContent.TileType<LargeCrystal>(), true);
         }
@@ -359,6 +357,7 @@ internal class DepthsGen
                 int type = ModContent.TileType<ShaleBlock>();
                 int currentDepth = j - baseY;
                 float adjustment = currentDepth / (float)height;
+                bool skipWalls = false;
 
                 if (value > 0.42f - adjustment * 0.15f && adjustment > 0.28f)
                     type = ModContent.TileType<ArqueriteOre>();
@@ -374,18 +373,24 @@ internal class DepthsGen
 
                     if (WorldGen.genRand.NextFloat() < diff)
                         continue;
+
+                    skipWalls = HasOpenAdjacent(i, j);
                 }
                 else if (adjustment < 0.25f) // Opens holes in the ceiling when above the second tunnel
                 {
                     if (!WorldGen.SolidTile(i, j))
                         continue;
+
+                    skipWalls = HasOpenAdjacent(i, j);
                 }
 
                 Tile tile = Main.tile[i, j];
                 tile.TileType = (ushort)type;
                 tile.HasTile = true;
                 tile.Slope = SlopeType.Solid;
-                tile.WallType = (ushort)ModContent.WallType<ShaleWallUnsafe>();
+
+                if (!skipWalls)
+                    tile.WallType = (ushort)ModContent.WallType<ShaleWallUnsafe>();
             }
         }
 
@@ -441,10 +446,16 @@ internal class DepthsGen
                 if (realX >= x + width)
                     realX -= width;
 
-                if (Main.tile[realX, y - j].HasTile && value > NoiseCutoff) // Clear tiles in the top half
+                Tile tile = Main.tile[realX, y - j];
+
+                if (tile.HasTile && value > NoiseCutoff) // Clear tiles in the top half
                 {
                     if (clearWalls)
-                        Main.tile[realX, y - j].ClearEverything();
+                    {
+                        tile.ClearEverything();
+                        Main.tile[realX, y - j + 1].Clear(Terraria.DataStructures.TileDataType.Wall);
+                        Main.tile[realX, y - j - 1].Clear(Terraria.DataStructures.TileDataType.Wall);
+                    }
                     else
                         Main.tile[realX, y - j].Clear(Terraria.DataStructures.TileDataType.Tile);
                 }
@@ -457,7 +468,11 @@ internal class DepthsGen
                 if (Main.tile[realX, y + j].HasTile && value > NoiseCutoff) // Clear tiles in the bottom half
                 {
                     if (clearWalls)
+                    {
                         Main.tile[realX, y + j].ClearEverything();
+                        Main.tile[realX, y + j + 1].Clear(Terraria.DataStructures.TileDataType.Wall);
+                        Main.tile[realX, y + j - 1].Clear(Terraria.DataStructures.TileDataType.Wall);
+                    }
                     else
                         Main.tile[realX, y + j].Clear(Terraria.DataStructures.TileDataType.Tile);
                 }
