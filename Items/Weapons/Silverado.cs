@@ -27,7 +27,7 @@ namespace TheDepths.Items.Weapons
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noMelee = true;
 			Item.knockBack = 4; 
-			Item.value = 50000;
+			Item.value = Item.sellPrice(0, 3, 50, 0);
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item11;
 			Item.autoReuse = false;

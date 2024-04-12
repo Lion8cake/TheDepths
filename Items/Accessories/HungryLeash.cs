@@ -20,7 +20,7 @@ namespace TheDepths.Items.Accessories
 		{
 			Item.width = 24;
 			Item.height = 28;
-			Item.value = 300000;
+			Item.value = Item.sellPrice(0, 5, 0, 0);
 			Item.expert = true;
 			Item.rare = -12;
 			Item.accessory = true;

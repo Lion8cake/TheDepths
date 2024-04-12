@@ -25,7 +25,7 @@ namespace TheDepths.Items.Accessories
 			Item.rare = ItemRarityID.Orange;
 			Item.width = 10;
 			Item.accessory = true;
-			Item.value = 20000;
+			Item.value = Item.sellPrice(0, 2, 0, 0);
 			Item.height = 10;
 		}
 

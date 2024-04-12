@@ -42,6 +42,7 @@ namespace TheDepths.Items.Placeable
 
 			Recipe recipe3 = CreateRecipe();
 			recipe3.AddIngredient(ModContent.ItemType<Items.Placeable.QuartzBrickWall>(), 4);
+			recipe3.AddTile(TileID.WorkBenches);
 			recipe3.Register();
 		}
 	}
