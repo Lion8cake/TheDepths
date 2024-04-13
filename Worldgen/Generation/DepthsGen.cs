@@ -22,8 +22,8 @@ internal class DepthsGen
     /// <summary>
     /// A list of each Shale gem. Used for randomization. 
     /// </summary>
-    public static int[] Gems => [ModContent.TileType<ShalestoneAmethyst>(), ModContent.TileType<ShalestoneTopaz>(), ModContent.TileType<ShalestoneDiamond>(),
-        ModContent.TileType<ShalestoneSapphire>(),  ModContent.TileType<ShalestoneEmerald>(), ModContent.TileType<ShalestoneRuby>()];
+    public static int[] Gems => new int[] { ModContent.TileType<ShalestoneAmethyst>(), ModContent.TileType<ShalestoneTopaz>(), ModContent.TileType<ShalestoneDiamond>(),
+        ModContent.TileType<ShalestoneSapphire>(),  ModContent.TileType<ShalestoneEmerald>(), ModContent.TileType<ShalestoneRuby>() };
 
     /// <summary>
     /// The generation for the main Depths. This does not include the pots (as that's a different step to override), but it does include trees and nightmare grove.<br/>
@@ -53,13 +53,18 @@ internal class DepthsGen
 
         int nightmareGroveSize = Main.maxTilesX / 6; // Each nightmare grove takes up 1/6th of the world, and non-grove is the rest
         AddNightmareGrove(nightmareGroveSize, 0);
-        AddDepthsDecor(nightmareGroveSize);
         AddBuildings(Main.maxTilesX / 2 - centerSizeHalved, Main.maxTilesX / 2 + centerSizeHalved, Main.maxTilesY - 160); // Adds all of the buildings
-    }
+		AddDepthsDecor(nightmareGroveSize);
+
+		//TODO
+		//Drunk/remix quicksilver/lava ocean
+		//Drunk/remix underground blockers (to stop the underground getting filled with quicksilver)
+		//Remix island
+	}
 
     internal static void SpecialGenerate(GenerationProgress progress, GameConfiguration configuration)
     {
-        int biomeWidth = WorldGen.drunkWorldGen ? (int)(Main.maxTilesX / 2.6f) : Main.maxTilesX; // Change this and the biome will adjust in size accordingly.
+        int biomeWidth = WorldGen.drunkWorldGen ? (int)(Main.maxTilesX / 2) : Main.maxTilesX; // Change this and the biome will adjust in size accordingly.
         int x = 0;
         int side = 0;
 
@@ -74,7 +79,7 @@ internal class DepthsGen
             else
             {
                 side = 1;
-                x = Main.maxTilesX - (int)(Main.maxTilesX / 2.6f);
+                x = Main.maxTilesX - (int)(Main.maxTilesX / 2);
                 TheDepthsWorldGen.DrunkDepthsLeft = false;
                 TheDepthsWorldGen.DrunkDepthsRight = true;
             }
@@ -111,7 +116,7 @@ internal class DepthsGen
 
         if (side is 0 or 1)
             AddBuildings(Main.maxTilesX - buildingArea, Main.maxTilesX - 60, Main.maxTilesY - 160);
-    }
+	}
 
     /// <summary>
     /// Replaces ceiling tiles in the middle area of a drunk world without me having to add them manually.
@@ -201,6 +206,91 @@ internal class DepthsGen
 			if (tile.HasTile)
 				digTunnel(placeX, placeY, WorldGen.genRand.NextFloat(-2, 2f), WorldGen.genRand.NextFloat(-2f, 2f), WorldGen.genRand.Next(2, 30), 4, LiquidID.Lava);
 		}
+
+        //Quicksilver Ocean
+        if (WorldGen.drunkWorldGen || WorldGen.remixWorldGen)
+        {
+            for (int n = 0; n < Main.maxTilesX * 2; ++n)
+			{
+                int k = WorldGen.genRand.Next((int)((double)Main.maxTilesX * 0.35), (int)((double)Main.maxTilesX * 0.65));
+                int l = WorldGen.genRand.Next(Main.maxTilesY - 180, Main.maxTilesY - 10);
+				WorldGen.TileRunner(k, l, WorldGen.genRand.Next(5, 20), WorldGen.genRand.Next(5, 10), -2);
+                for (int i = (int)(Main.maxTilesX * 0.35); i < Main.maxTilesX * 0.65; ++i)
+                {
+                    for (int j = Main.maxTilesY; j > Main.maxTilesY - 220; --j)
+                    {
+                        Main.tile[i, j].WallType = 0;
+                    }
+                }
+			}
+		}
+
+		//Island, taken from vanilla
+		if (WorldGen.remixWorldGen)
+		{
+			int num854 = (int)((double)Main.maxTilesX * 0.38);
+			int num855 = (int)((double)Main.maxTilesX * 0.62);
+			int num856 = num854;
+			int num857 = Main.maxTilesY - 1;
+			int num858 = Main.maxTilesY - 135;
+			int num859 = Main.maxTilesY - 160;
+			bool flag55 = false;
+			for (; num857 < Main.maxTilesY - 1 || num856 < num855; num856++)
+			{
+				if (!flag55)
+				{
+					num857 -= WorldGen.genRand.Next(1, 4);
+					if (num857 < num858)
+					{
+						flag55 = true;
+					}
+				}
+				else if (num856 >= num855)
+				{
+					num857 += WorldGen.genRand.Next(1, 4);
+					if (num857 > Main.maxTilesY - 1)
+					{
+						num857 = Main.maxTilesY - 1;
+					}
+				}
+				else
+				{
+					if ((num856 <= Main.maxTilesX / 2 - 5 || num856 >= Main.maxTilesX / 2 + 5) && WorldGen.genRand.Next(4) == 0)
+					{
+						if (WorldGen.genRand.Next(3) == 0)
+						{
+							num857 += WorldGen.genRand.Next(-1, 2);
+						}
+						else if (WorldGen.genRand.Next(6) == 0)
+						{
+							num857 += WorldGen.genRand.Next(-2, 3);
+						}
+						else if (WorldGen.genRand.Next(8) == 0)
+						{
+							num857 += WorldGen.genRand.Next(-4, 5);
+						}
+					}
+					if (num857 < num859)
+					{
+						num857 = num859;
+					}
+					if (num857 > num858)
+					{
+						num857 = num858;
+					}
+				}
+				for (int num860 = num857; num860 > num857 - 20; num860--)
+				{
+					Main.tile[num856, num860].LiquidAmount = 0;
+				}
+				for (int num861 = num857; num861 < Main.maxTilesY; num861++)
+				{
+					Tile tile = Main.tile[num856, num861];
+					tile.HasTile = true;
+					Main.tile[num856, num861].TileType = (ushort)ModContent.TileType<ShaleBlock>();
+				}
+			}
+		}
 	}
 
     /// <summary>
@@ -270,7 +360,8 @@ internal class DepthsGen
                 WorldGen.PlaceObject(i, j - 1, ModContent.TileType<ShadowShrub>(), true, 0);
         }
 
-        if (!WorldGen.SolidTile(i, j + 1)) // If no tile below...
+        Tile tile = Main.tile[i, j];
+        if (!WorldGen.SolidTile(i, j + 1) && (tile.TileType != ModContent.TileType<QuartzBricks>() || tile.TileType != ModContent.TileType<ArqueriteBricks>())) // If no tile below and is not any depths' bricks...
         {
             if (WorldGen.genRand.NextBool(40)) // Try and place a quartz chunk,
                 WorldGen.TileRunner(i, j + 1, WorldGen.genRand.NextFloat(1, 4), 3, ModContent.TileType<Quartz>(), true);
@@ -359,10 +450,10 @@ internal class DepthsGen
         noise.SetFractalLacunarity(3.95f);
         noise.SetFractalPingPongStrength(0.39f);
         progress = 0;
-        for (int i = x; i < x + width; ++i)
+        for (int i = x; i < x + (width - 1); ++i)
         {
-			progress = (double)i / (double)(Main.maxTilesX - 1);
-			float modFadeHeight = fadeHeight * (noise.GetNoise(i, -100) + 1); // Increases or decreases the depth of the gradient
+            progress = (double)i / (double)(Main.maxTilesX - 1);
+            float modFadeHeight = fadeHeight * (noise.GetNoise(i, -100) + 1); // Increases or decreases the depth of the gradient
             int baseY = y - (int)modFadeHeight;
 
             for (int j = baseY; j < baseY + height + modFadeHeight; ++j)
@@ -435,7 +526,7 @@ internal class DepthsGen
             int steps = WorldGen.genRand.Next(1, 6);
             WorldGen.OreRunner(gemX, gemY, str, steps, (ushort)WorldGen.genRand.Next(Gems));
         }
-    }
+	}
 
     /// <summary>
     /// Clears an asymmetrical tunnel, used to create the channels in the Depths.<br/>
@@ -517,15 +608,28 @@ internal class DepthsGen
     /// <param name="distanceFromBothEdges">Distance to replace from each edge.</param>
     internal static void AddNightmareGrove(int distanceFromBothEdges, int side)
     {
-        for (int i = 0; i < distanceFromBothEdges; ++i)
-        {
-            for (int j = Main.maxTilesY - 400; j < Main.maxTilesY; ++j)
-            {
-                if (side is 0 or -1)
+		if (WorldGen.remixWorldGen)
+		{
+			for (int i = (int)((double)Main.maxTilesX * 0.38); i < (int)((double)Main.maxTilesX * 0.62) + 15; ++i)
+			{
+                for (int j = Main.maxTilesY - 400; j < Main.maxTilesY; ++j)
+                {
                     TryGivingShaleNightmare(i, j);
+                }
+            }
+		}
+		else
+		{
+			for (int i = 0; i < distanceFromBothEdges; ++i)
+            {
+                for (int j = Main.maxTilesY - 400; j < Main.maxTilesY; ++j)
+                {
+                    if (side is 0 or -1)
+                        TryGivingShaleNightmare(i, j);
 
-                if (side is 0 or 1)
-                    TryGivingShaleNightmare(Main.maxTilesX - i, j);
+                    if (side is 0 or 1)
+                        TryGivingShaleNightmare(Main.maxTilesX - i, j);
+                }
             }
         }
     }
@@ -559,7 +663,7 @@ internal class DepthsGen
     {
         if (!WorldGen.SolidTile(i, j - 1)) // If we have no tile above...
         {
-            if (WorldGen.genRand.NextBool(50)) // Try to place a tree, or...
+            if (WorldGen.remixWorldGen ? WorldGen.genRand.NextBool() : WorldGen.genRand.NextBool(50)) // Try to place a tree, or...
             {
                 if (WorldGen.PlaceObject(i, j - 1, ModContent.TileType<NightSapling>(), true, 0))
                 {
@@ -577,7 +681,7 @@ internal class DepthsGen
 
             for (int y = j + 1; y < j + (height); y++)
             {
-                if (WorldGen.SolidTile(i, y))
+                if (WorldGen.SolidTile(i, y) || (j + height) >= Main.maxTilesY)
                     break;  
 
                 WorldGen.PlaceTile(i, y, ModContent.TileType<NightmareVines>());

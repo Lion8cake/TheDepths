@@ -11,6 +11,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.GameContent.Generation;
 using System.Net.Http.Headers;
+using Steamworks;
 
 namespace TheDepths.Worldgen.Generation;
 
@@ -103,6 +104,9 @@ internal class DepthsBuilding
         if (WorldGen.genRand.NextBool(8)) // Sometimes, do not add a door even if we can
             return;
 
+        if (position.X >= Main.maxTilesX)
+            return;
+
         int placeWalls = Main.tile[position.X + dir, position.Y].WallType;
 
         for (int i = 0; i < 3; ++i)
@@ -113,7 +117,8 @@ internal class DepthsBuilding
                 WorldGen.PlaceWall(position.X, position.Y - i, placeWalls);
         }
         WorldGen.PlaceTile(position.X, position.Y - 2, ModContent.TileType<QuartzDoorClosed>(), true);
-    }
+        Tile tile = Main.tile[position.X, position.Y + 1];
+	}
 
     /// <summary>
     /// Replaces some floor tiles in the given room with platforms (or holes).
@@ -124,6 +129,9 @@ internal class DepthsBuilding
     /// <param name="halfHeight">Half-height of the room, so to get the floor or ceiling of the room.</param>
     private static void CheckAddPlatforms(Point center, int dir, int width, int halfHeight)
     {
+        if (center.X >= Main.maxTilesX)
+            return;
+
         int y = center.Y + (halfHeight * dir);
         Tile above = Main.tile[center.X, y + dir];
 
@@ -167,10 +175,13 @@ internal class DepthsBuilding
     {
         ShapeData shapeData = new();
 
-        WorldUtils.Gen(new Point(x, y), new Shapes.Rectangle(size.X, size.Y), Actions.Chain( // Clear & add walls
-            new Actions.Clear().Output(shapeData),
-            new Actions.PlaceWall((ushort)(tileType == ModContent.TileType<ArqueriteBricks>() ? ModContent.WallType<ArqueriteBrickWallUnsafe>() : ModContent.WallType<QuartzBrickWallUnsafe>()))
-        ));
+        if ((x + size.X) < Main.maxTilesX)
+        {
+            WorldUtils.Gen(new Point(x, y), new Shapes.Rectangle(size.X, size.Y), Actions.Chain( // Clear & add walls
+                new Actions.Clear().Output(shapeData),
+                new Actions.PlaceWall((ushort)(tileType == ModContent.TileType<ArqueriteBricks>() ? ModContent.WallType<ArqueriteBrickWallUnsafe>() : ModContent.WallType<QuartzBrickWallUnsafe>()))
+            ));
+        }
 
         WorldUtils.Gen(new Point(x, y), new ModShapes.InnerOutline(shapeData, true), Actions.Chain( // Add tile walls & clear walls on border
             new Actions.ClearWall(),
@@ -298,7 +309,7 @@ internal class DepthsBuilding
     }
 
     /// <summary>
-    /// Tries to put down either furniture (from <see cref="Furnitures"/>) or Gemforges on ground.
+    /// Tries to put down furniture (from <see cref="Furnitures"/>)
     /// </summary>
     /// <param name="pos">Un-adjusted position of the furniture-to-be-placed.</param>
     /// <returns>Whether any furniture was placed or not.</returns>
@@ -307,10 +318,6 @@ internal class DepthsBuilding
         if (WorldGen.genRand.NextBool(14))
         {
             int type = WorldGen.genRand.Next(Furnitures);
-
-            if (WorldGen.genRand.NextBool(16)) // Chance to randomize into gem forge
-                type = ModContent.TileType<Gemforge>();
-
             int yOff = 1;
 
             if (type == ModContent.TileType<QuartzLamp>()) // Origin is dumb in worldgen, hardcoded adjustment for it

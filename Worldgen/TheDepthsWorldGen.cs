@@ -224,30 +224,27 @@ namespace TheDepths.Worldgen
 
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
 		{
-			if (isWorldDepths || WorldGen.drunkWorldGen || WorldGen.remixWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport)
+			if (isWorldDepths || WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport)
 			{
 				int baseUnderWorldIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Underworld"));
-
 				if (baseUnderWorldIndex >= 0)
 				{
-					if (WorldGen.drunkWorldGen || WorldGen.remixWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport)
+					if (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport || WorldGen.remixWorldGen)
 					{
 						if (WorldGen.drunkWorldGen)
 							tasks.Insert(baseUnderWorldIndex + 1, new PassLegacy("Depths: Depths", DepthsGen.SpecialGenerate)); // Overwrite some amount of space with the Depths
 						else
-							tasks[baseUnderWorldIndex] = new PassLegacy("Depths: Depths", DepthsGen.SpecialGenerate); // Replace the entire Underworld with only Depths for ddu
+							tasks[baseUnderWorldIndex] = new PassLegacy("Underworld", DepthsGen.SpecialGenerate); // Replace the entire Underworld with only Depths for ddu
 					}
 					else
-						tasks[baseUnderWorldIndex] = new PassLegacy("Depths: Depths", DepthsGen.Generate); // Replace the Underworld entirely with the Depths
-				}
+						tasks[baseUnderWorldIndex] = new PassLegacy("Underworld", DepthsGen.Generate); // Replace the Underworld entirely with the Depths
+				}//When replacing the Underworld we must set the Pass name to "Underworld" otherwise mods that rely on the underworld pass will fail causing a crash or worldgen to not generate
 
 				int hellforgeIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Hellforge"));
-
 				if (hellforgeIndex >= 0)
-					tasks[hellforgeIndex].Disable();
+					tasks[hellforgeIndex] = new PassLegacy("Hellforge", Gemforge);
 
 				int potsIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Pots"));
-
 				if (potsIndex >= 0)
 				{
 					if (!WorldGen.drunkWorldGen && !ModSupport.DepthsModCalling.FargoBoBWSupport)
@@ -255,12 +252,34 @@ namespace TheDepths.Worldgen
 					else
                         tasks.Insert(potsIndex + 1, new PassLegacy("Depths: Depths Pots", Pots)); // Adds the Pots method in addition to the vanilla method. It has a check for if it should skip all other pots in drunk world gen, so it doesn't add extra pots everywhere.
 
-                    if (WorldGen.drunkWorldGen)
+                    if (WorldGen.drunkWorldGen) //Lion8cake here, will replace this later with generation in the DepthsGen.Generate class
                     {
                         tasks.Insert(potsIndex + 1, new PassLegacy("Depths: Depths Ceiling Replacement", // The ceiling replacement wasn't working earlier, so this does that later.
                             (_, _) => DepthsGen.ReplaceHalfCeilingOnDrunkWorldGen(DrunkDepthsLeft ? 0 : Main.maxTilesX / 2)));
                     }
                 }
+
+				int buriedChestIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Buried Chests"));
+				if (buriedChestIndex >= 0)
+					tasks.Insert(buriedChestIndex + 1, new PassLegacy("Depths: Item Replacer", DepthsBuriedChests)); //Replaces some chests with (drunk) or all (depths only) with depth's loot such as diamond arrows
+
+				int resetIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Reset"));
+				if (resetIndex >= 0)
+					tasks.Insert(resetIndex + 1, new PassLegacy("Depths: Shadow Chest Shuffler", DepthsShadowchestGenResetter)); //Changes the lootpool of the shadowchests to include some shadow chest items
+
+				int mossIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Moss Grass"));
+				if (mossIndex >= 0)
+				{
+					tasks.Insert(mossIndex + 1, new PassLegacy("Depths: Quicksilver Moss Foliage", MossFoliageGen)); //Adds foliage to the Quicksilver moss
+					tasks.Insert(mossIndex + 1, new PassLegacy("Depths: Quicksilver moss", MossGen)); //Replaces Lava Moss
+				}
+
+				int cleanupIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
+				if (cleanupIndex >= 0)
+				{
+					tasks.Insert(cleanupIndex + 1, new PassLegacy("Depths: Tile Resetting", DrippingQuicksilverTileCleanup));
+					tasks.Insert(cleanupIndex + 1, new PassLegacy("Depths: Remix Shuffling", FinishDepthsRemix)); //Finalises worldgen for both remix and normal
+				}
 			}
 
             //		if (baseUnderWorldIndex != -1)
@@ -424,16 +443,37 @@ namespace TheDepths.Worldgen
 
 		private static void OnyxShale(GenerationProgress progres, GameConfiguration configurations)
 		{
-			OnyxShale();
+			float num1 = Main.maxTilesX * 0.5f;
+			float num2 = num1 * 0.2f;
+			for (int index = 0; index < num2; ++index)
+			{
+				int i = WorldGen.genRand.Next(0, Main.maxTilesX);
+				int j;
+				for (j = WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY); Main.tile[i, j].TileType != TileType<Shalestone>(); j = WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY))
+					i = WorldGen.genRand.Next(0, Main.maxTilesX);
+				WorldGen.TileRunner(i, j, WorldGen.genRand.Next(2, 6), WorldGen.genRand.Next(3, 7), TileType<OnyxShalestone>(), false, 0.0f, 0.0f, false, true);
+			}
 		}
 
 		public static void DepthsShadowchestGenResetter(GenerationProgress progress, GameConfiguration configuration)
 		{
 			progress.Message = "Resetting Shadow Chests";
-			List<int> list3 = new List<int> { 274, ModContent.ItemType<Items.Weapons.SilverStar>(), ModContent.ItemType<Items.Weapons.Skyfall>(), ModContent.ItemType<Items.Weapons.WhiteLightning>(), ModContent.ItemType<Items.Weapons.NightFury>() };
-			if (WorldGen.remixWorldGen)
+			List<int> list3;
+			if (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport)
 			{
-				list3 = new List<int> { 274, ModContent.ItemType<Items.Weapons.SilverStar>(), ModContent.ItemType<Items.Weapons.Skyfall>(), ModContent.ItemType<Items.Weapons.BlueSphere>(), ModContent.ItemType<Items.Weapons.NightFury>() };
+				list3 = new List<int> { 274, ModContent.ItemType<Items.Weapons.SilverStar>(), 220, ModContent.ItemType<Items.Weapons.Skyfall>(), 112, ModContent.ItemType<Items.Weapons.WhiteLightning>(), 218, ModContent.ItemType<Items.Weapons.NightFury>(), 3019 };
+				if (WorldGen.remixWorldGen)
+				{
+					list3 = new List<int> { 274, ModContent.ItemType<Items.Weapons.SilverStar>(), 220, ModContent.ItemType<Items.Weapons.Skyfall>(), 683, ModContent.ItemType<Items.Weapons.BlueSphere>(), 218, ModContent.ItemType<Items.Weapons.NightFury>(), 3019 };
+				}
+			}
+			else
+			{
+				list3 = new List<int> { 274, ModContent.ItemType<Items.Weapons.SilverStar>(), ModContent.ItemType<Items.Weapons.Skyfall>(), ModContent.ItemType<Items.Weapons.WhiteLightning>(), ModContent.ItemType<Items.Weapons.NightFury>() };
+				if (WorldGen.remixWorldGen)
+				{
+					list3 = new List<int> { 274, ModContent.ItemType<Items.Weapons.SilverStar>(), ModContent.ItemType<Items.Weapons.Skyfall>(), ModContent.ItemType<Items.Weapons.BlueSphere>(), ModContent.ItemType<Items.Weapons.NightFury>() };
+				}
 			}
 			List<int> list4 = new List<int>();
 			while (list3.Count > 0)
@@ -449,7 +489,7 @@ namespace TheDepths.Worldgen
 		public static void DrippingQuicksilverTileCleanup(GenerationProgress progress, GameConfiguration configuration)
 		{
 			progress.Message = "Mercury-ifying the lava caverns";
-			for (int k = 0; k < Main.maxTilesX; k++)
+			for (int k = (DrunkDepthsRight ? Main.maxTilesX / 2 : 0); k < (DrunkDepthsLeft ? Main.maxTilesX / 2 : Main.maxTilesX); k++)
 			{
 				for (int l = 0; l < Main.maxTilesY; l++)
 				{
@@ -494,13 +534,22 @@ namespace TheDepths.Worldgen
 							WorldGen.KillTile(k, l);
 						}
 					}
+					if (Main.tile[k, l].TileType == ModContent.TileType<QuartzDoorClosed>())
+					{
+						Tile tile = Main.tile[k, l + 1];
+						tile.Slope = SlopeType.Solid;
+						tile.IsHalfBlock = false;
+						Tile tile2 = Main.tile[k, l - 1];
+						tile2.Slope = SlopeType.Solid;
+						tile2.IsHalfBlock = false;
+					}
 				}
 			}
 		}
 
 		public static void DepthsBuriedChests(GenerationProgress progress, GameConfiguration configuration)
 		{
-			for (int chestID = 0; chestID < Main.maxChests; chestID++)
+			for (int chestID = 0; chestID < (!WorldGen.drunkWorldGen && !ModSupport.DepthsModCalling.FargoBoBWSupport ? Main.maxChests : Main.maxChests / 2); chestID++)
 			{
 				Chest chest = Main.chest[chestID];
 				if (chest != null)
@@ -548,7 +597,7 @@ namespace TheDepths.Worldgen
 		private void MossGen(GenerationProgress progress, GameConfiguration configuration)
 		{
 			progress.Message = "Growing Sparkly Moss";
-			for (int k = 0; k < Main.maxTilesX; k++)
+			for (int k = (DrunkDepthsRight ? Main.maxTilesX / 2 : 0); k < (DrunkDepthsLeft ? Main.maxTilesX / 2 : Main.maxTilesX); k++)
 			{
 				for (int l = 0; l < Main.maxTilesY; l++)
 				{
@@ -561,123 +610,6 @@ namespace TheDepths.Worldgen
 					}
 				}
 			}
-		}
-
-		private void ShadowShrubGen(GenerationProgress progress, GameConfiguration configuration)
-		{
-			double num261 = (double)Main.maxTilesX * 1.7;
-			if (WorldGen.remixWorldGen)
-			{
-				num261 *= 5.0;
-			}
-			for (int num262 = 0; (double)num262 < num261; num262++)
-			{
-				progress.Set((double)num262 / num261);
-				PlantAlch();
-			}
-		}
-
-		public static void PlantAlch()
-		{
-			int num = WorldGen.genRand.Next(20, Main.maxTilesX - 20);
-			int num2 = 0;
-			for (num2 = (Main.remixWorld ? WorldGen.genRand.Next(20, Main.maxTilesY - 20) : ((WorldGen.genRand.Next(40) == 0) ? WorldGen.genRand.Next((int)(Main.rockLayer + (double)Main.maxTilesY) / 2, Main.maxTilesY - 20) : ((WorldGen.genRand.Next(10) != 0) ? WorldGen.genRand.Next((int)Main.worldSurface, Main.maxTilesY - 20) : WorldGen.genRand.Next(20, Main.maxTilesY - 20)))); num2 < Main.maxTilesY - 20 && !Main.tile[num, num2].HasTile; num2++)
-			{
-			}
-			if (!(Main.tile[num, num2].HasTile && !Main.tile[num, num2].IsActuated) || Main.tile[num, num2 - 1].HasTile || Main.tile[num, num2 - 1].LiquidAmount != 0)
-			{
-				return;
-			}
-			int num3 = 15;
-			int num4 = 5;
-			int num5 = 0;
-			num3 = (int)((double)num3 * ((double)Main.maxTilesX / 4200.0));
-			int num9 = Utils.Clamp(num - num3, 4, Main.maxTilesX - 4);
-			int num6 = Utils.Clamp(num + num3, 4, Main.maxTilesX - 4);
-			int num7 = Utils.Clamp(num2 - num3, 4, Main.maxTilesY - 4);
-			int num8 = Utils.Clamp(num2 + num3, 4, Main.maxTilesY - 4);
-			for (int i = num9; i <= num6; i++)
-			{
-				for (int j = num7; j <= num8; j++)
-				{
-					if (Main.tileAlch[Main.tile[i, j].TileType])
-					{
-						num5++;
-					}
-				}
-			}
-			if (num5 < num4)
-			{
-				if (Main.tile[num, num2].TileType == ModContent.TileType<ShaleBlock>() || Main.tile[num, num2].TileType == ModContent.TileType<NightmareGrass>())
-				{
-					PlaceAlch(num, num2 - 1, 5);
-				}
-				if (Main.tile[num, num2 - 1].HasTile && Main.netMode == 2)
-				{
-					NetMessage.SendTileSquare(-1, num, num2 - 1);
-				}
-			}
-		}
-
-		public static bool PlaceAlch(int x, int y, int style)
-		{
-			Tile tile2;
-			tile2 = Main.tile[x, y];
-			if (!tile2.HasTile)
-			{
-				tile2 = Main.tile[x, y + 1];
-				if (tile2.HasUnactuatedTile)
-				{
-					tile2 = Main.tile[x, y + 1];
-					if (!tile2.IsHalfBlock)
-					{
-						tile2 = Main.tile[x, y + 1];
-						if (tile2.Slope == 0)
-						{
-							bool flag = false;
-							tile2 = Main.tile[x, y + 1];
-							if (tile2.TileType != ModContent.TileType<ShaleBlock>())
-							{
-								tile2 = Main.tile[x, y + 1];
-								if (tile2.TileType != ModContent.TileType<NightmareGrass>())
-								{
-									tile2 = Main.tile[x, y + 1];
-									if (tile2.TileType != 78)
-									{
-										tile2 = Main.tile[x, y + 1];
-										if (tile2.TileType != 380)
-										{
-											flag = true;
-										}
-									}
-								}
-							}
-							tile2 = Main.tile[x, y];
-							if (tile2.LiquidAmount > 0)
-							{
-								tile2 = Main.tile[x, y];
-								if (!(tile2.LiquidType == LiquidID.Lava))
-								{
-									flag = true;
-								}
-							}
-							if (!flag)
-							{
-								tile2 = Main.tile[x, y];
-								tile2.HasTile = true;
-								tile2 = Main.tile[x, y];
-								tile2.TileType = (ushort)ModContent.TileType<ShadowShrub>();
-								//tile2 = Main.tile[x, y];
-								//tile2.TileFrameX = (short)(18 * style);
-								//tile2 = Main.tile[x, y];
-								//tile2.TileFrameY = 0;
-								return true;
-							}
-						}
-					}
-				}
-			}
-			return false;
 		}
 
 		private void MossFoliageGen(GenerationProgress progress, GameConfiguration configuration)
@@ -906,20 +838,6 @@ namespace TheDepths.Worldgen
                 }
             }
         }
-
-		public static void OnyxShale()
-		{
-			float num1 = Main.maxTilesX * 0.5f;
-			float num2 = num1 * 0.2f;
-			for (int index = 0; index < num2; ++index)
-			{
-				int i = WorldGen.genRand.Next(0, Main.maxTilesX);
-				int j;
-				for (j = WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY); Main.tile[i, j].TileType != TileType<Shalestone>(); j = WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY))
-					i = WorldGen.genRand.Next(0, Main.maxTilesX);
-				WorldGen.TileRunner(i, j, WorldGen.genRand.Next(2, 6), WorldGen.genRand.Next(3, 7), TileType<OnyxShalestone>(), false, 0.0f, 0.0f, false, true);
-			}
-		}
 
         private static void Depths(GenerationProgress progress, GameConfiguration configuration)
         {
