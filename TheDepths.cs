@@ -41,6 +41,7 @@ using TheDepths.Tiles.Furniture;
 using TheDepths.Worldgen;
 using static Terraria.Graphics.FinalFractalHelper;
 using Terraria.ObjectData;
+using TheDepths.Tiles;
 
 namespace TheDepths
 {
@@ -131,6 +132,7 @@ namespace TheDepths
 			On_AmbientSky.HellBatsGoupSkyEntity.ctor += HellBatsGoupSkyEntity_ctor;
 			IL_Player.ItemCheck_UseBuckets += BucketCollectionItem;
 
+			IL_WorldGen.NotTheBees += NightmareGrassGFBPatcher;
 			On_Player.TryReplantingTree += TreeReplantingDetour;
 			On_LegacyPlayerRenderer.DrawPlayerFull += PlayerAfterImages;
 			On_Player.KeyDoubleTap += SlamDoubleTap;
@@ -198,6 +200,7 @@ namespace TheDepths
 			On_AmbientSky.HellBatsGoupSkyEntity.ctor -= HellBatsGoupSkyEntity_ctor;
 			IL_Player.ItemCheck_UseBuckets -= BucketCollectionItem;
 
+			IL_WorldGen.NotTheBees -= NightmareGrassGFBPatcher;
 			On_Player.TryReplantingTree -= TreeReplantingDetour;
 			On_LegacyPlayerRenderer.DrawPlayerFull -= PlayerAfterImages;
 			On_Player.KeyDoubleTap -= SlamDoubleTap;
@@ -276,6 +279,27 @@ namespace TheDepths
 				_ => throw new Exception("TheDepths: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
 		}
+
+		#region NOTTHEBEESCrispyHoneyProtection
+		private void NightmareGrassGFBPatcher(ILContext il)
+		{
+			var c = new ILCursor(il);
+			ILLabel IL_0898 = null;
+			if (!c.TryGotoNext(MoveType.After, i => i.MatchLdindU2(), i => i.MatchLdcI4(633), i => i.MatchBeq(out IL_0898)))
+			{
+				ModContent.GetInstance<TheDepths>().Logger.Debug("The Depths: Could not locate the AshGrass not the bees protection");
+				return;
+			}
+			if (IL_0898 == null) return;
+			c.EmitLdloc(1);
+			c.EmitLdloc(2);
+			c.EmitDelegate((int i, int j) =>
+			{
+				return Main.tile[i, j].TileType != ModContent.TileType<NightmareGrass>() && Main.tile[i, j].TileType != ModContent.TileType<ShaleBlock>() && Main.tile[i, j].TileType != ModContent.TileType<Shalestone>();
+			});
+			c.EmitBrfalse(IL_0898);
+		}
+		#endregion
 
 		#region AxeofRegrowthDetour
 		private void TreeReplantingDetour(On_Player.orig_TryReplantingTree orig, Player self, int x, int y)

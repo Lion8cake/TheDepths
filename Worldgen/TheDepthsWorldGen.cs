@@ -488,11 +488,31 @@ namespace TheDepths.Worldgen
 
 		public static void DrippingQuicksilverTileCleanup(GenerationProgress progress, GameConfiguration configuration)
 		{
-			progress.Message = "Mercury-ifying the lava caverns";
+			progress.Message = "Mercury-ifying the lower caverns";
 			for (int k = (DrunkDepthsRight ? Main.maxTilesX / 2 : 0); k < (DrunkDepthsLeft ? Main.maxTilesX / 2 : Main.maxTilesX); k++)
 			{
 				for (int l = 0; l < Main.maxTilesY; l++)
 				{
+					if (Main.tile[k, l].WallType == WallID.ObsidianBackUnsafe)
+					{
+						WorldGen.KillWall(k, l);
+						Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.NaturalQuicksilverWall1>();
+					}
+					else if (Main.tile[k, l].WallType == WallID.LavaUnsafe1 || Main.tile[k, l].WallType == WallID.LavaUnsafe4)
+					{
+						WorldGen.KillWall(k, l);
+						Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.NaturalQuicksilverWall2>();
+					}
+					else if (Main.tile[k, l].WallType == WallID.LavaUnsafe2)
+					{
+						WorldGen.KillWall(k, l);
+						Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.NaturalQuicksilverWall3>();
+					}
+					else if (Main.tile[k, l].WallType == WallID.LavaUnsafe3)
+					{
+						WorldGen.KillWall(k, l);
+						Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.NaturalQuicksilverWall4>();
+					}
 					if (Main.tile[k, l].TileType == TileID.LavaDrip)
 					{
 						WorldGen.KillTile(k, l);
@@ -500,41 +520,21 @@ namespace TheDepths.Worldgen
 						Tile tile = Main.tile[k, l];
 						tile.HasTile = true;
 					}
-					if (Main.tile[k, l].WallType == WallID.ObsidianBackUnsafe)
-					{
-						WorldGen.KillWall(k, l);
-						Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.NaturalQuicksilverWall1>();
-					}
-					if (Main.tile[k, l].WallType == WallID.LavaUnsafe1 || Main.tile[k, l].WallType == WallID.LavaUnsafe4)
-					{
-						WorldGen.KillWall(k, l);
-						Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.NaturalQuicksilverWall2>();
-					}
-					if (Main.tile[k, l].WallType == WallID.LavaUnsafe2)
-					{
-						WorldGen.KillWall(k, l);
-						Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.NaturalQuicksilverWall3>();
-					}
-					if (Main.tile[k, l].WallType == WallID.LavaUnsafe3)
-					{
-						WorldGen.KillWall(k, l);
-						Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.NaturalQuicksilverWall4>();
-					}
-					if (Main.tile[k, l].TileType == TileID.GeyserTrap)
+					else if (Main.tile[k, l].TileType == TileID.GeyserTrap)
 					{
 						WorldGen.KillTile(k, l);
 						WorldGen.Place2x1(k, l, (ushort)ModContent.TileType<WaterGeyser>(), 0);
 						Tile tile = Main.tile[k, l];
 						tile.HasTile = true;
 					}
-					if (Main.tile[k, l].TileType == ModContent.TileType<MercuryMoss>())
+					else if (Main.tile[k, l].TileType == ModContent.TileType<MercuryMoss>())
 					{
 						if ((!Main.tileSolid[Main.tile[k, l + 1].TileType] || !Main.tile[k, l + 1].HasTile) && (!Main.tileSolid[Main.tile[k, l - 1].TileType] || !Main.tile[k, l - 1].HasTile) && (!Main.tileSolid[Main.tile[k + 1, l].TileType] || !Main.tile[k + 1, l].HasTile) && (!Main.tileSolid[Main.tile[k - 1, l].TileType] || !Main.tile[k - 1, l].HasTile))
 						{
 							WorldGen.KillTile(k, l);
 						}
 					}
-					if (Main.tile[k, l].TileType == ModContent.TileType<QuartzDoorClosed>())
+					else if (Main.tile[k, l].TileType == ModContent.TileType<QuartzDoorClosed>())
 					{
 						Tile tile = Main.tile[k, l + 1];
 						tile.Slope = SlopeType.Solid;
@@ -1168,7 +1168,8 @@ namespace TheDepths.Worldgen
 					for (int l = Main.maxTilesY - 200; l < num3 + 10; l++)
 					{
 						Tile tile = Main.tile[k, l];
-						tile.LiquidType = 0;
+						tile.LiquidType = -1;
+						tile.LiquidAmount = 0;
 						if (Main.tile[k, l].TileType == ModContent.TileType<Tiles.ArqueriteOre>() || Main.tile[k, l].TileType == ModContent.TileType<Tiles.Shalestone>())
 						{
 							Main.tile[k, l].TileType = (ushort)ModContent.TileType<Tiles.ShaleBlock>();

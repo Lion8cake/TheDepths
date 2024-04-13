@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using ReLogic.Utilities;
 using System;
+using System.Numerics;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
@@ -102,12 +103,13 @@ internal class DepthsGen
 
         AddHolesBetweenTunnels(x, Main.maxTilesY - 160, biomeWidth, 120, 240); // Digs pits between the two chasms
         AddLiquidHoles(x, Main.maxTilesY - 200, biomeWidth, 160);
+        SpecialSeedGen();
 
         progress.Message = "Growing bioluminecent plants in very dark areas";
 
         int nightmareGroveSize = WorldGen.drunkWorldGen ? Main.maxTilesX / 2 :  Main.maxTilesX / 6; // Each nightmare grove takes up 1/6th of the world, and non-grove is the rest
         AddNightmareGrove(nightmareGroveSize, side);
-        //AddDepthsDecor(nightmareGroveSize);
+        AddDepthsDecor(nightmareGroveSize);
 
         progress.Message = "Building ruined homes...";
 
@@ -206,22 +208,31 @@ internal class DepthsGen
 			if (tile.HasTile)
 				digTunnel(placeX, placeY, WorldGen.genRand.NextFloat(-2, 2f), WorldGen.genRand.NextFloat(-2f, 2f), WorldGen.genRand.Next(2, 30), 4, LiquidID.Lava);
 		}
+	}
 
-        //Quicksilver Ocean
-        if (WorldGen.drunkWorldGen || WorldGen.remixWorldGen)
-        {
-            for (int n = 0; n < Main.maxTilesX * 2; ++n)
+    private static void SpecialSeedGen() //Lion8cake's dinkie ass code
+    {
+		//Quicksilver Ocean
+		if (WorldGen.drunkWorldGen || WorldGen.remixWorldGen)
+		{
+			for (int n = 0; n < Main.maxTilesX * 2; ++n)
 			{
-                int k = WorldGen.genRand.Next((int)((double)Main.maxTilesX * 0.35), (int)((double)Main.maxTilesX * 0.65));
-                int l = WorldGen.genRand.Next(Main.maxTilesY - 180, Main.maxTilesY - 10);
-				WorldGen.TileRunner(k, l, WorldGen.genRand.Next(5, 20), WorldGen.genRand.Next(5, 10), -2);
-                for (int i = (int)(Main.maxTilesX * 0.35); i < Main.maxTilesX * 0.65; ++i)
-                {
-                    for (int j = Main.maxTilesY; j > Main.maxTilesY - 220; --j)
-                    {
-                        Main.tile[i, j].WallType = 0;
-                    }
-                }
+				digTunnel(WorldGen.genRand.Next((int)((double)Main.maxTilesX * 0.35), (int)((double)Main.maxTilesX * 0.65)), WorldGen.genRand.Next(Main.maxTilesY - 150, Main.maxTilesY - 10), 1, 1, WorldGen.genRand.Next(5, 20), WorldGen.genRand.Next(5, 10), LiquidID.Lava);
+				WorldGen.TileRunner(WorldGen.genRand.Next((int)((double)Main.maxTilesX * 0.35), (int)((double)Main.maxTilesX * 0.65)), WorldGen.genRand.Next(Main.maxTilesY - 180, Main.maxTilesY - 10), WorldGen.genRand.Next(5, 20), WorldGen.genRand.Next(5, 10), -2);
+			}
+			for (int k = Main.maxTilesY; k > Main.maxTilesY - 130; --k) //Barrier
+			{
+                if (!TheDepthsWorldGen.DrunkDepthsRight)
+				    WorldGen.TileRunner((int)(Main.maxTilesX * 0.35), k, 20, 12, ModContent.TileType<ShaleBlock>(), addTile: true, overRide: true);
+				if (!TheDepthsWorldGen.DrunkDepthsLeft)
+					WorldGen.TileRunner((int)(Main.maxTilesX * 0.65), k, 20, 12, ModContent.TileType<ShaleBlock>(), addTile: true, overRide: true);
+			}
+			for (int i = (int)(Main.maxTilesX * 0.35); i < Main.maxTilesX * 0.65; ++i)
+			{
+				for (int j = Main.maxTilesY; j > Main.maxTilesY - 220; --j)
+				{
+					Main.tile[i, j].WallType = 0;
+				}
 			}
 		}
 
@@ -284,7 +295,7 @@ internal class DepthsGen
 					Main.tile[num856, num860].LiquidAmount = 0;
 				}
 				for (int num861 = num857; num861 < Main.maxTilesY; num861++)
-				{
+                {
 					Tile tile = Main.tile[num856, num861];
 					tile.HasTile = true;
 					Main.tile[num856, num861].TileType = (ushort)ModContent.TileType<ShaleBlock>();
@@ -325,6 +336,8 @@ internal class DepthsGen
     /// <param name="nightmareGroveSize">Size of the nightmare grove, in tiles.</param>
     private static void AddDepthsDecor(int nightmareGroveSize)
     {
+        if (WorldGen.remixWorldGen)
+            nightmareGroveSize = Main.maxTilesX;
         for (int i = nightmareGroveSize; i < Main.maxTilesX - nightmareGroveSize; ++i) // Loops from edge of grove -> other edge of the opposite grove
         {
             for (int j = Main.maxTilesY - 300; j < Main.maxTilesY - 10; ++j)
@@ -337,7 +350,50 @@ internal class DepthsGen
                 PlaceDepthsDecor(i, j);
             }
         }
-    }
+
+        //Didn't want to make a whole new method so im using this one to convert the island into underworld tiles on the appropriate side
+        //Replaces shale and nightmare grass, replaces trees
+		if (WorldGen.remixWorldGen)
+		{
+			for (int k = (TheDepthsWorldGen.DrunkDepthsLeft ? Main.maxTilesX / 2 : 0); k < (TheDepthsWorldGen.DrunkDepthsRight ? Main.maxTilesX / 2 : Main.maxTilesX); k++)
+			{
+				for (int l = Main.maxTilesY - 300; l < Main.maxTilesY; l++)
+				{
+					if (Main.tile[k, l].TileType == ModContent.TileType<ShaleBlock>())
+					{
+						WorldGen.KillTile(k, l, false, false, false);
+						Main.tile[k, l].TileType = (ushort)TileID.Ash;
+						Tile tile = Main.tile[k, l];
+						tile.HasTile = true;
+					}
+					else if (Main.tile[k, l].TileType == ModContent.TileType<NightmareGrass>())
+					{
+						WorldGen.KillTile(k, l, false, false, false);
+						Main.tile[k, l].TileType = (ushort)TileID.AshGrass;
+						Tile tile = Main.tile[k, l];
+						tile.HasTile = true;
+					}
+				}
+			}
+
+			int num854 = (int)((double)Main.maxTilesX * 0.38);
+			int num855 = (int)((double)Main.maxTilesX * 0.62);
+			int num856 = num854;
+			int num857 = Main.maxTilesY - 1;
+			int num858 = Main.maxTilesY - 135;
+			int num859 = Main.maxTilesY - 160;
+			for (int num864 = num854; num864 < num855 + 15; num864++)
+			{
+				for (int num865 = Main.maxTilesY - 200; num865 < num858 + 20; num865++)
+				{
+					if (Main.tile[num864, num865].TileType == 633 && Main.tile[num864, num865].HasTile == true && !Main.tile[num864, num865 - 1].HasTile == true && WorldGen.genRand.Next(3) == 0)
+					{
+						WorldGen.TryGrowingTreeByType(634, num864, num865);
+					}
+				}
+			}
+		}
+	}
 
     /// <summary>
     /// Adds trees, crystals and shrubs to Shale.
