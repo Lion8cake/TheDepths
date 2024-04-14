@@ -1897,11 +1897,6 @@ Mods: {
 					Toque duplo {$Key.DOWN}
 					'''
 			}
-
-			WorldGenTestItem: {
-				// DisplayName: World Gen Test Item
-				// Tooltip: ""
-			}
 		}
 
 		NPCs: {
