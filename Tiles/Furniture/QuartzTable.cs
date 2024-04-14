@@ -19,9 +19,10 @@ namespace TheDepths.Tiles.Furniture
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileTable[Type] = true;
-			Main.tileLavaDeath[Type] = true;
+			Main.tileLavaDeath[Type] = false;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
 			TileObjectData.newTile.Height = 2;
+			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.CoordinateHeights = new int[]{ 16, 18 };
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			TileObjectData.addTile(Type);

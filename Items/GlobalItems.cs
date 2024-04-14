@@ -83,7 +83,7 @@ namespace TheDepths.Items
 
 		public override bool IsAnglerQuestAvailable(int type)
 		{
-            if (Worldgen.TheDepthsWorldGen.depthsorHell && (!Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && !Worldgen.TheDepthsWorldGen.DrunkDepthsRight))
+            if (Worldgen.TheDepthsWorldGen.isWorldDepths && (!Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && !Worldgen.TheDepthsWorldGen.DrunkDepthsRight))
             {
                 if (type == ItemID.DemonicHellfish)
                 {

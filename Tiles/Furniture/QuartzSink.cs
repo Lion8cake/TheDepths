@@ -19,7 +19,8 @@ namespace TheDepths.Tiles.Furniture
             Main.tileLavaDeath[Type] = false;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
-            TileObjectData.addTile(Type);
+			TileObjectData.newTile.LavaDeath = false;
+			TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
             AdjTiles = new int[] { 172 };
             AddMapEntry(new Color(255, 255, 255), CreateMapEntryName());

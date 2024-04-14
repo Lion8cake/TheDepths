@@ -62,7 +62,7 @@ public class DepthsBiome : ModBiome
 		}
         else
         {
-            return Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210 && Worldgen.TheDepthsWorldGen.depthsorHell;
+            return Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210 && Worldgen.TheDepthsWorldGen.isWorldDepths;
         }
     }
 }

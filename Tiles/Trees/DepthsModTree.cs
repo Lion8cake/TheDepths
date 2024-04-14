@@ -92,13 +92,16 @@ namespace TheDepths.Tiles.Trees
 		public static bool GrowModdedTreeWithSettings(int checkedX, int checkedY, GrowTreeSettings settings)
 		{
 			int i;
+
 			for (i = checkedY; Main.tile[checkedX, i].TileType == settings.SaplingTileType; i++)
 			{
 			}
+
 			if (Main.tile[checkedX - 1, i - 1].LiquidAmount != 0 || Main.tile[checkedX, i - 1].LiquidAmount != 0 || Main.tile[checkedX + 1, i - 1].LiquidAmount != 0)
 			{
 				return false;
 			}
+
 			Tile tile = Main.tile[checkedX, i];
 			if (!tile.HasUnactuatedTile || tile.IsHalfBlock || tile.Slope != 0)
 			{

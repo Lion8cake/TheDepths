@@ -24,11 +24,11 @@ namespace TheDepths.Tiles.Furniture
             TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2);
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
             TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
-            TileObjectData.addTile(Type);
+			TileObjectData.newTile.LavaDeath = false;
+			TileObjectData.addTile(Type);
 
             AddMapEntry(new Color(255, 255, 255), CreateMapEntryName());
         }
-
 
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

@@ -61,7 +61,7 @@ namespace TheDepths.Items.Weapons
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.DryRocket);
-			recipe.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), () => Worldgen.TheDepthsWorldGen.depthsorHell && Main.LocalPlayer.adjLava);
+			recipe.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), () => Worldgen.TheDepthsWorldGen.isWorldDepths && Main.LocalPlayer.adjLava);
 			recipe.Register();
 		}
 	}

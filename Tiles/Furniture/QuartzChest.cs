@@ -39,7 +39,8 @@ namespace TheDepths.Tiles.Furniture
             TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(Chest.FindEmptyChest, -1, 0, true);
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(Chest.AfterPlacement_Hook, -1, 0, false);
             TileObjectData.newTile.AnchorInvalidTiles = new int[] { TileID.MagicalIceBlock };
-            TileObjectData.newTile.StyleHorizontal = true;
+			TileObjectData.newTile.LavaDeath = false;
+			TileObjectData.newTile.StyleHorizontal = true;
             // TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);

@@ -41,6 +41,7 @@ using TheDepths.Tiles.Furniture;
 using TheDepths.Worldgen;
 using static Terraria.Graphics.FinalFractalHelper;
 using Terraria.ObjectData;
+using TheDepths.Tiles;
 
 namespace TheDepths
 {
@@ -131,6 +132,7 @@ namespace TheDepths
 			On_AmbientSky.HellBatsGoupSkyEntity.ctor += HellBatsGoupSkyEntity_ctor;
 			IL_Player.ItemCheck_UseBuckets += BucketCollectionItem;
 
+			IL_WorldGen.NotTheBees += NightmareGrassGFBPatcher;
 			On_Player.TryReplantingTree += TreeReplantingDetour;
 			On_LegacyPlayerRenderer.DrawPlayerFull += PlayerAfterImages;
 			On_Player.KeyDoubleTap += SlamDoubleTap;
@@ -198,6 +200,7 @@ namespace TheDepths
 			On_AmbientSky.HellBatsGoupSkyEntity.ctor -= HellBatsGoupSkyEntity_ctor;
 			IL_Player.ItemCheck_UseBuckets -= BucketCollectionItem;
 
+			IL_WorldGen.NotTheBees -= NightmareGrassGFBPatcher;
 			On_Player.TryReplantingTree -= TreeReplantingDetour;
 			On_LegacyPlayerRenderer.DrawPlayerFull -= PlayerAfterImages;
 			On_Player.KeyDoubleTap -= SlamDoubleTap;
@@ -243,10 +246,10 @@ namespace TheDepths
 				["InDepths", Player player] => TheDepthsWorldGen.InDepths(player),
 				["IsPlayerInRightDepths", Player player] => TheDepthsWorldGen.IsPlayerInRightDepths(player),
 				["IsPlayerInLeftDepths", Player player] => TheDepthsWorldGen.IsPlayerInLeftDepths(player),
-				["depthsorHell"] => TheDepthsWorldGen.depthsorHell,
+				["depthsorHell"] => TheDepthsWorldGen.isWorldDepths,
 				["DrunkDepthsLeft"] => TheDepthsWorldGen.DrunkDepthsLeft,
 				["DrunkDepthsRight"] => TheDepthsWorldGen.DrunkDepthsRight,
-				["SetdepthsorHell", bool boolean] => TheDepthsWorldGen.depthsorHell = boolean,
+				["SetdepthsorHell", bool boolean] => TheDepthsWorldGen.isWorldDepths = boolean,
 				["SetDrunkDepthsLeft", bool boolean] => TheDepthsWorldGen.DrunkDepthsLeft = boolean,
 				["SetDrunkDepthsRight", bool boolean] => TheDepthsWorldGen.DrunkDepthsRight = boolean,
 
@@ -276,6 +279,27 @@ namespace TheDepths
 				_ => throw new Exception("TheDepths: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
 		}
+
+		#region NOTTHEBEESCrispyHoneyProtection
+		private void NightmareGrassGFBPatcher(ILContext il)
+		{
+			var c = new ILCursor(il);
+			ILLabel IL_0898 = null;
+			if (!c.TryGotoNext(MoveType.After, i => i.MatchLdindU2(), i => i.MatchLdcI4(633), i => i.MatchBeq(out IL_0898)))
+			{
+				ModContent.GetInstance<TheDepths>().Logger.Debug("The Depths: Could not locate the AshGrass not the bees protection");
+				return;
+			}
+			if (IL_0898 == null) return;
+			c.EmitLdloc(1);
+			c.EmitLdloc(2);
+			c.EmitDelegate((int i, int j) =>
+			{
+				return Main.tile[i, j].TileType != ModContent.TileType<NightmareGrass>() && Main.tile[i, j].TileType != ModContent.TileType<ShaleBlock>() && Main.tile[i, j].TileType != ModContent.TileType<Shalestone>();
+			});
+			c.EmitBrfalse(IL_0898);
+		}
+		#endregion
 
 		#region AxeofRegrowthDetour
 		private void TreeReplantingDetour(On_Player.orig_TryReplantingTree orig, Player self, int x, int y)
@@ -1241,7 +1265,7 @@ namespace TheDepths
 		#region LavaSensorDetour
 		private bool On_TELogicSensor_GetState(On_TELogicSensor.orig_GetState orig, int x, int y, TELogicSensor.LogicCheckType type, TELogicSensor instance)
 		{
-			if (type == TELogicSensor.LogicCheckType.Lava && ((Worldgen.TheDepthsWorldGen.depthsorHell && !TheDepthsWorldGen.DrunkDepthsLeft && !TheDepthsWorldGen.DrunkDepthsRight) || (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2)))
+			if (type == TELogicSensor.LogicCheckType.Lava && ((Worldgen.TheDepthsWorldGen.isWorldDepths && !TheDepthsWorldGen.DrunkDepthsLeft && !TheDepthsWorldGen.DrunkDepthsRight) || (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2)))
 			{
 				return false;
 			}
@@ -1286,7 +1310,7 @@ namespace TheDepths
 		{
 			ILCursor c = new(il);
 			c.GotoNext(MoveType.After, i => i.MatchCallvirt<SpriteBatch>("Draw"), i => i.MatchLdarg1(), i => i.MatchLdarg0(), i => i.MatchLdfld<UIGenProgressBar>("_texOuterLower"));
-			c.EmitDelegate((Asset<Texture2D> texture) => (!WorldGen.drunkWorldGen && TheDepthsWorldGen.depthsorHell || (WorldGen.drunkWorldGen && Main.rand.NextBool(2))) ? ModContent.Request<Texture2D>("TheDepths/Assets/Loading/Depths_Outer_Lower") : texture);
+			c.EmitDelegate((Asset<Texture2D> texture) => (!WorldGen.drunkWorldGen && TheDepthsWorldGen.isWorldDepths || (WorldGen.drunkWorldGen && Main.rand.NextBool(2))) ? ModContent.Request<Texture2D>("TheDepths/Assets/Loading/Depths_Outer_Lower") : texture);
 		}
 		#endregion
 
@@ -1536,7 +1560,7 @@ namespace TheDepths
 		private void On_Liquid_GetLiquidMergeTypes(On_Liquid.orig_GetLiquidMergeTypes orig, int thisLiquidType, out int liquidMergeTileType, out int liquidMergeType, bool waterNearby, bool lavaNearby, bool honeyNearby, bool shimmerNearby)
 		{
 			orig.Invoke(thisLiquidType, out liquidMergeTileType, out liquidMergeType, waterNearby, lavaNearby, honeyNearby, shimmerNearby);
-			if ((Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer) && Main.netMode == NetmodeID.SinglePlayer) || (Worldgen.TheDepthsWorldGen.depthsorHell && Main.netMode != NetmodeID.SinglePlayer))
+			if ((Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer) && Main.netMode == NetmodeID.SinglePlayer) || (Worldgen.TheDepthsWorldGen.isWorldDepths && Main.netMode != NetmodeID.SinglePlayer))
 			{
 				liquidMergeTileType = ModContent.TileType<Tiles.Quartz>();
 				liquidMergeType = thisLiquidType;
@@ -1769,7 +1793,7 @@ namespace TheDepths
 			c.EmitLdfld(typeof(Liquid).GetField("x", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)); //X position variable used in the delegate
 			c.EmitDelegate((int x) =>
 			{
-				return (Worldgen.TheDepthsWorldGen.depthsorHell && !TheDepthsWorldGen.DrunkDepthsLeft && !TheDepthsWorldGen.DrunkDepthsRight) 
+				return (Worldgen.TheDepthsWorldGen.isWorldDepths && !TheDepthsWorldGen.DrunkDepthsLeft && !TheDepthsWorldGen.DrunkDepthsRight) 
 				|| (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 
 				|| Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2);
 			});

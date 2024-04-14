@@ -25,27 +25,30 @@ namespace TheDepths
 			Main.spriteBatch.End();
 			Main.spriteBatch.Begin(default, default, SamplerState.PointClamp, default, default, default, Main.UIScaleMatrix);
 
-			for (int k = 4; k >= 0; k--)
+			if (!Main.starGame)
 			{
-				int num = k + 5;
-				Texture2D tex = ModContent.Request<Texture2D>("TheDepths/Backgrounds/DepthsUnderworldBG_" + num).Value;
-
-				int realWidth = (num > 5 && num < 9 ? tex.Width / 2 : tex.Width);
-
-				Rectangle? sourceRect = null;
-				if (num > 5 && num < 9)
+				for (int k = 4; k >= 0; k--)
 				{
-					sourceRect = tex.Frame(2, 2, 1, 1);
+					int num = k + 5;
+					Texture2D tex = ModContent.Request<Texture2D>("TheDepths/Backgrounds/DepthsUnderworldBG_" + num).Value;
+
+					int realWidth = (num > 5 && num < 9 ? tex.Width / 2 : tex.Width);
+
+					Rectangle? sourceRect = null;
+					if (num > 5 && num < 9)
+					{
+						sourceRect = tex.Frame(2, 2, 1, 1);
+					}
+
+					float heightRatio = Main.screenHeight / (float)Main.screenWidth;
+					int width = (int)(realWidth * heightRatio) * 2;
+					var pos = new Vector2((int)(Main.screenPosition.X * 0.08f * -(k - 5)) % width, 0);
+
+					Color color = Color.White;
+
+					for (int h = 0; h < Main.screenWidth + width; h += width)
+						Main.spriteBatch.Draw(tex, new Rectangle(h - (int)pos.X, (int)pos.Y, width, Main.screenHeight), sourceRect, color, 0, default, 0, 0);
 				}
-
-				float heightRatio = Main.screenHeight / (float)Main.screenWidth;
-				int width = (int)(realWidth * heightRatio) * 2;
-				var pos = new Vector2((int)(Main.screenPosition.X * 0.08f * - (k - 5)) % width, 0);
-
-				Color color = Color.White;
-
-				for (int h = 0; h < Main.screenWidth + width; h += width)
-					Main.spriteBatch.Draw(tex, new Rectangle(h - (int)pos.X, (int)pos.Y, width, Main.screenHeight), sourceRect, color, 0, default, 0, 0);
 			}
 			return true;
 		}

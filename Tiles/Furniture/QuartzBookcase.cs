@@ -14,12 +14,13 @@ namespace TheDepths.Tiles.Furniture
             Main.tileFrameImportant[Type] = true;
             Main.tileSolidTop[Type] = true;
             Main.tileTable[Type] = true;
-            Main.tileLavaDeath[Type] = true;
+            Main.tileLavaDeath[Type] = false;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
             TileObjectData.newTile.Height = 4;
             TileObjectData.newTile.Origin = new Point16(0, 3);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 18 };
-            TileObjectData.addTile(Type);
+			TileObjectData.newTile.LavaDeath = false;
+			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			DustType = ModContent.DustType<Dusts.QuartzCrystals>();
             AdjTiles = new int[] { 101 };
