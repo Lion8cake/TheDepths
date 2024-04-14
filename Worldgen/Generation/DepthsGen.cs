@@ -56,20 +56,15 @@ internal class DepthsGen
         AddNightmareGrove(nightmareGroveSize, 0);
         AddBuildings(Main.maxTilesX / 2 - centerSizeHalved, Main.maxTilesX / 2 + centerSizeHalved, Main.maxTilesY - 160); // Adds all of the buildings
 		AddDepthsDecor(nightmareGroveSize);
-
-		//TODO
-		//Drunk/remix quicksilver/lava ocean
-		//Drunk/remix underground blockers (to stop the underground getting filled with quicksilver)
-		//Remix island
 	}
 
     internal static void SpecialGenerate(GenerationProgress progress, GameConfiguration configuration)
     {
-        int biomeWidth = WorldGen.drunkWorldGen ? (int)(Main.maxTilesX / 2) : Main.maxTilesX; // Change this and the biome will adjust in size accordingly.
+        int biomeWidth = (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport) ? (int)(Main.maxTilesX / 2) : Main.maxTilesX; // Change this and the biome will adjust in size accordingly.
         int x = 0;
         int side = 0;
 
-		if (WorldGen.drunkWorldGen)
+		if (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport)
         {
             if (WorldGen.genRand.NextBool(2))
             {
@@ -110,6 +105,7 @@ internal class DepthsGen
         int nightmareGroveSize = WorldGen.drunkWorldGen ? Main.maxTilesX / 2 :  Main.maxTilesX / 6; // Each nightmare grove takes up 1/6th of the world, and non-grove is the rest
         AddNightmareGrove(nightmareGroveSize, side);
         AddDepthsDecor(nightmareGroveSize);
+        PostSpecialSeedGen();
 
         progress.Message = "Building ruined homes...";
 
@@ -119,33 +115,6 @@ internal class DepthsGen
         if (side is 0 or 1)
             AddBuildings(Main.maxTilesX - buildingArea, Main.maxTilesX - 60, Main.maxTilesY - 160);
 	}
-
-    /// <summary>
-    /// Replaces ceiling tiles in the middle area of a drunk world without me having to add them manually.
-    /// </summary>
-    /// <param name="startX">Start X position of the generation. Always assumes width is 1/2 of the world.</param>
-    internal static void ReplaceHalfCeilingOnDrunkWorldGen(int startX)
-    {
-        int biomeWidth = Main.maxTilesX / 2;
-
-        for (int i = startX; i < startX + biomeWidth; i++)
-        {
-            for (int j = Main.maxTilesY - 250; j < Main.maxTilesY - 50; ++j)
-            {
-                Tile tile = Main.tile[i, j];
-                ushort type = tile.TileType;
-
-                if (tile.TileType == TileID.Ash)
-                    tile.TileType = (ushort)ModContent.TileType<ShaleBlock>();
-
-                if (tile.TileType == TileID.AshGrass)
-                    tile.TileType = (ushort)ModContent.TileType<NightmareGrass>();
-
-                if (type != tile.TileType)
-                    WorldGen.SquareTileFrame(i, j, true);
-            }
-        }
-    }
 
     /// <summary>
     /// Adds buildings to the center of the world, based on <paramref name="halfWidth"/>, and starting at <paramref name="startY"/>.
@@ -212,6 +181,29 @@ internal class DepthsGen
 
     private static void SpecialSeedGen() //Lion8cake's dinkie ass code
     {
+		//Drunkseed remnant remover
+		for (int x = (TheDepthsWorldGen.DrunkDepthsRight ? Main.maxTilesX / 2 : 0); x < (TheDepthsWorldGen.DrunkDepthsLeft ? Main.maxTilesX / 2 : Main.maxTilesX); x++)
+		{
+			for (int y = Main.maxTilesY - 300; y < Main.maxTilesY; y++)
+			{
+				if (Main.tile[x, y].TileType == TileID.ObsidianBrick || Main.tile[x, y].TileType == TileID.HellstoneBrick || Main.tile[x, y].TileType == TileID.Beds || Main.tile[x, y].TileType == TileID.Bathtubs || Main.tile[x, y].TileType == TileID.Tables || Main.tile[x, y].TileType == TileID.WorkBenches 
+                    || Main.tile[x, y].TileType == TileID.Chairs || Main.tile[x, y].TileType == TileID.Platforms || Main.tile[x, y].TileType == TileID.Candelabras || Main.tile[x, y].TileType == TileID.GrandfatherClocks || Main.tile[x, y].TileType == TileID.Pianos || Main.tile[x, y].TileType == TileID.Bookcases 
+                    || Main.tile[x, y].TileType == TileID.Hellforge || Main.tile[x, y].TileType == TileID.Chandeliers || Main.tile[x, y].TileType == TileID.Torches || Main.tile[x, y].TileType == 89 || Main.tile[x, y].TileType == TileID.Dressers || Main.tile[x, y].TileType == TileID.Candles 
+                    || Main.tile[x, y].TileType == TileID.Statues || Main.tile[x, y].TileType == TileID.ClosedDoor || Main.tile[x, y].TileType == TileID.OpenDoor || Main.tile[x, y].TileType == TileID.TreeAsh || Main.tile[x, y].TileType == TileID.AshVines || Main.tile[x, y].TileType == TileID.HangingLanterns 
+                    || Main.tile[x, y].TileType == TileID.Lamps || Main.tile[x, y].TileType == TileID.Banners || Main.tile[x, y].TileType == TileID.Painting2X3 || Main.tile[x, y].TileType == TileID.Painting3X2 || Main.tile[x, y].TileType == TileID.Painting3X3 || Main.tile[x, y].TileType == TileID.Painting4X3 
+                    || Main.tile[x, y].TileType == TileID.Painting6X4)
+				{
+					Tile tile = Main.tile[x, y];
+					tile.HasTile = false;
+				}
+				if (Main.tile[x, y].WallType == WallID.ObsidianBrickUnsafe || Main.tile[x, y].WallType == WallID.HellstoneBrickUnsafe)
+				{
+					Tile tile = Main.tile[x, y];
+					tile.WallType = 0;
+				}
+			}
+		}
+
 		//Quicksilver Ocean
 		if (WorldGen.drunkWorldGen || WorldGen.remixWorldGen)
 		{
@@ -304,6 +296,52 @@ internal class DepthsGen
 		}
 	}
 
+    private static void PostSpecialSeedGen()
+    {
+		//Converting the tiles from nightmare to underworld is so much easier than the other way around due to how the quicksilver ocean and the depths roof works
+		//Replaces shale and nightmare grass, replaces trees
+		if (WorldGen.remixWorldGen && (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport))
+		{
+			for (int k = (TheDepthsWorldGen.DrunkDepthsLeft ? Main.maxTilesX / 2 : 0); k < (TheDepthsWorldGen.DrunkDepthsRight ? Main.maxTilesX / 2 : Main.maxTilesX); k++)
+			{
+				for (int l = Main.maxTilesY - 300; l < Main.maxTilesY; l++)
+				{
+					if (Main.tile[k, l].TileType == ModContent.TileType<ShaleBlock>())
+					{
+						WorldGen.KillTile(k, l, false, false, false);
+						Main.tile[k, l].TileType = (ushort)TileID.Ash;
+						Tile tile = Main.tile[k, l];
+						tile.HasTile = true;
+					}
+					else if (Main.tile[k, l].TileType == ModContent.TileType<NightmareGrass>())
+					{
+						WorldGen.KillTile(k, l, false, false, false);
+						Main.tile[k, l].TileType = (ushort)TileID.AshGrass;
+						Tile tile = Main.tile[k, l];
+						tile.HasTile = true;
+					}
+				}
+			}
+
+			int num854 = (int)((double)Main.maxTilesX * 0.38);
+			int num855 = (int)((double)Main.maxTilesX * 0.62);
+			int num856 = num854;
+			int num857 = Main.maxTilesY - 1;
+			int num858 = Main.maxTilesY - 135;
+			int num859 = Main.maxTilesY - 160;
+			for (int num864 = num854; num864 < num855 + 15; num864++)
+			{
+				for (int num865 = Main.maxTilesY - 200; num865 < num858 + 20; num865++)
+				{
+					if (Main.tile[num864, num865].TileType == 633 && Main.tile[num864, num865].HasTile == true && !Main.tile[num864, num865 - 1].HasTile == true && WorldGen.genRand.Next(3) == 0)
+					{
+						WorldGen.TryGrowingTreeByType(634, num864, num865);
+					}
+				}
+			}
+		}
+	}
+
     /// <summary>
     /// Adds holes between the chasms for easier player access.
     /// </summary>
@@ -350,49 +388,6 @@ internal class DepthsGen
                 PlaceDepthsDecor(i, j);
             }
         }
-
-        //Didn't want to make a whole new method so im using this one to convert the island into underworld tiles on the appropriate side
-        //Replaces shale and nightmare grass, replaces trees
-		if (WorldGen.remixWorldGen)
-		{
-			for (int k = (TheDepthsWorldGen.DrunkDepthsLeft ? Main.maxTilesX / 2 : 0); k < (TheDepthsWorldGen.DrunkDepthsRight ? Main.maxTilesX / 2 : Main.maxTilesX); k++)
-			{
-				for (int l = Main.maxTilesY - 300; l < Main.maxTilesY; l++)
-				{
-					if (Main.tile[k, l].TileType == ModContent.TileType<ShaleBlock>())
-					{
-						WorldGen.KillTile(k, l, false, false, false);
-						Main.tile[k, l].TileType = (ushort)TileID.Ash;
-						Tile tile = Main.tile[k, l];
-						tile.HasTile = true;
-					}
-					else if (Main.tile[k, l].TileType == ModContent.TileType<NightmareGrass>())
-					{
-						WorldGen.KillTile(k, l, false, false, false);
-						Main.tile[k, l].TileType = (ushort)TileID.AshGrass;
-						Tile tile = Main.tile[k, l];
-						tile.HasTile = true;
-					}
-				}
-			}
-
-			int num854 = (int)((double)Main.maxTilesX * 0.38);
-			int num855 = (int)((double)Main.maxTilesX * 0.62);
-			int num856 = num854;
-			int num857 = Main.maxTilesY - 1;
-			int num858 = Main.maxTilesY - 135;
-			int num859 = Main.maxTilesY - 160;
-			for (int num864 = num854; num864 < num855 + 15; num864++)
-			{
-				for (int num865 = Main.maxTilesY - 200; num865 < num858 + 20; num865++)
-				{
-					if (Main.tile[num864, num865].TileType == 633 && Main.tile[num864, num865].HasTile == true && !Main.tile[num864, num865 - 1].HasTile == true && WorldGen.genRand.Next(3) == 0)
-					{
-						WorldGen.TryGrowingTreeByType(634, num864, num865);
-					}
-				}
-			}
-		}
 	}
 
     /// <summary>
@@ -664,7 +659,7 @@ internal class DepthsGen
     /// <param name="distanceFromBothEdges">Distance to replace from each edge.</param>
     internal static void AddNightmareGrove(int distanceFromBothEdges, int side)
     {
-		if (WorldGen.remixWorldGen)
+		if (WorldGen.remixWorldGen && !WorldGen.drunkWorldGen)
 		{
 			for (int i = (int)((double)Main.maxTilesX * 0.38); i < (int)((double)Main.maxTilesX * 0.62) + 15; ++i)
 			{

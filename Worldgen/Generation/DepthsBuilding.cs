@@ -117,7 +117,6 @@ internal class DepthsBuilding
                 WorldGen.PlaceWall(position.X, position.Y - i, placeWalls);
         }
         WorldGen.PlaceTile(position.X, position.Y - 2, ModContent.TileType<QuartzDoorClosed>(), true);
-        Tile tile = Main.tile[position.X, position.Y + 1];
 	}
 
     /// <summary>
@@ -142,8 +141,11 @@ internal class DepthsBuilding
             int off = WorldGen.genRand.Next(-2, 3);
             bool makeHole = WorldGen.genRand.NextBool(14); // Sometimes, just have a hole in the wall
 
-            for (int i = center.X - useWidth - off;  i < center.X + useWidth - off; ++i)
+            for (int i = center.X - useWidth - off; i < center.X + useWidth - off; ++i)
             {
+                if (i >= Main.maxTilesX)
+                    continue;
+
                 Tile tile = Main.tile[i, y];
 
                 if (!tile.HasTile) // Skip if I'm placing over air
