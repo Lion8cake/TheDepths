@@ -19,7 +19,7 @@ namespace TheDepths.Items.Accessories
 		public override void SetDefaults() {
 			Item.width = 24;
 			Item.height = 28;
-			Item.value = 500000;
+			Item.value = Item.sellPrice(0, 6, 0, 0);
 			Item.rare = ItemRarityID.LightRed;
 			Item.accessory = true;
 		}

@@ -25,6 +25,7 @@ namespace TheDepths.Items.Placeable
         {
             Recipe recipe = CreateRecipe(4);
             recipe.AddIngredient(ModContent.ItemType<SilverfallBlock>());
+            recipe.AddTile(TileID.WorkBenches);
             recipe.Register();
         }
     }

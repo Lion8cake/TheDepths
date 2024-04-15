@@ -29,6 +29,7 @@ namespace TheDepths.Items.Placeable
 			Item.createTile = ModContent.TileType<Tiles.ArqueriteOre>();
 			Item.width = 12;
 			Item.height = 12;
+			Item.value = Item.sellPrice(0, 0, 2, 50);
 			Item.rare = ItemRarityID.Green;
 		}
 

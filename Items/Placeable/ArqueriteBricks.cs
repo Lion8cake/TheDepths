@@ -39,6 +39,7 @@ namespace TheDepths.Items.Placeable
 
 			Recipe recipe2 = CreateRecipe();
 			recipe2.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBrickWall>(), 4);
+			recipe2.AddTile(TileID.WorkBenches);
 			recipe2.Register();
 		}
 	}
