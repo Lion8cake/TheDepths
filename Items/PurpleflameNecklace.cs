@@ -18,7 +18,7 @@ namespace TheDepths.Items
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.value = 50000;
+            Item.value = Item.sellPrice(0, 5, 0, 0);
             Item.rare = ItemRarityID.Yellow;
             Item.UseSound = SoundID.Item79;
             Item.noMelee = true;

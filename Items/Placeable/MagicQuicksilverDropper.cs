@@ -19,7 +19,7 @@ namespace TheDepths.Items.Placeable
 			Item.width = 32;
 			Item.height = 32;
 			Item.maxStack = 9999;
-			Item.value = 500;
+			Item.value = Item.sellPrice(0, 0, 0, 40);
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTurn = true;
 			Item.useAnimation = 15;

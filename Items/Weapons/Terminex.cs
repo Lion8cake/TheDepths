@@ -27,7 +27,7 @@ namespace TheDepths.Items.Weapons
 			Item.useTime = 30;
 			Item.useAnimation = 30; 
 			Item.knockBack = 15;
-			Item.value = Item.buyPrice(gold: 27);
+			Item.value = Item.sellPrice(0, 0, 54, 0);
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item1; 
 			Item.autoReuse = true;
