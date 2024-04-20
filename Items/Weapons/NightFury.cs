@@ -21,7 +21,7 @@ namespace TheDepths.Items.Weapons
             Item.height = 36;
             Item.useTime = 20;
             Item.useAnimation = 20;
-            Item.value = 1000;
+            Item.value = Item.sellPrice(0, 2, 50, 0);
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.rare = 2;

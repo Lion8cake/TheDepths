@@ -21,6 +21,7 @@ namespace TheDepths.Items
 			Item.useAnimation = 8;
 			Item.useTime = 8;
 			Item.UseSound = SoundID.Item1;
+			Item.value = Item.sellPrice(0, 10, 0, 0);
 			Item.rare = ItemRarityID.Orange;
 			Item.fishingPole = 47;
 			Item.shootSpeed = 13f;
