@@ -17,7 +17,7 @@ namespace TheDepths.Tiles
         {
             Main.tileLighted[Type] = true;
             HitSound = SoundID.Dig;
-            AddMapEntry(new Color(185, 197, 200), (LocalizedText)null);
+            AddMapEntry(new Color(185, 197, 200));
             AnimationFrameHeight = 90;
             Main.tileSolid[Type] = false;
             Main.tileNoAttach[Type] = false;

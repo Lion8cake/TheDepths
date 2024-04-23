@@ -24,8 +24,9 @@ namespace TheDepths.Buffs
 		}
 
 		public override void Update(Player player, ref int buffIndex) {
-		player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
-		player.buffImmune[ModContent.BuffType<MercuryBoiling>()] = true;
+			player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
+			player.buffImmune[ModContent.BuffType<MercuryBoiling>()] = true;
+			player.GetModPlayer<TheDepthsPlayer>().cSkin = true;
 		}
 	}
 }

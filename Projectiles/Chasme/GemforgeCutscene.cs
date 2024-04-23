@@ -101,7 +101,7 @@ namespace TheDepths.Projectiles.Chasme
 				SoundEngine.PlaySound(SoundID.DD2_BetsyDeath, Projectile.position);
 				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
-					if (Projectile.position.Y / 16f < (float)(Main.maxTilesY - 205) || Main.wofNPCIndex >= 0 || Main.netMode == 1)
+					if (Projectile.position.Y / 16f < (float)(Main.maxTilesY - 205) || Main.wofNPCIndex >= 0 || Main.netMode == NetmodeID.MultiplayerClient)
 					{
 						return;
 					}
@@ -178,11 +178,11 @@ namespace TheDepths.Projectiles.Chasme
 					num4 = num6 * 16;
 					NPC.NewNPC(NPC.GetBossSpawnSource(targetPlayerIndex), num3, num4, ModContent.NPCType<ChasmeHeart>());
 				}
-				if (Main.netMode == 0)
+				if (Main.netMode == NetmodeID.SinglePlayer)
 				{
 					Main.NewText(Language.GetTextValue("Announcement.HasAwoken", Language.GetTextValue("Mods.TheDepths.NPCs.ChasmeBody.DisplayName")), 175, 75);
 				}
-				else if (Main.netMode == 2)
+				else if (Main.netMode == NetmodeID.Server)
 				{
 					ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", Language.GetTextValue("Mods.TheDepths.NPCs.ChasmeBody.DisplayName")), new Color(175, 75, 255));
 				}

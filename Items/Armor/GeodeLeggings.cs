@@ -32,10 +32,6 @@ namespace TheDepths.Items.Armor
 			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 2);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
-			Recipe recipe2 = CreateRecipe();
-			recipe2.AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 2);
-			recipe2.AddTile(TileID.Anvils);
-			recipe2.Register();
 		}
 	}
 }

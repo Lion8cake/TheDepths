@@ -83,7 +83,7 @@ namespace TheDepths.Projectiles
 							obj3.velocity.Y *= 0.75f;
 						}
 					}
-					if (num5 <= 0 || Main.rand.Next(3) == 0)
+					if (num5 <= 0 || Main.rand.NextBool(3))
 					{
 						continue;
 					}

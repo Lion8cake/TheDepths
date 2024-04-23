@@ -24,7 +24,7 @@ namespace TheDepths.Items.Weapons
             Item.value = Item.sellPrice(0, 2, 50, 0);
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
-            Item.rare = 2;
+            Item.rare = ItemRarityID.Green;
             Item.UseSound = SoundID.Item5;
             Item.autoReuse = true;
             Item.shoot = ProjectileID.PurificationPowder;

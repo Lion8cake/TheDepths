@@ -28,10 +28,10 @@ namespace TheDepths.Projectiles
 
             Projectile.velocity.Y += (float)-Projectile.timeLeft / 10000;
 
-			if (Main.rand.Next(30) == 0)
+			if (Main.rand.NextBool(30))
 			{
 				Dust dust2 = Dust.NewDustDirect(Projectile.Center, 4, 4, ModContent.DustType<ShadowflameEmber>(), 0f, 0f, 100);
-				if (Main.rand.Next(3) != 0)
+				if (!Main.rand.NextBool(3))
 				{
 					int projectileDesiredShader = (Main.player[Projectile.owner].mount._type == ModContent.MountType<NightmareHorse>() ? Main.player[Projectile.owner].cMount : Main.player[Projectile.owner].GetModPlayer<TheDepthsPlayer>().cShadowFlame);
 					dust2.shader = GameShaders.Armor.GetSecondaryShader(projectileDesiredShader, Main.LocalPlayer);
@@ -98,10 +98,10 @@ namespace TheDepths.Projectiles
 			Projectile.scale = Projectile.timeLeft / 120f;
 
 			Projectile.velocity.Y += (float)-Projectile.timeLeft / 10000;
-			if (Main.rand.Next(30) == 0)
+			if (Main.rand.NextBool(30))
 			{
 				Dust dust2 = Dust.NewDustDirect(Projectile.Center, 4, 4, ModContent.DustType<ShadowflameEmber>(), 0f, 0f, 100);
-				if (Main.rand.Next(3) != 0)
+				if (!Main.rand.NextBool(3))
 				{
 					int projectileDesiredShader = (Main.player[Projectile.owner].mount._type == ModContent.MountType<NightmareHorse>() ? Main.player[Projectile.owner].cMount : Main.player[Projectile.owner].GetModPlayer<TheDepthsPlayer>().cShadowFlame);
 					dust2.shader = GameShaders.Armor.GetSecondaryShader(projectileDesiredShader, Main.LocalPlayer);
@@ -169,10 +169,10 @@ namespace TheDepths.Projectiles
 
 			Projectile.velocity.Y += (float)-Projectile.timeLeft / 10000;
 
-			if (Main.rand.Next(30) == 0)
+			if (Main.rand.NextBool(30))
 			{
 				Dust dust2 = Dust.NewDustDirect(Projectile.Center, 4, 4, ModContent.DustType<ShadowflameEmber>(), 0f, 0f, 100);
-				if (Main.rand.Next(3) != 0)
+				if (!Main.rand.NextBool(3))
 				{
 					int projectileDesiredShader = (Main.player[Projectile.owner].mount._type == ModContent.MountType<NightmareHorse>() ? Main.player[Projectile.owner].cMount : Main.player[Projectile.owner].GetModPlayer<TheDepthsPlayer>().cShadowFlame);
 					dust2.shader = GameShaders.Armor.GetSecondaryShader(projectileDesiredShader, Main.LocalPlayer);

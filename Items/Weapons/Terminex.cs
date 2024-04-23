@@ -59,6 +59,16 @@ namespace TheDepths.Items.Weapons
 
         public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
+			OnHit(player, target);
+		}
+
+		public override void OnHitPvp(Player player, Player target, Player.HurtInfo hurtInfo)
+		{
+			OnHit(player, target);
+		}
+
+		private static void OnHit(Player player, Entity target)
+		{
 			if (player.ownedProjectileCounts[ModContent.ProjectileType<MercuryExplosion>()] < 20)
 			{
 				int num403 = Main.rand.Next(20, 31);
@@ -69,11 +79,11 @@ namespace TheDepths.Items.Weapons
 					vector45 *= (float)Main.rand.Next(10, 201) * 0.01f;
 					Projectile.NewProjectile(new EntitySource_Misc(""), target.position.X, target.position.Y, vector45.X, vector45.Y, ModContent.ProjectileType<Projectiles.MercuryExplosion>(), 0, 0, Main.LocalPlayer.whoAmI);
 				}
-				SoundEngine.PlaySound(new SoundStyle("TheDepths/Sounds/Item/deerclops_ice_attack_0") { Volume = 1f, }, target.position);
+				SoundEngine.PlaySound(SoundID.DeerclopsIceAttack with { Volume = 0.5f }, target.position);
 			}
-        }
+		}
 
-        public override void AddRecipes()
+		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 20);

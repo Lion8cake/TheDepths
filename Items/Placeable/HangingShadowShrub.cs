@@ -20,7 +20,7 @@ namespace TheDepths.Items.Placeable
             Item.autoReuse = true;
             Item.useAnimation = 15;
             Item.useTime = 10;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.value = Terraria.Item.sellPrice(silver: 25);
             Item.createTile = ModContent.TileType<Tiles.HangingShadowShrub>();

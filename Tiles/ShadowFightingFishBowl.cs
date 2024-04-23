@@ -13,10 +13,10 @@ namespace TheDepths.Tiles
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = false;
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
-            AddMapEntry(new Color(112, 217, 232));
-            DustType = DustID.Glass;
-            AnimationFrameHeight = 36;
+			AddMapEntry(new Color(112, 217, 232));
+			DustType = DustID.Glass;
+			AnimationFrameHeight = 36;
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 };
             TileObjectData.newTile.CoordinateWidth = 16;
             TileObjectData.newTile.DrawYOffset = 2;

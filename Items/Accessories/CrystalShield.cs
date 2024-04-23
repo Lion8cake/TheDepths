@@ -41,7 +41,7 @@ namespace TheDepths.Items.Accessories
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.CrystalSkull>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.PalladiumShield>(), 1);
-			recipe.AddTile(114);
+			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}
 	}

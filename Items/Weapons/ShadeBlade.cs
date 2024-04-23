@@ -5,7 +5,6 @@ using Terraria.ID;
 using Terraria.GameContent.Creative;
 using TheDepths.Projectiles;
 using Terraria.DataStructures;
-using TheDepths.Projectiles;
 
 namespace TheDepths.Items.Weapons
 {

@@ -28,6 +28,8 @@ using System.IO;
 using TheDepths.Dusts;
 using Terraria.GameContent.Events;
 using Terraria.Audio;
+using Terraria.Chat;
+using Terraria.Localization;
 
 namespace TheDepths.NPCs.Chasme
 {
@@ -761,39 +763,52 @@ namespace TheDepths.NPCs.Chasme
 
 		public override void OnKill()
 		{
-			NPC.SetEventFlagCleared(ref TheDepthsWorldGen.downedChasme, -1);
-
-			if (Main.netMode != NetmodeID.MultiplayerClient)
+			if (Main.netMode == NetmodeID.MultiplayerClient)
 			{
-				int CentreX = (int)(NPC.position.X + (12)) / 16;
-				int CentreY = (int)(NPC.position.Y + (12)) / 16;
-				int HalfLength = 3 + 1;
-				for (int k = CentreX - HalfLength; k <= CentreX + HalfLength; k++)
+				return;
+			}
+			CreateShadowBrickBoxForChasme();
+			bool eventFlag = Main.hardMode;
+			WorldGen.StartHardmode();
+			if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && !eventFlag)
+			{
+				if (Main.netMode == NetmodeID.SinglePlayer)
 				{
-					for (int l = CentreY - HalfLength; l <= CentreY + HalfLength; l++)
-					{
-						if ((k == CentreX - HalfLength || k == CentreX + HalfLength || l == CentreY - HalfLength || l == CentreY + HalfLength) && !Main.tile[k, l].HasTile)
-						{
-							Tile tile = Main.tile[k, l];
-							Main.tile[k, l].TileType = (ushort)ModContent.TileType<Tiles.ShadowBrick>();
-							tile.HasTile = true;
-						}
-						Main.tile[k, l].LiquidAmount = 0;
-						if (Main.netMode == NetmodeID.Server)
-						{
-							NetMessage.SendTileSquare(-1, k, l, 1);
-						}
-						else
-						{
-							WorldGen.SquareTileFrame(k, l, true);
-						}
-					}
+					Main.NewText(Lang.misc[32].Value, 50, byte.MaxValue, 130);
+				}
+				else if (Main.netMode == NetmodeID.Server)
+				{
+					ChatHelper.BroadcastChatMessage(NetworkText.FromKey(Lang.misc[32].Key), new Color(50, 255, 130));
 				}
 			}
+			NPC.SetEventFlagCleared(ref TheDepthsWorldGen.downedChasme, -1);
+		}
 
-			if (!Main.hardMode)
+		public void CreateShadowBrickBoxForChasme()
+		{
+			int CentreX = (int)(NPC.position.X + (12)) / 16;
+			int CentreY = (int)(NPC.position.Y + (12)) / 16;
+			int HalfLength = 3 + 1;
+			for (int k = CentreX - HalfLength; k <= CentreX + HalfLength; k++)
 			{
-				WorldGen.StartHardmode();
+				for (int l = CentreY - HalfLength; l <= CentreY + HalfLength; l++)
+				{
+					if ((k == CentreX - HalfLength || k == CentreX + HalfLength || l == CentreY - HalfLength || l == CentreY + HalfLength) && !Main.tile[k, l].HasTile)
+					{
+						Tile tile = Main.tile[k, l];
+						Main.tile[k, l].TileType = (ushort)ModContent.TileType<Tiles.ShadowBrick>();
+						tile.HasTile = true;
+					}
+					Main.tile[k, l].LiquidAmount = 0;
+					if (Main.netMode == NetmodeID.Server)
+					{
+						NetMessage.SendTileSquare(-1, k, l, 1);
+					}
+					else
+					{
+						WorldGen.SquareTileFrame(k, l, true);
+					}
+				}
 			}
 		}
 
@@ -825,31 +840,31 @@ namespace TheDepths.NPCs.Chasme
 
 		public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(ChasmePartIDs[0]);
-			writer.Write(ChasmePartIDs[1]);
-			writer.Write(ChasmePartIDs[2]);
-			writer.Write(ChasmePartIDs[3]);
-			writer.Write(ChasmePartIDs[4]);
-			writer.Write(ChasmePartIDs[5]);
-			writer.Write(ChasmePartIDs[6]);
-			writer.Write(ChasmePartIDs[7]);
-			writer.Write(ChasmePartIDs[8]);
-			writer.Write(ChasmePartIDs[9]);
+			writer.Write((byte)ChasmePartIDs[0]);
+			writer.Write((byte)ChasmePartIDs[1]);
+			writer.Write((byte)ChasmePartIDs[2]);
+			writer.Write((byte)ChasmePartIDs[3]);
+			writer.Write((byte)ChasmePartIDs[4]);
+			writer.Write((byte)ChasmePartIDs[5]);
+			writer.Write((byte)ChasmePartIDs[6]);
+			writer.Write((byte)ChasmePartIDs[7]);
+			writer.Write((byte)ChasmePartIDs[8]);
+			writer.Write((byte)ChasmePartIDs[9]);
 			writer.Write(TimesDownedHead);
 		}
 
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			ChasmePartIDs[0] = reader.ReadInt32();
-			ChasmePartIDs[1] = reader.ReadInt32();
-			ChasmePartIDs[2] = reader.ReadInt32();
-			ChasmePartIDs[3] = reader.ReadInt32();
-			ChasmePartIDs[4] = reader.ReadInt32();
-			ChasmePartIDs[5] = reader.ReadInt32();
-			ChasmePartIDs[6] = reader.ReadInt32();
-			ChasmePartIDs[7] = reader.ReadInt32();
-			ChasmePartIDs[8] = reader.ReadInt32();
-			ChasmePartIDs[9] = reader.ReadInt32();
+			ChasmePartIDs[0] = reader.ReadByte();
+			ChasmePartIDs[1] = reader.ReadByte();
+			ChasmePartIDs[2] = reader.ReadByte();
+			ChasmePartIDs[3] = reader.ReadByte();
+			ChasmePartIDs[4] = reader.ReadByte();	
+			ChasmePartIDs[5] = reader.ReadByte();
+			ChasmePartIDs[6] = reader.ReadByte();
+			ChasmePartIDs[7] = reader.ReadByte();
+			ChasmePartIDs[8] = reader.ReadByte();
+			ChasmePartIDs[9] = reader.ReadByte();
 			TimesDownedHead = reader.ReadInt32();
 		}
 	}

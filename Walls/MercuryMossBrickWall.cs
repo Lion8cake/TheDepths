@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Terraria.ID;
 
 namespace TheDepths.Walls
 {
@@ -25,7 +26,7 @@ namespace TheDepths.Walls
 			if (Main.rand.NextFloat() < 0.005f)
 			{
 				Vector2 position = new Vector2(i * 16, j * 16);
-				Dust dust = Main.dust[Dust.NewDust(position, 4, 4, 261, 0f, 0f, 0, new Color(119, 135, 162), 1f)];
+				Dust dust = Main.dust[Dust.NewDust(position, 4, 4, DustID.AncientLight, 0f, 0f, 0, new Color(119, 135, 162), 1f)];
 				dust.noGravity = true;
 			}
 

@@ -24,7 +24,7 @@ namespace TheDepths.Projectiles
 			SoundEngine.PlaySound(SoundID.Item107, Projectile.position);
 			for (int num405 = 0; num405 < 15; num405++)
 			{
-				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 13, 0f, -2f, 0, default(Color), 1.5f);
+				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Glass, 0f, -2f, 0, default(Color), 1.5f);
 			}
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{

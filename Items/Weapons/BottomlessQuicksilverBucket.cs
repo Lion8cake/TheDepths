@@ -18,7 +18,7 @@ namespace TheDepths.Items.Weapons
 		}
 
 		public override void SetDefaults() {
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTurn = true;
 			Item.useAnimation = 12;
 			Item.useTime = 5;

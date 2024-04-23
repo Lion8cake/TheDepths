@@ -364,7 +364,7 @@ internal class DepthsBuilding
 
 	public static PaintingEntry RandDarknessPicture()
 	{
-		int num = WorldGen.genRand.Next(8);
+		int num = WorldGen.genRand.Next(10);
 		int num2 = 0;
 		switch (num)
 		{
@@ -395,11 +395,14 @@ internal class DepthsBuilding
 			case 8:
 				num = ModContent.TileType<FlowingQuicksilver>();
 				break;
-			default:
+			case 9:
 				num = ModContent.TileType<DONOTDRINK>();
 				break;
+			default:
+				num = ModContent.TileType<OtherPortal>();
+				break;
 		}
-		PaintingEntry result = default(PaintingEntry);
+		PaintingEntry result;
 		result.tileType = num;
 		result.style = num2;
 		return result;

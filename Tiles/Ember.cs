@@ -10,7 +10,7 @@ using Terraria.ObjectData;
 
 namespace TheDepths.Tiles
 {
-    public class Ember: ModTile
+    public class Ember: ModTile //This now dud tile is a placeholder for the Depth's map background color
     {
         public override void SetStaticDefaults()
         {
@@ -20,7 +20,7 @@ namespace TheDepths.Tiles
             Main.tileLighted[Type] = true;
             Main.tileNoAttach[Type] = true;
             DustType = ModContent.DustType<EmberDust>();
-            AddMapEntry(new Color(179, 79, 36));
+            AddMapEntry(new Color(5, 5, 7));
             RegisterItemDrop(ModContent.ItemType<Items.Placeable.Ember>());
         }
 
@@ -37,17 +37,6 @@ namespace TheDepths.Tiles
                 return true;
             }
             WorldGen.KillTile(i, j);
-            return true;
-
-            if (!tileBelow.HasTile || tileBelow.IsActuated || tileBelow.IsHalfBlock || tileBelow.BottomSlope || tileBelow.TopSlope || Main.tileSolid[type] || Main.tileSolidTop[type])
-            {
-                WorldGen.KillTile(i, j);
-                //Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ModContent.ItemType<Items.Placeable.Ember>());
-            }
-            else
-            {
-                WorldGen.KillTile(i, j);
-            }
             return true;
         }
 

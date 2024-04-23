@@ -11,11 +11,6 @@ namespace TheDepths.Projectiles
 {
 	public class ShadowCat : ModProjectile
 	{
-		protected bool IsAboutToTeleport = false;
-		protected bool firstPoof = false;
-		protected int teleportWaitTimer;
-		protected int AnimationbeginningTimer;
-
 		public override void SetStaticDefaults() {
 			Main.projFrames[Projectile.type] = 17;
 			Main.projPet[Projectile.type] = true;
@@ -45,6 +40,10 @@ namespace TheDepths.Projectiles
         }
 
 		public override void AI() {
+			//Projectile.ai[0]; //IsAboutToTeleport
+			//Projectile.ai[1]; //teleportWaitTimer
+			//Projectile.ai[2]; //AnimationbeginningTimer
+
 			Player player = Main.player[Projectile.owner];
 
 			if (!player.dead && player.HasBuff(ModContent.BuffType<Buffs.ShadowCatBuff>())) {
@@ -66,22 +65,22 @@ namespace TheDepths.Projectiles
             {
 				if (player.fallStart == (int)(player.position.Y / 16f) && player.releaseJump == true && player.jump == 0 && player.wingTime == player.wingTimeMax && player.justJumped == false && player.rocketDelay2 == 0)
 				{
-					IsAboutToTeleport = true;
+					Projectile.ai[0] = 1f;
                 }
             }
 
-            if (IsAboutToTeleport == true)
+            if (Projectile.ai[0] == 1f)
             {
-				AnimationbeginningTimer++;
+				Projectile.ai[2]++;
 				if (Projectile.frame < 9)
                 {
 					Projectile.frame = 9;
                 }
-				if (AnimationbeginningTimer >= 8 * 4)
+				if (Projectile.ai[2] >= 8 * 4)
                 {
-					teleportWaitTimer++;
+					Projectile.ai[1]++;
                 }
-				if (teleportWaitTimer == 1)
+				if (Projectile.ai[1] == 1)
                 {
 					for (int i = 0; i < 4; i++)
 					{
@@ -92,11 +91,11 @@ namespace TheDepths.Projectiles
 					Projectile.position.X = player.Center.X;
 					Projectile.position.Y = player.Center.Y - 10;
 				}
-				if (teleportWaitTimer > 1)
+				if (Projectile.ai[1] > 1)
                 {
 					Projectile.frame = 16;
                 }
-				if (teleportWaitTimer >= 20)
+				if (Projectile.ai[1] >= 20)
                 {
 					for (int i = 0; i < 4; i++)
 					{
@@ -104,10 +103,10 @@ namespace TheDepths.Projectiles
 						Gore.NewGore(new EntitySource_Misc(""), Projectile.position, default(Vector2), GoreID.Smoke2);
 						Gore.NewGore(new EntitySource_Misc(""), Projectile.position, default(Vector2), GoreID.Smoke3);
 					}
-					teleportWaitTimer = 0;
+					Projectile.ai[1] = 0;
 					Projectile.frame = 15;
-					IsAboutToTeleport = false;
-					AnimationbeginningTimer = 0;
+					Projectile.ai[0] = 0f;
+					Projectile.ai[2] = 0;
 				}
             }
 
@@ -134,7 +133,7 @@ namespace TheDepths.Projectiles
 				Projectile.frameCounter = 0;
 			}
 
-			if (AnimationbeginningTimer == 0)
+			if (Projectile.ai[2] == 0)
 			{
 				if (Projectile.frameCounter > 4 && Projectile.frame > 8 && Projectile.frame < 16) //Teleport come up
 				{
@@ -147,7 +146,7 @@ namespace TheDepths.Projectiles
 				}
 			}
 
-			if (Projectile.frameCounter > 4 && Projectile.frame > 8 && Projectile.frame < 16 && AnimationbeginningTimer > 0) //Teleport go down
+			if (Projectile.frameCounter > 4 && Projectile.frame > 8 && Projectile.frame < 16 && Projectile.ai[2] > 0) //Teleport go down
 			{
 				Projectile.frame++;
 				Projectile.frameCounter = 0;

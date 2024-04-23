@@ -1,0 +1,2128 @@
+Mods: {
+	TheDepths: {
+		GameTips: {
+			DepthsTip0: Nieznany przyjazny NPC siedzi związany w Głębinach jako skrystalizowana wersja przeszłego siebie. Jeśli tylko only dałoby się go oczyścić . . .
+			DepthsTip1: Jeśli będziesz kopać wystarczająco głęboko w odpowiednim świecie, może skończysz w Głębinach!
+			DepthsTip2: Pokonaj giganta z cienistego kamienia Chasme aby zmienić swój świat na zawsze. Użycie Rubinowego Reliktu w Kuźni Klejnotów może ją przywołać...
+			DepthsTip3: Arkeryt jest bardzo trujący, stwórz Kryształową Czaszkę aby stać się odpornym na jego truciznę.
+			DepthsTip4: Przed wpadaniem do rtęci wypij najpierw miksturę Kryształowej Skóry!
+			DepthsTip5: Możesz spędzić aż 16 sekund w rtęci bez konsekwencji jeśli posiadasz prawidłowy sprzęt!
+			DepthsTip6: Podczas walki z Chasme powstaje magiczna bariera między Głębinami a podziemiami, przejście przez nią pozwala na bezpieczne wyjście z walki.
+		}
+
+		common: {
+			Banner: " Sztandar"
+			Banner2: Zwiększone obrażenia i obrona przed następującymi przeciwnikami:
+		}
+
+		SetBonus: {
+			GeodeHelmet: Przywołuje 4 Kryształy które zadają przeciwnikom 20 obrażeń
+			MercuryHelmet:
+				'''
+				3 pkt obrony
+				Rtęć nie może Cię zarazić
+				'''
+			NightwoodHelmet:
+				'''
+				Podwaja czas trwania Rtęciowych Butów
+				Skraca czas zatrucia rtęcią o połowę
+				'''
+			QuartzArmor: Zwiększa zasięg i prędkość biczów o 35%
+			OnyxRobeWizard:
+				'''
+				2 pkt obrony
+				18% większa szansa na magiczne trafienie krytyczne
+				'''
+			OnyxRobeMagic:
+				'''
+				3 pkt obrony
+				Zwiększa maksymalną liczbę punktów many o 100
+				'''
+			PetrifiedWoodHelmet: Zmniejsza otrzymywane obrażenia o 10%
+		}
+
+		Quest: {
+			Description: {
+				Chasmefish: Stara legenda mówi o szlachetnej rybie urodzonej w trakcie wschodu zaćmienia słonecznego która została zesłana do głębin tego świata. Znajdź ją dla mnie, abym mógł poznać jej prawdziwą moc.
+				Relicarp: Jeżeli jeszcze nie wiesz, w Głębinach istnieje magiczny kult wielbiący klejnoty. Ich praktyki są mi nie znane, ale wiesz, co wiem? Mają magiczną rybę która wygląda dokładnie jak specjalne relikty ich kultu. Zdobądź mi jedną, chcę wiedzieć co się stanie, gdy wrzucę ją do garnka.
+				GlimmerDepthFish: Bawiłem się na warstwie kwarcu aż w pewnym momencie bryła kwarcu z płetwami odczepiła się wpadając do rtęci i odpłynęła. Zawsze chciałem wiedzieć jak smakuje kwarc, więc wyłów mi ją abym stał się pierwszym który jej spróbuje.
+			}
+
+			CaughtLocation: {
+				Chasmefish: Można złapać w Jaskiniach
+				Relicarp: Można złapać w Jaskiniach
+				GlimmerDepthFish: Można złapać w Jaskiniach
+			}
+		}
+
+		Recipes.NearQuicksilver: Rtęć jest niezbędna
+
+		ShaleConfig: {
+			SlateBlock: Blok łupku
+			ShaleBlock: Blok łupku
+			SlateBricks: Cegła łupkowa
+			ShaleBricks: Cegła łupkowa
+			Slatestone: Kamień łupkowy
+			Shalestone: Kamień łupkowy
+		}
+
+		Bestiary: {
+			# Enemies
+			AlbinoBat: Dotknięty rzadką mutacją pigmentu, ten nietoperz wędruje przez głębszy system jaskiń, gdzie wtapia się w otaczającą go rtęć aby przetrwać.
+			Archroma: Kuzyn Pinkiego o podobnej gęstości i rozmiarze co powoduje, że są bardzo silne, jedzą pieniądze.
+			CrystalKing: Szlachetny król Geomantów, pomimo tego, że nie może chodzić, porusza się za pomocą teleportacji.
+			Ferroslime: Ten Szlam może wydawać się kolczasty, ale to tylko magnetyczna ciecz która formuje się w kształt kolców aby wyglądać groźniej.
+			Geomancer: Lojalni członkowie kultu doświadczeni w geomancji. Legendy mówią, że wielbią oni istnienie z cienistego płomienia.
+			GoldBat: Rzadki nietoperz z głębin który został przeklęty przez geomantów, i na zawsze stał się podobny do klejnotów. Pomimo ich nazwy, są koloru topazów.
+			KingCoal: Nie jest żadną miłą duszą, to brat i rywal Kryształowego Króla, urodzony w ogniu zrobi wszystko żeby Cię pokonać!
+			DepthsWorm: Pół-kamień Pół-szafir w którego żyłach płynie woda.
+			Shade: Istnienia zrobione z czystej ciemności dryfujące w Głębinach zdolne do unoszenia się w powietrzu. Ich grupa nazywa się ściemnieniem.
+			ShadowBat: Ten pół czarny szmaragdowy nietoperz jest silniejszym gatunkiem nietoperzy znalezionych w Głębinach. Czy to cień nietoperza czy cień z nietoperzy?
+			ShadowSlime: W pełni czarny szlam który wędruje w Głębinach, zostanie przez niego zaatakowanym było by oślepiające.
+			EnchantedNightmareWorm: Z czasem robaki, które dokopały się do głębokich podziemi odkryją Koszmarny Las. Zmuszone do adaptacji, nabrały fioletowego koloru z otoczenia.
+			QuartzCrawler: Czarny ślimak ze skorupą przypominającą bryłę kwarcu. Szczególnie pyszny przysmak dla ryb, które żyją w rtęci.
+			AlbinoRat: Szczur o rzadkim pigmencie skóry, który próbował wtopić się w otaczający kwarc i rtęć. Niby jak złapać tym czymś rybę?
+			Chasme: Olbrzym stworzony z czystego Łupku.           Chasme była zbyt potężna, ale nigdy nie chciała tej walki. Może to wszystko to nieporozumienie . .
+			ChasmeHands: Manifestacje z Łupku stworzone przez Chasme by pomóc doprowadzić Głębiny do tego, co teraz widzisz. Nie mają żadnych powiązań do dłoni Jelenioka.           Zniszczyłeś ją i jej dom tylko dla wolności starożytnych dusz. Szczęście ma swoją cenę.
+			ChasmeSoul: Chasme została stworzona w trakcie pełnego zaćmienia, które przeklęło ją i doprowadziło do tego, czym jest teraz. Została zamknięta w Głębinach, gdzie zmieniła wszystko w wieczną otchłań.        Zastanawiam się czasami czy da się znieść jej klątwę.
+			CrystalBoundTaxCollector: Ta krystaliczna formacja pozostała ze staruszka, który tu mieszkał gdy Chasme wprowadziła chaos na powierzchnię. Lata później jego ambicje przyprowadziły go do Głębin został zmieniony w kwarc przez kult geomantów Chasme.
+		}
+
+		PlayerDeathReason: {
+			Gemforge: {
+				0: "{0} próbował przywołać kult w pełnym świetle."
+				1: "{0} zabrał kuźnię klejnotów z jej domu."
+				2: "{0} chciał spalić relikt na powierzchni."
+			}
+
+			MercuryPoisoning: {
+				0: "{0} nie mógł znaleźć lekarstwa."
+				1: "{0} uległ swojej chorobie."
+				2: "{0} wypił żarówkę."
+				3: "{0} polizał specjalną skałę."
+			}
+
+			ChasmeHead: {
+				0: "{0} został pożarty przez Chasme."
+				1: "{0} został połknięty."
+				2: "{0} trafił do środka."
+			}
+		}
+
+		Tiles: {
+			ArqueriteOre.MapEntry: Ruda arkerytu
+			BlackTorch.MapEntry: Pochodnia
+			CoreBuilderTile.MapEntry: Warsztat rdzenia
+			DepthsBanners.MapEntry: Sztandar
+			DepthsMusicBox.MapEntry: Pozytywka
+			DepthsPot.MapEntry: Garnek
+			EmberUpdated.MapEntry: Niedopałek
+			Gemforge.MapEntry: Kuźnia Klejnotów
+			GemlockTile.MapEntry: Zasobnik Klejnotów
+			GeoTorch.MapEntry: Pochodnia
+			LargeCrystal.MapEntry: Duży Kryształ
+			OnyxShalestone.MapEntry: Onyks
+			Quartz.MapEntry: Kwarc
+			QuartzChair.MapEntry: Krzesło
+			QuartzDoorClosed.MapEntry: Drzwi
+			QuartzDoorOpen.MapEntry: Drzwi
+			QuartzTable.MapEntry: Stół
+			QuartzWorkbench.MapEntry: Stół warsztatowy
+			QuicksilverDropletSource.MapEntry: Cieknąca Rtęć
+			ShadowShrub.MapEntry: Cienisty Krzak
+			Shalestone.MapEntry: Shalestone
+			ShalestoneAmethyst.MapEntry: Ametyst
+			ShalestoneDiamond.MapEntry: Diament
+			ShalestoneEmerald.MapEntry: Szmaragd
+			ShalestoneRuby.MapEntry: Rubin
+			ShalestoneSapphire.MapEntry: Szafir
+			ShalestoneTopaz.MapEntry: Topaz
+			PetrifiedSapling.MapEntry: Drzewko
+			NightSapling.MapEntry: Nocna Sadzonka
+			QuicksilverSensor.MapEntry: Sensor cieczy (rtęć)
+			OtherPortal.MapEntry: Inny Portal
+			NightwoodBath.MapEntry: Wanna z drewna nocnego
+			NightwoodBed.MapEntry: Łóżko z drewna nocnego
+			NightwoodBookcase.MapEntry: Biblioteczka z drewna nocnego
+			NightwoodCandelabra.MapEntry: Świecznik z drewna nocnego
+			NightwoodCandle.MapEntry: Świeca z drewna nocnego
+			NightwoodChair.MapEntry: Krzesło z drewna nocnego
+			NightwoodChandelier.MapEntry: Żyrandol z drewna nocnego
+			NightwoodChest.MapEntry: Kufer z drewna nocnego
+			NightwoodClock.MapEntry: Zegar z drewna nocnego
+			NightwoodDoorClosed.MapEntry: Drzwi z drewna nocnego
+			NightwoodDoorOpen.MapEntry: Drzwi z drewna nocnego
+			NightwoodDresser.MapEntry: Komoda z drewna nocnego
+			NightwoodLamp.MapEntry: Lampa z drewna nocnego
+			NightwoodLantern.MapEntry: Lampion z drewna nocnego
+			NightwoodPiano.MapEntry: Pianino z drewna nocnego
+			NightwoodSink.MapEntry: Umywalka z drewna nocnego
+			NightwoodSofa.MapEntry: Kanapa z drewna nocnego
+			NightwoodTable.MapEntry: Stół z drewna nocnego
+			NightwoodToilet.MapEntry: Toaleta z drewna nocnego
+			NightwoodWorkbench.MapEntry: Stół warsztatowy z drewna nocnego
+			QuartzToilet.MapEntry: Kwarcowa toaleta
+			QuartzSofa.MapEntry: Kwarcowa kanapa
+			QuartzSink.MapEntry: Kwarcowa umywalka
+			QuartzPiano.MapEntry: Kwarcowe pianino
+			QuartzLantern.MapEntry: Kwarcowy lampion
+			QuartzLamp.MapEntry: Kwarcowa lampa
+			QuartzDresser.MapEntry: Kwarcowa komoda
+			QuartzClock.MapEntry: Kwarcowy zegar
+			QuartzChest.MapEntry: Kwarcowy kufer
+			QuartzChandelier.MapEntry: Kwarcowy żyrandol
+			QuartzCandle.MapEntry: Kwarcowa świeca
+			QuartzCandelabra.MapEntry: Kwarcowy świecznik
+			QuartzBookcase.MapEntry: Kwarcowa biblioteczka
+			QuartzBed.MapEntry: Kwarcowe łóżko
+			QuartzBath.MapEntry: Kwarcowa wanna
+			DepthsVanityBanners.MapEntry: Sztandary wyglądu z Głębin
+			DepthsOtherworldlyMusicBox.MapEntry: Pozytywka
+			AltarOfGems.MapEntry: Ołtarz klejnotów
+			ForTheSakeOfMakingGadgets.MapEntry: By Robić Gadżety
+			ImPurrSonation.MapEntry: Im Purr-sonacja
+			Mercury.MapEntry: Rtęć
+			MusiciansBestFriend.MapEntry: Najlepszy Przyjaciel Muzykanta
+			ChaosCat.MapEntry: Chaotyczny Kot
+			DONOTDRINK.MapEntry: NIE PRZEZNACZONE DO PICIA
+			WaterGeyser.MapEntry: Gejzer Wodny
+			PlacedGems.MapEntry: Postawione klejnoty
+			PlacedOnyx.MapEntry: Postawiony onyks
+			OnyxStone.MapEntry: Kamień onyksowy
+			OnyxGemtree.MapEntry: Onyksowe drzewo klejnotowe
+			PetrifiedTree.MapEntry: Skamieniałe drzewo
+			TheUnknownDepthsBelow.MapEntry: Nieznane Głębiny
+			NightwoodTree.MapEntry: Drzewo Nocne
+			NightwoodTrappedChest.MapEntry: Kufer z nocnego drewna
+			QuartzTrappedChest.MapEntry: Kwarcowy kufer
+			HangingShadowShrub.MapEntry: Wiszący cienisty krzak
+			PetrifiedWoodBath.MapEntry: Wanna ze skamieniałego drewna
+			PetrifiedWoodBookcase.MapEntry: Biblioteczka ze skamieniałego drewna
+			PetrifiedWoodCandelabra.MapEntry: Świecznik ze skamieniałego drewna
+			PetrifiedWoodCandle.MapEntry: Świeca ze skamieniałego drewna
+			PetrifiedWoodChair.MapEntry: Krzesło ze skamieniałego drewna
+			PetrifiedWoodChandelier.MapEntry: Żyrandol ze skamieniałego drewna
+			PetrifiedWoodChest.MapEntry: Kufer ze skamieniałego drewna
+			PetrifiedWoodClock.MapEntry: Zegar ze skamieniałego drewna
+			PetrifiedWoodDresser.MapEntry: Komoda ze skamieniałego drewna
+			PetrifiedWoodLamp.MapEntry: Lampa ze skamieniałego drewna
+			PetrifiedWoodLantern.MapEntry: Lampion ze skamieniałego drewna
+			PetrifiedWoodBedShaleSheetsAreImpossible.MapEntry: Łózko ze skamieniałego drewna
+			PetrifiedWoodPiano.MapEntry: Pianino ze skamieniałego drewna
+			PetrifiedWoodSink.MapEntry: Umywalka ze skamieniałego drewna
+			PetrifiedWoodSofa.MapEntry: Kanapa ze skamieniałego drewna
+			PetrifiedWoodTable.MapEntry: Stół ze skamieniałego drewna
+			PetrifiedWoodToilet.MapEntry: Toaleta ze skamieniałego drewna
+			PetrifiedWoodTrappedChest.MapEntry: Kufer ze skamieniałego drewna
+			PetrifiedWoodWorkbench.MapEntry: Stół warsztatowy ze skamieniałego drewna
+		}
+
+		Buffs: {
+			CrystalSkin: {
+				DisplayName: Kryształowa skóra
+				Description: Odporność na rtęć
+			}
+
+			FlaskofMercury: {
+				DisplayName: Nasycenie broni: rtęć
+				Description: Ataki w zwarciu gotują wrogów rtęcią
+			}
+
+			FreezingWater: {
+				DisplayName: Zamarzająca woda
+				Description: Osłabione zdolności fizyczne
+			}
+
+			LivingShadowSummonBuff: {
+				DisplayName: Sylwetka
+				Description: Podobizna Ciebie broni Cię
+			}
+
+			MercuryBoiling: {
+				DisplayName: Zatrucie Rtęcią
+				Description: Powolna utrata życia
+			}
+
+			MercuryFooting: {
+				DisplayName: Rtęciowe buty
+				Description: 15% zwiększona prędkosć poruszania się
+			}
+
+			MercuryPoisoning: {
+				DisplayName: Promieniowanie rtęci
+				Description: Utrata życia i zmniejszona prędkość poruszania się
+			}
+
+			RelicsCurse: {
+				DisplayName: Klątwa reliktu
+				Description: Nie możesz użyć więcej reliktów
+			}
+
+			SilverSphereBuff: {
+				DisplayName: Srebrna kula
+				Description: Cztery srebrne kule orbitują wokół Ciebie
+			}
+
+			ShadePetBuff: {
+				DisplayName: Cień
+				Description: '''"Cień lata wokół Ciebie"'''
+			}
+
+			ShadowCatBuff: {
+				DisplayName: Cień kota
+				Description: Czy to cień kota, czy kot cienia?
+			}
+
+			PurpleflameJellyBuff: {
+				DisplayName: Fioletowa ognista meduza
+				Description: Unikatowy ale rzadki i niegroźny gatunek Meduzy, który żyje w rtęci
+			}
+
+			MercuryContagion: {
+				DisplayName: Zakażenie rtęcią
+				Description: Gdy wrogowie zbliżą się do siebie, ich zaraza się roznosi
+			}
+
+			PhantomFirecartBuff.DisplayName: Wózek górniczy
+			OnyxMinecartBuff.DisplayName: Wózek górniczy
+
+			NightmareHorseBuff: {
+				DisplayName: Koszmarny koń
+				Description: Upiorny łupkowy koń stworzony przez Chasme
+			}
+
+			BuffofaThousandYears: {
+				DisplayName: Mała Chasme
+				Description: Mała Chasme broni Cię swoimi dłonmi cienia
+			}
+		}
+
+		Items: {
+			AmalgamAmulet: {
+				DisplayName: Amalgamatowy amulet
+				Tooltip: Daje 4 dodatkowe sekundy odporności na rtęć
+			}
+
+			AquaGlove: {
+				DisplayName: Wodna rękawica
+				Tooltip:
+					'''
+					Zwiększa odrzut w walce w i oblewa wrogów zamarzającą wodą
+					12% zwiększone obrażenia i szybkość walki w zwarciu
+					Umożliwia automatyczny atak broni do walki w zwarciu
+					'''
+			}
+
+			AquaStone: {
+				DisplayName: Kamień wody
+				Tooltip: Przy ataku oblewa wrogów zamarzającą wodą
+			}
+
+			CrystalShield: {
+				DisplayName: Kryształowa tarcza
+				Tooltip:
+					'''
+					Zmniejsza obrażenia od pocisków o połowę
+					Odbija większość pocisków w stronę wrogów
+					Daje odporność na zatrucie rtęcią
+					'''
+			}
+
+			CrystalSkull: {
+				DisplayName: Kryształowa czaszka
+				Tooltip: Daje odporność na zatrucie rtęcią
+			}
+
+			CrystalWaterWalkingBoots: {
+				DisplayName: Kryształowe buty wodnego kroku
+				Tooltip:
+					'''
+					Pozwala chodzić po wodzie i miodzie
+					Daje odporność na zatrucie rtęcią
+					'''
+			}
+
+			LodeStone: {
+				DisplayName: Magnetyt
+				Tooltip: Zwiększa zasięg podnoszenia przedmiotów
+			}
+
+			QuickSilverSurfboard: {
+				DisplayName: Deska do surfowania z rtęci
+				Tooltip: Pozwala posiadaczowi przez kilka sekund unosić się w powietrzu
+			}
+
+			SanctusShield: {
+				DisplayName: Tarcza świętości
+				Tooltip:
+					'''
+					Daje odporność na zatrucie rtęcią
+					Zmniejsza obrażenia od pocisków o połowę
+					Odbija większość pocisków w stronę wrogów
+					Daje odporność na większość osłabień
+					'''
+			}
+
+			SilverSlippers: {
+				DisplayName: Srebrne kapcie
+				Tooltip:
+					'''
+					Pozwala chodzić po wodzie, miodzie, lawie i rtęci
+					Daje odporność na zatrucie rtęcią
+					Daje 4 dodatkowe sekundy odporności na rtęć
+					'''
+			}
+
+			StoneRose: {
+				DisplayName: Kamienna róża
+				Tooltip: Zmniejszone obrażenia od osłabień rtęci
+			}
+
+			CharredCrown: {
+				DisplayName: Zwęglona korona
+				Tooltip: 18% zwiększone obrażenia magiczne
+			}
+
+			CrystalCrown: {
+				DisplayName: Kryształowa korona
+				Tooltip: 20% większa szansa na magiczne trafienie krytyczne
+			}
+
+			GeodeChestplate: {
+				DisplayName: Zbroja z geody
+				Tooltip: Zwiększa maksymalną liczbę twoich sług o 1
+			}
+
+			GeodeHelmet: {
+				DisplayName: Hełm z geody
+				Tooltip: Zwiększa maksymalną liczbę twoich sług o 1
+			}
+
+			GeodeLeggings: {
+				DisplayName: Spodnie z geody
+				Tooltip: Zwiększa maksymalną liczbę twoich sług o 1
+			}
+
+			Geode: {
+				DisplayName: Geoda
+				Tooltip: ""
+			}
+
+			MercuryChestplate: {
+				DisplayName: Kolczuga z rtęci
+				Tooltip: 19% zwiększone obrażenia w walce w zwarciu
+			}
+
+			MercuryGreaves: {
+				DisplayName: Nagolenniki z rtęci
+				Tooltip: 10% zwiększona szybkość poruszania się
+			}
+
+			MercuryHelmet: {
+				DisplayName: Hełm z rtęci
+				Tooltip: 6% zwiększona szansa na trafienie krytyczne w walce w zwarciu
+			}
+
+			OnyxRobe: {
+				DisplayName: Onyksowa szata
+				Tooltip:
+					'''
+					22% mniejszy koszt many
+					'Zwiększa maksymalną liczbę punktów many o 60'
+					'''
+			}
+
+			PurplePlumbersHat: {
+				DisplayName: Fioletowa czapka hydraulika
+				Tooltip: ""
+			}
+
+			PurplePlumbersPants: {
+				DisplayName: Fioletowe spodnie hydraulika
+				Tooltip: ""
+			}
+
+			PurplePlumbersShirt: {
+				DisplayName: Fioletowa koszulka hydraulika
+				Tooltip: ""
+			}
+
+			AchromaBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.Archroma.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.Archroma.DisplayName}"
+			}
+
+			AlbinoBatBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.AlbinoBat.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.AlbinoBat.DisplayName}"
+			}
+
+			CrystalKingBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.CrystalKing.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.CrystalKing.DisplayName}"
+			}
+
+			FerroslimeBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.Ferroslime.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.Ferroslime.DisplayName}"
+			}
+
+			GeomancerBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.Geomancer.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.Geomancer.DisplayName}"
+			}
+
+			GoldBatBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.GoldBat.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.GoldBat.DisplayName}"
+			}
+
+			KingCoalBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.KingCoal.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.KingCoal.DisplayName}"
+			}
+
+			SapphireSerpentBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.DepthsWorm.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.DepthsWorm.DisplayName}"
+			}
+
+			ShadeBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.Shade.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.Shade.DisplayName}"
+			}
+
+			ShadowBatBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.ShadowBat.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.ShadowBat.DisplayName}"
+			}
+
+			ShadowSlimeBanner: {
+				DisplayName: "{$Mods.TheDepths.NPCs.ShadowSlime.DisplayName}{$Mods.TheDepths.common.Banner}"
+				Tooltip: "{$Mods.TheDepths.common.Banner2} {$Mods.TheDepths.NPCs.ShadowSlime.DisplayName}"
+			}
+
+			CrystalSkinPotion: {
+				DisplayName: Mikstura kryształowej skóry
+				Tooltip: Daje odporność na zatrucie rtęcią
+			}
+
+			FlaskofMercury: {
+				DisplayName: Butelka rtęci
+				Tooltip: Ataki w zwarciu gotują wrogów rtęcią
+			}
+
+			LargeOnyx: {
+				DisplayName: Wielki onyks
+				Tooltip: Do "Zdobądź Flagę". Wypada, kiedy giniesz
+			}
+
+			OnyxHook: {
+				DisplayName: Onyksowy hak
+				Tooltip: ""
+			}
+
+			Onyx: {
+				DisplayName: Onyks
+				Tooltip: ""
+			}
+
+			ArqueriteBar: {
+				DisplayName: Sztabka arkerytu
+				Tooltip: "'Mdławy w dotyku'"
+			}
+
+			ArqueriteBricks: {
+				DisplayName: Cegła z arkerytu
+				Tooltip: ""
+			}
+
+			ArqueriteBrickWall: {
+				DisplayName: Ściana z arkerytowych cegieł
+				Tooltip: ""
+			}
+
+			ArqueriteOre: {
+				DisplayName: Ruda arkerytu
+				Tooltip: ""
+			}
+
+			BlackGemspark: {
+				DisplayName: Onyksowy blok świecący
+				Tooltip: ""
+			}
+
+			BlackTorch: {
+				DisplayName: Czarna pochodnia
+				Tooltip: ""
+			}
+
+			CoreBuilder: {
+				DisplayName: Warsztat rdzenia
+				Tooltip:
+					'''
+					               Pozwala Ci wymienić materiały z piekła na ich alternatywy z Głębin i vice wersa
+					               'Legendarna kuźnia w której podobno stworzono rdzeń świata'
+					'''
+			}
+
+			DepthsMusicBox: {
+				DisplayName: Pozytywka (Głębiny)
+				Tooltip: ""
+			}
+
+			DiamondDust: {
+				DisplayName: Diamentowy pył
+				Tooltip: ""
+			}
+
+			Ember: {
+				DisplayName: Niedopałek
+				Tooltip: ""
+			}
+
+			Gemforge: {
+				DisplayName: Kuźnia klejnotów
+				Tooltip: ""
+			}
+
+			GeoTorch: {
+				DisplayName: Geo pochodnia
+				Tooltip: ""
+			}
+
+			LargeCrystal: {
+				DisplayName: Duży kryształ
+				Tooltip: ""
+			}
+
+			LivingFog: {
+				DisplayName: Blok żywej mgły
+				Tooltip: ""
+			}
+
+			MagicQuicksilverDropper: {
+				DisplayName: Magiczny rtęciowy zakraplacz
+				Tooltip: ""
+			}
+
+			OnyxGemLock: {
+				DisplayName: Onyksowy zasobnik klejnotów
+				Tooltip: Naciśnij Kliknij prawym przyciskiem, żeby umieścić lub usunąć wielkie onyksy
+			}
+
+			PetrifiedWood: {
+				DisplayName: Skamieniałe drewno
+				Tooltip: ""
+			}
+
+			Quartz: {
+				DisplayName: Kwarc
+				Tooltip: ""
+			}
+
+			QuartzBlock: {
+				DisplayName: Blok kwarcu
+				Tooltip: ""
+			}
+
+			QuartzBricks: {
+				DisplayName: Kwarcowa cegła
+				Tooltip: ""
+			}
+
+			QuartzBrickWall: {
+				DisplayName: Ściana z kwarcowej cegły
+				Tooltip: ""
+			}
+
+			QuartzChair: {
+				DisplayName: Kwarcowe krzesło
+				Tooltip: ""
+			}
+
+			QuartzDoor: {
+				DisplayName: Kwarcowe drzwi
+				Tooltip: ""
+			}
+
+			QuartzPillar: {
+				DisplayName: Kwarcowy filar
+				Tooltip: ""
+			}
+
+			QuartzPlatform: {
+				DisplayName: Kwarcowa platforma
+				Tooltip: ""
+			}
+
+			QuartzTable: {
+				DisplayName: Kwarcowy stół
+				Tooltip: ""
+			}
+
+			QuartzWorkbench: {
+				DisplayName: Kwarcowy stół warsztatowy
+				Tooltip: ""
+			}
+
+			ShadowBrick: {
+				DisplayName: Cegła cienia
+				Tooltip: ""
+			}
+
+			ShadowShrubPlanterBox: {
+				DisplayName: Planterowa skrzynka cienistych krzaków
+				Tooltip: ""
+			}
+
+			ShadowShrubSeeds: {
+				DisplayName: Nasiona cienistego krzaku
+				Tooltip: ""
+			}
+
+			ShadowShrub: {
+				DisplayName: Cienisty krzak
+				Tooltip: ""
+			}
+
+			ShaleBlock.Tooltip: ""
+			ShaleBricks.Tooltip: ""
+			Shalestone.Tooltip: ""
+
+			SilverfallBlock: {
+				DisplayName: Blok rtęciospadu
+				Tooltip: ""
+			}
+
+			SilverfallWall: {
+				DisplayName: Ściana rtęciospadu
+				Tooltip: ""
+			}
+
+			RubyRelic: {
+				DisplayName: Rubinowy relikt
+				Tooltip:
+					'''
+					'Słyszysz to?'
+					Może wkładanie tego do Kuźni Klejnotów to nienajlepszy pomysł..
+					'''
+			}
+
+			SilverSpherePotion: {
+				DisplayName: Mikstura srebrnych kul
+				Tooltip: Przywołuje 4 srebrne kule, które orbitują Cię i zadają obrażenia wrogom!
+			}
+
+			BlackPhaseblade: {
+				DisplayName: Czarny miecz świetny
+				Tooltip: ""
+			}
+
+			BlackPhasesaber: {
+				DisplayName: Czarny miecz świetniejszy
+				Tooltip: ""
+			}
+
+			BlueSphere: {
+				DisplayName: Niebieska kula
+				Tooltip: Zbierz je wszystkie!
+			}
+
+			DiamondArrow: {
+				DisplayName: Diamentowa strzała
+				Tooltip: 3 wybuchy kryształów są wystrzeliwane w losowych kierunkach przy zderzeniu
+			}
+
+			DiamondBolt: {
+				DisplayName: Diamentowe berło
+				Tooltip: ""
+			}
+
+			LivingShadowStaff: {
+				DisplayName: Kostur cienia
+				Tooltip: Przywołuje sylwetkę, która walczy za Ciebie
+			}
+
+			MercuryHamaxe: {
+				DisplayName: Rtęciowy młotopór
+				Tooltip: ""
+			}
+
+			MercuryPickaxe: {
+				DisplayName: Rtęciowy kilof
+				Tooltip: ""
+			}
+
+			Mercury: {
+				DisplayName: Merkury
+				Tooltip: "'L. Cake'"
+			}
+
+			NightFury: {
+				DisplayName: Nocna furia
+				Tooltip: ""
+			}
+
+			OnyxSepter: {
+				DisplayName: Onyksowy kostur
+				Tooltip: ""
+			}
+
+			POWHammer: {
+				DisplayName: Młotek P.O.W
+				Tooltip: "'Silnie bonkowalny'"
+			}
+
+			QuartzCannon: {
+				DisplayName: Kwarcowa armata
+				Tooltip: ""
+			}
+
+			RubyBolt: {
+				DisplayName: Rubinowe berło
+				Tooltip: ""
+			}
+
+			SapphireShovel: {
+				DisplayName: Szafirowa łopata
+				Tooltip: Zamraża przeciwników na krótki czas
+			}
+
+			ShadeBlade: {
+				DisplayName: Ostrze cienia
+				Tooltip: ""
+			}
+
+			Shaderang: {
+				DisplayName: Cieniarang
+				Tooltip: ""
+			}
+
+			ShadowClaw: {
+				DisplayName: Szpon cienia
+				Tooltip: Wypuszcza ciemną energię
+			}
+
+			ShadowSphere: {
+				DisplayName: Kula cienia
+				Tooltip: ""
+			}
+
+			Silverado: {
+				DisplayName: Srebrnado
+				Tooltip: Strzela potężnymi szybkimi pociskami
+			}
+
+			SilverStar: {
+				DisplayName: Srebrna gwiazda
+				Tooltip: ""
+			}
+
+			Skyfall: {
+				DisplayName: Lot z nieba
+				Tooltip: Oblewa wrogów rtęciowym deszczem
+			}
+
+			Steelocanth: {
+				DisplayName: Stalokant
+				Tooltip: ""
+			}
+
+			WhiteLightning: {
+				DisplayName: Biały piorun
+				Tooltip: Przywołuje do 3 piorunowych kuli, które łączą się ze sobą
+			}
+
+			Terminex: {
+				DisplayName: Terminex
+				Tooltip: ""
+			}
+
+			ShadePetItem: {
+				DisplayName: Ser i krakersy
+				Tooltip: Przywołuje przyjazny cień podążający za tobą
+			}
+
+			GlitterBlock: {
+				DisplayName: Blok brokatu
+				Tooltip: ""
+			}
+
+			QuicksilverBucket: {
+				DisplayName: Wiadro rtęci
+				Tooltip:
+					'''
+					Zawiera niewielką ilość rtęci
+					Można ją wylać
+					'''
+			}
+
+			CoreGlobe: {
+				DisplayName: Globus rdzenia
+				Tooltip:
+					'''
+					Rzuć go, aby zmienić wygląd rdzenia
+					'Czas na zmianę scenerii'
+					'''
+			}
+
+			NightmareSeeds: {
+				DisplayName: Koszmarne nasiona
+				Tooltip: ""
+			}
+
+			QuicksilverSensor: {
+				DisplayName: Sensor cieczy (rtęć)
+				Tooltip: Aktywuje się gdy jest na nim rtęć, w przeciwnym wypadku nieaktywny
+			}
+
+			QuicksilverBomb: {
+				DisplayName: Bomba rtęci
+				Tooltip: Mały wybuch, który rozchlapuje rtęć
+			}
+
+			QuicksilverRocket: {
+				DisplayName: Rtęciorakieta
+				Tooltip: Po uderzeniu rozchlapuje rtęć
+			}
+
+			QuartzCrate: {
+				DisplayName: Kwarcowa skrzynia
+				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+			}
+
+			QuartzFeeder: {
+				DisplayName: Kwarcowy żywiciel
+				Tooltip: ""
+			}
+
+			ShadowFightingFish: {
+				DisplayName: Ryba wojownika cienia
+				Tooltip: ""
+			}
+
+			SilverLiner: {
+				DisplayName: Srebrna wędka
+				Tooltip: Pozwala na wędkowanie w rtęci
+			}
+
+			ArqueriteCrate: {
+				DisplayName: Arkerytowa skrzynia
+				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+			}
+
+			QuicksilverproofFishingHook: {
+				DisplayName: Rtęcioodporny hak wędkarski
+				Tooltip: Pozwala na wędkowanie w rtęci
+			}
+
+			QuartzLockBox: {
+				DisplayName: Zamknięty kwarcowy kuferek
+				Tooltip:
+					'''
+					{$CommonItemTooltip.RightClickToOpen}
+					Wymaga klucza cienia
+					'''
+			}
+
+			FluorescentLightBulb: {
+				DisplayName: Fluorescencyjna żarówka
+				Tooltip: ""
+			}
+
+			GiantFluorescentLightBulb: {
+				DisplayName: Wielka fluorescencyjna żarówka
+				Tooltip: "'Jest za ciężka, żeby wisieć na jakimkolwiek suficie.'"
+			}
+
+			OtherPortal: {
+				DisplayName: Inny Portal
+				Tooltip:
+					'''
+					'Kosztuje tylko diament.'
+					'L. Cake'
+					'''
+			}
+
+			PottedMercuryTendrils: {
+				DisplayName: Doniczkowe rtęciowe pnącza
+				Tooltip: ""
+			}
+
+			PottedNightmarePalm: {
+				DisplayName: Doniczkowa palma koszmarów
+				Tooltip: ""
+			}
+
+			PottedNightterrorBush: {
+				DisplayName: Doniczkowy krzak upiora
+				Tooltip: ""
+			}
+
+			PottedPurplestarBrambles: {
+				DisplayName: Doniczkowe cieniste ciernie
+				Tooltip: ""
+			}
+
+			PottedShadowflameBulb: {
+				DisplayName: Doniczkowy kwiat cienistego płomienia
+				Tooltip: ""
+			}
+
+			ShadowFightingFishBowl: {
+				DisplayName: Akwarium z rybą wojownika cienia
+				Tooltip: "'Raczej nie chcesz zakładać misy pełnej rtęci na głowę. .'"
+			}
+
+			ShadowflameEmberedTreads: {
+				DisplayName: Buty cienistych płomyków
+				Tooltip: "'Są całkiem spore jak na płomyki'"
+			}
+
+			NightmareFlareTreads: {
+				DisplayName: Buty cienistego ognia
+				Tooltip:
+					'''
+					Pozwala latać
+					Posiadacz biega superszybko
+					Zostawia za tobą ślad cienistego ognia
+					'''
+			}
+
+			QuicksilverproofTackleBag: {
+				DisplayName: Rtęcioodporna torba na sprzęt
+				Tooltip:
+					'''
+					Żyłka nigdy nie pęka, zmniejsza szanse ryby na połknięcie przynęty, zwiększa moc wędkarstwa o 10
+					Pozwala na wędkowanie w rtęci
+					'''
+			}
+
+			PurpleflameNecklace: {
+				DisplayName: Naszyjnik fioletowego ognia
+				Tooltip:
+					'''
+					Przywołuje fioletową meduzę, którą można dosiąść
+					'Nie razi prądem, prawda?'
+					'''
+			}
+
+			EnchantedNightmareWorm: {
+				DisplayName: Koszmarny pomrowik
+				Tooltip: ""
+			}
+
+			QuartzCrawler: {
+				DisplayName: Kwarcowy ślimak
+				Tooltip: ""
+			}
+
+			AlbinoRat: {
+				DisplayName: Szczur albinos
+				Tooltip: ""
+			}
+
+			QuicksilverproofBugNet: {
+				DisplayName: Rtęcioodporna siatka na robaki
+				Tooltip: "'Gdy robi się zbyt trująco'"
+			}
+
+			AlbinoRatCage: {
+				DisplayName: Klatka dla szczurów albinosów
+				Tooltip: ""
+			}
+
+			EnchantedNightmareWormCage: {
+				DisplayName: Klatka dla koszmarnych pomrowików
+				Tooltip: ""
+			}
+
+			QuartzCrawlerCage: {
+				DisplayName: Klatka dla kwarcowych ślimaków
+				Tooltip: ""
+			}
+
+			GeodeLazerPointer: {
+				DisplayName: Geodowy wskaźnik laserowy
+				Tooltip:
+					'''
+					Przywołuje cienistego kota
+					'Czy cienie mogą chodzić?'
+					'''
+			}
+
+			Chasmefish: {
+				DisplayName: Ryba Chasme
+				Tooltip: Można złapać w jaskiniach
+			}
+
+			GlimmerDepthFish: {
+				DisplayName: Głębinowa ryba błyskotka
+				Tooltip: Można złapać w jaskiniach
+			}
+
+			Relicarp: {
+				DisplayName: Relikarp
+				Tooltip: Można złapać w jaskiniach
+			}
+
+			ShalestoneConch: {
+				DisplayName: Łupkowa muszla
+				Tooltip: Jeśli się wsłuchasz, usłyszysz rytuały kultowe
+			}
+
+			ShellPhoneDepths: {
+				DisplayName: Muszlofon (głębiny)
+				Tooltip:
+					'''
+					Wyświetla wszystko
+					Pozwala w dowolnym momencie przenieść się do głębin
+					Kliknij prawym przyciskiem, by przełączyć punkt docelowy
+					'Jeśli się wsłuchasz, usłyszysz coś o gwarancji swojego samochodu'
+					'''
+			}
+
+			AncientShadowBrick: {
+				DisplayName: Starożytna cegła cienia
+				Tooltip: ""
+			}
+
+			NightWood: {
+				DisplayName: Drewno nocy
+				Tooltip: ""
+			}
+
+			NightwoodBath: {
+				DisplayName: Wanna z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodBed: {
+				DisplayName: Łózko z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodBookcase: {
+				DisplayName: Biblioteczka z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodCandelabra: {
+				DisplayName: Świecznik z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodCandle: {
+				DisplayName: Świeca z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodChair: {
+				DisplayName: Krzesło z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodChandelier: {
+				DisplayName: Żyrandol z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodChest: {
+				DisplayName: Kufer z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodClock: {
+				DisplayName: Zegar z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodDoor: {
+				DisplayName: Drzwi z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodDresser: {
+				DisplayName: Komoda z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodLamp: {
+				DisplayName: Lampa z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodLantern: {
+				DisplayName: Lampion z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodPiano: {
+				DisplayName: Pianino z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodPlatform: {
+				DisplayName: Platforma z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodSink: {
+				DisplayName: Umywalka z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodSofa: {
+				DisplayName: Kanapa z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodTable: {
+				DisplayName: Stół z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodToilet: {
+				DisplayName: Toaleta z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodWorkbench: {
+				DisplayName: Warsztat z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodWall: {
+				DisplayName: Ściana z drewna nocnego
+				Tooltip: ""
+			}
+
+			ChasmeBag: {
+				DisplayName: Torba skarbów (Chasme)
+				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+			}
+
+			ChasmeSoulMask: {
+				DisplayName: Maska duszy Chasme
+				Tooltip: ""
+			}
+
+			ShadowChasmeMask: {
+				DisplayName: Maska cienia Chasme
+				Tooltip: ""
+			}
+
+			ChasmeTrophy: {
+				DisplayName: Trofeum - Chasme
+				Tooltip: ""
+			}
+
+			ChasmeMusicBox: {
+				DisplayName: Pozytywka (Chasme)
+				Tooltip: ""
+			}
+
+			ChasmeRelic: {
+				DisplayName: Relikt Chasme
+				Tooltip: ""
+			}
+
+			PhantomFirecart: {
+				DisplayName: Wózek górniczy geomanty
+				Tooltip: Daje 4 dodatkowe sekundy odporności na rtęć
+			}
+
+			QuartzCandelabra: {
+				Tooltip: ""
+				DisplayName: Kwarcowy świecznik
+			}
+
+			QuartzBookcase: {
+				Tooltip: ""
+				DisplayName: Kwarcowa biblioteczka
+			}
+
+			QuartzBed: {
+				Tooltip: ""
+				DisplayName: Kwarcowe łóżko
+			}
+
+			QuartzBath: {
+				Tooltip: ""
+				DisplayName: Kwarcowa wanna
+			}
+
+			QuartzCandle: {
+				DisplayName: Kwarcowa świeca
+				Tooltip: ""
+			}
+
+			QuartzChandelier: {
+				DisplayName: Kwarcowy żyrandol
+				Tooltip: ""
+			}
+
+			QuartzChest: {
+				DisplayName: Kwarcowy kufer
+				Tooltip: ""
+			}
+
+			QuartzClock: {
+				DisplayName: Kwarcowy zegar
+				Tooltip: ""
+			}
+
+			QuartzDresser: {
+				DisplayName: Kwarcowa komoda
+				Tooltip: ""
+			}
+
+			QuartzLamp: {
+				DisplayName: Kwarcowa lampa
+				Tooltip: ""
+			}
+
+			QuartzLantern: {
+				DisplayName: Kwarcowy lampion
+				Tooltip: ""
+			}
+
+			QuartzPiano: {
+				DisplayName: Kwarcowe pianino
+				Tooltip: ""
+			}
+
+			QuartzSink: {
+				DisplayName: Kwarcowa umywalka
+				Tooltip: ""
+			}
+
+			QuartzSofa: {
+				DisplayName: Kwarcowa kanapa
+				Tooltip: ""
+			}
+
+			QuartzToilet: {
+				DisplayName: Kwarcowa toaleta
+				Tooltip: ""
+			}
+
+			QuartzVase: {
+				DisplayName: Kwarcowy wazon
+				Tooltip: ""
+			}
+
+			GemforgeBanner: {
+				DisplayName: Sztandar kuźni klejnotów
+				Tooltip: ""
+			}
+
+			GlowingQuicksilverBanner: {
+				DisplayName: Sztandar świecącej rtęci
+				Tooltip: ""
+			}
+
+			LostHeartBanner: {
+				DisplayName: Sztandar zgubionego serca
+				Tooltip: ""
+			}
+
+			QuartzStackBanner: {
+				DisplayName: Sztandar stosu kwarcu
+				Tooltip: ""
+			}
+
+			RackedCollectionBanner: {
+				DisplayName: Sztandar z klejnotami
+				Tooltip: ""
+			}
+
+			RelicBanner: {
+				DisplayName: Sztandar reliktu
+				Tooltip: ""
+			}
+
+			SwordOfTheCavesBanner: {
+				DisplayName: Sztandar miecza z jaskiń
+				Tooltip: ""
+			}
+
+			NightwoodFence: {
+				DisplayName: Płotek z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodSword: {
+				Tooltip: ""
+				DisplayName: Miecz z drewna nocnego
+			}
+
+			NightwoodHammer: {
+				DisplayName: Młot z drewna nocnego
+				Tooltip: ""
+			}
+
+			NightwoodBow: {
+				Tooltip: ""
+				DisplayName: Łuk z drewna nocnego
+			}
+
+			NightwoodHelmet: {
+				Tooltip: ""
+				DisplayName: Hełm z drewna nocnego
+			}
+
+			NightwoodGreaves: {
+				Tooltip: ""
+				DisplayName: Nagolenniki z drewna nocnego
+			}
+
+			NightwoodBreastplate: {
+				Tooltip: ""
+				DisplayName: Napierśnik z drewna nocnego
+			}
+
+			Ciamito: {
+				Tooltip: "{$CommonItemTooltip.MinorStats}"
+				DisplayName: Ciamito
+			}
+
+			BlackOlive: {
+				Tooltip: "{$CommonItemTooltip.MinorStats}"
+				DisplayName: Czarna oliwka
+			}
+
+			DepthsOtherworldlyMusicBox: {
+				DisplayName: Nieziemska pozytywka (głębiny)
+				Tooltip: ""
+			}
+
+			AltarOfGems: {
+				DisplayName: Ołtarz klejnotów
+				Tooltip: "'L. Cake'"
+			}
+
+			ForTheSakeOfMakingGadgets: {
+				DisplayName: By robić gadżety
+				Tooltip: "'L. Cake'"
+			}
+
+			ImPurrSonation: {
+				DisplayName: Im-Purr-Sonacja
+				Tooltip: "'L. Cake & W. Sephi'"
+			}
+
+			MusiciansBestFriend: {
+				DisplayName: Najlepszy przyjaciel muzykanta
+				Tooltip: "'L. Cake'"
+			}
+
+			ChaosCat: {
+				DisplayName: Chaotyczny Kot
+				Tooltip: "'L. Cake & B. Cat'"
+			}
+
+			DONOTDRINK: {
+				DisplayName: NIE PRZEZNACZONE DO PICIA
+				Tooltip: "'L. Cake'"
+			}
+
+			LivingFogDye: {
+				DisplayName: Żyjący barwnik mgły
+				Tooltip: ""
+			}
+
+			IntenseShadowDye: {
+				Tooltip: ""
+				DisplayName: Intensywny barwnik cienia
+			}
+
+			CrystalHorseshoe: {
+				DisplayName: Kryształowa podkowa
+				Tooltip:
+					'''
+					Anuluje obrażenia spowodowane upadkiem
+					Daje odporność na zatrucie rtęcią
+					'''
+			}
+
+			SilverCharm: {
+				DisplayName: Srebrny talizman
+				Tooltip:
+					'''
+					Daje odporność na zatrucie rtęcią
+					Daje 4 dodatkowe sekundy odporności na rtęć
+					'''
+			}
+
+			AzuriteRose: {
+				DisplayName: Azurytowa róża
+				Tooltip:
+					'''
+					Daje 4 dodatkowe sekundy odporności na rtęć
+					Daje odporność na zatrucie rtęcią
+					Zmniejszone obrażenia od osłabień rtęci
+					'''
+			}
+
+			CryingSkull: {
+				DisplayName: Płacząca czaszka
+				Tooltip:
+					'''
+					Daje 4 dodatkowe sekundy odporności na rtęć
+					Daje odporność na zatrucie rtęcią
+					'''
+			}
+
+			CrystalRose: {
+				DisplayName: Kryształowa róża
+				Tooltip:
+					'''
+					Daje odporność na zatrucie rtęcią
+					Zmniejszone obrażenia od osłabień rtęci
+					'''
+			}
+
+			MercuryMoss: {
+				DisplayName: Rtęciowy mech
+				Tooltip: "'Zaskakujący widok, którego nigdy nie zapomnisz'"
+			}
+
+			MercuryMossFishingBobber: {
+				DisplayName: Spławik z mchu rtęciowego
+				Tooltip:
+					'''
+					Zwiększona moc wędkarstwa o 10
+					Spławik zaczyna świecić
+					'''
+			}
+
+			MercuryMossBricks: {
+				DisplayName: Cegła z rtęciowego mchu
+				Tooltip: ""
+			}
+
+			MercuryMossBrickWall: {
+				DisplayName: Ściana z cegieł rteciowego mchu
+				Tooltip: ""
+			}
+
+			QuartzStackWall: {
+				DisplayName: Ściana ze stosu kwarcu
+				Tooltip: ""
+			}
+
+			LeakyMercuryWall: {
+				DisplayName: Ściana ociekająca rtęcią
+				Tooltip: ""
+			}
+
+			MercuryBubbleWall: {
+				DisplayName: Rtęciowa ściana bąbelkowa
+				Tooltip: ""
+			}
+
+			DottedQuicksilverWall: {
+				DisplayName: Plamkowana ściana rtęciowa
+				Tooltip: ""
+			}
+
+			WaterGeyser: {
+				DisplayName: Gejzer wodny
+				Tooltip: ""
+			}
+
+			AquaQuiver: {
+				DisplayName: Wodny kołczan
+				Tooltip:
+					'''
+					Zwiększa obrażenia strzał o 10%, a także znacznie zwiększa ich szybkość
+					20% szans nieużycia strzał
+					Moczy drewniane strzały w zamarzającej wodzie
+					'STÓJ!'
+					'''
+			}
+
+			PalladiumShield: {
+				DisplayName: Tarcza z paladium
+				Tooltip:
+					'''
+					Zmniejsza obrażenia od pocisków o połowę
+					Odbija większość pocisków w stronę wrogów
+					'''
+			}
+
+			OnyxMinecart: {
+				DisplayName: Onyksowy wózek górniczy
+				Tooltip: ""
+			}
+
+			OnyxStoneBlock: {
+				DisplayName: Blok onyksowego kamienia
+				Tooltip: ""
+			}
+
+			OnyxStoneWall: {
+				DisplayName: Ściana z onyksowego kamienia
+				Tooltip: ""
+			}
+
+			BlackGemsparkWall: {
+				DisplayName: Ściana z onyksowych bloków świecących
+				Tooltip: ""
+			}
+
+			BlackGemsparkWallOffline: {
+				DisplayName: Nieaktywna ściana z onyksowych bloków świecących
+				Tooltip: ""
+			}
+
+			OnyxSquirrel: {
+				Tooltip: ""
+				DisplayName: Onyksowa wiewiórka
+			}
+
+			OnyxBunny: {
+				Tooltip: ""
+				DisplayName: Onyksowy króliczek
+			}
+
+			OnyxBunnyCage: {
+				DisplayName: Klatka dla onyksowych króliczków
+				Tooltip: ""
+			}
+
+			OnyxSquirrelCage: {
+				DisplayName: Klatka dla onyksowych wiewiórek
+				Tooltip: ""
+			}
+
+			BlackStainedGlass: {
+				DisplayName: Czarny witraż
+				Tooltip: ""
+			}
+
+			OnyxGemcorn: {
+				DisplayName: Onyksowy żołądź klejnotowy
+				Tooltip: ""
+			}
+
+			TheUnknownDepthsBelow: {
+				DisplayName: Nieznane Głębiny
+				Tooltip: "'D. Colin & D. Rious'"
+			}
+
+			FlowingQuicksilver: {
+				DisplayName: Płynąca rtęć
+				Tooltip: "'D. Colin & D. Rious'"
+			}
+
+			GeoCampfire: {
+				DisplayName: Geo ognisko
+				Tooltip: ""
+			}
+
+			NightwoodTrappedChest: {
+				DisplayName: Pułapka: Kufer z drewna nocnego
+				Tooltip: ""
+			}
+
+			QuartzTrappedChest: {
+				DisplayName: Pułapka: Kwarcowy kufer
+				Tooltip: ""
+			}
+
+			SapphireSerpentKite: {
+				DisplayName: Latawiec szafirowy wąż
+				Tooltip:
+					'''
+					Latawce można puszczać, gdy jest wiatr
+					Ściągnij go za pomocą <prawego przycisku myszy>
+					'''
+			}
+
+			Lamington: {
+				DisplayName: Lamington
+				Tooltip:
+					'''
+					{$CommonItemTooltip.MajorStats}
+					'...głęboko z dołu.'
+					'''
+			}
+
+			HangingShadowShrub: {
+				DisplayName: Wiszący cienisty krzak
+				Tooltip: ""
+			}
+
+			MidnightHorseshoe: {
+				DisplayName: Podkowa północy
+				Tooltip: ""
+			}
+
+			AmethystShalestoneBlock: {
+				DisplayName: Ametystowy blok łupkowy
+				Tooltip: ""
+			}
+
+			DiamondShalestoneBlock: {
+				DisplayName: Diamentowy blok łupkowy
+				Tooltip: ""
+			}
+
+			EmeraldShalestoneBlock: {
+				DisplayName: Szmaragdowy blok łupkowy
+				Tooltip: ""
+			}
+
+			OnyxShalestoneBlock: {
+				DisplayName: Onyksowy blok łupkowy
+				Tooltip: ""
+			}
+
+			RubyShalestoneBlock: {
+				DisplayName: Rubinowy blok łupkowy
+				Tooltip: ""
+			}
+
+			SapphireShalestoneBlock: {
+				DisplayName: Szafirowy blok łupkowy
+				Tooltip: ""
+			}
+
+			TopazShalestoneBlock: {
+				DisplayName: Topazowy blok łupkowy
+				Tooltip: ""
+			}
+
+			ShaleWall: {
+				DisplayName: Ściana łupkowa
+				Tooltip: ""
+			}
+
+			StaffOfAThousandYears: {
+				DisplayName: Tysiącletni kostur
+				Tooltip: Przywołuje małe Chasme walczące po twojej stronie
+			}
+
+			QuartzHood: {
+				DisplayName: Kwarcowy kaptur
+				Tooltip: Zwiększa zasięg bicza o 15%
+			}
+
+			QuartzLeggings: {
+				DisplayName: Kwarcowe spodnie
+				Tooltip: Zwiększa maksymalną liczbę sług gracza o 1
+			}
+
+			QuartzWinterCoat: {
+				DisplayName: Kwarcowy płaszcz snieżny
+				Tooltip: Zwiększa szybkość bicza o 15%
+			}
+
+			HungryLeash: {
+				DisplayName: Nienażarty na smyczy
+				Tooltip:
+					'''
+					Za każde 25% utraconego życia, prędkość ruchu zwiększa się o 25%
+					'Jak głodny?'
+					'''
+			}
+
+			PetrifiedWoodBath: {
+				DisplayName: Wanna ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBed: {
+				DisplayName: Łóżko ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBookcase: {
+				DisplayName: Biblioteczka ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodCandelabra: {
+				DisplayName: Świecznik ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodCandle: {
+				DisplayName: Świeca ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodChair: {
+				DisplayName: Krzesło ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodChandelier: {
+				DisplayName: Żyrandol ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodChest: {
+				DisplayName: Kufer ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodClock: {
+				DisplayName: Zegar ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodDoor: {
+				DisplayName: Drzwi ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodDresser: {
+				DisplayName: Komoda ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodLamp: {
+				DisplayName: Lampa ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodLantern: {
+				DisplayName: Lampion ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodPiano: {
+				DisplayName: Pianino ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodPlatform: {
+				DisplayName: Platforma ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodSink: {
+				DisplayName: Umywalka ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodSofa: {
+				DisplayName: Kanapa ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodTable: {
+				DisplayName: Stół ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodToilet: {
+				DisplayName: Toaleta ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodTrappedChest: {
+				DisplayName: Pułapka: Kufer ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodWorkbench: {
+				DisplayName: Stół warsztatowy ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodFence: {
+				DisplayName: Płot ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodWall: {
+				DisplayName: Ściana ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBow: {
+				DisplayName: Łuk ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodHammer: {
+				DisplayName: Młot ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodSword: {
+				DisplayName: Miecz ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodBreastplate: {
+				DisplayName: Napierśnik ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodGreaves: {
+				DisplayName: Nagolenniki ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			PetrifiedWoodHelmet: {
+				DisplayName: Hełm ze skamieniałego drewna
+				Tooltip: ""
+			}
+
+			BottomlessQuicksilverBucket: {
+				DisplayName: Bezdenne wiadro rtęci
+				Tooltip:
+					'''
+					Zawiera nieskończoną ilość rtęci
+					Można ją wylać
+					'''
+			}
+
+			QuicksilverAbsorbantSponge: {
+				DisplayName: Gąbka pochłaniająca rtęć
+				Tooltip: Może wchłonąć nieskończone ilości rtęci
+			}
+
+			ShalestoneShackle: {
+				DisplayName: Łupkowe kajdany
+				Tooltip:
+					'''
+					Pozwala na uderzenie w ziemię
+					Naciśnij dwukrotnie {$Key.DOWN}
+					'''
+			}
+		}
+
+		NPCs: {
+			AlbinoBat.DisplayName: Nietoperz albinos
+			Archroma.DisplayName: Achromatyk
+			ChasmeBody.DisplayName: Chasme
+			ChasmeHandLeft.DisplayName: Dłoń Chasme
+			ChasmeHandRight.DisplayName: Dłoń Chasme
+			ChasmeHead.DisplayName: Głowa Chasme
+			ChasmeHeart.DisplayName: Serce Chasme
+			CrystalKing.DisplayName: Kryształowy Król
+			Ferroslime.DisplayName: Ferroszlam
+			Geomancer.DisplayName: Geomanta
+			GoldBat.DisplayName: Żłoty nietoperz
+			KingCoal.DisplayName: Król Węglik
+			Shade.DisplayName: Cień
+			ShadowBat.DisplayName: Cienisty nietoperz
+			ShadowSlime.DisplayName: Szlam cienia
+			DepthsWorm.DisplayName: Szafirowy wąż
+			SapphireSerpentBody.DisplayName: Ciało szafirowego węża
+			SapphireSerpentHead.DisplayName: Głowa szafirowego węża
+			SapphireSerpentTail.DisplayName: Ogon szafirowego węża
+			EnchantedNightmareWorm.DisplayName: Koszmarny pomrowik
+			QuartzCrawler.DisplayName: Kwarcowy ślimak
+			AlbinoRat.DisplayName: Szczur albinos
+			OnyxSquirrel.DisplayName: Onyksowa wiewiórka
+			OnyxBunny.DisplayName: Onyksowy króliczek
+			CrystalBoundTaxCollector.DisplayName: Uwięziony kryształ
+		}
+
+		Projectiles: {
+			ShadePetProjectile.DisplayName: Cień-chowaniec
+			BlueExplosion.DisplayName: Niebieski wybuch
+			BlueSphereYoyo.DisplayName: Jojo
+			GemforgeCutscene.DisplayName: Kryształowa kuźnia
+			CrystalBall.DisplayName: Kryształowy pocisk
+			CrystalBallPassive.DisplayName: Kryształowy pocisk
+			DiamondArrow.DisplayName: Diamentowa strzała
+			DiamondBolt.DisplayName: Diamentowy pocisk
+			DiamondDustProj.DisplayName: Diamentowy pył
+			GeodeCrystalSummon.DisplayName: Kryształ geody
+			GlitteringGoldenLine.DisplayName: Brokatowa złota żyłka
+			LumpOfCoal.DisplayName: Węgielek
+			OnyxBolt.DisplayName: Onyksowy pocisk
+			OnyxHook.DisplayName: Onyksowy hak
+			QuartzChunk.DisplayName: Kwarc
+			RubyBolt.DisplayName: Rubinowy pocisk
+			SapphireShovelProj.DisplayName: Pocisk wodny
+			Shaderang.DisplayName: Cieniarang
+			ShadowBall.DisplayName: Duży cienisty pocisk
+			ShadowBall2.DisplayName: Cienisty pocisk
+			ShadowBall3.DisplayName: Mały cienisty pocisk
+			ShadowClawBottom.DisplayName: Cienisty szpon
+			ShadowClawMiddle.DisplayName: Cienisty szpon
+			ShadowClawTip.DisplayName: Cienisty szpon
+			SilverSpheres.DisplayName: Srebrna kula
+			SilverStar.DisplayName: Srebrna gwiazda
+			SkyFallRain.DisplayName: Kropla rtęci
+			SkyfallYoyo.DisplayName: Jojo
+			Steelocanth.DisplayName: Stalokant
+			LivingShadowSummonProj.DisplayName: Sylwetka
+			CoreGlobe.DisplayName: Globus rdzenia
+			WhiteLightning.DisplayName: Biały piorun
+			WhiteLightningOrb.DisplayName: Biały piorun kulisty
+			WhiteLightningOrb2.DisplayName: Biały piorun kulisty
+			WhiteLightningOrb3.DisplayName: Biały piorun kulisty
+			WhiteLightningTo2.DisplayName: Biały piorun
+			WhiteLightningTo1.DisplayName: Biały piorun
+			WhiteLightningTo3.DisplayName: Biały piorun
+			QuicksilverBomb.DisplayName: Bomba rtęci
+			QuicksilverGrenade.DisplayName: Granat
+			QuicksilverMine.DisplayName: Mina zbliżeniowa
+			QuicksilverRocket.DisplayName: Rakieta
+			QuicksilverSnowmanRocket.DisplayName: Rakieta
+			SilverBobber.DisplayName: Spławik
+			ShadowflameEmber1.DisplayName: Spławik
+			ShadowCat.DisplayName: Cień kota
+			ShadowflameEmber2.DisplayName: Cienisty płomień
+			ShadowflameEmber3.DisplayName: Cienisty płomień
+			POWHammerSwing.DisplayName: Młot POW
+			POWEffect.DisplayName: POW
+			MercuryExplosion1.DisplayName: Wybuch rtęci
+			MercuryExplosion.DisplayName: Wybuch rtęci
+			ShadeBladeLeft.DisplayName: Ostrze cienia
+			ShadeBladeRight.DisplayName: Ostrze cienia
+			ShadeBladeCalculator.DisplayName: Kalkulator ostrza cienia
+			ChasmeRay.DisplayName: Rubinowy promień
+			ChasmeShockwave.DisplayName: Rubinowa fala uderzeniowa
+			MercuryMossFishingBobber.DisplayName: Spławik
+			WaterGeyser.DisplayName: Gejzer wodny
+			AquaArrow.DisplayName: Wodna strzała
+			OnyxExplosion.DisplayName: Onyksowy wybuch
+			SapphireSerpentKite.DisplayName: Latawiec szafirowego węża
+			MiniChasme.DisplayName: Mini-Chasme
+			MiniChasmeHand.DisplayName: Mini-Chasme Hand
+			ShalestoneHand.DisplayName: Łupkowa dłoń
+			ShalestoneSlam.DisplayName: Łupkowy cios
+			ShadowLash.DisplayName: Cienisty ognik
+			QuicksilverTears.DisplayName: Rtęciowe łzy
+			EmeraldEnergy.DisplayName: Szmaragdowa energia
+		}
+
+		Biomes: {
+			DepthsBiome: {
+				DisplayName: Głębiny
+				TownNPCDialogueName: Głębiny
+			}
+		}
+
+		UnderworldSelection: {
+			Random: {
+				Title: Losowy
+				Description: Pozwól naturze zadecydować, czy Piekło czy Głębiny będą jądrem świata.
+			}
+
+			Underworld: {
+				Title: Piekło
+				Description: W twoim świecie na pewno będzie pełne lawy Piekło.
+			}
+
+			Depths: {
+				Title: Głębiny
+				Description: W twoim świecie na pewno będą zimne, ciemne Głębiny.
+			}
+		}
+
+		Configs: {
+			TheDepthsClientConfig: {
+				DisplayName: Konfiguracja Głębin po stronie klienta
+				Headers.DepthsClientsideConfig: Konfiguracja Głębin po stronie klienta
+
+				SlateConfig: {
+					Label: Renames Shale to Slate
+					Tooltip: Renames Shale to Slate, Requires the mod to reload for the config to work
+				}
+
+				EnableFog: {
+					Label: Włącz mgłę w Głębinach
+					Tooltip: Włącza gęstą mgłę widzianą w Głębinach, wyłącz aby się jej pozbyć.
+				}
+			}
+
+			FargosBoBWConfig: {
+				DisplayName: Konfiguracja Głębin w Fargos Best of Both Worlds
+				Headers.DrunkSeedRequiresFargosbestofbothworldsmod: Mieszany świat (wymaga moda Fargo's Best of Both Worlds)
+
+				BothCores: {
+					Label: "[i:174][i:TheDepths/ArqueriteOre] Oba światy"
+					Tooltip: ""
+				}
+			}
+		}
+
+		Emotes: {
+			DepthsBiomeEmote: biomciemności
+			ShadowCatEmote: kotcienia
+			ChasmeEmote: chasme
+		}
+
+		DepthsBiome: Głębiny
+
+		Achievements: {
+			HeartSmasher: {
+				Name: Niszczyciel serc
+				Description: Pokonaj Chasme i jej łupkowego giganta. Stwórczyni Głębin i przywódca Geomantów.
+			}
+
+			PickaxeOfPoison: {
+				Name: Trujący górnik
+				Description: Stwórz rtęciowy kilof z najśmiertelniejszych cieczy.
+			}
+
+			MysteriesOfTheDark: {
+				Name: Tajemnice ciemności
+				Description: Zejdź tak nisko, żeby dotrzeć do głębin.
+			}
+
+			MercuryAngler: {
+				Name: Rtęciowy rybak
+				Description: Wrzuć przynętę do rtęci, aby znaleźć życie odporne na rtęć.
+			}
+		}
+
+		BossChecklist.SpawnInfo.Chasme: Przywołaj używając [i:TheDepths/RubyRelic] w [i:TheDepths/Gemforge] w jądrze twojego świata. [c/FF0000:Zaczyna Hardmode!]
+		InDepths: W Głębinach
+		OutDepths: Poza Głębinami
+		GameUI.LayerDepths: Głębiny
+
+		CreditsRollCategory_DepthsTeam: {
+			1: Zespół Depths
+			2: Lion8cake
+			3: Snickerbobble
+			4: HBDeus
+			5: GabeHasWon
+			6: Ghasttear1
+			7: Syntrin
+			8: Darkrious
+			9: Larfleeze
+			10: Moddingus
+			11: Hariq “Hariq53”
+			12: Phase II “alpha0010”
+			13: Kurtis
+			14: Andrey2345
+			15: Yee苍棱
+			16: Seceip
+			17: Roton
+			18: BasicallyIAmFox
+		}
+
+		MusicDisplay: {
+			ModName: Głębiny
+			Author: HBDeus
+			Depths.DisplayName: The Unsound Deep
+			DepthsOtherworldly.DisplayName: The Deep Unsound
+			Chasme.DisplayName: Chasmic to the Rock
+		}
+
+		Keybinds.GroundSlam.DisplayName: Łupkowy cios
+	}
+}
+
+ItemTooltip.TerrasparkBoots:
+	'''
+	Pozwala latać oraz superszybko biegać, a także zapewnia dodatkową ruchliwość na lodzie
+	8% zwiększona szybkość poruszania się
+	Pozwala chodzić po wodzie, miodzie, rtęci i lawie
+	Zapewnia odporność na bloki ognia i rtęci, 7 seconds odporności na lawę oraz 8 sekund odporności na rtęć
+	Obniża obrażenia spowodowane dotknięciem lawy i rtęci
+	'''

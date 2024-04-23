@@ -142,7 +142,7 @@ namespace TheDepths.NPCs
 				NPC.ai[1] = 30f;
 				NPC.netUpdate = true;
 			}
-			if (NPC.ai[0] >= 650f && Main.netMode != 1)
+			if (NPC.ai[0] >= 650f && Main.netMode != NetmodeID.MultiplayerClient)
 			{
 				NPC.ai[0] = 1f;
 				int targetTileX = (int)Main.player[NPC.target].Center.X / 16;
@@ -162,7 +162,7 @@ namespace TheDepths.NPCs
 				if (NPC.ai[1] == 0f)
 				{
 					SoundEngine.PlaySound(in SoundID.Item42, NPC.position);
-					if (Main.netMode != 1)
+					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
 						Vector2 val = Main.player[NPC.target].Center + new Vector2(NPC.Center.X, NPC.Center.Y);
 						Vector2 val2 = NPC.Center + new Vector2(NPC.Center.X, NPC.Center.Y);

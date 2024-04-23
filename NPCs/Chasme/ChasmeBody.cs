@@ -160,12 +160,12 @@ namespace TheDepths.NPCs.Chasme
 
 		public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(HeartID);
+			writer.Write((byte)HeartID);
 		}
 
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			HeartID = reader.ReadInt32();
+			HeartID = reader.ReadByte();
 		}
 	}
 }

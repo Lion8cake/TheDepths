@@ -15,7 +15,7 @@ namespace TheDepths.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTime = 18;
 			Item.useAnimation = 18;
 			Item.knockBack = 3f;
@@ -24,7 +24,7 @@ namespace TheDepths.Items.Weapons
 			Item.damage = 26;
 			Item.scale = 1f;
 			Item.UseSound = SoundID.Item15;
-			Item.rare = 1;
+			Item.rare = ItemRarityID.Blue;
 			Item.value = 27000;
 			Item.DamageType = DamageClass.Melee;
 		}

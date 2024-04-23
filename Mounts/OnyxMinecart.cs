@@ -32,7 +32,7 @@ namespace TheDepths.Mounts
 
 		public static void Sparks(Vector2 dustPosition)
 		{
-			dustPosition += new Vector2((Main.rand.Next(2) == 0) ? 13 : (-13), 0f).RotatedBy(DelegateMethods.Minecart.rotation);
+			dustPosition += new Vector2((Main.rand.NextBool(2)) ? 13 : (-13), 0f).RotatedBy(DelegateMethods.Minecart.rotation);
 			int num = Dust.NewDust(dustPosition, 1, 1, ModContent.DustType<Dusts.ShadowflameEmber>(), Main.rand.Next(-2, 3), Main.rand.Next(-2, 3));
 			Main.dust[num].noGravity = true;
 			Main.dust[num].fadeIn = Main.dust[num].scale + 1f + 0.01f * (float)Main.rand.Next(0, 51);
@@ -41,7 +41,7 @@ namespace TheDepths.Mounts
 			Main.dust[num].velocity.X *= (float)Main.rand.Next(25, 101) * 0.01f;
 			Main.dust[num].velocity.Y -= (float)Main.rand.Next(15, 31) * 0.1f;
 			Main.dust[num].position.Y -= 4f;
-			if (Main.rand.Next(3) != 0)
+			if (!Main.rand.NextBool(3))
 			{
 				Main.dust[num].noGravity = false;
 			}
@@ -112,7 +112,7 @@ namespace TheDepths.Mounts
 			newMount.idleFrameDelay = 0;
 			newMount.idleFrameStart = 0;
 			newMount.idleFrameLoop = false;
-			if (Main.netMode != 2)
+			if (Main.netMode != NetmodeID.Server)
 			{
 				newMount.backTexture = Asset<Texture2D>.Empty;
 				newMount.backTextureExtra = Asset<Texture2D>.Empty;

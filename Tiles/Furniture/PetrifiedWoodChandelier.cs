@@ -117,13 +117,11 @@ namespace TheDepths.Tiles.Furniture
 		{
 			Vector2 unscaledPosition = Main.Camera.UnscaledPosition;
 			Vector2 zero = Vector2.Zero;
-			int sizeX = 1;
-			int sizeY = 1;
 			Tile tile = Main.tile[i, j];
 			if (tile != null && tile.HasTile)
 			{
-				sizeX = 3;
-				sizeY = 3;
+				int sizeX = 3;
+				int sizeY = 3;
 				DrawMultiTileVinesInWind(unscaledPosition, zero, i, j, sizeX, sizeY, spriteBatch);
 			}
 		}
@@ -134,7 +132,9 @@ namespace TheDepths.Tiles.Furniture
 			UnifiedRandom _rand = (UnifiedRandom)typeof(TileDrawing).GetField("_rand", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(Main.instance.TilesRenderer);
 			bool _isActiveAndNotPaused = (bool)typeof(TileDrawing).GetField("_isActiveAndNotPaused", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(Main.instance.TilesRenderer);
 
-			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)topLeftY << 32 | (long)((ulong)topLeftX));
+			long seedX = (long)topLeftY << 32;
+			long seedY = (long)(ulong)topLeftX;
+			ulong randSeed = Main.TileFrameSeed ^ (ulong)(seedX | seedY);
 
 			float windCycle = (float)typeof(TileDrawing).GetMethod("GetWindCycle", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(Main.instance.TilesRenderer, new object[] { topLeftX, topLeftY, _sunflowerWindCounter });
 			float num = windCycle;
@@ -144,21 +144,15 @@ namespace TheDepths.Tiles.Furniture
 			windCycle += highestWindGridPushComplex;
 			new Vector2(sizeX * 16 * 0.5f, 0f);
 			Vector2 vector = new Vector2(topLeftX * 16 - (int)screenPosition.X + sizeX * 16f * 0.5f, topLeftY * 16 - (int)screenPosition.Y) + offSet;
-			float num2 = 0.07f;
 			Tile tile = Main.tile[topLeftX, topLeftY];
 			int type = tile.TileType;
 			Vector2 vector2 = new(0f, -2f);
 			vector += vector2;
-			Texture2D texture2D = null;
-			Color color = Color.Transparent;
-			float? num3 = null;
 			float num4 = 1f;
-			float num5 = -4f;
 			bool flag2 = false;
-			num2 = 0.15f;
-			int PositioningFix = 192;
-			num3 = 1f;
-			num5 = 0f;
+			float num2 = 0.15f;
+			float? num3 = 1f;
+			float num5 = 0f;
 			if (flag2)
 			{
 				vector += new Vector2(0f, 16f);
@@ -168,8 +162,6 @@ namespace TheDepths.Tiles.Furniture
 			{
 				windCycle -= num;
 			}
-			Vector2 vector4 = default(Vector2);
-			Rectangle rectangle = default(Rectangle);
 			for (int i = topLeftX; i < topLeftX + sizeX; i++)
 			{
 				for (int j = topLeftY; j < topLeftY + sizeY; j++)
@@ -196,8 +188,8 @@ namespace TheDepths.Tiles.Furniture
 					{
 						num7 = 0f;
 					}
-					Main.instance.TilesRenderer.GetTileDrawData(i, j, tile2, type2, ref tileFrameX, ref tileFrameY, out var tileWidth, out var tileHeight, out var tileTop, out var halfBrickHeight, out var addFrX, out var addFrY, out var tileSpriteEffect, out var _, out var _, out var _);
-					bool flag3 = _rand.Next(4) == 0;
+					Main.instance.TilesRenderer.GetTileDrawData(i, j, tile2, type2, ref tileFrameX, ref tileFrameY, out var tileWidth, out var tileHeight, out var tileTop, out var halfBrickHeight, out var addFrX, out var addFrY, out var tileSpriteEffect, out _, out _, out _);
+					bool flag3 = _rand.NextBool(4);
 					Color tileLight = Lighting.GetColor(i, j);
 					typeof(TileDrawing).GetMethod("DrawAnimatedTile_AdjustForVisionChangers", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(Main.instance.TilesRenderer, new object[] { i, j, tile2, type2, tileFrameX, tileFrameY, tileLight, flag3 });
 					tileLight = (Color)typeof(TileDrawing).GetMethod("DrawTiles_GetLightOverride", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(Main.instance.TilesRenderer, new object[] { j, i, tile2, type2, tileFrameX, tileFrameY, tileLight });
@@ -207,14 +199,13 @@ namespace TheDepths.Tiles.Furniture
 					}
 					Vector2 vector3 = new Vector2(i * 16 - (int)screenPosition.X, j * 16 - (int)screenPosition.Y + tileTop) + offSet;
 					vector3 += vector2;
-					vector4 = new(windCycle * num4, Math.Abs(windCycle) * num5 * num7);
+					Vector2 vector4 = new(windCycle * num4, Math.Abs(windCycle) * num5 * num7);
 					Vector2 vector5 = vector - vector3;
 					Texture2D tileDrawTexture = Main.instance.TilesRenderer.GetTileDrawTexture(tile2, i, j);
 					if (tileDrawTexture != null)
 					{
-
 						Vector2 vector6 = vector + new Vector2(0f, vector4.Y);
-						rectangle = new(tileFrameX + addFrX, tileFrameY + addFrY, tileWidth, tileHeight - halfBrickHeight);
+						Rectangle rectangle = new(tileFrameX + addFrX, tileFrameY + addFrY, tileWidth, tileHeight - halfBrickHeight);
 						float rotation = windCycle * num2 * num7;
 						Main.spriteBatch.Draw(tileDrawTexture, vector6, (Rectangle?)rectangle, tileLight, rotation, vector5, 1f, tileSpriteEffect, 0f);
 

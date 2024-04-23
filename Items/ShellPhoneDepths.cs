@@ -21,7 +21,7 @@ namespace TheDepths.Items
 			Item.useTurn = true;
 			Item.width = 20;
 			Item.height = 20;
-			Item.useStyle = 4;
+			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.useTime = 90;
 			Item.UseSound = SoundID.Item6;
 			Item.useAnimation = 90;

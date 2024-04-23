@@ -47,7 +47,22 @@ namespace TheDepths.Worldgen
 		/// <summary>
 		///   Checks if the player is in the depths part of the world. This is used to reduce repetion within code as previously all the check needed was depthsorHell == true.
 		/// </summary>
-		public static bool InDepths(Player player) => ((isWorldDepths && !DrunkDepthsLeft && !DrunkDepthsRight) || (IsPlayerInLeftDepths(player) || IsPlayerInRightDepths(player)));
+		public static bool InDepths(Player player) => (isWorldDepths && !DrunkDepthsLeft && !DrunkDepthsRight) || IsPlayerInLeftDepths(player) || IsPlayerInRightDepths(player);
+
+		/// <summary>
+		/// Detects if the inputted tile X coord is on the depths side of the drunk seed if the depths is on the Right
+		/// </summary>
+		public static bool IsTileInRightDepths(int x) => DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2;
+
+		/// <summary>
+		///   Detects if the inputted tile X coord is on the depths side of the drunk seed if the depths is on the left
+		/// </summary>
+		public static bool IsTileInLeftDepths(int x) => DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2;
+
+		/// <summary>
+		///   Checks if the inputted tile X coord is in the depths part of the world. This is used to reduce repetion within code as previously this same check was unwrapped in multiple places.
+		/// </summary>
+		public static bool TileInDepths(int x) => (isWorldDepths && !DrunkDepthsLeft && !DrunkDepthsRight) || IsTileInLeftDepths(x) || IsTileInRightDepths(x);
 
 		public override void OnWorldLoad()
 		{
@@ -231,7 +246,7 @@ namespace TheDepths.Worldgen
 				{
 					if (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport || WorldGen.remixWorldGen)
 					{
-						if (WorldGen.drunkWorldGen)
+						if (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport)
 							tasks.Insert(baseUnderWorldIndex + 1, new PassLegacy("Depths: Depths", DepthsGen.SpecialGenerate)); // Overwrite some amount of space with the Depths
 						else
 							tasks[baseUnderWorldIndex] = new PassLegacy("Underworld", DepthsGen.SpecialGenerate); // Replace the entire Underworld with only Depths for ddu
@@ -292,7 +307,7 @@ namespace TheDepths.Worldgen
 				int j;
 				for (j = WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY); Main.tile[i, j].TileType != TileType<Shalestone>(); j = WorldGen.genRand.Next(Main.maxTilesY - 140, Main.maxTilesY))
 					i = WorldGen.genRand.Next(0, Main.maxTilesX);
-				WorldGen.TileRunner(i, j, WorldGen.genRand.Next(2, 6), WorldGen.genRand.Next(3, 7), TileType<OnyxShalestone>(), false, 0.0f, 0.0f, false, true);
+				WorldGen.OreRunner(i, j, WorldGen.genRand.Next(2, 6), WorldGen.genRand.Next(3, 7), (ushort)TileType<OnyxShalestone>());
 			}
 		}
 

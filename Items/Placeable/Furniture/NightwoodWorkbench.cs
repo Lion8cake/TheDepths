@@ -1,5 +1,6 @@
 using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace TheDepths.Items.Placeable.Furniture
 {
@@ -19,7 +20,7 @@ namespace TheDepths.Items.Placeable.Furniture
             Item.autoReuse = true;
             Item.useAnimation = 15;
             Item.useTime = 10;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.value = Terraria.Item.sellPrice(copper: 30);
             Item.createTile = ModContent.TileType<Tiles.Furniture.NightwoodWorkbench>();

@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using TheDepths.Dusts;
 using System;
 using Terraria.DataStructures;
+using TheDepths.Worldgen;
 
 namespace TheDepths.Tiles
 {
@@ -67,9 +68,9 @@ namespace TheDepths.Tiles
         {
 			Tile tile = Main.tile[i, j];
 			int x = i - Main.tile[i, j].TileFrameX / 18 % 1;
-			if (Main.netMode != 1)
+			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
-				if (j > Main.UnderworldLayer && (Worldgen.TheDepthsWorldGen.isWorldDepths || (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2)))
+				if (j > Main.UnderworldLayer && TheDepthsWorldGen.TileInDepths(x))
 				{
 					tile.LiquidType = LiquidID.Lava;
 					tile.LiquidAmount = 128;

@@ -36,7 +36,7 @@ namespace TheDepths.Items
 			recipe.AddIngredient(ItemID.Waterleaf, 1);
 			recipe.AddIngredient(ModContent.ItemType<Items.ShadowShrub>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Quartz>(), 1);
-			recipe.AddTile(13);
+			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 		}
     }

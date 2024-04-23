@@ -1,3 +1,66 @@
+v1.0
+=========================
+Reworked Worldgen, now is nolonger a clone of the underworld worldgeneration
+Added Polish Translation by Roton
+Renamed depthsorHell worldtag to isWorldDepths
+Added controller support for the world creation screen
+Resprited all banner items
+Resprited Dont Dig up depths icons
+Added chlorothyte extractinator support to quartz and obsidian
+Resprited Core builder item
+Resprited Large quartz item
+Resprited Quartz table item
+Resprited Quartz door item
+Resprited the Terminex
+Fixed Quartz not having a pickaxe power
+Fixed chasme not playing Otherworldly WoF when otherworldly music is enabled
+Rewrote the loottable for quartz and arquerite crates
+Rewrote the map code to be much better, now mods that fullbright the whole world now work properly
+Added a system for chasme to allow her to do anything on death if a mod makes the WoF do something on death (eg. Thorium "new life has spring into the depths" text)
+Added PvP support to the Terminex
+Resprited Quartz
+Resprited Relicarp
+Resprited Glimmer Depth fish
+Updated icon again
+Updated README.md file
+Fixed workshop icon not showing up due to a typo
+Fixed quartz furniture being detroyed by lava and quicksilver
+Fixed workgen issue where quartz doors and the tiles above and below them being hammered
+Fixed Shale, shalestone and nightmare grass turning to crispy honey blocks during GFB worldgen
+Removed leftover code related to NPC targets causing a out of bounds error in dual core worlds
+Fixed Depths and Otherworldly Depths menus not removing their texture when generating a GFB seed
+Fixed the shadow claw not piercing infinitely
+Doubled shadow claw damage from 28 to 56
+Removed unused depths' map backgrounds
+Fixed several sell values of items
+Fixed some recipes not requiring workbenches when they should have
+Removed test image of the shalestone slam
+Organised IL edits within the code
+Fixed all warnings (shouldn't be noticable ingame apart from slight preformance improvements)
+Fixed all recipes requiring to be near lava having an invisible extra condition that didn't work
+Fixed depths' 2nd bg being waaaay too small causing visual errors
+Added tooltip to the geocampfire
+Added several in-code methods for checking if an area is in the depths or underworld (has mod calls for these too)
+Changed the map color of the unused ember tile
+Fixed Silverfall block map color
+Fixed Silverfall wall map color
+Fixed mercury hamaxe being 20 bars instead of 15
+Fixed crystal skin potion not pausing the amulet timer
+Fixed shalebrick map color
+Fixed worldgeneration issue with DO NOT DRINK and Flowing quicksilver being unobtainable
+Fixed several tile tileobjectdata
+Fixed shadow cat pet's ai not syncing in multiplayer
+Fixed shalestone onyx corrupting nearby tiles
+Fixed chasme not printing the text "The Jungle Grows Restless" if all mechs are defeated beforehand
+Fixed Sanctus sheild not having 4 defence but instead 2
+Removed duplicate recipes of the geode armour
+Fixed Terminex sounds being way too loud
+Removed duplicate sound within the depths'
+Fixed the Quartz table tile texture being super short causing visual errors with anything placed ontop
+Fixed the Quartz platform sprite not tiling correctly with horizontal and staircase platforms intercepting each other
+Fixed Chasme body parts using a much more taxing network syncing in multiplayer
+Rewrote the description
+
 Beta v0.8.2.1
 =========================
 Added Chinese Translation by Yee苍棱

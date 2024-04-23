@@ -34,7 +34,7 @@ namespace TheDepths.Projectiles
 			float num104 = Projectile.velocity.X / 3f * (float)num103;
 			float num100 = Projectile.velocity.Y / 3f * (float)num103;
 			int num101 = 4;
-			int frostDust = Dust.NewDust(new Vector2(Projectile.position.X + (float)num101, Projectile.position.Y + (float)num101), Projectile.width - num101 * 2, Projectile.height - num101 * 2, 92, 0f, 0f, 100, default(Color), 1.2f);
+			int frostDust = Dust.NewDust(new Vector2(Projectile.position.X + (float)num101, Projectile.position.Y + (float)num101), Projectile.width - num101 * 2, Projectile.height - num101 * 2, DustID.Frost, 0f, 0f, 100, default(Color), 1.2f);
 			Dust obj = Main.dust[frostDust];
 			obj.noGravity = true;
 			obj.velocity *= 0.1f;
@@ -45,7 +45,7 @@ namespace TheDepths.Projectiles
 		if (Main.rand.NextBool(10))
 		{
 			int num102 = 4;
-			int frostDustSmol = Dust.NewDust(new Vector2(Projectile.position.X + (float)num102, Projectile.position.Y + (float)num102), Projectile.width - num102 * 2, Projectile.height - num102 * 2, 92, 0f, 0f, 100, default(Color), 0.6f);
+			int frostDustSmol = Dust.NewDust(new Vector2(Projectile.position.X + (float)num102, Projectile.position.Y + (float)num102), Projectile.width - num102 * 2, Projectile.height - num102 * 2, DustID.Frost, 0f, 0f, 100, default(Color), 0.6f);
 			Dust obj2 = Main.dust[frostDustSmol];
 			obj2.velocity *= 0.25f;
 			Dust obj3 = Main.dust[frostDustSmol];

@@ -30,7 +30,7 @@ namespace TheDepths.NPCs
 
         public override void SetStaticDefaults()
         {
-            var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers
             {
                 CustomTexturePath = "TheDepths/NPCs/SapphireSerpent_Bestiary",
                 Position = new Vector2(0f, 0f),
@@ -156,7 +156,7 @@ namespace TheDepths.NPCs
 
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers
             {
                 Hide = true
             };
@@ -209,7 +209,7 @@ namespace TheDepths.NPCs
 
         public override void SetStaticDefaults()
         {
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers
             {
                 Hide = true
             };

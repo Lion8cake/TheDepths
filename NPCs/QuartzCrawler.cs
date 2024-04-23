@@ -19,7 +19,7 @@ namespace TheDepths.NPCs
 
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0)
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers
             {
                 Velocity = 1f,
                 Position = new(1, 2)

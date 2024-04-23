@@ -20,7 +20,7 @@ namespace TheDepths.Items.Placeable.Furniture
             Item.autoReuse = true;
             Item.useAnimation = 15;
             Item.useTime = 10;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.value = Terraria.Item.sellPrice(silver: 6);
             Item.createTile = ModContent.TileType<Tiles.Furniture.QuartzChandelier>();

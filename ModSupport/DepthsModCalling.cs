@@ -11,7 +11,7 @@ namespace TheDepths.ModSupport
 {
     public class DepthsModCalling : ModSystem
     {
-		public static readonly Mod? Achievements = ModLoader.TryGetMod("TMLAchievements", out Mod obtainedMod) ? obtainedMod : null;
+		public static readonly Mod Achievements = ModLoader.TryGetMod("TMLAchievements", out Mod obtainedMod) ? obtainedMod : null;
 
         public static bool FargoBoBWSupport = ModLoader.HasMod("FargoSeeds") && ModContent.GetInstance<ModSupport.FargosBoBWConfig>().BothCores;
 

@@ -22,7 +22,7 @@ namespace TheDepths.Items.Weapons
 			Item.height = 40;
 			Item.useTime = 10;
 			Item.useAnimation = 10;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.noMelee = true;
 			Item.knockBack = 3;
 			Item.value = 10000;

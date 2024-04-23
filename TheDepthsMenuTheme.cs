@@ -33,6 +33,7 @@ namespace TheDepths
 					Rectangle? sourceRect = null;
 					if (k == 1)
 					{
+						tex = ModContent.Request<Texture2D>("TheDepths/Backgrounds/DepthsUnderworldBG_" + k + "_2").Value;
 						sourceRect = tex.Frame(2, 2, 1, 1);
 					}
 

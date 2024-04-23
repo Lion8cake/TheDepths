@@ -12,8 +12,6 @@ namespace TheDepths.Projectiles
 {
 	public class MercuryExplosion : ModProjectile
 	{
-		public bool IsGasOver = true;
-
 		public override void SetDefaults() {
 			Projectile.width = 32;
 			Projectile.height = 32;
@@ -93,15 +91,25 @@ namespace TheDepths.Projectiles
 				return;
 			}
 			Projectile.localAI[1] = 15f;
-			if (Main.netMode != 2)
+			if (Main.netMode != NetmodeID.Server)
 			{
-				Player localPlayer = Main.LocalPlayer;
-				if (localPlayer.active && !localPlayer.DeadOrGhost && localPlayer.Hitbox.Intersects(Projectile.Hitbox) && localPlayer.hostile && Projectile.TryGetOwner(out localPlayer) == false)
+				Player player = Main.player[Projectile.owner];
+				for (int i = 0; i < Main.maxPlayers; i++)
 				{
-					localPlayer.AddBuff(ModContent.BuffType<Buffs.MercuryContagion>(), 60 * 4);
+					Player target = Main.player[i];
+					if (target.active && !target.DeadOrGhost && target != player)
+					{
+						if (target.hostile && player.hostile && (target.team != player.team || target.team == 0))
+						{
+							if (!target.buffImmune[ModContent.BuffType<Buffs.MercuryContagion>()] && target.Hitbox.Intersects(Projectile.Hitbox))
+							{
+								target.AddBuff(ModContent.BuffType<Buffs.MercuryContagion>(), 60 * 4);
+							}
+						}
+					}
 				}
 			}
-			if (Main.netMode == 1)
+			if (Main.netMode == NetmodeID.MultiplayerClient)
 			{
 				return;
 			}

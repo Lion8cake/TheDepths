@@ -20,7 +20,7 @@ namespace TheDepths.Items.Placeable.Furniture
             Item.autoReuse = true;
             Item.useAnimation = 15;
             Item.useTime = 10;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.value = Terraria.Item.sellPrice(silver: 3);
             Item.createTile = ModContent.TileType<Tiles.Furniture.NightwoodCandelabra>();
@@ -28,7 +28,7 @@ namespace TheDepths.Items.Placeable.Furniture
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NightWood>(), 5).AddIngredient(8, 3).AddTile(TileID.WorkBenches).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NightWood>(), 5).AddIngredient(ItemID.Torch, 3).AddTile(TileID.WorkBenches).Register();
         }
     }
 }

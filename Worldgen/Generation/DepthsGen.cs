@@ -109,11 +109,18 @@ internal class DepthsGen
 
         progress.Message = "Building ruined homes...";
 
-        if (side is 0 or (-1))
-            AddBuildings(60, buildingArea, Main.maxTilesY - 160); // Adds all of the buildings
+        if (Main.drunkWorld)
+        {
+            if (side is 0 or (-1))
+                AddBuildings(60, buildingArea, Main.maxTilesY - 160); // Adds all of the buildings
 
-        if (side is 0 or 1)
-            AddBuildings(Main.maxTilesX - buildingArea, Main.maxTilesX - 60, Main.maxTilesY - 160);
+            if (side is 0 or 1)
+                AddBuildings(Main.maxTilesX - buildingArea, Main.maxTilesX - 60, Main.maxTilesY - 160);
+        }
+        else
+        {
+			AddBuildings(side == -1 ? Main.maxTilesX / 2 - buildingArea : Main.maxTilesX / 2, side == -1 ? Main.maxTilesX / 2 : Main.maxTilesX / 2 + buildingArea, Main.maxTilesY - 160); // Adds all of the buildings
+		}
 	}
 
     /// <summary>
@@ -258,17 +265,17 @@ internal class DepthsGen
 				}
 				else
 				{
-					if ((num856 <= Main.maxTilesX / 2 - 5 || num856 >= Main.maxTilesX / 2 + 5) && WorldGen.genRand.Next(4) == 0)
+					if ((num856 <= Main.maxTilesX / 2 - 5 || num856 >= Main.maxTilesX / 2 + 5) && WorldGen.genRand.NextBool(4))
 					{
-						if (WorldGen.genRand.Next(3) == 0)
+						if (WorldGen.genRand.NextBool(3))
 						{
 							num857 += WorldGen.genRand.Next(-1, 2);
 						}
-						else if (WorldGen.genRand.Next(6) == 0)
+						else if (WorldGen.genRand.NextBool(6))
 						{
 							num857 += WorldGen.genRand.Next(-2, 3);
 						}
-						else if (WorldGen.genRand.Next(8) == 0)
+						else if (WorldGen.genRand.NextBool(8))
 						{
 							num857 += WorldGen.genRand.Next(-4, 5);
 						}
@@ -333,7 +340,7 @@ internal class DepthsGen
 			{
 				for (int num865 = Main.maxTilesY - 200; num865 < num858 + 20; num865++)
 				{
-					if (Main.tile[num864, num865].TileType == 633 && Main.tile[num864, num865].HasTile == true && !Main.tile[num864, num865 - 1].HasTile == true && WorldGen.genRand.Next(3) == 0)
+					if (Main.tile[num864, num865].TileType == 633 && Main.tile[num864, num865].HasTile == true && !Main.tile[num864, num865 - 1].HasTile == true && WorldGen.genRand.NextBool(3))
 					{
 						WorldGen.TryGrowingTreeByType(634, num864, num865);
 					}
@@ -714,7 +721,7 @@ internal class DepthsGen
     {
         if (!WorldGen.SolidTile(i, j - 1)) // If we have no tile above...
         {
-            if (WorldGen.remixWorldGen ? WorldGen.genRand.NextBool() : WorldGen.genRand.NextBool(50)) // Try to place a tree, or...
+            if (WorldGen.remixWorldGen ? WorldGen.genRand.NextBool() : WorldGen.genRand.NextBool(5)) // Try to place a tree, or...
             {
                 if (WorldGen.PlaceObject(i, j - 1, ModContent.TileType<NightSapling>(), true, 0))
                 {

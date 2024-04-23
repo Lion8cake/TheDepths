@@ -17,7 +17,7 @@ namespace TheDepths.Projectiles
 			Projectile.height = 32;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Magic;
-			Projectile.penetrate = 1;
+			Projectile.penetrate = -1;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.alpha = 255;
@@ -50,7 +50,7 @@ namespace TheDepths.Projectiles
 					int num72 = Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.position.X + Projectile.velocity.X + (float)(Projectile.width / 2), Projectile.position.Y + Projectile.velocity.Y + (float)(Projectile.height / 2), Projectile.velocity.X, Projectile.velocity.Y, type, Projectile.damage, Projectile.knockBack, Projectile.owner);
 					Main.projectile[num72].damage = Projectile.damage;
 					Main.projectile[num72].ai[1] = Projectile.ai[1] + 1f;
-					NetMessage.SendData(27, -1, -1, null, num72);
+					NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, num72);
 				}
 				return;
 			}
@@ -82,7 +82,7 @@ namespace TheDepths.Projectiles
 			Projectile.height = 32;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Magic;
-			Projectile.penetrate = 1;
+			Projectile.penetrate = -1;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.alpha = 255;
@@ -135,7 +135,7 @@ namespace TheDepths.Projectiles
 			Projectile.height = 32;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Magic;
-			Projectile.penetrate = 1;
+			Projectile.penetrate = -1;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.alpha = 255;
@@ -165,7 +165,7 @@ namespace TheDepths.Projectiles
 					int num72 = Projectile.NewProjectile(new EntitySource_Misc(""), Projectile.position.X + Projectile.velocity.X + (float)(Projectile.width / 2), Projectile.position.Y + Projectile.velocity.Y + (float)(Projectile.height / 2), Projectile.velocity.X, Projectile.velocity.Y, type, Projectile.damage, Projectile.knockBack, Projectile.owner);
 					Main.projectile[num72].damage = Projectile.damage;
 					Main.projectile[num72].ai[1] = Projectile.ai[1] + 1f;
-					NetMessage.SendData(27, -1, -1, null, num72);
+					NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, num72);
 				}
 				return;
 			}

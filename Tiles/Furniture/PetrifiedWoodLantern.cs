@@ -84,7 +84,9 @@ namespace TheDepths.Tiles.Furniture
 			UnifiedRandom _rand = (UnifiedRandom)typeof(TileDrawing).GetField("_rand", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(Main.instance.TilesRenderer);
 			bool _isActiveAndNotPaused = (bool)typeof(TileDrawing).GetField("_isActiveAndNotPaused", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(Main.instance.TilesRenderer);
 
-			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)topLeftY << 32 | (long)((ulong)topLeftX));
+			long seedX = (long)topLeftY << 32;
+			long seedY = (long)(ulong)topLeftX;
+			ulong randSeed = Main.TileFrameSeed ^ (ulong)(seedX | seedY);
 
 			float windCycle = (float)typeof(TileDrawing).GetMethod("GetWindCycle", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(Main.instance.TilesRenderer, new object[] { topLeftX, topLeftY, _sunflowerWindCounter });
 			float num = windCycle;
@@ -99,14 +101,12 @@ namespace TheDepths.Tiles.Furniture
 			int type = tile.TileType;
 			Vector2 vector2 = new(0f, -2f);
 			vector += vector2;
-			Texture2D texture2D = null;
 			Color color = Color.Transparent;
 			float? num3 = null;
 			float num4 = 1f;
 			float num5 = -4f;
 			bool flag2 = false;
 			num2 = 0.15f;
-			int PositioningFix = 192;
 			num3 = 1f;
 			num5 = 0f;
 			if (flag2)
@@ -147,7 +147,7 @@ namespace TheDepths.Tiles.Furniture
 						num7 = 0f;
 					}
 					Main.instance.TilesRenderer.GetTileDrawData(i, j, tile2, type2, ref tileFrameX, ref tileFrameY, out var tileWidth, out var tileHeight, out var tileTop, out var halfBrickHeight, out var addFrX, out var addFrY, out var tileSpriteEffect, out var _, out var _, out var _);
-					bool flag3 = _rand.Next(4) == 0;
+					bool flag3 = _rand.NextBool(4);
 					Color tileLight = Lighting.GetColor(i, j);
 					typeof(TileDrawing).GetMethod("DrawAnimatedTile_AdjustForVisionChangers", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(Main.instance.TilesRenderer, new object[] { i, j, tile2, type2, tileFrameX, tileFrameY, tileLight, flag3 });
 					tileLight = (Color)typeof(TileDrawing).GetMethod("DrawTiles_GetLightOverride", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static).Invoke(Main.instance.TilesRenderer, new object[] { j, i, tile2, type2, tileFrameX, tileFrameY, tileLight });

@@ -116,7 +116,7 @@ namespace TheDepths.Tiles
 					}
 				}
 			}
-			if (Main.netMode == 2 && flag)
+			if (Main.netMode == NetmodeID.Server && flag)
 			{
 				NetMessage.SendTileSquare(-1, i, j, 3);
 			}

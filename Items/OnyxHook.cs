@@ -18,13 +18,13 @@ namespace TheDepths.Items
 			Item.noUseGraphic = true;
 			Item.damage = 0;
 			Item.knockBack = 7f;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.width = 18;
 			Item.height = 28;
 			Item.UseSound = SoundID.Item1;
 			Item.useAnimation = 20;
 			Item.useTime = 20;
-			Item.rare = 1;
+			Item.rare = ItemRarityID.Blue;
 			Item.noMelee = true;
 			Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.shootSpeed = 13f;

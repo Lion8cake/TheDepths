@@ -36,7 +36,7 @@ namespace TheDepths.Items.Accessories
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.AnglerTackleBag, 1);
 			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.QuicksilverproofFishingHook>(), 1);
-			recipe.AddTile(114);
+			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}
 	}

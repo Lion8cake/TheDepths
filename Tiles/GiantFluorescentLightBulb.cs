@@ -14,9 +14,9 @@ namespace TheDepths.Tiles
 			Main.tileLighted[Type] = true;
 			Main.tileWaterDeath[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
-			AddMapEntry(new Color(140, 165, 170));
 			TileObjectData.addTile(Type);
-        }
+			AddMapEntry(new Color(140, 165, 170));
+		}
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{

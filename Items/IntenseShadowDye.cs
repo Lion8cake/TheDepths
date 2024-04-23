@@ -13,10 +13,7 @@ namespace TheDepths.Items
 			if (!Main.dedServ) {
 				GameShaders.Armor.BindShader(
 					Item.type,
-					new ArmorShaderData(
-						new Ref<Effect>(Mod.Assets.Request<Effect>("Shaders/ShadowedDye",
-						AssetRequestMode.ImmediateLoad).Value
-					), "DeepShadowDyeShaderPass")
+					new ArmorShaderData(Mod.Assets.Request<Effect>("Shaders/ShadowedDye"), "DeepShadowDyeShaderPass")
 				);
 			}
 			Item.ResearchUnlockCount = 3;

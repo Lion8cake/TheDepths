@@ -28,7 +28,7 @@ namespace TheDepths.Items.Placeable.Furniture
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<NightWood>(), 20).AddIngredient(149, 10).AddTile(TileID.Sawmill).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<NightWood>(), 20).AddIngredient(ItemID.Book, 10).AddTile(TileID.Sawmill).Register();
         }
     }
 }

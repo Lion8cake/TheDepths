@@ -17,10 +17,10 @@ namespace TheDepths.Tiles
             Main.tileFrameImportant[Type] = true;
             TileID.Sets.FramesOnKillWall[Type] = true;
             TileID.Sets.AvoidedByNPCs[Type] = true;
+            TileID.Sets.FramesOnKillWall[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.StyleWrapLimit = 36;
-			TileID.Sets.FramesOnKillWall[Type] = true;
             TileObjectData.addTile(Type);
             TileID.Sets.DisableSmartCursor[Type] = true;
             DustType = 7;

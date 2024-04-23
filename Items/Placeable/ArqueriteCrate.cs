@@ -4,6 +4,7 @@ using Terraria.GameContent.Creative;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheDepths.Items.Accessories;
 
 namespace TheDepths.Items.Placeable
 {
@@ -39,110 +40,96 @@ namespace TheDepths.Items.Placeable
 
 		public override void ModifyItemLoot(ItemLoot itemLoot)
 		{
-            var DepthsItems1 = new IItemDropRule[]
-            {
-                ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Accessories.AmalgamAmulet>(), 1),
-                ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Accessories.ShadowflameEmberedTreads>(), 1),
-                ItemDropRule.NotScalingWithLuck(ModContent.ItemType<PurpleflameNecklace>(), 1),
-                ItemDropRule.NotScalingWithLuck(ModContent.ItemType<ShadowFightingFishBowl>(), 1),
-                ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Accessories.QuicksilverproofFishingHook>(), 1),
-                ItemDropRule.NotScalingWithLuck(ModContent.ItemType<FluorescentLightBulb>(), 1)
-            };
-            IItemDropRule bc_hangingPot = ItemDropRule.NotScalingWithLuck(ItemID.PotSuspended, 4, 1, 2);
-            IItemDropRule bc_locketBox = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<QuartzLockBox>());
-            IItemDropRule bc_waterbomb = ItemDropRule.NotScalingWithLuck(ItemID.WetBomb, 3, 7, 10);
-            var DepthsItems2 = new IItemDropRule[]
-            {
-                ItemDropRule.NotScalingWithLuck(ModContent.ItemType<PottedPurplestarBrambles>(), 1),
-                ItemDropRule.NotScalingWithLuck(ModContent.ItemType<PottedShadowflameBulb>(), 1),
-                ItemDropRule.NotScalingWithLuck(ModContent.ItemType<PottedNightterrorBush>(), 1),
-                ItemDropRule.NotScalingWithLuck(ModContent.ItemType<PottedNightmarePalm>(), 1),
-                ItemDropRule.NotScalingWithLuck(ModContent.ItemType<PottedMercuryTendrils>(), 1)
-            };
-            IItemDropRule bc_goldCoin = ItemDropRule.NotScalingWithLuck(ItemID.GoldCoin, 4, 5, 12);
-            var oresTier1 = new IItemDropRule[]
-            {
-                ItemDropRule.NotScalingWithLuck(ItemID.CopperOre, 1, 30, 49),
-                ItemDropRule.NotScalingWithLuck(ItemID.TinOre, 1, 30, 49),
-                ItemDropRule.NotScalingWithLuck(ItemID.IronOre, 1, 30, 49),
-                ItemDropRule.NotScalingWithLuck(ItemID.LeadOre, 1, 30, 49),
-                ItemDropRule.NotScalingWithLuck(ItemID.SilverOre, 1, 30, 49),
-                ItemDropRule.NotScalingWithLuck(ItemID.TungstenOre, 1, 30, 49),
-                ItemDropRule.NotScalingWithLuck(ItemID.GoldOre, 1, 30, 49),
-                ItemDropRule.NotScalingWithLuck(ItemID.PlatinumOre, 1, 30, 49)
-            };
-            var hardmodeOresTier1 = new IItemDropRule[]
-            {
-                ItemDropRule.NotScalingWithLuck(ItemID.CobaltOre, 1, 30, 49),
-                ItemDropRule.NotScalingWithLuck(ItemID.PalladiumOre, 1, 30, 49),
-                ItemDropRule.NotScalingWithLuck(ItemID.MythrilOre, 1, 30, 49),
-                ItemDropRule.NotScalingWithLuck(ItemID.OrichalcumOre, 1, 30, 49),
-                ItemDropRule.NotScalingWithLuck(ItemID.AdamantiteOre, 1, 30, 49),
-                ItemDropRule.NotScalingWithLuck(ItemID.TitaniumOre, 1, 30, 49)
-            };
-            var barsTier1 = new IItemDropRule[]
-            {
-                ItemDropRule.NotScalingWithLuck(ItemID.IronBar, 1, 10, 20),
-                ItemDropRule.NotScalingWithLuck(ItemID.LeadBar, 1, 10, 20),
-                ItemDropRule.NotScalingWithLuck(ItemID.SilverBar, 1, 10, 20),
-                ItemDropRule.NotScalingWithLuck(ItemID.TungstenBar, 1, 10, 20),
-                ItemDropRule.NotScalingWithLuck(ItemID.GoldBar, 1, 10, 20),
-                ItemDropRule.NotScalingWithLuck(ItemID.PlatinumBar, 1, 10, 20)
-            };
-            var hardmodeBarsTier1 = new IItemDropRule[]
-            {
-                ItemDropRule.NotScalingWithLuck(ItemID.CobaltBar, 1, 8, 20),
-                ItemDropRule.NotScalingWithLuck(ItemID.PalladiumBar, 1, 8, 20),
-                ItemDropRule.NotScalingWithLuck(ItemID.MythrilBar, 1, 8, 20),
-                ItemDropRule.NotScalingWithLuck(ItemID.OrichalcumBar, 1, 8, 20),
-                ItemDropRule.NotScalingWithLuck(ItemID.AdamantiteBar, 1, 8, 20),
-                ItemDropRule.NotScalingWithLuck(ItemID.TitaniumBar, 1, 8, 20)
-            };
-            var potions = new IItemDropRule[]
-            {
-                ItemDropRule.NotScalingWithLuck(ModContent.ItemType<CrystalSkinPotion>(), 1, 2, 4),
-                ItemDropRule.NotScalingWithLuck(ItemID.SpelunkerPotion, 1, 2, 4),
-                ItemDropRule.NotScalingWithLuck(ItemID.HunterPotion, 1, 2, 4),
-                ItemDropRule.NotScalingWithLuck(ItemID.GravitationPotion, 1, 2, 4),
-                ItemDropRule.NotScalingWithLuck(ItemID.MiningPotion, 1, 2, 4),
-                ItemDropRule.NotScalingWithLuck(ItemID.HeartreachPotion, 1, 2, 4)
-            };
-            var extraPotions = new IItemDropRule[]
-            {
-                ItemDropRule.NotScalingWithLuck(ItemID.HealingPotion, 1, 5, 17),
-                ItemDropRule.NotScalingWithLuck(ItemID.ManaPotion, 1, 5, 17)
-            };
-            var extraBait = new IItemDropRule[]
-            {
-                ItemDropRule.NotScalingWithLuck(ItemID.MasterBait, 1, 2, 6),
-                ItemDropRule.NotScalingWithLuck(ItemID.JourneymanBait, 1, 2, 6)
-            };
-            IItemDropRule bc_pet1 = ItemDropRule.NotScalingWithLuck(ItemID.HellCake, 20);
-            IItemDropRule bc_pet2 = ItemDropRule.NotScalingWithLuck(ItemID.WetBomb, 20);
-
-            var oresList = new List<IItemDropRule>();
-            var barsList = new List<IItemDropRule>();
-            oresList.AddRange(oresTier1);
-            oresList.AddRange(hardmodeOresTier1);
-            barsList.AddRange(barsTier1);
-            barsList.AddRange(hardmodeBarsTier1);
-
-            IItemDropRule[] hell = new IItemDropRule[] {
-                bc_goldCoin,
-                ItemDropRule.SequentialRulesNotScalingWithLuck(1, new OneFromRulesRule(5, oresList.ToArray()), new OneFromRulesRule(3, 2, barsList.ToArray())),
-                new OneFromRulesRule(3, potions),
-                bc_waterbomb,
-                bc_locketBox,
-                bc_hangingPot,
-                new OneFromRulesRule(1, DepthsItems1),
-                bc_pet1,
-                bc_pet2,
-            };
-            
-            itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(hell));
-            itemLoot.Add(new OneFromRulesRule(2, extraPotions));
-            itemLoot.Add(new OneFromRulesRule(2, DepthsItems2));
-            itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, extraBait));
-        }
-    }
+			IItemDropRule[] bc_quicksilver = new IItemDropRule[2]
+			{
+			ItemDropRule.NotScalingWithLuck(ModContent.ItemType<AmalgamAmulet>(), 20),
+			ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<ShadowflameEmberedTreads>(), ModContent.ItemType<PurpleflameNecklace>(), ModContent.ItemType<ShadowFightingFishBowl>(), ModContent.ItemType<QuicksilverproofFishingHook>(), ModContent.ItemType<FluorescentLightBulb>())
+			};
+			IItemDropRule bc_pot = ItemDropRule.NotScalingWithLuck(ItemID.PotSuspended, 4, 2, 2);
+			IItemDropRule bc_quar = ItemDropRule.Common(ModContent.ItemType<QuartzLockBox>());
+			IItemDropRule bc_wet = ItemDropRule.NotScalingWithLuck(ItemID.WetBomb, 3, 7, 10);
+			IItemDropRule bc_plant = ItemDropRule.OneFromOptionsNotScalingWithLuck(2, ModContent.ItemType<PottedPurplestarBrambles>(), ModContent.ItemType<PottedShadowflameBulb>(), ModContent.ItemType<PottedNightterrorBush>(), ModContent.ItemType<PottedNightmarePalm>(), ModContent.ItemType<PottedMercuryTendrils>());
+			IItemDropRule bc_ornate = ItemDropRule.NotScalingWithLuck(ItemID.OrnateShadowKey, 20);
+			IItemDropRule bc_geocart = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<PhantomFirecart>(), 20);
+			IItemDropRule bc_pointer = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<GeodeLazerPointer>(), 20);
+			IItemDropRule bc_goldCoin = ItemDropRule.NotScalingWithLuck(ItemID.GoldCoin, 4, 5, 12);
+			IItemDropRule[] ores = new IItemDropRule[8]
+			{
+			ItemDropRule.NotScalingWithLuck(12, 1, 20, 35),
+			ItemDropRule.NotScalingWithLuck(699, 1, 20, 35),
+			ItemDropRule.NotScalingWithLuck(11, 1, 20, 35),
+			ItemDropRule.NotScalingWithLuck(700, 1, 20, 35),
+			ItemDropRule.NotScalingWithLuck(14, 1, 20, 35),
+			ItemDropRule.NotScalingWithLuck(701, 1, 20, 35),
+			ItemDropRule.NotScalingWithLuck(13, 1, 20, 35),
+			ItemDropRule.NotScalingWithLuck(702, 1, 20, 35)
+			};
+			IItemDropRule[] hardmodeOres = new IItemDropRule[6]
+			{
+			ItemDropRule.NotScalingWithLuck(364, 1, 20, 35),
+			ItemDropRule.NotScalingWithLuck(1104, 1, 20, 35),
+			ItemDropRule.NotScalingWithLuck(365, 1, 20, 35),
+			ItemDropRule.NotScalingWithLuck(1105, 1, 20, 35),
+			ItemDropRule.NotScalingWithLuck(366, 1, 20, 35),
+			ItemDropRule.NotScalingWithLuck(1106, 1, 20, 35)
+			};
+			IItemDropRule[] bars = new IItemDropRule[6]
+			{
+			ItemDropRule.NotScalingWithLuck(22, 1, 6, 16),
+			ItemDropRule.NotScalingWithLuck(704, 1, 6, 16),
+			ItemDropRule.NotScalingWithLuck(21, 1, 6, 16),
+			ItemDropRule.NotScalingWithLuck(705, 1, 6, 16),
+			ItemDropRule.NotScalingWithLuck(19, 1, 6, 16),
+			ItemDropRule.NotScalingWithLuck(706, 1, 6, 16)
+			};
+			IItemDropRule[] hardmodeBars = new IItemDropRule[6]
+			{
+			ItemDropRule.NotScalingWithLuck(381, 1, 5, 16),
+			ItemDropRule.NotScalingWithLuck(1184, 1, 5, 16),
+			ItemDropRule.NotScalingWithLuck(382, 1, 5, 16),
+			ItemDropRule.NotScalingWithLuck(1191, 1, 5, 16),
+			ItemDropRule.NotScalingWithLuck(391, 1, 5, 16),
+			ItemDropRule.NotScalingWithLuck(1198, 1, 5, 16)
+			};
+			IItemDropRule[] potions = new IItemDropRule[6]
+			{
+			ItemDropRule.NotScalingWithLuck(288, 1, 2, 4),
+			ItemDropRule.NotScalingWithLuck(296, 1, 2, 4),
+			ItemDropRule.NotScalingWithLuck(304, 1, 2, 4),
+			ItemDropRule.NotScalingWithLuck(305, 1, 2, 4),
+			ItemDropRule.NotScalingWithLuck(2322, 1, 2, 4),
+			ItemDropRule.NotScalingWithLuck(2323, 1, 2, 4)
+			};
+			IItemDropRule[] extraPotions = new IItemDropRule[2]
+			{
+			ItemDropRule.NotScalingWithLuck(188, 1, 5, 17),
+			ItemDropRule.NotScalingWithLuck(189, 1, 5, 17)
+			};
+			IItemDropRule[] extraBait = new IItemDropRule[2]
+			{
+			ItemDropRule.NotScalingWithLuck(2676, 3, 2, 6),
+			ItemDropRule.NotScalingWithLuck(2675, 1, 2, 6)
+			};
+			IItemDropRule hardmodeBiomeCrateOres = ItemDropRule.SequentialRulesNotScalingWithLuck(7, new OneFromRulesRule(2, hardmodeOres), new OneFromRulesRule(1, ores));
+			IItemDropRule hardmodeBiomeCrateBars = ItemDropRule.SequentialRulesNotScalingWithLuck(4, new OneFromRulesRule(3, 2, hardmodeBars), new OneFromRulesRule(1, bars));
+			IItemDropRule[] arquerite = new IItemDropRule[12]
+			{
+				ItemDropRule.SequentialRulesNotScalingWithLuck(1, bc_quicksilver),
+				bc_pot,
+				bc_quar,
+				bc_wet,
+				bc_plant,
+				bc_geocart,
+				bc_goldCoin,
+				hardmodeBiomeCrateOres,
+				hardmodeBiomeCrateBars,
+				new OneFromRulesRule(3, potions),
+				bc_ornate,
+				bc_pointer
+			};
+			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(arquerite));
+			itemLoot.Add(new OneFromRulesRule(2, extraPotions));
+			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, extraBait));
+		}
+	}
 }

@@ -100,7 +100,7 @@ namespace TheDepths.Projectiles
 					dust212.scale += Main.rand.NextFloat();
 					Main.dust[num38].position = new Vector2(Projectile.Center.X, Projectile.Center.Y + (float)Projectile.height * 0.5f * (float)(-num26));
 					Main.dust[num38].customData = num27;
-					if (num26 == -1 && Main.rand.Next(4) != 0)
+					if (num26 == -1 && !Main.rand.NextBool(4))
 					{
 						Main.dust[num38].velocity.Y -= 0.2f;
 					}
@@ -123,7 +123,7 @@ namespace TheDepths.Projectiles
 					dust212.scale += Main.rand.NextFloat();
 					Main.dust[num41].position = new Vector2(Projectile.Center.X, Projectile.Center.Y + (float)Projectile.height * 0.5f * (float)(-num26));
 					Main.dust[num41].customData = num27;
-					if (num26 == -1 && Main.rand.Next(4) != 0)
+					if (num26 == -1 && !Main.rand.NextBool(4))
 					{
 						Main.dust[num41].velocity.Y -= 0.2f;
 					}
@@ -183,7 +183,7 @@ namespace TheDepths.Projectiles
 					dust16 = Main.dust[num48];
 					dust212 = dust16;
 					dust212.scale += Main.rand.NextFloat();
-					if (num26 == -1 && Main.rand.Next(4) != 0)
+					if (num26 == -1 && !Main.rand.NextBool(4))
 					{
 						Main.dust[num48].velocity.Y -= 0.2f;
 					}

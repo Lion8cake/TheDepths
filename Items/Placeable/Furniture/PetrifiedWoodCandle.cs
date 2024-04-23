@@ -20,7 +20,7 @@ namespace TheDepths.Items.Placeable.Furniture
             Item.autoReuse = true;
             Item.useAnimation = 15;
             Item.useTime = 10;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.consumable = true;
             Item.value = 0;
             Item.createTile = ModContent.TileType<Tiles.Furniture.PetrifiedWoodCandle>();
@@ -28,7 +28,7 @@ namespace TheDepths.Items.Placeable.Furniture
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<PetrifiedWood>(), 4).AddIngredient(8, 1).AddTile(TileID.WorkBenches).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<PetrifiedWood>(), 4).AddIngredient(ItemID.Torch, 1).AddTile(TileID.WorkBenches).Register();
         }
     }
 }

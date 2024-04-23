@@ -66,19 +66,6 @@ namespace TheDepths
 			}
 		}
 
-		public override void PostAddRecipes()
-        {
-            for (int i = 0; i < Recipe.numRecipes; i++)
-            {
-                Recipe recipe = Main.recipe[i];
-
-                if (recipe.HasCondition(Condition.NearLava))
-                {
-                    recipe.AddCondition(Language.GetOrRegister(""), () => Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer));
-                }
-            }
-        }
-
 		public static int? MossConversion(int thisType, int otherType)
 		{
             if (Main.tileMoss[thisType] || TileID.Sets.tileMossBrick[thisType])

@@ -84,7 +84,7 @@ namespace TheDepths.Tiles
 			int reachableEndY = (int)SmartCursorUsageInfo.GetField("reachableEndY", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).GetValue(providedInfo);
 			Vector2 mouse = (Vector2)SmartCursorUsageInfo.GetField("mouse", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance).GetValue(providedInfo);
 			List<Tuple<int, int>> _targets = (List<Tuple<int, int>>)typeof(SmartCursorHelper).GetField("_targets", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public).GetValue(null);
-			if (item.createTile == 380 && item.createTile != Type)
+			if (item.createTile == TileID.PlanterBox && item.createTile != Type)
 			{
 				orig.Invoke(providedInfo, ref focusedX, ref focusedY);
 			}

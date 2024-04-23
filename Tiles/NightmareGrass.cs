@@ -60,15 +60,13 @@ namespace TheDepths.Tiles
 				int num = ModContent.TileType<ShaleBlock>();
 				int num18 = ModContent.TileType<NightmareGrass_Foliage>();
 				int maxValue = 2;
-				bool flag = false;
-				if (num18 != -1 && !Main.tile[i, minJ].HasTile && WorldGen.genRand.Next(maxValue) == 0)
+				if (num18 != -1 && !Main.tile[i, minJ].HasTile && WorldGen.genRand.NextBool(maxValue))
 				{
-					flag = true;
 					if (WorldGen.PlaceTile(i, minJ, num18, mute: true))
 					{
 						Main.tile[i, minJ].CopyPaintAndCoating(Main.tile[i, j]);
 					}
-					if (Main.netMode == 2 && Main.tile[i, minJ].HasTile)
+					if (Main.netMode == NetmodeID.Server && Main.tile[i, minJ].HasTile)
 					{
 						NetMessage.SendTileSquare(-1, i, minJ);
 					}
@@ -105,7 +103,7 @@ namespace TheDepths.Tiles
 							}
 						}
 					}
-					if (Main.netMode == 2 && flag3)
+					if (Main.netMode == NetmodeID.Server && flag3)
 					{
 						NetMessage.SendTileSquare(-1, i, j, 3);
 					}
@@ -115,14 +113,14 @@ namespace TheDepths.Tiles
 			{
 				int num2 = Main.tile[i, j].TileType;
 
-				if (!Main.tile[i, minJ].HasTile && WorldGen.genRand.Next(10) == 0)
+				if (!Main.tile[i, minJ].HasTile && WorldGen.genRand.NextBool(10))
 				{
 					WorldGen.PlaceTile(i, minJ, ModContent.TileType<NightmareGrass_Foliage>(), mute: true);
 					if (Main.tile[i, minJ].HasTile)
 					{
 						Main.tile[i, minJ].CopyPaintAndCoating(Main.tile[i, j]);
 					}
-					if (Main.netMode == 2 && Main.tile[i, minJ].HasTile)
+					if (Main.netMode == NetmodeID.Server && Main.tile[i, minJ].HasTile)
 					{
 						NetMessage.SendTileSquare(-1, i, minJ);
 					}
@@ -144,22 +142,21 @@ namespace TheDepths.Tiles
 						}
 					}
 				}
-				if (Main.netMode == 2 && flag6)
+				if (Main.netMode == NetmodeID.Server && flag6)
 				{
 					NetMessage.SendTileSquare(-1, i, j, 3);
 				}
 			}
 
-			Tile tile = Main.tile[i, j];
 			if (Worldgen.TheDepthsWorldGen.GrowMoreVines(i, j))
 			{
 				int maxValue6 = 70;
-				tile = Main.tile[i, j];
+				Tile tile = Main.tile[i, j];
 				if (tile.TileType == ModContent.TileType<NightmareVines>())
 				{
 					maxValue6 = 7;
 				}
-				if (WorldGen.genRand.Next(maxValue6) == 0)
+				if (WorldGen.genRand.NextBool(maxValue6))
 				{
 					tile = Main.tile[i, j + 1];
 					if (!tile.HasTile)
@@ -201,7 +198,7 @@ namespace TheDepths.Tiles
 								tile = Main.tile[i, num42];
 								tile.CopyPaintAndCoating(Main.tile[i, j]);
 								WorldGen.SquareTileFrame(i, num42);
-								if (Main.netMode == 2)
+								if (Main.netMode == NetmodeID.Server)
 								{
 									NetMessage.SendTileSquare(-1, i, num42);
 								}

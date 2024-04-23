@@ -68,7 +68,7 @@ namespace TheDepths.Mounts
 			MountData.swimFrameCount = MountData.inAirFrameCount;
 			MountData.swimFrameDelay = MountData.inAirFrameDelay;
 			MountData.swimFrameStart = MountData.inAirFrameStart;
-			if (Main.netMode != 2)
+			if (Main.netMode != NetmodeID.Server)
 			{
 				MountData.backTextureGlow = ModContent.Request<Texture2D>("TheDepths/Mounts/NightmareHorse_Glow");
 				MountData.backTextureExtra = Asset<Texture2D>.Empty;

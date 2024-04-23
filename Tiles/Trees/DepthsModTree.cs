@@ -48,7 +48,7 @@ namespace TheDepths.Tiles.Trees
 		{
 			if (tileCache.TileFrameX >= 22 && tileCache.TileFrameY >= 198)
 			{
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					if (genRand.NextBool(2))
 					{
@@ -397,11 +397,11 @@ namespace TheDepths.Tiles.Trees
 			{
 				flag5 = true;
 			}
-			if (genRand.Next(3) == 0)
+			if (genRand.NextBool(3))
 			{
 				flag4 = false;
 			}
-			if (genRand.Next(3) == 0)
+			if (genRand.NextBool(3))
 			{
 				flag5 = false;
 			}
@@ -506,7 +506,7 @@ namespace TheDepths.Tiles.Trees
 					Main.tile[checkedX, i - 1].TileFrameY = 176;
 				}
 			}
-			if (genRand.Next(13) != 0)
+			if (!genRand.NextBool(13))
 			{
 				num4 = genRand.Next(3);
 				if (num4 == 0)
@@ -545,7 +545,7 @@ namespace TheDepths.Tiles.Trees
 				}
 			}
 			RangeFrame(checkedX - 2, i - num2 - 1, checkedX + 2, i + 1);
-			if (Main.netMode == 2)
+			if (Main.netMode == NetmodeID.Server)
 			{
 				NetMessage.SendTileSquare(-1, checkedX - 1, i - num2, 3, num2);
 			}

@@ -11,7 +11,6 @@ namespace TheDepths.ModSupport
 		public static FargosBoBWConfig Instance => ModContent.GetInstance<FargosBoBWConfig>();
 
 		[Header("DrunkSeedRequiresFargosbestofbothworldsmod")]
-		[Label("[i:174][i:TheDepths/ArqueriteOre] Both Cores")]
 		[DefaultValue(true)]
 		public bool BothCores;
 	}

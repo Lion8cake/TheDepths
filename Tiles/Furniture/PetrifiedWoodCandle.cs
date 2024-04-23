@@ -70,7 +70,9 @@ namespace TheDepths.Tiles.Furniture
 
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
-			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)((ulong)i));
+			long seedX = (long)j << 32;
+			long seedY = (long)(ulong)i;
+			ulong randSeed = Main.TileFrameSeed ^ (ulong)(seedX | seedY);
 			Color color = new Color(60, 60, 60, 0);
 			int frameX = Main.tile[i, j].TileFrameX;
 			int frameY = Main.tile[i, j].TileFrameY;

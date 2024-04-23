@@ -1620,7 +1620,7 @@ Mods: {
 
 			GeoCampfire: {
 				DisplayName: Geo Campfire
-				Tooltip: ""
+				Tooltip: "{$ItemTooltip.Campfire}"
 			}
 
 			NightwoodTrappedChest: {
@@ -1897,11 +1897,6 @@ Mods: {
 					Double tap {$Key.DOWN}
 					'''
 			}
-
-			WorldGenTestItem: {
-				DisplayName: World Gen Test Item
-				Tooltip: ""
-			}
 		}
 
 		NPCs: {
@@ -1945,13 +1940,6 @@ Mods: {
 			GeodeCrystalSummon.DisplayName: Geode Crystal
 			GlitteringGoldenLine.DisplayName: Glittering Golden Line
 			LumpOfCoal.DisplayName: Lump of Coal
-			MiracfulCrimson1.DisplayName: Ruby Note
-			MiracfulCrimson2.DisplayName: Ruby Note
-			MiracfulCrimson3.DisplayName: Ruby Note
-			MiracfulSapphire.DisplayName: Sapphire Flameball
-			MiracfulSnake.DisplayName: Amber Snake
-			MiracfulSparkle.DisplayName: Diamond Spark
-			MiracfulWhip.DisplayName: Amethyst Whip
 			OnyxBolt.DisplayName: Onyx Bolt
 			OnyxHook.DisplayName: Onyx Hook
 			QuartzChunk.DisplayName: Quartz
@@ -1992,7 +1980,6 @@ Mods: {
 			POWEffect.DisplayName: POW Effect
 			MercuryExplosion1.DisplayName: Mercury Explosion
 			MercuryExplosion.DisplayName: Mercury Explosion
-			MercuryWarningSign.DisplayName: Mercury Warning Sign
 			ShadeBladeLeft.DisplayName: Shade Blade
 			ShadeBladeRight.DisplayName: Shade Blade
 			ShadeBladeCalculator.DisplayName: Shade Blade Calculator
@@ -2103,17 +2090,20 @@ Mods: {
 			2: Lion8cake
 			3: Snickerbobble
 			4: HBDeus
-			5: Ghasttear1
-			6: Syntrin
-			7: Darkrious
-			8: Larfleeze
-			9: Moddingus
-			10: Hariq “Hariq53”
-			11: Kurtis
-			12: Andrey2345
-			13: Yee苍棱
-			14: Seceip
-			15: BasicallyIAmFox
+			5: GabeHasWon
+			6: Ghasttear1
+			7: Syntrin
+			8: Darkrious
+			9: Larfleeze
+			10: Moddingus
+			11: Hariq “Hariq53”
+			12: Phase II “alpha0010”
+			13: Kurtis
+			14: Andrey2345
+			15: Yee苍棱
+			16: Seceip
+			17: Roton
+			18: BasicallyIAmFox
 		}
 
 		MusicDisplay: {

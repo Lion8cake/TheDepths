@@ -1901,11 +1901,6 @@ Mods: {
 					Двойное нажатие {$Key.DOWN}
 					'''
 			}
-
-			WorldGenTestItem: {
-				// DisplayName: World Gen Test Item
-				// Tooltip: ""
-			}
 		}
 
 		NPCs: {
@@ -1949,13 +1944,6 @@ Mods: {
 			GeodeCrystalSummon.DisplayName: Жеодовый кристалл
 			GlitteringGoldenLine.DisplayName: Сверкающая золотая линяя
 			LumpOfCoal.DisplayName: Кусок угля
-			MiracfulCrimson1.DisplayName: Рубиновая нота
-			MiracfulCrimson2.DisplayName: Рубиновая нота
-			MiracfulCrimson3.DisplayName: Рубиновая нота
-			MiracfulSapphire.DisplayName: Сапфировый файерболл
-			MiracfulSnake.DisplayName: Янтарная змея
-			MiracfulSparkle.DisplayName: Алмазная искра
-			MiracfulWhip.DisplayName: Аметистовый хлыст
 			OnyxBolt.DisplayName: Ониксовый заряд
 			OnyxHook.DisplayName: Ониксовый крюк
 			QuartzChunk.DisplayName: Кварц
@@ -1996,7 +1984,6 @@ Mods: {
 			POWEffect.DisplayName: POW Эффект
 			MercuryExplosion1.DisplayName: Ртутный взрыв
 			MercuryExplosion.DisplayName: Ртутный взрыв
-			MercuryWarningSign.DisplayName: Ртутный предупреждающий знак
 			ShadeBladeLeft.DisplayName: Теневое лезвие
 			ShadeBladeRight.DisplayName: Теневое лезвие
 			ShadeBladeCalculator.DisplayName: Калькулятор теневого лезвия
@@ -2097,7 +2084,7 @@ Mods: {
 			}
 		}
 
-		BossChecklist.SpawnInfo.Chasme: Появляется при использовании [i:TheDepths/RubyRelic] на [i:TheDepths/Gemforge] в ядре твоего мира. [c/FF0000:Starts Hardmode!]
+		BossChecklist.SpawnInfo.Chasme: Появляется при использовании [i:TheDepths/RubyRelic] на [i:TheDepths/Gemforge] в ядре твоего мира. [c/FF0000:Начинает Хардмод!]
 		InDepths: Mods.TheDepths.InDepths
 		OutDepths: Mods.TheDepths.OutDepths
 		GameUI.LayerDepths: Глубины
@@ -2107,17 +2094,20 @@ Mods: {
 			2: Lion8cake
 			3: Snickerbobble
 			4: HBDeus
-			5: Ghasttear1
-			6: Syntrin
-			7: Darkrious
-			8: Larfleeze
-			9: Moddingus
-			10: Hariq “Hariq53”
-			11: Kurtis
-			12: Andrey2345
-			13: Yee苍棱
-			14: Seceip
-			15: BasicallyIAmFox
+			5: GabeHasWon
+			6: Ghasttear1
+			7: Syntrin
+			8: Darkrious
+			9: Larfleeze
+			10: Moddingus
+			11: Hariq “Hariq53”
+			12: Phase II “alpha0010”
+			13: Kurtis
+			14: Andrey2345
+			15: Yee苍棱
+			16: Seceip
+			17: Roton
+			18: BasicallyIAmFox
 		}
 
 		MusicDisplay: {
@@ -2125,7 +2115,7 @@ Mods: {
 			Author: by HBDues
 			Depths.DisplayName: Невменяемая глубина
 			DepthsOtherworldly.DisplayName: Глубинная невменяемость
-			Chasme.DisplayName: Чазми у камня
+			Chasme.DisplayName: Пропасть к скалам
 		}
 
 		Keybinds.GroundSlam.DisplayName: Удар по земле

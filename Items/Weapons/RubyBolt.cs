@@ -25,12 +25,12 @@ namespace TheDepths.Items.Weapons
 			Item.useTime = 27;
 			Item.useAnimation = 27;
 			Item.autoReuse = true;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.staff[Item.type] = true;
 			Item.noMelee = true;
 			Item.knockBack = 3f;
 			Item.value = Item.sellPrice(0, 1, 0);
-			Item.rare = 4;
+			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item43;
 			Item.autoReuse = true;
 			Item.shoot = ModContent.ProjectileType<Projectiles.RubyBolt>();

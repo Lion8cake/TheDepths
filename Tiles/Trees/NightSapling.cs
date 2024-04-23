@@ -64,14 +64,14 @@ namespace TheDepths.Tiles.Trees
 				{
 					if (j > Main.rockLayer)
 					{
-						if (WorldGen.genRand.Next(5) == 0)
+						if (WorldGen.genRand.NextBool(5))
 						{
 							AttemptToGrowNightmareFromSapling(i, j);
 						}
 					}
 					else
 					{
-						if (WorldGen.genRand.Next(20) == 0)
+						if (WorldGen.genRand.NextBool(20))
 						{
 							AttemptToGrowNightmareFromSapling(i, j);
 						}
@@ -90,7 +90,7 @@ namespace TheDepths.Tiles.Trees
 
 		public static bool AttemptToGrowNightmareFromSapling(int x, int y)
 		{
-			if (Main.netMode == 1)
+			if (Main.netMode == NetmodeID.MultiplayerClient)
 			{
 				return false;
 			}
@@ -135,11 +135,11 @@ namespace TheDepths.Tiles.Trees
 			}
 			if (treeHeight > 0)
 			{
-				if (Main.netMode == 2)
+				if (Main.netMode == NetmodeID.Server)
 				{
-					NetMessage.SendData(112, -1, -1, null, 1, x, y, treeHeight, ModContent.GoreType<PetrifiedTreeLeaf>());
+					NetMessage.SendData(MessageID.SpecialFX, -1, -1, null, 1, x, y, treeHeight, ModContent.GoreType<PetrifiedTreeLeaf>());
 				}
-				if (Main.netMode == 0)
+				if (Main.netMode == NetmodeID.SinglePlayer)
 				{
 					WorldGen.TreeGrowFX(x, y, treeHeight, ModContent.GoreType<PetrifiedTreeLeaf>());
 				}

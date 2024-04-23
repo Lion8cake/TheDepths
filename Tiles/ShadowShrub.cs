@@ -53,10 +53,10 @@ namespace TheDepths.Tiles
 				ModContent.TileType<ShadowShrubPlanterBox>()
 			};
 
+			TileObjectData.addTile(Type);
+
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(172, 49, 238), name);
-
-			TileObjectData.addTile(Type);
 			DustType = ModContent.DustType<ShadowShrubDust>();
 			HitSound = SoundID.Grass;
 		}

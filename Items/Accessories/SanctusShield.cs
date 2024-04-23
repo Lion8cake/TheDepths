@@ -27,7 +27,7 @@ namespace TheDepths.Items.Accessories
 			Item.value = 250000;
 			Item.accessory = true;
 			Item.height = 20;
-			Item.defense = 2;
+			Item.defense = 4;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
@@ -52,7 +52,7 @@ namespace TheDepths.Items.Accessories
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ModContent.ItemType<CrystalShield>(), 1);
 			recipe.AddIngredient(ItemID.AnkhCharm, 1);
-			recipe.AddTile(114);
+			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}
 	}

@@ -45,7 +45,7 @@ namespace TheDepths.Items.Accessories
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.SpectreBoots, 1);
 			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.ShadowflameEmberedTreads>(), 1);
-			recipe.AddTile(114);
+			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}
 	}

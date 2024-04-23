@@ -7,7 +7,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.Audio;
-using Terraria;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using static Humanizer.In;
@@ -31,7 +30,7 @@ namespace TheDepths.Projectiles
 			int num861 = 35;
 			for (int num862 = 0; num862 < 30; num862++)
 			{
-				Dust dust55 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 31, 0f, 0f, 100, transparent4, 1.5f);
+				Dust dust55 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, transparent4, 1.5f);
 				Dust dust2 = dust55;
 				dust2.velocity *= 1.4f;
 			}
@@ -82,7 +81,7 @@ namespace TheDepths.Projectiles
 			int num861 = 35;
 			for (int num862 = 0; num862 < 30; num862++)
 			{
-				Dust dust55 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 31, 0f, 0f, 100, transparent4, 1.5f);
+				Dust dust55 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, transparent4, 1.5f);
 				Dust dust2 = dust55;
 				dust2.velocity *= 1.4f;
 			}
@@ -133,7 +132,7 @@ namespace TheDepths.Projectiles
 			int num861 = 35;
 			for (int num862 = 0; num862 < 30; num862++)
 			{
-				Dust dust55 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 31, 0f, 0f, 100, transparent4, 1.5f);
+				Dust dust55 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, transparent4, 1.5f);
 				Dust dust2 = dust55;
 				dust2.velocity *= 1.4f;
 			}
@@ -184,7 +183,7 @@ namespace TheDepths.Projectiles
 			int num861 = 35;
 			for (int num862 = 0; num862 < 30; num862++)
 			{
-				Dust dust55 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 31, 0f, 0f, 100, transparent4, 1.5f);
+				Dust dust55 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, transparent4, 1.5f);
 				Dust dust2 = dust55;
 				dust2.velocity *= 1.4f;
 			}
@@ -235,7 +234,7 @@ namespace TheDepths.Projectiles
 			int num861 = 35;
 			for (int num862 = 0; num862 < 30; num862++)
 			{
-				Dust dust55 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 31, 0f, 0f, 100, transparent4, 1.5f);
+				Dust dust55 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0f, 0f, 100, transparent4, 1.5f);
 				Dust dust2 = dust55;
 				dust2.velocity *= 1.4f;
 			}
@@ -281,7 +280,7 @@ namespace TheDepths.Projectiles
 				bool flag34 = Main.myPlayer == projectile.owner;
 				if (flag23)
 				{
-					flag34 = Main.netMode != 1;
+					flag34 = Main.netMode != NetmodeID.MultiplayerClient;
 				}
 				if (flag34 && (flag23))
 				{

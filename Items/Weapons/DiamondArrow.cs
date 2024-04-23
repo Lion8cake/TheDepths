@@ -29,7 +29,7 @@ namespace TheDepths.Items.Weapons
 
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe(33);
-			recipe.AddIngredient(40, 33);
+			recipe.AddIngredient(ItemID.WoodenArrow, 33);
 			recipe.AddIngredient(ModContent.ItemType<DiamondDust>(), 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();

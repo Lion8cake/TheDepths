@@ -15,7 +15,7 @@ namespace TheDepths.Items.Weapons
 	
 		public override void SetDefaults()
 		{
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.shootSpeed = 5f;
 			Item.shoot = ModContent.ProjectileType<Projectiles.QuicksilverBomb>();
 			Item.width = 20;

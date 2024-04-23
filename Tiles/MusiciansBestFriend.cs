@@ -12,11 +12,11 @@ namespace TheDepths.Tiles
         public override void SetStaticDefaults()
         {
             Main.tileLavaDeath[Type] = true;
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
+			Main.tileFrameImportant[Type] = true;
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
             TileObjectData.newTile.Height = 3;
             TileObjectData.newTile.Width = 2;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16 };
-            Main.tileFrameImportant[Type] = true;
             TileObjectData.addTile(Type);
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(99, 50, 30), name);

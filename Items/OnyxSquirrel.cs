@@ -13,7 +13,7 @@ namespace TheDepths.Items
 
         public override void SetDefaults()
         {
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.autoReuse = true;
 			Item.useTurn = true;
 			Item.useAnimation = 15;

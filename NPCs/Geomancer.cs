@@ -24,7 +24,7 @@ namespace TheDepths.NPCs
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 20;
 
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers
 			{
 				Velocity = 1f,
 				Direction = -1

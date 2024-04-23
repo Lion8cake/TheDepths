@@ -37,8 +37,8 @@ namespace TheDepths.Projectiles.SilverSpherePotion
 		{
 			for (int i = 0; i < 15; i++)
 			{
-				int num = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width * 2, Projectile.height * 2, 11, 0f, 0f, 100, default(Color), 1.2f);
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width * 2, Projectile.height * 2, 11, 0f, 0f, 100, default(Color), 1.2f);
+				int num = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width * 2, Projectile.height * 2, DustID.Silver, 0f, 0f, 100, default(Color), 1.2f);
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width * 2, Projectile.height * 2, DustID.Silver, 0f, 0f, 100, default(Color), 1.2f);
 				Main.dust[num2].noGravity = true;
 			}
 			Projectile.ai[1] = 1f;
@@ -66,8 +66,8 @@ namespace TheDepths.Projectiles.SilverSpherePotion
 				{
 				for (int i = 0; i < 15; i++)
 					{
-						int num = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height * 2, 11, 0f, 0f, 100, default(Color), 1.2f);
-						int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height * 2, 11, 0f, 0f, 100, default(Color), 1.2f);
+						int num = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height * 2, DustID.Silver, 0f, 0f, 100, default(Color), 1.2f);
+						int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height * 2, DustID.Silver, 0f, 0f, 100, default(Color), 1.2f);
 						Main.dust[num2].noGravity = true;
 						Dust obj = Main.dust[num2];
 						obj.velocity *= 0.75f;

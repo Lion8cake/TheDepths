@@ -1,81 +1,41 @@
 ﻿=========================================
 The Depths (Alternate Hell)
 =========================================
-Depths version 0.8.2
-Please report any bugs to our discord: https://discord.gg/JwEKrVhjA6
-Worlds can be converted from 1.4.3 to 1.4.4 just by opening them
+Depths version 1.0 (full release)
+Welcome to THE DEPTHS 
+The Depths is a mod that adds an alternate biome to the underworld called the depths, this works very similar to how the crimson and corruption works in the base game. 
+This mod fully replaces all content found within the underworld from the lava cavern layer to the wall of flesh; everything has an alternative!
+The depths' biome is a cold, dark deeper cave filled with shale, mercury and lots of gems. it contains a whole new liquid and a new boss and way of unlocking hardmode
 
-The Depths is an alternate version of the underworld similar to how crimson corruption works. It generates instead of the underworld to give some of your worlds that bit of spice when starting a new playthrough.
-This mod is made by the same devs behind the confection mod, a mod similar to this one but for the hallow. This biome and most of its sprites and ideas come from Snickerbobble and her forum post talking about her take on an alternate hell.
+The Depths was originally a concept made back in 2015 by Snickerbobble that contained sprites and very well made concepts for a lot of the depths' content. In august of 2021 this project would be picked up by Lion8cake and be worked on ever since to bring a fully working hell alternate to terraria/tModLoader.
+The team behind the Depths has also made a similar yet incomplete mod called the Confection REBAKED, it does a very similar thing to the Depths but replaces the Hallow instead of the underworld.
 
-This mod has Achievement Mod Support, download and use the Achievement Mod to see achievements for this mod
-This mod has Fargo's Best of Both World Support, When enabled you can now have both the depths and underworld coexist in normal worlds
-This mod has Music Display Support. When hearing any new music from the depths they will display the music name and creator
-This mod has Boss Checklist Support, When enabled chasme will have her own checklist page
+This mod contains some mod support features, the supported mods are below
+Achievement Mod - download and use the Achievement Mod to see four new achievements to collect
+Fargo's Best of Both Worlds - download and use Fargo's BoBW, this allows for the creation of dual core worlds without the use of a drunk seed
+Music Display - download and use the Music Display mod to see the track names and authors for each of the depths' music
+Boss Checklist - download and use Boss Checklist to see the alternate wall of flesh and where and how to fight her
 
-=========================================
-Change Log
-=========================================
-0.8.2.1
-===============================
-Added Chinese Translation by Yee苍棱
-Added Brazilian Portuguese by Seceip
-Fixed rotation of the Aqua Arrow
-Fixed rotation of diamond arrows and them not having gravity
-Fixed gemforges allowing for multiple chasme's to be spawned during the cutscene
-Fixed gemforges not giving all nearby players the relic's curse debuff
-Added Updated icon by Yee苍棱
-0.8.2
-===============================
-Reworked Chasme Completely, she is now an actually enjoyable and fully functioning fight
-- Added Death Animation to chasme
-- Fixed damage scaling
-- Added some animations
-- Added Legendary mode changes
-Added Russian Translation by Andrey2345
-Fixed typos in the english translation with some descriptions and armour tooltips
-Changed the Angler quest text for the Relicarp
-Fixed Nightwood being named Night Wood
-Fixed HBDeus being named as HBDues in the Music Titles support
-Fixed several texts still using the default Mods.TheDepths... name or being too basic
-Increased visibility in the depth's fog when chasme or a bloodmoon is active
-Fixed Diamond shard projectiles from diamond arrows dealing the remaineder damage indead of the actual damage divided by 2
-Buffed the Silverado's damage
-Gave the Silverado a ToolTip
-Fixed Trees having incorrect positioning in captures
-Added Projectiles related to chasme
-Removed now unused projectiles related to chasme (such as Chas voids)
-Resprited Chasme boss icon (this came 2 update prior unknowningly)
-Removed Unused chasme death shader
-Fixed Campfires using the wrong spritebatch for drawing their glowmasks
-Replaced the fishing bobber detour with proper offsetment code added by tml
-===============================
-0.8.1.1
-===============================
-Fixed NPCs basing what liquid damage they took based on what side of the world their target was on
-Fixed the Silhouette minion breaking servers and not letting them start
-===============================
-0.8.1
-===============================
-Fixed bugnets being unable to catch no critters exceot for depths/quicksilver ones
-Fixed accessories that increased pickup range not working exceot for the lodestone
-Fixed typo in the shalestone Shackles tooltip
-Fixed Nightwood and petrified trees not being replanted by the Axe of Regrowth
-Changed how acorns place nightwood and petrified saplings
-Added ability for the axe of regrowth to chop down Petrified Trees
-Added AxesAbleToBreakStone ID Set for modders
-Fixed Tile framing issues with nightmare grass
-Moved some unused assets to the 'old assets' folder
-===============================
-0.8.0
-===============================
-... view the changelogs for the changes in the 0.8.0 update
+Various notes:
+Drunk seed allows for you to use both the Depths and Underworld if entirely replacing a biome is not your thing
+Full Don't dig up and other seed support for any playthrough you might enjoy
+This mod contains various systems that allow for dynamic support with Modded Items, NPCs, Bosses and more allowing for most mods to be automatically compatible
+Custom world icons will display which worlds are Depths and underworlds
+Full controller support - if your mouse is broken, fear not you can play on a console controller
+Full Multiplayer support - feel free to dig deep alongside your friends
+
+Links:
+Original Concept Forum: https://forums.terraria.org/index.php?threads/sprites-the-depths-an-alternate-underworld.19859/
+Alternate Biomes Discord: https://discord.gg/JwEKrVhjA6
+The Depths' Wiki: https://terrariamods.wiki.gg/wiki/The_Depths
+
 ==========================================
 -=Credits - Translators=-
 ==========================================
 Russian Translation: Andrey2345
 Chinese Translation: Yee苍棱
 Brazilian Portuguese: Seceip
+Polish Translation: Roton
 
 ==========================================
 -=Credits=-
@@ -83,11 +43,13 @@ Brazilian Portuguese: Seceip
 Lion8cake -  The Main Dev behind the mod
 Snickerbobble - The main concept creator
 HBDeus - Depths and Chasme Boss theme, (these are very awesome check him out on yt)
+GabeHasWon - Depths worldgen
 Ghast tear - 1.3 & 1.4.4 World Creation UI
 Syntrin - For making the default depths underworld background
 Darkrious & Larfleeze - For two Depths paintings and the Nightmare Tree and Armor Retexture
 Moddingus - Old Chasme AI
 Hariq - Old Chasme's base, movement and conjoinment
+alpha0010 - General fixes to various items and tiles
 Kurtis - Rocket boot dust IL edit
 bingchilling18 - old No underworld evaporation
 BasicallyIAmFox - Silhouette summon rendertarget system and code

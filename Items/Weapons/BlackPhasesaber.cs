@@ -15,7 +15,7 @@ namespace TheDepths.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 3f;
 			Item.width = 40;
 			Item.height = 40;
@@ -27,7 +27,7 @@ namespace TheDepths.Items.Weapons
 			Item.scale = 1f;
 			Item.autoReuse = true;
 			Item.useTurn = true;
-			Item.rare = 4;
+			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(0, 1);
 		}
 		

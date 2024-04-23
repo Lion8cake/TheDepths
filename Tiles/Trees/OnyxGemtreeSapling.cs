@@ -58,7 +58,7 @@ namespace TheDepths.Tiles.Trees
 				{
 					for (int k = 0; k < (Main.maxTilesX * Main.maxTilesY); k++)
 					{
-						if (WorldGen.genRand.Next(5) == 0)
+						if (WorldGen.genRand.NextBool(5))
 						{
 							AttemptToGrowOnyxFromSapling(i, j, underground: true);
 						}
@@ -69,7 +69,7 @@ namespace TheDepths.Tiles.Trees
 
 		public static bool AttemptToGrowOnyxFromSapling(int x, int y, bool underground)
 		{
-			if (Main.netMode == 1)
+			if (Main.netMode == NetmodeID.MultiplayerClient)
 			{
 				return false;
 			}
@@ -118,11 +118,11 @@ namespace TheDepths.Tiles.Trees
 			}
 			if (treeHeight > 0)
 			{
-				if (Main.netMode == 2)
+				if (Main.netMode == NetmodeID.Server)
 				{
-					NetMessage.SendData(112, -1, -1, null, 1, x, y, treeHeight, ModContent.GoreType<OnyxGemtreeLeaf>());
+					NetMessage.SendData(MessageID.SpecialFX, -1, -1, null, 1, x, y, treeHeight, ModContent.GoreType<OnyxGemtreeLeaf>());
 				}
-				if (Main.netMode == 0)
+				if (Main.netMode == NetmodeID.SinglePlayer)
 				{
 					WorldGen.TreeGrowFX(x, y, treeHeight, ModContent.GoreType<OnyxGemtreeLeaf>());
 				}

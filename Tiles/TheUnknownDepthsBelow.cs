@@ -17,9 +17,9 @@ namespace TheDepths.Tiles
             TileObjectData.newTile.Height = 4;
             TileObjectData.newTile.Width = 6;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16 };
-            Main.tileFrameImportant[Type] = true;
             TileObjectData.addTile(Type);
-            LocalizedText name = CreateMapEntryName();
+			Main.tileFrameImportant[Type] = true;
+			LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(99, 50, 30), name);
         }
 

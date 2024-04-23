@@ -152,7 +152,7 @@ namespace TheDepths.Tiles.Trees
 			{
 				num2 *= 3;
 			}
-			if (_rand.Next(num2) != 0)
+			if (!_rand.NextBool(num2))
 			{
 				return;
 			}

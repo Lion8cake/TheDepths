@@ -174,69 +174,69 @@ namespace TheDepths.Tiles.Trees
 				return;
 			}
 
-			if (Main.getGoodWorld && genRand.Next(17) == 0)
+			if (Main.getGoodWorld && genRand.NextBool(17))
 			{
 				Projectile.NewProjectile(new EntitySource_ShakeTree(x, y), x * 16, y * 16, (float)Main.rand.Next(-100, 101) * 0.002f, 0f, ProjectileID.Bomb, 0, 0f, Main.myPlayer, 16f, 16f);
 			}
-			else if (genRand.Next(35) == 0 && Main.halloween)
+			else if (genRand.NextBool(35) && Main.halloween)
 			{
 				Item.NewItem(new EntitySource_ShakeTree(x, y), x * 16, y * 16, 16, 16, ItemID.RottenEgg, genRand.Next(1, 3));
 			}
-			else if (genRand.Next(12) == 0)
+			else if (genRand.NextBool(12))
 			{
 				Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, ModContent.ItemType<Items.Placeable.NightWood>(), genRand.Next(1, 4));
 			}
-			else if (genRand.Next(20) == 0)
+			else if (genRand.NextBool(20))
 			{
 				int type = ItemID.CopperCoin;
 				int num2 = genRand.Next(50, 100);
-				if (genRand.Next(30) == 0)
+				if (genRand.NextBool(30))
 				{
 					type = ItemID.GoldCoin;
-					num2 = 1;
-					if (genRand.Next(5) == 0)
+					num2 = ItemUseStyleID.Swing;
+					if (genRand.NextBool(5))
 					{
 						num2++;
 					}
-					if (genRand.Next(10) == 0)
+					if (genRand.NextBool(10))
 					{
 						num2++;
 					}
 				}
-				else if (genRand.Next(10) == 0)
+				else if (genRand.NextBool(10))
 				{
 					type = ItemID.SilverCoin;
 					num2 = genRand.Next(1, 21);
-					if (genRand.Next(3) == 0)
+					if (genRand.NextBool(3))
 					{
 						num2 += genRand.Next(1, 21);
 					}
-					if (genRand.Next(4) == 0)
+					if (genRand.NextBool(4))
 					{
 						num2 += genRand.Next(1, 21);
 					}
 				}
 				Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, type, num2);
 			}
-			else if (genRand.Next(20) == 0 && y > Main.maxTilesY - 250)
+			else if (genRand.NextBool(20) && y > Main.maxTilesY - 250)
 			{
 				NPC.NewNPC(new EntitySource_ShakeTree(x, y), x * 16, y * 16, (WorldGen.genRand.NextBool(3) ? ModContent.NPCType<NPCs.AlbinoRat>() : (WorldGen.genRand.NextBool(2) ? ModContent.NPCType<NPCs.EnchantedNightmareWorm>() : ModContent.NPCType<NPCs.QuartzCrawler>())));
 			}
-			else if (Main.remixWorld && genRand.Next(20) == 0 && y > Main.maxTilesY - 250)
+			else if (Main.remixWorld && genRand.NextBool(20) && y > Main.maxTilesY - 250)
 			{
 				Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, ItemID.Rope, genRand.Next(20, 41));
 			}
-			else if (genRand.Next(12) == 0)
+			else if (genRand.NextBool(12))
 			{
-				int secondaryItemStack = ((genRand.Next(2) != 0) ? ModContent.ItemType<BlackOlive>() : ModContent.ItemType<Ciamito>());
+				int secondaryItemStack = ((!genRand.NextBool(2)) ? ModContent.ItemType<BlackOlive>() : ModContent.ItemType<Ciamito>());
 				Item.NewItem(GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, secondaryItemStack);
 			}
 
-			if (Main.netMode == 2)
+			if (Main.netMode == NetmodeID.Server)
 			{
-				NetMessage.SendData(112, -1, -1, null, 1, x, y, 1f, ModContent.GoreType<PetrifiedTreeLeaf>());
+				NetMessage.SendData(MessageID.SpecialFX, -1, -1, null, 1, x, y, 1f, ModContent.GoreType<PetrifiedTreeLeaf>());
 			}
-			if (Main.netMode == 0)
+			if (Main.netMode == NetmodeID.SinglePlayer)
 			{
 				TreeGrowFX(x, y, 1, ModContent.GoreType<PetrifiedTreeLeaf>(), hitTree: true);
 			}
@@ -272,7 +272,7 @@ namespace TheDepths.Tiles.Trees
 			{
 				num2 *= 3;
 			}
-			if (_rand.Next(num2) != 0)
+			if (!_rand.NextBool(num2))
 			{
 				return;
 			}
@@ -285,7 +285,7 @@ namespace TheDepths.Tiles.Trees
 				int num5 = 0;
 				if (tile.TileFrameY == 220)
 				{
-					num5 = 1;
+					num5 = ItemUseStyleID.Swing;
 				}
 				else if (tile.TileFrameY == 242)
 				{

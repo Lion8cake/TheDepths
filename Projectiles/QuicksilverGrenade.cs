@@ -31,7 +31,7 @@ namespace TheDepths.Projectiles
 			int num861 = 35;
 			for (int num862 = 0; num862 < 30; num862++)
 			{
-				Dust dust55 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 31, 0f, 0f, 100, transparent4, 1.5f);
+				Dust dust55 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, transparent4, 1.5f);
 				Dust dust2 = dust55;
 				dust2.velocity *= 1.4f;
 			}
@@ -58,9 +58,9 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != 1 && Worldgen.TheDepthsWorldGen.InDepths(Main.player[Projectile.owner]))
+			if (Main.netMode != NetmodeID.MultiplayerClient && Worldgen.TheDepthsWorldGen.InDepths(Main.player[Projectile.owner]))
 			{
-				Point pt3 = base.Projectile.Center.ToTileCoordinates();
+				Point pt3 = Projectile.Center.ToTileCoordinates();
 				Projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);
 			}
 		}

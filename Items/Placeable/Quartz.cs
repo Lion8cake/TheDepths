@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using Terraria;
 using TheDepths.Items.Weapons;
+using Terraria.GameContent;
 
 namespace TheDepths.Items.Placeable
 {
@@ -13,6 +14,8 @@ namespace TheDepths.Items.Placeable
 		{
 			ItemID.Sets.SortingPriorityMaterials[Item.type] = 58;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+
+			ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(Type, 1, ItemID.Obsidian, 1);
 		}
 
 		public override void SetDefaults()

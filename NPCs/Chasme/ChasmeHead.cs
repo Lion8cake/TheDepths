@@ -26,7 +26,7 @@ namespace TheDepths.NPCs.Chasme
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 6;
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers
             {
                 Hide = true
             };
@@ -111,7 +111,7 @@ namespace TheDepths.NPCs.Chasme
                 NPC.ai[0]++;
                 if (NPC.ai[0] >= (NPC.dontTakeDamage ? 4.5 : 3) * 60)
                 {
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         Vector2 accuracy = NPC.dontTakeDamage ? new Vector2(Main.rand.Next(-128, 128), Main.rand.Next(-128, 128)) : Vector2.Zero; //Fuck up the accuracy when the core it out
                         int damage2 = (int)MathHelper.Lerp(70, (float)(70 * 1.5), damagePer);
@@ -131,7 +131,7 @@ namespace TheDepths.NPCs.Chasme
                     NPC.ai[1]++;
                     if (NPC.ai[1] >= 15)
                     {
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = 0; i < 40; i++)
                             {
@@ -295,12 +295,12 @@ namespace TheDepths.NPCs.Chasme
 
 		public override void SendExtraAI(BinaryWriter writer)
 		{
-			writer.Write(HeartID);
+			writer.Write((byte)HeartID);
 		}
 
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
-			HeartID = reader.ReadInt32();
+			HeartID = reader.ReadByte();
 		}
 	}
 }

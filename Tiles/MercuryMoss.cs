@@ -33,7 +33,7 @@ namespace TheDepths.Tiles
             if (Main.rand.NextFloat() < 0.01f)
             {
                 Vector2 position = new Vector2(i * 16, j * 16);
-                Dust dust = Main.dust[Dust.NewDust(position, 4, 4, 261, 0f, 0f, 0, new Color(119, 135, 162), 1f)];
+                Dust dust = Main.dust[Dust.NewDust(position, 4, 4, DustID.AncientLight, 0f, 0f, 0, new Color(119, 135, 162), 1f)];
                 dust.noGravity = true;
             }
 		}
@@ -130,7 +130,7 @@ namespace TheDepths.Tiles
 					}
 				}
 			}
-			if (Main.netMode == 2 && flag)
+			if (Main.netMode == NetmodeID.Server && flag)
 			{
 				NetMessage.SendTileSquare(-1, i, j, 3);
 			}

@@ -25,12 +25,12 @@ namespace TheDepths.Items.Weapons
 			Item.useTime = 27;
 			Item.useAnimation = 27;
 			Item.autoReuse = true;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.staff[Item.type] = true;
 			Item.noMelee = true;
 			Item.knockBack = 4f;
 			Item.value = Item.sellPrice(0, 0, 80);
-			Item.rare = 5;
+			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item43;
 			Item.autoReuse = true;
 			Item.shoot = ModContent.ProjectileType<OnyxBolt>();

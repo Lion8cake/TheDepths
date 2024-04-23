@@ -35,7 +35,7 @@ namespace TheDepths.Items.Weapons
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 20);
+			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 15);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

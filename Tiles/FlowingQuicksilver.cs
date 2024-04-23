@@ -15,6 +15,7 @@ namespace TheDepths.Tiles
             Main.tileLavaDeath[Type] = true;
             Main.tileNoAttach[Type] = true;
             Main.tileTable[Type] = false;
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
             TileObjectData.newTile.Width = 3;
             TileObjectData.newTile.Height = 2;
             TileObjectData.newTile.CoordinateHeights = new int[2] { 16, 16 };

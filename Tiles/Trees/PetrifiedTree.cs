@@ -102,7 +102,7 @@ namespace TheDepths.Tiles.Trees
 			Tile tile = Main.tile[i, j];
 			if (fail)
 			{
-				if (Main.netMode != 1 && TileID.Sets.IsShakeable[tile.TileType])
+				if (Main.netMode != NetmodeID.MultiplayerClient && TileID.Sets.IsShakeable[tile.TileType])
 				{
 					ShakeTree(i, j);
 				}
@@ -150,11 +150,11 @@ namespace TheDepths.Tiles.Trees
 			{
 				return;
 			}
-			if (Main.netMode == 2)
+			if (Main.netMode == NetmodeID.Server)
 			{
-				NetMessage.SendData(112, -1, -1, null, 1, x, y, 1f, ModContent.GoreType<PetrifiedTreeLeaf>());
+				NetMessage.SendData(MessageID.SpecialFX, -1, -1, null, 1, x, y, 1f, ModContent.GoreType<PetrifiedTreeLeaf>());
 			}
-			if (Main.netMode == 0)
+			if (Main.netMode == NetmodeID.SinglePlayer)
 			{
 				TreeGrowFX(x, y, 1, ModContent.GoreType<PetrifiedTreeLeaf>(), hitTree: true);
 			}
@@ -190,7 +190,7 @@ namespace TheDepths.Tiles.Trees
 			{
 				num2 *= 3;
 			}
-			if (_rand.Next(num2) != 0)
+			if (!_rand.NextBool(num2))
 			{
 				return;
 			}

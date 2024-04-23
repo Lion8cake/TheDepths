@@ -17,14 +17,14 @@ namespace TheDepths.Items.Weapons
 		}
 
 		public override void SetDefaults() {
-			Item.damage = 28;
+			Item.damage = 56;
 			Item.DamageType = DamageClass.Magic;
 			Item.mana = 10;
 			Item.width = 40;
 			Item.height = 40;
 			Item.useTime = 28;
 			Item.useAnimation = 28;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.noMelee = true;
 			Item.knockBack = 5;
 			Item.value = 10000;

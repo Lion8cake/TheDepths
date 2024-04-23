@@ -21,7 +21,7 @@ namespace TheDepths.NPCs
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
 
-			var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers
 			{
 				Position = new Vector2(0f, -20f),
 				PortraitPositionXOverride = 0f,

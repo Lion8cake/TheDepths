@@ -140,28 +140,27 @@ namespace TheDepths.Tiles
 			}
 			if (Player.GetClosestRollLuck(i, j, range) == 0f)
 			{
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					Projectile.NewProjectile(new EntitySource_Misc(""), i * 16 + 16, j * 16 + 16, 0f, -12f, ProjectileID.CoinPortal, 0, 0f, Main.myPlayer); //Coin Portal
 				}
 				return;
 			}
-			if (Main.getGoodWorld && WorldGen.genRand.Next(6) == 0)
+			if (Main.getGoodWorld && WorldGen.genRand.NextBool(6))
 			{
 				Projectile.NewProjectile(new EntitySource_Misc(""), i * 16 + 16, j * 16 + 8, (float)Main.rand.Next(-100, 101) * 0.002f, 0f, ProjectileID.Bomb, 0, 0f, Main.myPlayer, 16f, 16f); //Bomb
 				return;
 			}
-			if (Main.remixWorld && Main.netMode != 1 && WorldGen.genRand.Next(5) == 0)
+			if (Main.remixWorld && Main.netMode != NetmodeID.MultiplayerClient && WorldGen.genRand.NextBool(5))
 			{
 				Player player = Main.player[Player.FindClosest(new Vector2((float)(i * 16), (float)(j * 16)), 16, 16)];
-				if (Main.rand.Next(2) == 0)
+				if (Main.rand.NextBool(2))
 				{
 					Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.FallenStar); //Fallen star
 				}
 				else if (player.ZoneJungle)
 				{
-					int num12 = -1;
-					num12 = NPC.NewNPC(new EntitySource_Misc(""), x2 * 16 + 16, y2 * 16 + 32, NPCID.JungleSlime); //Jungle Slime
+					int num12 = NPC.NewNPC(new EntitySource_Misc(""), x2 * 16 + 16, y2 * 16 + 32, NPCID.JungleSlime);
 					if (num12 > -1)
 					{
 						Main.npc[num12].ai[1] = 75f;
@@ -170,8 +169,7 @@ namespace TheDepths.Tiles
 				}
 				else if ((double)j > Main.rockLayer && j < Main.maxTilesY - 350)
 				{
-					int num13 = -1;
-					num13 = ((Main.rand.Next(9) == 0) ? NPC.NewNPC(new EntitySource_Misc(""), x2 * 16 + 16, y2 * 16 + 32, NPCID.PurpleSlime) : ((Main.rand.Next(7) == 0) ? NPC.NewNPC(new EntitySource_Misc(""), x2 * 16 + 16, y2 * 16 + 32, NPCID.RedSlime) : ((Main.rand.Next(6) == 0) ? NPC.NewNPC(new EntitySource_Misc(""), x2 * 16 + 16, y2 * 16 + 32, NPCID.YellowSlime) : ((Main.rand.Next(3) != 0) ? NPC.NewNPC(new EntitySource_Misc(""), x2 * 16 + 16, y2 * 16 + 32, NPCID.BlueSlime) : NPC.NewNPC(new EntitySource_Misc(""), x2 * 16 + 16, y2 * 16 + 32, NPCID.GreenSlime)))));
+					int num13 = ((Main.rand.NextBool(9)) ? NPC.NewNPC(new EntitySource_Misc(""), x2 * 16 + 16, y2 * 16 + 32, NPCID.PurpleSlime) : ((Main.rand.NextBool(7)) ? NPC.NewNPC(new EntitySource_Misc(""), x2 * 16 + 16, y2 * 16 + 32, NPCID.RedSlime) : ((Main.rand.NextBool(6)) ? NPC.NewNPC(new EntitySource_Misc(""), x2 * 16 + 16, y2 * 16 + 32, NPCID.YellowSlime) : ((!Main.rand.NextBool(3)) ? NPC.NewNPC(new EntitySource_Misc(""), x2 * 16 + 16, y2 * 16 + 32, NPCID.BlueSlime) : NPC.NewNPC(new EntitySource_Misc(""), x2 * 16 + 16, y2 * 16 + 32, NPCID.GreenSlime)))));
 					if (num13 > -1) //slimes
 					{
 						Main.npc[num13].ai[1] = 75f;
@@ -180,8 +178,7 @@ namespace TheDepths.Tiles
 				}
 				else if ((double)j > Main.worldSurface && (double)j <= Main.rockLayer)
 				{
-					int num14 = -1;
-					num14 = NPC.NewNPC(new EntitySource_Misc(""), x2 * 16 + 16, y2 * 16 + 32, NPCID.BlackSlime); //Black Slime
+					int num14 = NPC.NewNPC(new EntitySource_Misc(""), x2 * 16 + 16, y2 * 16 + 32, NPCID.BlackSlime);
 					if (num14 > -1)
 					{
 						Main.npc[num14].ai[1] = 75f;
@@ -200,7 +197,7 @@ namespace TheDepths.Tiles
 				Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.Rope, stack); //Rope
 				return;
 			}
-			if (WorldGen.genRand.Next(45) == 0 || (Main.rand.Next(45) == 0 && Main.expertMode))
+			if (WorldGen.genRand.NextBool(45) || (Main.rand.NextBool(45) && Main.expertMode))
 			{
 				if ((double)j < Main.worldSurface)
 				{
@@ -405,14 +402,14 @@ namespace TheDepths.Tiles
 					{
 						Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.TitanPotion);
 					}
-					if (WorldGen.genRand.Next(5) == 0)
+					if (WorldGen.genRand.NextBool(5))
 					{
 						Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.PotionOfReturn);
 					}
 				}
 				return;
 			}
-			if (Main.netMode == 2 && Main.rand.Next(30) == 0)
+			if (Main.netMode == NetmodeID.Server && Main.rand.NextBool(30))
 			{
 				Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.WormholePotion);
 				return;
@@ -428,7 +425,7 @@ namespace TheDepths.Tiles
 			for (int k = 0; k < 50; k++)
 			{
 				Item item = player2.inventory[k];
-				if (!item.IsAir && item.createTile == 4)
+				if (!item.IsAir && item.createTile == TileID.Torches)
 				{
 					num2 += item.stack;
 					if (num2 >= num3)
@@ -441,17 +438,17 @@ namespace TheDepths.Tiles
 			if (num15 == 0 && player2.statLife < player2.statLifeMax2)
 			{
 				Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.Heart);
-				if (Main.rand.Next(2) == 0)
+				if (Main.rand.NextBool(2))
 				{
 					Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.Heart);
 				}
 				if (Main.expertMode)
 				{
-					if (Main.rand.Next(2) == 0)
+					if (Main.rand.NextBool(2))
 					{
 						Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.Heart);
 					}
-					if (Main.rand.Next(2) == 0)
+					if (Main.rand.NextBool(2))
 					{
 						Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.Heart);
 					}
@@ -493,7 +490,7 @@ namespace TheDepths.Tiles
 					{
 						int stack2 = Main.rand.Next(10, 21);
 						int type4 = 40;
-						if (flag && WorldGen.genRand.Next(2) == 0)
+						if (flag && WorldGen.genRand.NextBool(2))
 						{
 							type4 = ((!Main.hardMode) ? ItemID.Shuriken : ItemID.Grenade);
 						}
@@ -503,7 +500,7 @@ namespace TheDepths.Tiles
 						}
 						else if (Main.hardMode)
 						{
-							type4 = ((Main.rand.Next(2) != 0) ? ItemID.UnholyArrow : ((WorldGen.SavedOreTiers.Silver != TileID.Tungsten) ? ItemID.SilverBullet : ItemID.TungstenBullet));
+							type4 = ((!Main.rand.NextBool(2)) ? ItemID.UnholyArrow : ((WorldGen.SavedOreTiers.Silver != TileID.Tungsten) ? ItemID.SilverBullet : ItemID.TungstenBullet));
 						}
 						Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, type4, stack2);
 						return;
@@ -516,7 +513,7 @@ namespace TheDepths.Tiles
 							type5 = ItemID.HealingPotion;
 						}
 						int num6 = 1;
-						if (Main.expertMode && Main.rand.Next(3) != 0)
+						if (Main.expertMode && !Main.rand.NextBool(3))
 						{
 							num6++;
 						}
@@ -557,23 +554,23 @@ namespace TheDepths.Tiles
 				num7 *= 1.25f;
 			}
 			num7 *= 1f + (float)Main.rand.Next(-20, 21) * 0.01f;
-			if (Main.rand.Next(4) == 0)
+			if (Main.rand.NextBool(4))
 			{
 				num7 *= 1f + (float)Main.rand.Next(5, 11) * 0.01f;
 			}
-			if (Main.rand.Next(8) == 0)
+			if (Main.rand.NextBool(8))
 			{
 				num7 *= 1f + (float)Main.rand.Next(10, 21) * 0.01f;
 			}
-			if (Main.rand.Next(12) == 0)
+			if (Main.rand.NextBool(12))
 			{
 				num7 *= 1f + (float)Main.rand.Next(20, 41) * 0.01f;
 			}
-			if (Main.rand.Next(16) == 0)
+			if (Main.rand.NextBool(16))
 			{
 				num7 *= 1f + (float)Main.rand.Next(40, 81) * 0.01f;
 			}
-			if (Main.rand.Next(20) == 0)
+			if (Main.rand.NextBool(20))
 			{
 				num7 *= 1f + (float)Main.rand.Next(50, 101) * 0.01f;
 			}
@@ -581,15 +578,15 @@ namespace TheDepths.Tiles
 			{
 				num7 *= 2.5f;
 			}
-			if (Main.expertMode && Main.rand.Next(2) == 0)
+			if (Main.expertMode && Main.rand.NextBool(2))
 			{
 				num7 *= 1.25f;
 			}
-			if (Main.expertMode && Main.rand.Next(3) == 0)
+			if (Main.expertMode && Main.rand.NextBool(3))
 			{
 				num7 *= 1.5f;
 			}
-			if (Main.expertMode && Main.rand.Next(4) == 0)
+			if (Main.expertMode && Main.rand.NextBool(4))
 			{
 				num7 *= 1.75f;
 			}
@@ -647,11 +644,11 @@ namespace TheDepths.Tiles
 				if (num7 > 1000000f)
 				{
 					int num8 = (int)(num7 / 1000000f);
-					if (num8 > 50 && Main.rand.Next(2) == 0)
+					if (num8 > 50 && Main.rand.NextBool(2))
 					{
 						num8 /= Main.rand.Next(3) + 1;
 					}
-					if (Main.rand.Next(2) == 0)
+					if (Main.rand.NextBool(2))
 					{
 						num8 /= Main.rand.Next(3) + 1;
 					}
@@ -662,11 +659,11 @@ namespace TheDepths.Tiles
 				if (num7 > 10000f)
 				{
 					int num9 = (int)(num7 / 10000f);
-					if (num9 > 50 && Main.rand.Next(2) == 0)
+					if (num9 > 50 && Main.rand.NextBool(2))
 					{
 						num9 /= Main.rand.Next(3) + 1;
 					}
-					if (Main.rand.Next(2) == 0)
+					if (Main.rand.NextBool(2))
 					{
 						num9 /= Main.rand.Next(3) + 1;
 					}
@@ -677,11 +674,11 @@ namespace TheDepths.Tiles
 				if (num7 > 100f)
 				{
 					int num10 = (int)(num7 / 100f);
-					if (num10 > 50 && Main.rand.Next(2) == 0)
+					if (num10 > 50 && Main.rand.NextBool(2))
 					{
 						num10 /= Main.rand.Next(3) + 1;
 					}
-					if (Main.rand.Next(2) == 0)
+					if (Main.rand.NextBool(2))
 					{
 						num10 /= Main.rand.Next(3) + 1;
 					}
@@ -690,11 +687,11 @@ namespace TheDepths.Tiles
 					continue;
 				}
 				int num11 = (int)num7;
-				if (num11 > 50 && Main.rand.Next(2) == 0)
+				if (num11 > 50 && Main.rand.NextBool(2))
 				{
 					num11 /= Main.rand.Next(3) + 1;
 				}
-				if (Main.rand.Next(2) == 0)
+				if (Main.rand.NextBool(2))
 				{
 					num11 /= Main.rand.Next(4) + 1;
 				}

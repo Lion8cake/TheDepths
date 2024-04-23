@@ -27,7 +27,7 @@ public class ChasmeHandRight : ModNPC
 	{
 		NPCID.Sets.TrailCacheLength[Type] = 10;
 		NPCID.Sets.TrailingMode[Type] = 1;
-		NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+		NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers
 		{
 			Hide = true
 		};
@@ -216,7 +216,7 @@ public class ChasmeHandRight : ModNPC
 			NPC.ai[3]++;
 			if (NPC.ai[3] >= (NPC.dontTakeDamage ? Main.rand.Next(4, 16) : Main.rand.Next(2, 8)) * 60 && NPC.ai[1] == 0)
 			{
-				if (Main.netMode != 1)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					Vector2 accuracy = !chasmeSoul.dontTakeDamage ? new Vector2(Main.rand.Next(-128, 128), Main.rand.Next(-128, 128)) : Vector2.Zero; //Fuck up the accuracy when the core it out
 					int damage2 = (int)MathHelper.Lerp(55, (float)(55 * 1.5), damagePer);
@@ -323,14 +323,14 @@ public class ChasmeHandRight : ModNPC
 
 	public override void SendExtraAI(BinaryWriter writer)
 	{
-		writer.Write(HeartID);
+		writer.Write((byte)HeartID);
 		writer.Write(DirectionToTarget.X);
 		writer.Write(DirectionToTarget.Y);
 	}
 
 	public override void ReceiveExtraAI(BinaryReader reader)
 	{
-		HeartID = reader.ReadInt32();
+		HeartID = reader.ReadByte();
 		DirectionToTarget.X = reader.ReadSingle();
 		DirectionToTarget.Y = reader.ReadSingle();
 	}

@@ -42,6 +42,11 @@ using TheDepths.Worldgen;
 using static Terraria.Graphics.FinalFractalHelper;
 using Terraria.ObjectData;
 using TheDepths.Tiles;
+using Terraria.GameContent.UI.States;
+using Terraria.Map;
+using MonoMod.RuntimeDetour.HookGen;
+using MonoMod.RuntimeDetour;
+using TheDepths.NPCs.Chasme;
 
 namespace TheDepths
 {
@@ -58,13 +63,10 @@ namespace TheDepths
 		public override void Load()
 		{
 			GroundSlamKeybind = KeybindLoader.RegisterKeybind(this, "GroundSlam", "LeftControl");
-			
-			Asset<Effect> shader = ModContent.Request<Effect>("TheDepths/Shaders/DepthsFog", AssetRequestMode.ImmediateLoad);
-			Asset<Effect> shader2 = ModContent.Request<Effect>("TheDepths/Shaders/SilhouetteShader", AssetRequestMode.ImmediateLoad);
-			Ref<Effect> vertexPixelShaderRef = Main.VertexPixelShaderRef;
-			Filters.Scene["TheDepths:FogShader"] = new Filter(new ScreenShaderData(new Ref<Effect>(shader.Value), "DepthsFogShaderPass"), EffectPriority.VeryHigh);
-			GameShaders.Misc["TheDepths:SilhouetteShader"] = new MiscShaderData(new Ref<Effect>(shader2.Value), "SilhouettePass");
-			GameShaders.Misc["TheDepths:ShadowLash"] = new MiscShaderData(vertexPixelShaderRef, "MagicMissile").UseProjectionMatrix(doUse: true);
+
+			Filters.Scene["TheDepths:FogShader"] = new Filter(new ScreenShaderData(ModContent.Request<Effect>("TheDepths/Shaders/DepthsFog", AssetRequestMode.ImmediateLoad), "DepthsFogShaderPass"), EffectPriority.VeryHigh);
+			GameShaders.Misc["TheDepths:SilhouetteShader"] = new MiscShaderData(ModContent.Request<Effect>("TheDepths/Shaders/SilhouetteShader", AssetRequestMode.ImmediateLoad), "SilhouettePass");
+			GameShaders.Misc["TheDepths:ShadowLash"] = new MiscShaderData(Main.Assets.Request<Effect>("PixelShader"), "MagicMissile").UseProjectionMatrix(doUse: true);
 			GameShaders.Misc["TheDepths:ShadowLash"].UseImage0(ModContent.Request<Texture2D>("TheDepths/Shaders/ShadowflameFlameHue", AssetRequestMode.ImmediateLoad));
 			GameShaders.Misc["TheDepths:ShadowLash"].UseImage1("Images/Extra_" + (short)189);
 			GameShaders.Misc["TheDepths:ShadowLash"].UseImage2("Images/Extra_" + (short)190);
@@ -84,39 +86,46 @@ namespace TheDepths
 				EquipLoader.AddEquipTexture(this, "TheDepths/Items/Armor/OnyxRobe_Legs", EquipType.Legs, name: "OnyxRobe_Legs");
 			}
 
+			//Enviroment
 			IL_Liquid.Update += Evaporation;
-			Terraria.IL_Player.UpdateBiomes += HeatRemoval;
-
+			IL_Player.UpdateBiomes += HeatRemoval;
+			On_AmbientSky.HellBatsGoupSkyEntity.ctor += HellBatsGoupSkyEntity_ctor;
 			IL_Main.DrawBG += UWBGInsert;
 			IL_Main.DrawCapture += UWBGInsertCapture;
+			On_TileLightScanner.ApplyHellLight += TileLightScanner_ApplyHellLight;
+			On_TileDrawing.DrawMultiTileVinesInWind += On_TileDrawing_DrawMultiTileVinesInWind;
+			IL_NPC.SpawnNPC += NPCSpawningEdit;
+			IL_MapHelper.CreateMapTile += MapEdit;
 
-			Terraria.On_Main.UpdateAudio_DecideOnTOWMusic += Main_UpdateAudio_DecideOnTOWMusic;
-
-			Terraria.Graphics.Light.On_TileLightScanner.ApplyLiquidLight += On_TileLightScanner_ApplyLiquidLight;
-			Terraria.Graphics.Light.On_TileLightScanner.ApplyHellLight += TileLightScanner_ApplyHellLight;
-			On_WaterfallManager.AddLight += On_WaterfallManager_AddLight;
-
+			//UI edits
+			IL_UIGenProgressBar.DrawSelf += ProgressBarEdit;
+			IL_UIWorldCreation.BuildPage += DepthsSelectionMenu.ILBuildPage;
+			IL_UIWorldCreation.MakeInfoMenu += DepthsSelectionMenu.ILMakeInfoMenu;
+			IL_UIWorldCreation.SetupGamepadPoints += DepthsSelectionMenu.ILSetUpGamepadPoints;
+			IL_UIWorldCreation.ShowOptionDescription += DepthsSelectionMenu.ILShowOptionDescription;
+			On_UIWorldCreation.SetDefaultOptions += DepthsSelectionMenu.OnSetDefaultOptions;
 			On_UIWorldListItem.DrawSelf += (orig, self, spriteBatch) =>
 			{
 				orig(self, spriteBatch);
 				DrawWorldSelectItemOverlay(self, spriteBatch);
 			};
 
-			Terraria.On_WaterfallManager.DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects += On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects;
-			Terraria.On_WaterfallManager.StylizeColor += On_WaterfallManager_StylizeColor;
+			//Item edits
+			On_Player.ItemCheck_CatchCritters += On_Player_ItemCheck_CatchCritters;
+			IL_Player.ItemCheck_UseBuckets += BucketCollectionItem;
+			On_Player.PlaceThing_PaintScrapper_LongMoss += On_Player_PlaceThing_PaintScrapper_LongMoss;
+			On_Player.GetItemGrabRange += On_Player_GetItemGrabRange;
+			On_Player.ItemCheck_ManageRightClickFeatures += On_Player_ItemCheck_ManageRightClickFeatures;
+			On_ItemSlot.TryItemSwap += On_ItemSlot_TryItemSwap;
+			IL_Player.GetAnglerReward_MainReward += HotRodReplacer;
+			On_Player.RemoveAnglerAccOptionsFromRewardPool += On_Player_RemoveAnglerAccOptionsFromRewardPool;
 
+			//Quicksilver edits
+			On_WaterfallManager.AddLight += On_WaterfallManager_AddLight;
+			On_WaterfallManager.DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects += On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects;
+			On_WaterfallManager.StylizeColor += On_WaterfallManager_StylizeColor;
 			On_Liquid.GetLiquidMergeTypes += On_Liquid_GetLiquidMergeTypes;
 			On_Player.PlaceThing_Tiles_CheckLavaBlocking += On_Player_PlaceThing_Tiles_CheckLavaBlocking;
-
-			IL_UIGenProgressBar.DrawSelf += ProgressBarEdit;
-			Terraria.GameContent.UI.States.IL_UIWorldCreation.BuildPage += DepthsSelectionMenu.ILBuildPage;
-			Terraria.GameContent.UI.States.IL_UIWorldCreation.MakeInfoMenu += DepthsSelectionMenu.ILMakeInfoMenu;
-			Terraria.GameContent.UI.States.IL_UIWorldCreation.ShowOptionDescription +=
-				DepthsSelectionMenu.ILShowOptionDescription;
-
-
-			Terraria.GameContent.UI.States.On_UIWorldCreation.SetDefaultOptions += DepthsSelectionMenu.OnSetDefaultOptions;
-			On_Player.ItemCheck_CatchCritters += On_Player_ItemCheck_CatchCritters;
 			IL_LiquidRenderer.InternalPrepareDraw += LavaBubbleReplacer;
 			IL_Player.Update += SplashPlayerLava;
 			IL_NPC.Collision_WaterCollision += SplashNPCLava;
@@ -124,34 +133,30 @@ namespace TheDepths
 			IL_Item.MoveInWorld += SplashItemLava;
 			IL_Main.oldDrawWater += LavaBubbleReplacer;
 			On_TELogicSensor.GetState += On_TELogicSensor_GetState;
+			On_TileLightScanner.ApplyLiquidLight += On_TileLightScanner_ApplyLiquidLight;
 
-			On_TileDrawing.DrawMultiTileVinesInWind += On_TileDrawing_DrawMultiTileVinesInWind;
-			On_TileDrawing.PostDrawTiles += On_TileDrawing_PostDrawTiles;
-			On_TileDrawing.GetWindCycle += On_TileDrawing_GetWindCycle;
-
-			On_AmbientSky.HellBatsGoupSkyEntity.ctor += HellBatsGoupSkyEntity_ctor;
-			IL_Player.ItemCheck_UseBuckets += BucketCollectionItem;
-
+			//other
+			On_Main.UpdateAudio_DecideOnTOWMusic += Main_UpdateAudio_DecideOnTOWMusic;
 			IL_WorldGen.NotTheBees += NightmareGrassGFBPatcher;
 			On_Player.TryReplantingTree += TreeReplantingDetour;
 			On_LegacyPlayerRenderer.DrawPlayerFull += PlayerAfterImages;
 			On_Player.KeyDoubleTap += SlamDoubleTap;
+			On_TileDrawing.PostDrawTiles += On_TileDrawing_PostDrawTiles;
+			On_TileDrawing.GetWindCycle += On_TileDrawing_GetWindCycle;
 			IL_Player.RocketBootVisuals += RocketBootVfx;
-			On_Player.PlaceThing_PaintScrapper_LongMoss += On_Player_PlaceThing_PaintScrapper_LongMoss;
 			On_TileLightScanner.ApplySurfaceLight += On_TileLightScanner_ApplySurfaceLight;
-			IL_NPC.SpawnNPC += NPCSpawningEdit;
-			On_Player.ItemCheck_ManageRightClickFeatures += On_Player_ItemCheck_ManageRightClickFeatures;
-			On_ItemSlot.TryItemSwap += On_ItemSlot_TryItemSwap;
 			IL_Main.DrawInfoAccs += DepthMeterTextChanger;
-			On_Player.GetItemGrabRange += On_Player_GetItemGrabRange;
-			IL_Player.GetAnglerReward_MainReward += HotRodReplacer;
-			On_Player.RemoveAnglerAccOptionsFromRewardPool += On_Player_RemoveAnglerAccOptionsFromRewardPool;
 
 			//credits
 			IL_CreditsRollComposer.FillSegments += FillCreditSegmentILEdit;
 			IL_CreditsRollEvent.TryStartingCreditsRoll += CreditsRollIngameTimeDurationExtention;
 			IL_CreditsRollEvent.UpdateTime += CreditsRollIngameTimeDurationExtention;
 			IL_CreditsRollEvent.SetRemainingTimeDirect += CreditsRollIngameTimeDurationExtention;
+
+			MethodInfo NPCLoader_OnKill = typeof(NPCLoader).GetMethod("OnKill", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance);
+			Detour_OnKill = new Hook(NPCLoader_OnKill, On_NPCLoader_OnKill);
+			if (Detour_OnKill != null)
+				Detour_OnKill.Apply();
 		}
 
 		public override void Unload()
@@ -164,27 +169,38 @@ namespace TheDepths
 			fractalProfiles.Remove(ModContent.ItemType<Terminex>());
 
 			livingFireBlockList = null;
-			IL_Liquid.Update -= Evaporation;
-			Terraria.IL_Player.UpdateBiomes -= HeatRemoval;
 
+			//Enviroment
+			IL_Liquid.Update -= Evaporation;
+			IL_Player.UpdateBiomes -= HeatRemoval;
 			IL_Main.DrawBG -= UWBGInsert;
 			IL_Main.DrawCapture -= UWBGInsertCapture;
+			On_TileLightScanner.ApplyHellLight -= TileLightScanner_ApplyHellLight;
+			On_TileDrawing.DrawMultiTileVinesInWind -= On_TileDrawing_DrawMultiTileVinesInWind;
+			On_AmbientSky.HellBatsGoupSkyEntity.ctor -= HellBatsGoupSkyEntity_ctor;
+			IL_NPC.SpawnNPC -= NPCSpawningEdit;
+			IL_MapHelper.CreateMapTile -= MapEdit;
 
-			Terraria.On_Main.UpdateAudio_DecideOnTOWMusic -= Main_UpdateAudio_DecideOnTOWMusic;
-
-			Terraria.Graphics.Light.On_TileLightScanner.ApplyLiquidLight -= On_TileLightScanner_ApplyLiquidLight;
-			Terraria.Graphics.Light.On_TileLightScanner.ApplyHellLight -= TileLightScanner_ApplyHellLight;
-			On_WaterfallManager.AddLight -= On_WaterfallManager_AddLight;
-
-			Terraria.On_WaterfallManager.DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects -= On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects;
-			Terraria.On_WaterfallManager.StylizeColor -= On_WaterfallManager_StylizeColor;
-
-			On_Liquid.GetLiquidMergeTypes -= On_Liquid_GetLiquidMergeTypes;
-			On_Player.PlaceThing_Tiles_CheckLavaBlocking -= On_Player_PlaceThing_Tiles_CheckLavaBlocking;
-
+			//UI edits
 			IL_UIGenProgressBar.DrawSelf -= ProgressBarEdit;
 
+			//Item edits
 			On_Player.ItemCheck_CatchCritters -= On_Player_ItemCheck_CatchCritters;
+			IL_Player.ItemCheck_UseBuckets -= BucketCollectionItem;
+			On_Player.PlaceThing_PaintScrapper_LongMoss -= On_Player_PlaceThing_PaintScrapper_LongMoss;
+			On_Player.ItemCheck_ManageRightClickFeatures -= On_Player_ItemCheck_ManageRightClickFeatures;
+			On_ItemSlot.TryItemSwap -= On_ItemSlot_TryItemSwap;
+			On_Player.GetItemGrabRange -= On_Player_GetItemGrabRange;
+			IL_Player.GetAnglerReward_MainReward -= HotRodReplacer;
+			On_Player.RemoveAnglerAccOptionsFromRewardPool -= On_Player_RemoveAnglerAccOptionsFromRewardPool;
+
+			//Quicksilver edits
+			On_TileLightScanner.ApplyLiquidLight -= On_TileLightScanner_ApplyLiquidLight;
+			On_WaterfallManager.AddLight -= On_WaterfallManager_AddLight;
+			On_WaterfallManager.DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects -= On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects;
+			On_WaterfallManager.StylizeColor -= On_WaterfallManager_StylizeColor;
+			On_Liquid.GetLiquidMergeTypes -= On_Liquid_GetLiquidMergeTypes;
+			On_Player.PlaceThing_Tiles_CheckLavaBlocking -= On_Player_PlaceThing_Tiles_CheckLavaBlocking;
 			IL_LiquidRenderer.InternalPrepareDraw -= LavaBubbleReplacer;
 			IL_Player.Update -= SplashPlayerLava;
 			IL_NPC.Collision_WaterCollision -= SplashNPCLava;
@@ -193,33 +209,26 @@ namespace TheDepths
 			IL_Main.oldDrawWater -= LavaBubbleReplacer;
 			On_TELogicSensor.GetState -= On_TELogicSensor_GetState;
 
-			On_TileDrawing.DrawMultiTileVinesInWind -= On_TileDrawing_DrawMultiTileVinesInWind;
+			//other
+			On_Main.UpdateAudio_DecideOnTOWMusic -= Main_UpdateAudio_DecideOnTOWMusic;
 			On_TileDrawing.PostDrawTiles -= On_TileDrawing_PostDrawTiles;
 			On_TileDrawing.GetWindCycle -= On_TileDrawing_GetWindCycle;
-
-			On_AmbientSky.HellBatsGoupSkyEntity.ctor -= HellBatsGoupSkyEntity_ctor;
-			IL_Player.ItemCheck_UseBuckets -= BucketCollectionItem;
-
 			IL_WorldGen.NotTheBees -= NightmareGrassGFBPatcher;
 			On_Player.TryReplantingTree -= TreeReplantingDetour;
 			On_LegacyPlayerRenderer.DrawPlayerFull -= PlayerAfterImages;
 			On_Player.KeyDoubleTap -= SlamDoubleTap;
 			IL_Player.RocketBootVisuals -= RocketBootVfx;
-			On_Player.PlaceThing_PaintScrapper_LongMoss -= On_Player_PlaceThing_PaintScrapper_LongMoss;
 			On_TileLightScanner.ApplySurfaceLight -= On_TileLightScanner_ApplySurfaceLight;
-			IL_NPC.SpawnNPC -= NPCSpawningEdit;
-			On_Player.ItemCheck_ManageRightClickFeatures -= On_Player_ItemCheck_ManageRightClickFeatures;
-			On_ItemSlot.TryItemSwap -= On_ItemSlot_TryItemSwap;
 			IL_Main.DrawInfoAccs -= DepthMeterTextChanger;
-			On_Player.GetItemGrabRange -= On_Player_GetItemGrabRange;
-			IL_Player.GetAnglerReward_MainReward -= HotRodReplacer;
-			On_Player.RemoveAnglerAccOptionsFromRewardPool -= On_Player_RemoveAnglerAccOptionsFromRewardPool;
 
 			//credits
 			IL_CreditsRollComposer.FillSegments -= FillCreditSegmentILEdit;
 			IL_CreditsRollEvent.TryStartingCreditsRoll -= CreditsRollIngameTimeDurationExtention;
 			IL_CreditsRollEvent.UpdateTime -= CreditsRollIngameTimeDurationExtention;
 			IL_CreditsRollEvent.SetRemainingTimeDirect -= CreditsRollIngameTimeDurationExtention;
+
+			if (Detour_OnKill != null)
+				Detour_OnKill.Dispose();
 		}
 
 		public override void PostSetupContent()
@@ -246,10 +255,13 @@ namespace TheDepths
 				["InDepths", Player player] => TheDepthsWorldGen.InDepths(player),
 				["IsPlayerInRightDepths", Player player] => TheDepthsWorldGen.IsPlayerInRightDepths(player),
 				["IsPlayerInLeftDepths", Player player] => TheDepthsWorldGen.IsPlayerInLeftDepths(player),
-				["depthsorHell"] => TheDepthsWorldGen.isWorldDepths,
+				["TileInDepths", int x] => TheDepthsWorldGen.TileInDepths(x),
+				["IsTileInRightDepths", int x] => TheDepthsWorldGen.IsTileInRightDepths(x),
+				["IsTileInLeftDepths", int x] => TheDepthsWorldGen.IsTileInLeftDepths(x),
+				["isWorldDepths"] => TheDepthsWorldGen.isWorldDepths,
 				["DrunkDepthsLeft"] => TheDepthsWorldGen.DrunkDepthsLeft,
 				["DrunkDepthsRight"] => TheDepthsWorldGen.DrunkDepthsRight,
-				["SetdepthsorHell", bool boolean] => TheDepthsWorldGen.isWorldDepths = boolean,
+				["SetisWorldDepths", bool boolean] => TheDepthsWorldGen.isWorldDepths = boolean,
 				["SetDrunkDepthsLeft", bool boolean] => TheDepthsWorldGen.DrunkDepthsLeft = boolean,
 				["SetDrunkDepthsRight", bool boolean] => TheDepthsWorldGen.DrunkDepthsRight = boolean,
 
@@ -279,6 +291,52 @@ namespace TheDepths
 				_ => throw new Exception("TheDepths: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
 		}
+
+		#region DynamicChasmeOnkillDetour
+		private static Hook Detour_OnKill = null;
+
+		private delegate void orig_OnKill(NPC npc);
+
+		private void On_NPCLoader_OnKill(orig_OnKill orig, NPC npc)
+		{
+			if (npc.type == ModContent.NPCType<ChasmeHeart>())
+			{
+				npc.type = NPCID.WallofFlesh;
+				orig.Invoke(npc);
+				npc.type = ModContent.NPCType<ChasmeHeart>();
+			}
+			else
+				orig.Invoke(npc);
+		}
+		#endregion
+
+		#region MapILEdit
+		private void MapEdit(ILContext il)
+		{
+			ILCursor c = new(il);
+			c.TryGotoNext(MoveType.After, i => i.MatchLdsfld("Terraria.Map.MapHelper", "liquidPosition"), i => i.MatchLdloc(10), i => i.MatchAdd(), i => i.MatchStloc3());
+			c.EmitLdarg0(); //i (aka X)
+			c.EmitLdarg1(); //j (aka Y)
+			c.EmitLdloca(3); //num5
+			c.EmitDelegate((int i, int j, ref int num5) =>
+			{
+				if (TheDepthsWorldGen.TileInDepths(i) && Main.tile[i, j].LiquidType == LiquidID.Lava)
+				{
+					num5 = MapHelper.tileLookup[ModContent.TileType<SilverfallBlock>()]; //Contains the MapColor (85, 96, 102) //take note (192, 189, 196) forum has the color as
+				}
+			});
+			c.TryGotoNext(MoveType.After, i => i.MatchLdsfld("Terraria.Map.MapHelper", "hellPosition"), i => i.MatchStloc3());
+			c.EmitLdarg0(); //i (aka X)
+			c.EmitLdloca(3); //num5
+			c.EmitDelegate((int i, ref int num5) =>
+			{
+				if (TheDepthsWorldGen.TileInDepths(i))
+				{
+					num5 = MapHelper.tileLookup[ModContent.TileType<Ember>()]; //Contains the MapColor (5, 5, 7)
+				}
+			});
+		}
+		#endregion
 
 		#region NOTTHEBEESCrispyHoneyProtection
 		private void NightmareGrassGFBPatcher(ILContext il)
@@ -319,7 +377,7 @@ namespace TheDepths
 				if (num)
 				{
 					TileObjectData.CallPostPlacementPlayerHook(Player.tileTargetX, Player.tileTargetY, type, style, self.direction, objectData.alternate, objectData);
-					if (Main.netMode == 1)
+					if (Main.netMode == NetmodeID.MultiplayerClient)
 					{
 						NetMessage.SendObjectPlacement(-1, Player.tileTargetX, Player.tileTargetY, objectData.type, objectData.style, objectData.alternate, objectData.random, self.direction);
 					}
@@ -854,7 +912,7 @@ namespace TheDepths
 		{
 			ILCursor c = new ILCursor(il); //place a IL cursor
 			c.GotoNext(MoveType.After, i => i.MatchLdcI4(28800)); //Look for a LDC I4 instruction with 28800 (all timers use this)
-			c.EmitDelegate<Func<int, int>>(maxDuration => maxDuration + 60 * 20); //Adds ontop of the max duration to account for the custom credits
+			c.EmitDelegate<Func<int, int>>(maxDuration => maxDuration + 60 * 28); //Adds ontop of the max duration to account for the custom credits
 		}
 		#endregion
 
@@ -876,14 +934,14 @@ namespace TheDepths
 			int frameX = tile.TileFrameX;
 			WorldGen.KillTile(x, y);
 			self.ApplyItemTime(self.inventory[self.selectedItem]);
-			if (Main.netMode == 1)
+			if (Main.netMode == NetmodeID.MultiplayerClient)
 			{
-				NetMessage.SendData(17, -1, -1, null, 0, x, y);
+				NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, x, y);
 			}
-			if (Main.rand.Next(9) == 0)
+			if (Main.rand.NextBool(9))
 			{
 				int number = Item.NewItem(new EntitySource_ItemUse(self, self.HeldItem), x * 16, y * 16, 16, 16, ModContent.ItemType<Items.Placeable.MercuryMoss>());
-				NetMessage.SendData(21, -1, -1, null, number, 1f);
+				NetMessage.SendData(MessageID.SyncItem, -1, -1, null, number, 1f);
 			}
 		}
 		#endregion
@@ -1265,7 +1323,7 @@ namespace TheDepths
 		#region LavaSensorDetour
 		private bool On_TELogicSensor_GetState(On_TELogicSensor.orig_GetState orig, int x, int y, TELogicSensor.LogicCheckType type, TELogicSensor instance)
 		{
-			if (type == TELogicSensor.LogicCheckType.Lava && ((Worldgen.TheDepthsWorldGen.isWorldDepths && !TheDepthsWorldGen.DrunkDepthsLeft && !TheDepthsWorldGen.DrunkDepthsRight) || (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 || Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2)))
+			if (type == TELogicSensor.LogicCheckType.Lava && TheDepthsWorldGen.TileInDepths(x))
 			{
 				return false;
 			}
@@ -1543,7 +1601,7 @@ namespace TheDepths
 		{
 			if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
 			{
-				if (waterfallType == 1)
+				if (waterfallType == NetmodeID.MultiplayerClient)
 				{
 					float r = 0f;
 					float g = 0f;
@@ -1637,7 +1695,7 @@ namespace TheDepths
 		{
 			if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
 			{
-				if (waterfallType == 1)
+				if (waterfallType == NetmodeID.MultiplayerClient)
 				{
 					Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver_Silverfall", (AssetRequestMode)1), position, sourceRect, color, 0f, default(Vector2), 1f, effects, 0f);
 					return;
@@ -1653,7 +1711,11 @@ namespace TheDepths
 			orig.Invoke(self);
 			if (!Main.gameMenu)
 			{
-				if (Main.newMusic == MusicLoader.GetMusicSlot(this, "Sounds/Music/Depths"))
+				if (Main.newMusic == MusicLoader.GetMusicSlot(this, "Sounds/Music/Chasme"))
+				{
+					Main.newMusic = MusicID.OtherworldlyWoF;
+				}
+				else if (Main.newMusic == MusicLoader.GetMusicSlot(this, "Sounds/Music/Depths"))
 				{
 					Main.newMusic = MusicLoader.GetMusicSlot(this, "Sounds/Music/DepthsOtherworldly");
 				}
@@ -1753,7 +1815,7 @@ namespace TheDepths
 		private void On_TileLightScanner_ApplyLiquidLight(On_TileLightScanner.orig_ApplyLiquidLight orig, TileLightScanner self, Tile tile, ref Vector3 lightColor)
 		{
 			orig.Invoke(self, tile, ref lightColor);
-			if (tile.LiquidType == 1 && Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
+			if (tile.LiquidType == NetmodeID.MultiplayerClient && Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
 				lightColor = Vector3.Zero;
 		}
 		#endregion
@@ -1793,9 +1855,7 @@ namespace TheDepths
 			c.EmitLdfld(typeof(Liquid).GetField("x", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)); //X position variable used in the delegate
 			c.EmitDelegate((int x) =>
 			{
-				return (Worldgen.TheDepthsWorldGen.isWorldDepths && !TheDepthsWorldGen.DrunkDepthsLeft && !TheDepthsWorldGen.DrunkDepthsRight) 
-				|| (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(x) < Main.maxTilesX / 2 
-				|| Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(x) > Main.maxTilesX / 2);
+				return TheDepthsWorldGen.TileInDepths(x);
 			});
 			c.EmitBrtrue(IL_011e);
 		}

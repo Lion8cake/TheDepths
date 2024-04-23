@@ -29,7 +29,7 @@ namespace TheDepths.NPCs
 
 		public override void PostAI(NPC npc)
 		{
-			bool NPCInDepths = ((TheDepthsWorldGen.isWorldDepths && !TheDepthsWorldGen.DrunkDepthsLeft && !TheDepthsWorldGen.DrunkDepthsRight) || ((TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(npc.position.ToTileCoordinates().X) < Main.maxTilesX / 2) || (TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(npc.position.ToTileCoordinates().X) > Main.maxTilesX / 2)));
+			bool NPCInDepths = TheDepthsWorldGen.TileInDepths(npc.position.ToTileCoordinates().X);
 
 			if (NPCInDepths && Collision.LavaCollision(npc.position, npc.width, npc.height))
 			{
@@ -64,7 +64,7 @@ namespace TheDepths.NPCs
 					{
 						if (!target.HasBuff(ModContent.BuffType<Buffs.MercuryContagion>()) && target != npc)
 						{
-							target.AddBuff(ModContent.BuffType<Buffs.MercuryContagion>(), npc.buffTime[npc.FindBuffIndex(ModContent.BuffType<Buffs.MercuryContagion>())]); //works but worried about MP
+							target.AddBuff(ModContent.BuffType<Buffs.MercuryContagion>(), npc.buffTime[npc.FindBuffIndex(ModContent.BuffType<Buffs.MercuryContagion>())]);
 						}
 					}
 				}

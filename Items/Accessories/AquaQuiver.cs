@@ -35,7 +35,7 @@ namespace TheDepths.Items.Accessories
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.MagicQuiver, 1);
 			recipe.AddIngredient(ModContent.ItemType<AquaStone>(), 1);
-			recipe.AddTile(114);
+			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}
 	}

@@ -33,7 +33,7 @@ namespace TheDepths.Projectiles
 			{
 				Dust dust;
 				Vector2 position = Projectile.Center - new Vector2(-6, 12);
-				dust = Main.dust[Terraria.Dust.NewDust(position, 4, 4, 261, 0f, 0f, 0, new Color(119, 135, 162), 2f)];
+				dust = Main.dust[Terraria.Dust.NewDust(position, 4, 4, DustID.AncientLight, 0f, 0f, 0, new Color(119, 135, 162), 2f)];
 				dust.noGravity = true;
 			}
 			return true;
@@ -216,7 +216,7 @@ namespace TheDepths.Projectiles
 				}
 				Projectile.localAI[1] += finalFishingLevel / 30;
 				Projectile.localAI[1] += Main.rand.Next(1, 3);
-				if (Main.rand.Next(60) == 0)
+				if (Main.rand.NextBool(60))
 				{
 					Projectile.localAI[1] += 60f;
 				}

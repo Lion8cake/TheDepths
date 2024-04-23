@@ -9,7 +9,7 @@ namespace TheDepths.Walls
         public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = true;
-            AddMapEntry(new Color(96, 94, 98));
+            AddMapEntry(new Color(42, 48, 51));
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

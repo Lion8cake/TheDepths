@@ -104,13 +104,11 @@ namespace TheDepths.Projectiles.Summons
 				Projectile.active = false;
 				return;
 			}
-			bool flag = true;
 			int num = 450;
 			float num12 = 500f; //distance before flight With wings
 			float num21 = 300f;
 			float num13 = 1000f; //distance before flight Without wings
 			float num22 = 600f;
-			int num32 = 15;
 			if (player.dead)
 			{
 				player.GetModPlayer<TheDepthsPlayer>().livingShadow = false;
@@ -120,7 +118,6 @@ namespace TheDepths.Projectiles.Summons
 				Projectile.timeLeft = 2;
 			}
 			num = 800;
-			Color newColor;
 			Vector2 vector = player.Center;
 			vector.X -= (15 + player.width / 2) * player.direction;
 			vector.X -= (player.direction == 1 ? 0 : -36) + Projectile.minionPos * (player.direction == 1 ? 20 : -20);
@@ -140,7 +137,6 @@ namespace TheDepths.Projectiles.Summons
 			float playerDistance;
 			float myDistance;
 			bool closerIsMe;
-			Rectangle hitbox;
 			if (Projectile.ai[0] == 1f)
 			{
 				Projectile.ai[2] = (player.wingTimeMax > 0 ? 0f : 1f);
