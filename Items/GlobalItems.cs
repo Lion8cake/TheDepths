@@ -59,6 +59,7 @@ namespace TheDepths.Items
             ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(ItemID.AshBlock, 1, ModContent.ItemType<ShaleBlock>(), 1);
             ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(ItemID.Hellstone, 1, ModContent.ItemType<ArqueriteOre>(), 1);
 			ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(ItemID.Obsidian, 1, ModContent.ItemType<Quartz>(), 1);
+            ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(ItemID.LivingFireBlock, 1, ModContent.ItemType<LivingFog>(), 1);
 		}
 
 		public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback)

@@ -1,4 +1,5 @@
 ﻿using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,6 +12,7 @@ namespace TheDepths.Items.Placeable
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+            ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(Type, 1, ItemID.LivingFireBlock, 1);
         }
 
         public override void SetDefaults()
