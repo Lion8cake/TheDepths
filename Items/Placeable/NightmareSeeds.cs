@@ -6,6 +6,10 @@ namespace TheDepths.Items.Placeable
 {
     public class NightmareSeeds : ModItem
 	{
+		public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.AshGrassSeeds;
+		}
+
 		public override void SetDefaults()
 		{
 			Item.useTurn = true;

@@ -55,6 +55,7 @@ namespace TheDepths.Items
             ItemID.Sets.ShimmerTransformToItem[ItemID.Amber] = ItemID.Diamond;
             ItemID.Sets.ShimmerTransformToItem[ItemID.CobaltOre] = ModContent.ItemType<ArqueriteOre>();
             ItemID.Sets.ShimmerTransformToItem[ItemID.Hellstone] = ItemID.PlatinumOre;
+            ItemID.Sets.ShimmerTransformToItem[ItemID.AshGrassSeeds] = ModContent.ItemType<NightmareSeeds>();
 
             ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(ItemID.AshBlock, 1, ModContent.ItemType<ShaleBlock>(), 1);
             ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(ItemID.Hellstone, 1, ModContent.ItemType<ArqueriteOre>(), 1);
