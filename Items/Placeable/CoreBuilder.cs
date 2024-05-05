@@ -47,6 +47,7 @@ namespace TheDepths.Items.Placeable
 
 			AddAndReplace<RubyRelic>(ItemID.GuideVoodooDoll);
 			AddAndReplace<ShalestoneConch>(ItemID.DemonConch);
+			AddAndReplace<AquaStone>(ItemID.MagmaStone);
 		}
 
 		private static void AddAndReplace<TConf>(int hall) where TConf : ModItem

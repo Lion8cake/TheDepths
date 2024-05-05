@@ -21,7 +21,7 @@ namespace TheDepths.Items
 			Item.width = 46;
 			Item.height = 48;
 			Item.rare = ItemRarityID.Orange;
-			Item.value = Item.buyPrice(0, 0, 40);
+			Item.value = Item.sellPrice(0, 5, 0, 0);
 			Item.useAnimation = 20;
 			Item.useTurn = true;
 			Item.autoReuse = true;

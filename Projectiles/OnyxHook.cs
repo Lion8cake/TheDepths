@@ -48,7 +48,7 @@ namespace TheDepths.Projectiles
 
         public override float GrappleRange()
         {
-            return 400f;
+            return 480f;
         }
 
         public override void NumGrappleHooks(Player player, ref int numHooks)

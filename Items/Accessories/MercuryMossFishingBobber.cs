@@ -21,7 +21,6 @@ namespace TheDepths.Items.Accessories
 			Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.rare = ItemRarityID.Blue;
 			Item.accessory = true;
-			Item.vanity = true;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)

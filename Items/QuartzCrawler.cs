@@ -26,6 +26,7 @@ namespace TheDepths.Items
             Item.height = 14;
             Item.noUseGraphic = true;
             Item.bait = 35;
+            Item.value = Item.sellPrice(0, 0, 50, 0);
             Item.rare = ItemRarityID.Green;
 
             Item.makeNPC = (short)ModContent.NPCType<NPCs.QuartzCrawler>();

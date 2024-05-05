@@ -27,7 +27,7 @@ namespace TheDepths.Items
 
 		public override void SetDefaults() {
 			Item.DefaultToFood(22, 22, BuffID.WellFed, 18000);
-			Item.value = Item.buyPrice(0, 20);
+			Item.value = Item.sellPrice(0, 0, 20, 0);
 			Item.rare = ItemRarityID.Blue;
 		}
     }
