@@ -11,6 +11,7 @@ namespace TheDepths.Items.Placeable
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Wood;
 		}
 
 		public override void SetDefaults() {

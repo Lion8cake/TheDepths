@@ -40,6 +40,7 @@ namespace TheDepths.Items.Weapons
 			recipe.AddIngredient(ItemID.MeteoriteBar, 15);
 			recipe.AddIngredient(ModContent.ItemType<Placeable.Onyx>(), 10);
 			recipe.AddTile(TileID.Anvils);
+			recipe.SortAfterFirstRecipesOf(ItemID.OrangePhaseblade);
 			recipe.Register();
 		}
 	}

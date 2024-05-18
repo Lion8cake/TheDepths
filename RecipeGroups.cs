@@ -69,6 +69,7 @@ namespace TheDepths
                 .AddIngredient(ItemID.MagicHoneyDropper)
                 .AddIngredient(ItemID.Wire)
                 .AddTile(TileID.MythrilAnvil)
+                .SortAfterFirstRecipesOf(ItemID.LogicSensor_Liquid)
                 .Register();
             Recipe recipe3 = Recipe.Create(ItemID.DryBomb);
                 recipe3.AddIngredient(ModContent.ItemType<Items.Weapons.QuicksilverBomb>())
@@ -109,6 +110,7 @@ namespace TheDepths
 			    .AddIngredient(ModContent.ItemType<Items.Placeable.GlitterBlock>())
 			    .AddIngredient(ItemID.Waterleaf)
 			    .AddTile(TileID.Bottles)
+			    .SortAfterFirstRecipesOf(ItemID.FishingPotion)
 			    .Register();
 		}
 

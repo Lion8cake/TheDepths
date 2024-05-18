@@ -47,6 +47,7 @@ namespace TheDepths.Items
             Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ModContent.ItemType<Onyx>(), 15);
             recipe.AddTile(TileID.Anvils);
+            recipe.SortAfterFirstRecipesOf(ItemID.LargeAmber);
             recipe.Register();
         }
     }

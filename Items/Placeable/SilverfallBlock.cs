@@ -28,12 +28,14 @@ namespace TheDepths.Items.Placeable
             recipe.AddIngredient(ItemID.Glass);
             recipe.AddTile(TileID.CrystalBall);
             recipe.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), () => Worldgen.TheDepthsWorldGen.isWorldDepths && Main.LocalPlayer.adjLava);
+            recipe.SortAfterFirstRecipesOf(ItemID.LavafallBlock);
             recipe.Register();
 
             Recipe recipe2 = CreateRecipe();
             recipe2.AddIngredient(ModContent.ItemType<Items.Placeable.SilverfallWall>(), 4);
             recipe2.AddTile(TileID.WorkBenches);
             recipe2.Register();
+            recipe2.SortAfter(recipe);
         }
     }
 }

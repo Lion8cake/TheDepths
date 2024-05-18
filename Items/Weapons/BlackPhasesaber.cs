@@ -39,9 +39,10 @@ namespace TheDepths.Items.Weapons
 		public override void AddRecipes()
 		{
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.CrystalShard, 50);
+			recipe.AddIngredient(ItemID.CrystalShard, 25);
 			recipe.AddIngredient(ModContent.ItemType<BlackPhaseblade>(), 1);
-			recipe.AddTile(TileID.Anvils);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.SortAfterFirstRecipesOf(ItemID.OrangePhasesaber);
 			recipe.Register();
 		}
 	}

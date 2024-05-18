@@ -10,7 +10,7 @@ namespace TheDepths.Items.Placeable
 	{
 		public override void SetStaticDefaults()
 		{
-			ItemID.Sets.SortingPriorityMaterials[Item.type] = 90;
+			ItemID.Sets.SortingPriorityMaterials[Item.type] = 70;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
 		}
 

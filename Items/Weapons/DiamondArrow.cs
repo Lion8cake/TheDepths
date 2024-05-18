@@ -32,6 +32,7 @@ namespace TheDepths.Items.Weapons
 			recipe.AddIngredient(ItemID.WoodenArrow, 33);
 			recipe.AddIngredient(ModContent.ItemType<DiamondDust>(), 1);
 			recipe.AddTile(TileID.Anvils);
+			recipe.SortAfterFirstRecipesOf(ItemID.HellfireArrow);
 			recipe.Register();
 		}
 	}

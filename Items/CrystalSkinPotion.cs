@@ -37,6 +37,7 @@ namespace TheDepths.Items
 			recipe.AddIngredient(ModContent.ItemType<Items.ShadowShrub>(), 1);
 			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Quartz>(), 1);
 			recipe.AddTile(TileID.Bottles);
+			recipe.SortAfterFirstRecipesOf(ItemID.ObsidianSkinPotion);
 			recipe.Register();
 		}
     }

@@ -53,6 +53,7 @@ namespace TheDepths.Items.Placeable
 			Recipe recipe = CreateRecipe(10);
 			recipe.AddIngredient(ItemID.Torch, 10);
 			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Onyx>(), 1);
+			recipe.SortAfterFirstRecipesOf(ItemID.OrangeTorch);
 			recipe.Register();
 		}
 	}

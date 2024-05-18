@@ -25,6 +25,7 @@ namespace TheDepths.Items.Placeable
             recipe.AddIngredient(ModContent.ItemType<Onyx>(), 5);
             recipe.AddIngredient(ItemID.StoneBlock, 10);
             recipe.AddTile(TileID.HeavyWorkBench);
+            recipe.SortAfterFirstRecipesOf(ItemID.GemLockAmber);
             recipe.Register();
         }
     }

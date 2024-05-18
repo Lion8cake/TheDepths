@@ -17,6 +17,7 @@ namespace TheDepths.NPCs
             NPCID.Sets.CountsAsCritter[Type] = true;
             NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
             NPCID.Sets.TownCritter[Type] = true;
+            NPCID.Sets.ShimmerTransformToNPC[Type] = NPCID.Shimmerfly;
 
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Buffs.MercuryBoiling>()] = true;

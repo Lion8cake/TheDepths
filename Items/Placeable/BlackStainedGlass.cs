@@ -32,6 +32,7 @@ namespace TheDepths.Items.Placeable
 				.AddIngredient(ItemID.GlassWall, 20)
 				.AddIngredient(ModContent.ItemType<Onyx>())
 				.AddTile(TileID.WorkBenches)
+				.SortAfterFirstRecipesOf(ItemID.OrangeStainedGlass)
 				.Register();
 		}
 	}
