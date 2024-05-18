@@ -57,6 +57,7 @@ namespace TheDepths.Items.Placeable
 			Recipe recipe = CreateRecipe(3);
 			recipe.AddIngredient(ItemID.Torch, 3);
 			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 1);
+			recipe.SortAfterFirstRecipesOf(ItemID.DemonTorch);
 			recipe.Register();
 		}
 	}

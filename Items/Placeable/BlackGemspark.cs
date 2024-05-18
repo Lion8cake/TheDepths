@@ -32,17 +32,20 @@ namespace TheDepths.Items.Placeable
 			recipe.AddIngredient(ItemID.Glass, 20);
 			recipe.AddIngredient(ModContent.ItemType<Onyx>(), 1);
 			recipe.AddTile(TileID.WorkBenches);
+			recipe.SortAfterFirstRecipesOf(ItemID.AmberGemsparkBlock);
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe(1);
 			recipe2.AddIngredient(ModContent.ItemType<Items.Placeable.BlackGemsparkWall>(), 4);
 			recipe2.AddTile(TileID.WorkBenches);
 			recipe2.Register();
+			recipe2.SortAfter(recipe);
 
 			Recipe recipe3 = CreateRecipe(1);
 			recipe3.AddIngredient(ModContent.ItemType<Items.Placeable.BlackGemsparkWallOffline>(), 4);
 			recipe3.AddTile(TileID.WorkBenches);
 			recipe3.Register();
+			recipe3.SortAfter(recipe2);
 		}
 	}
 }

@@ -11,7 +11,7 @@ namespace TheDepths.Items.Placeable
 	{
 		public override void SetStaticDefaults()
 		{
-			ItemID.Sets.SortingPriorityMaterials[Item.type] = 58;
+			ItemID.Sets.SortingPriorityMaterials[Item.type] = 69;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Hellstone;
 

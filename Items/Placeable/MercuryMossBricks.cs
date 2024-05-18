@@ -32,12 +32,14 @@ namespace TheDepths.Items.Placeable
 			recipe.AddIngredient(ModContent.ItemType<MercuryMoss>(), 1);
 			recipe.AddIngredient(ItemID.ClayBlock, 10);
 			recipe.AddTile(TileID.Furnaces);
+			recipe.SortAfterFirstRecipesOf(ItemID.VioletMossBlock);
 			recipe.Register();
 
 			Recipe recipe2 = CreateRecipe();
 			recipe2.AddIngredient(ModContent.ItemType<MercuryMossBrickWall>(), 4);
 			recipe2.AddTile(TileID.WorkBenches);
 			recipe2.Register();
+			recipe2.SortAfter(recipe);
 		}
 	}
 }

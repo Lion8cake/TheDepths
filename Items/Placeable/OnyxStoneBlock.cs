@@ -30,16 +30,18 @@ namespace TheDepths.Items.Placeable
 
 		public override void AddRecipes()
 		{
-			CreateRecipe()
+			Recipe recipe = CreateRecipe()
 				.AddIngredient(ModContent.ItemType<Onyx>())
 				.AddIngredient(ItemID.StoneBlock)
 				.AddCondition(Condition.InGraveyard)
 				.AddTile(TileID.HeavyWorkBench)
+				.SortAfterFirstRecipesOf(ItemID.AmberStoneBlock)
 				.Register();
 			CreateRecipe()
 				.AddIngredient(ModContent.ItemType<OnyxStoneWall>(), 4)
 				.AddTile(TileID.WorkBenches)
-				.Register();
+				.Register()
+				.SortAfter(recipe);
 		}
 	}
 }
