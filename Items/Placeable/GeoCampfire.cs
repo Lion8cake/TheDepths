@@ -31,7 +31,11 @@ namespace TheDepths.Items.Placeable
 
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddRecipeGroup(RecipeGroupID.Wood, 10).AddIngredient(ModContent.ItemType<GeoTorch>(), 5).Register();
+            CreateRecipe(1)
+                .AddRecipeGroup(RecipeGroupID.Wood, 10)
+                .AddIngredient(ModContent.ItemType<GeoTorch>(), 5)
+                .SortAfterFirstRecipesOf(ItemID.DemonCampfire)
+                .Register();
         }
     }
 }

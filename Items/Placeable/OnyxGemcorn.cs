@@ -35,6 +35,7 @@ namespace TheDepths.Items.Placeable
             CreateRecipe(1)
                 .AddIngredient(ItemID.Acorn)
                 .AddIngredient(ModContent.ItemType<Onyx>())
+                .SortAfterFirstRecipesOf(ItemID.GemTreeAmberSeed)
 				.Register();
         }
     }

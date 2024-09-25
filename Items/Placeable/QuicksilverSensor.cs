@@ -36,6 +36,7 @@ namespace TheDepths.Items.Placeable
 			recipe.AddIngredient(ModContent.ItemType<MagicQuicksilverDropper>());
 			recipe.AddIngredient(ItemID.Wire);
 			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.SortAfterFirstRecipesOf(ItemID.LogicSensor_Lava);
 			recipe.Register();
 		}
 	}
