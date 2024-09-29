@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -27,6 +28,16 @@ namespace TheDepths.Tiles
             r = 0.63f;
             g = 0.68f;
             b = 0.73f;
+        }
+
+        public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset)
+        {
+            frameXOffset = Main.tileFrame[Type] * 54;
+        }
+
+        public override void AnimateTile(ref int frame, ref int frameCounter)
+        {
+            frame = Main.tileFrame[TileID.PottedLavaPlantTendrils];
         }
     }
 }

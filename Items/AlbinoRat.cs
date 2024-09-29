@@ -26,6 +26,7 @@ namespace TheDepths.Items
             Item.height = 20;
             Item.noUseGraphic = true;
             Item.bait = 15;
+            Item.value = Item.sellPrice(0, 0, 20, 0);
             Item.rare = ItemRarityID.Blue;
 
             Item.makeNPC = (short)ModContent.NPCType<NPCs.AlbinoRat>();
