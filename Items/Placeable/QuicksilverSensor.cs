@@ -28,16 +28,5 @@ namespace TheDepths.Items.Placeable
 			Item.createTile = ModContent.TileType<Tiles.QuicksilverSensor>();
 			Item.rare = ItemRarityID.Blue;
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.Cog, 5);
-			recipe.AddIngredient(ModContent.ItemType<MagicQuicksilverDropper>());
-			recipe.AddIngredient(ItemID.Wire);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SortAfterFirstRecipesOf(ItemID.LogicSensor_Lava);
-			recipe.Register();
-		}
 	}
 }

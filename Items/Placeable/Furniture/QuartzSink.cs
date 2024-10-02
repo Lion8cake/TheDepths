@@ -25,10 +25,5 @@ namespace TheDepths.Items.Placeable.Furniture
             Item.value = Terraria.Item.sellPrice(copper: 60);
             Item.createTile = ModContent.TileType<Tiles.Furniture.QuartzSink>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.Quartz>(), 4).AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteOre>(), 2).AddIngredient(ItemID.WaterBucket, 1).AddTile(TileID.WorkBenches).Register();
-        }
     }
 }

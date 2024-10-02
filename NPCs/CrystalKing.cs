@@ -39,7 +39,7 @@ namespace TheDepths.NPCs
             NPC.height = 74;
             NPC.damage = 50;
             NPC.defense = 34;
-            NPC.lifeMax = 500;
+            NPC.lifeMax = 400;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.lavaImmune = true;
@@ -169,7 +169,8 @@ namespace TheDepths.NPCs
 						Vector2 val = Main.player[NPC.target].Center + new Vector2(NPC.Center.X, NPC.Center.Y);
 						Vector2 val2 = NPC.Center + new Vector2(NPC.Center.X, NPC.Center.Y);
 						float num10 = (float)Math.Atan2(val2.Y - val.Y, val2.X - val.X);
-						Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X, NPC.Center.Y, (float)(Math.Cos(num10) * 14.0 * -1.0), (float)(Math.Sin(num10) * 14.0 * -1.0), ModContent.ProjectileType<CrystalBall>(), 25, 0f, 0);
+						int proj = Projectile.NewProjectile(new EntitySource_Misc(""), NPC.Center.X, NPC.Center.Y, (float)(Math.Cos(num10) * 14.0 * -1.0), (float)(Math.Sin(num10) * 14.0 * -1.0), ModContent.ProjectileType<CrystalBall>(), 25, 0f, 0);
+						NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, proj);
 					}
 				}
 			}
@@ -179,7 +180,7 @@ namespace TheDepths.NPCs
         {
             if (Main.hardMode && (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(spawnInfo.Player) && !Main.remixWorld) || Main.hardMode &&  (spawnInfo.Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(spawnInfo.Player) && (spawnInfo.SpawnTileX < Main.maxTilesX * 0.38 + 50.0 || spawnInfo.SpawnTileX > Main.maxTilesX * 0.62) && Main.remixWorld))
             {
-                return 1f;
+                return 0.6f;
             }
             return 0f;
         }
@@ -194,7 +195,9 @@ namespace TheDepths.NPCs
 
         public override void HitEffect(NPC.HitInfo hit)
         {
-            if (Main.netMode == NetmodeID.Server)
+			NPC.ai[1] = 0f;
+
+			if (Main.netMode == NetmodeID.Server)
             {
                 return;
             }

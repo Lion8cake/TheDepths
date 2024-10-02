@@ -30,14 +30,5 @@ namespace TheDepths.Items.Accessories
 			player.accTackleBox = true;
 			player.fishingSkill += 10;
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.AnglerTackleBag, 1);
-			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.QuicksilverproofFishingHook>(), 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
-		}
 	}
 }

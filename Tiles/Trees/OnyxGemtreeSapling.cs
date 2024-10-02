@@ -56,12 +56,9 @@ namespace TheDepths.Tiles.Trees
 				Tile tile = Main.tile[i, j];
 				if (tile.HasUnactuatedTile)
 				{
-					for (int k = 0; k < (Main.maxTilesX * Main.maxTilesY); k++)
+					if (WorldGen.genRand.NextBool(5))
 					{
-						if (WorldGen.genRand.NextBool(5))
-						{
-							AttemptToGrowOnyxFromSapling(i, j, underground: true);
-						}
+						AttemptToGrowOnyxFromSapling(i, j, underground: true);
 					}
 				}
 			}

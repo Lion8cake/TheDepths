@@ -29,13 +29,5 @@ namespace TheDepths.Items.Weapons
             Item.noMelee = true;
             Item.value = 100;
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Items.Placeable.PetrifiedWood>(), 8)
-                .AddTile(TileID.WorkBenches)
-                .Register();
-        }
     }
 }

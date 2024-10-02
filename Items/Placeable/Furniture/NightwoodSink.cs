@@ -25,10 +25,5 @@ namespace TheDepths.Items.Placeable.Furniture
             Item.value = Terraria.Item.sellPrice(copper: 60);
             Item.createTile = ModContent.TileType<Tiles.Furniture.NightwoodSink>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NightWood>(), 6).AddIngredient(ItemID.WaterBucket, 1).AddTile(TileID.WorkBenches).Register();
-        }
     }
 }

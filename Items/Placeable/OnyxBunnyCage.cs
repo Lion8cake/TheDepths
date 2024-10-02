@@ -28,12 +28,5 @@ namespace TheDepths.Items.Placeable
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<Tiles.OnyxBunnyCage>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1)
-                .AddIngredient(ModContent.ItemType<OnyxBunny>())
-                .AddIngredient(ItemID.Terrarium, 1).Register();
-        }
     }
 }

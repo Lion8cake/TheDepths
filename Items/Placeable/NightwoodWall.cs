@@ -26,13 +26,5 @@ namespace TheDepths.Items.Placeable
             Item.consumable = true;
             Item.createWall = ModContent.WallType<Walls.NightwoodWall>();
         }
-
-        public override void AddRecipes()
-        {
-            Recipe recipe = CreateRecipe(4);
-            recipe.AddIngredient(ModContent.ItemType<NightWood>());
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.Register();
-        }
     }
 }

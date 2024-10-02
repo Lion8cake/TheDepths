@@ -25,10 +25,5 @@ namespace TheDepths.Items.Placeable.Furniture
             Item.value = Terraria.Item.sellPrice(silver: 1);
             Item.createTile = ModContent.TileType<Tiles.Furniture.NightwoodChest>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<NightWood>(), 8).AddRecipeGroup(RecipeGroupID.IronBar, 2).AddTile(TileID.WorkBenches).Register();
-        }
     }
 }

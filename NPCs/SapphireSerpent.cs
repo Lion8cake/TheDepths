@@ -139,10 +139,8 @@ namespace TheDepths.NPCs
 					Vector2 direction = (target.Center - NPC.Center).SafeNormalize(Vector2.UnitX);
 					direction = direction.RotatedByRandom(MathHelper.ToRadians(10));
 
-					int projectile = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, direction * 10, ModContent.ProjectileType<SapphireShovelProj>(), 5, 0, Main.myPlayer);
-					Main.projectile[projectile].timeLeft = 300;
-                    Main.projectile[projectile].friendly = false;
-                    Main.projectile[projectile].hostile = true;
+					int projectile = Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, direction * 10, ModContent.ProjectileType<SapphireSpit>(), 25, 0, Main.myPlayer);
+					NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, projectile);
 					attackCounter = 60;
 					NPC.netUpdate = true;
 				}

@@ -16,6 +16,7 @@ namespace TheDepths.Tiles
 		public override void SetStaticDefaults()
 		{
 			TileID.Sets.Ore[Type] = true;
+			TileID.Sets.DoesntGetReplacedWithTileReplacement[Type] = true;
 			Main.tileOreFinderPriority[Type] = 500;
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 975;

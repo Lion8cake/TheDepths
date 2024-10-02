@@ -25,10 +25,5 @@ namespace TheDepths.Items.Placeable
             Item.value = Terraria.Item.sellPrice(silver: 25);
             Item.createTile = ModContent.TileType<Tiles.HangingShadowShrub>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ItemID.PotSuspended).AddIngredient(ModContent.ItemType<ShadowShrub>()).Register();
-        }
     }
 }

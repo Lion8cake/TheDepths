@@ -47,6 +47,8 @@ namespace TheDepths {
 				public static bool[] BottomlessLavaBucketOnlyItem = ItemID.Sets.Factory.CreateBoolSet(); //For Modders
 
 				public static bool[] LavaSpongeOnlyItem = ItemID.Sets.Factory.CreateBoolSet(); //For Modders
+
+				public static bool[] LavaFishingHookOnlyItem = ItemID.Sets.Factory.CreateBoolSet(ItemID.LavaproofTackleBag);
 			}
 
 			/// <summary>
@@ -60,6 +62,12 @@ namespace TheDepths {
 			/// <br />Make sure that said axes that can break petrified trees have their pick value set to 0. Axes with a pickaxe value higher than 0 will already be able to destroy Petrified Trees
 			/// </summary>
 			public static bool[] AxesAbleToBreakStone = ItemID.Sets.Factory.CreateBoolSet(ItemID.AcornAxe);
+
+			/// <summary>
+			/// NPCs that should be unaffected by the Freezing Water debuff granted by the sapphire shovel, aqua stone and more
+			/// If an npc is a boss, it is automatically immune.
+			/// </summary>
+			public static bool[] IsntFreezable = NPCID.Sets.Factory.CreateBoolSet(NPCID.DungeonGuardian, NPCID.GolemFistLeft, NPCID.GolemFistRight, NPCID.PlanterasHook, NPCID.PlanterasTentacle, NPCID.TheHungry, NPCID.TheHungryII, NPCID.SkeletronHand, NPCID.PrimeCannon, NPCID.PrimeLaser, NPCID.PrimeSaw, NPCID.PrimeVice);
 		}
     }
 }

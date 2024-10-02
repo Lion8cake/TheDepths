@@ -48,13 +48,5 @@ namespace TheDepths.Items.Weapons
 				Item.useAnimation = 15;
 			}
 		}
-
-        public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.NightWood>(), 7);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
-		}
 	}
 }

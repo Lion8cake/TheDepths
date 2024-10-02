@@ -39,6 +39,16 @@ namespace TheDepths.Projectiles
 			behindNPCsAndTiles.Add(index);
         }
 
+		public override void OnKill(int timeLeft)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				Gore.NewGore(new EntitySource_Misc(""), Projectile.position, default(Vector2), GoreID.Smoke1);
+				Gore.NewGore(new EntitySource_Misc(""), Projectile.position, default(Vector2), GoreID.Smoke2);
+				Gore.NewGore(new EntitySource_Misc(""), Projectile.position, default(Vector2), GoreID.Smoke3);
+			}
+		}
+
 		public override void AI() {
 			//Projectile.ai[0]; //IsAboutToTeleport
 			//Projectile.ai[1]; //teleportWaitTimer
@@ -48,6 +58,7 @@ namespace TheDepths.Projectiles
 
 			if (!player.dead && player.HasBuff(ModContent.BuffType<Buffs.ShadowCatBuff>())) {
 				Projectile.timeLeft = 2;
+				player.GetModPlayer<TheDepthsPlayer>().shadowCat = true;
 			}
 
 			if (player.position.X >= Projectile.Center.X)

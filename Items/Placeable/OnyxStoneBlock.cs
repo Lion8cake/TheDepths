@@ -27,21 +27,5 @@ namespace TheDepths.Items.Placeable
 			Item.createTile = ModContent.TileType<Tiles.OnyxStone>();
 			Item.SetShopValues(ItemRarityID.White, Item.sellPrice(0, 0, 1));
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe()
-				.AddIngredient(ModContent.ItemType<Onyx>())
-				.AddIngredient(ItemID.StoneBlock)
-				.AddCondition(Condition.InGraveyard)
-				.AddTile(TileID.HeavyWorkBench)
-				.SortAfterFirstRecipesOf(ItemID.AmberStoneBlock)
-				.Register();
-			CreateRecipe()
-				.AddIngredient(ModContent.ItemType<OnyxStoneWall>(), 4)
-				.AddTile(TileID.WorkBenches)
-				.Register()
-				.SortAfter(recipe);
-		}
 	}
 }

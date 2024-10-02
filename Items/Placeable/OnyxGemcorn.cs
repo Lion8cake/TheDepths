@@ -28,15 +28,5 @@ namespace TheDepths.Items.Placeable
 			Item.useAnimation = 15;
 			Item.height = 22;
 		}
-
-
-		public override void AddRecipes()
-        {
-            CreateRecipe(1)
-                .AddIngredient(ItemID.Acorn)
-                .AddIngredient(ModContent.ItemType<Onyx>())
-                .SortAfterFirstRecipesOf(ItemID.GemTreeAmberSeed)
-				.Register();
-        }
     }
 }

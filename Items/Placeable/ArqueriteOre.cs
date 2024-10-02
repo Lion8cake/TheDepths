@@ -33,21 +33,5 @@ namespace TheDepths.Items.Placeable
 			Item.value = Item.sellPrice(0, 0, 2, 50);
 			Item.rare = ItemRarityID.Green;
 		}
-
-		public override void AddRecipes()
-		{
-			CreateRecipe()
-				.AddIngredient(ModContent.ItemType<LeakyMercuryWall>(), 4)
-				.AddTile(TileID.WorkBenches)
-				.Register();
-			CreateRecipe()
-				.AddIngredient(ModContent.ItemType<MercuryBubbleWall>(), 4)
-				.AddTile(TileID.WorkBenches)
-				.Register();
-			CreateRecipe()
-				.AddIngredient(ModContent.ItemType<DottedQuicksilverWall>(), 4)
-				.AddTile(TileID.WorkBenches)
-				.Register();
-		}
 	}
 }

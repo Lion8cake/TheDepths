@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheDepths.Dusts;
 using Terraria.GameContent.Creative;
+using TheDepths.Items.Armor;
 
 namespace TheDepths.Items.Weapons
 {
@@ -35,14 +36,6 @@ namespace TheDepths.Items.Weapons
 			if (Main.rand.NextBool(10)) {
 				int dust = Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, ModContent.DustType<MercurySparkleDust>());
 			}
-		}
-		
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<ArqueriteBar>(), 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
 		}
 	}
 }

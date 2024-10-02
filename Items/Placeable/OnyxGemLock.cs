@@ -18,15 +18,5 @@ namespace TheDepths.Items.Placeable
             Item.CloneDefaults(ItemID.GemLockRuby);
             Item.createTile = ModContent.TileType<GemlockTile>();
         }
-
-        public override void AddRecipes()
-        {
-            Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ModContent.ItemType<Onyx>(), 5);
-            recipe.AddIngredient(ItemID.StoneBlock, 10);
-            recipe.AddTile(TileID.HeavyWorkBench);
-            recipe.SortAfterFirstRecipesOf(ItemID.GemLockAmber);
-            recipe.Register();
-        }
     }
 }

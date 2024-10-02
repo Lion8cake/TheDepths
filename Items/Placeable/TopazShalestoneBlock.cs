@@ -27,15 +27,5 @@ namespace TheDepths.Items.Placeable
 			Item.createTile = ModContent.TileType<Tiles.ShalestoneTopaz>();
 			Item.SetShopValues(ItemRarityID.White, Item.sellPrice(0, 0, 1));
 		}
-
-		public override void AddRecipes()
-		{
-			CreateRecipe()
-				.AddIngredient(ItemID.Topaz)
-				.AddIngredient(ModContent.ItemType<Shalestone>())
-				.AddCondition(Condition.InGraveyard)
-				.AddTile(TileID.HeavyWorkBench)
-				.Register();
-		}
 	}
 }

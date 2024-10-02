@@ -36,14 +36,5 @@ namespace TheDepths.Items.Weapons
 			Item.shoot = ModContent.ProjectileType<Projectiles.RubyBolt>();
 			Item.shootSpeed = 7.5f;
 		}
-		
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.RubyStaff);
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Ember>(), 30);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
-		}
 	}
 }

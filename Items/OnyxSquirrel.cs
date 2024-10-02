@@ -1,6 +1,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheDepths.Items.Placeable;
 
 namespace TheDepths.Items
 {
@@ -9,7 +10,8 @@ namespace TheDepths.Items
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 5;
-        }
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Onyx>();
+		}
 
         public override void SetDefaults()
         {

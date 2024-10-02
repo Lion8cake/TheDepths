@@ -25,10 +25,5 @@ namespace TheDepths.Items.Placeable.Furniture
             Item.value = Terraria.Item.sellPrice(copper: 60);
             Item.createTile = ModContent.TileType<Tiles.Furniture.PetrifiedWoodPiano>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<PetrifiedWood>(), 15).AddIngredient(ItemID.Bone, 4).AddIngredient(ItemID.Book, 1).AddTile(TileID.Sawmill).Register();
-        }
     }
 }

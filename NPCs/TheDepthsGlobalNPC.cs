@@ -27,6 +27,19 @@ namespace TheDepths.NPCs
 			}
 		}
 
+		public override bool PreAI(NPC npc)
+		{
+			if (npc.type == NPCID.DemonTaxCollector || npc.type == ModContent.NPCType<CrystalBoundTaxCollector>())
+			{
+				if (NPC.savedTaxCollector && Main.netMode != NetmodeID.MultiplayerClient)
+				{
+					npc.StrikeInstantKill();
+					return false;
+				}
+			}
+			return true;
+		}
+
 		public override void PostAI(NPC npc)
 		{
 			bool NPCInDepths = TheDepthsWorldGen.TileInDepths(npc.position.ToTileCoordinates().X);
@@ -117,7 +130,7 @@ namespace TheDepths.NPCs
 		}
 		
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
-			if (slowWater && !npc.boss && npc.type != NPCID.DungeonGuardian)
+			if (slowWater && !npc.boss && !TheDepthsIDs.Sets.IsntFreezable[npc.type])
 			{
 				npc.velocity.X = 0f;
 				if (npc.noGravity)

@@ -25,13 +25,5 @@ namespace TheDepths.Items.Armor
 		public override void UpdateEquip(Player player) {
 			player.maxMinions++;
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 8);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
-		}
 	}
 }

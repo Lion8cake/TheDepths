@@ -30,14 +30,5 @@ namespace TheDepths.Items.Placeable
 			Item.placeStyle = 0;
 			Item.rare = ItemRarityID.White;
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.EmptyDropper);
-			recipe.AddTile(TileID.CrystalBall);
-			recipe.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), () => Worldgen.TheDepthsWorldGen.isWorldDepths && Main.LocalPlayer.adjLava);
-			recipe.Register();
-		}
 	}
 }

@@ -25,15 +25,5 @@ namespace TheDepths.Items.Accessories
 			player.carpet = true;
 			player.GetModPlayer<TheDepthsPlayer>().quicksilverSurfboard = true;
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.DiamondDust>(), 20);
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 20);
-			recipe.AddIngredient(ItemID.SoulofFlight, 20);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
-		}
 	}
 }

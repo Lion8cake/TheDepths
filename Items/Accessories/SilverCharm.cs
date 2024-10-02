@@ -28,14 +28,5 @@ namespace TheDepths.Items.Accessories
 			player.GetModPlayer<TheDepthsPlayer>().aAmulet = true;
 			player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<AmalgamAmulet>());
-			recipe.AddIngredient(ModContent.ItemType<CrystalSkull>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
-		}
 	}
 }

@@ -32,29 +32,5 @@ namespace TheDepths.Items.Accessories
 			player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
 			player.GetModPlayer<TheDepthsPlayer>().stoneRose = true;
 		}
-		
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<StoneRose>());
-			recipe.AddIngredient(ModContent.ItemType<AmalgamAmulet>());
-			recipe.AddIngredient(ModContent.ItemType<CrystalWaterWalkingBoots>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
-
-			Recipe recipe2 = CreateRecipe();
-			recipe2.AddIngredient(ModContent.ItemType<StoneRose>());
-			recipe2.AddIngredient(ModContent.ItemType<SilverCharm>());
-			recipe2.AddIngredient(ModContent.ItemType<CrystalWaterWalkingBoots>());
-			recipe2.AddTile(TileID.TinkerersWorkbench);
-			recipe2.Register();
-
-			Recipe recipe3 = CreateRecipe();
-			recipe3.AddIngredient(ModContent.ItemType<StoneRose>());
-			recipe3.AddIngredient(ModContent.ItemType<SilverCharm>());
-			recipe3.AddIngredient(ItemID.WaterWalkingBoots);
-			recipe3.AddTile(TileID.TinkerersWorkbench);
-			recipe3.Register();
-		}
 	}
 }

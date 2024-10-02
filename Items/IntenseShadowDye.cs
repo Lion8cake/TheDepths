@@ -28,13 +28,5 @@ namespace TheDepths.Items
 			Item.rare = ItemRarityID.Orange;
 			Item.dye = dye;
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.ShadowDye, 2);
-			recipe.AddTile(TileID.DyeVat);
-			recipe.Register();
-		}
 	}
 }

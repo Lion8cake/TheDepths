@@ -24,13 +24,5 @@ namespace TheDepths.Items.Placeable
 			Item.consumable = true;
 			Item.createWall = ModContent.WallType<Walls.BlackGemsparkWallOffline>();
 		}
-
-		public override void AddRecipes()
-		{
-			CreateRecipe(4)
-				.AddIngredient(ModContent.ItemType<BlackGemspark>())
-				.AddTile(TileID.WorkBenches)
-				.Register();
-		}
 	}
 }

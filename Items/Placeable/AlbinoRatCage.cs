@@ -20,12 +20,5 @@ namespace TheDepths.Items.Placeable
             Item.CloneDefaults(ItemID.WormCage);
             Item.createTile = ModContent.TileType<Tiles.AlbinoRatCage>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1)
-                .AddIngredient(ModContent.ItemType<Items.AlbinoRat>())
-                .AddIngredient(ItemID.Terrarium, 1).Register();
-        }
     }
 }

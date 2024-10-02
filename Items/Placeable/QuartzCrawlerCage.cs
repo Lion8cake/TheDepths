@@ -20,12 +20,5 @@ namespace TheDepths.Items.Placeable
             Item.CloneDefaults(ItemID.WormCage);
             Item.createTile = ModContent.TileType<Tiles.QuartzCrawlerCage>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1)
-                .AddIngredient(ModContent.ItemType<Items.QuartzCrawler>())
-                .AddIngredient(ItemID.Terrarium, 1).Register();
-        }
     }
 }

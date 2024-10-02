@@ -32,6 +32,8 @@ using static Terraria.ModLoader.PlayerDrawLayer;
 using Terraria.GameInput;
 using static Terraria.ModLoader.ExtraJump;
 using TheDepths.NPCs.Chasme;
+using Terraria.GameContent.Drawing;
+using Terraria.GameContent.UI.Elements;
 
 namespace TheDepths
 {
@@ -64,6 +66,8 @@ namespace TheDepths
         public bool sEmbers;
         public bool nFlare;
         public bool pShield;
+        private int pShieldReduction = 1;
+        private int pShieldTimer = 0;
         public bool Gslam;
         public bool GslamVanity;
         public bool quicksilverSurfboard;
@@ -84,7 +88,10 @@ namespace TheDepths
         public bool livingShadow;
         public bool miniChasme;
         public bool ShadePet;
+        public bool shadowCat;
         public bool FogMonolith;
+
+        public bool engageChasme;
 
         public override void ResetEffects()
         {
@@ -117,6 +124,7 @@ namespace TheDepths
             livingShadow = false;
             miniChasme = false;
             ShadePet = false;
+            shadowCat = false;
             if (tremblingDepthsScreenshakeTimer < 0)
             {
 				tremblingDepthsScreenshakeTimer = 0;
@@ -125,7 +133,7 @@ namespace TheDepths
             {
                 tremblingDepthsScreenshakeTimer--;
             }
-            FogMonolith = false;
+			FogMonolith = false;
         }
 
         public override void ModifyScreenPosition()
@@ -245,13 +253,47 @@ namespace TheDepths
 
 		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
 		{
-			if (pShield && !TheDepthsIDs.Sets.UnreflectiveProjectiles[proj.type])
-			{
-                modifiers.FinalDamage *= 0.5f;
-                proj.hostile = false;
-                proj.friendly = true;
-                proj.velocity = -proj.oldVelocity;
-                proj.owner = Main.myPlayer;
+            if (pShield)
+            {
+                float percentage = 0.0f;
+                pShieldTimer = 60 * 3;
+                if (pShieldReduction < 6)
+                    pShieldReduction++;
+                switch (pShieldReduction)
+                {
+                    case 1:
+                        percentage = 0.5f;
+                        break;
+                    case 2:
+                        percentage = 0.45f;
+                        break;
+                    case 3:
+                        percentage = 0.35f;
+                        break;
+                    case 4:
+                        percentage = 0.20f;
+                        break;
+					case 5:
+						percentage = 0.1f;
+						break;
+					case 6:
+						percentage = 0.0f;
+						break;
+				}
+				modifiers.FinalDamage *= 1f - percentage;
+				if (!TheDepthsIDs.Sets.UnreflectiveProjectiles[proj.type])
+			    {
+                    proj.hostile = false;
+                    proj.friendly = true;
+                    proj.velocity = -proj.oldVelocity;
+                    proj.owner = Player.whoAmI;
+					SoundEngine.PlaySound(in SoundID.Item150, Player.position);
+					ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.SilverBulletSparkle, new ParticleOrchestraSettings
+					{
+						PositionInWorld = proj.Center,
+						MovementVector = Vector2.Zero
+					}, Player.whoAmI);
+				}
             }
 		}
 
@@ -408,7 +450,32 @@ namespace TheDepths
                 player.velocity.Y = 20;
             }
 
-            if (!Main.dedServ)
+			if (pShieldTimer <= 0)
+			{
+                if (pShieldReduction > 1)
+                {
+                    pShieldTimer = 60 * 2;
+                    pShieldReduction--;
+                }
+                else
+                {
+					pShieldTimer = 0;
+				}
+			}
+			else
+			{
+				pShieldTimer--;
+			}
+            if (pShieldReduction > 6)
+            {
+                pShieldReduction = 6;
+            }
+			if (pShieldReduction <= 0)
+			{
+				pShieldReduction = 1;
+			}
+
+			if (!Main.dedServ)
             {
                 if (Worldgen.TheDepthsWorldGen.InDepths(player))
                 {
@@ -691,12 +758,17 @@ namespace TheDepths
             }
 			if (chasmeNPCIndex < 0 || !Main.npc[chasmeNPCIndex].active)
 			{
+                engageChasme = false;
 				return;
 			}
+            if (Player.ZoneUnderworldHeight)
+            {
+                engageChasme = true;
+            }
 			Vector2 center = Player.Center;
 			float num3 = Main.npc[chasmeNPCIndex].position.X + (float)(Main.npc[chasmeNPCIndex].width / 2) - center.X;
 			float num2 = Main.npc[chasmeNPCIndex].position.Y + (float)(Main.npc[chasmeNPCIndex].height / 2) - center.Y;
-			if ((float)Math.Sqrt(num3 * num3 + num2 * num2) > 20000f)
+			if ((float)Math.Sqrt(num3 * num3 + num2 * num2) > 20000f && engageChasme)
 			{
 				Player.KillMe(PlayerDeathReason.ByOther(11), 1000.0, 0);
 			}

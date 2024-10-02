@@ -24,14 +24,5 @@ namespace TheDepths.Items.Placeable
 			Item.consumable = true;
 			Item.createWall = ModContent.WallType<Walls.OnyxStoneWall>();
 		}
-
-		public override void AddRecipes()
-		{
-			CreateRecipe(4)
-				.AddIngredient(ModContent.ItemType<OnyxStoneBlock>())
-				.AddCondition(Condition.InGraveyard)
-				.AddTile(TileID.WorkBenches)
-				.Register();
-		}
 	}
 }

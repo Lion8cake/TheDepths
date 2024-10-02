@@ -20,12 +20,5 @@ namespace TheDepths.Items.Placeable
             Item.CloneDefaults(ItemID.WormCage);
             Item.createTile = ModContent.TileType<Tiles.EnchantedNightmareWormCage>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1)
-                .AddIngredient(ModContent.ItemType<Items.EnchantedNightmareWorm>())
-                .AddIngredient(ItemID.Terrarium, 1).Register();
-        }
     }
 }

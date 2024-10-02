@@ -5,6 +5,7 @@ using Terraria.ID;
 using TheDepths.Buffs;
 using Terraria.GameContent.Creative;
 using Terraria.Localization;
+using TheDepths.Items.Weapons;
 
 namespace TheDepths.Items.Armor
 {
@@ -39,14 +40,6 @@ namespace TheDepths.Items.Armor
 				player.buffImmune[ModContent.BuffType<MercuryBoiling>()] = true;
 				player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
 			}
-		}
-
-		public override void AddRecipes() 
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
 		}
 	}
 }

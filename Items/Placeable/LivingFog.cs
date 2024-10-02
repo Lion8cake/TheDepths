@@ -12,7 +12,7 @@ namespace TheDepths.Items.Placeable
         public override void SetStaticDefaults()
         {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
-            ItemTrader.ChlorophyteExtractinator.AddOption_OneWay(Type, 1, ItemID.LivingFireBlock, 1);
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.LivingFireBlock;
         }
 
         public override void SetDefaults()

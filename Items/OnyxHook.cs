@@ -30,14 +30,5 @@ namespace TheDepths.Items
 			Item.shootSpeed = 13f;
             Item.shoot = ModContent.ProjectileType<Projectiles.OnyxHook>();
         }
-		
-		public override void AddRecipes()
-        {
-            Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ModContent.ItemType<Onyx>(), 15);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SortAfterFirstRecipesOf(ItemID.AmberHook);
-            recipe.Register();
-        }
     }
 }

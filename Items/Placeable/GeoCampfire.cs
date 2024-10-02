@@ -28,14 +28,5 @@ namespace TheDepths.Items.Placeable
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerCampfire;
 		}
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1)
-                .AddRecipeGroup(RecipeGroupID.Wood, 10)
-                .AddIngredient(ModContent.ItemType<GeoTorch>(), 5)
-                .SortAfterFirstRecipesOf(ItemID.DemonCampfire)
-                .Register();
-        }
     }
 }

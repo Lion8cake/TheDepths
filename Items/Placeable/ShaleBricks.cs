@@ -40,13 +40,5 @@ namespace TheDepths.Items.Placeable
 			Item.height = 12;
 			Item.rare = ItemRarityID.White;
 		}
-		
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ShaleBlock>(), 2);
-			recipe.AddTile(TileID.Furnaces);
-			recipe.Register();
-		}
 	}
 }

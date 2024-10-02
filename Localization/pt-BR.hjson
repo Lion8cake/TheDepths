@@ -215,6 +215,7 @@ Mods: {
 			PetrifiedWoodToilet.MapEntry: Porcelana de Madeira Petrificada
 			PetrifiedWoodTrappedChest.MapEntry: Baú-Armadilha de Madeira Petrificada
 			PetrifiedWoodWorkbench.MapEntry: Bancada de Trabalho de Madeira Petrificada
+			// FelineTombstone.MapEntry: Feline Tombstone
 		}
 
 		Buffs: {
@@ -1897,6 +1898,11 @@ Mods: {
 					Toque duplo {$Key.DOWN}
 					'''
 			}
+
+			FelineTombstone: {
+				// DisplayName: Feline Tombstone
+				// Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -1945,6 +1951,7 @@ Mods: {
 			QuartzChunk.DisplayName: Quartzo
 			RubyBolt.DisplayName: Dardo Rubi
 			SapphireShovelProj.DisplayName: Dardo de Água
+			SapphireSpit.DisplayName: "{$Mods.TheDepths.Projectiles.SapphireShovelProj.DisplayName}"
 			Shaderang.DisplayName: Bumerangue das Sombras
 			ShadowBall.DisplayName: Bola Sombria Grande
 			ShadowBall2.DisplayName: Bola Sombria
@@ -1997,6 +2004,7 @@ Mods: {
 			ShadowLash.DisplayName: Chicote Sombrio
 			QuicksilverTears.DisplayName: Lágrimas de Mercúrio
 			EmeraldEnergy.DisplayName: Energia Esmeralda
+			// FelineTombstone.DisplayName: Feline Tombstone
 		}
 
 		Biomes: {
@@ -2103,7 +2111,8 @@ Mods: {
 			15: Yee苍棱
 			16: Seceip
 			17: Roton
-			18: BasicallyIAmFox
+			18: CDT_Maggot
+			19: BasicallyIAmFox
 		}
 
 		MusicDisplay: {

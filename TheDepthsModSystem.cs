@@ -100,6 +100,11 @@ namespace TheDepths
 			return false;
 		}
 
+		public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
+		{
+			Main.SceneMetrics.GraveyardTileCount += tileCounts[ModContent.TileType<FelineTombstone>()];
+		}
+
 		private static void TileGlowmaskList(TileDrawInfo drawData, int type, out Texture2D altGlowTexture, out Texture2D glowTexture, out Rectangle glowSourceRect, out Color glowColor)
 		{
 			glowTexture = null;

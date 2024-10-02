@@ -215,6 +215,7 @@ Mods: {
 			PetrifiedWoodToilet.MapEntry: Petrified Wood Toilet
 			PetrifiedWoodTrappedChest.MapEntry: Petrified Wood Trapped Chest
 			PetrifiedWoodWorkbench.MapEntry: Petrified Wood Workbench
+			FelineTombstone.MapEntry: Tombstone
 		}
 
 		Buffs: {
@@ -1548,7 +1549,8 @@ Mods: {
 				DisplayName: Palladium Shield
 				Tooltip:
 					'''
-					Halves all projectile damage
+					Longer you aren't hit, the more damage is reduced from projectiles.
+					This can gain up to 50% damage reduction from projectiles.
 					Reflects most projectiles towards attackers
 					'''
 			}
@@ -1897,6 +1899,11 @@ Mods: {
 					Double tap {$Key.DOWN}
 					'''
 			}
+
+			FelineTombstone: {
+				DisplayName: Feline Tombstone
+				Tooltip: "'Although gone, may we remember them and imortalise them for the years to come'"
+			}
 		}
 
 		NPCs: {
@@ -1945,6 +1952,7 @@ Mods: {
 			QuartzChunk.DisplayName: Quartz
 			RubyBolt.DisplayName: Ruby Bolt
 			SapphireShovelProj.DisplayName: Bolt of Water
+			SapphireSpit.DisplayName: "{$Mods.TheDepths.Projectiles.SapphireShovelProj.DisplayName}"
 			Shaderang.DisplayName: Shaderang
 			ShadowBall.DisplayName: Large Shadow Ball
 			ShadowBall2.DisplayName: Shadow Ball
@@ -1997,6 +2005,7 @@ Mods: {
 			ShadowLash.DisplayName: Shadow Lash
 			QuicksilverTears.DisplayName: Quicksilver Tears
 			EmeraldEnergy.DisplayName: Emerald Energy
+			FelineTombstone.DisplayName: Feline Tombstone
 		}
 
 		Biomes: {
@@ -2103,7 +2112,8 @@ Mods: {
 			15: Yee苍棱
 			16: Seceip
 			17: Roton
-			18: BasicallyIAmFox
+			18: CDT_Maggot
+			19: BasicallyIAmFox
 		}
 
 		MusicDisplay: {

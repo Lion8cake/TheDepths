@@ -30,6 +30,7 @@ namespace TheDepths
 		public static RecipeGroup LavaBucketGroup;
 		public static RecipeGroup BottomlessLavaBucketGroup;
 		public static RecipeGroup LavaSpongeGroup;
+        public static RecipeGroup LavaFishingHookGroup;
 
 		public override void Unload()
         {
@@ -53,65 +54,7 @@ namespace TheDepths
 			LavaBucketGroup = null;
 			BottomlessLavaBucketGroup = null;
 			LavaSpongeGroup = null;
-		}
-
-        public override void AddRecipes()
-        {
-            Recipe recipe = Recipe.Create(ItemID.TerrasparkBoots);
-                recipe.AddIngredient(ItemID.FrostsparkBoots)
-                .AddIngredient(ModContent.ItemType<SilverSlippers>())
-                .AddTile(TileID.TinkerersWorkbench)
-                .Register();
-            Recipe recipe2 = Recipe.Create(ItemID.LogicSensor_Liquid);
-                recipe2.AddIngredient(ItemID.Cog, 5)
-                .AddIngredient(ItemID.MagicWaterDropper)
-                .AddIngredient(ModContent.ItemType<MagicQuicksilverDropper>())
-                .AddIngredient(ItemID.MagicHoneyDropper)
-                .AddIngredient(ItemID.Wire)
-                .AddTile(TileID.MythrilAnvil)
-                .SortAfterFirstRecipesOf(ItemID.LogicSensor_Liquid)
-                .Register();
-            Recipe recipe3 = Recipe.Create(ItemID.DryBomb);
-                recipe3.AddIngredient(ModContent.ItemType<Items.Weapons.QuicksilverBomb>())
-                .Register();
-            Recipe recipe4 = Recipe.Create(ItemID.DryRocket);
-                recipe4.AddIngredient(ModContent.ItemType<Items.Weapons.QuicksilverRocket>())
-                .Register();
-            Recipe recipe5 = Recipe.Create(ItemID.SeafoodDinner);
-                recipe5.AddIngredient(ModContent.ItemType<Items.ShadowFightingFish>(), 2)
-                .AddTile(TileID.CookingPots)
-                .Register();
-            Recipe recipe6 = Recipe.Create(ItemID.SeafoodDinner);
-                recipe6.AddIngredient(ModContent.ItemType<Items.QuartzFeeder>(), 2)
-                .AddTile(TileID.CookingPots)
-                .Register();
-            Recipe recipe8 = Recipe.Create(ItemID.NightsEdge);
-                recipe8.AddIngredient(ItemID.LightsBane)
-                .AddIngredient(ItemID.Muramasa)
-                .AddIngredient(ItemID.BladeofGrass)
-                .AddIngredient(ModContent.ItemType<Items.Weapons.Terminex>())
-                .AddTile(TileID.DemonAltar)
-                .Register();
-            Recipe recipe9 = Recipe.Create(ItemID.NightsEdge);
-                recipe9.AddIngredient(ItemID.BloodButcherer)
-                .AddIngredient(ItemID.Muramasa)
-                .AddIngredient(ItemID.BladeofGrass)
-                .AddIngredient(ModContent.ItemType<Items.Weapons.Terminex>())
-                .AddTile(TileID.DemonAltar)
-                .Register();
-            Recipe recipe18 = Recipe.Create(ItemID.ShellphoneDummy);
-                recipe18.AddIngredient(ItemID.CellPhone)
-                .AddIngredient(ItemID.MagicConch)
-                .AddIngredient(ModContent.ItemType<Items.ShalestoneConch>())
-                .AddTile(TileID.TinkerersWorkbench)
-                .Register();
-			Recipe recipe7 = Recipe.Create(ItemID.FishingPotion);
-			    recipe7.AddIngredient(ItemID.BottledWater)
-			    .AddIngredient(ModContent.ItemType<Items.Placeable.GlitterBlock>())
-			    .AddIngredient(ItemID.Waterleaf)
-			    .AddTile(TileID.Bottles)
-			    .SortAfterFirstRecipesOf(ItemID.FishingPotion)
-			    .Register();
+			LavaFishingHookGroup = null;
 		}
 
         public override void AddRecipeGroups()
@@ -161,6 +104,8 @@ namespace TheDepths
 			RecipeGroup.RegisterGroup("BottomlessLavaBucket", BottomlessLavaBucketGroup);
 			LavaSpongeGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.LavaAbsorbantSponge)}", ItemID.LavaAbsorbantSponge, ModContent.ItemType<QuicksilverAbsorbantSponge>());
 			RecipeGroup.RegisterGroup("LavaAbsorbantSponge", LavaSpongeGroup);
+			LavaFishingHookGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.LavaFishingHook)}", ItemID.LavaFishingHook, ModContent.ItemType<QuicksilverproofFishingHook>());
+			RecipeGroup.RegisterGroup("LavaFishingHook", LavaFishingHookGroup);
 		}
 
         public override void PostAddRecipes()
@@ -267,6 +212,11 @@ namespace TheDepths
 				{
 					recipe.AddRecipeGroup("LavaAbsorbantSponge", LS.stack);
 					recipe.RemoveIngredient(LS);
+				}
+				if (recipe.TryGetIngredient(ItemID.LavaFishingHook, out var LPFH) && !TheDepthsIDs.Sets.RecipeBlacklist.LavaFishingHookOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup("LavaFishingHook", LPFH.stack);
+					recipe.RemoveIngredient(LPFH);
 				}
 
 				if (recipe.HasCondition(Condition.NearLava))

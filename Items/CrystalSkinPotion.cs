@@ -28,17 +28,5 @@ namespace TheDepths.Items
             Item.buffType = ModContent.BuffType<Buffs.CrystalSkin>();
             Item.buffTime = 21600;
         }
-		
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(ItemID.Waterleaf, 1);
-			recipe.AddIngredient(ModContent.ItemType<Items.ShadowShrub>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Quartz>(), 1);
-			recipe.AddTile(TileID.Bottles);
-			recipe.SortAfterFirstRecipesOf(ItemID.ObsidianSkinPotion);
-			recipe.Register();
-		}
     }
 }

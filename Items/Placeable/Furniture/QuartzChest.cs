@@ -25,10 +25,5 @@ namespace TheDepths.Items.Placeable.Furniture
             Item.value = Terraria.Item.sellPrice(silver: 1);
             Item.createTile = ModContent.TileType<Tiles.Furniture.QuartzChest>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Quartz>(), 6).AddIngredient(ModContent.ItemType<ArqueriteOre>(), 2).AddRecipeGroup(RecipeGroupID.IronBar, 2).AddTile(TileID.WorkBenches).Register();
-        }
     }
 }

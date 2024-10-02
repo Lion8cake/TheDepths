@@ -24,13 +24,5 @@ namespace TheDepths.Items.Armor
 		public override void UpdateEquip(Player player) {
 			player.moveSpeed += 0.10f;
 		}
-
-		public override void AddRecipes() 
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 15);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
-		}
 	}
 }

@@ -15,7 +15,9 @@ namespace TheDepths.ModSupport
 
         public static bool FargoBoBWSupport = ModLoader.HasMod("FargoSeeds") && ModContent.GetInstance<ModSupport.FargosBoBWConfig>().BothCores;
 
-        public override void PostSetupContent()
+		public static readonly Mod? BiomeLavaMod = ModLoader.TryGetMod("BiomeLava", out Mod obtainedMod) ? obtainedMod : null;
+
+		public override void PostSetupContent()
 		{
 			AchievementSetup();
 

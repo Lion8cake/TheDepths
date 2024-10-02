@@ -53,13 +53,5 @@ namespace TheDepths.Items.Armor
 				Item.defense = 2;
 			}
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.NightWood>(), 20);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
-		}
 	}
 }

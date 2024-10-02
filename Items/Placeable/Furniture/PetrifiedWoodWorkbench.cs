@@ -25,10 +25,5 @@ namespace TheDepths.Items.Placeable.Furniture
             Item.value = Terraria.Item.sellPrice(copper: 30);
             Item.createTile = ModContent.TileType<Tiles.Furniture.PetrifiedWoodWorkbench>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<PetrifiedWood>(), 10).Register();
-        }
     }
 }

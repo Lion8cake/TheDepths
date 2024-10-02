@@ -47,6 +47,9 @@ using Terraria.Map;
 using MonoMod.RuntimeDetour.HookGen;
 using MonoMod.RuntimeDetour;
 using TheDepths.NPCs.Chasme;
+using TheDepths.Gores;
+using TheDepths.ModSupport;
+using CalamityMod.NPCs.TownNPCs;
 
 namespace TheDepths
 {
@@ -119,21 +122,25 @@ namespace TheDepths
 			On_ItemSlot.TryItemSwap += On_ItemSlot_TryItemSwap;
 			IL_Player.GetAnglerReward_MainReward += HotRodReplacer;
 			On_Player.RemoveAnglerAccOptionsFromRewardPool += On_Player_RemoveAnglerAccOptionsFromRewardPool;
+			On_Item.CanShimmer += On_Item_CanShimmer;
 
 			//Quicksilver edits
-			On_WaterfallManager.AddLight += On_WaterfallManager_AddLight;
-			On_WaterfallManager.DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects += On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects;
-			On_WaterfallManager.StylizeColor += On_WaterfallManager_StylizeColor;
-			On_Liquid.GetLiquidMergeTypes += On_Liquid_GetLiquidMergeTypes;
-			On_Player.PlaceThing_Tiles_CheckLavaBlocking += On_Player_PlaceThing_Tiles_CheckLavaBlocking;
-			IL_LiquidRenderer.InternalPrepareDraw += LavaBubbleReplacer;
-			IL_Player.Update += SplashPlayerLava;
-			IL_NPC.Collision_WaterCollision += SplashNPCLava;
-			IL_Projectile.Update += SplashProjectileLava;
-			IL_Item.MoveInWorld += SplashItemLava;
-			IL_Main.oldDrawWater += LavaBubbleReplacer;
+			if (DepthsModCalling.BiomeLavaMod == null)
+			{
+				On_WaterfallManager.AddLight += On_WaterfallManager_AddLight;
+				On_WaterfallManager.DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects += On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects;
+				On_WaterfallManager.StylizeColor += On_WaterfallManager_StylizeColor;
+				IL_LiquidRenderer.InternalPrepareDraw += LavaBubbleReplacer;
+				IL_Player.Update += SplashPlayerLava;
+				IL_NPC.Collision_WaterCollision += SplashNPCLava;
+				IL_Projectile.Update += SplashProjectileLava;
+				IL_Item.MoveInWorld += SplashItemLava;
+				IL_Main.oldDrawWater += LavaBubbleReplacer;
+				On_TileLightScanner.ApplyLiquidLight += On_TileLightScanner_ApplyLiquidLight;
+			}
 			On_TELogicSensor.GetState += On_TELogicSensor_GetState;
-			On_TileLightScanner.ApplyLiquidLight += On_TileLightScanner_ApplyLiquidLight;
+			On_Player.PlaceThing_Tiles_CheckLavaBlocking += On_Player_PlaceThing_Tiles_CheckLavaBlocking;
+			On_Liquid.GetLiquidMergeTypes += On_Liquid_GetLiquidMergeTypes;
 
 			//other
 			On_Main.UpdateAudio_DecideOnTOWMusic += Main_UpdateAudio_DecideOnTOWMusic;
@@ -146,6 +153,7 @@ namespace TheDepths
 			IL_Player.RocketBootVisuals += RocketBootVfx;
 			On_TileLightScanner.ApplySurfaceLight += On_TileLightScanner_ApplySurfaceLight;
 			IL_Main.DrawInfoAccs += DepthMeterTextChanger;
+			On_Player.DropTombstone += On_Player_DropTombstone;
 
 			//credits
 			IL_CreditsRollComposer.FillSegments += FillCreditSegmentILEdit;
@@ -193,6 +201,7 @@ namespace TheDepths
 			On_Player.GetItemGrabRange -= On_Player_GetItemGrabRange;
 			IL_Player.GetAnglerReward_MainReward -= HotRodReplacer;
 			On_Player.RemoveAnglerAccOptionsFromRewardPool -= On_Player_RemoveAnglerAccOptionsFromRewardPool;
+			On_Item.CanShimmer -= On_Item_CanShimmer;
 
 			//Quicksilver edits
 			On_TileLightScanner.ApplyLiquidLight -= On_TileLightScanner_ApplyLiquidLight;
@@ -220,6 +229,7 @@ namespace TheDepths
 			IL_Player.RocketBootVisuals -= RocketBootVfx;
 			On_TileLightScanner.ApplySurfaceLight -= On_TileLightScanner_ApplySurfaceLight;
 			IL_Main.DrawInfoAccs -= DepthMeterTextChanger;
+			On_Player.DropTombstone -= On_Player_DropTombstone;
 
 			//credits
 			IL_CreditsRollComposer.FillSegments -= FillCreditSegmentILEdit;
@@ -268,6 +278,7 @@ namespace TheDepths
 				//IDs
 				["UnreflectiveProjectiles", int projectileID, bool flag] => TheDepthsIDs.Sets.UnreflectiveProjectiles[projectileID] = flag,
 				["AxesAbleToBreakStone", int itemID, bool flag] => TheDepthsIDs.Sets.AxesAbleToBreakStone[itemID] = flag,
+				["IsntFreezable", int npcID, bool flag] => TheDepthsIDs.Sets.IsntFreezable[npcID] = flag,
 				["HellstoneBarOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.HellstoneBarOnlyItem[itemID] = flag,
 				["HellstoneOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.HellstoneOnlyItem[itemID] = flag,
 				["ObsidianOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.ObsidianOnlyItem[itemID] = flag,
@@ -288,9 +299,61 @@ namespace TheDepths
 				["LavaBucketOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.LavaBucketOnlyItem[itemID] = flag,
 				["BottomlessLavaBucketOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.BottomlessLavaBucketOnlyItem[itemID] = flag,
 				["LavaSpongeOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.LavaSpongeOnlyItem[itemID] = flag,
+				["LavaFishingHookOnlyItem", int itemID, bool flag] => TheDepthsIDs.Sets.RecipeBlacklist.LavaFishingHookOnlyItem[itemID] = flag,
 				_ => throw new Exception("TheDepths: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
 		}
+
+		#region TombstoneDetour
+		private void On_Player_DropTombstone(On_Player.orig_DropTombstone orig, Player self, long coinsOwned, NetworkText deathText, int hitDirection)
+		{
+			if (Main.netMode != NetmodeID.MultiplayerClient)
+			{
+				if (self.GetModPlayer<TheDepthsPlayer>().shadowCat)
+				{
+					float num;
+					for (num = (float)Main.rand.Next(-35, 36) * 0.1f; num < 2f && num > -2f; num += (float)Main.rand.Next(-30, 31) * 0.1f)
+					{
+					}
+					int num2 = ModContent.ProjectileType<Projectiles.FelineTombstone>();
+					IEntitySource projectileSource_Misc = new EntitySource_Misc("");
+					int damage = 0;
+					int num3 = 0;
+					if (Main.getGoodWorld)
+					{
+						damage = 70;
+						num3 = 10;
+					}
+					int num4 = self.whoAmI;
+					int num5 = ((!Main.getGoodWorld) ? Projectile.NewProjectile(projectileSource_Misc, self.position.X + (float)(self.width / 2), self.position.Y + (float)(self.height / 2), (float)Main.rand.Next(10, 30) * 0.1f * (float)hitDirection + num, (float)Main.rand.Next(-40, -20) * 0.1f, num2, damage, num3, Main.myPlayer, num4) : Projectile.NewProjectile(projectileSource_Misc, self.position.X + (float)(self.width / 2), self.position.Y + (float)(self.height / 2), ((float)Main.rand.Next(10, 30) * 0.1f * (float)hitDirection + num) * 1.5f, (float)Main.rand.Next(-40, -20) * 0.1f * 1.5f, num2, damage, num3, Main.myPlayer, num4));
+					DateTime now = DateTime.Now;
+					string text = now.ToString("D");
+					if (GameCulture.FromCultureName(GameCulture.CultureName.English).IsActive)
+					{
+						text = now.ToString("MMMM d, yyy");
+					}
+					string miscText = deathText.ToString() + "\n" + text;
+					Main.projectile[num5].miscText = miscText;
+				}
+				else
+				{
+					orig.Invoke(self, coinsOwned, deathText, hitDirection);
+				}
+			}
+		}
+
+		#endregion
+
+		#region ShimmerEdits
+		private bool On_Item_CanShimmer(On_Item.orig_CanShimmer orig, Item self)
+		{
+			if (!Main.hardMode && (self.type == ModContent.ItemType<OnyxBunny>() || self.type == ModContent.ItemType<OnyxSquirrel>()))
+			{
+				return false;
+			}
+			return orig.Invoke(self);
+		}
+		#endregion
 
 		#region DynamicChasmeOnkillDetour
 		private static Hook Detour_OnKill = null;
@@ -560,6 +623,7 @@ namespace TheDepths
 				Main.stackSplit = 30;
 				Main.mouseRightRelease = false;
 				Recipe.FindRecipes();
+				return;
 			}
 			if (Worldgen.TheDepthsWorldGen.InDepths(player))
 			{

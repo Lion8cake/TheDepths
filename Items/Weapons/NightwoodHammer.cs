@@ -48,10 +48,5 @@ namespace TheDepths.Items.Weapons
                 Item.hammer = 47;
             }
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe().AddIngredient(ModContent.ItemType<Items.Placeable.NightWood>(), 8).AddTile(TileID.WorkBenches).Register();
-        }
     }
 }

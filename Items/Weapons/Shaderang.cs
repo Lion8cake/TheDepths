@@ -44,14 +44,5 @@ namespace TheDepths.Items.Weapons
             if (stack <= 0) canuse = false;
             return canuse;
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 3)
-                .AddIngredient(ItemID.ThornChakram)
-                .AddTile(TileID.Anvils)
-                .Register();
-        }
     }
 }

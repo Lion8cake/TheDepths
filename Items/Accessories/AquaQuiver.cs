@@ -24,19 +24,11 @@ namespace TheDepths.Items.Accessories
 			Item.accessory = true;
 		}
 
-		public override void UpdateAccessory(Player player, bool hideVisual) {
+		public override void UpdateAccessory(Player player, bool hideVisual)
+		{
 			player.magicQuiver = true;
 			player.arrowDamage += 0.1f;
 			player.GetModPlayer<TheDepthsPlayer>().HasAquaQuiver = true;
-		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.MagicQuiver, 1);
-			recipe.AddIngredient(ModContent.ItemType<AquaStone>(), 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
 		}
 	}
 }

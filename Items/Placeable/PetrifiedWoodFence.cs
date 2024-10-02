@@ -26,13 +26,5 @@ namespace TheDepths.Items.Placeable
             Item.consumable = true;
             Item.createWall = ModContent.WallType<Walls.PetrifiedWoodFenceWall>();
         }
-
-        public override void AddRecipes()
-        {
-            Recipe recipe = CreateRecipe(4);
-            recipe.AddIngredient(ModContent.ItemType<PetrifiedWood>());
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.Register();
-        }
     }
 }

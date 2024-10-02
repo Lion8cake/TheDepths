@@ -36,14 +36,5 @@ namespace TheDepths.Items.Accessories
 			player.GetModPlayer<TheDepthsPlayer>().stoneRose = true;
 			player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<StoneRose>());
-			recipe.AddIngredient(ModContent.ItemType<CrystalSkull>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
-		}
 	}
 }

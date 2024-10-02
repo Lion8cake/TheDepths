@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
+using TheDepths.Items.Armor;
 
 namespace TheDepths.Items.Weapons
 {
@@ -30,14 +31,6 @@ namespace TheDepths.Items.Weapons
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
-		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 15);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
 		}
 
 		public override void MeleeEffects(Player player, Rectangle hitbox) {

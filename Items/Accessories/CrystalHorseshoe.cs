@@ -27,13 +27,5 @@ namespace TheDepths.Items.Accessories
             player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
 			player.noFallDmg = true;
 		}
-
-		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.LuckyHorseshoe);
-			recipe.AddIngredient(ModContent.ItemType<CrystalSkull>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
-		}
 	}
 }

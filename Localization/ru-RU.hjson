@@ -219,6 +219,7 @@ Mods: {
 			PetrifiedWoodToilet.MapEntry: Унитаз из Окаменевшей древесины
 			PetrifiedWoodTrappedChest.MapEntry: Сундук-ловушка из Окаменевшей древесины
 			PetrifiedWoodWorkbench.MapEntry: Верстак из Окаменевшей древесины
+			// FelineTombstone.MapEntry: Feline Tombstone
 		}
 
 		Buffs: {
@@ -1901,6 +1902,11 @@ Mods: {
 					Двойное нажатие {$Key.DOWN}
 					'''
 			}
+
+			FelineTombstone: {
+				// DisplayName: Feline Tombstone
+				// Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -1949,6 +1955,7 @@ Mods: {
 			QuartzChunk.DisplayName: Кварц
 			RubyBolt.DisplayName: Рубиновый заряд
 			SapphireShovelProj.DisplayName: Заряд воды
+			SapphireSpit.DisplayName: "{$Mods.TheDepths.Projectiles.SapphireShovelProj.DisplayName}"
 			Shaderang.DisplayName: Тенеранг
 			ShadowBall.DisplayName: Большой теневой шар
 			ShadowBall2.DisplayName: Теневой шар
@@ -2001,6 +2008,7 @@ Mods: {
 			ShadowLash.DisplayName: Теневой хлыст
 			QuicksilverTears.DisplayName: Ртутные слёзы
 			EmeraldEnergy.DisplayName: Изумрудная энергия
+			// FelineTombstone.DisplayName: Feline Tombstone
 		}
 
 		Biomes: {
@@ -2107,7 +2115,8 @@ Mods: {
 			15: Yee苍棱
 			16: Seceip
 			17: Roton
-			18: BasicallyIAmFox
+			18: CDT_Maggot
+			19: BasicallyIAmFox
 		}
 
 		MusicDisplay: {

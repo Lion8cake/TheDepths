@@ -29,12 +29,5 @@ namespace TheDepths.Items.Accessories
 		public override void UpdateAccessory(Player player, bool hideVisual) {
             player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
 		}
-
-		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Quartz>(), 20);
-			recipe.AddTile(TileID.Furnaces);
-			recipe.Register();
-		}
 	}
 }

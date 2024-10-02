@@ -29,10 +29,5 @@ namespace TheDepths.Items.Weapons
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe().AddIngredient(ModContent.ItemType<Items.Placeable.PetrifiedWood>(), 8).AddTile(TileID.WorkBenches).Register();
-        }
     }
 }

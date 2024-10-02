@@ -26,13 +26,5 @@ namespace TheDepths.Items.Weapons
 			Item.useAnimation = 15;
 			Item.knockBack = 5f;
 		}
-
-        public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.PetrifiedWood>(), 7);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
-		}
 	}
 }

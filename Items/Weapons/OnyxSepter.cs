@@ -36,15 +36,5 @@ namespace TheDepths.Items.Weapons
 			Item.shoot = ModContent.ProjectileType<OnyxBolt>();
 			Item.shootSpeed = 7.5f;
 		}
-		
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 10);
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Geode>(), 6);
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Onyx>(), 8);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
-		}
 	}
 }

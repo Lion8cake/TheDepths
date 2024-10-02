@@ -29,13 +29,5 @@ namespace TheDepths.Items.Armor
 			player.setBonus = Language.GetTextValue("Mods.TheDepths.SetBonus.PetrifiedWoodHelmet");
 			player.endurance = 0.1f;
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.PetrifiedWood>(), 20);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
-		}
 	}
 }

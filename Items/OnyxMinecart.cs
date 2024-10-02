@@ -26,14 +26,5 @@ namespace TheDepths.Items
 			Item.noMelee = true;
 			Item.DefaultToMount(ModContent.MountType<Mounts.OnyxMinecart>());
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.Minecart);
-			recipe.AddIngredient(ModContent.ItemType<LargeOnyx>());
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
-		}
 	}
 }

@@ -25,10 +25,5 @@ namespace TheDepths.Items.Placeable.Furniture
             Item.value = Terraria.Item.sellPrice(copper: 30);
             Item.createTile = ModContent.TileType<Tiles.Furniture.NightwoodWorkbench>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NightWood>(), 10).Register();
-        }
     }
 }

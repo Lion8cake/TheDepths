@@ -215,6 +215,7 @@ Mods: {
 			PetrifiedWoodToilet.MapEntry: Toaleta ze skamieniałego drewna
 			PetrifiedWoodTrappedChest.MapEntry: Kufer ze skamieniałego drewna
 			PetrifiedWoodWorkbench.MapEntry: Stół warsztatowy ze skamieniałego drewna
+			// FelineTombstone.MapEntry: Feline Tombstone
 		}
 
 		Buffs: {
@@ -1897,6 +1898,11 @@ Mods: {
 					Naciśnij dwukrotnie {$Key.DOWN}
 					'''
 			}
+
+			FelineTombstone: {
+				// DisplayName: Feline Tombstone
+				// Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -1945,6 +1951,7 @@ Mods: {
 			QuartzChunk.DisplayName: Kwarc
 			RubyBolt.DisplayName: Rubinowy pocisk
 			SapphireShovelProj.DisplayName: Pocisk wodny
+			SapphireSpit.DisplayName: "{$Mods.TheDepths.Projectiles.SapphireShovelProj.DisplayName}"
 			Shaderang.DisplayName: Cieniarang
 			ShadowBall.DisplayName: Duży cienisty pocisk
 			ShadowBall2.DisplayName: Cienisty pocisk
@@ -1997,6 +2004,7 @@ Mods: {
 			ShadowLash.DisplayName: Cienisty ognik
 			QuicksilverTears.DisplayName: Rtęciowe łzy
 			EmeraldEnergy.DisplayName: Szmaragdowa energia
+			// FelineTombstone.DisplayName: Feline Tombstone
 		}
 
 		Biomes: {
@@ -2103,7 +2111,8 @@ Mods: {
 			15: Yee苍棱
 			16: Seceip
 			17: Roton
-			18: BasicallyIAmFox
+			18: CDT_Maggot
+			19: BasicallyIAmFox
 		}
 
 		MusicDisplay: {

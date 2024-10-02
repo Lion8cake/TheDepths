@@ -25,10 +25,5 @@ namespace TheDepths.Items.Placeable.Furniture
             Item.value = 0;
             Item.createTile = ModContent.TileType<Tiles.Furniture.NightwoodToilet>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<Items.Placeable.NightWood>(), 6).AddTile(TileID.Sawmill).Register();
-        }
     }
 }

@@ -60,14 +60,5 @@ namespace TheDepths.Items.Armor
 			player.statManaMax2 += 60;
 			player.hasGemRobe = true;
 		}
-		
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.Robe, 1);
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Onyx>(), 10);
-			recipe.AddTile(TileID.Loom);
-			recipe.Register();
-		}
 	}
 }

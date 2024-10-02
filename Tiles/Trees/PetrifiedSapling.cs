@@ -60,21 +60,18 @@ namespace TheDepths.Tiles.Trees
 			Tile tile = Main.tile[i, j];
 			if (tile.HasUnactuatedTile)
 			{
-				for (int k = 0; k < (Main.maxTilesX * Main.maxTilesY); k++)
+				if (j > Main.rockLayer)
 				{
-					if (j > Main.rockLayer)
+					if (WorldGen.genRand.NextBool(5))
 					{
-						if (WorldGen.genRand.NextBool(5))
-						{
-							AttemptToGrowPetrifiedFromSapling(i, j);
-						}
+						AttemptToGrowPetrifiedFromSapling(i, j);
 					}
-					else
+				}
+				else
+				{
+					if (WorldGen.genRand.NextBool(20))
 					{
-						if (WorldGen.genRand.NextBool(20))
-						{
-							AttemptToGrowPetrifiedFromSapling(i, j);
-						}
+						AttemptToGrowPetrifiedFromSapling(i, j);
 					}
 				}
 			}

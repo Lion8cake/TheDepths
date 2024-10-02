@@ -4,6 +4,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using TheDepths.Items.Armor;
 
 namespace TheDepths.Items
 {
@@ -32,15 +33,6 @@ namespace TheDepths.Items
 		public override bool? CanCatchNPC(NPC target, Player player)
 		{
 			return null;
-		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 15);
-			recipe.AddIngredient(ItemID.BugNet, 1);
-			recipe.AddTile(TileID.Hellforge);
-			recipe.Register();
 		}
 	}
 }

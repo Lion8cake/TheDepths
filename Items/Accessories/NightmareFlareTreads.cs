@@ -39,14 +39,5 @@ namespace TheDepths.Items.Accessories
 			player.GetModPlayer<TheDepthsPlayer>().sEmbers = true;
 			player.GetModPlayer<TheDepthsPlayer>().nFlare = true;
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.SpectreBoots, 1);
-			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.ShadowflameEmberedTreads>(), 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
-		}
 	}
 }

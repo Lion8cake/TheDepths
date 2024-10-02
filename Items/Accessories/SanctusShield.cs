@@ -46,14 +46,5 @@ namespace TheDepths.Items.Accessories
 			player.buffImmune[BuffID.Darkness] = true;
 			player.buffImmune[BuffID.Stoned] = true;
 		}
-		
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<CrystalShield>(), 1);
-			recipe.AddIngredient(ItemID.AnkhCharm, 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
-		}
 	}
 }

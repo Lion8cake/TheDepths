@@ -25,10 +25,5 @@ namespace TheDepths.Items.Placeable.Furniture
             Item.value = 0;
             Item.createTile = ModContent.TileType<Tiles.Furniture.PetrifiedWoodPlatform>();
         }
-
-        public override void AddRecipes()
-        {
-            CreateRecipe(2).AddIngredient(ModContent.ItemType<PetrifiedWood>(), 1).Register();
-        }
     }
 }

@@ -35,15 +35,5 @@ namespace TheDepths.Items.Weapons
 		{
 			Lighting.AddLight(player.itemLocation + new Vector2(6f + player.velocity.X, 14f), 0.058f, 0.061f, 0.06f);
 		}
-	    
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.CrystalShard, 25);
-			recipe.AddIngredient(ModContent.ItemType<BlackPhaseblade>(), 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.SortAfterFirstRecipesOf(ItemID.OrangePhasesaber);
-			recipe.Register();
-		}
 	}
 }

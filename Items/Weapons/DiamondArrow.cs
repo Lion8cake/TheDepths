@@ -26,14 +26,5 @@ namespace TheDepths.Items.Weapons
 			Item.shootSpeed = 7f;
 			Item.ammo = AmmoID.Arrow;
 		}
-
-		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe(33);
-			recipe.AddIngredient(ItemID.WoodenArrow, 33);
-			recipe.AddIngredient(ModContent.ItemType<DiamondDust>(), 1);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SortAfterFirstRecipesOf(ItemID.HellfireArrow);
-			recipe.Register();
-		}
 	}
 }

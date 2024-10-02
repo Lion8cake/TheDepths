@@ -26,10 +26,5 @@ namespace TheDepths.Items.Placeable.Furniture
             Item.value = Terraria.Item.sellPrice(silver: 5);
             Item.createTile = ModContent.TileType<Tiles.Furniture.PetrifiedWoodTrappedChest>();
         }
-
-        public override void AddRecipes()
-        {
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<PetrifiedWoodChest>()).AddIngredient(ItemID.Wire, 10).AddTile(TileID.HeavyWorkBench).Register();
-		}
     }
 }

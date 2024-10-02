@@ -179,7 +179,7 @@ namespace TheDepths.NPCs.Chasme
 				float chaspos = NPC.position.X + 40f;
 				if (nearPlayer.position.Y > (float)((Main.maxTilesY - 250) * 16) && nearPlayer.position.X > chaspos - 1920f && nearPlayer.position.X < chaspos + 1920f)
 				{
-					nearPlayer.AddBuff(BuffID.Horrified, 10);
+					nearPlayer.AddBuff(BuffID.Horrified, 660);
 					nearPlayer.gross = true;
 				}
 			}

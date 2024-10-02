@@ -35,33 +35,5 @@ namespace TheDepths.Items.Placeable
 			Item.placeStyle = 0;
 			Item.rare = ItemRarityID.Green;
 		}
-		
-		public override void AddRecipes()
-        {
-			CreateRecipe()
-                .AddIngredient(ItemID.AshBlock, 50)
-                .AddIngredient(ItemID.Hellforge, 1)
-                .AddIngredient(ItemID.HellstoneBar, 10)
-                .AddTile(TileID.Anvils)
-				.Register();
-
-			AddAndReplace<RubyRelic>(ItemID.GuideVoodooDoll);
-			AddAndReplace<ShalestoneConch>(ItemID.DemonConch);
-			AddAndReplace<AquaStone>(ItemID.MagmaStone);
-		}
-
-		private static void AddAndReplace<TConf>(int hall) where TConf : ModItem
-		{
-			Recipe recipe = Recipe.Create(hall);
-			recipe.AddIngredient(ContentInstance<TConf>.Instance.Type);
-			recipe.AddTile(ModContent.TileType<CoreBuilderTile>());
-			recipe.DisableDecraft();
-			recipe.Register();
-			recipe = Recipe.Create(ContentInstance<TConf>.Instance.Type);
-			recipe.AddIngredient(hall);
-			recipe.AddTile(ModContent.TileType<CoreBuilderTile>());
-			recipe.DisableDecraft();
-			recipe.Register();
-		}
 	}
 }

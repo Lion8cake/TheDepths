@@ -25,15 +25,5 @@ namespace TheDepths.Items.Placeable
 			Item.value = Item.sellPrice(0, 0, 1, 60);
 			Item.createWall = ModContent.WallType<Walls.BlackStainedGlass>();
 		}
-
-		public override void AddRecipes()
-		{
-			CreateRecipe(20)
-				.AddIngredient(ItemID.GlassWall, 20)
-				.AddIngredient(ModContent.ItemType<Onyx>())
-				.AddTile(TileID.WorkBenches)
-				.SortAfterFirstRecipesOf(ItemID.OrangeStainedGlass)
-				.Register();
-		}
 	}
 }

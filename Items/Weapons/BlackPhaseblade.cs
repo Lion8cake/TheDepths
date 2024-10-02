@@ -33,15 +33,5 @@ namespace TheDepths.Items.Weapons
 		{
 			Lighting.AddLight(player.itemLocation + new Vector2(6f + player.velocity.X, 14f), 0.058f, 0.061f, 0.06f);
 		}
-		
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.MeteoriteBar, 15);
-			recipe.AddIngredient(ModContent.ItemType<Placeable.Onyx>(), 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.SortAfterFirstRecipesOf(ItemID.OrangePhaseblade);
-			recipe.Register();
-		}
 	}
 }

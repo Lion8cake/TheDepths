@@ -56,13 +56,5 @@ namespace TheDepths.Items.Weapons
 				type = ModContent.ProjectileType<Projectiles.QuicksilverRocket>();
 			}
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.DryRocket);
-			recipe.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), () => Worldgen.TheDepthsWorldGen.isWorldDepths && Main.LocalPlayer.adjLava);
-			recipe.Register();
-		}
 	}
 }

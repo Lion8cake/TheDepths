@@ -28,15 +28,5 @@ namespace TheDepths.Items
             Item.buffType = ModContent.BuffType<Buffs.FlaskofMercury>();
             Item.buffTime = 72000;
         }
-		
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteOre>(), 3);
-			recipe.AddTile(TileID.ImbuingStation);
-			recipe.SortAfterFirstRecipesOf(ItemID.FlaskofFire);
-			recipe.Register();
-		}
     }
 }

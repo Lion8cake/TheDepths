@@ -18,13 +18,5 @@ namespace TheDepths.Items.Armor
 			Item.height = 20;
 			Item.defense = 3;
 		}
-
-		public override void AddRecipes() 
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.PetrifiedWood>(), 30);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
-		}
 	}
 }

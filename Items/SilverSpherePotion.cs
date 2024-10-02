@@ -28,16 +28,5 @@ namespace TheDepths.Items
             Item.buffType = ModContent.BuffType<Buffs.SilverSphereBuff>();
             Item.buffTime = 14400;
         }
-		
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.BottledWater, 1);
-			recipe.AddIngredient(ModContent.ItemType<ShadowFightingFish>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<QuartzFeeder>(), 2);
-			recipe.AddIngredient(ModContent.ItemType<Items.ShadowShrub>(), 1);
-			recipe.AddTile(TileID.Bottles);
-			recipe.Register();
-		}
     }
 }

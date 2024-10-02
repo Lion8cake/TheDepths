@@ -28,12 +28,5 @@ namespace TheDepths.Items.Weapons
 			Item.value = Item.sellPrice(0, 0, 5);
 			Item.rare = ItemRarityID.Blue;
 		}
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.DryBomb);
-			recipe.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), () => Worldgen.TheDepthsWorldGen.isWorldDepths && Main.LocalPlayer.adjLava);
-			recipe.Register();
-		}
 	}
 }

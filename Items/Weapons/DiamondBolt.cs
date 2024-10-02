@@ -36,14 +36,5 @@ namespace TheDepths.Items.Weapons
 			Item.shoot = ModContent.ProjectileType<Projectiles.DiamondBolt>();
 			Item.shootSpeed = 7.5f;
 		}
-		
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.DiamondStaff);
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.DiamondDust>(), 30);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
-		}
 	}
 }

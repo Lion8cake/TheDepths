@@ -9,6 +9,7 @@ using System;
 using Terraria.DataStructures;
 using TheDepths.Projectiles;
 using Terraria.Audio;
+using TheDepths.Items.Armor;
 
 namespace TheDepths.Items.Weapons
 {
@@ -81,14 +82,6 @@ namespace TheDepths.Items.Weapons
 				}
 				SoundEngine.PlaySound(SoundID.DeerclopsIceAttack with { Volume = 0.5f }, target.position);
 			}
-		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.ArqueriteBar>(), 20);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
 		}
 	}
 }

@@ -1,3 +1,37 @@
+v1.0.1
+=========================
+Added Spanish Translation by CDT_Maggot
+Added Larger/Large+/Custom world size world support for depths worlds
+Added proper crafting placement, now all item recipes will nolonger appear below coins
+Added Biome Lava Support - this includes custom quicksilver styles as well for depths worlds
+Added Feline Tombstone
+Changed Arquerite and Quartz crates dropping obsidian skin potions instead of crystal skin potions
+Fixed research amount for the Bottomless Quicksilver bucket and Quicksilver absorbant sponge from 5 to 1
+lava fishing hooks in recipes are now replaced by recipe groups containing quartz fishing hooks
+Fixed several issues related to tree rendering and growth causing lag and other visual bugs
+Reworked the palladium shield
+Added special effect to projectiles parried by the palladium shield
+Added several more NPCs to the invicibility to the freezing water debuff
+Fixed all critter items when thrown in shimmer to spawn faelings with the incorrect texture
+Fixed arquerite having the wrong inventory sorting
+Fixed Nightwood shimmering into its walls
+Nerfed king coal and Crystal King in both AI, spawnrates and stats
+Fixed several NPCs not spawning their projectiles properly on servers
+Fixed arquerite being block-swappable
+Fixed players not fighting or have died to chasme being stuck in a death loop when at the surface
+Made the tortured soul and bound crystal formation explode when the tax collector was present
+Fixed Mercry Bobber being classified as a vanity item
+Respritied quartz chair.
+Fixed the sell price of several items
+Geode armour now takes more geodes to craft
+Increased range of the onyx hook
+Potted Mercury Tendrils now have an animation
+Ash Grass and Living fire can now be transmutated with their depths item counterparts (and vise versa)
+Core builder can now transmutate the auqa and magma stone
+Fixed right clicking the shell phone in the inventory skipping the spawn teleport state
+Onyx Bunnies and squirels now shimmer into onyx in hardmode
+Added more recipes to the Silver Slippers
+
 v1.0
 =========================
 Reworked Worldgen, now is nolonger a clone of the underworld worldgeneration

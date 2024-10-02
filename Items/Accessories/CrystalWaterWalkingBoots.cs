@@ -28,14 +28,5 @@ namespace TheDepths.Items.Accessories
 			player.waterWalk = true;
 			player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;
 		}
-		
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.WaterWalkingBoots, 1);
-			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.CrystalSkull>(), 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
-		}
 	}
 }

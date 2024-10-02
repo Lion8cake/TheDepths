@@ -21,13 +21,5 @@ namespace TheDepths.Items.Placeable
 			Item.createTile = ModContent.TileType<Tiles.LargeCrystal>();
 			Item.rare = ItemRarityID.White;
 		}
-		
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Quartz>(), 4);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
-		}
 	}
 }

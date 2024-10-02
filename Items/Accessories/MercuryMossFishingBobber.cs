@@ -36,14 +36,5 @@ namespace TheDepths.Items.Accessories
         {
 			player.overrideFishingBobber = ModContent.ProjectileType<Projectiles.MercuryMossFishingBobber>();
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.MercuryMoss>(), 5);
-			recipe.AddIngredient(ItemID.FishingBobberGlowingStar, 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
-		}
 	}
 }

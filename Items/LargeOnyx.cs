@@ -41,14 +41,5 @@ namespace TheDepths.Items
             spriteBatch.Draw(texture2D, vector2_3, new Rectangle?(), new Color(250, 250, 250, Main.mouseTextColor / 2), rotation, vector2_1, (float)(Main.mouseTextColor / 1000.0 + 0.800000011920929), 0, 0.0f);
             return false;
         }
-
-        public override void AddRecipes()
-        {
-            Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ModContent.ItemType<Onyx>(), 15);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SortAfterFirstRecipesOf(ItemID.LargeAmber);
-            recipe.Register();
-        }
     }
 }

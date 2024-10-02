@@ -74,7 +74,7 @@ namespace TheDepths.Items.Placeable
 			};
 			IItemDropRule[] potions = new IItemDropRule[6]
 			{
-			ItemDropRule.NotScalingWithLuck(288, 1, 2, 4),
+			ItemDropRule.NotScalingWithLuck(ModContent.ItemType<CrystalSkinPotion>(), 1, 2, 4),
 			ItemDropRule.NotScalingWithLuck(296, 1, 2, 4),
 			ItemDropRule.NotScalingWithLuck(304, 1, 2, 4),
 			ItemDropRule.NotScalingWithLuck(305, 1, 2, 4),

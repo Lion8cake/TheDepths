@@ -35,14 +35,5 @@ namespace TheDepths.Items.Accessories
             player.GetModPlayer<TheDepthsPlayer>().aStone = true;
 			player.autoReuseGlove = true;
 		}
-		
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.MechanicalGlove, 1);
-			recipe.AddIngredient(ModContent.ItemType<Items.Accessories.AquaStone>(), 1);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
-		}
 	}
 }

@@ -215,6 +215,7 @@ Mods: {
 			PetrifiedWoodToilet.MapEntry: 石化木马桶
 			PetrifiedWoodTrappedChest.MapEntry: 受困石化木箱
 			PetrifiedWoodWorkbench.MapEntry: 石化木工作台
+			// FelineTombstone.MapEntry: Feline Tombstone
 		}
 
 		Buffs: {
@@ -1897,6 +1898,11 @@ Mods: {
 					双击{$Key.DOWN}下砸
 					'''
 			}
+
+			FelineTombstone: {
+				// DisplayName: Feline Tombstone
+				// Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -1945,6 +1951,7 @@ Mods: {
 			QuartzChunk.DisplayName: Quartz
 			RubyBolt.DisplayName: Ruby Bolt
 			SapphireShovelProj.DisplayName: Bolt of Water
+			SapphireSpit.DisplayName: "{$Mods.TheDepths.Projectiles.SapphireShovelProj.DisplayName}"
 			Shaderang.DisplayName: Shaderang
 			ShadowBall.DisplayName: Large Shadow Ball
 			ShadowBall2.DisplayName: Shadow Ball
@@ -1997,6 +2004,7 @@ Mods: {
 			ShadowLash.DisplayName: 暗影猛击
 			QuicksilverTears.DisplayName: 水银之泪
 			EmeraldEnergy.DisplayName: 翡翠能量
+			// FelineTombstone.DisplayName: Feline Tombstone
 		}
 
 		Biomes: {
@@ -2103,7 +2111,8 @@ Mods: {
 			15: Yee苍棱
 			16: Seceip
 			17: Roton
-			18: BasicallyIAmFox
+			18: CDT_Maggot
+			19: BasicallyIAmFox
 		}
 
 		MusicDisplay: {

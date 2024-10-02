@@ -47,14 +47,5 @@ namespace TheDepths.Items.Placeable
 				Lighting.AddLight((int)((Item.position.X + Item.width / 2) / 16f), (int)((Item.position.Y + Item.height / 2) / 16f), 0.058f, 0.061f, 0.06f);
 			}
 		}
-		
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe(10);
-			recipe.AddIngredient(ItemID.Torch, 10);
-			recipe.AddIngredient(ModContent.ItemType<Items.Placeable.Onyx>(), 1);
-			recipe.SortAfterFirstRecipesOf(ItemID.OrangeTorch);
-			recipe.Register();
-		}
 	}
 }

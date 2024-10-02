@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Xna.Framework;
 using ReLogic.Utilities;
 using System;
 using System.Numerics;
@@ -514,9 +515,17 @@ internal class DepthsGen
             float modFadeHeight = fadeHeight * (noise.GetNoise(i, -100) + 1); // Increases or decreases the depth of the gradient
             int baseY = y - (int)modFadeHeight;
 
-            for (int j = baseY; j < baseY + height + modFadeHeight; ++j)
+			//ModContent.GetInstance<TheDepths>().Logger.Debug(Main.maxTilesX);
+			//ModContent.GetInstance<TheDepths>().Logger.Debug(i);
+
+			for (int j = baseY; j < baseY + height + modFadeHeight; ++j)
             {
-                float value = noise.GetNoise(i, j);
+				//ModContent.GetInstance<TheDepths>().Logger.Debug(j);
+
+                if (j >= Main.maxTilesY)
+                    continue;
+
+				float value = noise.GetNoise(i, j);
                 int type = ModContent.TileType<ShaleBlock>();
                 int currentDepth = j - baseY;
                 float adjustment = currentDepth / (float)height;
@@ -560,7 +569,10 @@ internal class DepthsGen
 
             for (int l = Main.maxTilesY; l > y - 60; l--)
             {
-                Tile tile = Main.tile[i, l];
+				if (l >= Main.maxTilesY)
+					break;
+
+				Tile tile = Main.tile[i, l];
                 if (tile.LiquidType > -1)
                 {
                     tile.LiquidType = -1;
@@ -699,6 +711,9 @@ internal class DepthsGen
     /// <param name="j">Y position of the tile.</param>
     private static void TryGivingShaleNightmare(int i, int j)
     {
+        if (i >= Main.maxTilesX || j >= Main.maxTilesY)
+            return;
+
         Tile tile = Main.tile[i, j];
 
         if (tile.TileType != ModContent.TileType<ShaleBlock>()) // Must place grass on shale

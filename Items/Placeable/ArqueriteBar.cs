@@ -30,14 +30,5 @@ namespace TheDepths.Items.Placeable
 			Item.placeStyle = 0;
 			Item.rare = ItemRarityID.Green;
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<ArqueriteOre>(), 3);
-			recipe.AddIngredient(ModContent.ItemType<Quartz>(), 1);
-			recipe.AddTile(TileID.Hellforge);
-			recipe.Register();
-		}
 	}
 }

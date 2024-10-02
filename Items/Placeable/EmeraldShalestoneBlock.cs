@@ -27,15 +27,5 @@ namespace TheDepths.Items.Placeable
 			Item.createTile = ModContent.TileType<Tiles.ShalestoneEmerald>();
 			Item.SetShopValues(ItemRarityID.White, Item.sellPrice(0, 0, 1));
 		}
-
-		public override void AddRecipes()
-		{
-			CreateRecipe()
-				.AddIngredient(ItemID.Emerald)
-				.AddIngredient(ModContent.ItemType<Shalestone>())
-				.AddCondition(Condition.InGraveyard)
-				.AddTile(TileID.HeavyWorkBench)
-				.Register();
-		}
 	}
 }

@@ -28,12 +28,5 @@ namespace TheDepths.Items.Placeable
 			Item.createTile = ModContent.TileType<Tiles.GiantFluorescentLightBulb>();
 			Item.value = 200;
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<FluorescentLightBulb>(), 3);
-			recipe.Register();
-		}
 	}
 }
