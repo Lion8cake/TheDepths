@@ -219,7 +219,7 @@ Mods: {
 			PetrifiedWoodToilet.MapEntry: Унитаз из Окаменевшей древесины
 			PetrifiedWoodTrappedChest.MapEntry: Сундук-ловушка из Окаменевшей древесины
 			PetrifiedWoodWorkbench.MapEntry: Верстак из Окаменевшей древесины
-			// FelineTombstone.MapEntry: Feline Tombstone
+			FelineTombstone.MapEntry: Кошачье надгробие
 		}
 
 		Buffs: {
@@ -1553,7 +1553,8 @@ Mods: {
 				DisplayName: Палладиевый щит
 				Tooltip:
 					'''
-					Уменьшает урон от снарядов в 2 раза
+					Чем дольше вы не получаете урона - тем меньше урона наносят вам снаряды.
+					Возможно снижение урона вражеских снарядов до 50%
 					Отражает большинство снарядов в сторону врагов
 					'''
 			}
@@ -1904,8 +1905,8 @@ Mods: {
 			}
 
 			FelineTombstone: {
-				// DisplayName: Feline Tombstone
-				// Tooltip: ""
+				DisplayName: Кошачье надгробие
+				Tooltip: "'Хоть они и ушли, мы будем помнить их и увековечим их на долгие годы'"
 			}
 		}
 
@@ -2008,7 +2009,7 @@ Mods: {
 			ShadowLash.DisplayName: Теневой хлыст
 			QuicksilverTears.DisplayName: Ртутные слёзы
 			EmeraldEnergy.DisplayName: Изумрудная энергия
-			// FelineTombstone.DisplayName: Feline Tombstone
+			FelineTombstone.DisplayName: Кошачье надгробие
 		}
 
 		Biomes: {
@@ -2114,9 +2115,10 @@ Mods: {
 			14: Andrey2345
 			15: Yee苍棱
 			16: Seceip
-			17: Roton
-			18: CDT_Maggot
-			19: BasicallyIAmFox
+			17: zynn
+			18: Roton
+			19: CDT_Maggot
+			20: BasicallyIAmFox
 		}
 
 		MusicDisplay: {

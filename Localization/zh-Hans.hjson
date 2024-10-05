@@ -215,7 +215,7 @@ Mods: {
 			PetrifiedWoodToilet.MapEntry: 石化木马桶
 			PetrifiedWoodTrappedChest.MapEntry: 受困石化木箱
 			PetrifiedWoodWorkbench.MapEntry: 石化木工作台
-			// FelineTombstone.MapEntry: Feline Tombstone
+			FelineTombstone.MapEntry: 猫咪墓碑
 		}
 
 		Buffs: {
@@ -1549,7 +1549,8 @@ Mods: {
 				DisplayName: 钯金护盾
 				Tooltip:
 					'''
-					减半所有弹幕伤害
+					不受伤的时间越长，弹幕对你造成的伤害就越高
+					最多降低50%来自弹幕的伤害
 					会将大多数的弹幕反弹到攻击者身上
 					'''
 			}
@@ -1900,8 +1901,8 @@ Mods: {
 			}
 
 			FelineTombstone: {
-				// DisplayName: Feline Tombstone
-				// Tooltip: ""
+				DisplayName: 猫咪墓碑
+				Tooltip: "'虽然它已然去世，但我们会记住它，并在未来的岁月中永垂不朽'"
 			}
 		}
 
@@ -2004,7 +2005,7 @@ Mods: {
 			ShadowLash.DisplayName: 暗影猛击
 			QuicksilverTears.DisplayName: 水银之泪
 			EmeraldEnergy.DisplayName: 翡翠能量
-			// FelineTombstone.DisplayName: Feline Tombstone
+			FelineTombstone.DisplayName: 猫咪墓碑
 		}
 
 		Biomes: {
@@ -2110,9 +2111,10 @@ Mods: {
 			14: Andrey2345
 			15: Yee苍棱
 			16: Seceip
-			17: Roton
-			18: CDT_Maggot
-			19: BasicallyIAmFox
+			17: zynn
+			18: Roton
+			19: CDT_Maggot
+			20: BasicallyIAmFox
 		}
 
 		MusicDisplay: {

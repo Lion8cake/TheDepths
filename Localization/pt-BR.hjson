@@ -215,7 +215,7 @@ Mods: {
 			PetrifiedWoodToilet.MapEntry: Porcelana de Madeira Petrificada
 			PetrifiedWoodTrappedChest.MapEntry: Baú-Armadilha de Madeira Petrificada
 			PetrifiedWoodWorkbench.MapEntry: Bancada de Trabalho de Madeira Petrificada
-			// FelineTombstone.MapEntry: Feline Tombstone
+			FelineTombstone.MapEntry: Lápide de gato
 		}
 
 		Buffs: {
@@ -1549,7 +1549,8 @@ Mods: {
 				DisplayName: Escudo de Paládio
 				Tooltip:
 					'''
-					Reduz pela metade todo dano de projéteis
+					Quanto mais tempo você não levar dano, menos dano levará de projéteis.
+					Aumenta a redução do dano de projéteis em 50%.
 					Reflete a maioria dos projéteis para os atacantes
 					'''
 			}
@@ -1900,8 +1901,8 @@ Mods: {
 			}
 
 			FelineTombstone: {
-				// DisplayName: Feline Tombstone
-				// Tooltip: ""
+				DisplayName: Lápide de gato
+				Tooltip: "'Mesmo que morto, o mantemos vivo na memória e imortal pelos anos que virão.'"
 			}
 		}
 
@@ -2004,7 +2005,7 @@ Mods: {
 			ShadowLash.DisplayName: Chicote Sombrio
 			QuicksilverTears.DisplayName: Lágrimas de Mercúrio
 			EmeraldEnergy.DisplayName: Energia Esmeralda
-			// FelineTombstone.DisplayName: Feline Tombstone
+			FelineTombstone.DisplayName: Lápide de gato
 		}
 
 		Biomes: {
@@ -2110,9 +2111,10 @@ Mods: {
 			14: Andrey2345
 			15: Yee苍棱
 			16: Seceip
-			17: Roton
-			18: CDT_Maggot
-			19: BasicallyIAmFox
+			17: zynn
+			18: Roton
+			19: CDT_Maggot
+			20: BasicallyIAmFox
 		}
 
 		MusicDisplay: {

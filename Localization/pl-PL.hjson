@@ -215,7 +215,7 @@ Mods: {
 			PetrifiedWoodToilet.MapEntry: Toaleta ze skamieniałego drewna
 			PetrifiedWoodTrappedChest.MapEntry: Kufer ze skamieniałego drewna
 			PetrifiedWoodWorkbench.MapEntry: Stół warsztatowy ze skamieniałego drewna
-			// FelineTombstone.MapEntry: Feline Tombstone
+			FelineTombstone.MapEntry: Koci grób
 		}
 
 		Buffs: {
@@ -1549,7 +1549,8 @@ Mods: {
 				DisplayName: Tarcza z paladium
 				Tooltip:
 					'''
-					Zmniejsza obrażenia od pocisków o połowę
+					Im dłużej nie otrzymujesz obrażeń, tym mniej otrzymasz od następnego pocisku.
+					Bonus pozwala na zmniejszenie obrażen do 50%
 					Odbija większość pocisków w stronę wrogów
 					'''
 			}
@@ -1900,8 +1901,8 @@ Mods: {
 			}
 
 			FelineTombstone: {
-				// DisplayName: Feline Tombstone
-				// Tooltip: ""
+				DisplayName: Koci grób
+				Tooltip: "'Mimo że nie ma go już z nami, pozostanie w naszej pamięci na wieki'"
 			}
 		}
 
@@ -2004,7 +2005,7 @@ Mods: {
 			ShadowLash.DisplayName: Cienisty ognik
 			QuicksilverTears.DisplayName: Rtęciowe łzy
 			EmeraldEnergy.DisplayName: Szmaragdowa energia
-			// FelineTombstone.DisplayName: Feline Tombstone
+			FelineTombstone.DisplayName: Koci grób
 		}
 
 		Biomes: {
@@ -2110,9 +2111,10 @@ Mods: {
 			14: Andrey2345
 			15: Yee苍棱
 			16: Seceip
-			17: Roton
-			18: CDT_Maggot
-			19: BasicallyIAmFox
+			17: zynn
+			18: Roton
+			19: CDT_Maggot
+			20: BasicallyIAmFox
 		}
 
 		MusicDisplay: {

@@ -1,4 +1,3 @@
-using CalamityMod.NPCs.TownNPCs;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.GameContent.ItemDropRules;

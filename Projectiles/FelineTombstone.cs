@@ -3,7 +3,6 @@ using TheDepths.Tiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod.NPCs.TownNPCs;
 using System;
 using Terraria.Audio;
 

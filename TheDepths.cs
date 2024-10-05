@@ -49,7 +49,6 @@ using MonoMod.RuntimeDetour;
 using TheDepths.NPCs.Chasme;
 using TheDepths.Gores;
 using TheDepths.ModSupport;
-using CalamityMod.NPCs.TownNPCs;
 
 namespace TheDepths
 {
@@ -976,7 +975,7 @@ namespace TheDepths
 		{
 			ILCursor c = new ILCursor(il); //place a IL cursor
 			c.GotoNext(MoveType.After, i => i.MatchLdcI4(28800)); //Look for a LDC I4 instruction with 28800 (all timers use this)
-			c.EmitDelegate<Func<int, int>>(maxDuration => maxDuration + 60 * 28); //Adds ontop of the max duration to account for the custom credits
+			c.EmitDelegate<Func<int, int>>(maxDuration => maxDuration + 60 * 30); //Adds ontop of the max duration to account for the custom credits
 		}
 		#endregion
 
