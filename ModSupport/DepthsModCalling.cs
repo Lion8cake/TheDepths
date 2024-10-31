@@ -13,9 +13,22 @@ namespace TheDepths.ModSupport
     {
 		public static readonly Mod Achievements = ModLoader.TryGetMod("TMLAchievements", out Mod obtainedMod) ? obtainedMod : null;
 
-        public static bool FargoBoBWSupport = ModLoader.HasMod("FargoSeeds") && ModContent.GetInstance<ModSupport.FargosBoBWConfig>().BothCores;
+		public static readonly Mod? FargoSeeds = ModLoader.TryGetMod("FargoSeeds", out Mod obtainedMod) ? obtainedMod : null;
 
 		public static readonly Mod? BiomeLavaMod = ModLoader.TryGetMod("BiomeLava", out Mod obtainedMod) ? obtainedMod : null;
+
+		/// <summary>
+		/// Checks if fargos best of both worlds is enabled
+		/// </summary>
+		public static bool FargoBoBW = false;
+
+		/// <summary>
+		/// Call this method to update the FargoBoBW bool before using it.
+		/// </summary>
+		public static void UpdateFargoBoBW()
+		{
+			FargoBoBW = ModContent.GetInstance<FargosBoBWConfig>().BothCores && FargoSeeds != null;
+		}
 
 		public override void PostSetupContent()
 		{

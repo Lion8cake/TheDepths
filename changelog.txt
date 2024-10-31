@@ -1,3 +1,20 @@
+v1.0.2.1
+=========================
+Fixed Major issue where the depths biome doesnt show up in areas
+
+v1.0.2
+=========================
+Added the ability to create artificial biomes of the depths and underworlds when in the opposite biome area
+Resprited Quicksilver Bucket
+Resprited World Icon Underworld
+Resprited World Icon Drunk Left Depths
+Resprited World Icon Drunk Right Depths
+Resprited World Icon Drunk
+Resprited Nightwood Sword (thanks Ariadne)
+Fixed the world creation loading bar causing issues with some mods
+Fixed Fargo BoBW's config only working on game restart
+Fixed Zenith worlds not spawning ash grass on the middle island
+
 v1.0.1
 =========================
 Added Spanish Translation by CDT_Maggot

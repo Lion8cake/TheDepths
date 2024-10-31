@@ -49,6 +49,7 @@ using MonoMod.RuntimeDetour;
 using TheDepths.NPCs.Chasme;
 using TheDepths.Gores;
 using TheDepths.ModSupport;
+using TheDepths.Biomes;
 
 namespace TheDepths
 {
@@ -1430,7 +1431,7 @@ namespace TheDepths
 		private void ProgressBarEdit(ILContext il)
 		{
 			ILCursor c = new(il);
-			c.GotoNext(MoveType.After, i => i.MatchCallvirt<SpriteBatch>("Draw"), i => i.MatchLdarg1(), i => i.MatchLdarg0(), i => i.MatchLdfld<UIGenProgressBar>("_texOuterLower"));
+			c.GotoNext(MoveType.After, i => i.MatchLdarg1(), i => i.MatchLdarg0(), i => i.MatchLdfld<UIGenProgressBar>("_texOuterLower"));
 			c.EmitDelegate((Asset<Texture2D> texture) => (!WorldGen.drunkWorldGen && TheDepthsWorldGen.isWorldDepths || (WorldGen.drunkWorldGen && Main.rand.NextBool(2))) ? ModContent.Request<Texture2D>("TheDepths/Assets/Loading/Depths_Outer_Lower") : texture);
 		}
 		#endregion

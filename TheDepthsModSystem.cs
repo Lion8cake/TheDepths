@@ -35,6 +35,10 @@ namespace TheDepths
 {
     public class TheDepthsModSystem : ModSystem
     {
+		public int artificialDepthsBlockCount;
+
+		public int artificialUnderworldBlockCount;
+
 		//public static bool NotLavaDestroyable;
 
 		/*public override void PreUpdateWorld()
@@ -103,6 +107,8 @@ namespace TheDepths
 		public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
 		{
 			Main.SceneMetrics.GraveyardTileCount += tileCounts[ModContent.TileType<FelineTombstone>()];
+			artificialDepthsBlockCount = tileCounts[ModContent.TileType<ShaleBlock>()] + tileCounts[ModContent.TileType<Shalestone>()] + tileCounts[ModContent.TileType<NightmareGrass>()];
+			artificialUnderworldBlockCount = tileCounts[TileID.Ash] + tileCounts[TileID.AshGrass];
 		}
 
 		private static void TileGlowmaskList(TileDrawInfo drawData, int type, out Texture2D altGlowTexture, out Texture2D glowTexture, out Rectangle glowSourceRect, out Color glowColor)

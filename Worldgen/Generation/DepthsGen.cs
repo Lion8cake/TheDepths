@@ -61,11 +61,11 @@ internal class DepthsGen
 
     internal static void SpecialGenerate(GenerationProgress progress, GameConfiguration configuration)
     {
-        int biomeWidth = (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport) ? (int)(Main.maxTilesX / 2) : Main.maxTilesX; // Change this and the biome will adjust in size accordingly.
+        int biomeWidth = (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBW) ? (int)(Main.maxTilesX / 2) : Main.maxTilesX; // Change this and the biome will adjust in size accordingly.
         int x = 0;
         int side = 0;
 
-		if (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport)
+		if (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBW)
         {
             if (WorldGen.genRand.NextBool(2))
             {
@@ -308,7 +308,7 @@ internal class DepthsGen
     {
 		//Converting the tiles from nightmare to underworld is so much easier than the other way around due to how the quicksilver ocean and the depths roof works
 		//Replaces shale and nightmare grass, replaces trees
-		if (WorldGen.remixWorldGen && (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport))
+		if (WorldGen.remixWorldGen && (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBW))
 		{
 			for (int k = (TheDepthsWorldGen.DrunkDepthsLeft ? Main.maxTilesX / 2 : 0); k < (TheDepthsWorldGen.DrunkDepthsRight ? Main.maxTilesX / 2 : Main.maxTilesX); k++)
 			{
@@ -317,16 +317,16 @@ internal class DepthsGen
 					if (Main.tile[k, l].TileType == ModContent.TileType<ShaleBlock>())
 					{
 						WorldGen.KillTile(k, l, false, false, false);
-						Main.tile[k, l].TileType = (ushort)TileID.Ash;
 						Tile tile = Main.tile[k, l];
 						tile.HasTile = true;
+                        Main.tile[k, l].TileType = (ushort)TileID.Ash;
 					}
 					else if (Main.tile[k, l].TileType == ModContent.TileType<NightmareGrass>())
 					{
 						WorldGen.KillTile(k, l, false, false, false);
-						Main.tile[k, l].TileType = (ushort)TileID.AshGrass;
 						Tile tile = Main.tile[k, l];
 						tile.HasTile = true;
+                        Main.tile[k, l].TileType = (ushort)TileID.AshGrass;
 					}
 				}
 			}
@@ -337,13 +337,24 @@ internal class DepthsGen
 			int num857 = Main.maxTilesY - 1;
 			int num858 = Main.maxTilesY - 135;
 			int num859 = Main.maxTilesY - 160;
-			for (int num864 = num854; num864 < num855 + 15; num864++)
+			for (int num840 = num854; num840 < num855 + 15; num840++)
 			{
-				for (int num865 = Main.maxTilesY - 200; num865 < num858 + 20; num865++)
+				for (int num841 = Main.maxTilesY - 300; num841 < num858 + 20; num841++)
 				{
-					if (Main.tile[num864, num865].TileType == 633 && Main.tile[num864, num865].HasTile == true && !Main.tile[num864, num865 - 1].HasTile == true && WorldGen.genRand.NextBool(3))
+					Main.tile[num840, num841].LiquidAmount = 0;
+					if (Main.tile[num840, num841].TileType == 57 && Main.tile[num840, num841].HasTile && (!Main.tile[num840 - 1, num841 - 1].HasTile || !Main.tile[num840, num841 - 1].HasTile || !Main.tile[num840 + 1, num841 - 1].HasTile || !Main.tile[num840 - 1, num841].HasTile || !Main.tile[num840 + 1, num841].HasTile || !Main.tile[num840 - 1, num841 + 1].HasTile || !Main.tile[num840, num841 + 1].HasTile || !Main.tile[num840 + 1, num841 + 1].HasTile))
 					{
-						WorldGen.TryGrowingTreeByType(634, num864, num865);
+						Main.tile[num840, num841].TileType = 633;
+					}
+				}
+			}
+			for (int num842 = num854; num842 < num855 + 15; num842++)
+			{
+				for (int num843 = Main.maxTilesY - 200; num843 < num858 + 20; num843++)
+				{
+					if (Main.tile[num842, num843].TileType == 633 && Main.tile[num842, num843].HasTile && !Main.tile[num842, num843 - 1].HasTile && WorldGen.genRand.NextBool(3))
+					{
+						WorldGen.TryGrowingTreeByType(634, num842, num843);
 					}
 				}
 			}

@@ -52,17 +52,24 @@ public class DepthsBiome : ModBiome
 
 	public override bool IsBiomeActive(Player player)
     {
-        if (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft)
+        bool flag;
+        bool flag2 = true;
+		if (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft)
         {
-			return Worldgen.TheDepthsWorldGen.IsPlayerInLeftDepths(player) && Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210;
+			flag = Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(player.position.ToTileCoordinates().X) < Main.maxTilesX / 2;
 		}
         else if (Worldgen.TheDepthsWorldGen.DrunkDepthsRight)
         {
-			return Worldgen.TheDepthsWorldGen.IsPlayerInRightDepths(player) && Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210;
+			flag = Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(player.position.ToTileCoordinates().X) > Main.maxTilesX / 2;
 		}
         else
         {
-            return Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210 && Worldgen.TheDepthsWorldGen.isWorldDepths;
+            flag = Worldgen.TheDepthsWorldGen.isWorldDepths;
         }
-    }
+        if (ModContent.GetInstance<TheDepthsModSystem>().artificialUnderworldBlockCount >= 300)
+        {
+            flag2 = false;
+        }
+        return (flag || ModContent.GetInstance<TheDepthsModSystem>().artificialDepthsBlockCount >= 300) && flag2 && Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210;
+	}
 }

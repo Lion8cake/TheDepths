@@ -1,7 +1,7 @@
 ﻿=========================================
 The Depths (Alternate Hell)
 =========================================
-Depths version 1.0.1 (full release)
+Depths version 1.0.2.1 (full release)
 Welcome to THE DEPTHS 
 The Depths is a mod that adds an alternate biome to the underworld called the depths, this works very similar to how the crimson and corruption works in the base game. 
 This mod fully replaces all content found within the underworld from the lava cavern layer to the wall of flesh; everything has an alternative!
@@ -52,6 +52,7 @@ Darkrious & Larfleeze - For two Depths paintings and the Nightmare Tree and Armo
 alpha0010 - Lots of general fixes to various items and tiles
 Moddingus - Old Chasme AI
 Hariq - Old Chasme's base, movement and conjoinment
+Ariadne - Nightwood Sword resrpite
 Kurtis - Rocket boot dust IL edit
 bingchilling18 - old No underworld evaporation
 BasicallyIAmFox - Silhouette summon rendertarget system and code

@@ -15,6 +15,8 @@ using System.IO;
 using TheDepths.Tiles.Trees;
 using TheDepths.Worldgen.Generation;
 using static Terraria.ModLoader.ModContent;
+using TheDepths.ModSupport;
+using TheDepths.Biomes;
 
 namespace TheDepths.Worldgen
 {    
@@ -37,17 +39,17 @@ namespace TheDepths.Worldgen
 		/// <summary>
 		/// Detects if the player is on the depths side of the drunk seed if the depths is on the Right
 		/// </summary>
-		public static bool IsPlayerInRightDepths(Player player) => DrunkDepthsRight && Math.Abs(player.position.ToTileCoordinates().X) > Main.maxTilesX / 2;
+		public static bool IsPlayerInRightDepths(Player player) => DrunkDepthsRight && ((Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 200 && player.InModBiome<DepthsBiome>()) || (Math.Abs(player.position.ToTileCoordinates().Y) < Main.maxTilesY - 200 && Math.Abs(player.position.ToTileCoordinates().X) > Main.maxTilesX / 2));
 
 		/// <summary>
 		///   Detects if the player is on the depths side of the drunk seed if the depths is on the left
 		/// </summary>
-		public static bool IsPlayerInLeftDepths(Player player) => DrunkDepthsLeft && Math.Abs(player.position.ToTileCoordinates().X) < Main.maxTilesX / 2;
+		public static bool IsPlayerInLeftDepths(Player player) => DrunkDepthsLeft && ((Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 200 && player.InModBiome<DepthsBiome>()) || (Math.Abs(player.position.ToTileCoordinates().Y) < Main.maxTilesY - 200 && Math.Abs(player.position.ToTileCoordinates().X) < Main.maxTilesX / 2));
 
 		/// <summary>
 		///   Checks if the player is in the depths part of the world. This is used to reduce repetion within code as previously all the check needed was depthsorHell == true.
 		/// </summary>
-		public static bool InDepths(Player player) => (isWorldDepths && !DrunkDepthsLeft && !DrunkDepthsRight) || IsPlayerInLeftDepths(player) || IsPlayerInRightDepths(player);
+		public static bool InDepths(Player player) => (isWorldDepths && player.InModBiome<DepthsBiome>() && !DrunkDepthsLeft && !DrunkDepthsRight) || IsPlayerInLeftDepths(player) || IsPlayerInRightDepths(player);
 
 		/// <summary>
 		/// Detects if the inputted tile X coord is on the depths side of the drunk seed if the depths is on the Right
@@ -222,7 +224,8 @@ namespace TheDepths.Worldgen
 				_ => throw new ArgumentOutOfRangeException(),
 			};
 
-			if (Main.drunkWorld || ModSupport.DepthsModCalling.FargoBoBWSupport)
+			DepthsModCalling.UpdateFargoBoBW();
+			if (Main.drunkWorld || ModSupport.DepthsModCalling.FargoBoBW)
             {
 				if (Main.rand.NextBool(2))
 				{
@@ -239,14 +242,15 @@ namespace TheDepths.Worldgen
 
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
 		{
-			if (isWorldDepths || WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport)
+			DepthsModCalling.UpdateFargoBoBW();
+			if (isWorldDepths || WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBW)
 			{
 				int baseUnderWorldIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Underworld"));
 				if (baseUnderWorldIndex >= 0)
 				{
-					if (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport || WorldGen.remixWorldGen)
+					if (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBW || WorldGen.remixWorldGen)
 					{
-						if (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport)
+						if (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBW)
 							tasks.Insert(baseUnderWorldIndex + 1, new PassLegacy("Depths: Depths", DepthsGen.SpecialGenerate)); // Overwrite some amount of space with the Depths
 						else
 							tasks[baseUnderWorldIndex] = new PassLegacy("Underworld", DepthsGen.SpecialGenerate); // Replace the entire Underworld with only Depths for ddu
@@ -291,7 +295,8 @@ namespace TheDepths.Worldgen
 
         public override void ModifyHardmodeTasks(List<GenPass> list)
 		{
-			if (isWorldDepths || WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport)
+			DepthsModCalling.UpdateFargoBoBW();
+			if (isWorldDepths || WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBW)
 			{
 				list.Add(new PassLegacy("The Depths: Onyx Shalestone", new WorldGenLegacyMethod(OnyxShale)));
 			}
@@ -315,7 +320,7 @@ namespace TheDepths.Worldgen
 		{
 			progress.Message = "Resetting Shadow Chests";
 			List<int> list3;
-			if (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBWSupport)
+			if (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBW)
 			{
 				list3 = new List<int> { 274, ModContent.ItemType<Items.Weapons.SilverStar>(), 220, ModContent.ItemType<Items.Weapons.Skyfall>(), 112, ModContent.ItemType<Items.Weapons.WhiteLightning>(), 218, ModContent.ItemType<Items.Weapons.NightFury>(), 3019 };
 				if (WorldGen.remixWorldGen)
@@ -406,7 +411,7 @@ namespace TheDepths.Worldgen
 
 		public static void DepthsBuriedChests(GenerationProgress progress, GameConfiguration configuration)
 		{
-			for (int chestID = 0; chestID < (!WorldGen.drunkWorldGen && !ModSupport.DepthsModCalling.FargoBoBWSupport ? Main.maxChests : Main.maxChests / 2); chestID++)
+			for (int chestID = 0; chestID < (!WorldGen.drunkWorldGen && !ModSupport.DepthsModCalling.FargoBoBW ? Main.maxChests : Main.maxChests / 2); chestID++)
 			{
 				Chest chest = Main.chest[chestID];
 				if (chest != null)
