@@ -31,7 +31,7 @@ Mods: {
 			OnyxRobeWizard:
 				'''
 				2 defense
-				Icreases Magic critical strike chance by 18%
+				Increases Magic critical strike chance by 18%
 				'''
 			OnyxRobeMagic:
 				'''
@@ -43,9 +43,9 @@ Mods: {
 
 		Quest: {
 			Description: {
-				Chasmefish: There is an old legend that says that a royal fish was born on the rise of a solar eclipse and was cursed to the depths of this world. I want you to find this fish so I can see how powerful it truly is.
-				Relicarp: If you don't know already but there is a magical cult in the Depths that worship gemstones. Their practices remain unknown to me but you know what I do know? They have a magical fish that looks just like their special cult relics. Go get one for me so I can find out what happens when I place it in a pot.
-				GlimmerDepthFish: I was playing on a layer of quartz when all of a sudden a quartz chunk broke off into the quicksilver and it grew fins and swam away. I've always wanted to know what quartz tastes like, so get me this fish so I can be the first to taste it.
+				Chasmefish: There is an old legend that says that a royal fish was born on the rise of a solar eclipse and was cursed to the depths of this world. I want you to find this fish so I can see how powerful it truly is!
+				Relicarp: If you don't know already but there is a magical cult in the Depths that worship gemstones. Their practices remain unknown to me but you know what I do know? They have a magical fish that looks just like their special cult relics. Go get one for me so I can find out what happens when I place it in a pot!
+				GlimmerDepthFish: I was playing on a layer of quartz when all of a sudden a quartz chunk broke off into the quicksilver and it grew fins and swam away. I've always wanted to know what quartz tastes like, so get me this fish so I can be the first to taste it!
 			}
 
 			CaughtLocation: {
@@ -68,9 +68,9 @@ Mods: {
 
 		Bestiary: {
 			# Enemies
-			AlbinoBat: A victum of a rare pigment mutation, this bat roams the deeper cavern system to blend in with the surrounding mercury in order to survive.
+			AlbinoBat: A victim of a rare pigment mutation, this bat roams the deeper cavern system to blend in with the surrounding mercury in order to survive.
 			Archroma: A cousin of pinky with a similar density causing them to be very strong, they eat money.
-			CrystalKing: A royal king of Geomancy, although unable to walk he can teleport like most other mages.
+			CrystalKing: A royal king of geomancy, although unable to walk he can teleport like most other mages.
 			Ferroslime: This slime may appear spiky, but that's only its ferrofluid spiking up to come off as more threatening than it is.
 			Geomancer: Loyal cult members well-practiced in geomancy. Legends have it that they worship a living shadowflame being.
 			GoldBat: A rare bat in the depths that was cursed by the geomancers to be a gem-like creature. Despite their name they are actually the same color as topaz.
@@ -78,10 +78,10 @@ Mods: {
 			DepthsWorm: A stone and sapphire serpent with water flowing through its veins. It carries a shovel like no other.
 			Shade: Beings of pure darkness that drift through the depths with the ability to freely float through the air. A group of them is called a darkening.
 			ShadowBat: This half black half emerald bat is a stonger varient of the bats found in the depths. Is it a bat's shadow or a shadow made of bats?
-			ShadowSlime: A purely black slime that roams the hardened depths, getting hit by it would be a blinding.
-			EnchantedNightmareWorm: Over time worms that have found their way to the deep underground will have discovered the Nightmare Grove. Forced to blend in, they inherit the natural purple tint of their surrounding enviroment.
+			ShadowSlime: A purely black slime that roams the hardened depths, getting hit by it could cause severe blinding.
+			EnchantedNightmareWorm: Over time worms that have found their way to the deep underground will have discovered the Nightmare Grove. Forced to blend in, they inherit the natural purple tint of their surrounding environment.
 			QuartzCrawler: A black snail with a shell that looks very similar to a chunk of quartz. An especially tasty treat to fish that lurk in the mercury.
-			AlbinoRat: A rare pigmented rat that attempted to blend in with the surrounding quartz and mercury. How the hell do you catch a fish with that thing?
+			AlbinoRat: A rare pigmented rat that attempted to blend in with the surrounding quartz and mercury. How are you going to catch fish with this thing?
 			Chasme: A giant made of pure Shalestone. Despite being called Chasme this is only her depth'n tool of destruction and safety.          Chasme too was powerful but she never wanted that fight. Maybe this was all a misunderstanding
 			ChasmeHands: Shalestone manifestations made by Chasme to help shape the Depths to what you see today. These have no correlation to the hands of those from Deerclops.           You destroyed her and her home all for the freedom of the ancient spirits. Happiness comes at a cost.
 			ChasmeSoul: Chasme was born on a total eclipse that cursed her to what you saw then. She was locked away in the deep underground where she turned everything into an eternal dark abyss.        Sometimes I wonder if her curse could be broken someday.
@@ -137,84 +137,84 @@ Mods: {
 			ShalestoneRuby.MapEntry: Ruby
 			ShalestoneSapphire.MapEntry: Sapphire
 			ShalestoneTopaz.MapEntry: Topaz
-			PetrifiedSapling.MapEntry: Petrified Sapling
-			NightSapling.MapEntry: Nightwood Sapling
+			PetrifiedSapling.MapEntry: Sapling
+			NightSapling.MapEntry: Sapling
 			QuicksilverSensor.MapEntry: Liquid Sensor (Quicksilver)
-			OtherPortal.MapEntry: Other Portal
-			NightwoodBath.MapEntry: Nightwood Bath
-			NightwoodBed.MapEntry: Nightwood Bed
-			NightwoodBookcase.MapEntry: Nightwood Bookcase
-			NightwoodCandelabra.MapEntry: Nightwood Candelabra
-			NightwoodCandle.MapEntry: Nightwood Candle
-			NightwoodChair.MapEntry: Nightwood Chair
-			NightwoodChandelier.MapEntry: Nightwood Chandelier
-			NightwoodChest.MapEntry: Nightwood Chest
-			NightwoodClock.MapEntry: Nightwood Clock
-			NightwoodDoorClosed.MapEntry: Nightwood Door
-			NightwoodDoorOpen.MapEntry: Nightwood Door
-			NightwoodDresser.MapEntry: Nightwood Dresser
-			NightwoodLamp.MapEntry: Nightwood Lamp
-			NightwoodLantern.MapEntry: Nightwood Lantern
-			NightwoodPiano.MapEntry: Nightwood Piano
-			NightwoodSink.MapEntry: Nightwood Sink
-			NightwoodSofa.MapEntry: Nightwood Sofa
-			NightwoodTable.MapEntry: Nightwood Table
-			NightwoodToilet.MapEntry: Nightwood Toilet
-			NightwoodWorkbench.MapEntry: Nightwood Workbench
-			QuartzToilet.MapEntry: Quartz Toilet
-			QuartzSofa.MapEntry: Quartz Sofa
-			QuartzSink.MapEntry: Quartz Sink
-			QuartzPiano.MapEntry: Quartz Piano
-			QuartzLantern.MapEntry: Quartz Lantern
-			QuartzLamp.MapEntry: Quartz Lamp
-			QuartzDresser.MapEntry: Quartz Dresser
-			QuartzClock.MapEntry: Quartz Clock
-			QuartzChest.MapEntry: Quartz Chest
-			QuartzChandelier.MapEntry: Quartz Chandelier
-			QuartzCandle.MapEntry: Quartz Candle
-			QuartzCandelabra.MapEntry: Quartz Candelabra
-			QuartzBookcase.MapEntry: Quartz Bookcase
-			QuartzBed.MapEntry: Quartz Bed
-			QuartzBath.MapEntry: Quartz Bath
-			DepthsVanityBanners.MapEntry: Depths Vanity Banners
+			OtherPortal.MapEntry: Painting
+			NightwoodBath.MapEntry: Bath
+			NightwoodBed.MapEntry: Bed
+			NightwoodBookcase.MapEntry: Bookcase
+			NightwoodCandelabra.MapEntry: Candelabra
+			NightwoodCandle.MapEntry: Candle
+			NightwoodChair.MapEntry: Chair
+			NightwoodChandelier.MapEntry: Chandelier
+			NightwoodChest.MapEntry: Chest
+			NightwoodClock.MapEntry: Clock
+			NightwoodDoorClosed.MapEntry: Door
+			NightwoodDoorOpen.MapEntry: Door
+			NightwoodDresser.MapEntry: Dresser
+			NightwoodLamp.MapEntry: Lamp
+			NightwoodLantern.MapEntry: Lantern
+			NightwoodPiano.MapEntry: Piano
+			NightwoodSink.MapEntry: Sink
+			NightwoodSofa.MapEntry: Sofa
+			NightwoodTable.MapEntry: Table
+			NightwoodToilet.MapEntry: Toilet
+			NightwoodWorkbench.MapEntry: Workbench
+			QuartzToilet.MapEntry: Toilet
+			QuartzSofa.MapEntry: Sofa
+			QuartzSink.MapEntry: Sink
+			QuartzPiano.MapEntry: Piano
+			QuartzLantern.MapEntry: Lantern
+			QuartzLamp.MapEntry: Lamp
+			QuartzDresser.MapEntry: Dresser
+			QuartzClock.MapEntry: Clock
+			QuartzChest.MapEntry: Chest
+			QuartzChandelier.MapEntry: Chandelier
+			QuartzCandle.MapEntry: Candle
+			QuartzCandelabra.MapEntry: Candelabra
+			QuartzBookcase.MapEntry: Bookcase
+			QuartzBed.MapEntry: Bed
+			QuartzBath.MapEntry: Bath
+			DepthsVanityBanners.MapEntry: Banner
 			DepthsOtherworldlyMusicBox.MapEntry: Music Box
-			AltarOfGems.MapEntry: Altar Of Gems
-			ForTheSakeOfMakingGadgets.MapEntry: For The Sake Of Making Gadgets
-			ImPurrSonation.MapEntry: Im Purr-sonation
-			Mercury.MapEntry: Mercury
-			MusiciansBestFriend.MapEntry: Musicians Best Friend
-			ChaosCat.MapEntry: Chaos Cat
-			DONOTDRINK.MapEntry: DO NOT DRINK
+			AltarOfGems.MapEntry: Painting
+			ForTheSakeOfMakingGadgets.MapEntry: Painting
+			ImPurrSonation.MapEntry: Painting
+			Mercury.MapEntry: Painting
+			MusiciansBestFriend.MapEntry: Painting
+			ChaosCat.MapEntry: Painting
+			DONOTDRINK.MapEntry: Painting
 			WaterGeyser.MapEntry: Water Geyser
-			PlacedGems.MapEntry: Placed Gems
-			PlacedOnyx.MapEntry: Placed Onyx
-			OnyxStone.MapEntry: Onyx Stone
+			PlacedGems.MapEntry: Geode
+			PlacedOnyx.MapEntry: Onyx
+			OnyxStone.MapEntry: Onyx
 			OnyxGemtree.MapEntry: Onyx Gemtree
 			PetrifiedTree.MapEntry: Petrified Tree
-			TheUnknownDepthsBelow.MapEntry: The Unknown Depths Below
+			TheUnknownDepthsBelow.MapEntry: Painting
 			NightwoodTree.MapEntry: Nightwood Tree
-			NightwoodTrappedChest.MapEntry: Nightwood Chest
-			QuartzTrappedChest.MapEntry: Quartz Chest
+			NightwoodTrappedChest.MapEntry: Chest
+			QuartzTrappedChest.MapEntry: Chest
 			HangingShadowShrub.MapEntry: Hanging Shadow Shrub
-			PetrifiedWoodBath.MapEntry: Petrified Wood Bath
-			PetrifiedWoodBookcase.MapEntry: Petrified Wood Bookcase
-			PetrifiedWoodCandelabra.MapEntry: Petrified Wood Candelabra
-			PetrifiedWoodCandle.MapEntry: Petrified Wood Candle
-			PetrifiedWoodChair.MapEntry: Petrified Wood Chair
-			PetrifiedWoodChandelier.MapEntry: Petrified Wood Chandelier
-			PetrifiedWoodChest.MapEntry: Petrified Wood Chest
-			PetrifiedWoodClock.MapEntry: Petrified Wood Clock
-			PetrifiedWoodDresser.MapEntry: Petrified Wood Dresser
-			PetrifiedWoodLamp.MapEntry: Petrified Wood Lamp
-			PetrifiedWoodLantern.MapEntry: Petrified Wood Lantern
-			PetrifiedWoodBedShaleSheetsAreImpossible.MapEntry: Petrified Wood Bed
-			PetrifiedWoodPiano.MapEntry: Petrified Wood Piano
-			PetrifiedWoodSink.MapEntry: Petrified Wood Sink
-			PetrifiedWoodSofa.MapEntry: Petrified Wood Sofa
-			PetrifiedWoodTable.MapEntry: Petrified Wood Table
-			PetrifiedWoodToilet.MapEntry: Petrified Wood Toilet
-			PetrifiedWoodTrappedChest.MapEntry: Petrified Wood Trapped Chest
-			PetrifiedWoodWorkbench.MapEntry: Petrified Wood Workbench
+			PetrifiedWoodBath.MapEntry: Bath
+			PetrifiedWoodBookcase.MapEntry: Bookcase
+			PetrifiedWoodCandelabra.MapEntry: Candelabra
+			PetrifiedWoodCandle.MapEntry: Candle
+			PetrifiedWoodChair.MapEntry: Chair
+			PetrifiedWoodChandelier.MapEntry: Chandelier
+			PetrifiedWoodChest.MapEntry: Chest
+			PetrifiedWoodClock.MapEntry: Clock
+			PetrifiedWoodDresser.MapEntry: Dresser
+			PetrifiedWoodLamp.MapEntry: Lamp
+			PetrifiedWoodLantern.MapEntry: Lantern
+			PetrifiedWoodBedShaleSheetsAreImpossible.MapEntry: Bed
+			PetrifiedWoodPiano.MapEntry: Piano
+			PetrifiedWoodSink.MapEntry: Sink
+			PetrifiedWoodSofa.MapEntry: Sofa
+			PetrifiedWoodTable.MapEntry: Table
+			PetrifiedWoodToilet.MapEntry: Toilet
+			PetrifiedWoodTrappedChest.MapEntry: Chest
+			PetrifiedWoodWorkbench.MapEntry: Workbench
 			FelineTombstone.MapEntry: Tombstone
 		}
 
@@ -266,7 +266,7 @@ Mods: {
 
 			ShadePetBuff: {
 				DisplayName: Shade Pet
-				Description: '''"A Shade is floating around with you!"'''
+				Description: A Shade is floating around with you!
 			}
 
 			ShadowCatBuff: {
@@ -289,7 +289,7 @@ Mods: {
 
 			NightmareHorseBuff: {
 				DisplayName: Nightmare Horse
-				Description: A ghastly looking shalestone horse constructed by chasme herself
+				Description: A ghastly looking shalestone horse constructed by Chasme herself
 			}
 
 			BuffofaThousandYears: {
@@ -308,7 +308,7 @@ Mods: {
 				DisplayName: Aqua Glove
 				Tooltip:
 					'''
-					Increases Melee knockback and inflicts freezing water on attack
+					Increases melee knockback and melee attacks inflict freezing water
 					Increases melee speed and damage by 12%
 					Enables auto swing for melee weapons
 					'''
@@ -316,7 +316,7 @@ Mods: {
 
 			AquaStone: {
 				DisplayName: Aqua Stone
-				Tooltip: Inflicts freezing water on attack
+				Tooltip: Melee attacks inflict freezing water
 			}
 
 			CrystalShield: {
@@ -332,7 +332,7 @@ Mods: {
 
 			CrystalSkull: {
 				DisplayName: Crystal Skull
-				Tooltip: Grants immunity to Mercury Radiation
+				Tooltip: Grants immunity to mercury radiation
 			}
 
 			CrystalWaterWalkingBoots: {
@@ -345,7 +345,7 @@ Mods: {
 			}
 
 			LodeStone: {
-				DisplayName: Lode Stone
+				DisplayName: Lodestone
 				Tooltip: Increases item pickup range
 			}
 
@@ -371,7 +371,7 @@ Mods: {
 				Tooltip:
 					'''
 					Provides the ability to walk on water, honey, lava & quicksilver
-					Grants immunity to radiation
+					Grants immunity to mercury radiation
 					Grants 4 seconds of extra immunity to quicksilver
 					'''
 			}
@@ -393,17 +393,17 @@ Mods: {
 
 			GeodeChestplate: {
 				DisplayName: Geode Chestplate
-				Tooltip: Incresses maximum amount of minions by 1
+				Tooltip: Increases maximum amount of minions by 1
 			}
 
 			GeodeHelmet: {
 				DisplayName: Geode Helmet
-				Tooltip: Incresses maximum amount of minions by 1
+				Tooltip: Increases maximum amount of minions by 1
 			}
 
 			GeodeLeggings: {
 				DisplayName: Geode Leggings
-				Tooltip: Incresses maximum amount of minions by 1
+				Tooltip: Increases maximum amount of minions by 1
 			}
 
 			Geode: {
@@ -413,12 +413,12 @@ Mods: {
 
 			MercuryChestplate: {
 				DisplayName: Mercury Chestplate
-				Tooltip: Increases Melee Damage by 19%
+				Tooltip: Increases melee damage by 19%
 			}
 
 			MercuryGreaves: {
 				DisplayName: Mercury Greaves
-				Tooltip: Increases Movement Speed by 10%
+				Tooltip: Increases movement speed by 10%
 			}
 
 			MercuryHelmet: {
@@ -430,8 +430,8 @@ Mods: {
 				DisplayName: Onyx Robe
 				Tooltip:
 					'''
-					Reduces mana cost by 22%
 					Increases maximum mana by 60
+					Reduces mana cost by 22%
 					'''
 			}
 
@@ -564,7 +564,7 @@ Mods: {
 				DisplayName: Core Builder
 				Tooltip:
 					'''
-					Allows you to convert hell materials into their depths alternatives and vice versa 
+					Allows you to convert Underworld materials into their depths alternatives and vice versa 
 					'A legendary forge which is rumored to have made the world's core'
 					'''
 			}
@@ -714,7 +714,7 @@ Mods: {
 
 			SilverSpherePotion: {
 				DisplayName: Silver Sphere Potion
-				Tooltip: Summons 4 silver spheres to orbit the player and deal damage to enemies!
+				Tooltip: Summons 4 silver spheres to orbit the player and deal damage to enemies
 			}
 
 			BlackPhaseblade: {
@@ -734,7 +734,7 @@ Mods: {
 
 			DiamondArrow: {
 				DisplayName: Diamond Arrow
-				Tooltip: 3 bursts of crystals are shot out in random directions apon impact
+				Tooltip: 3 bursts of crystals are shot out in random directions upon impact
 			}
 
 			DiamondBolt: {
@@ -768,12 +768,12 @@ Mods: {
 			}
 
 			OnyxSepter: {
-				DisplayName: Onyx Septer
+				DisplayName: Onyx Scepter
 				Tooltip: ""
 			}
 
 			POWHammer: {
-				DisplayName: P.O.W Hammer
+				DisplayName: P.O.W. Hammer
 				Tooltip: "'High bonkability'"
 			}
 
@@ -789,7 +789,7 @@ Mods: {
 
 			SapphireShovel: {
 				DisplayName: Sapphire Shovel
-				Tooltip: Disables enemies for a few seconds.
+				Tooltip: Disables enemies for a few seconds
 			}
 
 			ShadeBlade: {
@@ -925,7 +925,7 @@ Mods: {
 				Tooltip:
 					'''
 					{$CommonItemTooltip.RightClickToOpen}
-					Requires a Shadow key
+					Requires a Shadow Key
 					'''
 			}
 
@@ -936,7 +936,7 @@ Mods: {
 
 			GiantFluorescentLightBulb: {
 				DisplayName: Giant Fluorescent Light Bulb
-				Tooltip: "'Its too heavy to hang on any roof.'"
+				Tooltip: "'Its too heavy to hang on any roof'"
 			}
 
 			OtherPortal: {
@@ -1006,7 +1006,7 @@ Mods: {
 				DisplayName: Purpleflame Necklace
 				Tooltip:
 					'''
-					Summons a ridable Purpleflame Jellyfish
+					Summons a rideable Purpleflame Jellyfish
 					'He doesn't zap, does he?'
 					'''
 			}
@@ -1028,7 +1028,7 @@ Mods: {
 
 			QuicksilverproofBugNet: {
 				DisplayName: Quicksilverproof Bug Net
-				Tooltip: "'For when things are a bit too poisonus to handle'"
+				Tooltip: "'For when things are a bit too poisonous to handle'" #the temptation to further mispell 'poisonous' is hard to ignore
 			}
 
 			AlbinoRatCage: {
@@ -1446,7 +1446,7 @@ Mods: {
 				Tooltip:
 					'''
 					Negates fall damage
-					Grants immunity to Mercury Radiation
+					Grants immunity to mercury radiation
 					'''
 			}
 
@@ -1454,7 +1454,7 @@ Mods: {
 				DisplayName: Silver Charm
 				Tooltip:
 					'''
-					Grants immunity to Mercury Radiation
+					Grants immunity to mercury radiation
 					Grants 4 additional seconds of quicksilver immunity
 					'''
 			}
@@ -1464,8 +1464,8 @@ Mods: {
 				Tooltip:
 					'''
 					Grants 4 additional seconds of quicksilver immunity
-					Grants immunity to Mercury Radiation
-					Reduced damage from Mercury debuffs
+					Grants immunity to mercury radiation
+					Reduces damage from mercury debuffs
 					'''
 			}
 
@@ -1474,7 +1474,7 @@ Mods: {
 				Tooltip:
 					'''
 					Grants 4 additional seconds of quicksilver immunity
-					Grants immunity to Mercury Radiation
+					Grants immunity to mercury radiation
 					'''
 			}
 
@@ -1482,8 +1482,8 @@ Mods: {
 				DisplayName: Crystal Rose
 				Tooltip:
 					'''
-					Grants immunity to Mercury Radiation
-					Reduced damage from Mercury debuffs
+					Grants immunity to mercury radiation
+					Reduces damage from mercury debuffs
 					'''
 			}
 
@@ -1712,7 +1712,7 @@ Mods: {
 
 			QuartzHood: {
 				DisplayName: Quartz Hood
-				Tooltip: Increases Whip Range by 15%
+				Tooltip: Increases whip range by 15%
 			}
 
 			QuartzLeggings: {
@@ -1722,14 +1722,14 @@ Mods: {
 
 			QuartzWinterCoat: {
 				DisplayName: Quartz Winter Coat
-				Tooltip: Increases Whip Speed by 15%
+				Tooltip: Increases whip speed by 15%
 			}
 
 			HungryLeash: {
 				DisplayName: Hungry Leash
 				Tooltip:
 					'''
-					For every 25% health lost, movement speed is increased by 25%
+					For every 25% life lost, movement speed is increased by 25%
 					'How hungry?'
 					'''
 			}
@@ -1904,7 +1904,7 @@ Mods: {
 
 			FelineTombstone: {
 				DisplayName: Feline Tombstone
-				Tooltip: "'Although gone, may we remember them and imortalise them for the years to come'"
+				Tooltip: "'Although gone, may we remember them and imortalize them for the years to come'"
 			}
 		}
 
@@ -1925,9 +1925,9 @@ Mods: {
 			ShadowBat.DisplayName: Shadow Bat
 			ShadowSlime.DisplayName: Shadow Slime
 			DepthsWorm.DisplayName: Sapphire Serpent
-			SapphireSerpentBody.DisplayName: Sapphire Serpent Body
-			SapphireSerpentHead.DisplayName: Sapphire Serpent Head
-			SapphireSerpentTail.DisplayName: Sapphire Serpent Tail
+			SapphireSerpentBody.DisplayName: Sapphire Serpent
+			SapphireSerpentHead.DisplayName: Sapphire Serpent
+			SapphireSerpentTail.DisplayName: Sapphire Serpent
 			EnchantedNightmareWorm.DisplayName: Nightmare Slug
 			QuartzCrawler.DisplayName: Quartz Crawler
 			AlbinoRat.DisplayName: Albino Rat
@@ -2012,7 +2012,7 @@ Mods: {
 
 		Biomes: {
 			DepthsBiome: {
-				DisplayName: Depths Biome
+				DisplayName: The Depths
 				TownNPCDialogueName: The Depths
 			}
 		}
@@ -2135,7 +2135,7 @@ ItemTooltip.TerrasparkBoots:
 	'''
 	Allows flight, super fast running, and extra mobility on ice
 	8% increased movement speed
-	Provides the ability to walk on water, honey, quicksilver & lava
-	Grants immunity to fire & poisonus blocks, 7 seconds of immunity to lava and 8 secconds immunity to quicksilver
+	Provides the ability to walk on water, honey, lava & quicksilver
+	Grants immunity to fire & poisonous blocks, 7 seconds of immunity to lava and 8 seconds immunity to quicksilver
 	Reduces damage from touching lava and quicksilver debuffs
 	'''
