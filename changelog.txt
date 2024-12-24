@@ -1,3 +1,8 @@
+v1.0.2.3
+=========================
+Fixed several typos in the english translation file
+Chasme's soul now stays out longer depending on difficulty modes (ie: 40 seconds to damage the soul 25% in expert mode)
+
 v1.0.2.2
 =========================
 Fixed depths or underworld only worlds having the player be in the depths biome for quicksilver and more to work

@@ -208,7 +208,21 @@ namespace TheDepths.NPCs.Chasme
 			NPC headNPC = Main.npc[ChasmePartIDs[0]];
 
 			//Stages, goes head -> core -> head 4 times
-			int CoreOpenDur = Main.getGoodWorld ? 60 : 20;
+			int CoreDurMultiplier = 1;
+			if (Main.expertMode)
+			{
+				CoreDurMultiplier += 1;
+			}
+			if (Main.masterMode)
+			{
+				CoreDurMultiplier += 1; 
+			}
+			if (Main.getGoodWorld)
+			{
+				CoreDurMultiplier += 1;
+			}
+			//In seconds as its turned to ticks later when used
+			int CoreOpenDur = 20 * CoreDurMultiplier;
 			bool Headlife3 = NPC.life <= NPC.lifeMax / 4;
 			bool Headlife2 = NPC.life <= NPC.lifeMax / 2;
 			bool Headlife1 = NPC.life <= (NPC.lifeMax / 4 + NPC.lifeMax / 2);

@@ -1028,7 +1028,7 @@ Mods: {
 
 			QuicksilverproofBugNet: {
 				DisplayName: Quicksilverproof Bug Net
-				Tooltip: "'For when things are a bit too poisonous to handle'" #the temptation to further mispell 'poisonous' is hard to ignore
+				Tooltip: "'For when things are a bit too poisonous to handle'"
 			}
 
 			AlbinoRatCage: {
