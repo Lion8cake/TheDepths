@@ -107,11 +107,7 @@ namespace TheDepths
 			IL_UIWorldCreation.SetupGamepadPoints += DepthsSelectionMenu.ILSetUpGamepadPoints;
 			IL_UIWorldCreation.ShowOptionDescription += DepthsSelectionMenu.ILShowOptionDescription;
 			On_UIWorldCreation.SetDefaultOptions += DepthsSelectionMenu.OnSetDefaultOptions;
-			On_UIWorldListItem.DrawSelf += (orig, self, spriteBatch) =>
-			{
-				orig(self, spriteBatch);
-				DrawWorldSelectItemOverlay(self, spriteBatch);
-			};
+			On_UIWorldListItem.DrawSelf += WorldIconOverlay;
 
 			//Item edits
 			On_Player.ItemCheck_CatchCritters += On_Player_ItemCheck_CatchCritters;
@@ -191,6 +187,7 @@ namespace TheDepths
 
 			//UI edits
 			IL_UIGenProgressBar.DrawSelf -= ProgressBarEdit;
+			On_UIWorldListItem.DrawSelf -= WorldIconOverlay;
 
 			//Item edits
 			On_Player.ItemCheck_CatchCritters -= On_Player_ItemCheck_CatchCritters;
@@ -1142,11 +1139,12 @@ namespace TheDepths
 		#endregion
 
 		#region NEWWorldIcondetour
-		private void DrawWorldSelectItemOverlay(UIWorldListItem uiItem, SpriteBatch spriteBatch)
+		private void WorldIconOverlay(On_UIWorldListItem.orig_DrawSelf orig, UIWorldListItem self, SpriteBatch spriteBatch)
 		{
-			bool data = uiItem.Data.TryGetHeaderData(ModContent.GetInstance<TheDepthsWorldGen>(), out var _data);
-			UIElement WorldIcon = (UIElement)typeof(UIWorldListItem).GetField("_worldIcon", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(uiItem);
-			WorldFileData Data = (WorldFileData)typeof(AWorldListItem).GetField("_data", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(uiItem);
+			orig.Invoke(self, spriteBatch);
+			bool data = self.Data.TryGetHeaderData(ModContent.GetInstance<TheDepthsWorldGen>(), out var _data);
+			UIElement WorldIcon = (UIElement)typeof(UIWorldListItem).GetField("_worldIcon", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
+			WorldFileData Data = (WorldFileData)typeof(AWorldListItem).GetField("_data", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
 			WorldIcon.RemoveAllChildren();
 			#region UnopenedWorldIcon
 			if (!data)

@@ -323,8 +323,9 @@ Mods: {
 				DisplayName: Crystal Shield
 				Tooltip:
 					'''
-					Halves all projectile damage
-					Reflects most projectiles towards attackers
+					Longer you aren't hit, the more damage is reduced from projectiles.
+					This can gain up to 50% damage reduction from projectiles.
+					Reflects most projectiles towards attackers 25% of the time
 					Immune to mercury radiation
 					'''
 			}
@@ -357,9 +358,10 @@ Mods: {
 				DisplayName: Sanctus Shield
 				Tooltip:
 					'''
+					Longer you aren't hit, the more damage is reduced from projectiles.
+					This can gain up to 50% damage reduction from projectiles.
+					Reflects most projectiles towards attackers 25% of the time
 					Grants immunity to mercury radiation
-					Halves all projectile damage
-					Reflects most projectiles towards attackers
 					Grants immunity to most debuffs
 					'''
 			}
@@ -1551,7 +1553,7 @@ Mods: {
 					'''
 					Longer you aren't hit, the more damage is reduced from projectiles.
 					This can gain up to 50% damage reduction from projectiles.
-					Reflects most projectiles towards attackers
+					Reflects most projectiles towards attackers 25% of the time
 					'''
 			}
 

@@ -323,9 +323,10 @@ Mods: {
 				DisplayName: Escudo de Cristal
 				Tooltip:
 					'''
-					Diminui pela metade todos os danos de projéteis
-					Reflete a maioria dos projéteis aos atacantes
-					Imune a radição de mercúrio
+					Mayor reducción de daño de proyectiles mientras más pase el tiempo sin ser golpeado.
+					Acumula hasta un 50% de reducción de daño por proyectiles.
+					25% de probabilidad de reflejar los proyectiles hacia los enemigos
+					Inmune a la radiación por mercurio.
 					'''
 			}
 
@@ -357,10 +358,11 @@ Mods: {
 				DisplayName: Escudo Santificado
 				Tooltip:
 					'''
-					Garante a imunidade à radiação de mercúrio
-					Reduz pela metade todo dano de projéteis
-					Reflete a maioria dos projéteis para os atacantes
-					Garante imunidade à maioria dos debuffs
+					Mayor reducción de daño de proyectiles mientras más pase el tiempo sin ser golpeado.
+					Acumula hasta un 50% de reducción de daño por proyectiles.
+					25% de probabilidad de reflejar los proyectiles hacia los enemigos
+					Inmune a la radiación por mercurio.
+					Inmune a la mayoría de efectos negativos.
 					'''
 			}
 
@@ -1549,9 +1551,9 @@ Mods: {
 				DisplayName: Escudo de Paládio
 				Tooltip:
 					'''
-					Quanto mais tempo você não levar dano, menos dano levará de projéteis.
-					Aumenta a redução do dano de projéteis em 50%.
-					Reflete a maioria dos projéteis para os atacantes
+					Mayor reducción de daño de proyectiles mientras más pase el tiempo sin ser golpeado.
+					Acumula hasta un 50% de reducción de daño por proyectiles.
+					25% de probabilidad de reflejar los proyectiles hacia los enemigos
 					'''
 			}
 

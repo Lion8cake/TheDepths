@@ -323,9 +323,10 @@ Mods: {
 				DisplayName: Escudo de Cristal
 				Tooltip:
 					'''
-					Reduce a la mitad todo el daño proveniente de proyectiles
-					Redirige la mayoría de los proyectiles hacía los atacantes
-					Garantiza inmunidad a la radiación por mercurio
+					Aumenta a redução de dano por projéteis com o tempo
+					O máximo de redução de dano por projéteis é de 50%
+					Reflete 25% da maioria dos projéteis
+					Fornece imunidade a radiação por mercúrio
 					'''
 			}
 
@@ -357,10 +358,11 @@ Mods: {
 				DisplayName: Escudo Sanctus
 				Tooltip:
 					'''
-					Garantiza inmunidad a la radiación por mercurio
-					Reduce todo el daño proveniente de proyectiles a la mitad
-					Redirige la mayoría de proyectiles hacia los enemigos
-					Garantiza inmunidad a la mayoria de efectos negativos
+					Aumenta a redução de dano por projéteis com o tempo
+					O máximo de redução de dano por projéteis é de 50%
+					Reflete 25% da maioria dos projéteis
+					Fornece imunidade a radiação por mercúrio
+					Fornece imunidade a maioria dos debuffs
 					'''
 			}
 
@@ -1549,9 +1551,9 @@ Mods: {
 				DisplayName: Escudo de Paladio
 				Tooltip:
 					'''
-					Mientras menos te golpeen, mayor es la cantidad de daño reducida del daño por proyectiles.
-					Gana hasta un 50% de reducción de daño por proyectiles.
-					Refleja la mayoria de los proyectiles hacia los enemigos
+					Aumenta a redução de dano por projéteis com o tempo
+					O máximo de redução de dano por projéteis é de 50%
+					Reflete 25% da maioria dos projéteis
 					'''
 			}
 

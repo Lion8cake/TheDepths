@@ -281,7 +281,7 @@ namespace TheDepths
 						break;
 				}
 				modifiers.FinalDamage *= 1f - percentage;
-				if (!TheDepthsIDs.Sets.UnreflectiveProjectiles[proj.type])
+				if (!TheDepthsIDs.Sets.UnreflectiveProjectiles[proj.type] && Main.rand.NextBool(4))
 			    {
                     proj.hostile = false;
                     proj.friendly = true;

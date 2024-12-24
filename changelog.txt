@@ -1,3 +1,10 @@
+v1.0.2.2
+=========================
+Fixed depths or underworld only worlds having the player be in the depths biome for quicksilver and more to work
+Nerfed the palladium shield and its upgrades now only reflecting projectiles 25% of the time
+Fixed the crystal and Sanctus shield having outdated tooltips
+Changed how the world icons are drawn (this should have no change ingame but other mods that edit the icons may now work properly)
+
 v1.0.2.1
 =========================
 Fixed Major issue where the depths biome doesnt show up in areas

@@ -70,6 +70,6 @@ public class DepthsBiome : ModBiome
         {
             flag2 = false;
         }
-        return (flag || ModContent.GetInstance<TheDepthsModSystem>().artificialDepthsBlockCount >= 300) && flag2 && Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210;
+        return (flag || ModContent.GetInstance<TheDepthsModSystem>().artificialDepthsBlockCount >= 300) && !(!flag2 && flag) && Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210;
 	}
 }

@@ -323,8 +323,9 @@ Mods: {
 				DisplayName: Kryształowa tarcza
 				Tooltip:
 					'''
-					Zmniejsza obrażenia od pocisków o połowę
-					Odbija większość pocisków w stronę wrogów
+					Im dłużej nie otrzymujesz obrażeń tym mniej otrzymasz od następnego pocisku.
+					Bonus pozwala na zmniejszenie obrażeń do 50%
+					Ma szansę 25% odbić większość typów pocisków w stronę atakującego
 					Daje odporność na zatrucie rtęcią
 					'''
 			}
@@ -357,9 +358,10 @@ Mods: {
 				DisplayName: Tarcza świętości
 				Tooltip:
 					'''
+					Im dłużej nie otrzymujesz obrażeń tym mniej otrzymasz od następnego pocisku.
+					Bonus pozwala na zmniejszenie obrażeń do 50%
+					Ma szansę 25% odbić większość typów pocisków w stronę atakującego
 					Daje odporność na zatrucie rtęcią
-					Zmniejsza obrażenia od pocisków o połowę
-					Odbija większość pocisków w stronę wrogów
 					Daje odporność na większość osłabień
 					'''
 			}
@@ -1549,9 +1551,9 @@ Mods: {
 				DisplayName: Tarcza z paladium
 				Tooltip:
 					'''
-					Im dłużej nie otrzymujesz obrażeń, tym mniej otrzymasz od następnego pocisku.
-					Bonus pozwala na zmniejszenie obrażen do 50%
-					Odbija większość pocisków w stronę wrogów
+					Im dłużej nie otrzymujesz obrażeń tym mniej otrzymasz od następnego pocisku.
+					Bonus pozwala na zmniejszenie obrażeń do 50%
+					Ma szansę 25% odbić większość typów pocisków w stronę atakującego
 					'''
 			}
 
