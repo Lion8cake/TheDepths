@@ -129,7 +129,7 @@ namespace TheDepths.Liquids
 			{
 				for (int n = 0; n < 5; n++)
 				{
-					int num8 = Dust.NewDust(new Vector2(item.position.X - 6f, item.position.Y + (float)(item.height / 2) - 8f), item.width + 12, 24, 35);
+					int num8 = Dust.NewDust(new Vector2(item.position.X - 6f, item.position.Y + (float)(item.height / 2) - 8f), item.width + 12, 24, ModContent.DustType<QuicksilverBubble>());
 					Main.dust[num8].velocity.Y -= 1.5f;
 					Main.dust[num8].velocity.X *= 2.5f;
 					Main.dust[num8].scale = 1.3f;
@@ -142,7 +142,7 @@ namespace TheDepths.Liquids
 			{
 				for (int num15 = 0; num15 < 5; num15++)
 				{
-					int num16 = Dust.NewDust(new Vector2(item.position.X - 6f, item.position.Y + (float)(item.height / 2) - 8f), item.width + 12, 24, 35);
+					int num16 = Dust.NewDust(new Vector2(item.position.X - 6f, item.position.Y + (float)(item.height / 2) - 8f), item.width + 12, 24, ModContent.DustType<QuicksilverBubble>());
 					Main.dust[num16].velocity.Y -= 1.5f;
 					Main.dust[num16].velocity.X *= 2.5f;
 					Main.dust[num16].scale = 1.3f;
