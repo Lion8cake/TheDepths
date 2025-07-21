@@ -4,11 +4,12 @@ using System.Reflection;
 using System.Threading;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Drawing;
 using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheDepths.Dusts;
+using TheDepths.Liquids;
 using static Terraria.GameContent.Drawing.TileDrawing;
 
 namespace TheDepths.Tiles
@@ -162,7 +163,7 @@ namespace TheDepths.Tiles
 					if (!tile.HasTile)
 					{
 						tile = Main.tile[i, j + 1];
-						if (tile.LiquidType != LiquidID.Lava)
+						if (tile.LiquidType != LiquidID.Lava && tile.LiquidType != ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>())
 						{
 							bool flag3 = false;
 							for (int num41 = j; num41 > j - 10; num41--)

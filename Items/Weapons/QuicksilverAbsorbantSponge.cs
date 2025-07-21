@@ -7,6 +7,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using TheDepths.Liquids;
 
 namespace TheDepths.Items.Weapons
 {
@@ -54,7 +55,7 @@ namespace TheDepths.Items.Weapons
 								}
 							}
 						}
-						if (tile.LiquidType != LiquidID.Lava)
+						if (tile.LiquidType != ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>())
 						{
 							return;
 						}

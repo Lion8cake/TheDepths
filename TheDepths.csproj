@@ -25,5 +25,8 @@
     <Reference Include="CalamityMod">
       <HintPath>..\..\ModReader\CalamityMod\CalamityMod.dll</HintPath>
     </Reference>
+    <Reference Include="ModLiquidLib">
+      <HintPath>..\ModLiquidLib\bin\Debug\net8.0\ModLiquidLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

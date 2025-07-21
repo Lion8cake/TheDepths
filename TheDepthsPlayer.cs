@@ -1,39 +1,42 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib;
+using ModLiquidLib.Utils;
+using ReLogic.Content;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
+using Terraria.GameContent.Generation;
+using Terraria.GameContent.Liquid;
+using Terraria.GameContent.UI.Elements;
+using Terraria.GameInput;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.Map;
+using Terraria.ModLoader;
+using Terraria.Utilities;
+using TheDepths.Biomes;
 using TheDepths.Buffs;
 using TheDepths.Dusts;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.Graphics.Effects;
-using System.IO;
-using Terraria.ID;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.DataStructures;
-using System.Collections.Generic;
-using TheDepths.Items;
-using Terraria.GameContent.Generation;
-using Terraria.Localization;
-using Terraria.Utilities;
-using static Terraria.ModLoader.ModContent;
-using TheDepths.Biomes;
-using System;
-using TheDepths.Items.Weapons;
 using TheDepths.Gores;
+using TheDepths.Items;
+using TheDepths.Items.Weapons;
+using TheDepths.Liquids;
+using TheDepths.NPCs.Chasme;
 using TheDepths.Projectiles;
-using Terraria.Graphics.Shaders;
-using Terraria.Audio;
-using System.Reflection;
-using Terraria.Map;
-using Terraria.GameContent.Liquid;
-using ReLogic.Content;
 using TheDepths.Tiles;
 using TheDepths.Tiles.Trees;
-using static Terraria.ModLoader.PlayerDrawLayer;
-using Terraria.GameInput;
 using static Terraria.ModLoader.ExtraJump;
-using TheDepths.NPCs.Chasme;
-using Terraria.GameContent.Drawing;
-using Terraria.GameContent.UI.Elements;
+using static Terraria.ModLoader.ModContent;
+using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace TheDepths
 {
@@ -148,9 +151,6 @@ namespace TheDepths
 		{
             if (Main.netMode != NetmodeID.Server)
             {
-                TextureAssets.Liquid[1] = Main.Assets.Request<Texture2D>("Images/Liquid_1");
-                TextureAssets.LiquidSlope[1] = Main.Assets.Request<Texture2D>("Images/LiquidSlope_1");
-
                 int[] bgnumOriginal = new int[30] { 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 150, 151, 152, 157, 158, 159, 185, 186, 187 };
                 foreach (int i in bgnumOriginal)
                 {
@@ -160,14 +160,6 @@ namespace TheDepths
                 TextureAssets.Item[3729] = Main.Assets.Request<Texture2D>("Images/Item_3729");
                 TextureAssets.Tile[423] = Main.Assets.Request<Texture2D>("Images/Tiles_423");
 			}
-
-            if (!Main.dedServ)
-            {
-                for (int i = 0; i < 15; i++)
-                {
-                    LiquidRenderer.Instance._liquidTextures[i] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + i, (AssetRequestMode)1);
-                }
-            }
         }
 
 		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
@@ -302,74 +294,66 @@ namespace TheDepths
             rewardPool.Add(ModContent.ItemType<Items.LivingFogDye>());
         }
 
-        public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
+        public override void CatchFish(FishingAttempt fisher, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
             Player player = Player;
-            if (Worldgen.TheDepthsWorldGen.InDepths(player))
-            {
-                if (itemDrop == ItemID.Obsidifish)
-                {
-                    itemDrop = ModContent.ItemType<QuartzFeeder>();
-                }
-                if (itemDrop == ItemID.FlarefinKoi)
-                {
-                    itemDrop = ModContent.ItemType<ShadowFightingFish>();
-                }
-                if (itemDrop == ItemID.LavaCrate)
-                {
-                    itemDrop = ModContent.ItemType<Items.Placeable.QuartzCrate>();
-                }
-                if (itemDrop == ItemID.LavaCrateHard)
-                {
-                    itemDrop = ModContent.ItemType<Items.Placeable.ArqueriteCrate>();
-                }
-                if (itemDrop == ItemID.ObsidianSwordfish)
-                {
-                    itemDrop = ModContent.ItemType<Items.Weapons.Steelocanth>();
-                }
-                if (itemDrop == ItemID.DemonConch)
-                {
-                    itemDrop = ModContent.ItemType<Items.ShalestoneConch>();
-                }
-				if (itemDrop == ItemID.BottomlessLavaBucket)
+			if (Main.tile[fisher.X, fisher.Y].LiquidType == ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>())
+			{
+				if (fisher.CanFishInLava)
 				{
-					itemDrop = ModContent.ItemType<Items.Weapons.BottomlessQuicksilverBucket>();
-				}
-				if (itemDrop == ItemID.LavaAbsorbantSponge)
-				{
-					itemDrop = ModContent.ItemType<Items.Weapons.QuicksilverAbsorbantSponge>();
+					if (fisher.crate && Main.rand.Next(6) == 0)
+					{
+						itemDrop = (Main.hardMode ? ItemType<Items.Placeable.ArqueriteCrate>() : ItemType<Items.Placeable.QuartzCrate>());
+					}
+					else if (fisher.legendary && Main.hardMode && Main.rand.Next(3) == 0)
+					{
+						itemDrop = Main.rand.NextFromList(new int[4] { ItemType<ShalestoneConch>(), ItemType<BottomlessQuicksilverBucket>(), ItemType<QuicksilverAbsorbantSponge>(), ItemType<Items.Weapons.Steelocanth>() });
+					}
+					else if (fisher.legendary && !Main.hardMode && Main.rand.Next(3) == 0)
+					{
+						itemDrop = Main.rand.NextFromList(new int[3] { ItemType<ShalestoneConch>(), ItemType<BottomlessQuicksilverBucket>(), ItemType<QuicksilverAbsorbantSponge>() });
+					}
+					else if (fisher.veryrare)
+					{
+						itemDrop = ItemType<ShadowFightingFish>();
+					}
+					else if (fisher.rare)
+					{
+						itemDrop = ItemType<QuartzFeeder>();
+					}
+                    else
+                    {
+						itemDrop = 0;
+                    }
+                    if (ModSupport.DepthsModCalling.Achievements != null)
+                    {
+                        ModSupport.DepthsModCalling.Achievements.Call("Event", "FishingInQuicksilver");
+                    }
 				}
 			}
-
-            if (attempt.questFish == ModContent.ItemType<Chasmefish>())
+			
+            if (fisher.questFish == ModContent.ItemType<Chasmefish>())
             {
-                if (Player.ZoneRockLayerHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && attempt.uncommon || Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && attempt.uncommon)
+                if (Player.ZoneRockLayerHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && fisher.uncommon || Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && fisher.uncommon)
                 {
                     itemDrop = ModContent.ItemType<Chasmefish>();
                     return;
                 }
             }
-            if (attempt.questFish == ModContent.ItemType<Relicarp>())
+            if (fisher.questFish == ModContent.ItemType<Relicarp>())
             {
-                if (Player.ZoneRockLayerHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && attempt.uncommon || Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && attempt.uncommon)
+                if (Player.ZoneRockLayerHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && fisher.uncommon || Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && fisher   .uncommon)
                 {
                     itemDrop = ModContent.ItemType<Relicarp>();
                     return;
                 }
             }
-            if (attempt.questFish == ModContent.ItemType<GlimmerDepthFish>())
+            if (fisher.questFish == ModContent.ItemType<GlimmerDepthFish>())
             {
-                if (Player.ZoneRockLayerHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && attempt.uncommon || Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && attempt.uncommon)
+                if (Player.ZoneRockLayerHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && fisher.uncommon || Player.ZoneUnderworldHeight && Worldgen.TheDepthsWorldGen.InDepths(player) && fisher.uncommon)
                 {
                     itemDrop = ModContent.ItemType<GlimmerDepthFish>();
                     return;
-                }
-            }
-            if (attempt.CanFishInLava && attempt.inLava)
-            {
-                if (ModSupport.DepthsModCalling.Achievements != null)
-                {
-                    ModSupport.DepthsModCalling.Achievements.Call("Event", "FishingInQuicksilver");
                 }
             }
         }
@@ -475,17 +459,6 @@ namespace TheDepths
 				pShieldReduction = 1;
 			}
 
-			if (!Main.dedServ)
-            {
-                if (Worldgen.TheDepthsWorldGen.InDepths(player))
-                {
-                    LiquidRenderer.Instance._liquidTextures[1] = ModContent.Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver", (AssetRequestMode)1);
-                }
-                else
-                {
-                    LiquidRenderer.Instance._liquidTextures[1] = Main.Assets.Request<Texture2D>("Images/Misc/water_" + 1, (AssetRequestMode)1);
-                }
-            }
             if (sEmbers)
             {
                 if ((Main.tile[(int)(Player.position.X / 16f), (int)(Player.position.Y / 16f) + 3].HasTile && Main.tileSolid[Main.tile[(int)(Player.position.X / 16f), (int)(Player.position.Y / 16f) + 3].TileType]) || (Main.tile[(int)(Player.position.X / 16f) + 1, (int)(Player.position.Y / 16f) + 3].HasTile && Main.tileSolid[Main.tile[(int)(Player.position.X / 16f) + 1, (int)(Player.position.Y / 16f) + 3].TileType] && Player.velocity.Y == 0f))
@@ -600,13 +573,13 @@ namespace TheDepths
             }
             if (AmuletTimer < 60 * 4 * AmuletsActive)
             {
-                if ((AmuletsActive > 0) && (quicksilverWet == false || !Worldgen.TheDepthsWorldGen.InDepths(player)))
+                if (AmuletsActive > 0 && !quicksilverWet)
 				{
                     AmuletTimer++;
                 }
                 AmuletTimerCap = false;
             }
-            if (AmuletTimer <= 60 * 4 * AmuletsActive && (AmuletsActive > 0) && quicksilverWet == true && !cSkin)
+            if (AmuletTimer <= 60 * 4 * AmuletsActive && (AmuletsActive > 0) && quicksilverWet && !cSkin)
             {
                 AmuletTimer--;
             }
@@ -940,9 +913,6 @@ namespace TheDepths
                 }
                 if (Worldgen.TheDepthsWorldGen.InDepths(player))
                 {
-                    TextureAssets.Liquid[1] = Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver_Block");
-                    TextureAssets.LiquidSlope[1] = Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver_Slope");
-
                     //Old Texture/lava layer background
                     int[] bgnum = new int[30] { 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 150, 151, 152, 157, 158, 159, 185, 186, 187 };
                     foreach (int i in bgnum)
@@ -952,9 +922,6 @@ namespace TheDepths
                 }
                 else
                 {
-                    TextureAssets.Liquid[1] = Main.Assets.Request<Texture2D>("Images/Liquid_1");
-                    TextureAssets.LiquidSlope[1] = Main.Assets.Request<Texture2D>("Images/LiquidSlope_1");
-
                     //Old Texture/lava layer background
                     int[] bgnumOriginal = new int[30] { 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 150, 151, 152, 157, 158, 159, 185, 186, 187 };
                     foreach (int i in bgnumOriginal)
@@ -968,7 +935,7 @@ namespace TheDepths
                 TextureAssets.Item[3729] = Main.Assets.Request<Texture2D>("Images/Item_3729");
                 TextureAssets.Tile[423] = Main.Assets.Request<Texture2D>("Images/Tiles_423");
             }
-            if (player.lavaWet && Worldgen.TheDepthsWorldGen.InDepths(player) || Collision.LavaCollision(player.position, player.width, player.height) && Worldgen.TheDepthsWorldGen.InDepths(player))
+            if (player.GetModPlayer<ModLiquidPlayer>().moddedWet[ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>() - LiquidID.Count])
             {
                 if (Main.remixWorld)
                 {

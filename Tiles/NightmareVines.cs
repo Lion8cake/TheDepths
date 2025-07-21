@@ -8,6 +8,7 @@ using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheDepths.Dusts;
+using TheDepths.Liquids;
 
 namespace TheDepths.Tiles
 {
@@ -79,7 +80,7 @@ namespace TheDepths.Tiles
         public override void RandomUpdate(int i, int j)
         {
             Tile tileBelow = Framing.GetTileSafely(i, j + 1);
-            if (WorldGen.genRand.NextBool(15) && !tileBelow.HasTile && tileBelow.LiquidType != LiquidID.Lava)
+            if (WorldGen.genRand.NextBool(15) && !tileBelow.HasTile && tileBelow.LiquidType != LiquidID.Lava && tileBelow.LiquidType != ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>())
             {
                 bool placeVine = false;
                 int yTest = j;

@@ -24,32 +24,6 @@ namespace TheDepths.Items
     {
         public override bool InstancePerEntity => true;
 
-        public bool LavaProof;
-
-        public override void SetDefaults(Item item)
-        {
-            if (ItemID.Sets.IsLavaImmuneRegardlessOfRarity[item.type] == true)
-            {
-                LavaProof = true;
-            }
-        }
-
-        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
-        {
-            if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer) && Collision.LavaCollision(item.position, item.width, item.height))
-            {
-                ItemID.Sets.IsLavaImmuneRegardlessOfRarity[item.type] = true;
-            }
-            if (!Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer) && Collision.LavaCollision(item.position, item.width, item.height) && LavaProof == false)
-            {
-                ItemID.Sets.IsLavaImmuneRegardlessOfRarity[item.type] = false;
-            }
-            if (item.type == ItemID.Amethyst || item.type == ItemID.Topaz || item.type == ItemID.Sapphire || item.type == ItemID.Emerald || item.type == ItemID.Ruby || item.type == ItemID.Diamond)
-            {
-                ItemID.Sets.IsLavaImmuneRegardlessOfRarity[item.type] = true;
-            }
-        }
-
 		public override void SetStaticDefaults()
 		{
             ItemID.Sets.ShimmerTransformToItem[ItemID.Amber] = ItemID.Diamond;
@@ -164,33 +138,7 @@ namespace TheDepths.Items
 	{
 		public override bool AppliesToEntity(Item entity, bool lateInstantiation)
 		{
-            return entity.type == ItemID.ShellphoneHell || entity.type == ItemID.LavaBucket || entity.type == ItemID.BottomlessLavaBucket || entity.type == ItemID.DemonConch || entity.type == ItemID.LavaAbsorbantSponge;
-		}
-
-		public override bool CanUseItem(Item item, Player player)
-		{
-            if (item.type == ItemID.LavaBucket || item.type == ItemID.BottomlessLavaBucket)
-            {
-				item.autoReuse = !Worldgen.TheDepthsWorldGen.InDepths(player);
-			}
-			if (!Worldgen.TheDepthsWorldGen.InDepths(player))
-			{
-				return true;
-			}
-            else
-            {
-                if (item.type == ItemID.LavaBucket || item.type == ItemID.BottomlessLavaBucket)
-                {
-                    if (player.IsInTileInteractionRange(Player.tileTargetX, Player.tileTargetY, TileReachCheckSettings.Simple) && !Main.tile[Player.tileTargetX, Player.tileTargetY].HasTile && (Main.tile[Player.tileTargetX, Player.tileTargetY].LiquidAmount == 0 || Main.tile[Player.tileTargetX, Player.tileTargetY].LiquidType == LiquidID.Lava))
-                    {
-                        for (int i = 0; i < 12; i++)
-                        {
-                            Dust.NewDustDirect(Main.MouseWorld + new Vector2(-4f, -4f), 4, 4, DustID.Smoke, 0f, -1f);
-                        }
-                    }
-                }
-				return false;
-			}
+            return entity.type == ItemID.ShellphoneHell;
 		}
 	}
 

@@ -218,12 +218,6 @@ namespace TheDepths
 					recipe.AddRecipeGroup("LavaFishingHook", LPFH.stack);
 					recipe.RemoveIngredient(LPFH);
 				}
-
-				if (recipe.HasCondition(Condition.NearLava))
-				{
-                    recipe.RemoveCondition(Condition.NearLava);
-					recipe.AddCondition(Language.GetOrRegister("Conditions.NearLava"), () => Main.LocalPlayer.adjLava && !Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer));
-				}
 			}
         }
     }

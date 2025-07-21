@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
@@ -8,15 +10,15 @@ using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
+using TheDepths.Biomes;
+using TheDepths.Liquids;
+using TheDepths.ModSupport;
 using TheDepths.Tiles;
-using TheDepths.Walls;
 using TheDepths.Tiles.Furniture;
-using System.IO;
 using TheDepths.Tiles.Trees;
+using TheDepths.Walls;
 using TheDepths.Worldgen.Generation;
 using static Terraria.ModLoader.ModContent;
-using TheDepths.ModSupport;
-using TheDepths.Biomes;
 
 namespace TheDepths.Worldgen
 {    
@@ -65,6 +67,8 @@ namespace TheDepths.Worldgen
 		///   Checks if the inputted tile X coord is in the depths part of the world. This is used to reduce repetion within code as previously this same check was unwrapped in multiple places.
 		/// </summary>
 		public static bool TileInDepths(int x) => (isWorldDepths && !DrunkDepthsLeft && !DrunkDepthsRight) || IsTileInLeftDepths(x) || IsTileInRightDepths(x);
+
+		public static int LiquidTheDepthsGensWith() => (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBW || WorldGen.remixWorldGen) ? LiquidID.Lava : ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>();
 
 		public override void OnWorldLoad()
 		{
@@ -225,7 +229,7 @@ namespace TheDepths.Worldgen
 			};
 
 			DepthsModCalling.UpdateFargoBoBW();
-			if (Main.drunkWorld || ModSupport.DepthsModCalling.FargoBoBW)
+			if (Main.drunkWorld || DepthsModCalling.FargoBoBW)
             {
 				if (Main.rand.NextBool(2))
 				{
@@ -243,8 +247,27 @@ namespace TheDepths.Worldgen
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
 		{
 			DepthsModCalling.UpdateFargoBoBW();
-			if (isWorldDepths || WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBW)
+			if (isWorldDepths || WorldGen.drunkWorldGen || DepthsModCalling.FargoBoBW)
 			{
+				if (!WorldGen.drunkWorldGen && !DepthsModCalling.FargoBoBW && !WorldGen.remixWorldGen)
+				{
+					List<GenPass> sLTasts = tasks.FindAll(genpass => genpass.Name.Contains("Settle Liquids", StringComparison.CurrentCultureIgnoreCase));
+					foreach (GenPass pass in sLTasts)
+					{
+						int settleLiquid = tasks.IndexOf(pass);
+						if (settleLiquid >= 0)
+						{
+							tasks.Insert(settleLiquid, new PassLegacy("Depths: replace lava", ReplaceLava));
+						}
+					}
+
+					int quickCleanupIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Quick Cleanup"));
+					if (quickCleanupIndex >= 0)
+					{
+						tasks.Insert(quickCleanupIndex + 1, new PassLegacy("Depths: replace desert lava", ReplaceLava));
+					}
+				}
+
 				int baseUnderWorldIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Underworld"));
 				if (baseUnderWorldIndex >= 0)
 				{
@@ -287,6 +310,7 @@ namespace TheDepths.Worldgen
 				int cleanupIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
 				if (cleanupIndex >= 0)
 				{
+					tasks.Insert(cleanupIndex + 1, new PassLegacy("Depths: Post Finalise Liquid Replacement", ReplaceLava));
 					tasks.Insert(cleanupIndex - 1, new PassLegacy("Depths: Remix Shuffling", FinishDepthsRemix)); //Finalises worldgen for both remix and normal
 					tasks.Insert(cleanupIndex - 1, new PassLegacy("Depths: Tile Resetting", DrippingQuicksilverTileCleanup));
 				}
@@ -347,6 +371,21 @@ namespace TheDepths.Worldgen
 			GenVars.hellChestItem = list4.ToArray();
 		}
 
+		public static void ReplaceLava(GenerationProgress progress, GameConfiguration configuration)
+		{
+			for (int x = (DrunkDepthsRight ? Main.maxTilesX / 2 : 0); x < (DrunkDepthsLeft ? Main.maxTilesX / 2 : Main.maxTilesX); x++)
+			{
+				for (int y = 0; y < Main.maxTilesY; y++)
+				{
+					Tile tile = Main.tile[x, y];
+					if (tile.LiquidType == LiquidID.Lava)
+					{
+						tile.LiquidType = ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>();
+					}
+				}
+			}
+		}
+
 		public static void DrippingQuicksilverTileCleanup(GenerationProgress progress, GameConfiguration configuration)
 		{
 			progress.Message = "Mercury-ifying the lower caverns";
@@ -374,6 +413,7 @@ namespace TheDepths.Worldgen
 						WorldGen.KillWall(k, l);
 						Main.tile[k, l].WallType = (ushort)ModContent.WallType<Walls.NaturalQuicksilverWall4>();
 					}
+
 					if (Main.tile[k, l].TileType == TileID.LavaDrip)
 					{
 						WorldGen.KillTile(k, l);
@@ -388,15 +428,7 @@ namespace TheDepths.Worldgen
 						Tile tile = Main.tile[k, l];
 						tile.HasTile = true;
 					}
-					else if (Main.tile[k, l].TileType == ModContent.TileType<MercuryMoss>())
-					{
-						if ((!Main.tileSolid[Main.tile[k, l + 1].TileType] || !Main.tile[k, l + 1].HasTile) && (!Main.tileSolid[Main.tile[k, l - 1].TileType] || !Main.tile[k, l - 1].HasTile) && 
-							(!Main.tileSolid[Main.tile[k + 1, l].TileType] || !Main.tile[k + 1, l].HasTile) && (!Main.tileSolid[Main.tile[k - 1, l].TileType] || !Main.tile[k - 1, l].HasTile))
-						{
-							WorldGen.KillTile(k, l);
-						}
-					}
-					else if (Main.tile[k, l].TileType == ModContent.TileType<QuartzDoorClosed>())
+					else if (Main.tile[k, l].TileType == TileType<QuartzDoorClosed>())
 					{
 						Tile tile = Main.tile[k, l + 1];
 						tile.Slope = SlopeType.Solid;
@@ -404,6 +436,37 @@ namespace TheDepths.Worldgen
 						Tile tile2 = Main.tile[k, l - 1];
 						tile2.Slope = SlopeType.Solid;
 						tile2.IsHalfBlock = false;
+					}
+					if (Main.tile[k, l].TileType == TileID.WaterDrip)
+					{
+						for (int y = l - 21; y < l + 11; y++)
+						{
+							if (Main.tile[k, y].LiquidType == ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>())
+							{
+								Main.tile[k, l].TileType = (ushort)ModContent.TileType<QuicksilverDropletSource>();
+								break;
+							}
+							else if (Main.tile[k, y].LiquidAmount > 0)
+							{
+								break;
+							}
+						}
+					}
+					if (WorldGen.drunkWorldGen || DepthsModCalling.FargoBoBW || WorldGen.remixWorldGen)
+					{
+						Tile tile = Main.tile[k, l];
+						if (tile.LiquidType == LiquidID.Lava)
+						{
+							tile.LiquidType = ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>();
+						}
+						if (tile.TileType == TileID.Obsidian)
+						{
+							tile.TileType = (ushort)ModContent.TileType<Quartz>();
+						}
+						if (tile.TileType == TileID.CrispyHoneyBlock)
+						{
+							tile.TileType = (ushort)ModContent.TileType<GlitterBlock>();
+						}
 					}
 				}
 			}
@@ -465,10 +528,7 @@ namespace TheDepths.Worldgen
 				{
 					if (Main.tile[k, l].TileType == TileID.LavaMoss)
 					{
-						WorldGen.KillTile(k, l);
 						Main.tile[k, l].TileType = (ushort)ModContent.TileType<MercuryMoss>();
-						Tile tile = Main.tile[k, l];
-						tile.HasTile = true;
 					}
 				}
 			}
@@ -546,7 +606,7 @@ namespace TheDepths.Worldgen
 					{
 						if (!flag26)
 						{
-							if (Main.tile[num449, num450].HasTile && Main.tileSolid[Main.tile[num449, num450].TileType] && !(Main.tile[num449, num450 - 1].LiquidType == LiquidID.Lava) && !(Main.tile[num449, num450 - 1].LiquidType == LiquidID.Shimmer))
+							if (Main.tile[num449, num450].HasTile && Main.tileSolid[Main.tile[num449, num450].TileType] && !(Main.tile[num449, num450 - 1].LiquidType == LiquidTheDepthsGensWith()) && !(Main.tile[num449, num450 - 1].LiquidType == LiquidID.Shimmer))
 							{
 								flag26 = true;
 							}

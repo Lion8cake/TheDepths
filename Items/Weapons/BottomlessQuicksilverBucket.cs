@@ -7,6 +7,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using TheDepths.Liquids;
 
 namespace TheDepths.Items.Weapons
 {
@@ -59,7 +60,7 @@ namespace TheDepths.Items.Weapons
 							return;
 						}
 						SoundEngine.PlaySound(SoundID.SplashWeak, player.position);
-						tile.LiquidType = LiquidID.Lava;
+						tile.LiquidType = ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>();
 						tile.LiquidAmount = byte.MaxValue;
 						WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
 						player.ApplyItemTime(Item);

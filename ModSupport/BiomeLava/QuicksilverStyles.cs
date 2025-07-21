@@ -19,7 +19,7 @@ namespace TheDepths.ModSupport.BiomeLava
 	{
 		public override void Load()
 		{
-			if (DepthsModCalling.BiomeLavaMod != null)
+			/*if (DepthsModCalling.BiomeLavaMod != null)
 			{
 				QuicksilverStyle();
 				CorruptQuicksilverStyle();
@@ -28,7 +28,7 @@ namespace TheDepths.ModSupport.BiomeLava
 				JungleQuicksilverStyle();
 				IceQuicksilverStyle();
 				DesertQuicksilverStyle();
-			}
+			}*/
 		}
 
 		// The base quicksilver style

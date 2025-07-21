@@ -1,12 +1,13 @@
 using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.Localization;
-using TheDepths.Buffs;
-using Terraria.ID;
-using Terraria.ModLoader;
-using TheDepths.Dusts;
 using System;
+using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using TheDepths.Buffs;
+using TheDepths.Dusts;
+using TheDepths.Liquids;
 using TheDepths.Worldgen;
 
 namespace TheDepths.Tiles
@@ -73,7 +74,7 @@ namespace TheDepths.Tiles
 			{
 				if (j > Main.UnderworldLayer && TheDepthsWorldGen.TileInDepths(x))
 				{
-					tile.LiquidType = LiquidID.Lava;
+					tile.LiquidType = ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>();
 					tile.LiquidAmount = 128;
 				}
 			}
