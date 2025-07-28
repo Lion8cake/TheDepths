@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using ModLiquidLib.ModLoader;
 using System.Security.Cryptography;
 using Terraria;
 using Terraria.Audio;
@@ -53,7 +54,7 @@ namespace TheDepths.Items.Weapons
 							}
 						}
 					}
-					if (tile.LiquidType != ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>())
+					if (tile.LiquidType != LiquidLoader.LiquidType<Quicksilver>())
 					{
 						return;
 					}

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib;
+using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils;
 using ReLogic.Content;
 using System;
@@ -297,7 +298,7 @@ namespace TheDepths
         public override void CatchFish(FishingAttempt fisher, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
             Player player = Player;
-			if (Main.tile[fisher.X, fisher.Y].LiquidType == ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>())
+			if (Main.tile[fisher.X, fisher.Y].LiquidType == LiquidLoader.LiquidType<Quicksilver>())
 			{
 				if (fisher.CanFishInLava)
 				{
@@ -935,7 +936,7 @@ namespace TheDepths
                 TextureAssets.Item[3729] = Main.Assets.Request<Texture2D>("Images/Item_3729");
                 TextureAssets.Tile[423] = Main.Assets.Request<Texture2D>("Images/Tiles_423");
             }
-            if (player.GetModPlayer<ModLiquidPlayer>().moddedWet[ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>() - LiquidID.Count])
+            if (player.GetModdedWetArray()[LiquidLoader.LiquidType<Quicksilver>() - LiquidID.Count])
             {
                 if (Main.remixWorld)
                 {

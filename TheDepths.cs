@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
+using ModLiquidLib.ModLoader;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using MonoMod.RuntimeDetour;
@@ -288,7 +289,7 @@ namespace TheDepths
 				{
 					if (WorldGen.gen && b == LiquidID.Lava && TheDepthsWorldGen.TileInDepths(num))
 					{
-						b = ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>();
+						b = LiquidLoader.LiquidType<Quicksilver>();
 					}
 				}
 			});

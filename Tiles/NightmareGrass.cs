@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.ModLoader;
 using System.Reflection;
 using System.Threading;
 using Terraria;
@@ -163,7 +164,7 @@ namespace TheDepths.Tiles
 					if (!tile.HasTile)
 					{
 						tile = Main.tile[i, j + 1];
-						if (tile.LiquidType != LiquidID.Lava && tile.LiquidType != ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>())
+						if (tile.LiquidType != LiquidID.Lava && tile.LiquidType != LiquidLoader.LiquidType<Quicksilver>())
 						{
 							bool flag3 = false;
 							for (int num41 = j; num41 > j - 10; num41--)

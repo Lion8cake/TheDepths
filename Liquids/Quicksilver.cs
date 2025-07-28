@@ -1,10 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.ModLoader;
-using ModLiquidLib.Utils;
+using ModLiquidLib.Utils.Structs;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Graphics.Light;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TheDepths.Dusts;

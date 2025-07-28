@@ -14,6 +14,7 @@ using TheDepths.Tiles.Trees;
 using TheDepths.NPCs;
 using TheDepths.Dusts;
 using TheDepths.Liquids;
+using ModLiquidLib.ModLoader;
 
 namespace TheDepths.Projectiles
 {
@@ -121,7 +122,7 @@ namespace TheDepths.Projectiles
 			{
 				return false;
 			}
-			if (WorldGen.PlaceLiquid(x, y, (byte)ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>(), byte.MaxValue))
+			if (WorldGen.PlaceLiquid(x, y, (byte)LiquidLoader.LiquidType<Quicksilver>(), byte.MaxValue))
 			{
 				Vector2 position = new((float)(x * 16), (float)(y * 16));
 				int type = ModContent.DustType<QuicksilverBubble>();

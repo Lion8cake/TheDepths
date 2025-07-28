@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.ModLoader;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -43,20 +44,20 @@ namespace TheDepths.Tiles
 		{
 			int x = i - Main.tile[i, j].TileFrameX / 18 % 1;
 			int y = j - Main.tile[i, j].TileFrameY / 18 % 1;
-			if ((Main.tile[x, y].LiquidType == ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>()) && Main.tile[x, y].TileFrameX == 0)
+			if ((Main.tile[x, y].LiquidType == LiquidLoader.LiquidType<Quicksilver>()) && Main.tile[x, y].TileFrameX == 0)
 			{
 				Wiring.TripWire(x, y, 1, 1);
 			}
-			if (!(Main.tile[x, y].LiquidType == ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>()) && Main.tile[x, y].TileFrameX == 18)
+			if (!(Main.tile[x, y].LiquidType == LiquidLoader.LiquidType<Quicksilver>()) && Main.tile[x, y].TileFrameX == 18)
 			{
 				Wiring.TripWire(x, y, 1, 1);
 			}
 
-			if (Main.tile[x, y].LiquidType == ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>())
+			if (Main.tile[x, y].LiquidType == LiquidLoader.LiquidType<Quicksilver>())
 			{
 				Main.tile[x, y].TileFrameX = 18;
 			}
-			if (Main.tile[x, y].LiquidType != ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>())
+			if (Main.tile[x, y].LiquidType != LiquidLoader.LiquidType<Quicksilver>())
 			{
 				Main.tile[x, y].TileFrameX = 0;
 			}

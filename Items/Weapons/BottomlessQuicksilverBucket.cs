@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using ModLiquidLib.ModLoader;
 using System.Security.Cryptography;
 using Terraria;
 using Terraria.Audio;
@@ -83,13 +84,13 @@ namespace TheDepths.Items.Weapons
 				if (tile.LiquidAmount != 0)
 				{
 					tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
-					if (tile.LiquidType != ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>())
+					if (tile.LiquidType != LiquidLoader.LiquidType<Quicksilver>())
 					{
 						return;
 					}
 				}
 				SoundEngine.PlaySound(SoundID.SplashWeak, player.position);
-				tile.LiquidType = ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>();
+				tile.LiquidType = LiquidLoader.LiquidType<Quicksilver>();
 				tile.LiquidAmount = byte.MaxValue;
 				WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
 				player.ApplyItemTime(Item);

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using ModLiquidLib.ModLoader;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -68,7 +69,7 @@ namespace TheDepths.Worldgen
 		/// </summary>
 		public static bool TileInDepths(int x) => (isWorldDepths && !DrunkDepthsLeft && !DrunkDepthsRight) || IsTileInLeftDepths(x) || IsTileInRightDepths(x);
 
-		public static int LiquidTheDepthsGensWith() => (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBW || WorldGen.remixWorldGen) ? LiquidID.Lava : ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>();
+		public static int LiquidTheDepthsGensWith() => (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBW || WorldGen.remixWorldGen) ? LiquidID.Lava : LiquidLoader.LiquidType<Quicksilver>();
 
 		public override void OnWorldLoad()
 		{
@@ -380,7 +381,7 @@ namespace TheDepths.Worldgen
 					Tile tile = Main.tile[x, y];
 					if (tile.LiquidType == LiquidID.Lava)
 					{
-						tile.LiquidType = ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>();
+						tile.LiquidType = LiquidLoader.LiquidType<Quicksilver>();
 					}
 				}
 			}
@@ -441,7 +442,7 @@ namespace TheDepths.Worldgen
 					{
 						for (int y = l - 21; y < l + 11; y++)
 						{
-							if (Main.tile[k, y].LiquidType == ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>())
+							if (Main.tile[k, y].LiquidType == LiquidLoader.LiquidType<Quicksilver>())
 							{
 								Main.tile[k, l].TileType = (ushort)ModContent.TileType<QuicksilverDropletSource>();
 								break;
@@ -457,7 +458,7 @@ namespace TheDepths.Worldgen
 						Tile tile = Main.tile[k, l];
 						if (tile.LiquidType == LiquidID.Lava)
 						{
-							tile.LiquidType = ModLiquidLib.ModLiquidLib.LiquidType<Quicksilver>();
+							tile.LiquidType = LiquidLoader.LiquidType<Quicksilver>();
 						}
 						if (tile.TileType == TileID.Obsidian)
 						{
