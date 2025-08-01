@@ -1,3 +1,7 @@
+v1.0.3 (preview)
+=========================
+Added quicksilver as a sperate liquid using the new ModLiquid Library mod
+
 v1.0.2.3
 =========================
 Fixed several typos in the english translation file

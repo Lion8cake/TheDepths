@@ -26,7 +26,7 @@ namespace TheDepths.Liquids
 			AddMapEntry(new Color(85, 96, 102));
 		}
 
-		public override void OnPlayerSplash(Player player, bool isEnter)
+		public override bool OnPlayerSplash(Player player, bool isEnter)
 		{
 			if (isEnter)
 			{
@@ -54,9 +54,10 @@ namespace TheDepths.Liquids
 				}
 				SoundEngine.PlaySound(SoundID.SplashWeak, player.position);
 			}
+			return false;
 		}
 
-		public override void OnNPCSplash(NPC npc, bool isEnter)
+		public override bool OnNPCSplash(NPC npc, bool isEnter)
 		{
 			if (isEnter)
 			{
@@ -90,9 +91,10 @@ namespace TheDepths.Liquids
 					SoundEngine.PlaySound(SoundID.SplashWeak,  npc.position);
 				}
 			}
+			return false;
 		}
 
-		public override void OnProjectileSplash(Projectile proj, bool isEnter)
+		public override bool OnProjectileSplash(Projectile proj, bool isEnter)
 		{
 			if (isEnter)
 			{
@@ -120,9 +122,10 @@ namespace TheDepths.Liquids
 				}
 				SoundEngine.PlaySound(SoundID.SplashWeak, proj.position);
 			}
+			return false;
 		}
 
-		public override void OnItemSplash(Item item, bool isEnter)
+		public override bool OnItemSplash(Item item, bool isEnter)
 		{
 			if (isEnter)
 			{
@@ -150,6 +153,7 @@ namespace TheDepths.Liquids
 				}
 				SoundEngine.PlaySound(SoundID.SplashWeak, item.position);
 			}
+			return false;
 		}
 
 		public override int ChooseWaterfallStyle(int i, int j)

@@ -270,6 +270,7 @@ namespace TheDepths
 			};
 		}
 
+		#region LavaReplacerWorldGen
 		private void IL_Liquid_SettleWaterAt(ILContext il)
 		{
 			ILCursor c = new(il);
@@ -287,13 +288,14 @@ namespace TheDepths
 			{
 				if (!WorldGen.drunkWorldGen && !DepthsModCalling.FargoBoBW && !WorldGen.remixWorldGen)
 				{
-					if (WorldGen.gen && b == LiquidID.Lava && TheDepthsWorldGen.TileInDepths(num))
+					if (WorldGen.gen && WorldGen.generatingWorld && b == LiquidID.Lava && TheDepthsWorldGen.TileInDepths(num))
 					{
-						b = LiquidLoader.LiquidType<Quicksilver>();
+						//b = LiquidLoader.LiquidType<Quicksilver>();
 					}
 				}
 			});
 		}
+		#endregion
 
 		#region TombstoneDetour
 		private void On_Player_DropTombstone(On_Player.orig_DropTombstone orig, Player self, long coinsOwned, NetworkText deathText, int hitDirection)
