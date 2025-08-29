@@ -22,7 +22,7 @@ namespace TheDepths.Liquids
 			FallDelay = 5;
 			VanillaFallbackOnModDeletion = (ushort)LiquidID.Lava;
 			ChecksForDrowning = false;
-			PlayersEmitBreathBubbles = false;
+			AllowEmitBreathBubbles = false;
 			AddMapEntry(new Color(85, 96, 102));
 		}
 

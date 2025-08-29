@@ -1,3 +1,7 @@
+v1.0.3.1 (preview)
+=========================
+Updated to the latest ModLiquidLib update
+
 v1.0.3 (preview)
 =========================
 Added quicksilver as a sperate liquid using the new ModLiquid Library mod
