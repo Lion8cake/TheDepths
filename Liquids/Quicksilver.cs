@@ -4,9 +4,12 @@ using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils.Structs;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Graphics.Light;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TheDepths.Buffs;
 using TheDepths.Dusts;
+using TheDepths.NPCs;
 using TheDepths.Tiles;
 
 namespace TheDepths.Liquids
@@ -20,9 +23,11 @@ namespace TheDepths.Liquids
 			SlopeOpacity = 1f;
 			VisualViscosity = 200;
 			FallDelay = 5;
-			VanillaFallbackOnModDeletion = (ushort)LiquidID.Lava;
+			//VanillaFallbackOnModDeletion = (ushort)LiquidID.Lava;
 			ChecksForDrowning = false;
 			AllowEmitBreathBubbles = false;
+			UsesLavaCollisionForWet = true;
+			WaterRippleMultiplier = 0.3f;
 			AddMapEntry(new Color(85, 96, 102));
 		}
 
@@ -193,26 +198,22 @@ namespace TheDepths.Liquids
 
 		public override void EmitEffects(int i, int j, LiquidCache liquidCache)
 		{
-			//can probs be removed tbh
-			if (liquidCache.HasVisibleLiquid)
+			if (Main.rand.NextBool(700))
 			{
-				if (Main.rand.NextBool(700))
+				Dust.NewDust(new Vector2((float)(i * 16), (float)(j * 16)), 16, 16, ModContent.DustType<QuicksilverBubble>(), 0f, 0f, 0, Color.White);
+			}
+			if (Main.rand.NextBool(350))
+			{
+				int num27 = Dust.NewDust(new Vector2((float)(i * 16), (float)(j * 16)), 16, 8, ModContent.DustType<QuicksilverBubble>(), 0f, 0f, 50, Color.White, 1.5f);
+				Dust obj = Main.dust[num27];
+				obj.velocity *= 0.8f;
+				Main.dust[num27].velocity.X *= 2f;
+				Main.dust[num27].velocity.Y -= (float)Main.rand.Next(1, 7) * 0.1f;
+				if (Main.rand.NextBool(10))
 				{
-					Dust.NewDust(new Vector2((float)(i * 16), (float)(j * 16)), 16, 16, ModContent.DustType<QuicksilverBubble>(), 0f, 0f, 0, Color.White);
+					Main.dust[num27].velocity.Y *= Main.rand.Next(2, 5);
 				}
-				if (Main.rand.NextBool(350))
-				{
-					int num27 = Dust.NewDust(new Vector2((float)(i * 16), (float)(j * 16)), 16, 8, ModContent.DustType<QuicksilverBubble>(), 0f, 0f, 50, Color.White, 1.5f);
-					Dust obj = Main.dust[num27];
-					obj.velocity *= 0.8f;
-					Main.dust[num27].velocity.X *= 2f;
-					Main.dust[num27].velocity.Y -= (float)Main.rand.Next(1, 7) * 0.1f;
-					if (Main.rand.NextBool(10))
-					{
-						Main.dust[num27].velocity.Y *= Main.rand.Next(2, 5);
-					}
-					Main.dust[num27].noGravity = true;
-				}
+				Main.dust[num27].noGravity = true;
 			}
 		}
 
@@ -244,5 +245,58 @@ namespace TheDepths.Liquids
 				}
 			}
 		}
+
+		public override void OnPlayerCollision(Player player)
+		{
+			int AmuletsActive = player.GetModPlayer<TheDepthsPlayer>().GetActiveAmulets();
+			if (player.GetModPlayer<TheDepthsPlayer>().AmuletTimer <= 60 * 4 * AmuletsActive && (AmuletsActive > 0) && !player.GetModPlayer<TheDepthsPlayer>().cSkin)
+			{
+				player.GetModPlayer<TheDepthsPlayer>().AmuletTimer--;
+			}
+
+			if (Main.remixWorld)
+			{
+				player.GetModPlayer<TheDepthsPlayer>().quicksilverWet = true;
+				if (player.GetModPlayer<TheDepthsPlayer>().AmuletTimer == 0)
+				{
+					if (player.GetModPlayer<TheDepthsPlayer>().NightwoodBuff == true)
+					{
+						player.AddBuff(ModContent.BuffType<MercuryBoiling>(), (int)(60 * 3.5), false, false);
+					}
+					else
+					{
+						player.AddBuff(ModContent.BuffType<MercuryBoiling>(), 60 * 7, false, false);
+					}
+				}
+			}
+			else
+			{
+				if (player.GetModPlayer<TheDepthsPlayer>().NightwoodBuff == true)
+				{
+					player.AddBuff(ModContent.BuffType<MercuryFooting>(), 60 * 60, false, false);
+				}
+				else
+				{
+					player.AddBuff(ModContent.BuffType<MercuryFooting>(), 60 * 30, false, false);
+				}
+				player.GetModPlayer<TheDepthsPlayer>().quicksilverWet = true;
+				if (player.GetModPlayer<TheDepthsPlayer>().AmuletTimer == 0)
+				{
+					player.GetModPlayer<TheDepthsPlayer>().QuicksilverTimer++;
+				}
+			}
+		}
+
+		public override void OnNPCCollision(NPC npc)
+		{
+			npc.GetGlobalNPC<TheDepthsGlobalNPC>().QuicksilverTimer++;
+			if (npc.GetGlobalNPC<TheDepthsGlobalNPC>().QuicksilverTimer >= 120)
+			{
+				npc.GetGlobalNPC<TheDepthsGlobalNPC>().QuicksilverTimer = 120;
+				npc.AddBuff(ModContent.BuffType<MercuryBoiling>(), 60 * 7, false);
+			}
+		}
+
+		public override LightMaskMode LiquidLightMaskMode(int i, int j) => LightMaskMode.Solid;
 	}
 }

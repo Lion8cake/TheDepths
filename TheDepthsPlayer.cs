@@ -295,10 +295,20 @@ namespace TheDepths
             rewardPool.Add(ModContent.ItemType<Items.LivingFogDye>());
         }
 
-        public override void CatchFish(FishingAttempt fisher, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
+		//also syncing and saving data I feel theres a bit of an issue where the type could either be super small data wise (1 bit for a condition or 32 bits for a much larger number)
+		public override void CatchFish(FishingAttempt fisher, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
             Player player = Player;
-			if (Main.tile[fisher.X, fisher.Y].LiquidType == LiquidLoader.LiquidType<Quicksilver>())
+            Projectile bobberProj = null;
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile proj = Main.projectile[i];
+				if (proj.type == fisher.bobberType && (int)(proj.Center.X / 16f) == fisher.X && (int)(proj.Center.Y / 16f) == fisher.Y)
+                {
+                    bobberProj = proj;
+                }
+            }
+			if ((bobberProj != null && bobberProj.GetWet(LiquidLoader.LiquidType<Quicksilver>())) || Main.tile[fisher.X, fisher.Y].LiquidType == LiquidLoader.LiquidType<Quicksilver>())
 			{
 				if (fisher.CanFishInLava)
 				{
@@ -432,7 +442,14 @@ namespace TheDepths
             if (isSlamming)
             {
                 player.velocity.X = 0;
-                player.velocity.Y = 20;
+                if (player.gravDir == 1)
+                {
+					player.velocity.Y = 20;
+				}
+                else
+                {
+					player.velocity.Y = -20;
+				}
             }
 
 			if (pShieldTimer <= 0)
@@ -559,19 +576,7 @@ namespace TheDepths
                     }
 				}
 			}
-			int AmuletsActive = 0;
-            if ((aAmulet && !aAmulet2 && !aAmulet3) || (!aAmulet && !aAmulet2 && aAmulet3) || (!aAmulet && aAmulet2 && !aAmulet3))
-            {
-                AmuletsActive = 1;
-            }
-            else if ((aAmulet && aAmulet2 && !aAmulet3) || (aAmulet && !aAmulet2 && aAmulet3) || (!aAmulet && aAmulet2 && aAmulet3))
-			{
-                AmuletsActive = 2;
-			}
-            else if ((aAmulet && aAmulet2 && aAmulet3))
-            {
-                AmuletsActive = 3;
-            }
+			int AmuletsActive = GetActiveAmulets();
             if (AmuletTimer < 60 * 4 * AmuletsActive)
             {
                 if (AmuletsActive > 0 && !quicksilverWet)
@@ -579,10 +584,6 @@ namespace TheDepths
                     AmuletTimer++;
                 }
                 AmuletTimerCap = false;
-            }
-            if (AmuletTimer <= 60 * 4 * AmuletsActive && (AmuletsActive > 0) && quicksilverWet && !cSkin)
-            {
-                AmuletTimer--;
             }
             if (AmuletTimer >= 60 * 4 * AmuletsActive)
             {
@@ -667,6 +668,24 @@ namespace TheDepths
                 }
             }
         }
+
+        public int GetActiveAmulets()
+        {
+			int AmuletsActive = 0;
+			if ((aAmulet && !aAmulet2 && !aAmulet3) || (!aAmulet && !aAmulet2 && aAmulet3) || (!aAmulet && aAmulet2 && !aAmulet3))
+			{
+				AmuletsActive = 1;
+			}
+			else if ((aAmulet && aAmulet2 && !aAmulet3) || (aAmulet && !aAmulet2 && aAmulet3) || (!aAmulet && aAmulet2 && aAmulet3))
+			{
+				AmuletsActive = 2;
+			}
+			else if ((aAmulet && aAmulet2 && aAmulet3))
+			{
+				AmuletsActive = 3;
+			}
+            return AmuletsActive;
+		}
 
         public static void ShalestoneConch(Player player)
         {
@@ -931,52 +950,7 @@ namespace TheDepths
                     }
                 }
             }
-            else
-			{
-                TextureAssets.Item[3729] = Main.Assets.Request<Texture2D>("Images/Item_3729");
-                TextureAssets.Tile[423] = Main.Assets.Request<Texture2D>("Images/Tiles_423");
-            }
-            if (player.GetModdedWetArray()[LiquidLoader.LiquidType<Quicksilver>() - LiquidID.Count])
-            {
-                if (Main.remixWorld)
-                {
-                    player.lavaTime = 1000;
-                    player.buffImmune[BuffID.OnFire] = true;
-                    player.buffImmune[BuffID.OnFire3] = true;
-                    quicksilverWet = true;
-                    if (AmuletTimer == 0)
-                    {
-                        if (NightwoodBuff == true)
-                        {
-                            player.AddBuff(BuffType<MercuryBoiling>(), 60 * (int)3.5, false, false);
-                        }
-                        else
-                        {
-                            player.AddBuff(BuffType<MercuryBoiling>(), 60 * 7, false, false);
-                        }
-                    }
-                }
-                else
-                {
-                    if (NightwoodBuff == true)
-                    {
-                        player.AddBuff(BuffType<MercuryFooting>(), 60 * 60, false, false);
-                    }
-                    else
-                    {
-                        player.AddBuff(BuffType<MercuryFooting>(), 60 * 30, false, false);
-                    }
-                    player.lavaTime = 1000;
-                    player.buffImmune[BuffID.OnFire] = true;
-                    player.buffImmune[BuffID.OnFire3] = true;
-                    quicksilverWet = true;
-                    if (AmuletTimer == 0)
-                    {
-                        QuicksilverTimer++;
-                    }
-                }
-            }
-            else
+            if (!player.GetWet(LiquidLoader.LiquidType<Quicksilver>()))
             {
                 QuicksilverTimer = 0;
                 quicksilverWet = false;
