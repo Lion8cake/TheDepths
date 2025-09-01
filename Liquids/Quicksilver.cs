@@ -183,6 +183,15 @@ namespace TheDepths.Liquids
 			return TileID.Stone;
 		}
 
+		public override bool PreLiquidMerge(int liquidX, int liquidY, int tileX, int tileY, int otherLiquid)
+		{
+			if (otherLiquid == LiquidID.Lava && WorldGen.gen)
+			{
+				return false;
+			}
+			return true;
+		}
+
 		public override void LiquidMergeSound(int i, int j, int otherLiquid, ref SoundStyle? collisionSound)
 		{
 			collisionSound = SoundID.LiquidsHoneyWater;
