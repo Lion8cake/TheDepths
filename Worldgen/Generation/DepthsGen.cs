@@ -8,6 +8,7 @@ using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
+using TheDepths.Liquids;
 using TheDepths.Tiles;
 using TheDepths.Tiles.Trees;
 using TheDepths.Walls;
@@ -183,7 +184,7 @@ internal class DepthsGen
 			int placeY = y + WorldGen.genRand.Next(height);
 			Tile tile = Main.tile[placeX, placeY];
 			if (tile.HasTile)
-				digTunnel(placeX, placeY, WorldGen.genRand.NextFloat(-2, 2f), WorldGen.genRand.NextFloat(-2f, 2f), WorldGen.genRand.Next(2, 30), 4, LiquidID.Lava);
+				digTunnel(placeX, placeY, WorldGen.genRand.NextFloat(-2, 2f), WorldGen.genRand.NextFloat(-2f, 2f), WorldGen.genRand.Next(2, 30), 4, TheDepthsWorldGen.LiquidTheDepthsGensWith());
 		}
 	}
 
@@ -217,15 +218,20 @@ internal class DepthsGen
 		{
 			for (int n = 0; n < Main.maxTilesX * 2; ++n)
 			{
-				digTunnel(WorldGen.genRand.Next((int)((double)Main.maxTilesX * 0.35), (int)((double)Main.maxTilesX * 0.65)), WorldGen.genRand.Next(Main.maxTilesY - 150, Main.maxTilesY - 10), 1, 1, WorldGen.genRand.Next(5, 20), WorldGen.genRand.Next(5, 10), LiquidID.Lava);
+				digTunnel(WorldGen.genRand.Next((int)((double)Main.maxTilesX * 0.35), (int)((double)Main.maxTilesX * 0.65)), WorldGen.genRand.Next(Main.maxTilesY - 150, Main.maxTilesY - 10), 1, 1, WorldGen.genRand.Next(5, 20), WorldGen.genRand.Next(5, 10), TheDepthsWorldGen.LiquidTheDepthsGensWith());
 				WorldGen.TileRunner(WorldGen.genRand.Next((int)((double)Main.maxTilesX * 0.35), (int)((double)Main.maxTilesX * 0.65)), WorldGen.genRand.Next(Main.maxTilesY - 180, Main.maxTilesY - 10), WorldGen.genRand.Next(5, 20), WorldGen.genRand.Next(5, 10), -2);
 			}
-			for (int k = Main.maxTilesY; k > Main.maxTilesY - 130; --k) //Barrier
+			for (int k = Main.maxTilesY; k > Main.maxTilesY - 150; --k) //Barrier
 			{
-                if (!TheDepthsWorldGen.DrunkDepthsRight)
-				    WorldGen.TileRunner((int)(Main.maxTilesX * 0.35), k, 20, 12, ModContent.TileType<ShaleBlock>(), addTile: true, overRide: true);
-				if (!TheDepthsWorldGen.DrunkDepthsLeft)
-					WorldGen.TileRunner((int)(Main.maxTilesX * 0.65), k, 20, 12, ModContent.TileType<ShaleBlock>(), addTile: true, overRide: true);
+                if (k > Main.maxTilesY - 130)
+                {
+                    if (!TheDepthsWorldGen.DrunkDepthsRight)
+                        WorldGen.TileRunner((int)(Main.maxTilesX * 0.35), k, 20, 12, ModContent.TileType<ShaleBlock>(), addTile: true, overRide: true);
+                    if (!TheDepthsWorldGen.DrunkDepthsLeft)
+                        WorldGen.TileRunner((int)(Main.maxTilesX * 0.65), k, 20, 12, ModContent.TileType<ShaleBlock>(), addTile: true, overRide: true);
+                }
+
+				WorldGen.TileRunner(Main.maxTilesX / 2, k, 20, 12, ModContent.TileType<ShaleBlock>(), addTile: true, overRide: true);
 			}
 			for (int i = (int)(Main.maxTilesX * 0.35); i < Main.maxTilesX * 0.65; ++i)
 			{
@@ -308,54 +314,51 @@ internal class DepthsGen
     {
 		//Converting the tiles from nightmare to underworld is so much easier than the other way around due to how the quicksilver ocean and the depths roof works
 		//Replaces shale and nightmare grass, replaces trees
-		if (WorldGen.remixWorldGen && (WorldGen.drunkWorldGen || ModSupport.DepthsModCalling.FargoBoBW))
+		for (int k = (TheDepthsWorldGen.DrunkDepthsLeft ? Main.maxTilesX / 2 : 0); k < (TheDepthsWorldGen.DrunkDepthsRight ? Main.maxTilesX / 2 : Main.maxTilesX); k++)
 		{
-			for (int k = (TheDepthsWorldGen.DrunkDepthsLeft ? Main.maxTilesX / 2 : 0); k < (TheDepthsWorldGen.DrunkDepthsRight ? Main.maxTilesX / 2 : Main.maxTilesX); k++)
+			for (int l = Main.maxTilesY - 300; l < Main.maxTilesY; l++)
 			{
-				for (int l = Main.maxTilesY - 300; l < Main.maxTilesY; l++)
+				if (Main.tile[k, l].TileType == ModContent.TileType<ShaleBlock>())
 				{
-					if (Main.tile[k, l].TileType == ModContent.TileType<ShaleBlock>())
-					{
-						WorldGen.KillTile(k, l, false, false, false);
-						Tile tile = Main.tile[k, l];
-						tile.HasTile = true;
-                        Main.tile[k, l].TileType = (ushort)TileID.Ash;
-					}
-					else if (Main.tile[k, l].TileType == ModContent.TileType<NightmareGrass>())
-					{
-						WorldGen.KillTile(k, l, false, false, false);
-						Tile tile = Main.tile[k, l];
-						tile.HasTile = true;
-                        Main.tile[k, l].TileType = (ushort)TileID.AshGrass;
-					}
+					WorldGen.KillTile(k, l, false, false, false);
+					Tile tile = Main.tile[k, l];
+					tile.HasTile = true;
+                    Main.tile[k, l].TileType = (ushort)TileID.Ash;
+				}
+				else if (Main.tile[k, l].TileType == ModContent.TileType<NightmareGrass>())
+				{
+					WorldGen.KillTile(k, l, false, false, false);
+					Tile tile = Main.tile[k, l];
+					tile.HasTile = true;
+                    Main.tile[k, l].TileType = (ushort)TileID.AshGrass;
 				}
 			}
+		}
 
-			int num854 = (int)((double)Main.maxTilesX * 0.38);
-			int num855 = (int)((double)Main.maxTilesX * 0.62);
-			int num856 = num854;
-			int num857 = Main.maxTilesY - 1;
-			int num858 = Main.maxTilesY - 135;
-			int num859 = Main.maxTilesY - 160;
-			for (int num840 = num854; num840 < num855 + 15; num840++)
+		int num854 = (int)((double)Main.maxTilesX * 0.38);
+		int num855 = (int)((double)Main.maxTilesX * 0.62);
+		int num856 = num854;
+		int num857 = Main.maxTilesY - 1;
+		int num858 = Main.maxTilesY - 135;
+		int num859 = Main.maxTilesY - 160;
+		for (int num840 = num854; num840 < num855 + 15; num840++)
+		{
+			for (int num841 = Main.maxTilesY - 300; num841 < num858 + 20; num841++)
 			{
-				for (int num841 = Main.maxTilesY - 300; num841 < num858 + 20; num841++)
+				Main.tile[num840, num841].LiquidAmount = 0;
+				if (Main.tile[num840, num841].TileType == 57 && Main.tile[num840, num841].HasTile && (!Main.tile[num840 - 1, num841 - 1].HasTile || !Main.tile[num840, num841 - 1].HasTile || !Main.tile[num840 + 1, num841 - 1].HasTile || !Main.tile[num840 - 1, num841].HasTile || !Main.tile[num840 + 1, num841].HasTile || !Main.tile[num840 - 1, num841 + 1].HasTile || !Main.tile[num840, num841 + 1].HasTile || !Main.tile[num840 + 1, num841 + 1].HasTile))
 				{
-					Main.tile[num840, num841].LiquidAmount = 0;
-					if (Main.tile[num840, num841].TileType == 57 && Main.tile[num840, num841].HasTile && (!Main.tile[num840 - 1, num841 - 1].HasTile || !Main.tile[num840, num841 - 1].HasTile || !Main.tile[num840 + 1, num841 - 1].HasTile || !Main.tile[num840 - 1, num841].HasTile || !Main.tile[num840 + 1, num841].HasTile || !Main.tile[num840 - 1, num841 + 1].HasTile || !Main.tile[num840, num841 + 1].HasTile || !Main.tile[num840 + 1, num841 + 1].HasTile))
-					{
-						Main.tile[num840, num841].TileType = 633;
-					}
+					Main.tile[num840, num841].TileType = 633;
 				}
 			}
-			for (int num842 = num854; num842 < num855 + 15; num842++)
+		}
+		for (int num842 = num854; num842 < num855 + 15; num842++)
+		{
+			for (int num843 = Main.maxTilesY - 200; num843 < num858 + 20; num843++)
 			{
-				for (int num843 = Main.maxTilesY - 200; num843 < num858 + 20; num843++)
+				if (Main.tile[num842, num843].TileType == 633 && Main.tile[num842, num843].HasTile && !Main.tile[num842, num843 - 1].HasTile && WorldGen.genRand.NextBool(3))
 				{
-					if (Main.tile[num842, num843].TileType == 633 && Main.tile[num842, num843].HasTile && !Main.tile[num842, num843 - 1].HasTile && WorldGen.genRand.NextBool(3))
-					{
-						WorldGen.TryGrowingTreeByType(634, num842, num843);
-					}
+					WorldGen.TryGrowingTreeByType(634, num842, num843);
 				}
 			}
 		}

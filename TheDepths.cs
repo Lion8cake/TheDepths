@@ -1,8 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
+using ModLiquidLib.ModLoader;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
+using MonoMod.RuntimeDetour;
+using MonoMod.RuntimeDetour.HookGen;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -20,6 +23,7 @@ using Terraria.GameContent.Skies.CreditsRoll;
 using Terraria.GameContent.Tile_Entities;
 using Terraria.GameContent.UI;
 using Terraria.GameContent.UI.Elements;
+using Terraria.GameContent.UI.States;
 using Terraria.Graphics;
 using Terraria.Graphics.Capture;
 using Terraria.Graphics.Effects;
@@ -29,27 +33,25 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.Localization;
+using Terraria.Map;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 using Terraria.UI;
 using Terraria.Utilities;
+using TheDepths.Biomes;
 using TheDepths.Dusts;
+using TheDepths.Gores;
 using TheDepths.Hooks;
 using TheDepths.Items;
 using TheDepths.Items.Accessories;
 using TheDepths.Items.Weapons;
+using TheDepths.Liquids;
+using TheDepths.ModSupport;
+using TheDepths.NPCs.Chasme;
+using TheDepths.Tiles;
 using TheDepths.Tiles.Furniture;
 using TheDepths.Worldgen;
 using static Terraria.Graphics.FinalFractalHelper;
-using Terraria.ObjectData;
-using TheDepths.Tiles;
-using Terraria.GameContent.UI.States;
-using Terraria.Map;
-using MonoMod.RuntimeDetour.HookGen;
-using MonoMod.RuntimeDetour;
-using TheDepths.NPCs.Chasme;
-using TheDepths.Gores;
-using TheDepths.ModSupport;
-using TheDepths.Biomes;
 
 namespace TheDepths
 {
@@ -90,14 +92,13 @@ namespace TheDepths
 			}
 
 			//Enviroment
-			IL_Liquid.Update += Evaporation;
 			IL_Player.UpdateBiomes += HeatRemoval;
 			On_AmbientSky.HellBatsGoupSkyEntity.ctor += HellBatsGoupSkyEntity_ctor;
 			IL_Main.DrawBG += UWBGInsert;
 			IL_Main.DrawCapture += UWBGInsertCapture;
 			On_TileLightScanner.ApplyHellLight += TileLightScanner_ApplyHellLight;
 			On_TileDrawing.DrawMultiTileVinesInWind += On_TileDrawing_DrawMultiTileVinesInWind;
-			IL_NPC.SpawnNPC += NPCSpawningEdit;
+			//IL_NPC.SpawnNPC += NPCSpawningEdit; //this infact does NOT work lol, garbage collection issue
 			IL_MapHelper.CreateMapTile += MapEdit;
 
 			//UI edits
@@ -120,24 +121,6 @@ namespace TheDepths
 			On_Player.RemoveAnglerAccOptionsFromRewardPool += On_Player_RemoveAnglerAccOptionsFromRewardPool;
 			On_Item.CanShimmer += On_Item_CanShimmer;
 
-			//Quicksilver edits
-			if (DepthsModCalling.BiomeLavaMod == null)
-			{
-				On_WaterfallManager.AddLight += On_WaterfallManager_AddLight;
-				On_WaterfallManager.DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects += On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects;
-				On_WaterfallManager.StylizeColor += On_WaterfallManager_StylizeColor;
-				IL_LiquidRenderer.InternalPrepareDraw += LavaBubbleReplacer;
-				IL_Player.Update += SplashPlayerLava;
-				IL_NPC.Collision_WaterCollision += SplashNPCLava;
-				IL_Projectile.Update += SplashProjectileLava;
-				IL_Item.MoveInWorld += SplashItemLava;
-				IL_Main.oldDrawWater += LavaBubbleReplacer;
-				On_TileLightScanner.ApplyLiquidLight += On_TileLightScanner_ApplyLiquidLight;
-			}
-			On_TELogicSensor.GetState += On_TELogicSensor_GetState;
-			On_Player.PlaceThing_Tiles_CheckLavaBlocking += On_Player_PlaceThing_Tiles_CheckLavaBlocking;
-			On_Liquid.GetLiquidMergeTypes += On_Liquid_GetLiquidMergeTypes;
-
 			//other
 			On_Main.UpdateAudio_DecideOnTOWMusic += Main_UpdateAudio_DecideOnTOWMusic;
 			IL_WorldGen.NotTheBees += NightmareGrassGFBPatcher;
@@ -150,6 +133,7 @@ namespace TheDepths
 			On_TileLightScanner.ApplySurfaceLight += On_TileLightScanner_ApplySurfaceLight;
 			IL_Main.DrawInfoAccs += DepthMeterTextChanger;
 			On_Player.DropTombstone += On_Player_DropTombstone;
+			IL_Liquid.SettleWaterAt += IL_Liquid_SettleWaterAt;
 
 			//credits
 			IL_CreditsRollComposer.FillSegments += FillCreditSegmentILEdit;
@@ -175,14 +159,13 @@ namespace TheDepths
 			livingFireBlockList = null;
 
 			//Enviroment
-			IL_Liquid.Update -= Evaporation;
 			IL_Player.UpdateBiomes -= HeatRemoval;
 			IL_Main.DrawBG -= UWBGInsert;
 			IL_Main.DrawCapture -= UWBGInsertCapture;
 			On_TileLightScanner.ApplyHellLight -= TileLightScanner_ApplyHellLight;
 			On_TileDrawing.DrawMultiTileVinesInWind -= On_TileDrawing_DrawMultiTileVinesInWind;
 			On_AmbientSky.HellBatsGoupSkyEntity.ctor -= HellBatsGoupSkyEntity_ctor;
-			IL_NPC.SpawnNPC -= NPCSpawningEdit;
+			//IL_NPC.SpawnNPC -= NPCSpawningEdit;
 			IL_MapHelper.CreateMapTile -= MapEdit;
 
 			//UI edits
@@ -200,21 +183,6 @@ namespace TheDepths
 			On_Player.RemoveAnglerAccOptionsFromRewardPool -= On_Player_RemoveAnglerAccOptionsFromRewardPool;
 			On_Item.CanShimmer -= On_Item_CanShimmer;
 
-			//Quicksilver edits
-			On_TileLightScanner.ApplyLiquidLight -= On_TileLightScanner_ApplyLiquidLight;
-			On_WaterfallManager.AddLight -= On_WaterfallManager_AddLight;
-			On_WaterfallManager.DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects -= On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects;
-			On_WaterfallManager.StylizeColor -= On_WaterfallManager_StylizeColor;
-			On_Liquid.GetLiquidMergeTypes -= On_Liquid_GetLiquidMergeTypes;
-			On_Player.PlaceThing_Tiles_CheckLavaBlocking -= On_Player_PlaceThing_Tiles_CheckLavaBlocking;
-			IL_LiquidRenderer.InternalPrepareDraw -= LavaBubbleReplacer;
-			IL_Player.Update -= SplashPlayerLava;
-			IL_NPC.Collision_WaterCollision -= SplashNPCLava;
-			IL_Projectile.Update -= SplashProjectileLava;
-			IL_Item.MoveInWorld -= SplashItemLava;
-			IL_Main.oldDrawWater -= LavaBubbleReplacer;
-			On_TELogicSensor.GetState -= On_TELogicSensor_GetState;
-
 			//other
 			On_Main.UpdateAudio_DecideOnTOWMusic -= Main_UpdateAudio_DecideOnTOWMusic;
 			On_TileDrawing.PostDrawTiles -= On_TileDrawing_PostDrawTiles;
@@ -227,6 +195,7 @@ namespace TheDepths
 			On_TileLightScanner.ApplySurfaceLight -= On_TileLightScanner_ApplySurfaceLight;
 			IL_Main.DrawInfoAccs -= DepthMeterTextChanger;
 			On_Player.DropTombstone -= On_Player_DropTombstone;
+			IL_Liquid.SettleWaterAt -= IL_Liquid_SettleWaterAt;
 
 			//credits
 			IL_CreditsRollComposer.FillSegments -= FillCreditSegmentILEdit;
@@ -301,6 +270,33 @@ namespace TheDepths
 			};
 		}
 
+		#region LavaReplacerWorldGen
+		private void IL_Liquid_SettleWaterAt(ILContext il)
+		{
+			ILCursor c = new(il);
+			int b_varNum = -1;
+			int num_varNum = -1;
+			int num2_varNum = -1;
+
+			c.GotoNext(MoveType.Before, i => i.MatchLdsflda<Main>("tile"), 
+				i => i.MatchLdloc(out num_varNum), i => i.MatchLdloc(out num2_varNum), 
+				i => i.MatchCall<Tilemap>("get_Item"), i => i.MatchStloc(out _), i => i.MatchLdloca(out _), i => i.MatchLdloc(out b_varNum));
+			c.EmitLdloca(b_varNum);
+			c.EmitLdloc(num_varNum);
+			c.EmitLdloc(num2_varNum);
+			c.EmitDelegate((ref int b, int num, int num2) =>
+			{
+				if (!WorldGen.drunkWorldGen && !DepthsModCalling.FargoBoBW && !WorldGen.remixWorldGen)
+				{
+					if (WorldGen.gen && WorldGen.generatingWorld && b == LiquidID.Lava && TheDepthsWorldGen.TileInDepths(num))
+					{
+						b = LiquidLoader.LiquidType<Quicksilver>();
+					}
+				}
+			});
+		}
+		#endregion
+
 		#region TombstoneDetour
 		private void On_Player_DropTombstone(On_Player.orig_DropTombstone orig, Player self, long coinsOwned, NetworkText deathText, int hitDirection)
 		{
@@ -374,17 +370,6 @@ namespace TheDepths
 		private void MapEdit(ILContext il)
 		{
 			ILCursor c = new(il);
-			c.TryGotoNext(MoveType.After, i => i.MatchLdsfld("Terraria.Map.MapHelper", "liquidPosition"), i => i.MatchLdloc(10), i => i.MatchAdd(), i => i.MatchStloc3());
-			c.EmitLdarg0(); //i (aka X)
-			c.EmitLdarg1(); //j (aka Y)
-			c.EmitLdloca(3); //num5
-			c.EmitDelegate((int i, int j, ref int num5) =>
-			{
-				if (TheDepthsWorldGen.TileInDepths(i) && Main.tile[i, j].LiquidType == LiquidID.Lava)
-				{
-					num5 = MapHelper.tileLookup[ModContent.TileType<SilverfallBlock>()]; //Contains the MapColor (85, 96, 102) //take note (192, 189, 196) forum has the color as
-				}
-			});
 			c.TryGotoNext(MoveType.After, i => i.MatchLdsfld("Terraria.Map.MapHelper", "hellPosition"), i => i.MatchStloc3());
 			c.EmitLdarg0(); //i (aka X)
 			c.EmitLdloca(3); //num5
@@ -533,69 +518,6 @@ namespace TheDepths
 			{
 				return orig.Invoke(self, item);
 			}
-		}
-		#endregion
-
-		#region QuicksilverBubbleILedits 
-		private void SplashItemLava(ILContext il)
-		{
-			ILCursor c = new ILCursor(il);
-			c.GotoNext(MoveType.After, i => i.MatchStloc(15), i => i.MatchBr(out _), i => i.MatchLdarg0(), i => i.MatchLdflda<Entity>("position"), i => i.MatchLdfld<Vector2>("X"), i => i.MatchLdcR4(6), i => i.MatchSub(), i => i.MatchLdarg0(),
-				i => i.MatchLdflda<Entity>("position"), i => i.MatchLdfld<Vector2>("Y"), i => i.MatchLdarg0(), i => i.MatchLdfld<Entity>("height"), i => i.MatchLdcI4(2), i => i.MatchDiv(), i => i.MatchConvR4(), i => i.MatchAdd(), i => i.MatchLdcR4(8),
-				i => i.MatchSub(), i => i.MatchNewobj(out _), i => i.MatchLdarg0(), i => i.MatchLdfld<Entity>("width"), i => i.MatchLdcI4(12), i => i.MatchAdd(), i => i.MatchLdcI4(24), i => i.MatchLdcI4(35));
-			c.EmitDelegate<Func<int, int>>(type => Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer) ? ModContent.DustType<QuicksilverBubble>() : type);
-			c.GotoNext(MoveType.After, i => i.MatchStloc(23), i => i.MatchBr(out _), i => i.MatchLdarg0(), i => i.MatchLdflda<Entity>("position"), i => i.MatchLdfld<Vector2>("X"), i => i.MatchLdcR4(6), i => i.MatchSub(), i => i.MatchLdarg0(),
-				i => i.MatchLdflda<Entity>("position"), i => i.MatchLdfld<Vector2>("Y"), i => i.MatchLdarg0(), i => i.MatchLdfld<Entity>("height"), i => i.MatchLdcI4(2), i => i.MatchDiv(), i => i.MatchConvR4(), i => i.MatchAdd(), i => i.MatchLdcR4(8),
-				i => i.MatchSub(), i => i.MatchNewobj(out _), i => i.MatchLdarg0(), i => i.MatchLdfld<Entity>("width"), i => i.MatchLdcI4(12), i => i.MatchAdd(), i => i.MatchLdcI4(24), i => i.MatchLdcI4(35));
-			c.EmitDelegate<Func<int, int>>(type2 => Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer) ? ModContent.DustType<QuicksilverBubble>() : type2);
-		}
-
-		private void SplashProjectileLava(ILContext il)
-		{
-			ILCursor c = new ILCursor(il);
-			c.GotoNext(MoveType.After, i => i.MatchStloc(22), i => i.MatchBr(out _), i => i.MatchLdarg0(), i => i.MatchLdflda<Entity>("position"), i => i.MatchLdfld<Vector2>("X"), i => i.MatchLdcR4(6), i => i.MatchSub(), i => i.MatchLdarg0(),
-				i => i.MatchLdflda<Entity>("position"), i => i.MatchLdfld<Vector2>("Y"), i => i.MatchLdarg0(), i => i.MatchLdfld<Entity>("height"), i => i.MatchLdcI4(2), i => i.MatchDiv(), i => i.MatchConvR4(), i => i.MatchAdd(), i => i.MatchLdcR4(8),
-				i => i.MatchSub(), i => i.MatchNewobj(out _), i => i.MatchLdarg0(), i => i.MatchLdfld<Entity>("width"), i => i.MatchLdcI4(12), i => i.MatchAdd(), i => i.MatchLdcI4(24), i => i.MatchLdcI4(35));
-			c.EmitDelegate<Func<int, int>>(type => Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer) ? ModContent.DustType<QuicksilverBubble>() : type);
-			c.GotoNext(MoveType.After, i => i.MatchStloc(30), i => i.MatchBr(out _), i => i.MatchLdarg0(), i => i.MatchLdflda<Entity>("position"), i => i.MatchLdfld<Vector2>("X"), i => i.MatchLdcR4(6), i => i.MatchSub(), i => i.MatchLdarg0(),
-				i => i.MatchLdflda<Entity>("position"), i => i.MatchLdfld<Vector2>("Y"), i => i.MatchLdarg0(), i => i.MatchLdfld<Entity>("height"), i => i.MatchLdcI4(2), i => i.MatchDiv(), i => i.MatchConvR4(), i => i.MatchAdd(), i => i.MatchLdcR4(8),
-				i => i.MatchSub(), i => i.MatchNewobj(out _), i => i.MatchLdarg0(), i => i.MatchLdfld<Entity>("width"), i => i.MatchLdcI4(12), i => i.MatchAdd(), i => i.MatchLdcI4(24), i => i.MatchLdcI4(35));
-			c.EmitDelegate<Func<int, int>>(type2 => Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer) ? ModContent.DustType<QuicksilverBubble>() : type2);
-		}
-
-		private void SplashNPCLava(ILContext il)
-		{
-			ILCursor c = new ILCursor(il);
-			c.GotoNext(MoveType.After, i => i.MatchStloc(10), i => i.MatchBr(out _), i => i.MatchLdarg0(), i => i.MatchLdflda<Entity>("position"), i => i.MatchLdfld<Vector2>("X"), i => i.MatchLdcR4(6), i => i.MatchSub(), i => i.MatchLdarg0(),
-				i => i.MatchLdflda<Entity>("position"), i => i.MatchLdfld<Vector2>("Y"), i => i.MatchLdarg0(), i => i.MatchLdfld<Entity>("height"), i => i.MatchLdcI4(2), i => i.MatchDiv(), i => i.MatchConvR4(), i => i.MatchAdd(), i => i.MatchLdcR4(8),
-				i => i.MatchSub(), i => i.MatchNewobj(out _), i => i.MatchLdarg0(), i => i.MatchLdfld<Entity>("width"), i => i.MatchLdcI4(12), i => i.MatchAdd(), i => i.MatchLdcI4(24), i => i.MatchLdcI4(35));
-			c.EmitDelegate<Func<int, int>>(type => Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer) ? ModContent.DustType<QuicksilverBubble>() : type);
-			c.GotoNext(MoveType.After, i => i.MatchStloc(19), i => i.MatchBr(out _), i => i.MatchLdarg0(), i => i.MatchLdflda<Entity>("position"), i => i.MatchLdfld<Vector2>("X"), i => i.MatchLdcR4(6), i => i.MatchSub(), i => i.MatchLdarg0(),
-				i => i.MatchLdflda<Entity>("position"), i => i.MatchLdfld<Vector2>("Y"), i => i.MatchLdarg0(), i => i.MatchLdfld<Entity>("height"), i => i.MatchLdcI4(2), i => i.MatchDiv(), i => i.MatchConvR4(), i => i.MatchAdd(), i => i.MatchLdcR4(8),
-				i => i.MatchSub(), i => i.MatchNewobj(out _), i => i.MatchLdarg0(), i => i.MatchLdfld<Entity>("width"), i => i.MatchLdcI4(12), i => i.MatchAdd(), i => i.MatchLdcI4(24), i => i.MatchLdcI4(35));
-			c.EmitDelegate<Func<int, int>>(type2 => Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer) ? ModContent.DustType<QuicksilverBubble>() : type2);
-		}
-
-		private void SplashPlayerLava(ILContext il)
-		{
-			ILCursor c = new ILCursor(il);
-			c.GotoNext(MoveType.After, i => i.MatchStloc(172), i => i.MatchBr(out _), i => i.MatchLdarg0(), i => i.MatchLdflda<Entity>("position"), i => i.MatchLdfld<Vector2>("X"), i => i.MatchLdcR4(6), i => i.MatchSub(), i => i.MatchLdarg0(),
-				i => i.MatchLdflda<Entity>("position"), i => i.MatchLdfld<Vector2>("Y"), i => i.MatchLdarg0(), i => i.MatchLdfld<Entity>("height"), i => i.MatchLdcI4(2), i => i.MatchDiv(), i => i.MatchConvR4(), i => i.MatchAdd(), i => i.MatchLdcR4(8),
-				i => i.MatchSub(), i => i.MatchNewobj(out _), i => i.MatchLdarg0(), i => i.MatchLdfld<Entity>("width"), i => i.MatchLdcI4(12), i => i.MatchAdd(), i => i.MatchLdcI4(24), i => i.MatchLdcI4(35));
-			c.EmitDelegate<Func<int, int>>(type => Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer) ? ModContent.DustType<QuicksilverBubble>() : type);
-			c.GotoNext(MoveType.After, i => i.MatchStloc(180), i => i.MatchBr(out _), i => i.MatchLdarg0(), i => i.MatchLdflda<Entity>("position"), i => i.MatchLdfld<Vector2>("X"), i => i.MatchLdcR4(6), i => i.MatchSub(), i => i.MatchLdarg0(),
-				i => i.MatchLdflda<Entity>("position"), i => i.MatchLdfld<Vector2>("Y"), i => i.MatchLdarg0(), i => i.MatchLdfld<Entity>("height"), i => i.MatchLdcI4(2), i => i.MatchDiv(), i => i.MatchConvR4(), i => i.MatchAdd(), i => i.MatchLdcR4(8),
-				i => i.MatchSub(), i => i.MatchNewobj(out _), i => i.MatchLdarg0(), i => i.MatchLdfld<Entity>("width"), i => i.MatchLdcI4(12), i => i.MatchAdd(), i => i.MatchLdcI4(24), i => i.MatchLdcI4(35));
-			c.EmitDelegate<Func<int, int>>(type2 => Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer) ? ModContent.DustType<QuicksilverBubble>() : type2);
-		}
-
-		private void LavaBubbleReplacer(ILContext il)
-		{
-			ILCursor c = new ILCursor(il);
-			c.GotoNext(MoveType.After, i => i.MatchLdcI4(16), i => i.MatchLdcI4(16), i => i.MatchLdcI4(35));
-			c.EmitDelegate<Func<int, int>>(type => Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer) ? ModContent.DustType<QuicksilverBubble>() : type);
-			c.GotoNext(MoveType.After, i => i.MatchLdcI4(16), i => i.MatchLdcI4(8), i => i.MatchLdcI4(35));
-			c.EmitDelegate<Func<int, int>>(type2 => Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer) ? ModContent.DustType<QuicksilverBubble>() : type2);
 		}
 		#endregion
 
@@ -1368,31 +1290,6 @@ namespace TheDepths
 		}
 		#endregion
 
-		#region QuicksilverfallGlowmaskRemover
-		private Color On_WaterfallManager_StylizeColor(On_WaterfallManager.orig_StylizeColor orig, float alpha, int maxSteps, int waterfallType, int y, int s, Tile tileCache, Color aColor)
-		{
-			if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
-			{
-				return aColor;
-			}
-			else
-			{
-				return orig.Invoke(alpha, maxSteps, waterfallType, y, s, tileCache, aColor);
-			}
-		}
-		#endregion
-
-		#region LavaSensorDetour
-		private bool On_TELogicSensor_GetState(On_TELogicSensor.orig_GetState orig, int x, int y, TELogicSensor.LogicCheckType type, TELogicSensor instance)
-		{
-			if (type == TELogicSensor.LogicCheckType.Lava && TheDepthsWorldGen.TileInDepths(x))
-			{
-				return false;
-			}
-			return orig.Invoke(x, y, type, instance);
-		}
-		#endregion
-
 		#region MercuryBugCatchingPunishmentDetour
 		private Rectangle On_Player_ItemCheck_CatchCritters(On_Player.orig_ItemCheck_CatchCritters orig, Player self, Item sItem, Rectangle itemRectangle)
 		{
@@ -1645,128 +1542,6 @@ namespace TheDepths
 		}
 		#endregion
 
-		#region QuicksilverTilePlacement
-		private bool On_Player_PlaceThing_Tiles_CheckLavaBlocking(On_Player.orig_PlaceThing_Tiles_CheckLavaBlocking orig, Player self)
-		{
-			orig.Invoke(self);
-			bool result = false;
-			if (Worldgen.TheDepthsWorldGen.InDepths(self))
-			{
-				result = false;
-			}
-			return result;
-		}
-		#endregion
-
-		#region DepthsSilverfallLightRemover
-		private void On_WaterfallManager_AddLight(On_WaterfallManager.orig_AddLight orig, int waterfallType, int x, int y)
-		{
-			if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
-			{
-				if (waterfallType == NetmodeID.MultiplayerClient)
-				{
-					float r = 0f;
-					float g = 0f;
-					float b = 0f;
-					Lighting.AddLight(x, y, r, g, b);
-					return;
-				}
-			}
-			orig.Invoke(waterfallType, x, y);
-		}
-		#endregion
-
-		#region QuicksilverCombinations
-		private void On_Liquid_GetLiquidMergeTypes(On_Liquid.orig_GetLiquidMergeTypes orig, int thisLiquidType, out int liquidMergeTileType, out int liquidMergeType, bool waterNearby, bool lavaNearby, bool honeyNearby, bool shimmerNearby)
-		{
-			orig.Invoke(thisLiquidType, out liquidMergeTileType, out liquidMergeType, waterNearby, lavaNearby, honeyNearby, shimmerNearby);
-			if ((Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer) && Main.netMode == NetmodeID.SinglePlayer) || (Worldgen.TheDepthsWorldGen.isWorldDepths && Main.netMode != NetmodeID.SinglePlayer))
-			{
-				liquidMergeTileType = ModContent.TileType<Tiles.Quartz>();
-				liquidMergeType = thisLiquidType;
-				if (thisLiquidType != 0 && waterNearby)
-				{
-					switch (thisLiquidType)
-					{
-						case 1:
-							liquidMergeTileType = ModContent.TileType<Tiles.Quartz>();
-							break;
-						case 2:
-							liquidMergeTileType = 229;
-							break;
-						case 3:
-							liquidMergeTileType = 659;
-							break;
-					}
-					liquidMergeType = 0;
-				}
-				if (thisLiquidType != 1 && lavaNearby)
-				{
-					switch (thisLiquidType)
-					{
-						case 0:
-							liquidMergeTileType = ModContent.TileType<Tiles.Quartz>();
-							break;
-						case 2:
-							liquidMergeTileType = ModContent.TileType<Tiles.GlitterBlock>();
-							break;
-						case 3:
-							liquidMergeTileType = 659;
-							break;
-					}
-					liquidMergeType = 1;
-				}
-				if (thisLiquidType != 2 && honeyNearby)
-				{
-					switch (thisLiquidType)
-					{
-						case 0:
-							liquidMergeTileType = 229;
-							break;
-						case 1:
-							liquidMergeTileType = ModContent.TileType<Tiles.GlitterBlock>();
-							break;
-						case 3:
-							liquidMergeTileType = 659;
-							break;
-					}
-					liquidMergeType = 2;
-				}
-				if (thisLiquidType != 3 && shimmerNearby)
-				{
-					switch (thisLiquidType)
-					{
-						case 0:
-							liquidMergeTileType = 659;
-							break;
-						case 1:
-							liquidMergeTileType = 659;
-							break;
-						case 2:
-							liquidMergeTileType = 659;
-							break;
-					}
-					liquidMergeType = 3;
-				}
-			}
-		}
-		#endregion
-
-		#region SilverfallTextureDetour
-		private void On_WaterfallManager_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects(On_WaterfallManager.orig_DrawWaterfall_int_int_int_float_Vector2_Rectangle_Color_SpriteEffects orig, WaterfallManager self, int waterfallType, int x, int y, float opacity, Vector2 position, Rectangle sourceRect, Color color, SpriteEffects effects)
-		{
-			if (Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
-			{
-				if (waterfallType == NetmodeID.MultiplayerClient)
-				{
-					Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("TheDepths/Assets/Lava/Quicksilver_Silverfall", (AssetRequestMode)1), position, sourceRect, color, 0f, default(Vector2), 1f, effects, 0f);
-					return;
-				}
-			}
-			orig.Invoke(self, waterfallType, x, y, opacity, position, sourceRect, color, effects);
-		}
-		#endregion
-
 		#region OtherworldlyMusicDetour
 		private void Main_UpdateAudio_DecideOnTOWMusic(Terraria.On_Main.orig_UpdateAudio_DecideOnTOWMusic orig, Main self)
 		{
@@ -1873,15 +1648,6 @@ namespace TheDepths
 		}
 		#endregion
 
-		#region QuicksilverNoLightDetour
-		private void On_TileLightScanner_ApplyLiquidLight(On_TileLightScanner.orig_ApplyLiquidLight orig, TileLightScanner self, Tile tile, ref Vector3 lightColor)
-		{
-			orig.Invoke(self, tile, ref lightColor);
-			if (tile.LiquidType == NetmodeID.MultiplayerClient && Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer))
-				lightColor = Vector3.Zero;
-		}
-		#endregion
-
 		#region DepthsNoHeatDistortionILEdit
 		private void HeatRemoval(ILContext il)
 		{
@@ -1895,31 +1661,6 @@ namespace TheDepths
 				i => i.MatchCgt());
 			//Finds the Flag7 Bool that controles the heat Y level
 			c.EmitDelegate<Func<bool, bool>>(currentBool => currentBool && !Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer)); //Adds ontop of the bool with our own
-		}
-		#endregion
-
-		#region NoEvaporationILEdit
-		private void Evaporation(ILContext il)
-		{
-			ILCursor c = new(il);
-			ILLabel IL_011e = null;
-			if (!c.TryGotoNext(MoveType.After,
-				i => i.MatchLdarg0(),
-				i => i.MatchLdfld<Liquid>("y"),
-				i => i.MatchCall<Main>("get_UnderworldLayer"),
-				i => i.MatchBle(out IL_011e)))
-			{
-				ModContent.GetInstance<TheDepths>().Logger.Debug("The Depths: Could not locate the Water Evaporation Code");
-				return;
-			}
-			if (IL_011e == null) return;
-			c.EmitLdarg0();//Terraria.Liquid instance
-			c.EmitLdfld(typeof(Liquid).GetField("x", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)); //X position variable used in the delegate
-			c.EmitDelegate((int x) =>
-			{
-				return TheDepthsWorldGen.TileInDepths(x);
-			});
-			c.EmitBrtrue(IL_011e);
 		}
 		#endregion
 	}

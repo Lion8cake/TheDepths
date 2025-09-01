@@ -1,13 +1,15 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.ModLoader;
+using System;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using TheDepths.Dusts;
-using Terraria.ID;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+using TheDepths.Liquids;
 
 namespace TheDepths.Tiles
 {
@@ -42,34 +44,23 @@ namespace TheDepths.Tiles
 		{
 			int x = i - Main.tile[i, j].TileFrameX / 18 % 1;
 			int y = j - Main.tile[i, j].TileFrameY / 18 % 1;
-			if (Worldgen.TheDepthsWorldGen.TileInDepths(x))
+			if ((Main.tile[x, y].LiquidType == LiquidLoader.LiquidType<Quicksilver>()) && Main.tile[x, y].TileFrameX == 0)
 			{
-				if ((Main.tile[x, y].LiquidType == LiquidID.Lava) && Main.tile[x, y].TileFrameX == 0)
-				{
-					Wiring.TripWire(x, y, 1, 1);
-				}
-				if (!(Main.tile[x, y].LiquidType == LiquidID.Lava) && Main.tile[x, y].TileFrameX == 18)
-				{
-					Wiring.TripWire(x, y, 1, 1);
-				}
-
-				if (Main.tile[x, y].LiquidType == LiquidID.Lava)
-				{
-					Main.tile[x, y].TileFrameX = 18;
-				}
-				if (Main.tile[x, y].LiquidType != LiquidID.Lava)
-				{
-					Main.tile[x, y].TileFrameX = 0;
-				}
+				Wiring.TripWire(x, y, 1, 1);
 			}
-			else
-            {
-				if (Main.tile[x, y].TileFrameX == 18)
-				{
-					Wiring.TripWire(x, y, 1, 1);
-				}
+			if (!(Main.tile[x, y].LiquidType == LiquidLoader.LiquidType<Quicksilver>()) && Main.tile[x, y].TileFrameX == 18)
+			{
+				Wiring.TripWire(x, y, 1, 1);
+			}
+
+			if (Main.tile[x, y].LiquidType == LiquidLoader.LiquidType<Quicksilver>())
+			{
+				Main.tile[x, y].TileFrameX = 18;
+			}
+			if (Main.tile[x, y].LiquidType != LiquidLoader.LiquidType<Quicksilver>())
+			{
 				Main.tile[x, y].TileFrameX = 0;
-            }
+			}
         }
     }
 }

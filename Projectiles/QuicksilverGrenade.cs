@@ -1,10 +1,11 @@
 using Microsoft.Xna.Framework;
-using Terraria.Audio;
+using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using System;
+using TheDepths.Dusts;
 
 namespace TheDepths.Projectiles
 {
@@ -28,7 +29,7 @@ namespace TheDepths.Projectiles
 			Projectile.Resize(22, 22);
 			SoundEngine.PlaySound(SoundID.Item62, Projectile.position);
 			Color transparent4 = Color.Transparent;
-			int num861 = 35;
+			int num861 = ModContent.DustType<QuicksilverBubble>();
 			for (int num862 = 0; num862 < 30; num862++)
 			{
 				Dust dust55 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, transparent4, 1.5f);
@@ -58,10 +59,10 @@ namespace TheDepths.Projectiles
 					}
 				}
 			}
-			if (Main.netMode != NetmodeID.MultiplayerClient && Worldgen.TheDepthsWorldGen.InDepths(Main.player[Projectile.owner]))
+			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
 				Point pt3 = Projectile.Center.ToTileCoordinates();
-				Projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DelegateMethods.SpreadLava);
+				Projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt3, 3f, DepthsGlobalProj.SpreadQuicksilver);
 			}
 		}
 	}

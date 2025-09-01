@@ -1,3 +1,18 @@
+v1.0.4.0
+=========================
+Now uses the ModLiquid Library mod as a dependancy
+Added Quicksilver
+Removed needless edits
+Fixed hell npcs spawning in the depths
+
+v1.0.3.1 (preview)
+=========================
+Updated to the latest ModLiquidLib update
+
+v1.0.3 (preview)
+=========================
+Added quicksilver as a sperate liquid using the new ModLiquid Library mod
+
 v1.0.2.3
 =========================
 Fixed several typos in the english translation file

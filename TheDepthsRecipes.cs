@@ -13,6 +13,8 @@ using TheDepths.Items.Accessories;
 using TheDepths.Items.Placeable;
 using TheDepths.Items.Placeable.Furniture;
 using Terraria.Localization;
+using TheDepths.Liquids;
+using ModLiquidLib.ModLoader;
 
 namespace TheDepths
 {
@@ -422,14 +424,14 @@ namespace TheDepths
 			//Quicksilver Bomb
 			Recipe QuicksilverBomb = Recipe.Create(ModContent.ItemType<QuicksilverBomb>());
 			QuicksilverBomb.AddIngredient(ItemID.DryBomb);
-			QuicksilverBomb.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), () => Worldgen.TheDepthsWorldGen.isWorldDepths && Main.LocalPlayer.adjLava);
+			QuicksilverBomb.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), LiquidLoader.NearLiquid(LiquidLoader.LiquidType<Quicksilver>()).Predicate);
 			QuicksilverBomb.SortAfterFirstRecipesOf(ItemID.LavaBomb);
 			QuicksilverBomb.Register();
 
 			//Quicksilver Rocket
 			Recipe QuicksilverRocket = Recipe.Create(ModContent.ItemType<QuicksilverRocket>());
 			QuicksilverRocket.AddIngredient(ItemID.DryRocket);
-			QuicksilverRocket.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), () => Worldgen.TheDepthsWorldGen.isWorldDepths && Main.LocalPlayer.adjLava);
+			QuicksilverRocket.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), LiquidLoader.NearLiquid(LiquidLoader.LiquidType<Quicksilver>()).Predicate);
 			QuicksilverRocket.SortAfterFirstRecipesOf(ItemID.LavaRocket);
 			QuicksilverRocket.Register();
 
@@ -907,7 +909,7 @@ namespace TheDepths
 			Recipe MagicQuicksilverDropper = Recipe.Create(ModContent.ItemType<MagicQuicksilverDropper>());
 			MagicQuicksilverDropper.AddIngredient(ItemID.EmptyDropper);
 			MagicQuicksilverDropper.AddTile(TileID.CrystalBall);
-			MagicQuicksilverDropper.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), () => Worldgen.TheDepthsWorldGen.isWorldDepths && Main.LocalPlayer.adjLava);
+			MagicQuicksilverDropper.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), LiquidLoader.NearLiquid(LiquidLoader.LiquidType<Quicksilver>()).Predicate);
 			MagicQuicksilverDropper.SortAfterFirstRecipesOf(ItemID.MagicLavaDropper);
 			MagicQuicksilverDropper.Register();
 
@@ -1044,7 +1046,7 @@ namespace TheDepths
 			Recipe SilverfallBlock = Recipe.Create(ModContent.ItemType<SilverfallBlock>());
 			SilverfallBlock.AddIngredient(ItemID.Glass);
 			SilverfallBlock.AddTile(TileID.CrystalBall);
-			SilverfallBlock.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), () => Worldgen.TheDepthsWorldGen.isWorldDepths && Main.LocalPlayer.adjLava);
+			SilverfallBlock.AddCondition(Language.GetOrRegister("Mods.TheDepths.Recipes.NearQuicksilver"), LiquidLoader.NearLiquid(LiquidLoader.LiquidType<Quicksilver>()).Predicate);
 			SilverfallBlock.SortAfterFirstRecipesOf(ItemID.LavafallWall);
 			SilverfallBlock.Register();
 

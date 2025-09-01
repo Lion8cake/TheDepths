@@ -1,12 +1,11 @@
-using Microsoft.Xna.Framework;
-using System.Security.Cryptography;
+using ModLiquidLib.ID;
+using ModLiquidLib.ModLoader;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
+using TheDepths.Liquids;
 
 namespace TheDepths.Items.Weapons
 {
@@ -14,6 +13,13 @@ namespace TheDepths.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			ItemID.Sets.IsLavaImmuneRegardlessOfRarity[Type] = true;
+			ItemID.Sets.AlsoABuildingItem[Type] = true;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.WaterBucket;
+			ItemID.Sets.ShimmerTransformToItem[ItemID.HoneyBucket] = Type;
+			ItemID.Sets.DuplicationMenuToolsFilter[Type] = true;
+			LiquidID_TLmod.Sets.CreateLiquidBucketItem[LiquidLoader.LiquidType<Quicksilver>()] = Type;
+
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
 		}
 
@@ -31,57 +37,73 @@ namespace TheDepths.Items.Weapons
 
 		public override void HoldItem(Player player)
 		{
-			Tile tile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
-			if (player.IsInTileInteractionRange(Player.tileTargetX, Player.tileTargetY, TileReachCheckSettings.Simple))
+			if (!player.JustDroppedAnItem)
 			{
-				if (Worldgen.TheDepthsWorldGen.InDepths(player))
+				if (player.whoAmI != Main.myPlayer)
 				{
-					if (player.itemTime == 0 && player.itemAnimation > 0 && player.controlUseItem)
+					return;
+				}
+				if (player.noBuilding || !(player.position.X / 16f - (float)Player.tileRangeX - (float)Item.tileBoost <= (float)Player.tileTargetX) || !((player.position.X + (float)player.width) / 16f + (float)Player.tileRangeX + (float)Item.tileBoost - 1f >= (float)Player.tileTargetX) || !(player.position.Y / 16f - (float)Player.tileRangeY - (float)Item.tileBoost <= (float)Player.tileTargetY) || !((player.position.Y + (float)player.height) / 16f + (float)Player.tileRangeY + (float)Item.tileBoost - 2f >= (float)Player.tileTargetY))
+				{
+					return;
+				}
+				if (!Main.GamepadDisableCursorItemIcon)
+				{
+					player.cursorItemIconEnabled = true;
+					Main.ItemIconCacheUpdate(Item.type);
+				}
+				if (!player.ItemTimeIsZero || player.itemAnimation <= 0 || !player.controlUseItem)
+				{
+					return;
+				}
+				Tile tile;
+
+				tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
+				if (tile.LiquidAmount >= 200)
+				{
+					return;
+				}
+				tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
+				if (tile.HasUnactuatedTile)
+				{
+					bool[] tileSolid = Main.tileSolid;
+					tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
+					if (tileSolid[tile.TileType])
 					{
-						if (tile.HasUnactuatedTile)
+						bool[] tileSolidTop = Main.tileSolidTop;
+						tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
+						if (!tileSolidTop[tile.TileType])
 						{
-							bool[] tileSolid = Main.tileSolid;
-							if (tileSolid[tile.TileType])
+							tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
+							if (tile.TileType != 546)
 							{
-								bool[] tileSolidTop = Main.tileSolidTop;
-								if (!tileSolidTop[tile.TileType])
-								{
-									if (tile.TileType != 546)
-									{
-										return;
-									}
-								}
+								return;
 							}
 						}
-						if (tile.LiquidAmount != 0)
-						{
-							return;
-						}
-						SoundEngine.PlaySound(SoundID.SplashWeak, player.position);
-						tile.LiquidType = LiquidID.Lava;
-						tile.LiquidAmount = byte.MaxValue;
-						Item.stack--;
-						player.PutItemInInventoryFromItemUsage(ItemID.EmptyBucket, player.selectedItem);
-						WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
-						player.ApplyItemTime(Item);
-						if (Main.netMode == NetmodeID.MultiplayerClient)
-						{
-							NetMessage.sendWater(Player.tileTargetX, Player.tileTargetY);
-						}
 					}
-					player.cursorItemIconEnabled = true;
-					player.cursorItemIconID = Type;
 				}
-				else
+
+				tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
+				if (tile.LiquidAmount != 0)
 				{
-					if (player.itemTime == 0 && player.itemAnimation == 1 && player.controlUseItem)
+					tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
+					if (tile.LiquidType != LiquidLoader.LiquidType<Quicksilver>())
 					{
-						for (int i = 0; i < 12; i++)
-						{
-							Dust.NewDustDirect(Main.MouseWorld + new Vector2(-4f, -4f), 4, 4, DustID.Smoke, 0f, -1f);
-						}
+						return;
 					}
 				}
+				SoundEngine.PlaySound(SoundID.SplashWeak, player.position);
+				tile.LiquidType = LiquidLoader.LiquidType<Quicksilver>();
+				tile.LiquidAmount = byte.MaxValue;
+				WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
+				Item.stack--;
+				player.PutItemInInventoryFromItemUsage(ItemID.EmptyBucket, player.selectedItem);
+				player.ApplyItemTime(Item);
+				if (Main.netMode == 1)
+				{
+					NetMessage.sendWater(Player.tileTargetX, Player.tileTargetY);
+				}
+				return;
 			}
 		}
 	}

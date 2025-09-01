@@ -1,5 +1,6 @@
 displayName = The Depths (Hell Alternative)
 author = Lion8cake & Snickerbobble
-version = 1.0.2.3
+version = 1.0.4.0
+modReferences = ModLiquidLib
 includeSource = true
 includePDB = true

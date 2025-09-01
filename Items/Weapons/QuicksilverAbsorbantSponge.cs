@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using ModLiquidLib.ModLoader;
 using System.Security.Cryptography;
 using Terraria;
 using Terraria.Audio;
@@ -7,6 +8,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using TheDepths.Liquids;
 
 namespace TheDepths.Items.Weapons
 {
@@ -35,44 +37,41 @@ namespace TheDepths.Items.Weapons
 			Tile tile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
 			if (player.IsInTileInteractionRange(Player.tileTargetX, Player.tileTargetY, TileReachCheckSettings.Simple))
 			{
-				if (Worldgen.TheDepthsWorldGen.InDepths(player))
+				if (player.itemTime == 0 && player.itemAnimation > 0 && player.controlUseItem)
 				{
-					if (player.itemTime == 0 && player.itemAnimation > 0 && player.controlUseItem)
+					if (tile.HasUnactuatedTile)
 					{
-						if (tile.HasUnactuatedTile)
+						bool[] tileSolid = Main.tileSolid;
+						if (tileSolid[tile.TileType])
 						{
-							bool[] tileSolid = Main.tileSolid;
-							if (tileSolid[tile.TileType])
+							bool[] tileSolidTop = Main.tileSolidTop;
+							if (!tileSolidTop[tile.TileType])
 							{
-								bool[] tileSolidTop = Main.tileSolidTop;
-								if (!tileSolidTop[tile.TileType])
+								if (tile.TileType != 546)
 								{
-									if (tile.TileType != 546)
-									{
-										return;
-									}
+									return;
 								}
 							}
 						}
-						if (tile.LiquidType != LiquidID.Lava)
-						{
-							return;
-						}
-						if (tile.LiquidAmount > 0)
-						{
-							SoundEngine.PlaySound(SoundID.SplashWeak, player.position);
-						}
-						tile.LiquidAmount = 0;
-						WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
-						player.ApplyItemTime(Item);
-						if (Main.netMode == NetmodeID.MultiplayerClient)
-						{
-							NetMessage.sendWater(Player.tileTargetX, Player.tileTargetY);
-						}
 					}
-					player.cursorItemIconEnabled = true;
-					player.cursorItemIconID = Type;
+					if (tile.LiquidType != LiquidLoader.LiquidType<Quicksilver>())
+					{
+						return;
+					}
+					if (tile.LiquidAmount > 0)
+					{
+						SoundEngine.PlaySound(SoundID.SplashWeak, player.position);
+					}
+					tile.LiquidAmount = 0;
+					WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
+					player.ApplyItemTime(Item);
+					if (Main.netMode == NetmodeID.MultiplayerClient)
+					{
+						NetMessage.sendWater(Player.tileTargetX, Player.tileTargetY);
+					}
 				}
+				player.cursorItemIconEnabled = true;
+				player.cursorItemIconID = Type;
 			}
 		}
 	}

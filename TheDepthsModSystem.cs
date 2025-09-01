@@ -38,27 +38,6 @@ namespace TheDepths
 		public int artificialDepthsBlockCount;
 
 		public int artificialUnderworldBlockCount;
-
-		//public static bool NotLavaDestroyable;
-
-		/*public override void PreUpdateWorld()
-        {
-            //if (Worldgen.TheDepthsWorldGen.InDepths)
-            //{
-                for (int i = 0; i < TileLoader.TileCount; i++)
-                {
-                    Main.tileLavaDeath[i] = false;
-                }
-            //}
-            //else if (NotLavaDestroyable == false)
-            //{
-            //    for (int i = 0; i < TileLoader.TileCount; i++)
-            //    {
-            //        Main.tileLavaDeath[i] = true;
-            //    }
-            //}
-        }*/
-
 		public override void PostSetupContent()
 		{
 			for (int i = 0; i < ItemLoader.ItemCount; i++)

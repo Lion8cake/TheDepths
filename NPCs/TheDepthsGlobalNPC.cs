@@ -5,6 +5,9 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using System;
 using TheDepths.Worldgen;
+using ModLiquidLib.ModLoader;
+using ModLiquidLib.Utils;
+using TheDepths.Liquids;
 
 namespace TheDepths.NPCs
 {
@@ -42,31 +45,13 @@ namespace TheDepths.NPCs
 
 		public override void PostAI(NPC npc)
 		{
-			bool NPCInDepths = TheDepthsWorldGen.TileInDepths(npc.position.ToTileCoordinates().X);
-
-			if (NPCInDepths && Collision.LavaCollision(npc.position, npc.width, npc.height))
-			{
-				npc.lavaImmune = true;
-				npc.buffImmune[BuffID.OnFire] = true;
-				npc.buffImmune[BuffID.OnFire3] = true;
-				QuicksilverTimer++;
-				if (QuicksilverTimer >= 120)
-				{
-					QuicksilverTimer = 120;
-					npc.AddBuff(ModContent.BuffType<Buffs.MercuryBoiling>(), 60 * 7, false);
-				}
-			}
-			if (NPCInDepths && !Collision.LavaCollision(npc.position, npc.width, npc.height))
+			if (!npc.GetWet(LiquidLoader.LiquidType<Quicksilver>()))
 			{
 				QuicksilverTimer--;
 				if (QuicksilverTimer <= 0)
 				{
 					QuicksilverTimer = 0;
 				}
-			}
-			if (!NPCInDepths && Collision.LavaCollision(npc.position, npc.width, npc.height) && npc.buffImmune[ModContent.BuffType<Buffs.MercuryBoiling>()] == false)
-			{
-				npc.lavaImmune = false;
 			}
 			for (int o = 0; o < Main.maxNPCs; o++)
 			{

@@ -15,6 +15,7 @@ using TheDepths.Worldgen;
 
 namespace TheDepths.ModSupport.BiomeLava
 {
+	/*
 	public class QuicksilverStyles : ModSystem
 	{
 		public override void Load()
@@ -744,5 +745,5 @@ namespace TheDepths.ModSupport.BiomeLava
 	{
 		public override string Texture => "TheDepths/ModSupport/BiomeLava/Assets/Desert/DesertQuicksilverDrip";
 	}
-	#endregion
+	#endregion*/
 }
