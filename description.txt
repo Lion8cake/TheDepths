@@ -5,7 +5,7 @@ Depths version 1.0.4.0
 Welcome to THE DEPTHS 
 The Depths is a mod that adds an alternate biome to the underworld called the depths, this works very similar to how the crimson and corruption works in the base game. 
 This mod fully replaces all content found within the underworld from the lava cavern layer to the wall of flesh; everything has an alternative!
-The depths' biome is a cold, dark deeper cave filled with shale, mercury and lots of gems. it contains a whole new liquid and a new boss and way of unlocking hardmode
+The depths' biome is a cold, dark deeper cave filled with shale, mercury and lots of gems. It contains a whole new liquid and a new boss and way of unlocking hardmode
 
 The Depths was originally a concept made back in 2015 by Snickerbobble that contained sprites and very well made concepts for a lot of the depths' content. In august of 2021 this project would be picked up by Lion8cake and be worked on ever since to bring a fully working hell alternate to terraria/tModLoader.
 The team behind the Depths has also made a similar yet incomplete mod called the Confection REBAKED, it does a very similar thing to the Depths but replaces the Hallow instead of the underworld.
