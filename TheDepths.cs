@@ -290,7 +290,7 @@ namespace TheDepths
 				{
 					if (WorldGen.gen && WorldGen.generatingWorld && b == LiquidID.Lava && TheDepthsWorldGen.TileInDepths(num))
 					{
-						//b = LiquidLoader.LiquidType<Quicksilver>();
+						b = LiquidLoader.LiquidType<Quicksilver>();
 					}
 				}
 			});

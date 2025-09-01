@@ -15,11 +15,12 @@ using TheDepths.Worldgen;
 
 namespace TheDepths.ModSupport.BiomeLava
 {
+	/*
 	public class QuicksilverStyles : ModSystem
 	{
 		public override void Load()
 		{
-			/*if (DepthsModCalling.BiomeLavaMod != null)
+			if (DepthsModCalling.BiomeLavaMod != null)
 			{
 				QuicksilverStyle();
 				CorruptQuicksilverStyle();
@@ -28,7 +29,7 @@ namespace TheDepths.ModSupport.BiomeLava
 				JungleQuicksilverStyle();
 				IceQuicksilverStyle();
 				DesertQuicksilverStyle();
-			}*/
+			}
 		}
 
 		// The base quicksilver style
@@ -744,5 +745,5 @@ namespace TheDepths.ModSupport.BiomeLava
 	{
 		public override string Texture => "TheDepths/ModSupport/BiomeLava/Assets/Desert/DesertQuicksilverDrip";
 	}
-	#endregion
+	#endregion*/
 }

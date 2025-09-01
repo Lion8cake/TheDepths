@@ -1,7 +1,7 @@
 ﻿=========================================
 The Depths (Alternate Hell)
 =========================================
-Depths version 1.0.3.1 (Preview for the Liquid Overhaul Update)
+Depths version 1.0.4.0
 Welcome to THE DEPTHS 
 The Depths is a mod that adds an alternate biome to the underworld called the depths, this works very similar to how the crimson and corruption works in the base game. 
 This mod fully replaces all content found within the underworld from the lava cavern layer to the wall of flesh; everything has an alternative!
@@ -15,7 +15,8 @@ Achievement Mod - download and use the Achievement Mod to see four new achieveme
 Fargo's Best of Both Worlds - download and use Fargo's BoBW, this allows for the creation of dual core worlds without the use of a drunk seed
 Music Display - download and use the Music Display mod to see the track names and authors for each of the depths' music
 Boss Checklist - download and use Boss Checklist to see the alternate wall of flesh and where and how to fight her
-Biome Lava - download and use the Biome Lava mod to have custom biome specific quicksilver styles and a proper fade transition between quicksilver and lava
+
+Biome Lava support is unfortunately unavaliable as of 1.0.3.0. This support may return in furture updates.
 
 Various notes:
 Drunk seed allows for you to use both the Depths and Underworld if entirely replacing a biome is not your thing
