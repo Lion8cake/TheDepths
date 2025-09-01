@@ -23,7 +23,7 @@ namespace TheDepths.Liquids
 			SlopeOpacity = 1f;
 			VisualViscosity = 200;
 			FallDelay = 5;
-			//VanillaFallbackOnModDeletion = (ushort)LiquidID.Lava;
+			VanillaFallbackOnModDeletion = (ushort)LiquidID.Lava;
 			ChecksForDrowning = false;
 			AllowEmitBreathBubbles = false;
 			UsesLavaCollisionForWet = true;
