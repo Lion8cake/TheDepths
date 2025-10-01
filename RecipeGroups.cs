@@ -31,6 +31,7 @@ namespace TheDepths
 		public static RecipeGroup BottomlessLavaBucketGroup;
 		public static RecipeGroup LavaSpongeGroup;
         public static RecipeGroup LavaFishingHookGroup;
+		public static RecipeGroup ImpStaffHookGroup;
 
 		public override void Unload()
         {
@@ -55,6 +56,7 @@ namespace TheDepths
 			BottomlessLavaBucketGroup = null;
 			LavaSpongeGroup = null;
 			LavaFishingHookGroup = null;
+            ImpStaffHookGroup = null;
 		}
 
         public override void AddRecipeGroups()
@@ -106,6 +108,8 @@ namespace TheDepths
 			RecipeGroup.RegisterGroup("LavaAbsorbantSponge", LavaSpongeGroup);
 			LavaFishingHookGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.LavaFishingHook)}", ItemID.LavaFishingHook, ModContent.ItemType<QuicksilverproofFishingHook>());
 			RecipeGroup.RegisterGroup("LavaFishingHook", LavaFishingHookGroup);
+			ImpStaffHookGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.ImpStaff)}", ItemID.ImpStaff, ModContent.ItemType<LivingShadowStaff>());
+			RecipeGroup.RegisterGroup($"{Lang.GetItemNameValue(ItemID.ImpStaff)}", ImpStaffHookGroup);
 		}
 
         public override void PostAddRecipes()
@@ -188,37 +192,42 @@ namespace TheDepths
                     recipe.AddRecipeGroup("CobaltShield", CS.stack);
                     recipe.RemoveIngredient(CS);
                 }
-				if (recipe.TryGetIngredient(ItemID.Cascade, out var Cascade) && !TheDepthsIDs.Sets.RecipeBlacklist.CascadeOnlyItem[recipe.createItem.type])
-				{
-					recipe.AddRecipeGroup("Cascade", Cascade.stack);
-					recipe.RemoveIngredient(Cascade);
-				}
-				if (recipe.TryGetIngredient(ItemID.TreasureMagnet, out var TM) && !TheDepthsIDs.Sets.RecipeBlacklist.TreasureMagnetOnlyItem[recipe.createItem.type])
-				{
-					recipe.AddRecipeGroup("TreasureMagnet", TM.stack);
-					recipe.RemoveIngredient(TM);
-				}
-				if (recipe.TryGetIngredient(ItemID.LavaBucket, out var LB) && !TheDepthsIDs.Sets.RecipeBlacklist.LavaBucketOnlyItem[recipe.createItem.type])
-				{
-					recipe.AddRecipeGroup("LavaBucket", LB.stack);
-					recipe.RemoveIngredient(LB);
-				}
-				if (recipe.TryGetIngredient(ItemID.BottomlessLavaBucket, out var BLB) && !TheDepthsIDs.Sets.RecipeBlacklist.BottomlessLavaBucketOnlyItem[recipe.createItem.type])
-				{
-					recipe.AddRecipeGroup("BottomlessLavaBucket", BLB.stack);
-					recipe.RemoveIngredient(BLB);
-				}
-				if (recipe.TryGetIngredient(ItemID.LavaAbsorbantSponge, out var LS) && !TheDepthsIDs.Sets.RecipeBlacklist.LavaSpongeOnlyItem[recipe.createItem.type])
-				{
-					recipe.AddRecipeGroup("LavaAbsorbantSponge", LS.stack);
-					recipe.RemoveIngredient(LS);
-				}
-				if (recipe.TryGetIngredient(ItemID.LavaFishingHook, out var LPFH) && !TheDepthsIDs.Sets.RecipeBlacklist.LavaFishingHookOnlyItem[recipe.createItem.type])
-				{
-					recipe.AddRecipeGroup("LavaFishingHook", LPFH.stack);
-					recipe.RemoveIngredient(LPFH);
-				}
-			}
+            if (recipe.TryGetIngredient(ItemID.Cascade, out var Cascade) && !TheDepthsIDs.Sets.RecipeBlacklist.CascadeOnlyItem[recipe.createItem.type])
+            {
+              recipe.AddRecipeGroup("Cascade", Cascade.stack);
+              recipe.RemoveIngredient(Cascade);
+            }
+            if (recipe.TryGetIngredient(ItemID.TreasureMagnet, out var TM) && !TheDepthsIDs.Sets.RecipeBlacklist.TreasureMagnetOnlyItem[recipe.createItem.type])
+            {
+              recipe.AddRecipeGroup("TreasureMagnet", TM.stack);
+              recipe.RemoveIngredient(TM);
+            }
+            if (recipe.TryGetIngredient(ItemID.LavaBucket, out var LB) && !TheDepthsIDs.Sets.RecipeBlacklist.LavaBucketOnlyItem[recipe.createItem.type])
+            {
+              recipe.AddRecipeGroup("LavaBucket", LB.stack);
+              recipe.RemoveIngredient(LB);
+            }
+            if (recipe.TryGetIngredient(ItemID.BottomlessLavaBucket, out var BLB) && !TheDepthsIDs.Sets.RecipeBlacklist.BottomlessLavaBucketOnlyItem[recipe.createItem.type])
+            {
+              recipe.AddRecipeGroup("BottomlessLavaBucket", BLB.stack);
+              recipe.RemoveIngredient(BLB);
+            }
+            if (recipe.TryGetIngredient(ItemID.LavaAbsorbantSponge, out var LS) && !TheDepthsIDs.Sets.RecipeBlacklist.LavaSpongeOnlyItem[recipe.createItem.type])
+            {
+              recipe.AddRecipeGroup("LavaAbsorbantSponge", LS.stack);
+              recipe.RemoveIngredient(LS);
+            }
+            if (recipe.TryGetIngredient(ItemID.LavaFishingHook, out var LPFH) && !TheDepthsIDs.Sets.RecipeBlacklist.LavaFishingHookOnlyItem[recipe.createItem.type])
+            {
+              recipe.AddRecipeGroup("LavaFishingHook", LPFH.stack);
+              recipe.RemoveIngredient(LPFH);
+            }
+            if (recipe.TryGetIngredient(ItemID.ImpStaff, out var IS) && !TheDepthsIDs.Sets.RecipeBlacklist.ImpStaffOnlyItem[recipe.createItem.type])
+            {
+              recipe.AddRecipeGroup($"{Lang.GetItemNameValue(ItemID.ImpStaff)}", IS.stack);
+              recipe.RemoveIngredient(IS);
+            }
+          }
         }
     }
 }

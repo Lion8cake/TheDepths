@@ -2070,24 +2070,28 @@ Mods: {
 		DepthsBiome: Las Profundidades
 
 		Achievements: {
-			HeartSmasher: {
+			HeartBreaker: {
 				Name: Aplasta Corazones
 				Description: Vence a Chasme y a su gigante de Esquisto. La creadora de Las Profundidades y del culto de Geomantes.
+				FriendlyName: "{$Mods.TheDepths.Achievements.HeartBreaker.Name}"
 			}
 
 			PickaxeOfPoison: {
 				Name: Pico Ponsoñoso
 				Description: Fabrica un pico de mercurio utilizando el más peligroso de los fluidos.
+				FriendlyName: "{$Mods.TheDepths.Achievements.PickaxeOfPoison.Name}"
 			}
 
 			MysteriesOfTheDark: {
 				Name: Misterios de la Oscuridad
 				Description: Encuentra Las Profundidades de lo profundo.
+				FriendlyName: "{$Mods.TheDepths.Achievements.MysteriesOfTheDark.Name}"
 			}
 
 			MercuryAngler: {
 				Name: Pescador de Mercurio
 				Description: Pesca en mercurio para encontrar alguna forma de vida resistente al mismo.
+				FriendlyName: "{$Mods.TheDepths.Achievements.MercuryAngler.Name}"
 			}
 		}
 

@@ -2070,24 +2070,28 @@ Mods: {
 		DepthsBiome: 死渊
 
 		Achievements: {
-			HeartSmasher: {
+			HeartBreaker: {
 				Name: 碎心者
 				Description: 击败猎渊魔和她的页岩魔像.死渊的创造者和地心法师们的指挥者
+				FriendlyName: "{$Mods.TheDepths.Achievements.HeartBreaker.Name}"
 			}
 
 			PickaxeOfPoison: {
 				Name: 剧毒之镐
 				Description: 使用最致命的液体制作一把镐子
+				FriendlyName: "{$Mods.TheDepths.Achievements.PickaxeOfPoison.Name}"
 			}
 
 			MysteriesOfTheDark: {
 				Name: 暗黑之谜
 				Description: 去到足够深的地方找到死渊
+				FriendlyName: "{$Mods.TheDepths.Achievements.MysteriesOfTheDark.Name}"
 			}
 
 			MercuryAngler: {
 				Name: 水银垂钓者
 				Description: 在水银中投掷一根鱼线，寻找某些抗水银的海中生命
+				FriendlyName: "{$Mods.TheDepths.Achievements.MercuryAngler.Name}"
 			}
 		}
 

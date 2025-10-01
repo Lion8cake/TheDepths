@@ -2070,24 +2070,28 @@ Mods: {
 		DepthsBiome: As Profundezas
 
 		Achievements: {
-			HeartSmasher: {
+			HeartBreaker: {
 				Name: Esmagador de Coração
 				Description: Derrote Chasme e sua Gigante de Xisto. O criador das Profundezas e comandante dos Geomantes.
+				FriendlyName: "{$Mods.TheDepths.Achievements.HeartBreaker.Name}"
 			}
 
 			PickaxeOfPoison: {
 				Name: Picareta do Veneno
 				Description: Crie uma picareta de Mercúrio usando o líquido mais letal de todos.
+				FriendlyName: "{$Mods.TheDepths.Achievements.PickaxeOfPoison.Name}"
 			}
 
 			MysteriesOfTheDark: {
 				Name: Mistérios da Escuridão
 				Description: Vá fundo o bastante para encontras As Profundezas.
+				FriendlyName: "{$Mods.TheDepths.Achievements.MysteriesOfTheDark.Name}"
 			}
 
 			MercuryAngler: {
 				Name: Pescador de Mercúrio
 				Description: Lance uma linha em uma poça de mercúrio para encontrar alguma vida marinha resistente ao mercúrio.
+				FriendlyName: "{$Mods.TheDepths.Achievements.MercuryAngler.Name}"
 			}
 		}
 

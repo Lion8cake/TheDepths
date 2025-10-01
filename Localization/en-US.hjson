@@ -2070,24 +2070,28 @@ Mods: {
 		DepthsBiome: The Depths
 
 		Achievements: {
-			HeartSmasher: {
+			HeartBreaker: {
 				Name: Heart Smasher
 				Description: Defeat Chasme and her shalestone giant. The creator of The Depths and the commander of the Geomancers.
+				FriendlyName: "{$Mods.TheDepths.Achievements.HeartBreaker.Name}"
 			}
 
 			PickaxeOfPoison: {
 				Name: Pickaxe of Poison
 				Description: Craft a Mercury Pickaxe using the most deadly of liquids.
+				FriendlyName: "{$Mods.TheDepths.Achievements.PickaxeOfPoison.Name}"
 			}
 
 			MysteriesOfTheDark: {
 				Name: Mysteries of the Dark
 				Description: Go deep enough to find The Depths.
+				FriendlyName: "{$Mods.TheDepths.Achievements.MysteriesOfTheDark.Name}"
 			}
 
 			MercuryAngler: {
 				Name: Mercury Angler
 				Description: Cast a line into a pool of quicksilver to find some mercury resistant marine life.
+				FriendlyName: "{$Mods.TheDepths.Achievements.MercuryAngler.Name}"
 			}
 		}
 

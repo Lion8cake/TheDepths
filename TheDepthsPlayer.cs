@@ -1,43 +1,32 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ModLiquidLib;
 using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
-using Terraria.GameContent.Generation;
-using Terraria.GameContent.Liquid;
-using Terraria.GameContent.UI.Elements;
 using Terraria.GameInput;
-using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.Map;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using TheDepths.Achievements;
 using TheDepths.Biomes;
 using TheDepths.Buffs;
 using TheDepths.Dusts;
-using TheDepths.Gores;
 using TheDepths.Items;
 using TheDepths.Items.Weapons;
 using TheDepths.Liquids;
 using TheDepths.NPCs.Chasme;
 using TheDepths.Projectiles;
-using TheDepths.Tiles;
 using TheDepths.Tiles.Trees;
-using static Terraria.ModLoader.ExtraJump;
+using TheDepths.Worldgen;
 using static Terraria.ModLoader.ModContent;
-using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace TheDepths
 {
@@ -119,6 +108,7 @@ namespace TheDepths
             NightwoodBuff = false;
             pShield = false;
             Gslam = false;
+            GslamVanity = false;
 
             if (isSlamming)
             {
@@ -336,11 +326,11 @@ namespace TheDepths
                     {
 						itemDrop = 0;
                     }
-                    if (ModSupport.DepthsModCalling.Achievements != null)
-                    {
-                        ModSupport.DepthsModCalling.Achievements.Call("Event", "FishingInQuicksilver");
-                    }
+
+					GetInstance<MercuryAngler>().FishingInQuicksilver.Complete();
 				}
+                else 
+                    itemDrop = 0;
 			}
 			
             if (fisher.questFish == ModContent.ItemType<Chasmefish>())
@@ -435,7 +425,7 @@ namespace TheDepths
                 if (isSlamming && player.velocity.Y == 0)
                 {
                     SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, player.position);
-                    Projectile.NewProjectile(new EntitySource_Misc(""), player.position, Vector2.Zero, ModContent.ProjectileType<ShalestoneSlam>(), 0, 0);
+                    Projectile.NewProjectile(new EntitySource_Misc(""), player.position, Vector2.Zero, ModContent.ProjectileType<ShalestoneSlam>(), 0, 0, player.whoAmI);
                 }
                 isSlamming = false;
             }
@@ -450,6 +440,10 @@ namespace TheDepths
                 {
 					player.velocity.Y = -20;
 				}
+                if (player.dashTime != 0 || player.doubleTapCardinalTimer[2] > 0 || player.doubleTapCardinalTimer[3] > 0)
+                {
+                    isSlamming = false;
+                }
             }
 
 			if (pShieldTimer <= 0)
@@ -529,36 +523,7 @@ namespace TheDepths
             {
                 MercuryTimer = 0;
             }
-            if (stoneRose)
-            {
-                if (QuicksilverTimer >= 60 * 4 && AmuletTimer == 0)
-                {
-                    if (NightwoodBuff == true)
-                    {
-                        Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 3, false, false);
-                    }
-                    else
-                    {
-                        Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 7, false, false);
-                    }
-                    QuicksilverTimer = 60 * 4;
-                }
-            }
-            else
-            {
-                if (QuicksilverTimer >= 60 * 2 && AmuletTimer == 0)
-                {
-                    if (NightwoodBuff == true)
-                    {
-                        Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 3, false, false);
-                    }
-                    else
-                    {
-                        Player.AddBuff(BuffType<MercuryBoiling>(), 60 * 7, false, false);
-                    }
-                    QuicksilverTimer = 60 * 2;
-                }
-            }
+            
 			for (int i = 0; i < Main.maxPlayers; i++)
 			{
 				Player target = Main.player[i];
@@ -594,19 +559,12 @@ namespace TheDepths
             {
                 AmuletTimer = 0;
             }
-            //Main.NewText(AmuletTimer);
-            //Main.NewText(MercuryTimer); //For Debugging, posts number of ticks that have passed when the player is on Mercury
-            //Main.NewText("Depths in on the left: " + Worldgen.TheDepthsWorldGen.IsPlayerInLeftDepths(player)); //Debugging for the drunkseed tag checker
-			//Main.NewText("Depths in on the Right: " + Worldgen.TheDepthsWorldGen.IsPlayerInRightDepths(player));
-			//Main.NewText("World Tag DrunkDepthsLeft: " + Worldgen.TheDepthsWorldGen.DrunkDepthsLeft);
-			//Main.NewText("World Tag DrunkDepthsRight: " + Worldgen.TheDepthsWorldGen.DrunkDepthsRight);
-			//Main.NewText("World Tag depthsorHell: " + Worldgen.TheDepthsWorldGen.depthsorHell);
 
 			//Shalestone Conch and shellphone
 			Item item = Player.inventory[Player.selectedItem];
             if (!Player.JustDroppedAnItem)
             {
-                if ((item.type == ModContent.ItemType<ShalestoneConch>() || item.type == ModContent.ItemType<ShellPhoneDepths>()) && Player.itemAnimation > 0 && Worldgen.TheDepthsWorldGen.InDepths(player))
+                if ((item.type == ModContent.ItemType<ShalestoneConch>() || item.type == ModContent.ItemType<ShellPhoneDepths>()) && Player.itemAnimation > 0)
                 {
                     Vector2 vector2 = Vector2.UnitY.RotatedBy((float)Player.itemAnimation * ((float)Math.PI * 2f) / 30f) * new Vector2(15f, 0f);
                     for (int num = 0; num < 2; num++)
@@ -662,11 +620,8 @@ namespace TheDepths
 
             if (player.InModBiome<DepthsBiome>())
 			{
-                if (ModSupport.DepthsModCalling.Achievements != null)
-                {
-                    ModSupport.DepthsModCalling.Achievements.Call("Event", "WalkedIntoTheDepths");
-                }
-            }
+				GetInstance<MysteriesOfTheDark>().WalkedIntoTheDepths.Complete();
+			}
         }
 
         public int GetActiveAmulets()
@@ -713,6 +668,10 @@ namespace TheDepths
             if (!canSpawn)
             {
                 vector = player.CheckForGoodTeleportationSpot(ref canSpawn, num + num3, num3, teleportStartY, teleportRangeY, settings);
+            }
+            if (!TheDepthsWorldGen.TileInDepths((int)(vector.X / 16)))
+            {
+                canSpawn = false;
             }
             if (canSpawn)
             {
@@ -952,7 +911,11 @@ namespace TheDepths
             }
             if (!player.GetWet(LiquidLoader.LiquidType<Quicksilver>()))
             {
-                QuicksilverTimer = 0;
+                QuicksilverTimer -= 5;
+                if (QuicksilverTimer < 0)
+                {
+                    QuicksilverTimer = 0;
+                }
                 quicksilverWet = false;
             }
         }

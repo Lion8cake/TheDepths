@@ -42,17 +42,17 @@ namespace TheDepths.Worldgen
 		/// <summary>
 		/// Detects if the player is on the depths side of the drunk seed if the depths is on the Right
 		/// </summary>
-		public static bool IsPlayerInRightDepths(Player player) => DrunkDepthsRight && ((Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 200 && player.InModBiome<DepthsBiome>()) || (Math.Abs(player.position.ToTileCoordinates().Y) < Main.maxTilesY - 200 && Math.Abs(player.position.ToTileCoordinates().X) > Main.maxTilesX / 2));
+		public static bool IsPlayerInRightDepths(Player player) => DrunkDepthsRight && ((Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 200 && DepthsBiome.InModBiome(player)) || (Math.Abs(player.position.ToTileCoordinates().Y) < Main.maxTilesY - 200 && Math.Abs(player.position.ToTileCoordinates().X) > Main.maxTilesX / 2));
 
 		/// <summary>
 		///   Detects if the player is on the depths side of the drunk seed if the depths is on the left
 		/// </summary>
-		public static bool IsPlayerInLeftDepths(Player player) => DrunkDepthsLeft && ((Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 200 && player.InModBiome<DepthsBiome>()) || (Math.Abs(player.position.ToTileCoordinates().Y) < Main.maxTilesY - 200 && Math.Abs(player.position.ToTileCoordinates().X) < Main.maxTilesX / 2));
+		public static bool IsPlayerInLeftDepths(Player player) => DrunkDepthsLeft && ((Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 200 && DepthsBiome.InModBiome(player)) || (Math.Abs(player.position.ToTileCoordinates().Y) < Main.maxTilesY - 200 && Math.Abs(player.position.ToTileCoordinates().X) < Main.maxTilesX / 2));
 
 		/// <summary>
 		///   Checks if the player is in the depths part of the world. This is used to reduce repetion within code as previously all the check needed was depthsorHell == true.
 		/// </summary>
-		public static bool InDepths(Player player) => ((isWorldDepths && !DrunkDepthsLeft && !DrunkDepthsRight && Math.Abs(player.position.ToTileCoordinates().Y) < Main.maxTilesY - 200) || (Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 200 && player.InModBiome<DepthsBiome>())) || IsPlayerInLeftDepths(player) || IsPlayerInRightDepths(player);
+		public static bool InDepths(Player player) => ((isWorldDepths && !DrunkDepthsLeft && !DrunkDepthsRight && Math.Abs(player.position.ToTileCoordinates().Y) < Main.maxTilesY - 200) || (Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 200 && DepthsBiome.InModBiome(player))) || IsPlayerInLeftDepths(player) || IsPlayerInRightDepths(player);
 
 		/// <summary>
 		/// Detects if the inputted tile X coord is on the depths side of the drunk seed if the depths is on the Right

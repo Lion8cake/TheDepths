@@ -6,18 +6,24 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using MonoMod.RuntimeDetour;
 using MonoMod.RuntimeDetour.HookGen;
+using Newtonsoft.Json.Linq;
 using ReLogic.Content;
+using ReLogic.Peripherals.RGB;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
+using Terraria.Achievements;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Achievements;
 using Terraria.GameContent.Animations;
+using Terraria.GameContent.Creative;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent.Events;
 using Terraria.GameContent.Liquid;
+using Terraria.GameContent.RGB;
 using Terraria.GameContent.Skies;
 using Terraria.GameContent.Skies.CreditsRoll;
 using Terraria.GameContent.Tile_Entities;
@@ -35,9 +41,11 @@ using Terraria.IO;
 using Terraria.Localization;
 using Terraria.Map;
 using Terraria.ModLoader;
+using Terraria.Net;
 using Terraria.ObjectData;
 using Terraria.UI;
 using Terraria.Utilities;
+using TheDepths.Achievements;
 using TheDepths.Biomes;
 using TheDepths.Dusts;
 using TheDepths.Gores;
@@ -48,9 +56,11 @@ using TheDepths.Items.Weapons;
 using TheDepths.Liquids;
 using TheDepths.ModSupport;
 using TheDepths.NPCs.Chasme;
+using TheDepths.RGB;
 using TheDepths.Tiles;
 using TheDepths.Tiles.Furniture;
 using TheDepths.Worldgen;
+using static System.Diagnostics.Activity;
 using static Terraria.Graphics.FinalFractalHelper;
 
 namespace TheDepths
@@ -76,11 +86,18 @@ namespace TheDepths
 			GameShaders.Misc["TheDepths:ShadowLash"].UseImage1("Images/Extra_" + (short)189);
 			GameShaders.Misc["TheDepths:ShadowLash"].UseImage2("Images/Extra_" + (short)190);
 
-			TheDepthsWindUtilities.Load();
+			TheDepthsReflectionUtils.Load();
 
 			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
 
 			fractalProfiles.Add(ModContent.ItemType<Terminex>(), new FinalFractalProfile(70f, new Color(75, 103, 214))); // new Color(119, 135, 162)));
+
+			Main.Chroma.RegisterShader(new DepthsShader(), DepthsConfitions.InDepthsMenu, ShaderLayer.Menu);
+			Main.Chroma.RegisterShader(new CavernShader(new Color(156, 178, 184), new Color(25, 25, 25), 0.5f), DepthsConfitions.Depth.Mercury, ShaderLayer.Biome);
+			Main.Chroma.RegisterShader(new DepthsShader(), DepthsConfitions.Depth.Depths, ShaderLayer.Biome);
+			Main.Chroma.RegisterShader(new QuicksilverIndicatiorShader(), DepthsConfitions.Alert.QuicksilverIndicator, ShaderLayer.Alert);
+			Main.Chroma.RegisterShader(new ChasmesBeastShader(), DepthsConfitions.Boss.ShalestoneBeast, ShaderLayer.Boss);
+			Main.Chroma.RegisterShader(new ChasmeShader(), DepthsConfitions.Boss.Chasme, ShaderLayer.Boss);
 
 			mod = this;
 			livingFireBlockList = new List<int> { 336, 340, 341, 342, 343, 344, ModContent.TileType<Tiles.LivingFog>() };
@@ -108,7 +125,10 @@ namespace TheDepths
 			IL_UIWorldCreation.SetupGamepadPoints += DepthsSelectionMenu.ILSetUpGamepadPoints;
 			IL_UIWorldCreation.ShowOptionDescription += DepthsSelectionMenu.ILShowOptionDescription;
 			On_UIWorldCreation.SetDefaultOptions += DepthsSelectionMenu.OnSetDefaultOptions;
-			On_UIWorldListItem.DrawSelf += WorldIconOverlay;
+			On_UIWorldListItem.ctor += WorldIconOverlay;
+			IL_AchievementAdvisor.Initialize += EditAchievementRecomendations;
+			On_AchievementAdvisorCard.IsAchievableInWorld += IsAchieveableInConfectionWorld;
+			On_AchievementsHelper.HandleSpecialEvent += PreventHotInHereFromObtaining;
 
 			//Item edits
 			On_Player.ItemCheck_CatchCritters += On_Player_ItemCheck_CatchCritters;
@@ -120,6 +140,8 @@ namespace TheDepths
 			IL_Player.GetAnglerReward_MainReward += HotRodReplacer;
 			On_Player.RemoveAnglerAccOptionsFromRewardPool += On_Player_RemoveAnglerAccOptionsFromRewardPool;
 			On_Item.CanShimmer += On_Item_CanShimmer;
+			IL_Player.DemonConch += DemonConchPreventer;
+			IL_Recipe.UpdateWhichItemsAreMaterials += RemoveMaterialFromUnusedRecipeGroups;
 
 			//other
 			On_Main.UpdateAudio_DecideOnTOWMusic += Main_UpdateAudio_DecideOnTOWMusic;
@@ -134,6 +156,7 @@ namespace TheDepths
 			IL_Main.DrawInfoAccs += DepthMeterTextChanger;
 			On_Player.DropTombstone += On_Player_DropTombstone;
 			IL_Liquid.SettleWaterAt += IL_Liquid_SettleWaterAt;
+			On_Main.UpdateTime_StartDay += CycleDepthsBool;
 
 			//credits
 			IL_CreditsRollComposer.FillSegments += FillCreditSegmentILEdit;
@@ -145,19 +168,14 @@ namespace TheDepths
 			Detour_OnKill = new Hook(NPCLoader_OnKill, On_NPCLoader_OnKill);
 			if (Detour_OnKill != null)
 				Detour_OnKill.Apply();
+
+			//Edit the init BEFORE calling
+			Main.AchievementAdvisor.SetCards(new List<AchievementAdvisorCard>());
+			Main.AchievementAdvisor.Initialize();
 		}
 
 		public override void Unload()
 		{
-			GroundSlamKeybind = null;
-			TheDepthsWindUtilities.Unload();
-
-			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
-
-			fractalProfiles.Remove(ModContent.ItemType<Terminex>());
-
-			livingFireBlockList = null;
-
 			//Enviroment
 			IL_Player.UpdateBiomes -= HeatRemoval;
 			IL_Main.DrawBG -= UWBGInsert;
@@ -170,7 +188,10 @@ namespace TheDepths
 
 			//UI edits
 			IL_UIGenProgressBar.DrawSelf -= ProgressBarEdit;
-			On_UIWorldListItem.DrawSelf -= WorldIconOverlay;
+			On_UIWorldListItem.ctor -= WorldIconOverlay;
+			IL_AchievementAdvisor.Initialize -= EditAchievementRecomendations;
+			On_AchievementAdvisorCard.IsAchievableInWorld -= IsAchieveableInConfectionWorld;
+			On_AchievementsHelper.HandleSpecialEvent -= PreventHotInHereFromObtaining;
 
 			//Item edits
 			On_Player.ItemCheck_CatchCritters -= On_Player_ItemCheck_CatchCritters;
@@ -182,6 +203,8 @@ namespace TheDepths
 			IL_Player.GetAnglerReward_MainReward -= HotRodReplacer;
 			On_Player.RemoveAnglerAccOptionsFromRewardPool -= On_Player_RemoveAnglerAccOptionsFromRewardPool;
 			On_Item.CanShimmer -= On_Item_CanShimmer;
+			IL_Player.DemonConch -= DemonConchPreventer;
+			IL_Recipe.UpdateWhichItemsAreMaterials -= RemoveMaterialFromUnusedRecipeGroups;
 
 			//other
 			On_Main.UpdateAudio_DecideOnTOWMusic -= Main_UpdateAudio_DecideOnTOWMusic;
@@ -196,6 +219,7 @@ namespace TheDepths
 			IL_Main.DrawInfoAccs -= DepthMeterTextChanger;
 			On_Player.DropTombstone -= On_Player_DropTombstone;
 			IL_Liquid.SettleWaterAt -= IL_Liquid_SettleWaterAt;
+			On_Main.UpdateTime_StartDay -= CycleDepthsBool;
 
 			//credits
 			IL_CreditsRollComposer.FillSegments -= FillCreditSegmentILEdit;
@@ -205,6 +229,16 @@ namespace TheDepths
 
 			if (Detour_OnKill != null)
 				Detour_OnKill.Dispose();
+
+			//Edit the init BEFORE calling
+			Main.AchievementAdvisor.SetCards(new List<AchievementAdvisorCard>());
+			Main.AchievementAdvisor.Initialize();
+
+			GroundSlamKeybind = null;
+			TheDepthsReflectionUtils.Unload();
+			livingFireBlockList = null;
+			var fractalProfiles = (Dictionary<int, FinalFractalProfile>)typeof(FinalFractalHelper).GetField("_fractalProfiles", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+			fractalProfiles.Remove(ModContent.ItemType<Terminex>());
 		}
 
 		public override void PostSetupContent()
@@ -269,6 +303,129 @@ namespace TheDepths
 				_ => throw new Exception("TheDepths: Unknown mod call, make sure you are calling the right method/field with the right parameters!")
 			};
 		}
+
+
+		#region RecipeGroupMaterialTextPatcher
+		private void RemoveMaterialFromUnusedRecipeGroups(ILContext il)
+		{
+			ILCursor c = new(il);
+			ILLabel IL_0099 = null;
+			int groupItem_varNum = -1;
+			int recipeGround_varNum = -1;
+
+			c.GotoNext(MoveType.After, i => i.MatchLdfld<RecipeGroup>("ValidItems"), i => i.MatchCallvirt(out _), i => i.MatchStloc(out _), i => i.MatchBr(out IL_0099), i => i.MatchLdloca(out recipeGround_varNum), i => i.MatchCall(out _), i => i.MatchStloc(out groupItem_varNum));
+			c.EmitLdloca(groupItem_varNum);
+			c.EmitLdloca(recipeGround_varNum);
+			c.EmitDelegate((ref int item, ref RecipeGroup value) =>
+			{
+				bool isActuallyUsed = false;
+				for (int i = 0; i < Recipe.numRecipes; i++)
+				{
+					if (Main.recipe[i].HasRecipeGroup(value))
+					{
+						isActuallyUsed = true;
+						break;
+					}
+				}
+				if (isActuallyUsed)
+				{
+					ItemID.Sets.IsAMaterial[item] = true;
+				}
+			});
+			c.EmitBr(IL_0099);
+		}
+		#endregion
+
+		#region DemonConchEdit
+		private void DemonConchPreventer(ILContext il)
+		{
+			ILCursor c = new(il);
+			int initialGottenPosition_varNum = -1;
+
+			c.GotoNext(MoveType.Before, i => i.MatchBrfalse(out _), i => i.MatchLdloc(out initialGottenPosition_varNum), i => i.MatchStloc(out _), i => i.MatchLdarg(0), i => i.MatchLdloc(out _), i => i.MatchLdcI4(7), i => i.MatchLdcI4(0), i => i.MatchCall<Player>("Teleport"));
+			c.EmitLdloc(initialGottenPosition_varNum);
+			c.EmitDelegate((bool origCanSpawn, Vector2 vector) =>
+			{
+				bool canSpawn = origCanSpawn;
+				if (TheDepthsWorldGen.TileInDepths((int)(vector.X / 16)))
+				{
+					canSpawn = false;
+				}
+				return canSpawn;
+			});
+		}
+		#endregion
+
+		#region DrunkSeedDepthsCheckCycle
+		private void CycleDepthsBool(On_Main.orig_UpdateTime_StartDay orig, ref bool stopEvents)
+		{
+			if (Main.drunkWorld && Main.netMode != NetmodeID.MultiplayerClient)
+			{
+				TheDepthsWorldGen.isWorldDepths = !TheDepthsWorldGen.isWorldDepths;
+			}
+			orig.Invoke(ref stopEvents);
+		}
+		#endregion
+
+		#region AchievementEdits
+		private void PreventHotInHereFromObtaining(On_AchievementsHelper.orig_HandleSpecialEvent orig, Player player, int eventID)
+		{
+			if (eventID != 14 || !player.InModBiome<DepthsBiome>())
+			{
+				orig.Invoke(player, eventID);
+			}
+		}
+
+		private bool IsAchieveableInConfectionWorld(On_AchievementAdvisorCard.orig_IsAchievableInWorld orig, AchievementAdvisorCard self)
+		{
+			if (self.achievement.Name == ModContent.GetInstance<MysteriesOfTheDark>().Achievement.Name || self.achievement.Name == ModContent.GetInstance<PickaxeOfPoison>().Achievement.Name || self.achievement.Name == ModContent.GetInstance<HeartBreaker>().Achievement.Name)
+			{
+				return TheDepthsWorldGen.isWorldDepths;
+			}
+			else if (self.achievement.Name == "ITS_GETTING_HOT_IN_HERE" || self.achievement.Name == "MINER_FOR_FIRE" || self.achievement.Name == "STILL_HUNGRY")
+			{
+				return !TheDepthsWorldGen.isWorldDepths;
+			}
+			return orig.Invoke(self);
+		}
+
+		private void EditAchievementRecomendations(ILContext il)
+		{
+			ILCursor c = new ILCursor(il);
+			int achievementIndex_varNum = -1;
+
+			c.GotoNext(MoveType.Before, i => i.MatchLdarg(0), i => i.MatchLdfld<AchievementAdvisor>("_cards"), i => i.MatchCall<Main>("get_Achievements"), i => i.MatchLdstr("ITS_GETTING_HOT_IN_HERE"), i => i.MatchCallvirt<AchievementManager>("GetAchievement"), i => i.MatchLdloc(out achievementIndex_varNum));
+			c.EmitLdloca(achievementIndex_varNum);
+			c.EmitLdarga(0);
+			c.EmitDelegate((ref float num, ref AchievementAdvisor self) =>
+			{
+				List<AchievementAdvisorCard> _cards = self.GetCards();
+				_cards.Add(new AchievementAdvisorCard(ModContent.GetInstance<MysteriesOfTheDark>().Achievement, num++));
+				self.SetCards(_cards);
+			});
+
+			c.GotoNext(MoveType.Before, i => i.MatchLdarg(0), i => i.MatchLdfld<AchievementAdvisor>("_cards"), i => i.MatchCall<Main>("get_Achievements"), i => i.MatchLdstr("MINER_FOR_FIRE"), i => i.MatchCallvirt<AchievementManager>("GetAchievement"), i => i.MatchLdloc(out achievementIndex_varNum));
+			c.EmitLdloca(achievementIndex_varNum);
+			c.EmitLdarga(0);
+			c.EmitDelegate((ref float num, ref AchievementAdvisor self) =>
+			{
+				List<AchievementAdvisorCard> _cards = self.GetCards();
+				_cards.Add(new AchievementAdvisorCard(ModContent.GetInstance<PickaxeOfPoison>().Achievement, num++));
+				self.SetCards(_cards);
+			});
+
+			c.GotoNext(MoveType.Before, i => i.MatchLdarg(0), i => i.MatchLdfld<AchievementAdvisor>("_cards"), i => i.MatchCall<Main>("get_Achievements"), i => i.MatchLdstr("STILL_HUNGRY"), i => i.MatchCallvirt<AchievementManager>("GetAchievement"), i => i.MatchLdloc(out achievementIndex_varNum));
+			c.EmitLdloca(achievementIndex_varNum);
+			c.EmitLdarga(0);
+			c.EmitDelegate((ref float num, ref AchievementAdvisor self) =>
+			{
+				List<AchievementAdvisorCard> _cards = self.GetCards();
+				_cards.Add(new AchievementAdvisorCard(ModContent.GetInstance<HeartBreaker>().Achievement, num++));
+				self.SetCards(_cards);
+			});
+		}
+		#endregion
+
 
 		#region LavaReplacerWorldGen
 		private void IL_Liquid_SettleWaterAt(ILContext il)
@@ -608,6 +765,7 @@ namespace TheDepths
 		#endregion
 
 		#region UnderworldandTimSpawningILedits
+		//not used because I want to thank MonoMod for having ILedits being garbage collected
 		private void NPCSpawningEdit(ILContext il)
 		{
 			ILCursor c = new ILCursor(il);
@@ -1061,15 +1219,14 @@ namespace TheDepths
 		#endregion
 
 		#region NEWWorldIcondetour
-		private void WorldIconOverlay(On_UIWorldListItem.orig_DrawSelf orig, UIWorldListItem self, SpriteBatch spriteBatch)
+		private void WorldIconOverlay(On_UIWorldListItem.orig_ctor orig, UIWorldListItem self, WorldFileData data, int orderInList, bool canBePlayed)
 		{
-			orig.Invoke(self, spriteBatch);
-			bool data = self.Data.TryGetHeaderData(ModContent.GetInstance<TheDepthsWorldGen>(), out var _data);
+			orig.Invoke(self, data, orderInList, canBePlayed);
+			bool depthsData = self.Data.TryGetHeaderData(ModContent.GetInstance<TheDepthsWorldGen>(), out var _data);
 			UIElement WorldIcon = (UIElement)typeof(UIWorldListItem).GetField("_worldIcon", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
 			WorldFileData Data = (WorldFileData)typeof(AWorldListItem).GetField("_data", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(self);
-			WorldIcon.RemoveAllChildren();
 			#region UnopenedWorldIcon
-			if (!data)
+			if (!depthsData)
 			{
 				if (!Data.DrunkWorld && !Data.DefeatedMoonlord)
 				{
@@ -1663,60 +1820,5 @@ namespace TheDepths
 			c.EmitDelegate<Func<bool, bool>>(currentBool => currentBool && !Worldgen.TheDepthsWorldGen.InDepths(Main.LocalPlayer)); //Adds ontop of the bool with our own
 		}
 		#endregion
-	}
-
-	public static class TheDepthsWindUtilities
-	{
-		public static void Load()
-		{
-			_addSpecialPointSpecialPositions = typeof(Terraria.GameContent.Drawing.TileDrawing).GetField("_specialPositions", BindingFlags.NonPublic | BindingFlags.Instance);
-			_addSpecialPointSpecialsCount = typeof(Terraria.GameContent.Drawing.TileDrawing).GetField("_specialsCount", BindingFlags.NonPublic | BindingFlags.Instance);
-			_addVineRootPositions = typeof(Terraria.GameContent.Drawing.TileDrawing).GetField("_vineRootsPositions", BindingFlags.NonPublic | BindingFlags.Instance);
-		}
-
-		public static void Unload()
-		{
-			_addSpecialPointSpecialPositions = null;
-			_addSpecialPointSpecialsCount = null;
-			_addVineRootPositions = null;
-		}
-
-		public static FieldInfo _addSpecialPointSpecialPositions;
-		public static FieldInfo _addSpecialPointSpecialsCount;
-		public static FieldInfo _addVineRootPositions;
-
-		public static void AddSpecialPoint(this Terraria.GameContent.Drawing.TileDrawing tileDrawing, int x, int y, int type)
-		{
-			if (_addSpecialPointSpecialPositions.GetValue(tileDrawing) is Point[][] _specialPositions)
-			{
-				if (_addSpecialPointSpecialsCount.GetValue(tileDrawing) is int[] _specialsCount)
-				{
-					_specialPositions[type][_specialsCount[type]++] = new Point(x, y);
-				}
-			}
-		}
-
-		public static void CrawlToTopOfVineAndAddSpecialPoint(this Terraria.GameContent.Drawing.TileDrawing tileDrawing, int j, int i)
-		{
-			if (_addVineRootPositions.GetValue(tileDrawing) is List<Point> _vineRootsPositions)
-			{
-				int y = j;
-				for (int num = j - 1; num > 0; num--)
-				{
-					Tile tile = Main.tile[i, num];
-					if (WorldGen.SolidTile(i, num) || !tile.HasTile)
-					{
-						y = num + 1;
-						break;
-					}
-				}
-				Point item = new(i, y);
-				if (!_vineRootsPositions.Contains(item))
-				{
-					_vineRootsPositions.Add(item);
-					Main.instance.TilesRenderer.AddSpecialPoint(i, y, 6);
-				}
-			}
-		}
 	}
 }
