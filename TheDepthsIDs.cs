@@ -49,6 +49,8 @@ namespace TheDepths {
 				public static bool[] LavaSpongeOnlyItem = ItemID.Sets.Factory.CreateBoolSet(); //For Modders
 
 				public static bool[] LavaFishingHookOnlyItem = ItemID.Sets.Factory.CreateBoolSet(ItemID.LavaproofTackleBag);
+
+				public static bool[] ImpStaffOnlyItem = ItemID.Sets.Factory.CreateBoolSet(); //For Modders
 			}
 
 			/// <summary>

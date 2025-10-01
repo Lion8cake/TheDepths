@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheDepths.Buffs;
 using TheDepths.Dusts;
+using TheDepths.Items.Accessories;
 using TheDepths.NPCs;
 using TheDepths.Tiles;
 
@@ -248,18 +249,19 @@ namespace TheDepths.Liquids
 
 		public override void OnPlayerCollision(Player player)
 		{
-			int AmuletsActive = player.GetModPlayer<TheDepthsPlayer>().GetActiveAmulets();
-			if (player.GetModPlayer<TheDepthsPlayer>().AmuletTimer <= 60 * 4 * AmuletsActive && (AmuletsActive > 0) && !player.GetModPlayer<TheDepthsPlayer>().cSkin)
+			TheDepthsPlayer modPlayer = player.GetModPlayer<TheDepthsPlayer>();
+			int AmuletsActive = modPlayer.GetActiveAmulets();
+			if (modPlayer.AmuletTimer <= 60 * 4 * AmuletsActive && (AmuletsActive > 0) && !modPlayer.cSkin)
 			{
-				player.GetModPlayer<TheDepthsPlayer>().AmuletTimer--;
+				modPlayer.AmuletTimer--;
 			}
 
 			if (Main.remixWorld)
 			{
-				player.GetModPlayer<TheDepthsPlayer>().quicksilverWet = true;
-				if (player.GetModPlayer<TheDepthsPlayer>().AmuletTimer == 0)
+				modPlayer.quicksilverWet = true;
+				if (modPlayer.AmuletTimer <= 0)
 				{
-					if (player.GetModPlayer<TheDepthsPlayer>().NightwoodBuff == true)
+					if (modPlayer.NightwoodBuff == true)
 					{
 						player.AddBuff(ModContent.BuffType<MercuryBoiling>(), (int)(60 * 3.5), false, false);
 					}
@@ -271,7 +273,7 @@ namespace TheDepths.Liquids
 			}
 			else
 			{
-				if (player.GetModPlayer<TheDepthsPlayer>().NightwoodBuff == true)
+				if (modPlayer.NightwoodBuff == true)
 				{
 					player.AddBuff(ModContent.BuffType<MercuryFooting>(), 60 * 60, false, false);
 				}
@@ -279,12 +281,44 @@ namespace TheDepths.Liquids
 				{
 					player.AddBuff(ModContent.BuffType<MercuryFooting>(), 60 * 30, false, false);
 				}
-				player.GetModPlayer<TheDepthsPlayer>().quicksilverWet = true;
-				if (player.GetModPlayer<TheDepthsPlayer>().AmuletTimer == 0)
+				modPlayer.quicksilverWet = true;
+				if (modPlayer.AmuletTimer <= 0)
 				{
-					player.GetModPlayer<TheDepthsPlayer>().QuicksilverTimer++;
+					modPlayer.QuicksilverTimer++;
 				}
 			}
+
+			if (modPlayer.stoneRose)
+			{
+				if (modPlayer.QuicksilverTimer >= 60 * 4 && modPlayer.AmuletTimer <= 0)
+				{
+					if (modPlayer.NightwoodBuff == true)
+					{
+						player.AddBuff(ModContent.BuffType<MercuryBoiling>(), 60 * 3, false, false);
+					}
+					else
+					{
+						player.AddBuff(ModContent.BuffType<MercuryBoiling>(), 60 * 7, false, false);
+					}
+					modPlayer.QuicksilverTimer = 60 * 4;
+				}
+			}
+			else
+			{
+				if (modPlayer.QuicksilverTimer >= 60 * 2 && modPlayer.AmuletTimer <= 0)
+				{
+					if (modPlayer.NightwoodBuff == true)
+					{
+						player.AddBuff(ModContent.BuffType<MercuryBoiling>(), 60 * 3, false, false);
+					}
+					else
+					{
+						player.AddBuff(ModContent.BuffType<MercuryBoiling>(), 60 * 7, false, false);
+					}
+					modPlayer.QuicksilverTimer = 60 * 2;
+				}
+			}
+			Main.NewText(modPlayer.QuicksilverTimer);
 		}
 
 		public override void OnNPCCollision(NPC npc)

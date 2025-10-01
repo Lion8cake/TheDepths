@@ -89,8 +89,9 @@ namespace TheDepths.Projectiles
 						Projectile.alpha -= 20;
 					}
 				}
-				Projectile.position = player.position - new Vector2(Projectile.width / 2, -(player.height / 2 + 20));
+				Projectile.position = player.position - new Vector2(Projectile.width / 2, -(player.height / 2 + (10 * -(player.gravDir - 2)) + 10) * player.gravDir);
 			}
+			Projectile.rotation = player.gravDir == -1 ? MathHelper.Pi : 0f;
 			if ((player.afkCounter == 0 && Projectile.ai[0] == 1f) || (!player.GetModPlayer<TheDepthsPlayer>().isSlamming && Projectile.ai[0] == 0f))
 			{
 				if (Projectile.alpha <= 255)

@@ -2074,24 +2074,28 @@ Mods: {
 		DepthsBiome: Биом Глубин
 
 		Achievements: {
-			HeartSmasher: {
+			HeartBreaker: {
 				Name: Разрушитель сердца
 				Description: Победите Чазма и её сланцевую гигантку - создательницу глубин и руководительницу геомантов.
+				FriendlyName: "{$Mods.TheDepths.Achievements.HeartBreaker.Name}"
 			}
 
 			PickaxeOfPoison: {
 				Name: Кирка Яда
 				Description: Создайте ртутную кирку, используя самую смертоносную жидкость.
+				FriendlyName: "{$Mods.TheDepths.Achievements.PickaxeOfPoison.Name}"
 			}
 
 			MysteriesOfTheDark: {
 				Name: Тайны темноты
 				Description: Отправьтесь достаточно глубоко, чтобы попасть в Глубины.
+				FriendlyName: "{$Mods.TheDepths.Achievements.MysteriesOfTheDark.Name}"
 			}
 
 			MercuryAngler: {
 				Name: Ртутный чёрт
 				Description: Бросьте приманку в бассейн с ртутью, чтобы получить ртутноустойчивую морскую добычу
+				FriendlyName: "{$Mods.TheDepths.Achievements.MercuryAngler.Name}"
 			}
 		}
 

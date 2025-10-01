@@ -1,3 +1,26 @@
+v1.0.5.0
+=========================
+Added Mysteries of the Dark achievement
+Added Pickaxe of Poison achievement
+Added Heart Smasher achievement
+Added Mercury Angler achievement
+Added chroma keyboard support for the depths biomes and bosses
+Added recipe group for the imp staff (living shadow staff can now be used to craft items that require the imp staff)
+groundslamming can now be interupted by dashing
+Fixed being able to obtain "it's getting hot in here" in depths worlds
+Fixed the depths tag not being cycled every morning in drunk seeds similarly to the evil tag
+Fixed being able to catch normal fish in quicksilver is you don't have any quicksilver proof accessories equiped
+Fixed shalestone hand vanity not being reset, causing it to forever randomly pat the player on the head
+Fixed shalestone hand not being flipped in reverse gravity
+Fixed shalestone hand not causing dusts to be made in reverse gravity
+Fixed the demon conch and shalestone conch to now properly fail if their biome's requirements aren't met
+Fixed the timer that inflicts mercury poisoning instaniously returning to 0 rather than slowly going back down to 0
+Fixed the depths removing world select icon overlays
+Fixed amalgam amulet and it's upgrades preventing quicksilver damage forever rather than for a set duration
+Fixed items mentioned being "materials" despite crafting nothing
+Fixed Fargo's best of both world's config showing up constantly rather than only when FBOBW was loaded
+Fixed music in the depths' biome now allowing for tracks such as slime rain and town day/night to override the default depths track
+
 v1.0.4.0
 =========================
 Now uses the ModLiquid Library mod as a dependancy

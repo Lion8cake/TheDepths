@@ -31,6 +31,7 @@ namespace TheDepths
 		public static RecipeGroup BottomlessLavaBucketGroup;
 		public static RecipeGroup LavaSpongeGroup;
         public static RecipeGroup LavaFishingHookGroup;
+		public static RecipeGroup ImpStaffHookGroup;
 
 		public override void Unload()
         {
@@ -55,6 +56,7 @@ namespace TheDepths
 			BottomlessLavaBucketGroup = null;
 			LavaSpongeGroup = null;
 			LavaFishingHookGroup = null;
+            ImpStaffHookGroup = null;
 		}
 
         public override void AddRecipeGroups()
@@ -106,6 +108,8 @@ namespace TheDepths
 			RecipeGroup.RegisterGroup("LavaAbsorbantSponge", LavaSpongeGroup);
 			LavaFishingHookGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.LavaFishingHook)}", ItemID.LavaFishingHook, ModContent.ItemType<QuicksilverproofFishingHook>());
 			RecipeGroup.RegisterGroup("LavaFishingHook", LavaFishingHookGroup);
+			ImpStaffHookGroup = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} {Lang.GetItemNameValue(ItemID.ImpStaff)}", ItemID.ImpStaff, ModContent.ItemType<LivingShadowStaff>());
+			RecipeGroup.RegisterGroup($"{Lang.GetItemNameValue(ItemID.ImpStaff)}", ImpStaffHookGroup);
 		}
 
         public override void PostAddRecipes()
@@ -217,6 +221,11 @@ namespace TheDepths
 				{
 					recipe.AddRecipeGroup("LavaFishingHook", LPFH.stack);
 					recipe.RemoveIngredient(LPFH);
+				}
+				if (recipe.TryGetIngredient(ItemID.ImpStaff, out var IS) && !TheDepthsIDs.Sets.RecipeBlacklist.ImpStaffOnlyItem[recipe.createItem.type])
+				{
+					recipe.AddRecipeGroup($"{Lang.GetItemNameValue(ItemID.ImpStaff)}", IS.stack);
+					recipe.RemoveIngredient(IS);
 				}
 			}
         }

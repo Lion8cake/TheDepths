@@ -11,8 +11,6 @@ namespace TheDepths.ModSupport
 {
     public class DepthsModCalling : ModSystem
     {
-		public static readonly Mod Achievements = ModLoader.TryGetMod("TMLAchievements", out Mod obtainedMod) ? obtainedMod : null;
-
 		public static readonly Mod? FargoSeeds = ModLoader.TryGetMod("FargoSeeds", out Mod obtainedMod) ? obtainedMod : null;
 
 		public static readonly Mod? BiomeLavaMod = ModLoader.TryGetMod("BiomeLava", out Mod obtainedMod) ? obtainedMod : null;
@@ -32,22 +30,7 @@ namespace TheDepths.ModSupport
 
 		public override void PostSetupContent()
 		{
-			AchievementSetup();
-
 			BossChecklistSetup();
-		}
-
-		private void AchievementSetup()
-		{
-			if (Achievements == null)
-			{
-				return;
-			}
-
-			Achievements.Call("AddAchievement", ModContent.GetInstance<TheDepths>(), "MercuryAngler", AchievementCategory.Challenger, "TheDepths/Assets/MercuryAngler", null, false, false, 8f, new string[] { "Event_FishingInQuicksilver" });
-			Achievements.Call("AddAchievement", ModContent.GetInstance<TheDepths>(), "MysteriesOfTheDark", AchievementCategory.Explorer, "TheDepths/Assets/MysteriesOfTheDark", null, false, false, 8f, new string[] { "Event_WalkedIntoTheDepths" });
-			Achievements.Call("AddAchievement", ModContent.GetInstance<TheDepths>(), "PickaxeOfPoison", AchievementCategory.Collector, "TheDepths/Assets/PickaxeOfPoison", null, false, false, 8f, new string[] { "Craft_" + ModContent.ItemType<Items.Weapons.MercuryPickaxe>() });
-			Achievements.Call("AddAchievement", ModContent.GetInstance<TheDepths>(), "HeartSmasher", AchievementCategory.Slayer, "TheDepths/Assets/HeartBreaker", null, false, false, 8f, new string[] { "Kill_" + ModContent.NPCType<NPCs.Chasme.ChasmeHeart>() });
 		}
 
 		private void BossChecklistSetup()

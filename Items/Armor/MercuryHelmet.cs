@@ -1,11 +1,9 @@
-using TheDepths.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using TheDepths.Buffs;
 using Terraria.GameContent.Creative;
 using Terraria.Localization;
-using TheDepths.Items.Weapons;
 
 namespace TheDepths.Items.Armor
 {
@@ -35,7 +33,7 @@ namespace TheDepths.Items.Armor
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("Mods.TheDepths.SetBonus.MercuryHelmet");
 			player.statDefense += 3;
-			if (Main.player[Main.myPlayer].GetModPlayer<TheDepthsPlayer>().QuicksilverTimer == 0)
+			if (Main.player[Main.myPlayer].GetModPlayer<TheDepthsPlayer>().QuicksilverTimer <= 0)
 			{
 				player.buffImmune[ModContent.BuffType<MercuryBoiling>()] = true;
 				player.buffImmune[ModContent.BuffType<MercuryPoisoning>()] = true;

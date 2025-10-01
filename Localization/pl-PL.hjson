@@ -2070,24 +2070,28 @@ Mods: {
 		DepthsBiome: Głębiny
 
 		Achievements: {
-			HeartSmasher: {
+			HeartBreaker: {
 				Name: Niszczyciel serc
 				Description: Pokonaj Chasme i jej łupkowego giganta. Stwórczyni Głębin i przywódca Geomantów.
+				FriendlyName: "{$Mods.TheDepths.Achievements.HeartBreaker.Name}"
 			}
 
 			PickaxeOfPoison: {
 				Name: Trujący górnik
 				Description: Stwórz rtęciowy kilof z najśmiertelniejszych cieczy.
+				FriendlyName: "{$Mods.TheDepths.Achievements.PickaxeOfPoison.Name}"
 			}
 
 			MysteriesOfTheDark: {
 				Name: Tajemnice ciemności
 				Description: Zejdź tak nisko, żeby dotrzeć do głębin.
+				FriendlyName: "{$Mods.TheDepths.Achievements.MysteriesOfTheDark.Name}"
 			}
 
 			MercuryAngler: {
 				Name: Rtęciowy rybak
 				Description: Wrzuć przynętę do rtęci, aby znaleźć życie odporne na rtęć.
+				FriendlyName: "{$Mods.TheDepths.Achievements.MercuryAngler.Name}"
 			}
 		}
 
