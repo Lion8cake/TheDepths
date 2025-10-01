@@ -9,7 +9,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TheDepths.Buffs;
 using TheDepths.Dusts;
-using TheDepths.Items.Accessories;
 using TheDepths.NPCs;
 using TheDepths.Tiles;
 
@@ -249,6 +248,7 @@ namespace TheDepths.Liquids
 
 		public override void OnPlayerCollision(Player player)
 		{
+
 			TheDepthsPlayer modPlayer = player.GetModPlayer<TheDepthsPlayer>();
 			int AmuletsActive = modPlayer.GetActiveAmulets();
 			if (modPlayer.AmuletTimer <= 60 * 4 * AmuletsActive && (AmuletsActive > 0) && !modPlayer.cSkin)
@@ -281,6 +281,7 @@ namespace TheDepths.Liquids
 				{
 					player.AddBuff(ModContent.BuffType<MercuryFooting>(), 60 * 30, false, false);
 				}
+
 				modPlayer.quicksilverWet = true;
 				if (modPlayer.AmuletTimer <= 0)
 				{
@@ -318,7 +319,6 @@ namespace TheDepths.Liquids
 					modPlayer.QuicksilverTimer = 60 * 2;
 				}
 			}
-			Main.NewText(modPlayer.QuicksilverTimer);
 		}
 
 		public override void OnNPCCollision(NPC npc)

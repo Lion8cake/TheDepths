@@ -326,6 +326,7 @@ namespace TheDepths
                     {
 						itemDrop = 0;
                     }
+
 					GetInstance<MercuryAngler>().FishingInQuicksilver.Complete();
 				}
                 else 

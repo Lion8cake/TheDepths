@@ -304,6 +304,7 @@ namespace TheDepths
 			};
 		}
 
+
 		#region RecipeGroupMaterialTextPatcher
 		private void RemoveMaterialFromUnusedRecipeGroups(ILContext il)
 		{
@@ -424,6 +425,7 @@ namespace TheDepths
 			});
 		}
 		#endregion
+
 
 		#region LavaReplacerWorldGen
 		private void IL_Liquid_SettleWaterAt(ILContext il)
