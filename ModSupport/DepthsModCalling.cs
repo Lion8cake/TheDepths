@@ -25,7 +25,7 @@ namespace TheDepths.ModSupport
 		/// </summary>
 		public static void UpdateFargoBoBW()
 		{
-			FargoBoBW = ModContent.GetInstance<FargosBoBWConfig>().BothCores && FargoSeeds != null;
+			FargoBoBW = FargoSeeds != null && ModContent.GetInstance<FargosBoBWConfig>().BothCores;
 		}
 
 		public override void PostSetupContent()

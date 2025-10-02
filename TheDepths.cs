@@ -92,13 +92,6 @@ namespace TheDepths
 
 			fractalProfiles.Add(ModContent.ItemType<Terminex>(), new FinalFractalProfile(70f, new Color(75, 103, 214))); // new Color(119, 135, 162)));
 
-			Main.Chroma.RegisterShader(new DepthsShader(), DepthsConfitions.InDepthsMenu, ShaderLayer.Menu);
-			Main.Chroma.RegisterShader(new CavernShader(new Color(156, 178, 184), new Color(25, 25, 25), 0.5f), DepthsConfitions.Depth.Mercury, ShaderLayer.Biome);
-			Main.Chroma.RegisterShader(new DepthsShader(), DepthsConfitions.Depth.Depths, ShaderLayer.Biome);
-			Main.Chroma.RegisterShader(new QuicksilverIndicatiorShader(), DepthsConfitions.Alert.QuicksilverIndicator, ShaderLayer.Alert);
-			Main.Chroma.RegisterShader(new ChasmesBeastShader(), DepthsConfitions.Boss.ShalestoneBeast, ShaderLayer.Boss);
-			Main.Chroma.RegisterShader(new ChasmeShader(), DepthsConfitions.Boss.Chasme, ShaderLayer.Boss);
-
 			mod = this;
 			livingFireBlockList = new List<int> { 336, 340, 341, 342, 343, 344, ModContent.TileType<Tiles.LivingFog>() };
 
@@ -106,6 +99,12 @@ namespace TheDepths
 			{
 				DefaultRenderTargetOverrider.Patch();
 				EquipLoader.AddEquipTexture(this, "TheDepths/Items/Armor/OnyxRobe_Legs", EquipType.Legs, name: "OnyxRobe_Legs");
+				Main.Chroma.RegisterShader(new DepthsShader(), DepthsConditions.InDepthsMenu, ShaderLayer.Menu);
+				Main.Chroma.RegisterShader(new CavernShader(new Color(156, 178, 184), new Color(25, 25, 25), 0.5f), DepthsConditions.Depth.Mercury, ShaderLayer.Biome);
+				Main.Chroma.RegisterShader(new DepthsShader(), DepthsConditions.Depth.Depths, ShaderLayer.Biome);
+				Main.Chroma.RegisterShader(new QuicksilverIndicatiorShader(), DepthsConditions.Alert.QuicksilverIndicator, ShaderLayer.Alert);
+				Main.Chroma.RegisterShader(new ChasmesBeastShader(), DepthsConditions.Boss.ShalestoneBeast, ShaderLayer.Boss);
+				Main.Chroma.RegisterShader(new ChasmeShader(), DepthsConditions.Boss.Chasme, ShaderLayer.Boss);
 			}
 
 			//Enviroment
@@ -170,8 +169,11 @@ namespace TheDepths
 				Detour_OnKill.Apply();
 
 			//Edit the init BEFORE calling
-			Main.AchievementAdvisor.SetCards(new List<AchievementAdvisorCard>());
-			Main.AchievementAdvisor.Initialize();
+			if (!Main.dedServ)
+			{
+				Main.AchievementAdvisor.SetCards(new List<AchievementAdvisorCard>());
+				Main.AchievementAdvisor.Initialize();
+			}
 		}
 
 		public override void Unload()
@@ -231,8 +233,11 @@ namespace TheDepths
 				Detour_OnKill.Dispose();
 
 			//Edit the init BEFORE calling
-			Main.AchievementAdvisor.SetCards(new List<AchievementAdvisorCard>());
-			Main.AchievementAdvisor.Initialize();
+			if (!Main.dedServ)
+			{
+				Main.AchievementAdvisor.SetCards(new List<AchievementAdvisorCard>());
+				Main.AchievementAdvisor.Initialize();
+			}
 
 			GroundSlamKeybind = null;
 			TheDepthsReflectionUtils.Unload();
