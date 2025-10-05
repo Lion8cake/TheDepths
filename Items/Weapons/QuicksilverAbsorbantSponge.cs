@@ -1,12 +1,8 @@
-using Microsoft.Xna.Framework;
+using ModLiquidLib.ID;
 using ModLiquidLib.ModLoader;
-using System.Security.Cryptography;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using TheDepths.Liquids;
 
@@ -16,6 +12,12 @@ namespace TheDepths.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			ItemID.Sets.AlsoABuildingItem[Type] = true; //Unused, but useful to have here for both other mods and future game updates
+			ItemID.Sets.DuplicationMenuToolsFilter[Type] = true;
+
+			//Unlike buckets, sponges have extra functionality to allow the removing and adding of sponge items to liquids
+			LiquidID_TLmod.Sets.CanBeAbsorbedBy[LiquidLoader.LiquidType<Quicksilver>()].Add(Type);
+
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -30,49 +32,6 @@ namespace TheDepths.Items.Weapons
 			Item.rare = ItemRarityID.Lime;
 			Item.value = Item.sellPrice(0, 10);
 			Item.tileBoost += 2;
-		}
-
-		public override void HoldItem(Player player)
-		{
-			Tile tile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
-			if (player.IsInTileInteractionRange(Player.tileTargetX, Player.tileTargetY, TileReachCheckSettings.Simple))
-			{
-				if (player.itemTime == 0 && player.itemAnimation > 0 && player.controlUseItem)
-				{
-					if (tile.HasUnactuatedTile)
-					{
-						bool[] tileSolid = Main.tileSolid;
-						if (tileSolid[tile.TileType])
-						{
-							bool[] tileSolidTop = Main.tileSolidTop;
-							if (!tileSolidTop[tile.TileType])
-							{
-								if (tile.TileType != 546)
-								{
-									return;
-								}
-							}
-						}
-					}
-					if (tile.LiquidType != LiquidLoader.LiquidType<Quicksilver>())
-					{
-						return;
-					}
-					if (tile.LiquidAmount > 0)
-					{
-						SoundEngine.PlaySound(SoundID.SplashWeak, player.position);
-					}
-					tile.LiquidAmount = 0;
-					WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
-					player.ApplyItemTime(Item);
-					if (Main.netMode == NetmodeID.MultiplayerClient)
-					{
-						NetMessage.sendWater(Player.tileTargetX, Player.tileTargetY);
-					}
-				}
-				player.cursorItemIconEnabled = true;
-				player.cursorItemIconID = Type;
-			}
 		}
 	}
 }

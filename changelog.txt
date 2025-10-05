@@ -1,3 +1,7 @@
+v1.0.5.3
+=========================
+Updated to preview v2025.09
+
 v1.0.5.2
 =========================
 Fixed chroma shaders and the achievement advisor crashing servers, twice

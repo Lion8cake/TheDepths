@@ -1,7 +1,7 @@
 ﻿=========================================
 The Depths (Alternate Hell)
 =========================================
-Depths version 1.0.5.2 (Server crash fix hotfix)
+Depths version 1.0.5.3 (v2025.09 port hotfix)
 Welcome to THE DEPTHS 
 The Depths is a mod that adds an alternate biome to the underworld called the depths, this works very similar to how the crimson and corruption works in the base game. 
 This mod fully replaces all content found within the underworld from the lava cavern layer to the wall of flesh; everything has an alternative!

@@ -4,6 +4,7 @@ using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils.Structs;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent.Liquid;
 using Terraria.Graphics.Light;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,6 +12,7 @@ using TheDepths.Buffs;
 using TheDepths.Dusts;
 using TheDepths.NPCs;
 using TheDepths.Tiles;
+using static Terraria.GameContent.Liquid.LiquidRenderer;
 
 namespace TheDepths.Liquids
 {
@@ -18,8 +20,8 @@ namespace TheDepths.Liquids
 	{
 		public override void SetStaticDefaults()
 		{
-			LiquidFallLength = 3;
-			DefaultOpacity = 0.95f;
+			LiquidRenderer.WATERFALL_LENGTH[Type] = 3;
+			LiquidRenderer.DEFAULT_OPACITY[Type] = 0.95f;
 			SlopeOpacity = 1f;
 			VisualViscosity = 200;
 			FallDelay = 5;
