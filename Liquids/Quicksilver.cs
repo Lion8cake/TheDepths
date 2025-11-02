@@ -23,7 +23,7 @@ namespace TheDepths.Liquids
 			LiquidRenderer.WATERFALL_LENGTH[Type] = 3;
 			LiquidRenderer.DEFAULT_OPACITY[Type] = 0.95f;
 			SlopeOpacity = 1f;
-			VisualViscosity = 200;
+			LiquidRenderer.VISCOSITY_MASK[Type] = 200;
 			FallDelay = 5;
 			VanillaFallbackOnModDeletion = (ushort)LiquidID.Lava;
 			ChecksForDrowning = false;
