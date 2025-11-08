@@ -16,6 +16,7 @@ namespace TheDepths.Tiles
             Main.tileMergeDirt[Type] = true;
             Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = false;
+            Main.tileMerge[Type][ModContent.TileType<ShaleBlock>()] = true;
             AddMapEntry(new Color(42, 43, 51));
 			DustType = ModContent.DustType<NightWoodDust>();
         }

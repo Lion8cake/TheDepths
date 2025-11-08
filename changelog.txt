@@ -1,3 +1,9 @@
+v1.0.5.5
+=========================
+Fixed drunk seeds not registering biomes properly since v1.0.5.0
+Prevented biome tiles effecting underworld biomes in the center 100 tiles on drunk worlds, making the transition between the middle of the world better looking
+Fixed Nightmare wood not blending with shale
+
 v1.0.5.4
 =========================
 Updated to preview v2025.9.2.10

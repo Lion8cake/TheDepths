@@ -31,7 +31,8 @@ namespace TheDepths.Tiles
 			Main.tileMerge[Type][ModContent.TileType<ShalestoneSapphire>()] = true;
 			Main.tileMerge[Type][ModContent.TileType<ShalestoneTopaz>()] = true;
             Main.tileMerge[Type][ModContent.TileType<OnyxShalestone>()] = true;
-            Main.tileMerge[Type][TileID.Stone] = true;
+			Main.tileMerge[Type][ModContent.TileType<NightWood>()] = true;
+			Main.tileMerge[Type][TileID.Stone] = true;
 			DustType = ModContent.DustType<ShaleDust>();
         }
 

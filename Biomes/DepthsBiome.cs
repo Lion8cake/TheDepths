@@ -110,28 +110,51 @@ public class DepthsBiome : ModBiome
 
     public static bool InModBiome(Player player)
     {
-		bool flag;
-		bool flag2 = true;
+		bool inDepths;
+		bool hasUnderworldTiles = false;
+		bool hasDepthsTiles = false;
+		int tileBuffer = 80;
+		if (CheckIfUnderworldTileCountisNull() >= 300)
+		{
+			hasUnderworldTiles = true;
+		}
+		if (CheckIfTileCountisNull() >= 300)
+		{
+			hasDepthsTiles = true;
+		}
 		if (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft)
 		{
-			flag = Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(player.position.ToTileCoordinates().X) < Main.maxTilesX / 2;
+			inDepths = Worldgen.TheDepthsWorldGen.DrunkDepthsLeft && Math.Abs(player.position.ToTileCoordinates().X) < Main.maxTilesX / 2;
 		}
 		else if (Worldgen.TheDepthsWorldGen.DrunkDepthsRight)
 		{
-			flag = Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(player.position.ToTileCoordinates().X) > Main.maxTilesX / 2;
+			inDepths = Worldgen.TheDepthsWorldGen.DrunkDepthsRight && Math.Abs(player.position.ToTileCoordinates().X) > Main.maxTilesX / 2;
 		}
 		else
 		{
-			flag = Worldgen.TheDepthsWorldGen.isWorldDepths;
+			inDepths = Worldgen.TheDepthsWorldGen.isWorldDepths;
 		}
-        if (CheckIfTileCountisNull() >= 300)
-        {
-            flag2 = false;
-        }
-		return (flag || CheckIfTileCountisNull() >= 300) && !(!flag2 && flag) && Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210;
+		if (Worldgen.TheDepthsWorldGen.DrunkDepthsLeft || Worldgen.TheDepthsWorldGen.DrunkDepthsRight)
+		{
+			if (Math.Abs(player.position.ToTileCoordinates().X) < (Main.maxTilesX / 2) + tileBuffer && Math.Abs(player.position.ToTileCoordinates().X) > (Main.maxTilesX / 2) - tileBuffer)
+			{
+				hasUnderworldTiles = false;
+				hasDepthsTiles = false;
+			}
+		}
+		return (inDepths || hasDepthsTiles) && !(hasUnderworldTiles && inDepths) && Math.Abs(player.position.ToTileCoordinates().Y) >= Main.maxTilesY - 210;
 	}
 
 	private static int CheckIfTileCountisNull()
+	{
+		if (ModContent.GetInstance<TheDepthsModSystem>() != null)
+		{
+			return ModContent.GetInstance<TheDepthsModSystem>().artificialDepthsBlockCount;
+		}
+		return 0;
+	}
+
+	private static int CheckIfUnderworldTileCountisNull()
 	{
 		if (ModContent.GetInstance<TheDepthsModSystem>() != null)
 		{
