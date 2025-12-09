@@ -1,8 +1,8 @@
-using ModLiquidLib.ModLoader;
+using Terraria.ModLoader;
 
 namespace TheDepths.Biomes
 {
-    public class FreezingWaterfallStyle : ModLiquidFall
+    public class FreezingWaterfallStyle : ModWaterfallStyle
     {
     }
 }

@@ -3,10 +3,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using System;
-using TheDepths.Worldgen;
-using ModLiquidLib.ModLoader;
-using ModLiquidLib.Utils;
 using TheDepths.Liquids;
 
 namespace TheDepths.NPCs
@@ -45,7 +41,7 @@ namespace TheDepths.NPCs
 
 		public override void PostAI(NPC npc)
 		{
-			if (!npc.GetWet(LiquidLoader.LiquidType<Quicksilver>()))
+			if (!npc.wets[ModContent.LiquidType<Quicksilver>()])
 			{
 				QuicksilverTimer--;
 				if (QuicksilverTimer <= 0)

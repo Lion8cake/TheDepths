@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using ModLiquidLib.ModLoader;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -75,7 +74,7 @@ namespace TheDepths.Tiles
 			{
 				if (j > Main.UnderworldLayer && TheDepthsWorldGen.TileInDepths(x))
 				{
-					tile.LiquidType = LiquidLoader.LiquidType<Quicksilver>();
+					tile.LiquidType = ModContent.LiquidType<Quicksilver>();
 					tile.LiquidAmount = 128;
 				}
 			}

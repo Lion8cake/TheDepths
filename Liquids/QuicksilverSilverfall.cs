@@ -1,14 +1,9 @@
-﻿using ModLiquidLib.ModLoader;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
+using Terraria.ModLoader;
 
 namespace TheDepths.Liquids
 {
-	public class QuicksilverSilverfall : ModLiquidFall
+	public class QuicksilverSilverfall : ModWaterfallStyle
 	{
 		public override float? Alpha(int x, int y, float Alpha, int maxSteps, int s, Tile tileCache)
 		{

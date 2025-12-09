@@ -1,5 +1,3 @@
-using ModLiquidLib.ID;
-using ModLiquidLib.ModLoader;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
@@ -18,7 +16,7 @@ namespace TheDepths.Items.Weapons
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.WaterBucket;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.HoneyBucket] = Type;
 			ItemID.Sets.DuplicationMenuToolsFilter[Type] = true;
-			LiquidID_TLmod.Sets.CreateLiquidBucketItem[LiquidLoader.LiquidType<Quicksilver>()] = Type;
+			LiquidID.Sets.CreateLiquidBucketItem[ModContent.LiquidType<Quicksilver>()] = Type;
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 5;
 		}
@@ -87,13 +85,13 @@ namespace TheDepths.Items.Weapons
 				if (tile.LiquidAmount != 0)
 				{
 					tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
-					if (tile.LiquidType != LiquidLoader.LiquidType<Quicksilver>())
+					if (tile.LiquidType != ModContent.LiquidType<Quicksilver>())
 					{
 						return;
 					}
 				}
 				SoundEngine.PlaySound(SoundID.SplashWeak, player.position);
-				tile.LiquidType = LiquidLoader.LiquidType<Quicksilver>();
+				tile.LiquidType = ModContent.LiquidType<Quicksilver>();
 				tile.LiquidAmount = byte.MaxValue;
 				WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
 				Item.stack--;

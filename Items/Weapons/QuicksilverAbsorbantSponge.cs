@@ -1,5 +1,3 @@
-using ModLiquidLib.ID;
-using ModLiquidLib.ModLoader;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -16,7 +14,7 @@ namespace TheDepths.Items.Weapons
 			ItemID.Sets.DuplicationMenuToolsFilter[Type] = true;
 
 			//Unlike buckets, sponges have extra functionality to allow the removing and adding of sponge items to liquids
-			LiquidID_TLmod.Sets.CanBeAbsorbedBy[LiquidLoader.LiquidType<Quicksilver>()].Add(Type);
+			LiquidID.Sets.CanBeAbsorbedBy[ModContent.LiquidType<Quicksilver>()].Add(Type);
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}

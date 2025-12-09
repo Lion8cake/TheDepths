@@ -1,5 +1,5 @@
-﻿using ModLiquidLib.ModLoader;
-using Terraria.ID;
+﻿using Terraria.ID;
+using Terraria.ModLoader;
 using TheDepths.Worldgen;
 
 namespace TheDepths.Liquids

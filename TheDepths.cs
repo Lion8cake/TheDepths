@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
-using ModLiquidLib.ModLoader;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using MonoMod.RuntimeDetour;
@@ -121,7 +120,7 @@ namespace TheDepths
 			IL_UIGenProgressBar.DrawSelf += ProgressBarEdit;
 			IL_UIWorldCreation.BuildPage += DepthsSelectionMenu.ILBuildPage;
 			IL_UIWorldCreation.MakeInfoMenu += DepthsSelectionMenu.ILMakeInfoMenu;
-			IL_UIWorldCreation.SetupGamepadPoints += DepthsSelectionMenu.ILSetUpGamepadPoints;
+			//IL_UIWorldCreation.SetupGamepadPoints += DepthsSelectionMenu.ILSetUpGamepadPoints;
 			IL_UIWorldCreation.ShowOptionDescription += DepthsSelectionMenu.ILShowOptionDescription;
 			On_UIWorldCreation.SetDefaultOptions += DepthsSelectionMenu.OnSetDefaultOptions;
 			On_UIWorldListItem.ctor += WorldIconOverlay;
@@ -131,7 +130,6 @@ namespace TheDepths
 
 			//Item edits
 			On_Player.ItemCheck_CatchCritters += On_Player_ItemCheck_CatchCritters;
-			IL_Player.ItemCheck_UseBuckets += BucketCollectionItem;
 			On_Player.PlaceThing_PaintScrapper_LongMoss += On_Player_PlaceThing_PaintScrapper_LongMoss;
 			On_Player.GetItemGrabRange += On_Player_GetItemGrabRange;
 			On_Player.ItemCheck_ManageRightClickFeatures += On_Player_ItemCheck_ManageRightClickFeatures;
@@ -139,7 +137,7 @@ namespace TheDepths
 			IL_Player.GetAnglerReward_MainReward += HotRodReplacer;
 			On_Player.RemoveAnglerAccOptionsFromRewardPool += On_Player_RemoveAnglerAccOptionsFromRewardPool;
 			On_Item.CanShimmer += On_Item_CanShimmer;
-			IL_Player.DemonConch += DemonConchPreventer;
+			//IL_Player.DemonConch += DemonConchPreventer;
 			IL_Recipe.UpdateWhichItemsAreMaterials += RemoveMaterialFromUnusedRecipeGroups;
 
 			//other
@@ -150,7 +148,7 @@ namespace TheDepths
 			On_Player.KeyDoubleTap += SlamDoubleTap;
 			On_TileDrawing.PostDrawTiles += On_TileDrawing_PostDrawTiles;
 			On_TileDrawing.GetWindCycle += On_TileDrawing_GetWindCycle;
-			IL_Player.RocketBootVisuals += RocketBootVfx;
+			//IL_Player.RocketBootVisuals += RocketBootVfx;
 			On_TileLightScanner.ApplySurfaceLight += On_TileLightScanner_ApplySurfaceLight;
 			IL_Main.DrawInfoAccs += DepthMeterTextChanger;
 			On_Player.DropTombstone += On_Player_DropTombstone;
@@ -158,10 +156,10 @@ namespace TheDepths
 			On_Main.UpdateTime_StartDay += CycleDepthsBool;
 
 			//credits
-			IL_CreditsRollComposer.FillSegments += FillCreditSegmentILEdit;
-			IL_CreditsRollEvent.TryStartingCreditsRoll += CreditsRollIngameTimeDurationExtention;
-			IL_CreditsRollEvent.UpdateTime += CreditsRollIngameTimeDurationExtention;
-			IL_CreditsRollEvent.SetRemainingTimeDirect += CreditsRollIngameTimeDurationExtention;
+			//IL_CreditsRollComposer.FillSegments += FillCreditSegmentILEdit;
+			//IL_CreditsRollEvent.TryStartingCreditsRoll += CreditsRollIngameTimeDurationExtention;
+			//IL_CreditsRollEvent.UpdateTime += CreditsRollIngameTimeDurationExtention;
+			//IL_CreditsRollEvent.SetRemainingTimeDirect += CreditsRollIngameTimeDurationExtention;
 
 			MethodInfo NPCLoader_OnKill = typeof(NPCLoader).GetMethod("OnKill", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance);
 			Detour_OnKill = new Hook(NPCLoader_OnKill, On_NPCLoader_OnKill);
@@ -197,7 +195,6 @@ namespace TheDepths
 
 			//Item edits
 			On_Player.ItemCheck_CatchCritters -= On_Player_ItemCheck_CatchCritters;
-			IL_Player.ItemCheck_UseBuckets -= BucketCollectionItem;
 			On_Player.PlaceThing_PaintScrapper_LongMoss -= On_Player_PlaceThing_PaintScrapper_LongMoss;
 			On_Player.ItemCheck_ManageRightClickFeatures -= On_Player_ItemCheck_ManageRightClickFeatures;
 			On_ItemSlot.TryItemSwap -= On_ItemSlot_TryItemSwap;
@@ -205,7 +202,7 @@ namespace TheDepths
 			IL_Player.GetAnglerReward_MainReward -= HotRodReplacer;
 			On_Player.RemoveAnglerAccOptionsFromRewardPool -= On_Player_RemoveAnglerAccOptionsFromRewardPool;
 			On_Item.CanShimmer -= On_Item_CanShimmer;
-			IL_Player.DemonConch -= DemonConchPreventer;
+			//IL_Player.DemonConch -= DemonConchPreventer;
 			IL_Recipe.UpdateWhichItemsAreMaterials -= RemoveMaterialFromUnusedRecipeGroups;
 
 			//other
@@ -216,7 +213,7 @@ namespace TheDepths
 			On_Player.TryReplantingTree -= TreeReplantingDetour;
 			On_LegacyPlayerRenderer.DrawPlayerFull -= PlayerAfterImages;
 			On_Player.KeyDoubleTap -= SlamDoubleTap;
-			IL_Player.RocketBootVisuals -= RocketBootVfx;
+			//IL_Player.RocketBootVisuals -= RocketBootVfx;
 			On_TileLightScanner.ApplySurfaceLight -= On_TileLightScanner_ApplySurfaceLight;
 			IL_Main.DrawInfoAccs -= DepthMeterTextChanger;
 			On_Player.DropTombstone -= On_Player_DropTombstone;
@@ -224,10 +221,10 @@ namespace TheDepths
 			On_Main.UpdateTime_StartDay -= CycleDepthsBool;
 
 			//credits
-			IL_CreditsRollComposer.FillSegments -= FillCreditSegmentILEdit;
-			IL_CreditsRollEvent.TryStartingCreditsRoll -= CreditsRollIngameTimeDurationExtention;
-			IL_CreditsRollEvent.UpdateTime -= CreditsRollIngameTimeDurationExtention;
-			IL_CreditsRollEvent.SetRemainingTimeDirect -= CreditsRollIngameTimeDurationExtention;
+			//IL_CreditsRollComposer.FillSegments -= FillCreditSegmentILEdit;
+			//IL_CreditsRollEvent.TryStartingCreditsRoll -= CreditsRollIngameTimeDurationExtention;
+			//IL_CreditsRollEvent.UpdateTime -= CreditsRollIngameTimeDurationExtention;
+			//IL_CreditsRollEvent.SetRemainingTimeDirect -= CreditsRollIngameTimeDurationExtention;
 
 			if (Detour_OnKill != null)
 				Detour_OnKill.Dispose();
@@ -452,7 +449,7 @@ namespace TheDepths
 				{
 					if (WorldGen.gen && WorldGen.generatingWorld && b == LiquidID.Lava && TheDepthsWorldGen.TileInDepths(num))
 					{
-						b = LiquidLoader.LiquidType<Quicksilver>();
+						b = ModContent.LiquidType<Quicksilver>();
 					}
 				}
 			});
@@ -621,16 +618,6 @@ namespace TheDepths
 			{
 				self.GetModPlayer<TheDepthsPlayer>().GSlamkeybindPressed = true;
 			}
-		}
-		#endregion
-
-		#region BucketILEdit
-		private void BucketCollectionItem(ILContext il)
-		{
-			var c = new ILCursor(il);
-			c.GotoNext(MoveType.After, i => i.MatchLdcI4(1), i => i.MatchSub(), i => i.MatchStfld<Item>("stack"), i => i.MatchLdarg0(), i => i.MatchLdcI4(207));
-			c.EmitLdarg(0);
-			c.EmitDelegate((int item, Player player) => Worldgen.TheDepthsWorldGen.InDepths(player) ? ModContent.ItemType<QuicksilverBucket>() : item);
 		}
 		#endregion
 

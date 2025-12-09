@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ModLiquidLib.ModLoader;
-using ModLiquidLib.Utils;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -289,16 +287,7 @@ namespace TheDepths
 		public override void CatchFish(FishingAttempt fisher, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
         {
             Player player = Player;
-            Projectile bobberProj = null;
-            for (int i = 0; i < Main.maxProjectiles; i++)
-            {
-                Projectile proj = Main.projectile[i];
-				if (proj.type == fisher.bobberType && (int)(proj.Center.X / 16f) == fisher.X && (int)(proj.Center.Y / 16f) == fisher.Y)
-                {
-                    bobberProj = proj;
-                }
-            }
-			if ((bobberProj != null && bobberProj.GetWet(LiquidLoader.LiquidType<Quicksilver>())) || Main.tile[fisher.X, fisher.Y].LiquidType == LiquidLoader.LiquidType<Quicksilver>())
+			if (fisher.inLiquid[LiquidType<Quicksilver>()])
 			{
 				if (fisher.CanFishInLava)
 				{
@@ -909,7 +898,7 @@ namespace TheDepths
                     }
                 }
             }
-            if (!player.GetWet(LiquidLoader.LiquidType<Quicksilver>()))
+            if (!player.wets[LiquidType<Quicksilver>()])
             {
                 QuicksilverTimer -= 5;
                 if (QuicksilverTimer < 0)

@@ -1,6 +1,4 @@
-﻿using ModLiquidLib.ModLoader;
-using ModLiquidLib.Utils;
-using ReLogic.Peripherals.RGB;
+﻿using ReLogic.Peripherals.RGB;
 using System;
 using Terraria;
 using Terraria.ModLoader;
@@ -71,7 +69,7 @@ namespace TheDepths.RGB
 
 		public static class Alert
 		{
-			public static readonly ChromaCondition QuicksilverIndicator = new SimpleCondition((Player player) =>  !Main.gameMenu && ModLoader.HasMod(nameof(TheDepths)) && player.GetWet(LiquidLoader.LiquidType<Quicksilver>()));
+			public static readonly ChromaCondition QuicksilverIndicator = new SimpleCondition((Player player) =>  !Main.gameMenu && ModLoader.HasMod(nameof(TheDepths)) && player.wets[ModContent.LiquidType<Quicksilver>()]);
 		}
 
 		public static readonly ChromaCondition InDepthsMenu = new SimpleCondition((Player player) => Main.gameMenu && !TheDepthsReflectionUtils.GetIsLoading() && ModLoader.HasMod(nameof(TheDepths)) && (ModContent.GetInstance<TheDepthsMenuTheme>().IsSelected || ModContent.GetInstance<TheDepthsOtherworldlyMenuTheme>().IsSelected) && !Main.drunkWorld);
